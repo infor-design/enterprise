@@ -1122,11 +1122,11 @@ $header-toolbar-button-hover-color: $ids-color-palette-azure-10;
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-graphite-30;
 $header-tab-separator: $ids-color-palette-graphite-30;
-$header-tab-normal-color: $ids-color-palette-white;
+$header-tab-normal-color: $ids-color-palette-slate-50;
 $header-tab-text-color: $ids-color-palette-azure-70;
-$header-tab-hover-color: $ids-color-palette-white;
-$header-tab-selected-color: $ids-color-palette-white;
-$header-tab-focus-border-color: $ids-color-palette-white;
+$header-tab-hover-color: $ids-color-palette-slate-100;
+$header-tab-selected-color: $ids-color-palette-azure-60;
+$header-tab-focus-border-color: $ids-color-palette-azure-60;
 
 $header-tab-alt-bg-color: $ids-color-palette-white;
 $header-tab-alt-normal-color: $ids-color-palette-graphite-60;
@@ -1140,15 +1140,16 @@ $header-tab-disabled-color: rgba(255, 255, 255, .4);
 
 $header-tab-background-initial-color-new: $header-default-bg-color;
 $header-tab-gradient-initial-color-new: $header-default-bg-color;
-$header-tab-background-hover-color: $ids-color-palette-azure-80;
-$header-tab-background-hover-color-new: $ids-color-palette-azure-80;
-$header-tab-indicator-hover-color: $ids-color-palette-white;
-$header-tab-indicator-hover-color-new: $ids-color-palette-white;
+$header-tab-background-hover-color: $ids-color-palette-slate-20;
+$header-tab-background-hover-color-new: $ids-color-palette-slate-20;
+$header-tab-indicator-hover-color: $ids-color-palette-black;
+$header-tab-indicator-hover-color-new: $ids-color-palette-black;
 
 $header-tabcontainer-border-color-new: $ids-color-brand-primary-base;
-$header-tab-normal-color-new: $ids-color-palette-white;
-$header-tab-hover-color-new: $ids-color-palette-white;
-$header-tab-selected-color-new: $ids-color-palette-white;
+$header-tab-normal-color-new: $ids-color-palette-black;
+$header-tab-hover-color-new: $ids-color-palette-black;
+$header-tab-selected-color-new: $ids-color-palette-azure-60;
+$header-tab-disabled-color-new: $ids-color-palette-slate-30;
 
 
 // Header Breadcrumb

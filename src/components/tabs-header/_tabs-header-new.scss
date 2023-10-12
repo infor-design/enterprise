@@ -57,7 +57,7 @@
           padding-left: 0;
         }
 
-        &:hover:not(.is-disabled) {
+        &:hover:not(.is-selected):not(.is-disabled) {
           color: $header-tab-hover-color-new;
           border-bottom: 2px solid $header-tab-indicator-hover-color-new;
           background-color: $header-tab-background-hover-color-new;
@@ -268,6 +268,10 @@
       }
     }
   }
+}
+
+.tab-container.header-tabs > .tab-list-container .tab.is-disabled {
+  color: $header-tab-disabled-color-new;
 }
 
 .tab-container.is-personalizable {
