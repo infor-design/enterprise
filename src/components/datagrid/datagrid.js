@@ -11517,6 +11517,12 @@ Datagrid.prototype = {
     }
   },
 
+  /**
+   * Function to update the summary row
+   * @private
+   * @param {object} col The column data
+   * @param {number} cell The cell index
+   */
   updateSummaryRow(col, cell) {
     const totals = this.calculateTotals();
     const rowNodes = this.rowNodes(this.settings.dataset.length);
