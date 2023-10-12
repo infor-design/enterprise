@@ -11524,6 +11524,10 @@ Datagrid.prototype = {
    * @param {number} cell The cell index
    */
   updateSummaryRow(col, cell) {
+    if (!col.summaryRowFormatter) {
+      return;
+    }
+
     const totals = this.calculateTotals();
     const rowNodes = this.rowNodes(this.settings.dataset.length);
     const cellNode = rowNodes.find('td').eq(cell);
