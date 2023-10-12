@@ -14,8 +14,6 @@ demo:
     slug: example-100-percent
   - name: Anchor tags that look like buttons
     slug: example-as-link
-  - name: Form Call to Action Button
-    slug: example-secondary-border
   - name: Button with Icons
     slug: example-with-icons
   - name: Toggle Buttons

@@ -14,8 +14,8 @@ demo:
     slug: example-auto-size
   - name: Expandable Card
     slug: example-expandable
-  - name: Search and Scrollable Content
-    slug: example-search
+  - name: Single Select
+    slug: example-single-select
   - name: Full Page Width Cards
     slug: test-full-width
   - name: Menu Button in the Header
