@@ -11449,7 +11449,7 @@ Datagrid.prototype = {
     if (this.settings.rowTemplate) {
       const tmpl = this.settings.rowTemplate;
       const item = rowData;
-      let renderedTmpl = ''
+      let renderedTmpl = '';
 
       if (Tmpl && item) {
         renderedTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`, { dataset: item });

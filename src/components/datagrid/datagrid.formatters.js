@@ -427,7 +427,7 @@ const formatters = {
   },
 
   // Expand / Collapse Button
-  Expander(row, cell, value, col, item, api, formatLocale) {
+  Expander(row, cell, value, col, item, api) {
     const attrs = utils.stringAttributes(api, api.settings.attributes, `btn-expand-row-${row}`);
     const button = `<button ${attrs} type="button" aria-label="${Locale.translate('ExpandCollapse')}" ${item.isSummaryRow ? 'disabled=true' : ''} class="btn-icon datagrid-expand-btn ${item.expanded ? 'is-expanded' : ''}" tabindex="-1">
       <span class="icon plus-minus ${item.expanded ? 'active' : ''}"></span>
