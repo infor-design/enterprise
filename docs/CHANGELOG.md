@@ -21,6 +21,7 @@
 
 - `[Checkbox]` Changed color of checkbox in dark mode. ([#7991](https://github.com/infor-design/enterprise/issues/7991))
 - `[Form/Label]` Implemented a form layout designed to facilitate an inline design within a responsive-form container. ([#7764](https://github.com/infor-design/enterprise/issues/7764))
+- `[Homepages]` Changed incorrect width on quad widgets. ([#8056](https://github.com/infor-design/enterprise/issues/8056))
 - `[Module Nav]` Added usage guidance to docs. ([#7869](https://github.com/infor-design/enterprise/issues/7869))
 - `[Module Nav]` Added mobile behaviors. ([#7804](https://github.com/infor-design/enterprise/issues/7804))
 - `[Module Nav]` Fixed an alignment issue. ([#7934](https://github.com/infor-design/enterprise/issues/7934))
