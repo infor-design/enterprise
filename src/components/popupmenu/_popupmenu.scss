@@ -116,8 +116,6 @@
               padding-right: 6px;
               position: absolute;
               right: 1px;
-              top: 1px;
-              transform: translateY(50%);
             }
           }
         }
@@ -291,7 +289,7 @@
         padding-left: 57px;
       }
 
-      .icon:not(.arrow) {
+      .icon:not(.arrow):not(.close) {
         left: 58px;
       }
     }
@@ -300,7 +298,7 @@
       &:not(.arrow) {
         height: 14px;
         margin-left: -28px;
-        margin-top: 10px;
+        margin-top: 0;
         pointer-events: none;
         position: absolute;
       }
