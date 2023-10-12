@@ -974,6 +974,10 @@ PopupMenu.prototype = {
         self.holdingDownClick = true;
       }
 
+      if (self.menu.hasClass('is-open')) {
+        self.close();
+      }
+
       doOpen(e);
     }
 
@@ -2408,7 +2412,7 @@ PopupMenu.prototype = {
       isCancelled = false;
     }
 
-    if (!this.menu || !this.isOpen) {
+    if (!(this.menu || this.isOpen)) {
       return;
     }
 
@@ -2621,7 +2625,6 @@ PopupMenu.prototype = {
       .removeAttr('aria-controls')
       .removeAttr('aria-haspopup')
       .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keydown.popupmenu keypress.popupmenu contextmenu.popupmenu updated.popupmenu');
-
     return this;
   },
 
