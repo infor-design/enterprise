@@ -19,8 +19,6 @@ demo:
     slug: example-inputs
   - name: Responsive form with bottom alignment
     slug: example-align-field-bottoms
-  - name: Header Detail Form
-    slug: example-header-detail
 ---
 
 ## Layout Classes

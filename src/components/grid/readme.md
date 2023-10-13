@@ -60,7 +60,7 @@ We have a few exmaples of input fields in the responsive grid. These can be foun
 
 ## Other Modifiers
 
-We added an class modifier of `no-indent`, this will removing all margin indents on the grid. This can be used to nest responsive grids without the added gutters. See [the nested grid example](./demo/components/grid/test-nesting) for an example.
+We added an class modifier of `no-indent`, this will removing all margin indents on the grid. This can be used to nest responsive grids without the added gutters. See [the nested grid example](./demo/components/grid/example-nesting-no-margins) for an example.
 
 In addition we added a few extra class that can be added to the grid `row` element as follows:
 
