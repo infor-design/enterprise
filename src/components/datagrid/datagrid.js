@@ -4748,7 +4748,7 @@ Datagrid.prototype = {
 
     isEven = (this.recordCount % 2 === 0);
     const isSelected = this.isRowSelected(rowData);
-    const isActivated = rowData._rowactivated || rowData.expanded;
+    const isActivated = rowData._rowactivated;
     const rowStatus = { class: '', svg: '' };
     if (rowData && rowData.rowStatus && (rowData.rowStatus.icon === 'new' ? self.settings.showNewRowIndicator : true)) {
       rowStatus.show = true;
@@ -7348,7 +7348,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (columnSettings.inlineEditor) {
+      if (columnSettings?.inlineEditor) {
         if (e.type === 'click' && e.target.nodeName.toLowerCase() === 'input') {
           const el = e.target;
           el.focus();
@@ -7610,7 +7610,6 @@ Datagrid.prototype = {
               focusElem.closest(self.editor.className).length > 0) {
               return;
             }
-
             self.commitCellEdit();
           }
         }, 150);
@@ -10485,7 +10484,8 @@ Datagrid.prototype = {
       });
     } else {
       if (typeof this.editor.val === 'function') {
-        newValue = this.editor.val();
+        const editorValue = this.editor.val();
+        newValue = isNaN(Date.parse(editorValue)) && this.editor.name === 'date' ? '' : editorValue;
       }
       this.commitCellEditUtil(input, newValue, isEditor, isFileupload, isUseActiveRow, isCallback);
     }

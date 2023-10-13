@@ -319,11 +319,11 @@
     <!-- Detail area is optional and can have additional context -->
     <div class="module-nav-detail">&nbsp;</div>
   </aside>
-  <div class="page-container scrollable has-module-nav-offset">
+  <div class="page-container scrollable">
     <header class="header is-personalizable">
       <div class="flex-toolbar">
         <div class="toolbar-section">
-          <button id="header-hamburger" class="btn-icon application-menu-trigger personalize-actionable" type="button">
+          <button id="header-hamburger" class="btn-icon application-menu-trigger personalize-actionable" type="button" title="Toggle Module Nav">
             <span class="audible" data-translate="text">AppMenuTriggerTextAlt</span>
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-menu"></use>
@@ -343,35 +343,17 @@
       <div class="four columns">&nbsp;</div>
       <div class="four columns">&nbsp;</div>
       <div class="four columns">
-        <p>Displays top-level navigation in a flyout menu</p>
-
-        <div class="field field-checkbox">
-          <label for="display-mode-dropdown" class="label">Display Mode</label>
-          <select id="display-mode-dropdown" class="dropdown">
-            <option value="">Hidden</option>
-            <option value="collapsed" selected>Collapsed</option>
-            <option value="expanded">Expanded</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <input type="checkbox" class="checkbox" name="display-detail-check" id="display-detail-check" />
-          <label for="display-detail-check" class="checkbox-label">Display Detail View</label>
-        </div>
-
         <div class="field">
           <input type="checkbox" class="checkbox" name="pin-sections" id="pin-sections" />
-          <label for="pin-sections" class="checkbox-label">Pin "optionally-pinned" Sections</label>
+          <label for="pin-sections" class="checkbox-label">Preview 'pinSections' setting</label>
         </div>
-
         <div class="field">
-          <input type="checkbox" checked="true" class="checkbox" name="offset-check" id="offset-check" />
-          <label for="offset-check" class="checkbox-label">Offset the page container (don't hide any content)</label>
+          <input type="checkbox" class="checkbox" name="display-detail-check" id="display-detail-check" />
+          <label for="display-detail-check" class="checkbox-label">Preview 'showDetailView' setting</label>
         </div>
-
         <div class="field">
-          <input type="checkbox" class="checkbox" name="collapse-click-check" id="collapse-click-check" />
-          <label for="collapse-click-check" class="checkbox-label">Collapse/Hide when clicking outside an expanded menu</label>
+          <input type="checkbox" class="checkbox" name="hide-completely" id="hide-completely" />
+          <label for="hide-completely" class="checkbox-label">Hide completely</label>
         </div>
       </div>
     </div>
@@ -393,28 +375,12 @@
     const navEl = $('#nav');
     const navAPI = navEl.data('modulenav');
     const containerEl = $('.module-nav-container');
-    const dropdownEl = $('#display-mode-dropdown')
-    const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
     const displayCheckEl = $('#display-detail-check');
-    const offsetCheckEl = $('#offset-check');
-    const collapseCheckEl = $('#collapse-click-check');
     const hamburgerBtnEl = $('#header-hamburger');
     const pinSectionsCheckEl = $('#pin-sections');
 
-    // Connect form control event handling
-    dropdownAPI.element.on('change.test', (e) => {
-      let val = dropdownAPI.value;
-      if (val === 'Hidden') val = false;
-      navAPI.updated({ displayMode: val });
-    });
-
     displayCheckEl.on('change.test', (e) => {
       navAPI.updated({ showDetailView: displayCheckEl[0].checked });
-    });
-
-    offsetCheckEl.on('change.test', (e) => {
-      const pageContainer = containerEl.find('.page-container');
-      pageContainer[0].classList[ offsetCheckEl[0].checked ? 'add' : 'remove' ]('has-module-nav-offset');
     });
 
     pinSectionsCheckEl.on('change.test', (e) => {
@@ -423,22 +389,12 @@
 
     if (hamburgerBtnEl.length) {
       hamburgerBtnEl.on('click.test', (e) => {
-        if (dropdownAPI.value === 'collapsed') {
-          dropdownAPI.selectValue('expanded')
-          dropdownEl.trigger('change');
-        } else {
-          dropdownAPI.selectValue('collapsed')
-          dropdownEl.trigger('change');
-        }
+        navAPI.handleHamburgerClick();
       });
     }
 
-    collapseCheckEl.on('change.test', (e) => {
-      navAPI.updated({ enableOutsideClick: collapseCheckEl[0].checked });
-    });
-
     navEl.on('displaymodechange.test', (e, mode) => {
-      dropdownAPI.selectValue(mode === false ? '' : mode);
+      console.log('Display mode changed to:', mode);
     });
 
     // Connect component event handling
@@ -453,7 +409,20 @@
 
     roleButtonEl.on('click.test', (e) => {
       console.info('Module Button Click');
-    })
+    });
+
+    hideCompletelyEl.on('change.test', (e) => {
+      console.log(hideCompletelyEl[0].checked)
+
+      if (hideCompletelyEl[0].checked) {
+        navAPI.updated({ displayMode: false });
+        hamburgerBtnEl.attr('disabled', 'true');
+      }
+      else {
+        navAPI.updated({ displayMode: navAPI.isLargerThanBreakpoint() ? 'collapsed' : 'expanded' });
+        hamburgerBtnEl.removeAttr('disabled');
+      }
+    });
 
     // Customizations to the component after init
     navAPI.updated({ displayMode: 'collapsed' });

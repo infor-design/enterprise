@@ -169,7 +169,7 @@ SearchField.prototype = {
    * @returns {boolean} whether or not the searchfield is currently able to be collapsed.
    */
   get isCurrentlyCollapsible() {
-    return this.settings.collapsible === true || (this.settings.collapsible === 'mobile' && this.shouldBeFullWidth());
+    return this.settings.collapsible === true || this.settings.collapsible === 'mobile' || this.shouldBeFullWidth();
   },
 
   /**
@@ -914,8 +914,11 @@ SearchField.prototype = {
       list.find('.more-results, .no-results').on(`focus.${this.id}`, function () {
         const anchor = $(this);
         list.find('li').removeClass('is-selected');
-        anchor.parent('li').addClass('is-selected');
-        self.element.val('');
+
+        if (!anchor.hasClass('no-results')) {
+          anchor.parent('li').addClass('is-selected');
+          self.element.val('');
+        }
       });
     }).on(`listclose.${this.id}`, () => {
       const list = $('#autocomplete-list');

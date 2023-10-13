@@ -169,8 +169,8 @@
   .card-header {
     + .widget-content,
     + .card-content {
-      height: 708px;
-      min-height: 708px;
+      height: 704px;
+      min-height: 704px;
     }
   }
 }
@@ -221,7 +221,7 @@
 .widget.quintuple-width.to-single,
 .card.sextuple-width.to-single,
 .widget.sextuple-width.to-single {
-  width: 360px; // 320 (single)
+  width: 360px; // 360 (single)
 }
 
 .small-widget.double-width.to-single,
@@ -229,7 +229,7 @@
 .small-widget.quad-width.to-single,
 .small-widget.quintuple-width.to-single,
 .small-widget.sextuple-width.to-single {
-  width: 260px; // 320 (single)
+  width: 260px; // 260 (single)
 }
 
 .card.double-width,
@@ -242,7 +242,7 @@
 .widget.quintuple-width.to-double,
 .card.sextuple-width.to-double,
 .widget.sextuple-width.to-double {
-  width: 736px; // 660 (double: 380 + single)
+  width: 736px; // (360 * 2) + 16
 }
 
 .small-widget.double-width,
@@ -261,7 +261,7 @@
 .widget.quintuple-width.to-triple,
 .card.sextuple-width.to-triple,
 .widget.sextuple-width.to-triple {
-  width: 1112px; //1000 (triple: 380 + double)
+  width: 1112px; // (360 * 3) + (16 * 2)
 }
 
 .small-widget.triple-width,
@@ -277,7 +277,7 @@
 .widget.quintuple-width.to-quad,
 .card.sextuple-width.to-quad,
 .widget.sextuple-width.to-quad {
-  width: 1500px; //1340 (quad: 380 + triple)
+  width: 1488px; // (360 * 4)+(16 * 3)
 }
 
 .small-widget.quad-width,
@@ -290,7 +290,7 @@
 .widget.quintuple-width,
 .card.sextuple-width.to-quintuple,
 .widget.sextuple-width.to-quintuple {
-  width: 1880px; //1680 (quintuple: 380 + quad)
+  width: 1864; // (360 * 5)+(16 * 4)
 }
 
 .small-widget.quintuple-width,
@@ -300,7 +300,7 @@
 
 .card.sextuple-width,
 .widget.sextuple-width {
-  width: 2260px;
+  width: 2240; // (360 * 6)+(16 * 5)
 }
 
 .small-widget.sextuple-width {
@@ -337,10 +337,15 @@
   text-align: center;
 }
 
+.widget-content.no-scroll,
+.card-content.no-scroll {
+  overflow: hidden;
+}
+
 // Hero widget
 .hero-widget {
   background-color: $header-hero-widget-bg-color;
-  color: $header-button-color;
+  color: $font-color-default;
   max-height: 384px;
   min-height: 368px;
   overflow: hidden;

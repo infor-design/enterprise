@@ -273,6 +273,29 @@ DOM.html = function html(el, contents, stripTags) {
 };
 
 /**
+ * Replace content of a DOM element
+ * @param {HTMLElement|SVGElement|jQuery[]} el The element to append to
+ * @param {string|jQuery} contents The html string or jQuery object.
+ * @param {string} stripTags A list of tags to strip to prevent xss, or * for sanitizing and allowing all tags.
+ */
+DOM.replaceHtml = function replaceHtml(el, contents, stripTags) {
+  let domEl = el;
+  let domContents = contents;
+
+  if (el instanceof $ && el.length) {
+    domEl = domEl[0];
+  }
+
+  if (contents instanceof $ && el.length) {
+    domContents = contents[0];
+  }
+
+  if (domEl instanceof HTMLElement || domEl instanceof SVGElement) {
+    domEl.replaceChildren(this.xssClean(domContents, stripTags));
+  }
+};
+
+/**
  * Recursively checks parent nodes for a matching CSS selector
  * @param {HTMLElement/SVGElement} el the lower-level element being checked
  * @param {string} selector a valid CSS selector

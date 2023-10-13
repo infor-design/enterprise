@@ -24,7 +24,7 @@ function calculatePlaceholder(formattedValue, row, cell, value, col, item) {
     const getType = {};
     if (getType.toString.call(placeholder) === '[object Function]') {
       placeholder = placeholder(row, cell, value, col, item);
-    } else if (item && placeholder in item) {
+    } else if (item && item instanceof Object && placeholder in item) {
       placeholder = item[placeholder];
     }
 
@@ -112,8 +112,14 @@ const formatters = {
 
   Date(row, cell, value, col, isReturnValue, api, formatLocaleOnly = false) {
     let formatted = ((value === null || value === undefined) ? '' : value);
+    let isPlaceholder = false;
     let value2;
     const dateFormat = formatLocaleOnly ? null : col.dateFormat;
+
+    const placeholder = isReturnValue ? calculatePlaceholder(formatted, row, cell, value, col, isReturnValue) : '';
+    if (placeholder !== '') {
+      isPlaceholder = true;
+    }
 
     if (typeof value === 'string' && value) {
       if (col.sourceFormat) {
@@ -136,10 +142,21 @@ const formatters = {
     }
 
     if (!col.editor || isReturnValue === true) {
+      if (isPlaceholder) {
+        return '';
+      }
       return formatted;
     }
 
-    return `<span class="trigger">${formatted}</span>${$.createIcon({ icon: 'calendar', classes: ['icon-calendar'] })}`;
+    if (formatted === null || formatted === undefined || formatted === '') {
+      formatted = '';
+      if (placeholder) {
+        isPlaceholder = true;
+        formatted = placeholder;
+      }
+    }
+
+    return `<span class="trigger ${isPlaceholder ? 'is-placeholder' : ''}">${formatted}</span>${$.createIcon({ icon: 'calendar', classes: ['icon-calendar'] })}`;
   },
 
   Time(row, cell, value, col, isReturnValue) {

@@ -108,6 +108,10 @@
   }
 }
 
+.datagrid-drilldown {
+  top: -2px;
+}
+
 // Main Grid
 .datagrid {
   > tbody > tr .icon.plus-minus::before,
@@ -486,6 +490,10 @@
     }
   }
 
+  tbody tr td .datagrid-drilldown {
+    top: 2px;
+  }
+
   .datagrid-trigger-cell.has-editor .icon.icon-search-list {
     top: 1px;
   }
@@ -541,6 +549,10 @@
     .datepicker + .icon {
       top: -4px;
     }
+  }
+
+  tbody tr td .datagrid-drilldown {
+    top: 0;
   }
 }
 
@@ -1083,6 +1095,40 @@ html[dir='rtl'] {
 
           > .icon {
             top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .datagrid.medium-rowheight {
+    .is-editing .datepicker {
+      + .trigger.btn-icon {
+        margin-top: 5px;
+      }
+    }
+  }
+
+  .datagrid {
+    td.error {
+      .datagrid-cell-wrapper {
+        .trigger + .icon-calendar + .icon-error {
+          left: 0;
+          margin-top: 1px;
+        }
+      }
+    }
+  }
+
+  .datagrid-trigger-cell.has-editor {
+    &:not(.is-readonly) {
+      &:hover,
+      &:focus {
+        svg.icon + .icon-error,
+        svg.icon + .icon-info,
+        svg.icon + .icon-alert {
+          &:not(.datagrid-alert-icon) {
+            margin-left: 27px !important;
           }
         }
       }

@@ -3,8 +3,9 @@
 .widget {
   border-radius: 8px;
   box-shadow: 0 0 4px $cardlist-box-shadow-color-hover;
-  height: 373px;
-  min-height: 373px;
+  height: 368px;
+  min-height: 368px;
+  overflow: hidden;
 
   &.bordered {
     border: none;
@@ -280,8 +281,6 @@
   }
 
   .listview {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
     overflow: hidden;
     height: auto;
 
@@ -394,13 +393,22 @@
 html[dir='rtl'] {
   .card-header,
   .widget-header {
-    margin: 8px 16px 8px 2px;
+    &:not(.expandable-card-header) {
+      padding-left: 8px;
+      padding-right: 16px;
+      margin: unset;
+    }
 
     &:not(.has-toolbar) {
       > .btn-actions {
-        left: 13px;
+        left: 0;
         right: auto;
       }
+    }
+
+    &:not(.expandable-card-header) {
+      padding-left: 8px;
+      padding-right: 16px;
     }
 
     h2 ~ svg.icon.has-tooltip {

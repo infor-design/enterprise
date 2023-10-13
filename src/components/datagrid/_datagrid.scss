@@ -1221,7 +1221,7 @@ $datagrid-small-row-height: 25px;
           height: 25px;
           min-height: 25px;
           min-width: 25px;
-          top: -2px;
+          top: -3px;
           width: 25px;
         }
 
@@ -3421,6 +3421,11 @@ $datagrid-small-row-height: 25px;
   }
 }
 
+// Small Drilldown
+.datagrid.small-rowheight tbody tr td .datagrid-drilldown {
+  top: -2px;
+}
+
 // Grid Headers
 .datagrid-header {
   background-color: $datagrid-header-bg-color;
@@ -4126,6 +4131,7 @@ $datagrid-small-row-height: 25px;
   background-color: transparent;
   border-radius: 50%;
   margin: 0 auto;
+  top: -3px;
 
   .icon {
     color: $font-color-highcontrast;
@@ -4917,6 +4923,59 @@ html[dir='rtl'] {
     border-left: 1px solid $datagrid-cell-border-color;
   }
 
+  &[class*='theme-classic-'] .datagrid {
+    .datagrid-trigger-cell.has-editor {
+      &:not(.is-readonly) {
+        .datagrid-cell-wrapper {
+          .trigger + .icon.icon-calendar + .icon:not(.datagrid-alert-icon).icon-error {
+            left: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .datagrid-trigger-cell.has-editor {
+    &:not(.is-readonly) {
+      &:hover,
+      &:focus {
+        svg.icon + .icon-error,
+        svg.icon + .icon-info,
+        svg.icon + .icon-alert {
+          &:not(.datagrid-alert-icon) {
+            margin-left: 30px !important;
+          }
+        }
+      }
+    }
+  }
+
+  .datagrid {
+    .is-editing .datepicker {
+      + .trigger svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  .datagrid.normal-rowheight {
+    .is-editing .datepicker {
+      + .trigger {
+        left: -10px;
+      }
+    }
+  }
+
+  .datagrid.medium-rowheight {
+    .is-editing .datepicker {
+      ~ .trigger {
+        left: 0;
+        margin-right: 0;
+      }
+    }
+  }
+
   .datagrid {
     th:first-child {
       border-left: 1px solid $datagrid-header-border-color;
@@ -4947,21 +5006,17 @@ html[dir='rtl'] {
             margin-left: 5px;
           }
         }
-
-        &:hover,
-        &:focus {
-          .icon-error {
-            margin-left: 28px !important;
-          }
-        }
       }
 
       &.is-editing {
         .datepicker {
-          padding: 0 16px 0 0;
+          padding: 0;
 
           + .trigger {
-            margin-right: -3px;
+            margin-left: 0;
+            margin-right: 3px;
+            position: relative;
+            left: -10px;
 
             .icon {
               margin-right: 3px;

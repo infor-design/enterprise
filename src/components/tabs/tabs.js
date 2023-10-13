@@ -3825,8 +3825,6 @@ Tabs.prototype = {
     const tabMoreWidth = !this.isVerticalTabs() ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
     const scrollingTablist = this.tablistContainer;
-    const hasSectionForm = parentContainer.parents('section.scrollable-flex').length;
-    const hasHeader = parentContainer.parents('.header.has-tabs').length;
     const accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
     const widthPercentage = target[0].getBoundingClientRect().width / target[0].offsetWidth * 100;
     const isClassic = $('html[class*="classic-"]').length > 0;
@@ -3860,16 +3858,12 @@ Tabs.prototype = {
         targetRectObj.right += tablistScrollLeft;
 
         if (isRTL) {
-          targetRectObj.right += 1;
+          targetRectObj.right -= 1;
 
           // On RTL, remove the width of the controls on the left-most side of the tab container
           if (!isNotHeaderTabs) {
             targetRectObj.left -= tabMoreWidth;
             targetRectObj.right -= tabMoreWidth;
-          }
-
-          if (!hasSectionForm && !hasHeader) {
-            targetRectObj.right -= 42;
           }
         }
 
@@ -3892,7 +3886,7 @@ Tabs.prototype = {
       }
 
       if (isNotHeaderTabs && !self.isVerticalTabs() && !self.isModuleTabs()) {
-        targetRectObj.height; // eslint-disable-line
+        targetRectObj.height -= 1;
         targetRectObj.top += 2;
       }
 

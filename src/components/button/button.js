@@ -298,7 +298,7 @@ Button.prototype = {
 
     // Add extra, user-defined CSS classes, if applicable
     if (typeof this.settings.cssClass === 'string') {
-      this.element[0].className += xssUtils.stripHTML(this.settings.cssClass);
+      this.element[0].className += xssUtils.stripHTML(` ${this.settings.cssClass}`);
     }
 
     // Add hitbox area element.

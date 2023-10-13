@@ -106,6 +106,7 @@ $button-color-primary-hover-background: $ids-color-palette-azure-30;
 $button-color-primary-disabled-background-new: $ids-color-palette-slate-60;
 $button-color-primary-disabled-font-new: $ids-color-palette-slate-100;
 
+$button-color-secondary-menu-open-new: $ids-color-palette-white;
 $button-color-secondary-initial-font-new: $ids-color-palette-azure-40;
 $button-color-secondary-initial-border-new: $ids-color-palette-azure-40;
 $button-color-secondary-hover-border-new: $ids-color-palette-azure-40;
@@ -339,6 +340,7 @@ $toolbar-standalone-border-color: $ids-color-palette-slate-50;
 $toolbar-standalone-disabled-color: $ids-color-palette-slate-40;
 $toolbar-separator-color: $ids-color-palette-slate-50;
 $toolbar-btn-actions-hover-bg-color: $button-color-tertiary-hover-background-new;
+$toolbar-standalone-popup-label-color: $ids-color-palette-white;
 
 // Color Palette Background
 $color-border-color: rgba(255, 255, 255, 0.2);
@@ -448,10 +450,13 @@ $cardlist-actions-color: $ids-color-palette-slate-30;
 $cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
 
 // Checkboxes
-$checkbox-disabled-text-color: $checkbox-color-unchecked-disabled-font;
-$checkbox-disabled-checked-bg-color: $checkbox-color-unchecked-disabled-border;
+$checkbox-disabled-text-color: $ids-color-palette-slate-60;
 $checkbox-color-disabled-font: $input-color-disabled-font;
-$checkbox-color-checked-initial-background: $ids-color-palette-slate-80;
+$checkbox-color-checked-initial-background: $ids-color-palette-slate-20;
+$checkbox-color-checked-initial-arrow: $ids-color-palette-slate-100;
+$checkbox-color-unchecked-disabled-background: $ids-color-palette-slate-70;
+$checkbox-color-unchecked-disabled-border: $ids-color-palette-slate-60;
+$checkbox-color-unchecked-disabled-arrow: $ids-color-palette-slate-100;
 
 // Switch
 $radio-checked-color: $ids-color-brand-primary-base;
@@ -597,6 +602,7 @@ $module-nav-border-color: $ids-color-palette-slate-70;
 $module-nav-detail-bg-color: $ids-color-palette-slate-80;
 $module-nav-separator-color: $ids-color-palette-slate-80;
 $module-nav-text-color: $ids-color-palette-slate-30;
+$module-nav-shadow-color: rgba(0, 0, 0, 0.70);
 
 // Module Nav Input Field (Search/Role Dropdown)
 $module-nav-input-bg-color: $ids-color-palette-slate-80;
@@ -877,7 +883,7 @@ $about-text-border-color: $ids-color-palette-slate-50;
 $about-text-hover-border-color: $ids-color-palette-slate-30;
 
 // Sub Header
-$subhead-bg-color: $ids-color-palette-slate-50;
+$subhead-bg-color: $ids-color-palette-slate-70;
 $subheader-searchfield-context-bg: $ids-color-palette-slate-100;
 $subheader-input-color-focus-border: $ids-color-palette-slate-40;
 $subheader-input-text-color-focus: $ids-color-palette-slate-20;

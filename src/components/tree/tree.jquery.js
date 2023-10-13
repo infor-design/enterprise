@@ -1,3 +1,4 @@
+import { xssUtils } from '../../utils/xss';
 import { Tree, COMPONENT_NAME } from './tree';
 
 /**
@@ -6,6 +7,26 @@ import { Tree, COMPONENT_NAME } from './tree';
  * @returns {jQuery[]} elements being acted on
  */
 $.fn.tree = function (settings) {
+  // Find all anchor links within the context of 'this'
+  const anchorLinks = this.find('a');
+
+  // Check if there are elements with 'onerror' attributes within anchorLinks
+  const elementsWithError = anchorLinks.find('[onerror]');
+
+  // Check if there are elements with 'onerror' attributes within anchorLinks
+  if (elementsWithError.length) {
+    // Remove the 'onerror' attribute from all elements with 'onerror'
+    this.find('[onerror]').removeAttr('onerror');
+
+    // Iterate through all descendants of anchorLinks
+    anchorLinks.find('*').each(function () {
+      const elem = $(this);
+
+      // Sanitize the HTML content of each descendant to prevent cross-site scripting (XSS)
+      this.outerHTML = xssUtils.sanitizeHTML(elem.prop('outerHTML'));
+    });
+  }
+
   return this.each(function () {
     let instance = $.data(this, COMPONENT_NAME);
     if (instance) {

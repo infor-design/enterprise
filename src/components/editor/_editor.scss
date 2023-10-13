@@ -797,6 +797,10 @@ html.is-firefox {
   .flex-toolbar.formatter-toolbar .fontpicker {
     span {
       padding-top: 3px !important;
+
+      &.audible + span:not([class]) {
+        padding-top: unset !important;
+      }
     }
   }
 }

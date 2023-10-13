@@ -150,7 +150,8 @@
       width: 50%;
 
       &.btn-primary:focus {
-        box-shadow: 0 0 0 0 $body-color-primary-background, 0 0 0 1px $button-color-primary-initial-background, $focus-box-shadow;
+        box-shadow: 0 0 0 0 $body-color-primary-background, 0 0 0 0.12rem $button-color-primary-initial-background, $focus-box-shadow;
+        z-index: 3;
       }
 
       &.is-cancel-month-pane {
@@ -174,6 +175,7 @@
 .form-layout-compact .field {
   .datepicker {
     padding-right: 24px;
+    vertical-align: top;
 
     + .trigger,
     + .tooltip-description + .trigger {

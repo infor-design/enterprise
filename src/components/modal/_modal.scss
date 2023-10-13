@@ -238,7 +238,8 @@
 
     .searchfield-wrapper {
       min-width: 300px;
-      width: calc(100% + 2px);
+      width: 100%;
+      margin: 0;
 
       input {
         border-color: $fieldset-border-top-color;
@@ -539,6 +540,10 @@ body.modal-engaged {
 }
 
 .modal-body {
+  &.overflow {
+    overflow: auto;
+  }
+
   > *:not(.pager-toolbar):last-child {
     margin-bottom: 0;
   }
