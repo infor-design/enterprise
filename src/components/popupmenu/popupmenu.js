@@ -132,7 +132,7 @@ PopupMenu.prototype = {
    * @returns {boolean} whether or not the popupmenu is currently open
    */
   get isOpen() {
-    return DOM.hasClass(this.element[0], 'is-open');
+    return DOM.hasClass(this.element[0], 'is-open') || DOM.hasClass(this.menu[0], 'is-open');
   },
 
   /**
@@ -974,10 +974,7 @@ PopupMenu.prototype = {
         self.holdingDownClick = true;
       }
 
-      if (self.menu.hasClass('is-open')) {
-        self.close();
-      }
-
+      self.close();
       doOpen(e);
     }
 
@@ -2411,8 +2408,8 @@ PopupMenu.prototype = {
     if (!isCancelled || isCancelled === undefined) {
       isCancelled = false;
     }
-
-    if (!(this.menu || this.isOpen)) {
+    console.log(this.menu, this.isOpen, !this.menu || !this.isOpen)
+    if (!this.menu || !this.isOpen) {
       return;
     }
 
