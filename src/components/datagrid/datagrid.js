@@ -12196,7 +12196,7 @@ Datagrid.prototype = {
   /**
    * Expand Detail Row Or Tree Row
    * @param  {number} dataRowIndex The row to toggle
-   * @param  {boolean} expandOnly If true, set the toggle to expand only
+   * @param  {boolean} expandOnly Set the toggle to expand only
    * @returns {void}
    */
   toggleRowDetail(dataRowIndex, expandOnly = false) {
