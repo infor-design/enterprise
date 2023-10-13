@@ -7,7 +7,7 @@ demo:
     slug: example-index
   pages:
   - name: Anniversary Format (Month, Year)
-    slug: example-anniversay-format
+    slug: example-anniversary-format
   - name: Specify a custom or ISO Format
     slug: example-custom-format
   - name: Disabling Calendar Days
