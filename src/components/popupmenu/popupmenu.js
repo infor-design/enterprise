@@ -2408,7 +2408,7 @@ PopupMenu.prototype = {
     if (!isCancelled || isCancelled === undefined) {
       isCancelled = false;
     }
-    console.log(this.menu, this.isOpen, !this.menu || !this.isOpen)
+
     if (!this.menu || !this.isOpen) {
       return;
     }
