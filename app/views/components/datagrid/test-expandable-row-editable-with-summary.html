@@ -245,6 +245,14 @@
         dataset: data,
         summaryRow: true,
         rowTemplate: rowTemplate,
+        onPostRenderCell: function(container, args) {
+          console.log('Post Render Row', args.row, args.value.id, args.value.taskName);
+          if (args.row !== 0) {
+            container.innerHTML = '<span style="font-weight: bold">' + (args && args.value && args.value.id ? args.value.id : '').toString() + '</span>';
+          } else {
+            container.innerHTML = (args && args.value && args.value.id ? args.value.id : '').toString();
+          }
+        },
         attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
         toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true,
           results: true, keywordFilter: true, actions: true, exportToExcel: true, exportToCsv: true, rowHeight: true, personalize: true}
@@ -285,6 +293,7 @@
           rowData.quantity = qty ? qty : rowData.quantity;
           rowData.price = price ? price : rowData.price;
           gridApi.updateRow(row, rowData);
+          gridApi.toggleRowDetail(row, true);
           console.log('Row is updated');
         } else {
           console.log('Can not find given row to update');
