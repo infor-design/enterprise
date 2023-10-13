@@ -11542,8 +11542,7 @@ Datagrid.prototype = {
     }
 
     const totals = this.calculateTotals();
-    const rowNodes = this.rowNodes(this.settings.dataset.length);
-    const cellNode = rowNodes.find('td').eq(cell);
+    const cellNode =  this.rowNodes(this.settings.dataset.length).find('td').eq(cell);
     const cellTemplate = `<div class="datagrid-cell-wrapper">${totals[col.id]}</div>`;
     cellNode.html(cellTemplate);
   },
