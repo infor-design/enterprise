@@ -55,16 +55,16 @@
 .is-personalizable .personalize-text,
 .is-personalizable.hyperlink:not(.personalize-actionable),
 .is-personalizable.hyperlink:not(.personalize-actionable):not([disabled]):not(.personalize-actionable-disabled):hover {
-  color: $ids-color-palette-slate-100;
+  color: $hyperlinks-personalize-text-color;
 }
 
 .is-personalizable .label+.personalize-text.data {
-  color: $ids-color-palette-slate-100;
+  color: $label-personalize-text-color;
 }
 
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg {
-  color: $ids-color-palette-slate-100;
+  color: $header-text-actionable-color;
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
@@ -125,7 +125,7 @@
     .info-message .icon,
     .info-message p,
     .btn-icon .icon {
-      color: $ids-color-palette-black;
+      color: $header-button-normal-color;
     }
   }
 

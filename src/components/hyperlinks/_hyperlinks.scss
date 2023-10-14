@@ -18,7 +18,7 @@
   }
 
   &.personalize-actionable {
-    color: $ids-color-palette-azure-60;
+    color: $hyperlinks-personalize-actionable-text-color;
 
     &:not([disabled]):not(.personalize-actionable-disabled):hover {
       color: $ids-color-palette-white;

@@ -2,23 +2,14 @@
 //================================================== //
 
 // Form Background Color
-$header-text-default-color: $ids-color-palette-slate-100;
-$header-text-actionable-color: $ids-color-palette-azure-60;
-$header-button-normal-color: $ids-color-palette-slate-100;
-$header-button-hover-color: $ids-color-palette-azure-60;
-
 $header-bg-color: $ids-color-palette-azure-60;
 $subhead-bg-color: $ids-color-palette-azure-70;
 $transparent: transparent;
 
-$header-border-color: $ids-color-palette-azure-80;
-$header-button-color: $ids-color-palette-slate-100;
-$header-button-focus-color: $ids-color-palette-slate-100;
-$header-button-focus-border-color: $ids-color-palette-azure-60;
 $header-button-disabled-color: rgba(0, 0, 0, 0.3);
 $header-primary-btn-background-color: $ids-color-palette-azure-50;
 $header-primary-btn-background-hover-color: $ids-color-brand-primary-base;
-$header-text-color: $ids-color-palette-slate-100;
+
 $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 3px 2px rgba(255, 255, 255, 0.3);
 
@@ -39,10 +30,30 @@ $homepage-header-menu-button-color: $ids-color-palette-black;
 
 $widget-editable-border-color: $ids-color-palette-azure-60;
 
-// Color Personalization in header
+// Header Colors
 $header-default-bg-color: $ids-color-palette-white;
 $header-default-bg-border-color: $ids-color-palette-slate-30;
 $header-default-bg-hover-color: $ids-color-palette-azure-80;
+
+$header-border-color: $ids-color-palette-azure-80;
+$header-text-default-color: $ids-color-palette-slate-100;
+$header-text-actionable-color: $ids-color-palette-azure-60;
+$header-button-normal-color: $ids-color-palette-slate-100;
+$header-button-icon-color: $ids-color-palette-slate-100;
+$header-button-hover-color: $ids-color-palette-azure-60;
+$header-button-focus-color: $ids-color-palette-slate-100;
+$header-button-focus-border-color: $ids-color-palette-azure-60;
+
+$counts-personalize-text-color: $header-text-default-color;
+$label-personalize-text-color: $header-text-default-color;
+$hyperlinks-personalize-actionable-text-color: $header-text-actionable-color;
+$hyperlinks-personalize-text-color: $header-text-default-color;
+$header-button-color: $header-button-normal-color;
+$header-text-color: $header-text-default-color;
+$header-toolbar-searchfield-icon-color: $header-button-icon-color;
+$header-toolbar-button-hover-color: $ids-color-palette-azure-10;
+
+// End of Header Colors
 
 $masthead-bg-color: $ids-color-palette-slate-80;
 $masthead-border-color: $ids-color-palette-slate-80;
@@ -1120,8 +1131,7 @@ $subheader-searchfield-category-button-font-color: $ids-color-palette-slate-80;
 $header-searchfield-input-border-color: $ids-color-palette-slate-40;
 $header-searchfield-input-border-hover-color: $ids-color-palette-slate-100;
 $header-searchfield-btn-font-color: $ids-color-palette-slate-80;
-$header-toolbar-searchfield-icon-color: $ids-color-palette-slate-100;
-$header-toolbar-button-hover-color: $ids-color-palette-azure-10;
+
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-graphite-30;
