@@ -55,16 +55,16 @@
 .is-personalizable .personalize-text,
 .is-personalizable.hyperlink:not(.personalize-actionable),
 .is-personalizable.hyperlink:not(.personalize-actionable):not([disabled]):not(.personalize-actionable-disabled):hover {
-  color: $ids-color-palette-white;
+  color: $ids-color-palette-slate-100;
 }
 
 .is-personalizable .label+.personalize-text.data {
-  color: $ids-color-palette-white;
+  color: $ids-color-palette-slate-100;
 }
 
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg {
-  color: rgba(255, 255, 255, 0.8);
+  color: $ids-color-palette-slate-100;
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
@@ -92,7 +92,7 @@
 }
 
 .is-personalizable .personalize-chart-targeted .total.bar {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .is-personalizable .personalize-actionable-disabled,
@@ -125,7 +125,7 @@
     .info-message .icon,
     .info-message p,
     .btn-icon .icon {
-      color: $ids-color-palette-white !important;
+      color: $ids-color-palette-black;
     }
   }
 

@@ -18,6 +18,11 @@
 @import '../core/config';
 
 // Form Background Color
+$header-text-default-color: $ids-color-palette-slate-100;
+$header-text-actionable-color: $ids-color-palette-azure-80;
+$header-button-normal-color: $ids-color-palette-slate-100;
+$header-button-hover-color: $ids-color-palette-azure-80;
+
 $header-bg-color: $ids-color-palette-azure-80;
 $header-default-bg-color: $ids-color-palette-white;
 $header-default-bg-border-color: $ids-color-palette-slate-30;

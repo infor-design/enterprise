@@ -18,7 +18,7 @@
   }
 
   &.personalize-actionable {
-    color: rgba(255, 255, 255, 0.8);
+    color: $ids-color-palette-azure-60;
 
     &:not([disabled]):not(.personalize-actionable-disabled):hover {
       color: $ids-color-palette-white;

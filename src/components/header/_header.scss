@@ -642,9 +642,13 @@ $subheader-height: 60px;
         cursor: pointer;
       }
 
-      &:not(.close) svg.icon,
-      &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable) svg.icon {
+      &:not(.close) svg.icon {
         color: $header-button-color;
+      }
+
+      &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable),
+      &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable) svg.icon {
+        color: $header-button-hover-color;
       }
 
       &.application-menu-trigger {
