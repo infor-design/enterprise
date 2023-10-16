@@ -6,8 +6,8 @@ demo:
   - name: Full Page MonthView Example
     slug: example-index
   pages:
-  - name: Disabling Weeks/Days
-    slug: example-disable-weekends
+  - name: In Page
+    slug: example-inpage
   - name: Restricting Month Selection
     slug: test-restrict-month-selection
 ---

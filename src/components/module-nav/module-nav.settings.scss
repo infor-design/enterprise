@@ -7,6 +7,10 @@
   padding-inline: 0;
 }
 
+.popupmenu-wrapper.module-nav-settings-menu {
+  z-index: 8500;
+}
+
 .popupmenu.module-nav-settings-menu {
   @include settings-menu-box-shadow;
 

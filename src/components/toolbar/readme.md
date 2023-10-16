@@ -16,12 +16,8 @@ demo:
     slug: example-no-title-text-buttons
   - name: No "More Actions" Button
     slug: example-no-action-button
-  - name: "`MaxVisibleButtons` Defined as '6' Instead of '3'"
-    slug: example-more-than-three-buttons
   - name: Additional Examples of `MaxVisibleButtons` Behavior
     slug: example-overflow
-  - name: "`selected` Event Behavior"
-    slug: example-selected-event
 ---
 
 ## Code Example
