@@ -310,6 +310,7 @@ Personalize.prototype = {
     colors.tabVerticalSelectedTextColor = colors.base;
     colors.tabVerticalSelectedColor = themeColors.palette.white.value;
     colors.tabDivider = colors.darkest;
+    colors.tabFade = colors.base;
 
     colors.tabFocusIndicator = colors.contrast;
     colors.tabFocusIndicatorVert = colors.base;
@@ -398,6 +399,7 @@ Personalize.prototype = {
       if (isNewDark) {
         colors.tabCloseInactiveColor = 'rgba(255, 255, 255, 0.85)';
         colors.base = themeColors.palette.slate[60].value;
+        colors.tabFade = themeColors.palette.slate[80].value;
         colors.btnPrimaryColor = colors.base;
         colors.dark = colors.base;
         colors.contrast = themeColors.palette.white.value;

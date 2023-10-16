@@ -273,7 +273,6 @@ a.is-personalizable svg.ripple-effect {
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
 .personalize-header.tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible {
   border-color: ${colors.headerTabsSelectedTextColor} !important;
-  box-shadow: ${colors.tabFocusBoxShadow} !important;
 }
 
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected {
@@ -751,11 +750,12 @@ html[class*='classic-'] .is-personalizable .tab-container.header-tabs.alternate 
 }
 .is-personalizable .scrollable-flex-header .breadcrumb.truncated:not(.alternate) .breadcrumb-list::before,
 .scrollable-flex-header.is-personalizable .breadcrumb.truncated:not(.alternate) .breadcrumb-list::before {
-  background-image: linear-gradient(to right, ${colors.base}, ${colorUtils.hexToRgba(colors.base, 0)});
+  background-image: linear-gradient(to right, ${colors.tabFade}, ${colorUtils.hexToRgba(colors.tabFade, 0)});
 }
+
 html[dir='rtl'] .is-personalizable .scrollable-flex-header .breadcrumb.truncated:not(.alternate) .breadcrumb-list::before,
 html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:not(.alternate) .breadcrumb-list::before {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.tabFade, 0)}, ${colors.tabFade});
 }
 .is-personalizable .scrollable-flex-header .breadcrumb:not(.alternate) .hyperlink,
 .scrollable-flex-header.is-personalizable .breadcrumb:not(.alternate) .hyperlink {
@@ -871,12 +871,12 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::be
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.tabFade, 0)}, ${colors.tabFade}) !important;
 }
 
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.tabFade, 0)}, ${colors.tabFade}) !important;
 }
 
 .is-personalizable.header .section-title {
