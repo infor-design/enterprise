@@ -16,8 +16,6 @@ demo:
     slug: example-legend
   - name: Selection only Month and Year
     slug: example-month-year-format
-  - name: Showing a Picker to Choose Month and Year
-    slug: example-month-year-picker
   - name: Date Range Selection
     slug: example-range
   - name: Change Field Widths

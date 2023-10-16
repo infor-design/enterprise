@@ -206,10 +206,12 @@ ModuleNav.prototype = {
       $(this.accordionEl).on(`aftercollapse.${COMPONENT_NAME}`, () => {
         this.setScrollable();
       });
-      $(this.accordionEl).on(`selected.${COMPONENT_NAME}`, () => {
+      $(this.accordionEl).on(`selected.${COMPONENT_NAME}`, (e, header) => {
+        if ($(header).is('#module-nav-settings-btn')) return;
         this.handleAutoCollapseOnMobile();
       });
-      $(this.accordionEl).on(`followlink.${COMPONENT_NAME}`, () => {
+      $(this.accordionEl).on(`followlink.${COMPONENT_NAME}`, (e, header) => {
+        if ($(header).is('#module-nav-settings-btn')) return;
         this.handleAutoCollapseOnMobile();
       });
     }

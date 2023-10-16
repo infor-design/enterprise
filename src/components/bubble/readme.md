@@ -6,8 +6,6 @@ demo:
   - name: Standard Bubble Chart
     slug: example-index
   pages:
-  - name: Defaulting a selected bubble
-    slug: test-selected
   - name: Set animation speed
     slug: test-animation
 ---
