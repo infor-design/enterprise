@@ -104,6 +104,7 @@
 
               &:hover svg {
                 color: $header-flex-toolbar-close-icon-color-hover;
+                background-color: rgba($searchfield-bg-color, 0);
               }
             }
           }
