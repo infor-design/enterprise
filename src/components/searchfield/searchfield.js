@@ -1477,6 +1477,10 @@ SearchField.prototype = {
       const categoryButtonBorder = (parseInt(categoryButtonStyle.borderLeftWidth, 10) * 2);
 
       subtractWidth += (categoryButtonWidth + categoryButtonPadding + categoryButtonBorder);
+
+      if (this.element.parents('.header').length === 1) {
+        subtractWidth += 40;
+      }
     }
 
     if (this.hasGoButton()) {
