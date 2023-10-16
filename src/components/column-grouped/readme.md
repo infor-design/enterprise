@@ -8,10 +8,6 @@ demo:
   pages:
   - name: Default a Selected Group
     slug: example-selected
-  - name: Handle negative values
-    slug: example-negative
-  - name: Set animation speed
-    slug: example-animation
   - name: Example showing Get Selected value
     slug: example-get-selected
   - name: Example showing Set Selected value
