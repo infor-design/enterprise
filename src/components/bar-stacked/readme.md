@@ -10,10 +10,6 @@ demo:
     slug: example-stacked-100
   - name: Colors
     slug: example-stacked-colors
-  - name: Patterns
-    slug: example-stacked-patterns
-  - name: Formatting Tooltip Data
-    slug: example-stacked-formatter-string
   - name: Set animation speed
     slug: test-animation
   - name: Example showing defaulting a selected value

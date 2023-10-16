@@ -22,14 +22,10 @@ demo:
     slug: example-enable
   - name: Select By Id
     slug: test-select-by-id
-  - name: Select Event
-    slug: example-select-event
   - name: Select Multiple
     slug: example-select-multiple
   - name: Sortable
     slug: example-sortable
-  - name: Update Node
-    slug: example-update-node
   - name: Preserve and Restore Tree
     slug: test-preserve-restore
   - name: Using Plus and Minus for Folders

@@ -8,8 +8,6 @@ demo:
   pages:
   - name: Lazy Loading Example
     slug: example-lazy-load
-  - name: Example Paging
-    slug: example-paging
   - name: Example Single Manager/Subordinate
     slug: example-single
 ---

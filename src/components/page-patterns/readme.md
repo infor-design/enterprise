@@ -44,7 +44,7 @@ Most of the examples require a unique structure attached to or under the page-co
 
 - `example-list-detail` - The list/detail pattern has a list of items on the left (this example shows a listview) and a details pane for content. When an item in the master listview is selected, the details pane is updated. This pattern is also responsive. On lower breakpoints just the list is shown and you can drill in and back to the list [See Example](./demo/components/page-patterns/example-list-detail)
 
-- `example-tree-detail` - The Tree/Detail pattern has a tree of items on the left and a details pane for content. When an item in the tree is selected, the details pane is updated. See Example](./demo/components/page-patterns/example-tree-detail)
+- `example-tree-detail` - The Tree/Detail pattern has a tree of items on the left and a details pane for content. When an item in the tree is selected, the details pane is updated. [See Example](./demo/components/page-patterns/example-tree-detail)
 
 - `example-settings-page` - The Vertical Tab /Detail pattern has a vertical tab on the left of high level navigation items , when they are clicked a section of those details is shown in the detail pane. This is very useful as a an application settings page. [See Example](./demo/components/page-patterns/example-settings-page)
 

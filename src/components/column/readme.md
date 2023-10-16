@@ -20,8 +20,6 @@ demo:
     slug: test-by-date
   - name: Formatting the Tooltip Values
     slug: test-formatter
-  - name: Right Click Menu on Bars
-    slug: example-rightclick
 ---
 
 ## Dataset Settings
