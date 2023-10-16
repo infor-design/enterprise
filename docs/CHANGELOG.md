@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.84.13 Fixes
+
+- `[Number]` Added additional check for `formatNumber`. ([#7752](https://github.com/infor-design/enterprise/issues/7752))
+
 ## v4.84.12 Fixes
 
 - `[Module Nav]` Fixed a bug where the settings was behind the main module nav element. ([#8063](https://github.com/infor-design/enterprise/issues/8063))
