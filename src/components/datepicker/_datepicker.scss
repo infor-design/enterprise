@@ -104,8 +104,6 @@
 // Popup Adjustments
 .monthview-popup.popover {
   max-width: inherit;
-  width: inherit !important;
-  height: auto !important;
 
   @media screen and (max-height: ($breakpoint-big-phone + 50)) {
     overflow-y: auto;
@@ -258,7 +256,7 @@ html[dir='rtl'] {
 
 @include respond-to(tabletdown) {
   .monthview-popup.popover .monthview {
-    min-width: inherit;
+    min-width: 310px;
 
     @media only screen
       and (minwidth: $breakpoint-phone)
