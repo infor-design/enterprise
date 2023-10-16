@@ -104,6 +104,9 @@
 // Popup Adjustments
 .monthview-popup.popover {
   max-width: inherit;
+  overflow: auto;
+  min-width: 300px;
+  min-height: 400px;
 
   @media screen and (max-height: ($breakpoint-big-phone + 50)) {
     overflow-y: auto;
@@ -124,7 +127,7 @@
   }
 
   .monthview .monthview-table {
-    max-width: 330px;
+    max-width: 310px;
   }
 
   // Week picker adjustments

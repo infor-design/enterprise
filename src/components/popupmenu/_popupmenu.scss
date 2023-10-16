@@ -604,6 +604,10 @@
   height: 45px;
   margin-top: 10px;
 
+  @media only screen and (max-device-width: $breakpoint-phone) {
+    min-width: 324px;
+  }
+
   button {
     @include css3(transition, color 0.3s ease 0s);
 
