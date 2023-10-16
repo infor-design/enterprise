@@ -141,7 +141,7 @@ html[dir='rtl'] {
           .searchfield {
             padding-right: 40px;
             border-radius: 8px;
-            width: 100%;
+            width: calc(100% - 40px);
             position: inherit;
           }
         }
@@ -181,6 +181,10 @@ html[dir='rtl'] {
 
           .searchfield {
             width: calc(85% + 35px);
+
+            @media (max-width: $breakpoint-slim) {
+              width: 80%;
+            }
           }
 
           .collapse-button {
@@ -188,7 +192,7 @@ html[dir='rtl'] {
 
             .icon {
               @media (max-width: $breakpoint-slim) {
-                left: 8px;
+                left: 9px;
                 top: 10px !important;
               }
             }
@@ -209,7 +213,7 @@ html[dir='rtl'] {
       right: 11%;
 
       @media (max-width: $breakpoint-slim) {
-        right: 12%;
+        right: 23%;
       }
     }
 
