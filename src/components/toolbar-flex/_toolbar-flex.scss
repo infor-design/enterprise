@@ -342,11 +342,13 @@
   &.search {
     padding: 0 10px;
 
-    &.flex-grow-2 {
-      flex-grow: 2;
+    @media (min-width: $breakpoint-phone-to-tablet) {
+      &.flex-grow-2 {
+        flex-grow: 2;
 
-      .toolbar-searchfield-wrapper {
-        width: 100%;
+        .toolbar-searchfield-wrapper {
+          width: 100%;
+        }
       }
     }
 
@@ -354,8 +356,10 @@
       display: flex;
       flex-grow: 0;
 
-      &.flex-grow-1 {
-        flex-grow: 1;
+      @media (min-width: $breakpoint-phone-to-tablet) {
+        &.flex-grow-1 {
+          flex-grow: 1;
+        }
       }
 
       .btn {

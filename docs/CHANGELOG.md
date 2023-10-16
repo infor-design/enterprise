@@ -11,6 +11,7 @@
 - `[Datagrid]` Fixed the position of empty message without icon in the datagrid. ([#7854](https://github.com/infor-design/enterprise/issues/7854))
 - `[Module Nav]` Fixed a bug where the settings was behind the main module nav element. ([#8063](https://github.com/infor-design/enterprise/issues/8063))
 - `[Module Nav]` Fixed a bug where the accordion in the page container inherited module nav accordion styles. ([#8040](https://github.com/infor-design/enterprise/issues/7884))
+- `[Searchfield]` Adjusted width on mobile. ([#6831](https://github.com/infor-design/enterprise/issues/6831))
 - `[ProcessIndicator]` Adjusted icon sizing to remove gaps between separators. ([#7982](https://github.com/infor-design/enterprise/issues/7982))
 - `[Searchfield]` Adjusted icon colors in classic. ([#7947](https://github.com/infor-design/enterprise/issues/7947))
 - `[Spinbox]` Adjusted spinbox wrapper sizing to stop increment button from overflowing in classic. ([#7988](https://github.com/infor-design/enterprise/issues/7988))
