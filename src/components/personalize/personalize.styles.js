@@ -132,7 +132,7 @@ html[class*="new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-se
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
-html.theme-new-dark .is-personalizable:not(.header) .btn-secondary.btn-menu:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled), 
+html.theme-new-dark .is-personalizable:not(.header) .btn-secondary.btn-menu:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary.btn-menu.is-open:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) {
   color: ${colors.lightest} !important;
   border-color: ${colors.lightest} !important;
@@ -946,6 +946,8 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 .is-personalizable.tab-container.vertical,
 .is-personalizable.tab-container.vertical > .tab-list-container {
   background-color: ${colors.tabVerticalColor} !important;
+  min-width: 249px;
+  width: 249px;
 }
 
 .is-personalizable.tab-container.vertical {
@@ -1080,7 +1082,7 @@ html[class*="theme-new-"] .is-personalizable .personalize-actionable:hover:not([
   width: 34px;
 }
 
-html[class*="theme-new-"] .is-personalizable .btn-icon.personalize-actionable:hover {
+html[class*="theme-new-"] .is-personalizable .btn-icon.personalize-actionable:hover:not([disabled]) {
   background-color: ${colors.btnBgHoverColor} !important;
 }
 

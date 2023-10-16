@@ -1,10 +1,6 @@
 ---
 title: Trackdirty
 description: The dirty tracker component tracks changes on fields and marks them with a visual indicator.
-demo:
-  embedded:
-  - name: Main Example
-    slug: example-index
 ---
 
 ## Code Example
