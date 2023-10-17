@@ -2699,7 +2699,7 @@ $datagrid-small-row-height: 25px;
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-text-size-adjust: none; //Prevent huge text on IOS
-    white-space: nowrap;
+    white-space: pre-wrap;
 
     &:focus,
     &.is-focused {
@@ -3411,6 +3411,10 @@ $datagrid-small-row-height: 25px;
         display: none;
       }
     }
+  }
+
+  &.trim-space td {
+    white-space: nowrap;
   }
 
   // Nested Grids

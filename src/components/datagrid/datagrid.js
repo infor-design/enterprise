@@ -494,6 +494,10 @@ Datagrid.prototype = {
       self.checkEmptyMessage();
     }
 
+    if (this.settings.trimSpaces) {
+      this.element.addClass('trim-space');
+    }
+
     self.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
     $(self.buttonSelector, self.table).button();
 
