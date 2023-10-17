@@ -117,6 +117,10 @@
     width: 100%;
     z-index: 3011;
 
+    @media only screen and (max-device-width: $breakpoint-phone) {
+      width: 324px;
+    }
+
     .content {
       height: 312px;
       padding: 0 !important;
@@ -958,16 +962,6 @@
 
     &.default {
       background-color: $calendar-disabled-bg-color;
-    }
-  }
-}
-
-.ios,
-.android {
-  .monthview-monthyear-pane {
-    .picklist-section.is-year {
-      width: calc(100% - 175px);
-      margin-left: 8px;
     }
   }
 }
