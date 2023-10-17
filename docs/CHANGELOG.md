@@ -4,6 +4,8 @@
 
 ## v4.89.0 Features
 
+- `[Datagrid]` Added ability for expandable and summary rows to be updated after cell update. ([#8058](https://github.com/infor-design/enterprise/issues/8058))
+
 ## v4.89.0 Fixes
 
 - `[Accordion]` Adjusted rules of accordion top border to be consistent whether open or closed. ([#7978](https://github.com/infor-design/enterprise/issues/7978))
