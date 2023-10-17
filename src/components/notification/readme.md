@@ -1,6 +1,6 @@
 ---
 title: Notification
-description: The notification banner is a non-dismissible banner that sits at the top of the page. It has alert colors, an optional link, and a dismiss button.
+description: The notification banner is a dismissible alert that sits at the top of the page. It has alert colors, an optional link, and a dismiss button.
 demo:
   embedded:
   - name: Showing a notification
