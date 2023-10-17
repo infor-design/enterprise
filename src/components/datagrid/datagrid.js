@@ -494,8 +494,8 @@ Datagrid.prototype = {
       self.checkEmptyMessage();
     }
 
-    if (this.settings.trimSpaces) {
-      this.element.addClass('trim-space');
+    if (this.settings.showSpace) {
+      this.element.addClass('show-space');
     }
 
     self.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
