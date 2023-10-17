@@ -115,6 +115,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.disableRowDeactivation=false] if a row is activated the user will not be able to deactivate it by clicking on the activated row
  * @param {boolean}  [settings.disableRowDeselection=false] if a row is selected the user will not be able to deselect it by clicking on the selected row again
  * @param {boolean}  [settings.sizeColumnsEqually=false] If true make all the columns equal width
+ * @param {boolean}  [settings.showSpace=false] If true all text space will be shown, if false, extra space will be trimmed
  * @param {boolean}  [settings.expandableRow=false] If true we append an expandable row area without the rowTemplate feature being needed.
  * @param {boolean}  [settings.exportConvertNegative=false] If set to true export data with trailing negative signs moved in front.
  * @param {array}    [settings.columnGroups=null] An array of columns to use for grouped column headers.
