@@ -98,13 +98,13 @@ describe('Datagrid Filter API', () => {
     filter = [{ columnId: 'price', operator: 'greater-than', value: 121 }];
     datagridObj.applyFilter(filter);
 
-    expect(document.body.querySelectorAll('tbody tr').length).toEqual(5);
+    expect(document.body.querySelectorAll('tbody tr').length).toEqual(6);
 
     // Date Type
     filter = [{ columnId: 'orderDate', operator: 'greater-than', value: '07/09/2014', format: 'MM/dd/yyyy' }];
     datagridObj.applyFilter(filter);
 
-    expect(document.body.querySelectorAll('tbody tr').length).toEqual(7);
+    expect(document.body.querySelectorAll('tbody tr').length).toEqual(8);
 
     // Checkbox Type
     filter = [{ columnId: 'inStock', operator: 'selected' }];
