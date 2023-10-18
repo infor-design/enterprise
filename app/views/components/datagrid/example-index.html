@@ -13,8 +13,8 @@
       $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
 
         // Define Columns for the Grid.
-        columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', formatter: Soho.Formatters.Text });
-        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, click: function(e) { console.log('Click Fired') } });
+        columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', formatter: Soho.Formatters.Text, whiteSpace: 'pre-wrap' });
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, click: function(e) { console.log('Click Fired') }, whiteSpace: 'pre-wrap' });
         columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
         columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden'});
         columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
@@ -27,7 +27,6 @@
           columns: columns,
           dataset: res,
           saveColumns: false,
-          showSpace: true,
           attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
           toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true}
         });

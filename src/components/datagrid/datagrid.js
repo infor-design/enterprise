@@ -115,7 +115,6 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.disableRowDeactivation=false] if a row is activated the user will not be able to deactivate it by clicking on the activated row
  * @param {boolean}  [settings.disableRowDeselection=false] if a row is selected the user will not be able to deselect it by clicking on the selected row again
  * @param {boolean}  [settings.sizeColumnsEqually=false] If true make all the columns equal width
- * @param {boolean}  [settings.showSpace=false] If true all text space will be shown, if false, extra space will be trimmed
  * @param {boolean}  [settings.expandableRow=false] If true we append an expandable row area without the rowTemplate feature being needed.
  * @param {boolean}  [settings.exportConvertNegative=false] If set to true export data with trailing negative signs moved in front.
  * @param {array}    [settings.columnGroups=null] An array of columns to use for grouped column headers.
@@ -493,10 +492,6 @@ Datagrid.prototype = {
     if (this.settings.emptyMessage) {
       self.setEmptyMessage(this.settings.emptyMessage);
       self.checkEmptyMessage();
-    }
-
-    if (this.settings.showSpace) {
-      this.element.addClass('show-space');
     }
 
     self.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
@@ -5033,7 +5028,8 @@ Datagrid.prototype = {
         }${colspan ? ` colspan="${colspan}"` : ''
         }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
         }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
-        }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper">`;
+        }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper"
+        ${col.whiteSpace ? `style="white-space: ${col.whiteSpace}"` : ''}>`;
 
       if (col.contentVisible) {
         const canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);
