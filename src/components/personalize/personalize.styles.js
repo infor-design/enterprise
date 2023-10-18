@@ -500,7 +500,6 @@ html.theme-classic-dark .header.is-personalizable .buttonset .searchfield-wrappe
 
 .header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button {
   background-color: transparent;
-  border-color: ${colors.borderActiveSearchHeader};
 }
 
 .header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button:focus:not(.hide-focus) {
@@ -636,10 +635,6 @@ html.theme-classic-dark .is-personalizable .count-container .instance-count .cou
 
 .header .toolbar-searchfield-wrapper.active.has-focus .searchfield {
   border-color: ${colors.borderActiveSearchHeader};
-}
-
-.header .toolbar-searchfield-wrapper.active.has-focus {
-  box-shadow: ${colors.shadowActiveSearchHeader};
 }
 
 html[class*="-dark"] .header .toolbar-searchfield-wrapper.active.has-focus .searchfield {
