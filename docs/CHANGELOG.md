@@ -4,6 +4,8 @@
 
 ## v4.89.0 Features
 
+- `[Datagrid]` Added ability for expandable and summary rows to be updated after cell update. ([#8058](https://github.com/infor-design/enterprise/issues/8058))
+
 ## v4.89.0 Fixes
 
 - `[Accordion]` Adjusted rules of accordion top border to be consistent whether open or closed. ([#7978](https://github.com/infor-design/enterprise/issues/7978))
@@ -11,6 +13,7 @@
 - `[Datagrid]` Fixed the position of empty message without icon in the datagrid. ([#7854](https://github.com/infor-design/enterprise/issues/7854))
 - `[Module Nav]` Fixed a bug where the settings was behind the main module nav element. ([#8063](https://github.com/infor-design/enterprise/issues/8063))
 - `[Module Nav]` Fixed a bug where the accordion in the page container inherited module nav accordion styles. ([#8040](https://github.com/infor-design/enterprise/issues/7884))
+- `[Popupmenu]` Fixed shared menu not closing and opening correctly. ([NG#1552](https://github.com/infor-design/enterprise-ng/issues/1552))
 - `[Searchfield]` Adjusted width on mobile. ([#6831](https://github.com/infor-design/enterprise/issues/6831))
 - `[ProcessIndicator]` Adjusted icon sizing to remove gaps between separators. ([#7982](https://github.com/infor-design/enterprise/issues/7982))
 - `[Searchfield]` Adjusted icon colors in classic. ([#7947](https://github.com/infor-design/enterprise/issues/7947))
