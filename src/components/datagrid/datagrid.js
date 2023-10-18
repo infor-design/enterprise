@@ -7776,6 +7776,7 @@ Datagrid.prototype = {
     let toolbar = null;
     let title = '';
     let more = null;
+    const useFlexToolbar = this.settings.useFlexToolbar;
     const self = this;
 
     if (!this.settings.toolbar) {
@@ -7787,11 +7788,11 @@ Datagrid.prototype = {
       toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)');
       this.refreshSelectedRowHeight();
     } else {
-      toolbar = $('<div class="toolbar datagrid-toolbar" role="toolbar"></div>');
+      toolbar = $(`<div class="${useFlexToolbar ? 'flex-toolbar' : 'toolbar'} datagrid-toolbar" role="toolbar"></div>`);
       this.removeToolbarOnDestroy = true;
 
       if (this.settings.toolbar.title) {
-        title = $(`<div class="title">${this.settings.toolbar.title}  </div>`);
+        title = $(`<div class="${useFlexToolbar ? 'toolbar-section ' : ''}title">${this.settings.toolbar.title}  </div>`);
       }
 
       if (!title) {
@@ -7804,19 +7805,23 @@ Datagrid.prototype = {
         title.append('<span class="datagrid-result-count"></span>');
       }
 
-      const buttonSet = $('<div class="buttonset"></div>').appendTo(toolbar);
-
+      const buttonSet = $(`<div class="${useFlexToolbar ? 'toolbar-section ' : ''}buttonset"></div>`).appendTo(toolbar);
+      const searchSet = $(`<div class="${useFlexToolbar ? 'toolbar-section ' : ''}search"></div>`).appendTo(toolbar);
       if (this.settings.toolbar.keywordFilter) {
         const labelMarkup = $(`<label class="audible" for="gridfilter">${Locale.translate('Keyword')}</label>`);
         const searchfieldMarkup = $(`<input class="searchfield" name="searchfield" placeholder="${Locale.translate('Keyword')}" id="gridfilter">`);
-
-        buttonSet.append(labelMarkup);
 
         if (!this.settings.toolbar.collapsibleFilter) {
           searchfieldMarkup.attr('data-options', '{ "collapsible": false }');
         }
 
-        buttonSet.append(searchfieldMarkup);
+        if (!this.settings.useFlexToolbar) {
+          buttonSet.append(labelMarkup);
+          buttonSet.append(searchfieldMarkup);
+        } else {
+          searchSet.append(labelMarkup);
+          searchSet.append(searchfieldMarkup);
+        }
       }
 
       if (this.settings.toolbar.dateFilter) {
@@ -7824,7 +7829,7 @@ Datagrid.prototype = {
       }
 
       if (this.settings.toolbar.actions) {
-        more = $('<div class="more"></div>').insertAfter(buttonSet);
+        more = $(`<div class="${useFlexToolbar ? 'toolbar-section ' : ''}more"></div>`);
         more.append(`<button class="btn-actions" title="More" type="button">${$.createIcon({ icon: 'more' })}<span class="audible">Grid Features</span></button>`);
         toolbar.addClass('has-more-button');
       }
@@ -7896,6 +7901,13 @@ Datagrid.prototype = {
         more.append(menu);
       }
 
+      if (this.settings.useFlexToolbar) {
+        toolbar.append(searchSet);
+      }
+
+      toolbar.append(buttonSet);
+      toolbar.append(more);
+
       if (this.element.prev().is('.contextual-toolbar')) {
         this.element.prev().before(toolbar);
       } else {
@@ -7966,7 +7978,12 @@ Datagrid.prototype = {
 
     if (this.settings.initializeToolbar && toolbar.hasClass('flex-toolbar') && !toolbar.data('toolbarFlex')) {
       const opts = $.fn.parseOptions(toolbar);
-      toolbar.toolbarFlex(opts);
+      
+      if (this.settings.toolbar.collapsibleFilter) {
+        opts.collapsibleFilter = true;
+      }
+
+      toolbar.toolbarflex(opts);
     }
 
     if (this.settings.toolbar && this.settings.toolbar.keywordFilter) {
