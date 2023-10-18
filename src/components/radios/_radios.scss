@@ -151,7 +151,7 @@
 .inline .radio:disabled:checked ~ .label-text::before,
 .radio:disabled:checked + label::after {
   background-color: $radio-color-checked-disabled-background;
-  border: 2px solid $radio-color-checked-disabled-background;
+  border-color: $radio-color-checked-disabled-border;
 }
 
 .inline .radio:disabled ~ .label-text,
