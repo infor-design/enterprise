@@ -951,6 +951,8 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 .is-personalizable.tab-container.vertical,
 .is-personalizable.tab-container.vertical > .tab-list-container {
   background-color: ${colors.tabVerticalColor} !important;
+  min-width: 249px;
+  width: 249px;
 }
 
 .is-personalizable.tab-container.vertical {

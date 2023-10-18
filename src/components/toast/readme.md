@@ -7,7 +7,7 @@ demo:
     slug: example-index
   pages:
   - name: Showing Toast in all Positions
-    slug: example-positions
+    slug: test-positions
 ---
 
 ## Behavior Guidelines

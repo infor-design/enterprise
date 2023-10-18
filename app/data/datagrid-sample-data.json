@@ -95,5 +95,19 @@
      "phone": "(888) 888-8888",
      "orderDate": "2018-08-08T06:00:00.000Z",
      "action": "On Hold"
-  }
+  },
+  {
+      "id": "7",
+      "productId": "SPC     2642206",
+      "sku": "#9000001-231",
+      "productName": "  Some    Space       Compressor",
+      "activity": "inspect and Repair",
+      "quantity": 41,
+      "price": 123.99,
+      "percent": 0.10,
+      "status": "OK",
+      "phone": "(888) 888-8888",
+      "orderDate": "2018-08-08T06:00:00.000Z",
+      "action": "On Hold"
+   }
 ]
