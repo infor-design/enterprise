@@ -16,6 +16,7 @@
 - `[Popupmenu]` Fixed shared menu not closing and opening correctly. ([NG#1552](https://github.com/infor-design/enterprise-ng/issues/1552))
 - `[Searchfield]` Adjusted width on mobile. ([#6831](https://github.com/infor-design/enterprise/issues/6831))
 - `[ProcessIndicator]` Adjusted icon sizing to remove gaps between separators. ([#7982](https://github.com/infor-design/enterprise/issues/7982))
+- `[Radios]` Adjusted styling of checked disabled radio button. ([#8082](https://github.com/infor-design/enterprise/issues/8082))
 - `[Spinbox]` Adjusted spinbox wrapper sizing to stop increment button from overflowing in classic. ([#7988](https://github.com/infor-design/enterprise/issues/7988))
 - `[Tabs]` Adjusted placement of icons in tab list spillover. ([#7970](https://github.com/infor-design/enterprise/issues/7970))
 - `[Weekview]` Added overnight event view when end time goes to next day. ([#7840](https://github.com/infor-design/enterprise/issues/7840))
