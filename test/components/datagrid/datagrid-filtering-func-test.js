@@ -92,19 +92,19 @@ describe('Datagrid Filter API', () => {
       { columnId: 'phone', operator: 'equals', value: '(888) 888-8888' }];
     datagridObj.applyFilter(filter);
 
-    expect(document.body.querySelectorAll('tbody tr').length).toEqual(3);
+    expect(document.body.querySelectorAll('tbody tr').length).toEqual(4);
 
     // Integer Type
     filter = [{ columnId: 'price', operator: 'greater-than', value: 121 }];
     datagridObj.applyFilter(filter);
 
-    expect(document.body.querySelectorAll('tbody tr').length).toEqual(5);
+    expect(document.body.querySelectorAll('tbody tr').length).toEqual(6);
 
     // Date Type
     filter = [{ columnId: 'orderDate', operator: 'greater-than', value: '07/09/2014', format: 'MM/dd/yyyy' }];
     datagridObj.applyFilter(filter);
 
-    expect(document.body.querySelectorAll('tbody tr').length).toEqual(7);
+    expect(document.body.querySelectorAll('tbody tr').length).toEqual(8);
 
     // Checkbox Type
     filter = [{ columnId: 'inStock', operator: 'selected' }];
@@ -147,7 +147,7 @@ describe('Datagrid Filter API', () => {
 
     datagridObj.clearFilter();
 
-    expect(document.body.querySelectorAll('tbody tr').length).toEqual(7);
+    expect(document.body.querySelectorAll('tbody tr').length).toEqual(8);
   });
 
   it.skip('should be able to set filter UI only', () => {
