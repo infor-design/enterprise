@@ -330,9 +330,11 @@ $toolbar-buttonset-height: 40px;
     // EPC: NOTE: Do NOT add different margins and heights to buttons inside of contextual toolbars.
     // Toolbar Overflow Calculation needs buttons to be "shorter" than the buttonset.
     [class^='btn'] {
+      border-radius: 8px;
       color: $contextual-toolbar-button-color;
       min-width: 0;
       padding: 0 10px;
+      margin-top: 4px;
 
       &.btn-icon {
         padding: 0 8px;
@@ -356,10 +358,10 @@ $toolbar-buttonset-height: 40px;
 
       &:hover {
         color: $contextual-toolbar-button-hover-color;
-        background-color: transparent;
+        background-color: rgba(0, 0, 0, .3) !important;
 
         .icon {
-          color: $contextual-toolbar-button-hover-color;
+          color: $contextual-toolbar-button-hover-color !important;
         }
       }
 
@@ -395,6 +397,11 @@ $toolbar-buttonset-height: 40px;
           border-color: transparent;
         }
       }
+    }
+
+    .btn-actions .icon {
+      position: relative;
+      left: -3px;
     }
   }
 
