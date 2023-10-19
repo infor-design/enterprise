@@ -323,6 +323,9 @@ Bar.prototype = {
       h -= (isBarStacked || isBarNormalized ? legendHeight - 20 : 0);
     }
 
+    const legendList = s.isStacked ? series : legendMap;
+    const marginOffset = (s.showLegend && legendList.length > 0) && (legendList[0].attributes && !legendList[0].data?.attributes) ? 0 : 15;
+
     self.svg = d3.select(this.element[0])
       .append('svg')
       .attr('width', w + (isAxisLabels.atLeastOne ? 20 : 0))
@@ -330,7 +333,7 @@ Bar.prototype = {
       .append('g')
       .attr('class', 'group')
       .attr('aria-label', `${s.dataset[0].name ? s.dataset[0].name : 'Name Group'}`)
-      .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : 15)})`);
+      .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : marginOffset)})`);
 
     // Adding title for accessibility
     if (self.settings.type === 'bar') {
