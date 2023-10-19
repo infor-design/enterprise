@@ -104,9 +104,16 @@
 // Popup Adjustments
 .monthview-popup.popover {
   max-width: inherit;
-  overflow: auto;
-  min-width: 300px;
-  min-height: 400px;
+  min-width: 314px;
+  min-height: 456px;
+
+  @media screen and (max-device-width: ($breakpoint-phone - 1)) {
+    min-width: 260px;
+  }
+
+  @media screen and (max-device-width: ($breakpoint-phone + 54)) {
+    overflow: auto;
+  }
 
   @media screen and (max-height: ($breakpoint-big-phone + 50)) {
     overflow-y: auto;
