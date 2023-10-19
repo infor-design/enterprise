@@ -7,9 +7,9 @@ demo:
     slug: example-index
   pages:
   - name: Paging on the Listview Component
-    slug: example-paging
+    slug: example-listview
   - name: Paging on the Datagrid Component
-    slug: example-paging
+    slug: example-datagrid
   - name: Paging on the Circle Pager Component
     slug: example-index
   - name: Standalone Pager (Just uses events and settings)
