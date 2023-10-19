@@ -5042,7 +5042,8 @@ Datagrid.prototype = {
         }${colspan ? ` colspan="${colspan}"` : ''
         }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
         }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
-        }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper">`;
+        }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper"
+        ${col.whiteSpace ? `style="white-space: ${col.whiteSpace}"` : ''}>`;
 
       if (col.contentVisible) {
         const canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);

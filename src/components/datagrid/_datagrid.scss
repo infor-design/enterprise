@@ -337,6 +337,11 @@ $datagrid-small-row-height: 25px;
     height: calc(100% - 40px);
   }
 
+
+  &.show-space td {
+    white-space: pre-wrap;
+  }
+
   // Hide last bottom border
   tr:last-child td {
     border-bottom: 0;
