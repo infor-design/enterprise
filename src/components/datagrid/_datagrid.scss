@@ -3379,7 +3379,7 @@ $datagrid-small-row-height: 25px;
 
         .datagrid-cell-wrapper {
           padding: 7px 20px;
-          white-space: normal;
+          white-space: pre-wrap;
         }
       }
     }
