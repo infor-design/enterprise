@@ -522,6 +522,7 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   render() {
+    const self = this;
     this.element.setAttribute('role', 'toolbar');
 
     if (Array.isArray(this.settings.attributes)) {
@@ -529,6 +530,23 @@ ToolbarFlex.prototype = {
     }
 
     this.items.forEach((item) => {
+      let sf = $(item.element);
+      if (sf.is('.toolbar-searchfield-wrapper, .searchfield-wrapper')) {
+        sf = sf.children('.searchfield');
+      }
+
+      if (!sf.data('searchfield') && sf.is('.searchfield')) {
+        const searchfieldOpts = $.extend({}, utils.parseSettings(sf[0]));
+
+        if (this.settings.collapsibleFilter) {
+          searchfieldOpts.collapsible = this.settings.collapsibleFilter;
+        }
+
+        sf.searchfield(searchfieldOpts);
+
+        utils.addAttributes(sf, self, self.settings.attributes, 'searchfield');
+      }
+
       item.render();
     });
   },

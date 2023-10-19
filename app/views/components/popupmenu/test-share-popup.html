@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <button id="popupmenu-trigger" class="btn-menu" data-init="false">
+        <span>Normal Menu</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
+          <use href="#icon-dropdown"></use>
+        </svg>
+      </button>
+      <button id="popupmenu-trigger-2" class="btn-menu" data-init="false">
+        <span>Normal Menu 2</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
+          <use href="#icon-dropdown"></use>
+        </svg>
+      </button>
+      <ul id="popup-menu" class="popupmenu" data-init="false">
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<script id="test-script">
+  const beforeOpen = (response, options) =>  {
+    response(`<li><a href="#" id="test1">Menu Option #1</a></li>
+        <li><a href="#" id="test2">Menu Option #2</a></li>
+        <li><a href="#" id="test3">Menu Option #3</a></li>`);
+  }
+
+  const beforeOpen2 = (response, options) =>  {
+    response(`<li><a href="#" id="test1">Menu Option #4</a></li>
+        <li><a href="#" id="test2">Menu Option #5</a></li>
+        <li><a href="#" id="test3">Menu Option #6</a></li>`);
+  }
+  $('#popupmenu-trigger').popupmenu({
+    beforeOpen: beforeOpen,
+    menu: 'popup-menu'
+  });
+  $('#popupmenu-trigger-2').popupmenu({
+    beforeOpen: beforeOpen2,
+    menu: 'popup-menu'
+  });
+</script>
