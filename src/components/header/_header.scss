@@ -737,6 +737,7 @@ $subheader-height: 60px;
             color: $header-searchfield-btn-font-color;
             height: 38px;
             padding-right: 20px;
+            border-right: none;
 
             @media (min-width: $breakpoint-phone-to-tablet) {
               padding-right: 10px;
