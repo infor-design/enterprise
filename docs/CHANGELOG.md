@@ -14,6 +14,7 @@
 - `[Datagrid]` Fixed the position of empty message without icon in the datagrid. ([#7854](https://github.com/infor-design/enterprise/issues/7854))
 - `[Datagrid]` Space between text in rows are not trimmed as default. ([#7849](https://github.com/infor-design/enterprise/issues/7849))
 - `[Datagrid]` Added option to use for flex toolbar. ([#7928](https://github.com/infor-design/enterprise/issues/7928))
+- `[Datagrid]` Whitespace should be shown on cell when expanded. ([#7848](https://github.com/infor-design/enterprise/issues/7848))
 - `[Module Nav]` Fixed a bug where the settings was behind the main module nav element. ([#8063](https://github.com/infor-design/enterprise/issues/8063))
 - `[Module Nav]` Fixed a bug where the accordion in the page container inherited module nav accordion styles. ([#8040](https://github.com/infor-design/enterprise/issues/7884))
 - `[Popupmenu]` Fixed shared menu not closing and opening correctly. ([NG#1552](https://github.com/infor-design/enterprise-ng/issues/1552))
