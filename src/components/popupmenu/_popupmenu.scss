@@ -603,6 +603,7 @@
   border-top: thin solid $popover-separator-color;
   height: 45px;
   margin-top: 10px;
+  margin-left: 1px;
 
   @media only screen and (max-device-width: $breakpoint-phone) {
     min-width: 324px;

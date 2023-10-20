@@ -10,7 +10,7 @@
   transform: scaleY(1);
   transition: all 0.01s ease-out; // force a repaint
   vertical-align: middle;
-  width: 100%;
+  width: inherit;
   height: fit-content;
 
   // Hide Days Option
@@ -118,7 +118,7 @@
     z-index: 3011;
 
     @media only screen and (max-device-width: $breakpoint-phone) {
-      width: 324px;
+      min-width: 324px;
     }
 
     .content {
