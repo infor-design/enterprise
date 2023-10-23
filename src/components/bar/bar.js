@@ -324,8 +324,8 @@ Bar.prototype = {
     }
 
     const legendList = s.isStacked ? series : legendMap;
-    const marginOffset = (s.showLegend && legendList.length > 0) 
-      && (legendList[0].attributes && !legendList[0].data?.attributes) ? 0 : 15;
+    const marginOffset = (s.showLegend && legendList.length > 0) && 
+      (legendList[0].attributes && !legendList[0].data?.attributes) ? 0 : 15;
 
     self.svg = d3.select(this.element[0])
       .append('svg')
