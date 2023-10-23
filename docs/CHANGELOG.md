@@ -9,6 +9,7 @@
 ## v4.89.0 Fixes
 
 - `[Accordion]` Adjusted rules of accordion top border to be consistent whether open or closed. ([#7978](https://github.com/infor-design/enterprise/issues/7978))
+- `[BarStacked]` Fixed the uneven legend spaces. ([#7874](https://github.com/infor-design/enterprise/issues/7874))
 - `[Button]` Adjusted rule for primary button styling when hovered in new version. ([#7977](https://github.com/infor-design/enterprise/issues/7977))
 - `[Button]` Adjusted rule for button styling on contextual action toolbars. ([#8084](https://github.com/infor-design/enterprise/issues/8084))
 - `[Cards]` Adjusted menu button positioning for no header. ([#8081](https://github.com/infor-design/enterprise/issues/8081))
