@@ -75,21 +75,6 @@
     }
   }
 
-  &.no-header {
-    .card-content {
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-
-      .btn-actions-wrapper {
-        min-width: 35px;
-        padding: 1px;
-        position: absolute;
-        right: 8px;
-        top: 8px;
-      }
-    }
-  }
-
   &:not(.show-buttons) button.btn-actions:not(.list-button) {
     opacity: 0;
   }
@@ -393,8 +378,6 @@
 html[dir='rtl'] {
   .card-header,
   .widget-header {
-    margin: 8px 16px 8px 2px;
-
     &:not(.expandable-card-header) {
       padding-left: 8px;
       padding-right: 16px;
@@ -403,9 +386,14 @@ html[dir='rtl'] {
 
     &:not(.has-toolbar) {
       > .btn-actions {
-        left: 13px;
+        left: 0;
         right: auto;
       }
+    }
+
+    &:not(.expandable-card-header) {
+      padding-left: 8px;
+      padding-right: 16px;
     }
 
     h2 ~ svg.icon.has-tooltip {

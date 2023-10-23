@@ -132,7 +132,7 @@ PopupMenu.prototype = {
    * @returns {boolean} whether or not the popupmenu is currently open
    */
   get isOpen() {
-    return DOM.hasClass(this.element[0], 'is-open');
+    return DOM.hasClass(this.element[0], 'is-open') || DOM.hasClass(this.menu[0], 'is-open');
   },
 
   /**
@@ -190,6 +190,7 @@ PopupMenu.prototype = {
     const parent = menu.parent();
     if (!parent.is('body')) {
       this.menuOrgContainment = { parent, index: parent.children().index(menu) };
+      this.menu.data('containment', this.menuOrgContainment);
     }
   },
 
@@ -973,6 +974,7 @@ PopupMenu.prototype = {
         self.holdingDownClick = true;
       }
 
+      self.close();
       doOpen(e);
     }
 
@@ -988,8 +990,7 @@ PopupMenu.prototype = {
       if (!leftClick) {
         this.menu.parent().on('contextmenu.popupmenu', disableBrowserContextMenu);
 
-        const disallowedOS = ['android', 'ios'];
-        if (disallowedOS.indexOf(env.os.name) === -1) {
+        if (!env.features.touch) {
           // Normal desktop operation
           this.element
             .on('contextmenu.popupmenu', (e) => {
@@ -1317,14 +1318,6 @@ PopupMenu.prototype = {
           }
         }
 
-        // Fix - not sure why, but firefox have to manualy trigger
-        if (self.isFirefox && isAutocomplete && !(/37|39|38|40/.test(key))) {
-          self.element.triggerHandler(e);
-          self.element[0].focus();
-          const val = self.element[0].value;
-          self.element[0].value = '';
-          self.element[0].value = val;
-        }
         return undefined;
       });
     }, 1);
@@ -1342,6 +1335,10 @@ PopupMenu.prototype = {
     let selectionResult = [anchor];
 
     if (!e && !anchor || !anchor.length) {
+      return false;
+    }
+
+    if (anchor.hasClass('no-results')) {
       return false;
     }
 
@@ -2583,10 +2580,13 @@ PopupMenu.prototype = {
       // Place the menu back where it came from while cleaning up.
       // Get an accurate target to place the menu back where it came from
       const searchfield = this.element.parent().children('.searchfield');
+      const menuContainment = this.menu.data('containment');
       if (searchfield.length) {
         this.menu.insertAfter(searchfield.first());
       } else if (this.menuOrgContainment) {
         this.insertAtContainment(this.menu);
+      } else if (menuContainment) {
+        this.insertAtContainment(this.menu, menuContainment);
       } else {
         this.menu.insertAfter(this.element);
       }
@@ -2622,7 +2622,6 @@ PopupMenu.prototype = {
       .removeAttr('aria-controls')
       .removeAttr('aria-haspopup')
       .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keydown.popupmenu keypress.popupmenu contextmenu.popupmenu updated.popupmenu');
-
     return this;
   },
 

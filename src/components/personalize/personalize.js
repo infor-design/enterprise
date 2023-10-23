@@ -318,6 +318,9 @@ Personalize.prototype = {
 
     colors.tabCloseInactiveColor = 'rgba(255, 255, 255, 0.85)';
     colors.tabCloseHoverColor = themeColors.palette.white.value;
+    colors.btnMenu = colors.base;
+
+    colors.btnBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.base}, 0 0 4px 3px rgba(54, 138, 192, 0.1)`;
 
     const isAlabaster = colors.header === '#ffffff';
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
@@ -350,7 +353,7 @@ Personalize.prototype = {
       colors.focusBoxShadow = '0 0 4px 3px rgba(54, 138, 192, 0.1)';
       colors.btnFocusBorderColor = themeColors.palette.azure[60].value;
       colors.borderActiveSearchMobile = themeColors.palette.azure[60].value;
-      colors.btnDisabledColor = 'rgba(0, 0, 0, 0.4) !important';
+      colors.btnDisabledColor = 'rgba(0, 0, 0, 0.3) !important';
       colors.btnPrimaryColor = themeColors.palette.azure[60].value;
       colors.btnPrimaryColorHover = '#0066D4';
       colors.btnSecondaryColor = themeColors.palette.azure[60].value;
@@ -364,6 +367,8 @@ Personalize.prototype = {
       colors.headerTabsSelectedTextColor = themeColors.palette.azure[60].value;
       colors.headerTextColor = themeColors.palette.slate[100].value;
       colors.headerIconColor = themeColors.palette.slate[80].value;
+      colors.btnMenu = themeColors.palette.azure[60].value;
+      colors.btnBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.btnMenu}, 0 0 4px 3px rgba(54, 138, 192, 0.1)`;
 
       colors.tabFocusIndicator = themeColors.palette.azure[60].value;
       colors.tabFocusIndicatorVert = themeColors.palette.azure[60].value;

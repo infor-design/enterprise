@@ -296,8 +296,9 @@ calendarShared.cleanEventData = function cleanEventData(
   const formatDate = d => Locale.formatDate(d, formatDateOptions);
   const parseDate = (d, o) => Locale.parseDate(d, utils.extend(true, { locale: locale.name }, o));
   const isAllDay = event.isAllDay === 'on' || event.isAllDay === 'true' || event.isAllDay;
-  let startDate = currentDate;
-  let endDate = currentDate;
+  const date = new Date(currentDate);
+  let startDate = date;
+  let endDate = date;
 
   if (event.startsLocale && event.endsLocale) {
     startDate = new Date(parseDate(event.startsLocale));
@@ -313,10 +314,10 @@ calendarShared.cleanEventData = function cleanEventData(
   }
 
   if (!Locale.isValidDate(startDate)) {
-    startDate = currentDate;
+    startDate = date;
   }
   if (!Locale.isValidDate(endDate)) {
-    endDate = currentDate;
+    endDate = date;
   }
 
   if (isAllDay) {

@@ -155,6 +155,13 @@ $datagrid-small-row-height: 25px;
         overflow-x: auto;
       }
     }
+
+    .empty-message {
+      div:only-child:is(.empty-title) {
+        padding: unset;
+        margin-top: 20px;
+      }
+    }
   }
 
   &.has-horizontal-scroll {
@@ -328,6 +335,11 @@ $datagrid-small-row-height: 25px;
   // Heights for scrollbars
   &.paginated {
     height: calc(100% - 40px);
+  }
+
+
+  &.show-space td {
+    white-space: pre-wrap;
   }
 
   // Hide last bottom border
@@ -3366,8 +3378,8 @@ $datagrid-small-row-height: 25px;
         white-space: normal;
 
         .datagrid-cell-wrapper {
-          padding: 7px 20px;
-          white-space: normal;
+          padding: 16px 17px;
+          white-space: pre-wrap;
         }
       }
     }
@@ -4923,6 +4935,59 @@ html[dir='rtl'] {
     border-left: 1px solid $datagrid-cell-border-color;
   }
 
+  &[class*='theme-classic-'] .datagrid {
+    .datagrid-trigger-cell.has-editor {
+      &:not(.is-readonly) {
+        .datagrid-cell-wrapper {
+          .trigger + .icon.icon-calendar + .icon:not(.datagrid-alert-icon).icon-error {
+            left: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .datagrid-trigger-cell.has-editor {
+    &:not(.is-readonly) {
+      &:hover,
+      &:focus {
+        svg.icon + .icon-error,
+        svg.icon + .icon-info,
+        svg.icon + .icon-alert {
+          &:not(.datagrid-alert-icon) {
+            margin-left: 30px !important;
+          }
+        }
+      }
+    }
+  }
+
+  .datagrid {
+    .is-editing .datepicker {
+      + .trigger svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  .datagrid.normal-rowheight {
+    .is-editing .datepicker {
+      + .trigger {
+        left: -10px;
+      }
+    }
+  }
+
+  .datagrid.medium-rowheight {
+    .is-editing .datepicker {
+      ~ .trigger {
+        left: 0;
+        margin-right: 0;
+      }
+    }
+  }
+
   .datagrid {
     th:first-child {
       border-left: 1px solid $datagrid-header-border-color;
@@ -4953,21 +5018,17 @@ html[dir='rtl'] {
             margin-left: 5px;
           }
         }
-
-        &:hover,
-        &:focus {
-          .icon-error {
-            margin-left: 28px !important;
-          }
-        }
       }
 
       &.is-editing {
         .datepicker {
-          padding: 0 16px 0 0;
+          padding: 0;
 
           + .trigger {
-            margin-right: -3px;
+            margin-left: 0;
+            margin-right: 3px;
+            position: relative;
+            left: -10px;
 
             .icon {
               margin-right: 3px;
