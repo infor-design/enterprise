@@ -890,6 +890,7 @@ $subheader-input-text-color-focus: $ids-color-palette-slate-20;
 $subheader-searchfield-category-button-font-color: $subheader-input-text-color-focus;
 
 // Header
+$header-text-default-color: $ids-color-palette-white;
 $header-text-color: $ids-color-palette-white;
 $header-toolbar-searchfield-icon-color: rgba($ids-color-palette-white, 1);
 $header-button-hover-color: rgba($ids-color-palette-white, 1);
@@ -901,6 +902,7 @@ $header-primary-btn-background-hover-color: $ids-color-palette-slate-80;
 $header-flex-toolbar-input-searchfield-color: $ids-color-palette-white;
 $header-flex-toolbar-close-icon-color: $header-flex-toolbar-input-searchfield-color;
 
+$hyperlinks-personalize-text-color: $header-text-default-color;
 $header-button-hover-color-new: $ids-color-palette-white;
 $header-hero-widget-bg-color: $ids-color-palette-slate-90;
 $header-button-disabled-color: rgba(255, 255, 255, 0.4);
