@@ -21,7 +21,7 @@
     color: $hyperlinks-personalize-actionable-text-color;
 
     &:not([disabled]):not(.personalize-actionable-disabled):hover {
-      color: $ids-color-palette-white;
+      color: $hyperlink-hover-color;
       opacity: 1;
     }
   }
