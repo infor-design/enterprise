@@ -352,7 +352,7 @@ html[dir='rtl'] {
   .inline .radio ~ .label-text::after,
   .radio + label::after {
     left: auto;
-    right: 4px;
+    right: 0;
   }
 
   // Adjust the label padding for RTL in short mode
