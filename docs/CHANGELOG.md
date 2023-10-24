@@ -26,6 +26,7 @@
 - `[Spinbox]` Adjusted spinbox wrapper sizing to stop increment button from overflowing in classic. ([#7988](https://github.com/infor-design/enterprise/issues/7988))
 - `[Tabs]` Adjusted placement of icons in tab list spillover. ([#7970](https://github.com/infor-design/enterprise/issues/7970))
 - `[Tabs]` Fixed the focus state of radio button not fully shown in tabs. ([#7955](https://github.com/infor-design/enterprise/issues/7955))
+- `[Targeted-Achievement]` Fixed waring color not displaying properly. ([#7891](https://github.com/infor-design/enterprise/issues/7891))
 - `[Validation]` Fixed the position of exclamation points of validation in non english localization. ([#5119](https://github.com/infor-design/enterprise/issues/5119))
 - `[Weekview]` Added overnight event view when end time goes to next day. ([#7840](https://github.com/infor-design/enterprise/issues/7840))
 - `[Weekview]` Fixed an issue with the week change when clicking the `Today` button. ([#7792](https://github.com/infor-design/enterprise/issues/7792))
