@@ -23,6 +23,7 @@
 - `[ProcessIndicator]` Adjusted icon sizing to remove gaps between separators. ([#7982](https://github.com/infor-design/enterprise/issues/7982))
 - `[Radios]` Adjusted styling of checked disabled radio button. ([#8082](https://github.com/infor-design/enterprise/issues/8082))
 - `[Searchfield]` Adjusted width on mobile. ([#6831](https://github.com/infor-design/enterprise/issues/6831))
+- `[Slider]` Added handling of slider touch events. ([#7957](https://github.com/infor-design/enterprise/issues/7957))
 - `[Spinbox]` Adjusted spinbox wrapper sizing to stop increment button from overflowing in classic. ([#7988](https://github.com/infor-design/enterprise/issues/7988))
 - `[Tabs]` Adjusted placement of icons in tab list spillover. ([#7970](https://github.com/infor-design/enterprise/issues/7970))
 - `[Tabs]` Fixed the focus state of radio button not fully shown in tabs. ([#7955](https://github.com/infor-design/enterprise/issues/7955))
