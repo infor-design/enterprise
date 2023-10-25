@@ -25,6 +25,7 @@ input[type='range'] {
 .slider-wrapper {
   background-color: $slider-bg-color;
   position: relative;
+  touch-action: none;
 
   @include css3(touch-callout, none);
   @include css3(user-select, none);
