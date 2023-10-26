@@ -9,6 +9,7 @@
 ## v4.89.0 Fixes
 
 - `[Accordion]` Adjusted rules of accordion top border to be consistent whether open or closed. ([#7978](https://github.com/infor-design/enterprise/issues/7978))
+- `[BarStacked]` Fixed the uneven legend spaces. ([#7874](https://github.com/infor-design/enterprise/issues/7874))
 - `[Button]` Adjusted rule for primary button styling when hovered in new version. ([#7977](https://github.com/infor-design/enterprise/issues/7977))
 - `[Button]` Adjusted rule for button styling on contextual action toolbars. ([#8084](https://github.com/infor-design/enterprise/issues/8084))
 - `[Cards]` Adjusted menu button positioning for no header. ([#8081](https://github.com/infor-design/enterprise/issues/8081))
@@ -18,6 +19,7 @@
 - `[Datagrid]` Added option to use for flex toolbar. ([#7928](https://github.com/infor-design/enterprise/issues/7928))
 - `[Datagrid]` Whitespace should be shown on cell when expanded. ([#7848](https://github.com/infor-design/enterprise/issues/7848))
 - `[Datagrid]` Additional check for select row when datagrid has grouping and filter. ([NG#1549](https://github.com/infor-design/enterprise-ng/issues/1549))
+- `[Datepicker]` Fixed datepicker prematurely closing after selecting a date when having a time format. ([#7916](https://github.com/infor-design/enterprise/issues/7916))
 - `[General]` Adjusted the reset for spans. ([#1513](https://github.com/infor-design/enterprise/issues/7854))
 - `[Module Nav]` Fixed a bug where the settings was behind the main module nav element. ([#8063](https://github.com/infor-design/enterprise/issues/8063))
 - `[Module Nav]` Fixed a bug where the accordion in the page container inherited module nav accordion styles. ([#8040](https://github.com/infor-design/enterprise/issues/7884))
@@ -28,6 +30,7 @@
 - `[Spinbox]` Adjusted spinbox wrapper sizing to stop increment button from overflowing in classic. ([#7988](https://github.com/infor-design/enterprise/issues/7988))
 - `[Tabs]` Adjusted placement of icons in tab list spillover. ([#7970](https://github.com/infor-design/enterprise/issues/7970))
 - `[Tabs]` Fixed the focus state of radio button not fully shown in tabs. ([#7955](https://github.com/infor-design/enterprise/issues/7955))
+- `[Targeted-Achievement]` Fixed waring color not displaying properly. ([#7891](https://github.com/infor-design/enterprise/issues/7891))
 - `[Validation]` Fixed the position of exclamation points of validation in non english localization. ([#5119](https://github.com/infor-design/enterprise/issues/5119))
 - `[Weekview]` Added overnight event view when end time goes to next day. ([#7840](https://github.com/infor-design/enterprise/issues/7840))
 - `[Weekview]` Fixed an issue with the week change when clicking the `Today` button. ([#7792](https://github.com/infor-design/enterprise/issues/7792))

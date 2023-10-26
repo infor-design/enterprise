@@ -3,6 +3,8 @@
     <div id="example-1" class="chart-container"></div>
     <div id="example-2" class="chart-container"></div>
     <div id="example-3" class="chart-container"></div>
+    <div id="example-4" class="chart-container"></div>
+    <div id="example-5" class="chart-container"></div>
   </div>
 </div>
 
@@ -40,6 +42,26 @@ $('body').on('initialized', function () {
   }];
 
   var api3 = $('#example-3').chart({dataset: dataset3, type: 'targeted-achievement'}).data('chart');
+
+  var dataset4 = [{
+    data: [{
+      name: {text: 'Label D'},
+      completed: {text: '75K of 250K', value: 75000, format: '.2s', color: 'alert'},
+      total: {value: 250000, difference: true, text: ' Remaining', format: '.2s'},
+    }]
+  }];
+
+  var api4 = $('#example-4').chart({dataset: dataset4, type: 'targeted-achievement'}).data('chart');
+
+  var dataset5 = [{
+    data: [{
+      name: {text: 'Label E'},
+      completed: {text: '120K of 250K', value: 120000, format: '.2s', color: 'warning'},
+      total: {value: 250000, difference: true, text: ' Remaining', format: '.2s'},
+    }]
+  }];
+
+  var api5 = $('#example-5').chart({dataset: dataset5, type: 'targeted-achievement'}).data('chart');
 
   // Example updating a value
   $('#menu-button').on('selected', function (e, args) {
