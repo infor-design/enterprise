@@ -12293,7 +12293,7 @@ Datagrid.prototype = {
       // detail.animateClosed();
       item.expanded = false;
       self.element.triggerHandler('collapserow', [{ grid: self, row: dataRowIndex, detail, item }]);
-    } else {
+    } else if (item) {
       expandRow.addClass('is-expanded');
       expandButton.addClass('is-expanded')
         .find('.plus-minus').addClass('active');
