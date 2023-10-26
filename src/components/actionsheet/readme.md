@@ -8,8 +8,8 @@ demo:
   pages:
   - name: Responsive Behavior Example
     slug: example-breakpoints
-  - name: No Items Example
-    slug: example-no-items
+  - name: No Icons Example
+    slug: example-no-icons
   - name: Callbacks Example
     slug: example-callbacks
 ---

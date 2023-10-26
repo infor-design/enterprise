@@ -132,7 +132,7 @@ PopupMenu.prototype = {
    * @returns {boolean} whether or not the popupmenu is currently open
    */
   get isOpen() {
-    return DOM.hasClass(this.element[0], 'is-open');
+    return DOM.hasClass(this.element[0], 'is-open') || DOM.hasClass(this.menu[0], 'is-open');
   },
 
   /**
@@ -974,6 +974,7 @@ PopupMenu.prototype = {
         self.holdingDownClick = true;
       }
 
+      self.close();
       doOpen(e);
     }
 
@@ -989,8 +990,7 @@ PopupMenu.prototype = {
       if (!leftClick) {
         this.menu.parent().on('contextmenu.popupmenu', disableBrowserContextMenu);
 
-        const disallowedOS = ['android', 'ios'];
-        if (disallowedOS.indexOf(env.os.name) === -1) {
+        if (!env.features.touch) {
           // Normal desktop operation
           this.element
             .on('contextmenu.popupmenu', (e) => {
@@ -2622,7 +2622,6 @@ PopupMenu.prototype = {
       .removeAttr('aria-controls')
       .removeAttr('aria-haspopup')
       .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keydown.popupmenu keypress.popupmenu contextmenu.popupmenu updated.popupmenu');
-
     return this;
   },
 

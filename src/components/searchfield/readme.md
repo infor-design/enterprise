@@ -16,10 +16,6 @@ demo:
     slug: example-different-template
   - name: Searchfield + Go Button
     slug: example-go-button
-  - name: Header Search Field (Compact)
-    slug: example-searchfield-expanded
-  - name: Header Search Field (Large)
-    slug: example-searchfield-large
   - name: No "All Results For `x`" Link
     slug: example-no-all-results-link
 ---

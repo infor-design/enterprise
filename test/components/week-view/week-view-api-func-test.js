@@ -5,6 +5,7 @@ import { WeekView } from '../../../src/components/week-view/week-view';
 import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 import { stringUtils } from '../../../src/utils/string';
+import { dateUtils } from '../../../src/utils/date';
 
 Soho.Locale = Locale;
 
@@ -161,11 +162,12 @@ describe('WeekView API', () => {
   it('should move to next month and back to today', () => {
     document.body.querySelector('.btn-icon.next').click();
 
-    weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
+    const start = new Date(2019, 11, 1);
+    weekViewAPI.showWeek(start, new Date(2019, 11, 7));
 
     document.body.querySelector('.hyperlink.today').click();
 
-    const testDate = new Date();
+    const testDate = dateUtils.firstDayOfWeek(new Date(), start.getDay());
     testDate.setHours(0, 0, 0, 0);
 
     expect(weekViewAPI.settings.startDate.getTime()).toEqual(testDate.getTime());

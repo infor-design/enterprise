@@ -7,7 +7,7 @@ demo:
     slug: example-index
   pages:
   - name: Anniversary Format (Month, Year)
-    slug: example-anniversay-format
+    slug: example-anniversary-format
   - name: Specify a custom or ISO Format
     slug: example-custom-format
   - name: Disabling Calendar Days
@@ -16,8 +16,6 @@ demo:
     slug: example-legend
   - name: Selection only Month and Year
     slug: example-month-year-format
-  - name: Showing a Picker to Choose Month and Year
-    slug: example-month-year-picker
   - name: Date Range Selection
     slug: example-range
   - name: Change Field Widths

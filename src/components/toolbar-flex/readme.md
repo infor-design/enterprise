@@ -1,6 +1,6 @@
 ---
 title: Flex Toolbar
-description: Used for building highly-configurable Toolbars for sections of your application.  The Flex Toolbar displays a row of buttons, searchfields, and hyperlinks in different alignable sections, along with contextual information about a workflow or process.  The Flex Toolbar can also be responsive, intelligently hiding buttons that can't be shown on-screen, and displaying them in an overflow menu.
+description: Used for building highly-configurable Toolbars for sections of your application.  The Flex Toolbar displays a row of buttons, searchfields, and hyperlinks in different align able sections, along with contextual information about a workflow or process.  The Flex Toolbar can also be responsive, intelligently hiding buttons that can't be shown on-screen, and displaying them in an overflow menu.
 demo:
   embedded:
   - name: Common Configuration
@@ -24,8 +24,6 @@ demo:
     slug: example-more-actions-ajax
   - name: Contains a "More Actions" button with predefined menu items
     slug: example-more-actions-predefined
-  - name: Contains a collapsible Searchfield with responsive behavior
-    slug: example-collapsible-searchfield
 ---
 
 ## Code Examples
@@ -85,7 +83,7 @@ Using a `.fluid` CSS class adds a property `flex-grow: 1;` to the section, which
 
 To provide compatibility with the legacy Toolbar, you can add `.title` and `.buttonset` CSS classes to your toolbar sections, as seen in the main sample above.  These section types automatically grow with `flex-grow: 1;` to provide similar layout to the legacy Toolbar.
 
-It's also possible to add a `.favor` class to either of these section types, which similates the legacy toolbar setting `favorButtonset`:
+It's also possible to add a `.favor` class to either of these section types, which simulates the legacy toolbar setting `favorButtonset`:
 
 ```html
 <!-- favorButtonset: true -->
