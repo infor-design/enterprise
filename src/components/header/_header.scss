@@ -380,14 +380,6 @@ $subheader-height: 60px;
       .collapse-button:focus .icon {
         color: $searchfield-header-icon-color;
       }
-
-      &.has-focus {
-        .searchfield {
-          &:focus {
-            border-left: 1px solid $header-searchfield-input-border-color;
-          }
-        }
-      }
     }
 
     .toolbar-searchfield-wrapper {
@@ -733,6 +725,10 @@ $subheader-height: 60px;
     .toolbar-section {
       &.search-categories {
         &.search {
+          @media (max-width: $breakpoint-phone-to-tablet) {
+            width: 50%;
+          }
+
           .btn.searchfield-category-button {
             color: $header-searchfield-btn-font-color;
             height: 38px;
