@@ -1,6 +1,7 @@
 import { utils } from '../../utils/utils';
 import { accordionSearchUtils } from '../../utils/accordion-search-utils';
 import { breakpoints } from '../../utils/breakpoints';
+import { debounce } from '../../utils/debounced-resize';
 import '../../utils/behaviors';
 
 import './module-nav.switcher.jquery';
@@ -35,7 +36,8 @@ const MODULE_NAV_DEFAULTS = {
   mobileBehavior: true,
   breakpoint: 'phone-to-tablet', // Can be 'tablet' or 'phone-to-tablet'(+ 767), 'phablet (+610)', 'desktop' + (1024) or 'tablet-to-desktop'(+1280).Default is 'phone-to-tablet'(767)
   showOverlay: true,
-  enableOutsideClick: false
+  enableOutsideClick: false,
+  autoCollapseOnMobile: true
 };
 
 const toggleScrollbar = (el, doToggle) => {
@@ -204,7 +206,19 @@ ModuleNav.prototype = {
       $(this.accordionEl).on(`aftercollapse.${COMPONENT_NAME}`, () => {
         this.setScrollable();
       });
+      $(this.accordionEl).on(`selected.${COMPONENT_NAME}`, (e, header) => {
+        if ($(header).is('#module-nav-settings-btn')) return;
+        this.handleAutoCollapseOnMobile();
+      });
+      $(this.accordionEl).on(`followlink.${COMPONENT_NAME}`, (e, header) => {
+        if ($(header).is('#module-nav-settings-btn')) return;
+        this.handleAutoCollapseOnMobile();
+      });
     }
+
+    $('body').on(`resize.${COMPONENT_NAME}`, debounce(() => {
+      this.checkMobileBehavior();
+    }, 0));
 
     if (!this.settings.mobileBehavior) this.enableOutsideClickEvent();
     return this;
@@ -226,7 +240,8 @@ ModuleNav.prototype = {
    * @returns {void}
    */
   checkMobileBehavior() {
-    if (this.settings.displayMode === 'expanded' && this.settings.mobileBehavior) {
+    if (!this.settings.mobileBehavior) return;
+    if (this.settings.displayMode === 'expanded') {
       const overlay = this.pageContainerEl.find('.page-overlay');
 
       if (breakpoints.isAbove(this.settings.breakpoint)) {
@@ -245,6 +260,16 @@ ModuleNav.prototype = {
       }
       this.settings.enableOutsideClick = true;
       this.enableOutsideClickEvent();
+      return;
+    }
+
+    if (this.settings.displayMode === 'collapsed' && !this.isLargerThanBreakpoint()) {
+      setDisplayMode(false, this.containerEl);
+      return;
+    }
+
+    if (this.settings.displayMode === 'collapsed' && this.isLargerThanBreakpoint()) {
+      setDisplayMode('collapsed', this.containerEl);
     }
   },
 
@@ -263,16 +288,34 @@ ModuleNav.prototype = {
     if (this.settings.displayMode === 'expanded') {
       const target = targetEl;
       if (target && !$(target).is('.application-menu-trigger') && !this.element[0].contains(target)) {
-        this.setDisplayMode(this.previousDisplayMode);
+        this.setDisplayMode(this.isLargerThanBreakpoint() ? 'collapsed' : false);
         this.removeOutsideClickEvent();
       }
     }
   },
 
   /**
- * handles the Searchfield Input event
- * @param {jQuery.Event} e jQuery `input` event
- */
+   * Handler to manually attach to any hamburger button or other elements
+   */
+  handleHamburgerClick() {
+    const currentDisplayMode = this.settings.displayMode;
+    if (currentDisplayMode === 'expanded' && this.isLargerThanBreakpoint()) {
+      this.updated({ displayMode: 'collapsed' });
+    } else if (currentDisplayMode === 'collapsed' && this.isLargerThanBreakpoint()) {
+      this.updated({ displayMode: 'expanded' });
+    } else if (currentDisplayMode === 'expanded' && !this.isLargerThanBreakpoint()) {
+      this.updated({ displayMode: false });
+    } else if (currentDisplayMode === 'collapsed' && !this.isLargerThanBreakpoint()) {
+      this.updated({ displayMode: 'expanded' });
+    } else if (currentDisplayMode === false) {
+      this.updated({ displayMode: 'expanded' });
+    }
+  },
+
+  /**
+   * handles the Searchfield Input event
+   * @param {jQuery.Event} e jQuery `input` event
+   */
   handleSearchfieldInputEvent() {
     accordionSearchUtils.handleSearchfieldInputEvent.apply(this, [COMPONENT_NAME]);
   },
@@ -376,6 +419,9 @@ ModuleNav.prototype = {
     if (this.settings.displayMode !== val) this.settings.displayMode = val;
     setDisplayMode(val, this.containerEl);
 
+    // close any active tooltips
+    $('#validation-errors, #tooltip, #validation-tooltip').addClass('is-hidden');
+
     // Reconfigure child elements to use the same display mode
     this.switcherAPI?.setDisplayMode(val);
     this.settingsAPI?.setDisplayMode(val);
@@ -460,6 +506,32 @@ ModuleNav.prototype = {
   },
 
   /**
+   * Checks the window size against the defined breakpoint.
+   * @private
+   * @returns {boolean} whether or not the window size is larger than the settings-defined breakpoint
+   */
+  isLargerThanBreakpoint() {
+    return breakpoints.isAbove(this.settings.breakpoint);
+  },
+
+  /**
+   * Handles the click to close behavior
+   * @private
+   */
+  handleAutoCollapseOnMobile() {
+    if (!this.settings.autoCollapseOnMobile) {
+      return;
+    }
+
+    this.userOpened = false;
+    if (this.isLargerThanBreakpoint()) {
+      return;
+    }
+
+    this.setDisplayMode(this.previousDisplayMode);
+  },
+
+  /**
    * Handle updated settings and values.
    * @param {object} [settings] if provided, updates module nav settings
    * @returns {object} chainable API
@@ -482,7 +554,6 @@ ModuleNav.prototype = {
    */
   teardown() {
     this.teardownEvents();
-    this.teardownResize();
     accordionSearchUtils.teardownFilter.apply(this, [COMPONENT_NAME]);
 
     // Separators
@@ -520,6 +591,7 @@ ModuleNav.prototype = {
     $(this.accordionEl).off(`beforeexpand.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`afterexpand.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`aftercollapse.${COMPONENT_NAME}`);
+    $('body').off(`resize.${COMPONENT_NAME}`);
   },
 
   /**
@@ -537,6 +609,7 @@ ModuleNav.prototype = {
    */
   destroy() {
     this.teardown();
+    this.teardownResize();
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };

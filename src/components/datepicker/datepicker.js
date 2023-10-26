@@ -1004,7 +1004,7 @@ DatePicker.prototype = {
 
         if (s.range.useRange) {
           self.isFocusAfterClose = true;
-        } else {
+        } else if (!s.showTime) {
           self.closeCalendar();
           self.element.focus();
         }

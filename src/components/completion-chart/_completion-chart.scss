@@ -293,6 +293,10 @@
         background-color: $ids-color-status-warning;
       }
 
+      &.warning {
+        background-color: $ids-color-status-caution;
+      }
+
       &.alert-yellow {
         background-color: $ids-color-status-caution;
       }

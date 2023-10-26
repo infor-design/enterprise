@@ -10,8 +10,6 @@ demo:
     slug: example-multiple-errors
   - name: Enabling a Button on Valid
     slug: example-validation-form
-  - name: Validating on Form Submit
-    slug: example-validation-on-submit
   - name: Example of a Number Range Validator
     slug: test-range-validation
   - name: Example of a Email Validator
@@ -33,7 +31,7 @@ This example shows how to manually link validation automatically on fields. Use 
 
 ## Code Example - Manual
 
-This example shows how to manually invoke an error message on a field. The function is chainable so you can add several errors.
+This example shows how to manually invoke an error message on a field. The function is chain able so you can add several errors.
 
 ```javascript
 $('#username-field')
@@ -79,7 +77,7 @@ There are a few built in validation rules you can use.
 
 - `required` - Test that the field has a value. This is triggered after entering and exiting a field without adding a value or optionally when submitting a form.
 - `date` - Basic test for a valid date. This is triggered after entering and exiting a field without adding a value or optionally when submitting a form.
-- `availableDate` - Basic test for a date being withing a range of valid dates. Used internally for date range contraining.
+- `availableDate` - Basic test for a date being within a range of valid dates. Used internally for date range containing.
 - `email` - Basic test for a valid email address.
 - `enableSubmit` - Used on the signing form to check if the submit button can be enabled.
 - `passwordReq` - Checks basic password rules. Must be at least 10 characters which contain at least one lowercase letter. One uppercase letter. One numeric digit and one special character.

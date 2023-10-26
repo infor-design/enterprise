@@ -152,7 +152,7 @@
 .btn {
   border-radius: 8px;
 
-  &:hover:not([disabled]) {
+  &:hover:not([disabled]):not(.btn-primary) {
     &:not(:disabled) {
       background-color: $button-color-tertiary-hover-background-new;
       color: $button-color-tertiary-hover-font-new;

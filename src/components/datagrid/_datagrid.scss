@@ -155,6 +155,13 @@ $datagrid-small-row-height: 25px;
         overflow-x: auto;
       }
     }
+
+    .empty-message {
+      div:only-child:is(.empty-title) {
+        padding: unset;
+        margin-top: 20px;
+      }
+    }
   }
 
   &.has-horizontal-scroll {
@@ -328,6 +335,11 @@ $datagrid-small-row-height: 25px;
   // Heights for scrollbars
   &.paginated {
     height: calc(100% - 40px);
+  }
+
+
+  &.show-space td {
+    white-space: pre-wrap;
   }
 
   // Hide last bottom border
@@ -3366,8 +3378,8 @@ $datagrid-small-row-height: 25px;
         white-space: normal;
 
         .datagrid-cell-wrapper {
-          padding: 7px 20px;
-          white-space: normal;
+          padding: 16px 17px;
+          white-space: pre-wrap;
         }
       }
     }

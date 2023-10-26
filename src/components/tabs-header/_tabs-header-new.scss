@@ -282,6 +282,13 @@
   .tab-panel {
     overflow-y: auto;
     margin-top: -5px;
+    padding-inline-start: 4px;
+  }
+}
+
+.tab-container.vertical + .tab-panel-container {
+  .tab-panel {
+    overflow-y: hidden;
   }
 }
 
