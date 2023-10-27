@@ -1479,6 +1479,10 @@ SearchField.prototype = {
       const categoryButtonBorder = (parseInt(categoryButtonStyle.borderLeftWidth, 10) * 2);
 
       subtractWidth += (categoryButtonWidth + categoryButtonPadding + categoryButtonBorder);
+
+      if (this.element.parents('.header').length === 1 && breakpoints.isBelow('phone-to-tablet')) {
+        subtractWidth += 40;
+      }
     }
 
     if (this.hasGoButton()) {
@@ -1574,6 +1578,10 @@ SearchField.prototype = {
     // Subtract width of extraneous buttons/elems
     if (this.hasCategories()) {
       subtractWidth += this.categoryButton.outerWidth(true);
+
+      if (this.element.parents('.header').length === 1 && breakpoints.isBelow('phone-to-tablet')) {
+        subtractWidth += 40;
+      }
     }
 
     if (this.hasGoButton()) {

@@ -484,11 +484,11 @@ charts.addLegend = function (series, chartType, settings, container) {
 
     legend.on('click.chart', '.chart-legend-item', function () {
       const idx = $(this).attr('index-id').match(regex)[1];
-      charts.handleElementClick(idx, this, series, settings);
+      charts.handleElementClick(idx, this, series, settings, container);
     }).on('keypress.chart', '.chart-legend-item', function (e) {
       if (e.which === 13 || e.which === 32) {
         const idx = $(this).attr('index-id').match(regex)[1];
-        charts.handleElementClick(idx, this, series, settings);
+        charts.handleElementClick(idx, this, series, settings, container);
       }
     });
 
@@ -503,8 +503,8 @@ charts.addLegend = function (series, chartType, settings, container) {
 
       const popupList = $('<ul class="popupmenu"></ul>');
 
-      for (let j = maxLength; j < series.length; j++) {
-        const listItem = $(`<li><a index-id="chart-legend-${j}" href="#"><div class="chart-popup-menu"></div></a></li>`);
+      for (let j = 0; j < series.length; j++) {
+        const listItem = $(`<li ${j === 0 ? 'class="is-hidden"' : ''}><a index-id="chart-legend-${j}" href="#"><div class="chart-popup-menu"></div></a></li>`);
         const textBlock = $(`<span class="chart-popup-menu-text">${xssUtils.stripTags(series[j].name)}</span>`);
 
         const hexColor = charts.chartColor(j, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[j]);
@@ -543,7 +543,7 @@ charts.addLegend = function (series, chartType, settings, container) {
 
       listButton.on('selected', (e, args) => {
         const idx = $(args[0]).attr('index-id').match(regex)[1];
-        charts.handleElementClick(idx, this, series, settings);
+        charts.handleElementClick(idx, this, series, settings, container);
       });
     } else {
       $(container).append(legend);
@@ -557,12 +557,14 @@ charts.addLegend = function (series, chartType, settings, container) {
  * @param {number} idx Index of clicked element.
  * @param {object} line The element that was clicked.
  * @param {array} series The data series.
- * @param {object} settings [description]
+ * @param {object} settings The chart setting
+ * @param  {object} container The dom container.
  */
-charts.handleElementClick = function (idx, line, series, settings) {
+charts.handleElementClick = function (idx, line, series, settings, container) {
   const api = $(settings?.svg?.node()).closest('.chart-container').data('chart');
   const noTrigger = api?.initialSelectCall;
   const elem = series[idx];
+  const isTwoColumn = series[0].display && series[0].display === 'twocolumn';
   let selector;
 
   if (settings.type === 'radar') {
@@ -603,6 +605,30 @@ charts.handleElementClick = function (idx, line, series, settings) {
 
   if (elem.selectionObj && settings?.selectable) {
     charts.selectElement(d3.select(elem.selectionObj.nodes()[idx]), elem.selectionInverse, elem.data, undefined, settings.dataset, noTrigger); // eslint-disable-line
+  }
+
+  if (isTwoColumn) {
+    const chartType = settings.type === 'donut' ? 'pie' : settings.type;
+    const hexColor = charts.chartColor(idx, chartType || (series.length === 1 ? 'bar-single' : 'bar'), elem);
+    const colorName = charts.chartColorName(idx, chartType || (series.length === 1 ? 'bar-single' : 'bar'), elem);
+    let color = '';
+    if (colorName.substr(0, 1) === '#') {
+      color = $('<span class="chart-legend-color"></span>');
+      if (!elem.pattern) {
+        color.css('background-color', hexColor);
+      }
+    } else {
+      color = $(`<span class="chart-legend-color ${elem.pattern ? '' : colorName}"></span>`);
+    }
+
+    const textBlock = $(`<span class="chart-legend-item-text">${xssUtils.stripTags(elem.name)}</span>`);
+    const chartLegendItem = container.find('.chart-legend-item');
+
+    chartLegendItem.empty();
+    chartLegendItem.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
+
+    container.find('.list-button').data('popupmenu').menu.children().removeClass('is-hidden');
+    $(container.find('.list-button').data('popupmenu').menu.children().get(idx)).addClass('is-hidden');
   }
 };
 

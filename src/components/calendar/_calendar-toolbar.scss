@@ -195,6 +195,10 @@
     border-bottom: 1px solid $popover-separator-color;
     padding: 0 5px 0 20px;
 
+    @media only screen and (max-device-width: $breakpoint-phone) {
+      min-width: 324px;
+    }
+
     @media only screen
       and (minwidth: $breakpoint-phone)
       and (ax-device-width: (m$breakpoint-big-phone + 88))

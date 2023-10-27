@@ -146,6 +146,12 @@ html[dir='rtl'] {
           }
         }
       }
+
+      &:not(.is-open) {
+        .searchfield + button.close {
+          display: none;
+        }
+      }
     }
   }
 
