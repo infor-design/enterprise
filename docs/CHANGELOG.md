@@ -12,6 +12,7 @@
 - `[Button]` Adjusted rule for primary button styling when hovered in new version. ([#7977](https://github.com/infor-design/enterprise/issues/7977))
 - `[Button]` Adjusted rule for button styling on contextual action toolbars. ([#8084](https://github.com/infor-design/enterprise/issues/8084))
 - `[Cards]` Adjusted menu button positioning for no header. ([#8081](https://github.com/infor-design/enterprise/issues/8081))
+- `[Circlepager]` Fixed a bug causing a visual glitch when resizing the circle pager. ([#7894](https://github.com/infor-design/enterprise/issues/7894))
 - `[Datagrid]` Fixed the position of empty message without icon in the datagrid. ([#7854](https://github.com/infor-design/enterprise/issues/7854))
 - `[Datagrid]` Space between text in rows are not trimmed as default. ([#7849](https://github.com/infor-design/enterprise/issues/7849))
 - `[Datagrid]` Added option to use for flex toolbar. ([#7928](https://github.com/infor-design/enterprise/issues/7928))
