@@ -37,6 +37,7 @@
 - `[Validation]` Fixed the position of exclamation points of validation in non english localization. ([#5119](https://github.com/infor-design/enterprise/issues/5119))
 - `[Weekview]` Added overnight event view when end time goes to next day. ([#7840](https://github.com/infor-design/enterprise/issues/7840))
 - `[Weekview]` Fixed an issue with the week change when clicking the `Today` button. ([#7792](https://github.com/infor-design/enterprise/issues/7792))
+- `[Weekview]` Fixed selected day keeps getting restarted when changing theme or mode in mobile view. ([#7927](https://github.com/infor-design/enterprise/issues/7927))
 
 ## v4.88.0
 

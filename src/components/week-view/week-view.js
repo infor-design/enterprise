@@ -1062,7 +1062,12 @@ WeekView.prototype = {
     this.settings.endDate = new Date(this.settings.startDate);
     this.settings.endDate.setDate(this.settings.endDate.getDate() + this.numberOfDays - 1);
     this.settings.endDate.setHours(23, 59, 59, 59);
-    this.showWeek(this.settings.startDate, this.settings.endDate);
+
+    if (this.currentDay) {
+      this.showWeek(this.currentDay, this.currentDay);
+    } else {
+      this.showWeek(this.settings.startDate, this.settings.endDate);
+    }
   },
 
   /**
@@ -1212,6 +1217,11 @@ WeekView.prototype = {
     } else {
       this.settings.endDate.setDate(this.settings.endDate.getDate() + diff);
     }
+
+    if (this.isDayView) {
+      this.currentDay = this.settings.startDate; 
+    }
+
     this.showWeek(this.settings.startDate, this.settings.endDate);
   },
 
