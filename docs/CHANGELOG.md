@@ -1,6 +1,13 @@
 # What's New with Enterprise
 
 ## v4.83.1
+## v4.88.2
+
+## v4.88.2 Features
+
+- `[Module Nav]` Fixed a bug where the css conflicted with accordion. ([#8117](https://github.com/infor-design/enterprise/issues/8063))
+- `[Context Menu]` Fixed that context menu stopped working in safari (detection issues). ([#8037](https://github.com/infor-design/enterprise/issues/8037))
+
 ## v4.88.1
 
 ## v4.88.1 Features
