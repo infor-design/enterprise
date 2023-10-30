@@ -46,6 +46,11 @@
     color: inherit;
     top: -2px;
   }
+
+  &.is-selected .btn,
+  &.is-selected .btn:hover {
+    color: $accordion-selected-icon-color;
+  }
 }
 
 html {
@@ -68,4 +73,8 @@ html {
       top: -2px;
     }
   }
+}
+
+.accordion.panel .accordion-header.is-selected [class^='btn']:focus:not(.hide-focus) {
+  border: 1px solid $accordion-selected-border-color !important;
 }
