@@ -30,6 +30,7 @@
 - `[Radios]` Adjusted styling of checked disabled radio button. ([#8082](https://github.com/infor-design/enterprise/issues/8082))
 - `[Searchfield]` Adjusted width on mobile. ([#6831](https://github.com/infor-design/enterprise/issues/6831))
 - `[Spinbox]` Adjusted spinbox wrapper sizing to stop increment button from overflowing in classic. ([#7988](https://github.com/infor-design/enterprise/issues/7988))
+- `[Tabs]` Fixed alabaster design issues in header, tab, tab-header, tabs-module, tabs-multi components. ([#7922](https://github.com/infor-design/enterprise/issues/7922))
 - `[Tabs]` Adjusted placement of icons in tab list spillover. ([#7970](https://github.com/infor-design/enterprise/issues/7970))
 - `[Tabs]` Fixed the focus state of radio button not fully shown in tabs. ([#7955](https://github.com/infor-design/enterprise/issues/7955))
 - `[Targeted-Achievement]` Fixed waring color not displaying properly. ([#7891](https://github.com/infor-design/enterprise/issues/7891))

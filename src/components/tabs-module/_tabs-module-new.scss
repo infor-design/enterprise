@@ -114,3 +114,9 @@
     border-color: transparent;
   }
 }
+
+.tab-container.module-tabs + .tab-panel-container {
+  .tab-panel {
+    padding-inline-start: unset;
+  }
+}

@@ -421,7 +421,7 @@ Personalize.prototype = {
         colors.headerTextColor = themeColors.palette.slate[10].value;
         colors.headerTabsTextColor = themeColors.palette.slate[10].value;
 
-        colors.headerTabBorder = themeColors.palette.slate[90].value;
+        colors.headerTabBorder = themeColors.palette.slate[60].value;
         colors.verticalTabBorder = themeColors.palette.slate[60].value;
         colors.tabFocusIndicator = themeColors.palette.white.value;
         colors.tabSelectedColor = themeColors.palette.slate[90].value;
@@ -486,6 +486,9 @@ Personalize.prototype = {
       if (isNewContrast) {
         colors.tabBorderColor = themeColors.palette.white.value;
         colors.tabHoverColor = themeColors.palette.slate[20].value;
+        colors.tabVerticalSelectedTextColor = themeColors.palette.azure[90].value;
+        colors.headerTabsSelectedTextColor = themeColors.palette.azure[90].value;
+        colors.moduleTabsSelectedTextColor = themeColors.palette.azure[90].value;
       }
     }
 
