@@ -75,21 +75,6 @@
     }
   }
 
-  &.no-header {
-    .card-content {
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-
-      .btn-actions-wrapper {
-        min-width: 35px;
-        padding: 1px;
-        position: absolute;
-        right: 8px;
-        top: 8px;
-      }
-    }
-  }
-
   &:not(.show-buttons) button.btn-actions:not(.list-button) {
     opacity: 0;
   }
