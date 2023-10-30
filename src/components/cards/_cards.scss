@@ -272,6 +272,12 @@ $card-header-section: '.card-header-section', '.widget-header-section';
       transform: translateY(-50%);
       padding-top: 12px;
 
+      .notification-container {
+        position: relative;
+        width: inherit;
+        top: -3px;
+      }
+
       .card-empty-info {
         .font-size-px-14 {
           margin: 0 auto;

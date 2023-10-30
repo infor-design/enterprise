@@ -3,6 +3,7 @@
       <h2 class="fieldset-title">Example Widgets</h2>
   </div>
 </div>
+
 <div class="row">
   <div class="four columns">
 
@@ -719,6 +720,54 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="one-third column">
+      <h2 class="fieldset-title">Example Notification</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="four columns">
+    <div class="card is-empty">
+      <div class="card-header">
+        <h2 class="widget-title">Message and Events</h2>
+        <button class="btn-actions" type="button" id="btn-1">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-vertical-ellipsis"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#" id="action-1">Action 1</a></li>
+          <li><a href="#" id="action-2">Action 2</a></li>
+          <li><a href="#" id="action-3">Action 3</a></li>
+        </ul>
+      </div>
+      <div class="card-content">
+        <div class="notification-container"></div>
+        <div class="listview" id="task-listview"
+          data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'selectable': 'false'}">
+        </div>
+        <div class="card-empty-icon">
+          <svg class="icon-empty-state is-slate" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-empty-new-project-new"></use>
+          </svg>
+        </div>
+        <div class="card-empty-title">
+          Add a new project
+        </div>
+        <div class="card-empty-info">
+          Description of empty message that explains why and possibly contains a hyperlink.
+        </div>
+        <div class="card-empty-actions">
+          <button type="button" class="btn-primary">
+            <span>Action</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   var setIcons = (isClassic) => {
     $('.icon-empty-state use').each(function( index ) {
@@ -739,4 +788,14 @@
     setIcons(theme.indexOf('theme-classic') > -1);
   });
   setIcons(document.querySelector('html').getAttribute('class').indexOf('theme-classic') > -1);
+</script>
+
+<script>
+  $('.notification-container').notification({
+    type: 'error',
+    message: 'Web API not available. No list available.',
+    parent: '.notification-container',
+    linkText: ''
+  });
+
 </script>
