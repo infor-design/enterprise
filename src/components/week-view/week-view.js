@@ -948,22 +948,22 @@ WeekView.prototype = {
     const endMonth = Locale.formatDate(endDate, { pattern: 'MMMM', locale: this.locale.name });
     const startYear = Locale.formatDate(startDate, { pattern: 'yyyy', locale: this.locale.name });
     const endYear = Locale.formatDate(endDate, { pattern: 'yyyy', locale: this.locale.name });
-    let monthStr = breakpoints.isBelow('slim') && this.currentCalendar.months ?
+    let monthStr = this.isMobileWidth && this.currentCalendar.months ?
       `${this.currentCalendar.months.abbreviated[endDate.getMonth()]} ${endYear}` :
       Locale.formatDate(endDate, { date: 'year', locale: this.locale.name });
 
     if (endMonth !== startMonth) {
-      const startStr = breakpoints.isBelow('slim') && this.currentCalendar.months ? this.currentCalendar.months.abbreviated[startDate.getMonth()] : Locale.formatDate(startDate, { pattern: 'MMM', locale: this.locale.name });
-      const endStr = breakpoints.isBelow('slim') && this.currentCalendar.months ?
+      const startStr = this.isMobileWidth && this.currentCalendar.months ? this.currentCalendar.months.abbreviated[startDate.getMonth()] : Locale.formatDate(startDate, { pattern: 'MMM', locale: this.locale.name });
+      const endStr = this.isMobileWidth && this.currentCalendar.months ?
         `${this.currentCalendar.months.abbreviated[endDate.getMonth()]} ${endYear}` :
         Locale.formatDate(endDate, { pattern: 'MMMM yyyy', locale: this.locale.name });
       monthStr = `${startStr} - ${endStr}`;
     }
     if (endYear !== startYear) {
-      const startStr = breakpoints.isBelow('slim') && this.currentCalendar.months ?
+      const startStr = this.isMobileWidth && this.currentCalendar.months ?
         `${this.currentCalendar.months.abbreviated[startDate.getMonth()]} ${startYear}` :
         Locale.formatDate(startDate, { pattern: 'MMM yyyy', locale: this.locale.name });
-      const endStr = breakpoints.isBelow('slim') && this.currentCalendar.months ?
+      const endStr = this.isMobileWidth && this.currentCalendar.months ?
         `${this.currentCalendar.months.abbreviated[endDate.getMonth()]} ${endYear}` :
         Locale.formatDate(endDate, { pattern: 'MMM yyyy', locale: this.locale.name });
       monthStr = `${startStr} - ${endStr}`;
