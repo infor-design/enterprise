@@ -38,6 +38,7 @@
 - `[Weekview]` Added overnight event view when end time goes to next day. ([#7840](https://github.com/infor-design/enterprise/issues/7840))
 - `[Weekview]` Fixed an issue with the week change when clicking the `Today` button. ([#7792](https://github.com/infor-design/enterprise/issues/7792))
 - `[Weekview]` Fixed selected day keeps getting restarted when changing theme or mode in mobile view. ([#7927](https://github.com/infor-design/enterprise/issues/7927))
+- `[Weekview]` Use abbreviated month names when in mobile size. ([#7924](https://github.com/infor-design/enterprise/issues/7924))
 
 ## v4.88.0
 
