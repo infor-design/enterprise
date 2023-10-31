@@ -25,6 +25,7 @@ input[type='range'] {
 .slider-wrapper {
   background-color: $slider-bg-color;
   position: relative;
+  touch-action: none;
 
   @include css3(touch-callout, none);
   @include css3(user-select, none);
@@ -82,6 +83,7 @@ input[type='range'] {
     margin: calc(25px + 4%) 50px calc(50px + 4%);
     min-height: 150px;
     width: 4px;
+    margin-left: 72px;
 
     .slider-hit-area {
       bottom: 0;
@@ -100,7 +102,7 @@ input[type='range'] {
       > .label {
         right: 24px;
         text-align: right;
-        top: 0;
+        top: -7px;
       }
     }
 

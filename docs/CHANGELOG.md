@@ -29,6 +29,7 @@
 - `[Searchfield]` Adjusted icon colors in classic. ([#7947](https://github.com/infor-design/enterprise/issues/7947))
 - `[Radios]` Adjusted styling of checked disabled radio button. ([#8082](https://github.com/infor-design/enterprise/issues/8082))
 - `[Searchfield]` Adjusted width on mobile. ([#6831](https://github.com/infor-design/enterprise/issues/6831))
+- `[Slider]` Added handling of slider touch events. ([#7957](https://github.com/infor-design/enterprise/issues/7957))
 - `[Spinbox]` Adjusted spinbox wrapper sizing to stop increment button from overflowing in classic. ([#7988](https://github.com/infor-design/enterprise/issues/7988))
 - `[Tabs]` Fixed alabaster design issues in header, tab, tab-header, tabs-module, tabs-multi components. ([#7922](https://github.com/infor-design/enterprise/issues/7922))
 - `[Tabs]` Adjusted placement of icons in tab list spillover. ([#7970](https://github.com/infor-design/enterprise/issues/7970))
