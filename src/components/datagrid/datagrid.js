@@ -6962,9 +6962,12 @@ Datagrid.prototype = {
         isTrigger = false; // No need to trigger if no data item
       } else {
         row = self.actualPagingRowIndex(self.actualRowIndex(rowElem));
-        item = self.settings.dataset[self.groupArray[row].group];
-        if (item && item.values) {
-          item = item.values[self.groupArray[row].node];
+
+        if (self.groupArray[row]) {
+          item = self.settings.dataset[self.groupArray[row].group];
+          if (item && item.values) {
+            item = item.values[self.groupArray[row].node];
+          }
         }
       }
     }
@@ -7978,7 +7981,7 @@ Datagrid.prototype = {
 
     if (this.settings.initializeToolbar && toolbar.hasClass('flex-toolbar') && !toolbar.data('toolbarFlex')) {
       const opts = $.fn.parseOptions(toolbar);
-      
+
       if (this.settings.toolbar.collapsibleFilter) {
         opts.collapsibleFilter = true;
       }
@@ -11491,7 +11494,7 @@ Datagrid.prototype = {
         detailTmpl.html(renderedTmpl);
       }
     }
-    
+
     if (this.settings.summaryRow && !this.settings.groupable) {
       this.updateSummaryRow(col, cell);
     }
@@ -12290,11 +12293,11 @@ Datagrid.prototype = {
       // detail.animateClosed();
       item.expanded = false;
       self.element.triggerHandler('collapserow', [{ grid: self, row: dataRowIndex, detail, item }]);
-    } else {
+    } else if (item) {
       expandRow.addClass('is-expanded');
       expandButton.addClass('is-expanded')
         .find('.plus-minus').addClass('active');
-      
+
       item.expanded = true;
 
       // Optionally Contstrain the width
