@@ -60,7 +60,7 @@
       columns.push({ id: 'activity1', name: 'Activity (Multi)', field: 'activity', filterType: 'contents', options: activities});
       columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer', minWidth: 95});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editorOptions: {showMonthYearPicker: true}});
-      columns.push({id: 'orderOtherDate', name: 'Order Date (Custom Format)', field: 'orderDate', filterType: 'date', filterConditions: ['equals', 'does-not-equal', 'in-range', 'less-than', 'less-equals', 'greater-than', 'greater-equals'], formatter: Soho.Formatters.Date, dateFormat: 'yyyyMMdd'});
+      columns.push({id: 'orderOtherDate', name: 'Order Date (Custom Format)', field: 'orderDate', filterType: 'date', filterConditions: ['equals'], formatter: Soho.Formatters.Date, dateFormat: 'yyyyMMdd'});
       columns.push({ id: 'time', name: 'Time', field: 'time', formatter: Soho.Formatters.Time, editor: Soho.Editors.Time, filterType: 'time' });
       columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Soho.Formatters.Checkbox, sortable: false, align: 'center', filterType: 'checkbox'});
       columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}, { value: "En file d\'attente", classes: 'error', label: "En file d\'attente" }]});

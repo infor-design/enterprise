@@ -24,10 +24,6 @@
 
     &:not(.is-disabled):hover {
       background-color: $vertical-tab-bg-hover-color;
-
-      a {
-        text-decoration: $vertical-tab-text-hover-decoration;
-      }
     }
 
     &.is-selected {

@@ -3,3 +3,11 @@
       margin-top: 5px;
     }
   }
+
+  html.is-mac {
+    .multitabs-container {
+      .tab-panel-container {
+        margin-top: 9px;
+      }
+    }
+  }

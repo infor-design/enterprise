@@ -361,6 +361,10 @@
       background-color: $popupmenu-hover-color;
     }
 
+    &.is-hidden {
+      display: none;
+    }
+
     &.disabled > a:focus {
       box-shadow: none;
     }
