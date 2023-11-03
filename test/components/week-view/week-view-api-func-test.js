@@ -6,7 +6,6 @@ import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 import { stringUtils } from '../../../src/utils/string';
 import { dateUtils } from '../../../src/utils/date';
-import { breakpoints } from '../../../src/utils/breakpoints';
 
 Soho.Locale = Locale;
 
