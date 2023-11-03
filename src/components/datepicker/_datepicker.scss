@@ -105,7 +105,7 @@
 .monthview-popup.popover {
   max-width: inherit;
   min-width: 314px;
-  min-height: 456px;
+  min-height: auto;
 
   @media screen and (max-device-width: ($breakpoint-phone - 1)) {
     min-width: 260px;
