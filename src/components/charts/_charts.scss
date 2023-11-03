@@ -348,7 +348,7 @@
     height: 12px;
     margin-right: 10px;
     position: relative;
-    top: 1px;
+    top: 0;
     width: 12px;
   }
 
@@ -376,6 +376,7 @@
 // Legend Popup Styling
 .chart-popup-menu {
   display: flex;
+  height: 40px;
 
   .chart-popup-menu-color {
     height: 15px;
@@ -386,6 +387,7 @@
   .chart-popup-menu-text {
     font-family: $ids-font-family-base;
     font-size: $ids-size-font-xs;
+    line-height: 38px;
   }
 }
 

@@ -60,7 +60,7 @@
       columns = [];
 
     columns.push({ id: 'date', name: 'Date', field: 'date', formatter: Soho.Formatters.Date});
-    columns.push({ id: 'description', name: 'Description', field: 'description'});
+    columns.push({ id: 'description', name: 'Description', field: 'description', width: 100});
     columns.push({ id: 'category', name: 'Category', field: 'category'});
     columns.push({ id: 'projectWork', name: 'Project Work', field: 'projectWork'});
     columns.push({ id: 'resource', name: 'Resource', field: 'resource'});
@@ -69,7 +69,8 @@
     data.push({ date: new Date(2015, 1, 20), description: 'Pending Benefits', paidBy: 'PR', category: '2244 Personnel', projectWork: 'Structural Design', resource: 'Charles Dunn', amount: '$204.00' });
     data.push({ date: new Date(2015, 1, 24), description: 'Pending Wages', paidBy: 'PR', category: '2244 Personnel', projectWork: 'Structural Design', resource: 'Vendor 3 Meylin Clark', amount: '$146.00' });
     data.push({ date: new Date(2015, 1, 24), description: 'Apple Computer INC', paidBy: 'AP', category: '2919 Supplies', projectWork: 'Structural Design', resource: 'Vendor 3 Meylin Clark', amount: '$1299.00' });
-    data.push({ date: new Date(2015, 2, 02), description: 'PO #1292', paidBy: 'AP', category: '2244 Personnel', projectWork: 'Structural Design', resource: 'Vendor 3 Meylin Clark', amount: '$398.00' });
+    data.push({ date: new Date(2015, 2, 3), description: 'PO #1292', paidBy: 'AP', category: '2244 Personnel', projectWork: 'Structural Design', resource: 'Vendor 3 Meylin Clark', amount: '$398.00' });
+    data.push({ date: new Date(2015, 2, 4), description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', paidBy: 'AP', category: '2244 Personnel', projectWork: 'Structural Design', resource: 'Vendor 3 Meylin Clark', amount: '$398.00' });
 
     $('.contextual-action-panel .datagrid').datagrid({
       columns: columns,

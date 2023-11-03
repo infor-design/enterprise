@@ -10,7 +10,7 @@
   transform: scaleY(1);
   transition: all 0.01s ease-out; // force a repaint
   vertical-align: middle;
-  width: 100%;
+  width: inherit;
   height: fit-content;
 
   // Hide Days Option
@@ -116,6 +116,10 @@
     top: 47px;
     width: 100%;
     z-index: 3011;
+
+    @media only screen and (max-device-width: $breakpoint-phone) {
+      min-width: 324px;
+    }
 
     .content {
       height: 312px;
@@ -575,7 +579,6 @@
   .monthview-table {
     margin: 20px auto 0;
     padding: 0 10px;
-    width: 100%;
 
     @media only screen
       and (min-device-width: $breakpoint-phone)
@@ -697,6 +700,7 @@
     .monthview-table {
       border-collapse: collapse;
       margin: 7px auto 0;
+      width: 100%;
     }
   }
 
@@ -958,16 +962,6 @@
 
     &.default {
       background-color: $calendar-disabled-bg-color;
-    }
-  }
-}
-
-.ios,
-.android {
-  .monthview-monthyear-pane {
-    .picklist-section.is-year {
-      width: calc(100% - 175px);
-      margin-left: 8px;
     }
   }
 }

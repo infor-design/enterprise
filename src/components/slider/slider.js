@@ -520,14 +520,30 @@ Slider.prototype = {
       }
 
       function conversion() {
+        let left;
+        let top;
+        if (e.type === 'touchmove') {
+          const pageX = e.originalEvent.changedTouches[0].pageX;
+          const pageY = e.originalEvent.changedTouches[0].pageY;
+          left = pageX - self.wrapper.offset().left - $(document).scrollLeft();
+          top = pageY - self.wrapper.offset().top - $(document).scrollTop();
+        } else {
+          left = args.left;
+          top = args.top;
+        }
+
         if (self.isVertical()) {
           const wh = self.wrapper.height();
           // Vertical Slider accounts for limits set on the height by IDS Enterprise Drag.js
           const adjustedHeight = wh - thisHandle.outerHeight();
-
-          return ((adjustedHeight - args.top) / adjustedHeight) * 100;
+          top = Math.min(Math.max(top, 0), adjustedHeight);
+          return ((adjustedHeight - top) / adjustedHeight) * 100;
         }
-        return args.left / (self.wrapper.width() - thisHandle.outerWidth()) * 100;
+
+        const ww = self.wrapper.width();
+        const adjustedWidth = ww - thisHandle.outerWidth();
+        left = Math.min(Math.max(left, 0), adjustedWidth);
+        return left / adjustedWidth * 100;
       }
 
       const val = conversion();
@@ -585,16 +601,16 @@ Slider.prototype = {
      * @property {HTMLElement} args.handle The slider handle DOM element.
      */
     handle.drag(draggableOptions)
-      .on('drag.slider', (e, args) => {
+      .on('drag.slider touchmove.slider', (e, args) => {
         updateHandleFromDraggable(e, $(e.currentTarget), args);
         self.isDragging = true;
       })
-      .on('dragstart', function () {
+      .on('dragstart touchstart', function () {
         $(this).addClass('is-dragging');
         self.range.addClass('is-dragging');
         self.element.trigger('slidestart', handle);
       })
-      .on('dragend', function (e) {
+      .on('dragend touchend', function (e) {
         // Round values when sliding is over
         if (!self.settings.step) {
           self.value($(e.currentTarget).hasClass('higher') ?
@@ -622,7 +638,7 @@ Slider.prototype = {
    * @param {jQuery[]} handle element representing a slider handle
    */
   disableHandleDrag(handle) {
-    handle.off('drag.slider dragstart dragend');
+    handle.off('drag.slider dragstart dragend touchmove.slider touchstart touchend');
 
     this.range.removeClass('is-dragging');
     handle.removeClass('is-dragging');

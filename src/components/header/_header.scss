@@ -355,6 +355,7 @@ $subheader-height: 60px;
     .toolbar-section.search-categories {
       .toolbar-searchfield-wrapper.has-categories .btn.searchfield-category-button {
         svg.icon {
+          color: $subheader-searchfield-category-button-font-color !important;
           transform: translateY(0);
         }
       }
@@ -366,7 +367,6 @@ $subheader-height: 60px;
 
       .searchfield-category-button {
         border: 1px solid $header-searchfield-input-border-color;
-        border-right: 0;
         border-radius: 0;
 
         &:focus:not(.hide-focus),
@@ -379,14 +379,6 @@ $subheader-height: 60px;
 
       .collapse-button:focus .icon {
         color: $searchfield-header-icon-color;
-      }
-
-      &.has-focus {
-        .searchfield {
-          &:focus {
-            border-left: 1px solid $header-searchfield-input-border-color;
-          }
-        }
       }
     }
 
@@ -737,6 +729,10 @@ $subheader-height: 60px;
     .toolbar-section {
       &.search-categories {
         &.search {
+          @media (max-width: $breakpoint-phone-to-tablet) {
+            width: 50%;
+          }
+
           .btn.searchfield-category-button {
             color: $header-searchfield-btn-font-color;
             height: 38px;

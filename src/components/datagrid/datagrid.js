@@ -432,6 +432,7 @@ Datagrid.prototype = {
   */
   firstRender() {
     const self = this;
+    const hasColWidth = self.settings.columns.some(col => col.width !== undefined);
     this.hasLeftPane = this.settings.frozenColumns.left.length > 0;
     this.hasRightPane = this.settings.frozenColumns.right.length > 0;
 
@@ -444,6 +445,10 @@ Datagrid.prototype = {
     self.bodyWrapperCenter = $(`<div class="datagrid-wrapper center scrollable-x${!this.hasRightPane ? ' scrollable-y' : ''}"></div>`);
     self.table = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.bodyWrapperCenter);
     self.element.append(self.bodyWrapperCenter);
+
+    if (hasColWidth) {
+      self.table.css('width', 'inherit');
+    }
 
     if (this.hasRightPane) {
       self.bodyWrapperRight = $('<div class="datagrid-wrapper right scrollable-y"></div>');
@@ -6962,9 +6967,12 @@ Datagrid.prototype = {
         isTrigger = false; // No need to trigger if no data item
       } else {
         row = self.actualPagingRowIndex(self.actualRowIndex(rowElem));
-        item = self.settings.dataset[self.groupArray[row].group];
-        if (item && item.values) {
-          item = item.values[self.groupArray[row].node];
+
+        if (self.groupArray[row]) {
+          item = self.settings.dataset[self.groupArray[row].group];
+          if (item && item.values) {
+            item = item.values[self.groupArray[row].node];
+          }
         }
       }
     }
@@ -7978,7 +7986,7 @@ Datagrid.prototype = {
 
     if (this.settings.initializeToolbar && toolbar.hasClass('flex-toolbar') && !toolbar.data('toolbarFlex')) {
       const opts = $.fn.parseOptions(toolbar);
-      
+
       if (this.settings.toolbar.collapsibleFilter) {
         opts.collapsibleFilter = true;
       }
@@ -11491,7 +11499,7 @@ Datagrid.prototype = {
         detailTmpl.html(renderedTmpl);
       }
     }
-    
+
     if (this.settings.summaryRow && !this.settings.groupable) {
       this.updateSummaryRow(col, cell);
     }
@@ -12290,11 +12298,11 @@ Datagrid.prototype = {
       // detail.animateClosed();
       item.expanded = false;
       self.element.triggerHandler('collapserow', [{ grid: self, row: dataRowIndex, detail, item }]);
-    } else {
+    } else if (item) {
       expandRow.addClass('is-expanded');
       expandButton.addClass('is-expanded')
         .find('.plus-minus').addClass('active');
-      
+
       item.expanded = true;
 
       // Optionally Contstrain the width

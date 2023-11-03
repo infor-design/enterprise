@@ -104,6 +104,7 @@
 
               &:hover svg {
                 color: $header-flex-toolbar-close-icon-color-hover;
+                background-color: rgba($searchfield-bg-color, 0);
               }
             }
           }
@@ -113,19 +114,11 @@
             color: $subheader-searchfield-category-button-font-color !important;
 
             svg.icon {
-              color: $subheader-searchfield-category-button-font-color !important;
-
               &.icon-dropdown {
                 margin-left: 1px;
                 margin-right: 2px;
               }
             }
-          }
-        }
-
-        &.context.has-focus {
-          .searchfield {
-            border-left-color: $subheader-input-color-focus-border;
           }
         }
       }

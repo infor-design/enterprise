@@ -2,6 +2,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { colorUtils } from '../../utils/color';
 import { Locale } from '../locale/locale';
+import { debounce } from '../../utils/debounced-resize';
 
 // Default Settings
 const COMPONENT_NAME = 'circlepager';
@@ -343,6 +344,14 @@ CirclePager.prototype = {
     this.setResponsiveSlidesToShow();
 
     this.slidesToShow = numOfSlides || this.settings.slidesToShow;
+
+    // Hiding the elements when calculating the slide width
+    this.hideSlides();
+
+    // Need to unset the card-content overflow to eliminate the scrollbar
+    // It only need this upon building the correct size of slides
+    this.element.parents('.card-content').addClass('unset-overflow');
+
     this.unbind().slidesJQ.css('width', '');
     if (this.slides.length) {
       setTimeout(() => {
@@ -472,6 +481,13 @@ CirclePager.prototype = {
     }
     for (let i = 0, l = this.slidesJQ.length; i < l; i++) {
       this.slidesJQ[i].style.width = `${((100 / this.slidesToShow) / this.slides.length)}%`;
+
+      // Remove the unset-overflow class after the slides are built
+      this.element.parents('.card-content').removeClass('unset-overflow');
+
+      // Show the slides after the slides are built
+      this.showSlides();
+      this.slidesJQ.addClass('transition');
     }
     this.show();
   },
@@ -502,6 +518,26 @@ CirclePager.prototype = {
   },
 
   /**
+   * Show the slides via adding `is-visible` class
+   * @private
+   * @returns {this} - Current instance of the component
+   */
+  showSlides() {
+    this.slidesJQ.addClass('is-visible');
+    return this;
+  },
+
+  /**
+ * Hide the slides via removing `is-visible` class
+ * @private
+ * @returns {this} - Current instance of the component
+ */
+  hideSlides() {
+    this.slidesJQ.removeClass('is-visible');
+    return this;
+  },
+
+  /**
   * Make un-active
   * @private
   * @returns {void}
@@ -519,7 +555,7 @@ CirclePager.prototype = {
   },
 
   /**
-  * Initialize active slide
+  * Initialize active slide.
   * @private
   * @returns {void}
   */
@@ -528,8 +564,19 @@ CirclePager.prototype = {
       this.next();
       return false;
     }
+
+    // Show the current slide
     this.show();
-    this.slidesJQ.addClass('is-visible');
+
+    // Check if control buttons are active or a pager toolbar is present,
+    // and show the slides accordingly.
+    const controlButtonsActive = this.controlButtons.hasClass('is-active');
+    const pagerToolbarPresent = this.controlButtons.find('.pager-toolbar').length > 0;
+
+    if (controlButtonsActive || pagerToolbarPresent) {
+      this.showSlides();
+      this.slidesJQ.addClass('transition');
+    }
   },
 
   /**
@@ -768,9 +815,9 @@ CirclePager.prototype = {
     });
 
     // Set max number of slides can view on resize
-    $('body').off('resize.circlepager').on('resize.circlepager', () => {
+    $('body').off('resize.circlepager').on('resize.circlepager', debounce(() => {
       self.responsiveSlidesToShow();
-    });
+    }, 0));
 
     const possibleTab = self.element.closest('.tab-panel-container').prev('.tab-container');
     possibleTab.off('activated.circlepager').on('activated.circlepager', () => {

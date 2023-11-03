@@ -948,13 +948,22 @@ WeekView.prototype = {
     const endMonth = Locale.formatDate(endDate, { pattern: 'MMMM', locale: this.locale.name });
     const startYear = Locale.formatDate(startDate, { pattern: 'yyyy', locale: this.locale.name });
     const endYear = Locale.formatDate(endDate, { pattern: 'yyyy', locale: this.locale.name });
-    let monthStr = Locale.formatDate(endDate, { date: 'year', locale: this.locale.name });
+    let monthStr = this.isMobileWidth && this.monthField ?
+      Locale.formatDate(endDate, { pattern: 'MMM yyyy', locale: this.locale.name }) :
+      Locale.formatDate(endDate, { date: 'year', locale: this.locale.name });
 
     if (endMonth !== startMonth) {
-      monthStr = `${Locale.formatDate(startDate, { pattern: 'MMM', locale: this.locale.name })} - ${Locale.formatDate(endDate, { pattern: 'MMMM yyyy', locale: this.locale.name })}`;
+      const startStr = Locale.formatDate(startDate, { pattern: 'MMM', locale: this.locale.name });
+      const endStr = this.isMobileWidth && this.monthField ?
+        Locale.formatDate(endDate, { pattern: 'MMM yyyy', locale: this.locale.name }) :
+        Locale.formatDate(endDate, { pattern: 'MMMM yyyy', locale: this.locale.name });
+      monthStr = `${startStr} - ${endStr}`;
     }
+
     if (endYear !== startYear) {
-      monthStr = `${Locale.formatDate(startDate, { pattern: 'MMM yyyy', locale: this.locale.name })} - ${Locale.formatDate(endDate, { pattern: 'MMM yyyy', locale: this.locale.name })}`;
+      const startStr = Locale.formatDate(startDate, { pattern: 'MMM yyyy', locale: this.locale.name });
+      const endStr = Locale.formatDate(endDate, { pattern: 'MMM yyyy', locale: this.locale.name });
+      monthStr = `${startStr} - ${endStr}`;
     }
 
     this.monthField.text(monthStr);
@@ -1062,7 +1071,12 @@ WeekView.prototype = {
     this.settings.endDate = new Date(this.settings.startDate);
     this.settings.endDate.setDate(this.settings.endDate.getDate() + this.numberOfDays - 1);
     this.settings.endDate.setHours(23, 59, 59, 59);
-    this.showWeek(this.settings.startDate, this.settings.endDate);
+
+    if (this.currentDay) {
+      this.showWeek(this.currentDay, this.currentDay);
+    } else {
+      this.showWeek(this.settings.startDate, this.settings.endDate);
+    }
   },
 
   /**
@@ -1212,6 +1226,11 @@ WeekView.prototype = {
     } else {
       this.settings.endDate.setDate(this.settings.endDate.getDate() + diff);
     }
+
+    if (this.isDayView) {
+      this.currentDay = this.settings.startDate;
+    }
+
     this.showWeek(this.settings.startDate, this.settings.endDate);
   },
 
