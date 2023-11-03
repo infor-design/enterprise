@@ -150,10 +150,13 @@
       float: left;
       opacity: 0; // Keep initially hidden until loaded
       position: relative;
-      transition: opacity 0.8s ease 0s;
 
       &.is-visible {
         opacity: 1; // Make it visible after loaded
+
+        &.transition {
+          transition: opacity 0.8s ease 0s;
+        }
       }
 
       .slide-content {

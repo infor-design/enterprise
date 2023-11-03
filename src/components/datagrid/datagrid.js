@@ -432,6 +432,7 @@ Datagrid.prototype = {
   */
   firstRender() {
     const self = this;
+    const hasColWidth = self.settings.columns.some(col => col.width !== undefined);
     this.hasLeftPane = this.settings.frozenColumns.left.length > 0;
     this.hasRightPane = this.settings.frozenColumns.right.length > 0;
 
@@ -444,6 +445,10 @@ Datagrid.prototype = {
     self.bodyWrapperCenter = $(`<div class="datagrid-wrapper center scrollable-x${!this.hasRightPane ? ' scrollable-y' : ''}"></div>`);
     self.table = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.bodyWrapperCenter);
     self.element.append(self.bodyWrapperCenter);
+
+    if (hasColWidth) {
+      self.table.css('width', 'inherit');
+    }
 
     if (this.hasRightPane) {
       self.bodyWrapperRight = $('<div class="datagrid-wrapper right scrollable-y"></div>');
