@@ -6,6 +6,7 @@ import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 import { stringUtils } from '../../../src/utils/string';
 import { dateUtils } from '../../../src/utils/date';
+import { breakpoints } from '../../../src/utils/breakpoints';
 
 Soho.Locale = Locale;
 
@@ -46,6 +47,7 @@ describe('WeekView API', () => {
       startHour: 8,
       endHour: 17
     });
+    weekViewAPI.isMobileWidth = false;
   });
 
   afterEach(() => {
@@ -73,6 +75,7 @@ describe('WeekView API', () => {
   });
 
   it('should render week start and end day', () => {
+    weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('December 2019');
     expect(document.body.querySelector('thead tr th:nth-child(1)').textContent.trim()).toEqual('HourAll day');
     expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('1Sun');
