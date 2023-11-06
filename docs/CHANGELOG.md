@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.90.0
+
+## v4.90.0 Features
+
+## v4.90.0 Fixes
+
+- `[Treemap]` Adjusted label styling in RTL. ([#6891](https://github.com/infor-design/enterprise/issues/6891))
+
 ## v4.89.0
 
 ## v4.89.0 Features
