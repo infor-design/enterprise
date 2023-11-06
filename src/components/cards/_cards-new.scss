@@ -98,10 +98,10 @@
   &.is-empty {
     .widget-content,
     .card-content {
-      // stylelint-disable-next-line scss/at-extend-no-missing-placeholder
-      @extend .flex-center;
       -ms-transform: translateY(-50%);
       transform: translateY(-50%);
+      // stylelint-disable-next-line scss/at-extend-no-missing-placeholder
+      @extend .flex-center;
     }
 
     .card-header + .card-content {
