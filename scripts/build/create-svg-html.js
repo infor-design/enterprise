@@ -11,8 +11,6 @@ import slash from 'slash';
 
 import logger from '../logger.js';
 
-import IdsMetadata from '../helpers/ids-metadata.js';
-
 const ROOT_DIR = slash(process.cwd());
 const NL = process.platform === 'win32' ? '\r\n' : '\n';
 let IS_VERBOSE = false;
@@ -27,19 +25,37 @@ const PATHS = {
  * @returns {obj[]} Theme path objects
  */
 function getIconSetPaths() {
-  const themes = new IdsMetadata().getThemes();
-  let iconSets = themes.map(theme => ({
-    src: `${PATHS.idsIdentity}/dist/theme-${theme.name}/icons/standard/svg/*.svg`,
-    dest: `${PATHS.iconComponent}/theme-${theme.name}-svg.html`,
-    class: 'svg-icons'
-  }));
+  let iconSets = [
+    {
+      src: `${PATHS.idsIdentity}/dist/theme-new/icons/default/svg/*.svg`,
+      dest: `${PATHS.iconComponent}/theme-new-default-svg.html`,
+      class: 'svg-icons'
+    },
+    {
+      src: `${PATHS.idsIdentity}/dist/theme-new/icons/old/svg/*.svg`,
+      dest: `${PATHS.iconComponent}/theme-new-old-svg.html`,
+      class: 'svg-icons'
+    },
+    {
+      src: `${PATHS.idsIdentity}/dist/theme-classic/icons/standard/svg/*.svg`,
+      dest: `${PATHS.iconComponent}/theme-classic-svg.html`,
+      class: 'svg-icons'
+    }
+  ];
 
   // Addition for classic "empty" icons
-  const emptyIconSets = themes.map(theme => ({
-    src: `${PATHS.idsIdentity}/dist/theme-${theme.name}/icons/empty/svg/*.svg`,
-    dest: `${ROOT_DIR}/src/components/emptymessage/theme-${theme.name}-svg-empty.html`,
-    class: 'svg-icons-empty'
-  }));
+  const emptyIconSets = [
+    {
+      src: `${PATHS.idsIdentity}/dist/theme-new/icons/old/empty/svg/*.svg`,
+      dest: `${ROOT_DIR}/src/components/emptymessage/theme-new-svg-empty.html`,
+      class: 'svg-icons-empty'
+    },
+    {
+      src: `${PATHS.idsIdentity}/dist/theme-classic/icons/empty/svg/*.svg`,
+      dest: `${ROOT_DIR}/src/components/emptymessage/theme-classic-svg-empty.html`,
+      class: 'svg-icons-empty'
+    }
+  ];
 
   iconSets = iconSets.concat(emptyIconSets);
 
