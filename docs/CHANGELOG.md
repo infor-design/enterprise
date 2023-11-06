@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.90.0
+
+## v4.90.0 Features
+
+## v4.90.0 Fixes
+
+- `[Modal]` Adjusted modal title spacing to avoid icon from cropping. ([#8031](https://github.com/infor-design/enterprise/issues/8031))
+
 ## v4.89.0
 
 ## v4.89.0 Features
