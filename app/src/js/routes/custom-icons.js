@@ -45,6 +45,9 @@ export default (url, theme) => {
   if (iconSet === 'standard' && theme === 'new') {
     metaPath = 'node_modules/ids-identity/dist/theme-new/icons/default/metadata.json';
   }
+  if (iconSet === 'empty' && theme === 'new') {
+    metaPath = 'node_modules/ids-identity/dist/theme-new/icons/old/empty/metadata.json';
+  }
   const meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8').toString());
 
   if (iconSet === 'empty') {
