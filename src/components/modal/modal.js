@@ -310,7 +310,7 @@ Modal.prototype = {
         <div class="modal-content"${maxWidth}>
           <div class="modal-header"><h1 class="modal-title"></h1></div>
           <div class="modal-body-wrapper">
-            <div class="modal-body ${this.settings.forceOverflow ? 'overflow' : ''}"></div>
+            <div class="modal-body${this.settings.forceOverflow ? ' overflow' : ''}"></div>
           </div>
         </div>
       </div>
