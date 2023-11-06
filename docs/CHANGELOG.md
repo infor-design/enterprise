@@ -22,6 +22,7 @@
 - `[Datagrid]` Additional check for select row when datagrid has grouping and filter. ([NG#1549](https://github.com/infor-design/enterprise-ng/issues/1549))
 - `[Datepicker]` Adjusted sizing of monthview popup to better accommodate smaller dimensions. ([#7974](https://github.com/infor-design/enterprise/issues/7974))
 - `[Datepicker]` Fixed datepicker prematurely closing after selecting a date when having a time format. ([#7916](https://github.com/infor-design/enterprise/issues/7916))
+- `[EmptyMessage]` Fixed empty message card content to center position. ([#7883](https://github.com/infor-design/enterprise/issues/7883))
 - `[General]` Adjusted the reset for spans. ([#1513](https://github.com/infor-design/enterprise/issues/7854))
 - `[Module Nav]` Fixed a bug where the settings was behind the main module nav element. ([#8063](https://github.com/infor-design/enterprise/issues/8063))
 - `[Module Nav]` Fixed a bug where the accordion in the page container inherited module nav accordion styles. ([#8040](https://github.com/infor-design/enterprise/issues/7884))
