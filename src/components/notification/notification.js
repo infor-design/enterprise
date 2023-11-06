@@ -81,7 +81,7 @@ Notification.prototype = {
       $(this.notificationEl).css({ 'max-width': `${$(parentEl).width()}px` });
       $(parentEl).closest('.modal-body-wrapper').prepend(this.notificationEl);
     } else {
-      parentEl.parentNode.insertBefore(this.notificationEl, parentEl.nextSibling);
+      parentEl.append(this.notificationEl);
     }
 
     $(this.notificationEl).animateOpen();
