@@ -268,8 +268,6 @@ $card-header-section: '.card-header-section', '.widget-header-section';
       margin: 0;
       position: absolute;
       top: 50%;
-      -ms-transform: translateY(-50%);
-      transform: translateY(-50%);
       padding-top: 12px;
 
       .notification-container {
@@ -291,7 +289,7 @@ $card-header-section: '.card-header-section', '.widget-header-section';
     }
 
     .card-header + .card-content {
-      padding-top: 48px;
+      padding-top: 33px;
     }
   }
 
