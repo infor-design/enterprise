@@ -22,6 +22,7 @@
 - `[Datagrid]` Additional check for select row when datagrid has grouping and filter. ([NG#1549](https://github.com/infor-design/enterprise-ng/issues/1549))
 - `[Datepicker]` Adjusted sizing of monthview popup to better accommodate smaller dimensions. ([#7974](https://github.com/infor-design/enterprise/issues/7974))
 - `[Datepicker]` Fixed datepicker prematurely closing after selecting a date when having a time format. ([#7916](https://github.com/infor-design/enterprise/issues/7916))
+- `[EmptyMessage]` Fixed empty message card content to center position. ([#7883](https://github.com/infor-design/enterprise/issues/7883))
 - `[General]` Adjusted the reset for spans. ([#1513](https://github.com/infor-design/enterprise/issues/7854))
 - `[Module Nav]` Fixed a bug where the settings was behind the main module nav element. ([#8063](https://github.com/infor-design/enterprise/issues/8063))
 - `[Module Nav]` Fixed a bug where the accordion in the page container inherited module nav accordion styles. ([#8040](https://github.com/infor-design/enterprise/issues/7884))
@@ -41,6 +42,7 @@
 - `[Weekview]` Added overnight event view when end time goes to next day. ([#7840](https://github.com/infor-design/enterprise/issues/7840))
 - `[Weekview]` Fixed an issue with the week change when clicking the `Today` button. ([#7792](https://github.com/infor-design/enterprise/issues/7792))
 - `[Weekview]` Fixed selected day keeps getting restarted when changing theme or mode in mobile view. ([#7927](https://github.com/infor-design/enterprise/issues/7927))
+- `[Weekview]` Use abbreviated month names when in mobile size. ([#7924](https://github.com/infor-design/enterprise/issues/7924))
 
 ## v4.88.0
 
