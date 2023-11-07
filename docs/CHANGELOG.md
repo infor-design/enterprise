@@ -1,8 +1,8 @@
 # What's New with Enterprise
 
-## v4.89.0 (Preview)
+## v4.89.1 (Preview)
 
-## v4.89.0 (Preview) Fixes
+## v4.89.1 (Preview) Fixes
 
 - `[Personalization]` Fixed incorrect values in the `Soho.theme.personalizationColors` api. ([#8151](https://github.com/infor-design/enterprise/issues/8151))
 
