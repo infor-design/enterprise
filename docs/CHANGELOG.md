@@ -1,5 +1,14 @@
 # What's New with Enterprise
 
+## v4.90.0
+
+## v4.90.0 Features
+
+## v4.90.0 Fixes
+
+- `[Pie/Donut]` Fixed a bug in clicking legends causing to change whole list to the last clicked legend name. ([#8139](https://github.com/infor-design/enterprise/issues/8139))
+- `[Pie/Donut]` Fixed a bug in where legends can be clicked if selectable settings set to false. ([#8140](https://github.com/infor-design/enterprise/issues/8140))
+
 ## v4.89.0
 
 ## v4.89.0 Features
