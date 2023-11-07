@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.90.0
+
+## v4.90.0 Features
+
+## v4.90.0 Fixes
+
+- `[Fileupload]` Added condition to not allow for input clearing for readonly and disabled. ([#8024](https://github.com/infor-design/enterprise/issues/8024))
+
 ## v4.89.0
 
 ## v4.89.0 Features
