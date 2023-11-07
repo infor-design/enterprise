@@ -5703,7 +5703,7 @@ Datagrid.prototype = {
     // Set selector
     const selector = {
       th: '.datagrid-header th',
-      td: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
+      td: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"]',
       rowstatus: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"] .icon-rowstatus',
       headerIcon: '.datagrid-header th .datagrid-header-icon'
     };
