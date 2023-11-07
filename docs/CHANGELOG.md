@@ -36,6 +36,8 @@
 - `[Module Nav]` Fixed a bug where the settings was behind the main module nav element. ([#8063](https://github.com/infor-design/enterprise/issues/8063))
 - `[Module Nav]` Fixed a bug where the accordion in the page container inherited module nav accordion styles. ([#8040](https://github.com/infor-design/enterprise/issues/7884))
 - `[Pie/Donut]` Fixed the displayed legend when selecting a different one. ([#7845](https://github.com/infor-design/enterprise/issues/7845))
+- `[Pie/Donut]` Fixed a bug in clicking legends causing to change whole list to the last clicked legend name. ([#8139](https://github.com/infor-design/enterprise/issues/8139))
+- `[Pie/Donut]` Fixed a bug in where legends can be clicked if selectable settings set to false. ([#8140](https://github.com/infor-design/enterprise/issues/8140))
 - `[Popupmenu]` Fixed shared menu not closing and opening correctly. ([NG#1552](https://github.com/infor-design/enterprise-ng/issues/1552))
 - `[ProcessIndicator]` Adjusted icon sizing to remove gaps between separators. ([#7982](https://github.com/infor-design/enterprise/issues/7982))
 - `[Radios]` Adjusted styling of checked disabled radio button. ([#8082](https://github.com/infor-design/enterprise/issues/8082))
