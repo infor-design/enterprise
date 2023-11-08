@@ -12,6 +12,7 @@
 
 ## v4.90.0 Fixes
 
+- `[Fileupload]` Added condition to not allow for input clearing for readonly and disabled. ([#8024](https://github.com/infor-design/enterprise/issues/8024))
 - `[Modal]` Adjusted modal title spacing to avoid icon from cropping. ([#8031](https://github.com/infor-design/enterprise/issues/8031))
 
 ## v4.89.0
