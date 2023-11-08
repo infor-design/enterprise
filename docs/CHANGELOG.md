@@ -6,6 +6,7 @@
 
 ## v4.90.0 Fixes
 
+- `[Datagrid]` Fix on new row not showing error tooltip on first cell. ([#8071](https://github.com/infor-design/enterprise/issues/8071))
 - `[Modal]` Adjusted modal title spacing to avoid icon from cropping. ([#8031](https://github.com/infor-design/enterprise/issues/8031))
 
 ## v4.89.0
@@ -28,7 +29,6 @@
 - `[Datagrid]` Whitespace should be shown on cell when expanded. ([#7848](https://github.com/infor-design/enterprise/issues/7848))
 - `[Datagrid]` Additional check for modal width. ([#7923](https://github.com/infor-design/enterprise/issues/7923))
 - `[Datagrid]` Additional check for select row when datagrid has grouping and filter. ([NG#1549](https://github.com/infor-design/enterprise-ng/issues/1549))
-- `[Datagrid]` Fix on new row not showing error tooltip on first cell. ([#8071](https://github.com/infor-design/enterprise/issues/8071))
 - `[Datepicker]` Adjusted sizing of monthview popup to better accommodate smaller dimensions. ([#7974](https://github.com/infor-design/enterprise/issues/7974))
 - `[Datepicker]` Fixed datepicker prematurely closing after selecting a date when having a time format. ([#7916](https://github.com/infor-design/enterprise/issues/7916))
 - `[Dropdown]` Fixed a bug where the text and dropdown icon were overlapping on smaller viewports. ([#8000](https://github.com/infor-design/enterprise/issues/8000))

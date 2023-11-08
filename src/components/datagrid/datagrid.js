@@ -10766,7 +10766,8 @@ Datagrid.prototype = {
         placement: 'bottom',
         content: message,
         isError: type === 'error' || type === 'dirtyerror',
-        wrapper: icon
+        wrapper: icon,
+        y: 5
       };
       this.cacheTooltip(icon, tooltip);
       this.setupTooltips(false, true);
