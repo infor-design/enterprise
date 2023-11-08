@@ -1,11 +1,5 @@
 # What's New with Enterprise
 
-## v4.89.0 (Preview)
-
-## v4.89.0 (Preview) Features
-
-- `[Datagrid]` Added ability for expandable and summary rows to be updated after cell update. ([#8058](https://github.com/infor-design/enterprise/issues/8058))
-- `[Tabs]` Changed all azure components like header and header tabs to be alabaster by default. ([#7861](https://github.com/infor-design/enterprise/issues/7861))
 ## v4.90.0
 
 ## v4.90.0 Features
@@ -14,13 +8,21 @@
 
 - `[Fileupload]` Added condition to not allow for input clearing for readonly and disabled. ([#8024](https://github.com/infor-design/enterprise/issues/8024))
 - `[Modal]` Adjusted modal title spacing to avoid icon from cropping. ([#8031](https://github.com/infor-design/enterprise/issues/8031))
+- `[Datagrid]` Added ability for expandable and summary rows to be updated after cell update. ([#8058](https://github.com/infor-design/enterprise/issues/8058))
+- `[Tabs]` Changed all azure components like header and header tabs to be alabaster by default. ([#7861](https://github.com/infor-design/enterprise/issues/7861))
+
+## v4.89.0 (Preview)
+
+## v4.89.0 (Preview) Features
+
+- `[Icons]` Added new icon designs. ([#8129](https://github.com/infor-design/enterprise/issues/8129))
+- `[Tabs]` Changed all azure components like header and header tabs to be alabaster by default. ([#7861](https://github.com/infor-design/enterprise/issues/7861))
 
 ## v4.89.0
 
 ## v4.89.0 Features
 
 - `[Datagrid]` Added ability for expandable and summary rows to be updated after cell update. ([#8058](https://github.com/infor-design/enterprise/issues/8058))
-- `[Tabs]` Changed all azure components like header and header tabs to be alabaster by default. ([#7861](https://github.com/infor-design/enterprise/issues/7861))
 
 ## v4.89.0 Fixes
 
