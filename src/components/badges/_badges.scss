@@ -11,6 +11,10 @@
     .btn-dismissible,
     .btn-linkable {
       color: $badge-disabled-text-color;
+
+      .icon {
+        color: $badge-disabled-text-color;
+      }
     }
 
     &:hover {
@@ -352,7 +356,7 @@
     .tag-list .tag.is-dismissible {
       .btn-dismissible {
         .icon {
-          top: -2px;
+          top: -1px;
           vertical-align: middle;
         }
       }
@@ -362,6 +366,9 @@
 
 .tag {
   display: inline-flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .badge {
@@ -513,7 +520,7 @@ html.theme-new-contrast {
       .tag-list .tag.is-dismissible {
         .btn-dismissible {
           .icon {
-            top: 0;
+            top: -2px;
             vertical-align: middle;
           }
         }
