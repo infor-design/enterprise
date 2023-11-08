@@ -29,7 +29,7 @@ $drop-shadow-depth: rgba($ids-color-boxshadow-base, 0.2);
 
 $application-menu-border-color: $ids-color-palette-slate-90;
 
-$header-default-bg-color: $ids-color-palette-azure-60;
+$header-default-bg-color: $ids-color-palette-white;
 
 // Icons
 $icon-color: $icon-color-fill;
@@ -213,7 +213,7 @@ $timepicker-disabled-color: $ids-color-palette-slate-30;
 $timepicker-readonly-icon-color: $ids-color-palette-slate-40;
 
 // Buttons
-$header-button-disabled-color: rgba($ids-color-palette-white, 0.6);
+$header-button-disabled-color: rgba(0, 0, 0, 0.3);
 $button-color-tertiary-initial-font: $ids-color-palette-slate-60;
 $button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-font-new;
 $button-disabled-background-color: transparent;

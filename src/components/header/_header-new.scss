@@ -246,8 +246,18 @@
   .flex-toolbar {
     [class^='btn'] {
       &:not(.close):not(.collapse-button):not([disabled]):hover {
-        color: $ids-color-palette-white !important;
-        background-color: $header-toolbar-button-hover-color !important;
+        color: $ids-color-palette-white;
+        background-color: $header-toolbar-button-hover-color;
+
+        svg.icon {
+          color: $header-button-hover-color-new;
+        }
+      }
+
+      &.application-menu-trigger:hover {
+        &:not(:focus) .icon {
+          color: $header-button-hover-color-new;
+        }
       }
     }
   }

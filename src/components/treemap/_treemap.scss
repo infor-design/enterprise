@@ -68,3 +68,15 @@
     line-height: 1em;
   }
 }
+
+html[dir='rtl'] {
+  .chart-treemap {
+    .chart-treemap-text {
+      right: 8px;
+    }
+
+    .chart-treemap-percent {
+      right: 8px;
+    }
+  }
+}

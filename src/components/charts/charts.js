@@ -344,6 +344,7 @@ charts.addLegend = function (series, chartType, settings, container) {
   let currentWidth;
   let totalWidth = 0;
   let maxLength;
+  this.hasLegendPopup = false;
 
   let currentTotalWidthPercent;
   for (i = 0; i < series.length; i++) {
@@ -501,6 +502,8 @@ charts.addLegend = function (series, chartType, settings, container) {
       </button>
       `);
 
+      this.hasLegendPopup = true;
+
       const popupList = $('<ul class="popupmenu"></ul>');
 
       for (let j = 0; j < series.length; j++) {
@@ -561,6 +564,10 @@ charts.addLegend = function (series, chartType, settings, container) {
  * @param  {object} container The dom container.
  */
 charts.handleElementClick = function (idx, line, series, settings, container) {
+  if (!settings.selectable) {
+    return;
+  }
+
   const api = $(settings?.svg?.node()).closest('.chart-container').data('chart');
   const noTrigger = api?.initialSelectCall;
   const elem = series[idx];
@@ -607,7 +614,7 @@ charts.handleElementClick = function (idx, line, series, settings, container) {
     charts.selectElement(d3.select(elem.selectionObj.nodes()[idx]), elem.selectionInverse, elem.data, undefined, settings.dataset, noTrigger); // eslint-disable-line
   }
 
-  if (isTwoColumn) {
+  if (isTwoColumn && this.hasLegendPopup) {
     const chartType = settings.type === 'donut' ? 'pie' : settings.type;
     const hexColor = charts.chartColor(idx, chartType || (series.length === 1 ? 'bar-single' : 'bar'), elem);
     const colorName = charts.chartColorName(idx, chartType || (series.length === 1 ? 'bar-single' : 'bar'), elem);
