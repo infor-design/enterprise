@@ -90,14 +90,14 @@ const convertSvgMarkup = (id, contents) => {
   changed = changed.replace(' style="color: #28282A; fill: transparent"', '');
   changed = changed.replace(' style="color: transparent; fill: #28282A;"', '');
   changed = changed.replace(' color="transparent" fill="#28282a" stroke="none"', '');
-  changed = changed.replaceAll('#000', 'currentColor');
+  changed = changed.replace(/#000/g, 'currentColor');
 
   if (changed.indexOf('stroke=') === -1) {
-    changed = changed.replaceAll('fill-rule="evenodd"', 'fill="currentColor" fill-rule="evenodd"');
+    changed = changed.replace(/fill-rule="evenodd"/g, 'fill="currentColor" fill-rule="evenodd"');
   }
 
   if (changed.indexOf('stroke=') === -1) {
-    changed = changed.replaceAll('<path d="', '<path fill="currentColor" d="');
+    changed = changed.replace(/<path d="/g, '<path fill="currentColor" d="');
   }
   return changed;
 };
