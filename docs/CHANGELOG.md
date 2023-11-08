@@ -7,6 +7,7 @@
 ## v4.90.0 Fixes
 
 - `[Modal]` Adjusted modal title spacing to avoid icon from cropping. ([#8031](https://github.com/infor-design/enterprise/issues/8031))
+- `[Timepicker]` Remove `disabled` prop in trigger button on enable call. ([NG#1567](https://github.com/infor-design/enterprise-ng/issues/1567))
 
 ## v4.89.0
 
