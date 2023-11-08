@@ -99,7 +99,7 @@ FileUpload.prototype = {
       if (e.which === 13 || e.which === 32) {
         elem.parent().find('[type="file"]').trigger('click');
         handle = true;
-      } else if (e.which === 8) {
+      } else if (e.which === 8 && !(elem.prop('readonly') || elem.prop('disabled'))) {
         if (env.browser.isIE11()) e.preventDefault();
         this.clearUploadFile();
         handle = true;

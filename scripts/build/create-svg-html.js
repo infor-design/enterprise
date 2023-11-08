@@ -115,6 +115,10 @@ const convertSvgMarkup = (id, contents) => {
   if (changed.indexOf('stroke=') === -1) {
     changed = changed.replace(/<path d="/g, '<path fill="currentColor" d="');
   }
+
+  if (id === 'user-status-unknown') {
+    changed = changed.replaceAll('></circle>', 'fill="currentColor" ></circle>');
+  }
   return changed;
 };
 
