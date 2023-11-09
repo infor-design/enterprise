@@ -3411,7 +3411,7 @@ $datagrid-small-row-height: 25px;
     }
 
     &.is-dirty-cell,
-    &.error {
+    &.has-editor.error {
       .icon-rowstatus {
         display: none;
       }
