@@ -17,6 +17,7 @@
 
 - `[Icons]` Added new icon designs. ([#8129](https://github.com/infor-design/enterprise/issues/8129))
 - `[Tabs]` Changed all azure components like header and header tabs to be alabaster by default. ([#7861](https://github.com/infor-design/enterprise/issues/7861))
+- `[Timepicker]` Remove `disabled` prop in trigger button on enable call. ([NG#1567](https://github.com/infor-design/enterprise-ng/issues/1567))
 
 ## v4.89.0
 
