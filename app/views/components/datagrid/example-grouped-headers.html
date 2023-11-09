@@ -38,10 +38,10 @@
         columns: columns,
         // Numeric Column Span Groups (3 + 1 + 2 + 3 === 9)
         columnGroups: [
-          { colspan: 3, id: 'group1', name: 'Column Group One', align: 'center' },
-          { colspan: 1, id: 'group2', name: 'Column Group Two' },
-          { colspan: 2, id: 'group3', name: 'Column Group Three', align: 'right' },
-          { colspan: 3, id: 'group4', name: 'Column Group Four', align: 'left' }
+          { colspan: 3, id: 'group1', name: 'Column Group One', align: 'center', tooltip: 'test', headerTooltip: 'test' },
+          { colspan: 1, id: 'group2', name: 'Column Group Two', tooltip: 'test' },
+          { colspan: 2, id: 'group3', name: 'Column Group Three', align: 'right', tooltip: 'test' },
+          { colspan: 3, id: 'group4', name: 'Column Group Four', align: 'left', tooltip: 'test' }
         ],
         dataset: data,
         columnReorder: true,
