@@ -6,13 +6,6 @@
 
 - `[Personalization]` Fixed incorrect values in the `Soho.theme.personalizationColors` api. ([#8151](https://github.com/infor-design/enterprise/issues/8151))
 
-## v4.89.0 (Preview)
-
-## v4.89.0 (Preview) Features
-
-- `[Datagrid]` Added ability for expandable and summary rows to be updated after cell update. ([#8058](https://github.com/infor-design/enterprise/issues/8058))
-- `[Tabs]` Changed all azure components like header and header tabs to be alabaster by default. ([#7861](https://github.com/infor-design/enterprise/issues/7861))
-
 ## v4.90.0
 
 ## v4.90.0 Features
