@@ -108,6 +108,10 @@ div.multiselect {
       color: $input-placeholder-color;
       content: attr(data-placeholder-text);
     }
+
+    @media (max-width: $breakpoint-phone) {
+      display: inline;
+    }
   }
 
   > .listoption-icon {

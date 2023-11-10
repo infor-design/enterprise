@@ -1,5 +1,16 @@
 # What's New with Enterprise
 
+## v4.90.0
+
+## v4.90.0 Features
+
+## v4.90.0 Fixes
+
+- `[Datagrid]` Fixed an issue where the new row did not display an error tooltip on the first cell. ([#8071](https://github.com/infor-design/enterprise/issues/8071))
+- `[Fileupload]` Added condition to not allow for input clearing for readonly and disabled. ([#8024](https://github.com/infor-design/enterprise/issues/8024))
+- `[Modal]` Adjusted modal title spacing to avoid icon from cropping. ([#8031](https://github.com/infor-design/enterprise/issues/8031))
+- `[Timepicker]` Remove `disabled` prop in trigger button on enable call. ([NG#1567](https://github.com/infor-design/enterprise-ng/issues/1567))
+
 ## v4.89.0
 
 ## v4.89.0 Features
@@ -22,11 +33,14 @@
 - `[Datagrid]` Additional check for select row when datagrid has grouping and filter. ([NG#1549](https://github.com/infor-design/enterprise-ng/issues/1549))
 - `[Datepicker]` Adjusted sizing of monthview popup to better accommodate smaller dimensions. ([#7974](https://github.com/infor-design/enterprise/issues/7974))
 - `[Datepicker]` Fixed datepicker prematurely closing after selecting a date when having a time format. ([#7916](https://github.com/infor-design/enterprise/issues/7916))
+- `[Dropdown]` Fixed a bug where the text and dropdown icon were overlapping on smaller viewports. ([#8000](https://github.com/infor-design/enterprise/issues/8000))
 - `[EmptyMessage]` Fixed empty message card content to center position. ([#7883](https://github.com/infor-design/enterprise/issues/7883))
 - `[General]` Adjusted the reset for spans. ([#1513](https://github.com/infor-design/enterprise/issues/7854))
 - `[Module Nav]` Fixed a bug where the settings was behind the main module nav element. ([#8063](https://github.com/infor-design/enterprise/issues/8063))
 - `[Module Nav]` Fixed a bug where the accordion in the page container inherited module nav accordion styles. ([#8040](https://github.com/infor-design/enterprise/issues/7884))
 - `[Pie/Donut]` Fixed the displayed legend when selecting a different one. ([#7845](https://github.com/infor-design/enterprise/issues/7845))
+- `[Pie/Donut]` Fixed a bug in clicking legends causing to change whole list to the last clicked legend name. ([#8139](https://github.com/infor-design/enterprise/issues/8139))
+- `[Pie/Donut]` Fixed a bug in where legends can be clicked if selectable settings set to false. ([#8140](https://github.com/infor-design/enterprise/issues/8140))
 - `[Popupmenu]` Fixed shared menu not closing and opening correctly. ([NG#1552](https://github.com/infor-design/enterprise-ng/issues/1552))
 - `[ProcessIndicator]` Adjusted icon sizing to remove gaps between separators. ([#7982](https://github.com/infor-design/enterprise/issues/7982))
 - `[Radios]` Adjusted styling of checked disabled radio button. ([#8082](https://github.com/infor-design/enterprise/issues/8082))
@@ -38,6 +52,7 @@
 - `[Tabs]` Adjusted placement of icons in tab list spillover. ([#7970](https://github.com/infor-design/enterprise/issues/7970))
 - `[Tabs]` Fixed the focus state of radio button not fully shown in tabs. ([#7955](https://github.com/infor-design/enterprise/issues/7955))
 - `[Targeted-Achievement]` Fixed waring color not displaying properly. ([#7891](https://github.com/infor-design/enterprise/issues/7891))
+- `[Treemap]` Adjusted label styling in RTL. ([#6891](https://github.com/infor-design/enterprise/issues/6891))
 - `[Validation]` Fixed the position of exclamation points of validation in non english localization. ([#5119](https://github.com/infor-design/enterprise/issues/5119))
 - `[Weekview]` Added overnight event view when end time goes to next day. ([#7840](https://github.com/infor-design/enterprise/issues/7840))
 - `[Weekview]` Fixed an issue with the week change when clicking the `Today` button. ([#7792](https://github.com/infor-design/enterprise/issues/7792))

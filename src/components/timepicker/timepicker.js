@@ -1211,6 +1211,7 @@ TimePicker.prototype = {
    */
   enable() {
     this.element.removeAttr('disabled readonly').closest('.field').removeClass('is-disabled');
+    this.trigger.removeAttr('disabled');
   },
 
   /**
