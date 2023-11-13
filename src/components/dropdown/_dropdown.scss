@@ -239,6 +239,7 @@ div.multiselect {
     scroll-behavior: smooth;
     text-overflow: clip;
     white-space: normal;
+    min-height: 33px;
 
     &.empty {
       padding: 16px 0 15px;
