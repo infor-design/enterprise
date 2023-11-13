@@ -3,8 +3,8 @@
 
 @mixin disabled-tag {
   &.is-disabled {
-    background-color: $badge-disabled-bg-color;
-    border-color: transparent;
+    background-color: transparent;
+    border-color: $input-color-disabled-border;
     color: $badge-disabled-text-color;
     pointer-events: none;
 
@@ -182,7 +182,6 @@
 
   // Alternate Color Tags
   &.secondary {
-    background-color: $badge-secondary-bg-color;
     border: 1px solid $badge-secondary-border-color;
     color: $badge-secondary-color;
     line-height: 20px;
@@ -494,10 +493,6 @@ html.theme-classic-contrast,
 html.theme-new-contrast {
   .tag,
   .badge {
-    &.secondary {
-      border-color: $badge-secondary-border-color;
-    }
-
     &:not(.error):not(.alert):not(.info):not(.good) {
       &.is-linkable {
         &:hover,
