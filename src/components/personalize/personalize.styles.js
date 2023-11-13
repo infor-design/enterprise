@@ -64,12 +64,20 @@ html[class*="theme-classic-"]:not(.theme-classic-dark) .btn-primary:not(.destruc
   border-color: ${colors.baseDisabled};
 }
 
+.is-personalizable:not(.header) .btn-tertiary:not(:disabled):hover {
+  background-color: ${colors.lightestPalette};
+}
+
 .is-personalizable:not(.header) .btn-link:not(:disabled):hover {
   background-color: ${colors.lightestPalette};
 }
 
+html[class*="new-"] .is-personalizable:not(.header) .btn-link:not(:disabled):hover {
+  background-color: ${colors.btnTertiaryBgHoverColor};
+}
+
 html[class*="new-"] .is-personalizable:not(.header) .btn-menu:not(.btn-secondary):not([disabled]):not(:disabled):hover {
-  background-color: ${colors.lightestPalette};
+  background-color: ${colors.btnTertiaryBgHoverColor};
 }
 
 .is-personalizable:not(.header) .btn-link:not(:disabled),
@@ -128,7 +136,7 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructiv
 
 html[class*="new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 html[class*="new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-secondary.btn-menu.is-open:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) {
-  background-color: ${colors.lightestPalette};
+  background-color: ${colors.btnTertiaryBgHoverColor}; 
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
@@ -496,6 +504,7 @@ html.theme-classic-dark .header.is-personalizable .buttonset .searchfield-wrappe
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
   color: ${colors.headerTabsSelectedTextColor} !important;
   opacity: 1;
+  background-color: transparent;
 }
 
 .header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button {
