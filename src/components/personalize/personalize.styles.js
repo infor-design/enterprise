@@ -496,6 +496,7 @@ html.theme-classic-dark .header.is-personalizable .buttonset .searchfield-wrappe
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
   color: ${colors.headerTabsSelectedTextColor} !important;
   opacity: 1;
+  background-color: transparent;
 }
 
 .header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button {
