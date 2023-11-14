@@ -203,13 +203,28 @@ html:not([dir='rtl']) {
 }
 
 html[dir='rtl'] {
+  .process-indicator {
+    &.compact {
+      &.has-labels {
+        .indicator.icon .icon {
+          left: 2px;
+        }
+      }
+    }
+  }
+
+  .process-indicator .indicator.icon .icon {
+    left: 4px;
+  }
+
   &.is-firefox {
     .indicator {
       &.more-info {
         &::before {
           top: 0.25em;
+          
         }
       }
     }
-  }
+  }  
 }
