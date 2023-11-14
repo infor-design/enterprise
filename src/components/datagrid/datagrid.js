@@ -10616,7 +10616,8 @@ Datagrid.prototype = {
       cell,
       newValue,
       false,
-      isInline
+      isInline,
+      oldValue
     );
     const value = this.fieldValue(rowData, col.field);
 
@@ -11321,9 +11322,10 @@ Datagrid.prototype = {
    * @param {any} value The value to use.
    * @param {boolean} fromApiCall Comes from an api call.
    * @param {boolean} isInline If the editor is an inline value.
+   * @param {any} oldValue The old value of the input.
    * @returns {void}
    */
-  updateCellNode(row, cell, value, fromApiCall, isInline) {
+  updateCellNode(row, cell, value, fromApiCall, isInline, oldValue) {
     let coercedVal;
     let rowNodes = this.settings.groupable ? this.rowNodesByDataIndex(row) : this.rowNodes(row);
     let cellNode = rowNodes.find('td').eq(cell);
@@ -11456,8 +11458,15 @@ Datagrid.prototype = {
       // Validate the cell
       this.validateCell(dataRowIndex, cell);
 
+      let oldCompare = oldValue;
+      let newCompare = value;
+      if (oldCompare instanceof Date) {
+        newCompare = Locale.parseDate(newCompare).getTime();
+        oldCompare = oldCompare.getTime();
+      }
+
       // Update and set trackdirty
-      if (!this.isDirtyCellUndefined(dataRowIndex, cell)) {
+      if (oldCompare !== newCompare && !this.isDirtyCellUndefined(dataRowIndex, cell)) {
         this.dirtyArray[dataRowIndex][cell].value = value;
         this.dirtyArray[dataRowIndex][cell].coercedVal = coercedVal;
         this.dirtyArray[dataRowIndex][cell].escapedCoercedVal = xssUtils.escapeHTML(coercedVal);

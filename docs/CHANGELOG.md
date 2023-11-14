@@ -10,6 +10,7 @@
 - `[Button]` Adjusted personalize button hover colors. ([#8035](https://github.com/infor-design/enterprise/issues/8035))
 - `[Datagrid]` Fixed misalignment on date cells when selected. ([#8021](https://github.com/infor-design/enterprise/issues/8021))
 - `[Datagrid]` Fixed an issue where the new row did not display an error tooltip on the first cell. ([#8071](https://github.com/infor-design/enterprise/issues/8071))
+- `[Datagrid]` Fixed an issue where dirty tracker will appear even no change was made from the cell. ([#8020](https://github.com/infor-design/enterprise/issues/8020))
 - `[Fileupload]` Added condition to not allow for input clearing for readonly and disabled. ([#8024](https://github.com/infor-design/enterprise/issues/8024))
 - `[Modal]` Adjusted modal title spacing to avoid icon from cropping. ([#8031](https://github.com/infor-design/enterprise/issues/8031))
 - `[Page-Patterns]` Fixed background on hovered selected tab. ([#8088](https://github.com/infor-design/enterprise/issues/8088))
