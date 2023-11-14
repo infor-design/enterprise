@@ -11506,7 +11506,7 @@ Datagrid.prototype = {
     // Sanitize console methods
     oldVal = xssUtils.sanitizeConsoleMethods(oldVal);
     coercedVal = xssUtils.sanitizeConsoleMethods(coercedVal);
-    console.log('sanitize')
+
     let isCellChange;
     if (typeof oldVal === 'string' && typeof coercedVal === 'string') {
       // Some reasion compare spaces not in match, use `&nbsp;` leading/trailing spaces
