@@ -8,6 +8,7 @@
 
 - `[Badges]` Adjusted color and positioning of dismissible button in multiselect dropdown tags. ([#8036](https://github.com/infor-design/enterprise/issues/8036))
 - `[Button]` Adjusted personalize button hover colors. ([#8035](https://github.com/infor-design/enterprise/issues/8035))
+- `[ContextualActionPanel]` Fixed close button layout for RTL. ([#8166](https://github.com/infor-design/enterprise/issues/8166)) 
 - `[Datagrid]` Adjusted hover styling for search and expand buttons. ([#8078](https://github.com/infor-design/enterprise/issues/8078))
 - `[Datagrid]` Fixed misalignment on date cells when selected. ([#8021](https://github.com/infor-design/enterprise/issues/8021))
 - `[Datagrid]` Fixed an issue where the new row did not display an error tooltip on the first cell. ([#8071](https://github.com/infor-design/enterprise/issues/8071))
