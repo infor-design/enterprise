@@ -16,7 +16,7 @@
         </ul>
       </div>
       <div class="card-content">
-        <div class="notification-cointainer"></div>
+        <div class="notification-container"></div>
         <div class="listview" id="task-listview"
           data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'selectable': 'false'}">
         </div>
@@ -45,30 +45,30 @@
 </script>
 
 <script>
-  $('.notification-cointainer').notification({
+  $('.notification-container').notification({
     type: 'error',
     message: 'ION API Error, please contact admin',
-    parent: '.notification-cointainer',
+    parent: '.notification-container',
     linkText: ''
   });
 
 </script>
 
 <script>
-    $('.notification-cointainer').notification({
+    $('.notification-container').notification({
       type: 'alert',
       message: 'Session Timeout, Reconnecting in 2 seconds before it resumes',
-      parent: '.notification-cointainer',
+      parent: '.notification-container',
       linkText: ''
     });
 
   </script>
 
 <script>
-    $('.notification-cointainer').notification({
+    $('.notification-container').notification({
       type: 'success',
       message: 'Records successfully updated!',
-      parent: '.notification-cointainer',
+      parent: '.notification-container',
       linkText: ''
     });
 

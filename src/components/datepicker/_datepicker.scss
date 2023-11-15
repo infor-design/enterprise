@@ -104,6 +104,16 @@
 // Popup Adjustments
 .monthview-popup.popover {
   max-width: inherit;
+  min-width: 314px;
+  min-height: auto;
+
+  @media screen and (max-device-width: ($breakpoint-phone - 1)) {
+    min-width: 260px;
+  }
+
+  @media screen and (max-device-width: ($breakpoint-phone + 54)) {
+    overflow: auto;
+  }
 
   @media screen and (max-height: ($breakpoint-big-phone + 50)) {
     overflow-y: auto;
@@ -124,7 +134,7 @@
   }
 
   .monthview .monthview-table {
-    max-width: 330px;
+    max-width: 310px;
   }
 
   // Week picker adjustments
@@ -161,6 +171,7 @@
       &.is-select-month-pane {
         transition: width 0.1s ease-in-out;
         width: 100%;
+        border-left: thin solid transparent;
       }
     }
   }

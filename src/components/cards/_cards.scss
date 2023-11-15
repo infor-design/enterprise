@@ -101,6 +101,23 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   position: relative;
   width: 100%;
 
+  &.no-header {
+    .card-content {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+
+      .btn-actions-wrapper {
+        min-width: 38px;
+        min-height: 38px;
+        padding: 2px;
+        margin: 1px;
+        position: absolute;
+        right: 8px;
+        top: 8px;
+      }
+    }
+  }
+
   &.border-less {
     background: none;
     border-color: transparent;
@@ -248,7 +265,16 @@ $card-header-section: '.card-header-section', '.widget-header-section';
     }
 
     .card-content {
+      margin: 0;
+      position: absolute;
+      top: 50%;
       padding-top: 12px;
+
+      .notification-container {
+        position: relative;
+        width: inherit;
+        top: -3px;
+      }
 
       .card-empty-info {
         .font-size-px-14 {
@@ -260,6 +286,10 @@ $card-header-section: '.card-header-section', '.widget-header-section';
           }
         }
       }
+    }
+
+    .card-header + .card-content {
+      padding-top: 33px;
     }
   }
 

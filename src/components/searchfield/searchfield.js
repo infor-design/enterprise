@@ -169,7 +169,7 @@ SearchField.prototype = {
    * @returns {boolean} whether or not the searchfield is currently able to be collapsed.
    */
   get isCurrentlyCollapsible() {
-    return this.settings.collapsible === true || this.settings.collapsible === 'mobile' || this.shouldBeFullWidth();
+    return this.settings.collapsible === true || (this.settings.collapsible === 'mobile' && breakpoints.isBelow('phone-to-tablet'));
   },
 
   /**
@@ -320,7 +320,7 @@ SearchField.prototype = {
     }
 
     // Add/remove the collapsible functionality
-    this.wrapper[0].classList[!this.settings.collapsible === true ? 'add' : 'remove']('non-collapsible');
+    this.wrapper[0].classList[!this.isCurrentlyCollapsible ? 'add' : 'remove']('non-collapsible');
 
     // Add/remove `toolbar-searchfield-wrapper` class based on existence of Toolbar Parent
     this.wrapper[0].classList[this.toolbarParent ? 'add' : 'remove']('toolbar-searchfield-wrapper');
@@ -521,6 +521,8 @@ SearchField.prototype = {
    * @returns {void}
    */
   adjustOnBreakpoint() {
+    this.wrapper[0].classList[!this.isCurrentlyCollapsible ? 'add' : 'remove']('non-collapsible');
+
     // On smaller form-factor (tablet/phone)
     if (this.shouldBeFullWidth()) {
       this.wrapper.removeAttr('style');
@@ -1477,6 +1479,10 @@ SearchField.prototype = {
       const categoryButtonBorder = (parseInt(categoryButtonStyle.borderLeftWidth, 10) * 2);
 
       subtractWidth += (categoryButtonWidth + categoryButtonPadding + categoryButtonBorder);
+
+      if (this.element.parents('.header').length === 1 && breakpoints.isBelow('phone-to-tablet')) {
+        subtractWidth += 40;
+      }
     }
 
     if (this.hasGoButton()) {
@@ -1572,6 +1578,10 @@ SearchField.prototype = {
     // Subtract width of extraneous buttons/elems
     if (this.hasCategories()) {
       subtractWidth += this.categoryButton.outerWidth(true);
+
+      if (this.element.parents('.header').length === 1 && breakpoints.isBelow('phone-to-tablet')) {
+        subtractWidth += 40;
+      }
     }
 
     if (this.hasGoButton()) {

@@ -75,21 +75,6 @@
     }
   }
 
-  &.no-header {
-    .card-content {
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-
-      .btn-actions-wrapper {
-        min-width: 35px;
-        padding: 1px;
-        position: absolute;
-        right: 8px;
-        top: 8px;
-      }
-    }
-  }
-
   &:not(.show-buttons) button.btn-actions:not(.list-button) {
     opacity: 0;
   }
@@ -113,8 +98,14 @@
   &.is-empty {
     .widget-content,
     .card-content {
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
       // stylelint-disable-next-line scss/at-extend-no-missing-placeholder
       @extend .flex-center;
+    }
+
+    .card-header + .card-content {
+      padding-top: 48px;
     }
   }
 

@@ -132,7 +132,7 @@ PopupMenu.prototype = {
    * @returns {boolean} whether or not the popupmenu is currently open
    */
   get isOpen() {
-    return DOM.hasClass(this.element[0], 'is-open');
+    return DOM.hasClass(this.element[0], 'is-open') || DOM.hasClass(this.menu[0], 'is-open');
   },
 
   /**
@@ -974,6 +974,7 @@ PopupMenu.prototype = {
         self.holdingDownClick = true;
       }
 
+      self.close();
       doOpen(e);
     }
 
@@ -2244,6 +2245,11 @@ PopupMenu.prototype = {
 
     // If the entire menu is "selectable", place the checkmark where it's supposed to go.
     if ((parent.hasClass('is-selectable') && !anchor.find('.icon').length) || singleMenu || singleSection) {
+      if (parent.hasClass('is-checked')) {
+        parent.removeClass('is-checked');
+        returnObj.push('deselected');
+        return returnObj;
+      }
       parent.prevUntil('.heading, .separator').add(parent.nextUntil('.heading, .separator')).removeClass('is-checked');
       parent.addClass('is-checked');
       returnObj.push('selected');
@@ -2621,7 +2627,6 @@ PopupMenu.prototype = {
       .removeAttr('aria-controls')
       .removeAttr('aria-haspopup')
       .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keydown.popupmenu keypress.popupmenu contextmenu.popupmenu updated.popupmenu');
-
     return this;
   },
 

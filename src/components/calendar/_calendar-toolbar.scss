@@ -12,7 +12,7 @@
     background-color: transparent;
     border: 1px solid transparent;
     border-radius: 2px;
-    box-shadow: none;
+    box-shadow: 0 0 4px 3px transparent;
     padding: 8px 36px 7px 8px;
 
     &:focus {
@@ -194,6 +194,10 @@
   .calendar-toolbar {
     border-bottom: 1px solid $popover-separator-color;
     padding: 0 5px 0 20px;
+
+    @media only screen and (max-device-width: $breakpoint-phone) {
+      min-width: 324px;
+    }
 
     @media only screen
       and (minwidth: $breakpoint-phone)

@@ -323,7 +323,7 @@
     <header class="header is-personalizable">
       <div class="flex-toolbar">
         <div class="toolbar-section">
-          <button id="header-hamburger" class="btn-icon application-menu-trigger personalize-actionable" type="button" title="Toggle Module Nav">
+          <button id="header-hamburger" class="btn-icon application-menu-trigger personalize-actionable" type="button">
             <span class="audible" data-translate="text">AppMenuTriggerTextAlt</span>
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-menu"></use>
@@ -340,9 +340,101 @@
     </header>
 
     <div class="row top-padding">
-      <div class="four columns">&nbsp;</div>
-      <div class="four columns">&nbsp;</div>
+      <div class="eight columns">
+        <div class="accordion" data-demo-set-links="true" data-options='{ "allowOnePane": false }'>
+          <div id="header-one" class="accordion-header">
+            <a href="#" id="warehouse-location" data-automation-id="accordion-a-header-one"><span>Warehouse Location</span></a>
+            <button id="personal-expander" data-automation-id="accordion-btn-warehouse-location" class="btn" tabindex="-1">
+              <svg class="chevron icon">
+                <use href="#icon-caret-down"></use>
+              </svg>
+              <span class="audible">Expand</span>
+            </button>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-content">
+              <p>
+              Remix, optimize, "B2B, iterate?" Best-of-breed efficient beta-test; social cutting-edge: rich magnetic tagclouds front-end infomediaries viral authentic incentivize sexy extensible functionalities incentivize. Generate killer authentic grow vertical blogospheres, functionalities ecologies harness, "tag solutions synergies exploit data-driven B2C open-source e-markets optimize create, enhance convergence create." Out-of-the-box strategize best-of-breed back-end, deploy design markets metrics. Content web services enhance leading-edge Cluetrain, deliverables dot-com scalable. User-centric morph, back-end, synthesize mesh, frictionless, exploit next-generation tag portals, e-commerce channels; integrate; recontextualize distributed revolutionize innovative eyeballs.
+              </p>
+            </div>
+          </div>
+    
+          <div id="header-two" class="accordion-header">
+            <a href="#" id="sort-by" data-automation-id="accordion-a-sort-by"><span>Sort By</span></a>
+            <button id="sort-by-expander" data-automation-id="accordion-btn-sort-by" class="btn" tabindex="-1">
+              <svg class="chevron icon">
+                <use href="#icon-caret-down"></use>
+              </svg>
+              <span class="audible">Expand</span>
+            </button>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-content">
+              <div class="radio-group">
+                <input type="radio" class="radio" name="sort" id="sort-recent" value="recent" />
+                <label for="sort-recent" class="radio-label">Recently Added</label>
+                <br/>
+                <input type="radio" class="radio" name="sort" id="sort-price-low-high" value="price-low-high" checked="true" />
+                <label for="sort-price-low-high" class="radio-label">Price: Low &ndash; High</label>
+                <br/>
+                <input type="radio" class="radio" name="sort" id="sort-price-high-low" value="price-high-low"/>
+                <label for="sort-price-high-low" class="radio-label">Price: High &ndash; Low</label>
+                <br/>
+                <input type="radio" class="radio" name="sort" id="sort-alphabetical" value="alphabetical" />
+                <label for="sort-alphabetical" class="radio-label">Alphabetical</label>
+                <br/>
+                <input type="radio" class="radio" name="sort" id="sort-stock" value="stock" />
+                <label for="sort-stock" class="radio-label">In Stock</label>
+                <br/>
+              </div>
+            </div>
+          </div>
+    
+          <div id="header-three" class="accordion-header">
+            <a id="brand-name" data-automation-id="accordion-a-brand-name" href="#"><span>Brand Name</span></a>
+            <button id="brand-name-expander" data-automation-id="accordion-btn-brand-name" class="btn" tabindex="-1">
+              <svg class="chevron icon">
+                <use href="#icon-caret-down"></use>
+              </svg>
+              <span class="audible">Expand</span>
+            </button>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-content">
+                <p>
+                Revolutionize implement infrastructures social front-end, world-class bricks-and-clicks extensible recontextualize? User-contributed e-business relationships widgets bleeding-edge transform, "viral world-class, unleash sexy embrace cross-media best-of-breed wireless, functionalities." Markets, "transition architectures, redefine infomediaries world-class back-end harness, mindshare blogospheres; schemas disintermediate rich," benchmark integrated markets blogging synergies dynamic social back-end convergence. Reinvent A-list A-list B2C rss-capable, mesh bandwidth mission-critical disintermediate strategize networks distributed integrated bleeding-edge rss-capable partnerships incubate, web-enabled e-markets. A-list channels enhance citizen-media, value solutions beta-test platforms enable interfaces, transition interfaces one-to-one expedite scalable.
+                </p>
+            </div>
+          </div>
+    
+          <div id="header-four" class="accordion-header">
+            <a id="material" data-automation-id="accordion-a-material" href="#"><span>Material</span></a>
+            <button id="material-expander" data-automation-id="accordion-btn-material" class="btn" tabindex="-1">
+              <svg class="chevron icon">
+                <use href="#icon-caret-down"></use>
+              </svg>
+              <span class="audible">Expand</span>
+            </button>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-content">
+              <p>
+              Revolutionize implement infrastructures social front-end, world-class bricks-and-clicks extensible recontextualize? User-contributed e-business relationships widgets bleeding-edge transform, "viral world-class, unleash sexy embrace cross-media best-of-breed wireless, functionalities." Markets, "transition architectures, redefine infomediaries world-class back-end harness, mindshare blogospheres; schemas disintermediate rich," benchmark integrated markets blogging synergies dynamic social back-end convergence. Reinvent A-list A-list B2C rss-capable, mesh bandwidth mission-critical disintermediate strategize networks distributed integrated bleeding-edge rss-capable partnerships incubate, web-enabled e-markets. A-list channels enhance citizen-media, value solutions beta-test platforms enable interfaces, transition interfaces one-to-one expedite scalable.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="four columns">
+        <div class="field field-checkbox">
+          <label for="display-mode-dropdown" class="label">Display mode</label>
+          <select id="display-mode-dropdown" class="dropdown">
+            <option value="collapsed" selected>Collapsed</option>
+            <option value="expanded">Expanded</option>
+            <option value="">Hidden</option>
+          </select>
+        </div>
+
         <div class="field">
           <input type="checkbox" class="checkbox" name="pin-sections" id="pin-sections" />
           <label for="pin-sections" class="checkbox-label">Preview 'pinSections' setting</label>
@@ -351,17 +443,7 @@
           <input type="checkbox" class="checkbox" name="display-detail-check" id="display-detail-check" />
           <label for="display-detail-check" class="checkbox-label">Preview 'showDetailView' setting</label>
         </div>
-        <div class="field">
-          <input type="checkbox" class="checkbox" name="hide-completely" id="hide-completely" />
-          <label for="hide-completely" class="checkbox-label">Hide completely</label>
-        </div>
       </div>
-    </div>
-    <div class="row test-spacer">&nbsp;</div>
-    <div class="row">
-      <div class="four columns">&nbsp;</div>
-      <div class="four columns">&nbsp;</div>
-      <div class="four columns">Scrolling this area shouldn't affect the navigation columns.</div>
     </div>
   </div>
 </section>
@@ -375,10 +457,18 @@
     const navEl = $('#nav');
     const navAPI = navEl.data('modulenav');
     const containerEl = $('.module-nav-container');
+    const dropdownEl = $('#display-mode-dropdown')
+    const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
     const displayCheckEl = $('#display-detail-check');
-    const hideCompletelyEl = $('#hide-completely');
     const hamburgerBtnEl = $('#header-hamburger');
     const pinSectionsCheckEl = $('#pin-sections');
+
+    // Connect form control event handling
+    dropdownAPI.element.on('change.test', (e) => {
+      let val = dropdownAPI.value;
+      if (val === 'Hidden') val = false;
+      navAPI.updated({ displayMode: val });
+    });
 
     displayCheckEl.on('change.test', (e) => {
       navAPI.updated({ showDetailView: displayCheckEl[0].checked });
@@ -390,12 +480,18 @@
 
     if (hamburgerBtnEl.length) {
       hamburgerBtnEl.on('click.test', (e) => {
-        navAPI.handleHamburgerClick();
+        if (dropdownAPI.value === 'collapsed') {
+          dropdownAPI.selectValue('expanded')
+          dropdownEl.trigger('change');
+        } else {
+          dropdownAPI.selectValue('collapsed')
+          dropdownEl.trigger('change');
+        }
       });
     }
 
     navEl.on('displaymodechange.test', (e, mode) => {
-      console.log('Display mode changed to:', mode);
+      dropdownAPI.selectValue(mode === false ? '' : mode);
     });
 
     // Connect component event handling
@@ -410,33 +506,7 @@
 
     roleButtonEl.on('click.test', (e) => {
       console.info('Module Button Click');
-    });
-
-    hideCompletelyEl.on('change.test', (e) => {
-      console.log(hideCompletelyEl[0].checked)
-
-      if (hideCompletelyEl[0].checked) {
-        navAPI.updated({ displayMode: false });
-        hamburgerBtnEl.attr('disabled', 'true');
-      }
-      else {
-        navAPI.updated({ displayMode: navAPI.isLargerThanBreakpoint() ? 'collapsed' : 'expanded' });
-        hamburgerBtnEl.removeAttr('disabled');
-      }
-    });
-
-    hideCompletelyEl.on('change.test', (e) => {
-      console.log(hideCompletelyEl[0].checked)
-
-      if (hideCompletelyEl[0].checked) {
-        navAPI.updated({ displayMode: false });
-        hamburgerBtnEl.attr('disabled', 'true');
-      }
-      else {
-       navAPI.updated({ displayMode: navAPI.isLargerThanBreakpoint() ? 'collapsed' : 'expanded' });
-       hamburgerBtnEl.removeAttr('disabled');
-      }
-    });
+    })
 
     // Customizations to the component after init
     navAPI.updated({ displayMode: 'collapsed' });

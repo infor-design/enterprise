@@ -97,7 +97,11 @@
     &.icon-error,
     &.icon-info,
     &.icon-alert {
-      top: 10px;
+      top: 9px;
+    }
+
+    &.icon-error {
+      margin-top: 0;
     }
   }
 }

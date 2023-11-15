@@ -14,9 +14,34 @@
       &.rejected {
         &::before,
         &::after {
-          width: ($indicator-size * 0.78);
+          width: ($indicator-size * 0.8);
+        }
+
+        &.current {
+          &::before,
+          &::after {
+            left: 0.55em;
+          }
         }
       }
+    }
+
+    &.has-labels {
+      .indicator.icon .icon {
+        height: 22px;
+        left: -3px;
+        top: -3px;
+        width: 21px;
+        z-index: 1;
+      }
+    }
+  }
+}
+
+.indicator {
+  &.time-out {
+    &::before {
+      left: 0.41em;
     }
   }
 }
@@ -27,7 +52,7 @@
 
 .indicator.rejected::before,
 .indicator.rejected::after {
-  left: 0.121em;
+  left: 0.14em;
   top: 0.58em;
 }
 
@@ -39,10 +64,11 @@
 }
 
 .process-indicator .indicator.icon .icon {
-  height: 22px;
-  left: 0;
-  top: 0;
-  width: 22px;
+  height: 29px;
+  left: -4px;
+  top: -4px;
+  width: 29px;
+  z-index: 1;
 }
 
 .process-indicator.responsive .details .icon {

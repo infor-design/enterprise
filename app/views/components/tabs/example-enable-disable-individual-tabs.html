@@ -107,15 +107,42 @@
         </fieldset>
 
         <fieldset class="radio-group">
-          <legend>Radio Buttons</legend>
-          <input type="radio" class="radio" name="radio" id="radio1" value="1" />
-          <label for="radio1" class="radio-label">Radio 1</label>
-          <br>
-          <input type="radio" class="radio" name="radio" id="radio2" value="2" />
-          <label for="radio2" class="radio-label">Radio 2</label>
-          <br>
-          <input type="radio" class="radio" name="radio" id="radio3" value="3" />
-          <label for="radio3" class="radio-label">Radio 3</label>
+          <div class="field">
+            <legend>Radio Buttons</legend>
+            <input type="radio" class="radio" name="radio" id="radio1" value="1" />
+            <label for="radio1" class="radio-label">Radio 1</label>
+            <br>
+            <input type="radio" class="radio" name="radio" id="radio2" value="2" />
+            <label for="radio2" class="radio-label">Radio 2</label>
+            <br>
+            <input type="radio" class="radio" name="radio" id="radio3" value="3" />
+            <label for="radio3" class="radio-label">Radio 3</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="field">
+            <legend>Switch</legend><br>
+            <div class="switch" id="switch-id-1" data-automation-id="switch-automation-id-1">
+              <input type="checkbox" checked="true" id="allow-notifications" name="allow-notifications" class="switch" />
+              <label for="allow-notifications">Allow notifications</label>
+            </div>
+        
+            <div class="switch" id="switch-id-2" data-automation-id="switch-automation-id-2">
+              <input type="checkbox" id="searched" name="searched" class="switch" />
+              <label for="searched">Allow my profile to be searched</label>
+            </div>
+        
+            <div class="switch" id="switch-id-3" data-automation-id="switch-automation-id-3">
+              <input type="checkbox" id="requests" name="requests" disabled="true" class="switch" />
+              <label for="requests">Automatically approve requests</label>
+            </div>
+        
+            <div class="switch" id="switch-id-4" data-automation-id="switch-automation-id-4">
+              <input type="checkbox" checked="true" id="requests-on" name="requests-on" disabled="true" class="switch" />
+              <label for="requests-on">Allow connections</label>
+            </div>
+          </div>
         </fieldset>
       </div>
       <div id="programmatic-tabs-disabled" class="tab-panel">

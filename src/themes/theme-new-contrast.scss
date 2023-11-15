@@ -311,7 +311,7 @@ $formatter-toolbar-separator-color: $ids-color-palette-slate-30;
 $contextual-toolbar-bg-color: $ids-color-palette-azure-60;
 $contextual-toolbar-color: $inverse-color;
 $contextual-toolbar-button-color: rgba($inverse-color, 1);
-$contextual-toolbar-button-hover-color: rgba($inverse-color, 0.7);
+$contextual-toolbar-button-hover-color: rgba($inverse-color, 1);
 $contextual-toolbar-button-disabled-color: rgba($inverse-color, 0.3);
 $contextual-panel-separator-bg-color: $ids-color-palette-slate-60;
 
@@ -458,6 +458,7 @@ $radio-border-hover-color: $radio-color-unchecked-hover-border;
 $radio-checked-color: $ids-color-brand-primary-base;
 $radio-checked-bg-color: $radio-color-checked-initial-background;
 $radio-disabled-checked-bg-color: $radio-color-checked-disabled-background;
+$radio-color-checked-disabled-border: $ids-color-palette-slate-60;
 
 // Pager
 $pager-text-color: $ids-color-brand-primary-base;
