@@ -10449,7 +10449,7 @@ Datagrid.prototype = {
       this.addToDirtyArray(idx, cell, data);
     }
 
-    if (typeof this.editor.focus === 'function') {
+    if (typeof this.editor.focus === 'function' && this.editor.name !== 'date') {
       this.editor.focus();
     }
 

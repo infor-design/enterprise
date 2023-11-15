@@ -181,7 +181,7 @@ $badge-secondary-icon-color: $ids-color-palette-graphite-100;
 $badge-secondary-hover-icon-color: $ids-color-palette-graphite-80;
 $badge-secondary-bg-color: $ids-color-palette-white;
 $badge-secondary-hover-bg-color: $ids-color-palette-graphite-20;
-$badge-secondary-border-color: $ids-color-palette-graphite-30;
+$badge-secondary-border-color: $ids-color-palette-graphite-40;
 $badge-secondary-hover-border-color: $ids-color-palette-graphite-50;
 $badge-secondary-disabled-border-color: $ids-color-palette-slate-40;
 $badge-error-color: $ids-color-palette-white;
@@ -302,8 +302,9 @@ $button-color-secondary-hover-background-new: $ids-color-palette-azure-10;
 $button-color-secondary-hover-border-new: $ids-color-palette-azure-60;
 $button-color-secondary-initial-background: transparent;
 
+$button-color-tertiary-hover-background: $ids-color-palette-slate-30;
 $button-color-tertiary-disabled-background-new: transparent;
-$button-color-tertiary-hover-background-new: $ids-color-palette-azure-10;
+$button-color-tertiary-hover-background-new: $ids-color-palette-azure-20;
 $button-color-tertiary-hover-font-new: $ids-color-palette-azure-60;
 
 $hero-button-color-tertiary-hover-background-new: $button-color-tertiary-hover-background-new;
