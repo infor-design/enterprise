@@ -32,7 +32,7 @@ const colorpickerHTML = `<div class="row">
 let colorpickerEl;
 let colorpickerObj;
 
-fdescribe('ColorPicker Methods', () => {
+describe('ColorPicker Methods', () => {
   beforeEach(() => {
     colorpickerEl = null;
     colorpickerObj = null;
