@@ -1148,7 +1148,7 @@ WeekView.prototype = {
       */
       this.element.trigger(eventName, { settings: this.settings, event: eventData[0] });
     };
-    const self = this;
+
     this.element.off(`click.${COMPONENT_NAME}`).on(`click.${COMPONENT_NAME}`, '.calendar-event', (e) => {
       fireEvent(e.currentTarget, 'eventclick');
       e.preventDefault();
