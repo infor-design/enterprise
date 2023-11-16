@@ -24,6 +24,10 @@
   .searchfield-wrapper.non-collapsible.is-open > .icon:not(.close):not(.icon-error) {
     left: 9px;
   }
+
+  .datagrid-result-count {
+    top: -2px;
+  }
 }
 
 .lookup-wrapper {
