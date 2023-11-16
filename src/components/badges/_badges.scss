@@ -3,14 +3,18 @@
 
 @mixin disabled-tag {
   &.is-disabled {
-    background-color: $badge-disabled-bg-color;
-    border-color: transparent;
+    background-color: transparent;
+    border-color: $input-color-disabled-border;
     color: $badge-disabled-text-color;
     pointer-events: none;
 
     .btn-dismissible,
     .btn-linkable {
       color: $badge-disabled-text-color;
+
+      .icon {
+        color: $badge-disabled-text-color;
+      }
     }
 
     &:hover {
@@ -178,7 +182,6 @@
 
   // Alternate Color Tags
   &.secondary {
-    background-color: $badge-secondary-bg-color;
     border: 1px solid $badge-secondary-border-color;
     color: $badge-secondary-color;
     line-height: 20px;
@@ -352,7 +355,7 @@
     .tag-list .tag.is-dismissible {
       .btn-dismissible {
         .icon {
-          top: -2px;
+          top: -1px;
           vertical-align: middle;
         }
       }
@@ -362,6 +365,9 @@
 
 .tag {
   display: inline-flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .badge {
@@ -487,10 +493,6 @@ html.theme-classic-contrast,
 html.theme-new-contrast {
   .tag,
   .badge {
-    &.secondary {
-      border-color: $badge-secondary-border-color;
-    }
-
     &:not(.error):not(.alert):not(.info):not(.good) {
       &.is-linkable {
         &:hover,
@@ -513,7 +515,7 @@ html.theme-new-contrast {
       .tag-list .tag.is-dismissible {
         .btn-dismissible {
           .icon {
-            top: 0;
+            top: -2px;
             vertical-align: middle;
           }
         }

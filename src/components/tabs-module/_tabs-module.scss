@@ -872,3 +872,11 @@ html[dir='rtl'] {
     width: 24px;
   }
 }
+
+.layout-embedded {
+  .container {
+    > .page-container {
+      padding: 0 !important;
+    }
+  }
+}
