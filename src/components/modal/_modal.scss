@@ -306,6 +306,18 @@
 
     .modal-body-wrapper {
       flex-grow: 1;
+
+      .splitter-container {
+        position: initial;
+
+        .is-right-side {
+          position: initial;
+
+          .page-container {
+            position: initial;
+          }
+        }
+      }
     }
   }
 
