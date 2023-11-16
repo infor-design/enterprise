@@ -485,7 +485,14 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 
   &.has-text {
-    width: $toolbarsearchfield-filled-out-width - 10;
+    width: $toolbarsearchfield-filled-out-width - 10; 
+
+    &.has-collapse-button {
+      &:not(.is-open) {
+        transition: all 300ms;
+        width: 34px;
+      }
+    }
 
     .icon {
       &.close {
