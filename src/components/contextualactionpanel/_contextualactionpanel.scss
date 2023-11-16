@@ -204,6 +204,7 @@
   .buttonset {
     [class^='btn']:last-child {
       margin-right: 12px;
+      margin-inline-end: 10px;
     }
   }
 
@@ -258,11 +259,6 @@ html[dir='rtl'] {
           }
         }
       }
-    }
-
-    .buttonset [class^='btn']:last-child {
-      margin-left: 10px;
-      margin-right: 6px;
     }
   }
 }
