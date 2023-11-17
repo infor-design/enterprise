@@ -17,6 +17,7 @@
 - `[Modal]` Fixed the searchfield size when settings has title in toolbar. ([#8025](https://github.com/infor-design/enterprise/issues/8025))
 - `[Page-Patterns]` Fixed background on hovered selected tab. ([#8088](https://github.com/infor-design/enterprise/issues/8088))
 - `[Popupmenu]` Added fix for icon size in new. ([#8175](https://github.com/infor-design/enterprise/issues/8175))
+- `[Searchfield]` Fixed animation of collapsible searchfield. ([#8076](https://github.com/infor-design/enterprise/issues/8076))
 - `[Tabs-Module]` Removed padding in embedded mode. ([#8060](https://github.com/infor-design/enterprise/issues/8060))
 - `[Timepicker]` Removed `disabled` prop in trigger button on enable call. ([NG#1567](https://github.com/infor-design/enterprise-ng/issues/1567))
 

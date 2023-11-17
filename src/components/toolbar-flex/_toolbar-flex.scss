@@ -39,6 +39,12 @@
         position: initial;
       }
 
+      &:not(.non-collapsible) {
+        .searchfield {
+          position: absolute;
+        }
+      }
+
       &.toolbar-searchfield-wrapper.has-close-icon-button {
         .btn-icon.close {
           right: 45px;
