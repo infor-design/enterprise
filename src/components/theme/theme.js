@@ -74,13 +74,13 @@ const theme = {
 
     switch (this.currentTheme.id) {
       case 'theme-new-light':
-        defaulColor = '#0066D4';
+        defaulColor = '#fff';
         break;
       case 'theme-new-contrast':
-        defaulColor = '#0066D4';
+        defaulColor = '#fff';
         break;
       case 'theme-new-dark':
-        defaulColor = '#0066D4';
+        defaulColor = '#28282A';
         break;
       case 'theme-classic-light':
         defaulColor = '#2578a9';
@@ -92,7 +92,7 @@ const theme = {
         defaulColor = '#50535A';
         break;
       default:
-        defaulColor = '#0066D4';
+        defaulColor = '#fff';
         break;
     }
     personalize.default = { id: 'default', name: Locale.translate('Default', opts), backgroundColorClass: 'primary-bg-color', value: defaulColor };
