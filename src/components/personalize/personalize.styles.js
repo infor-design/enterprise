@@ -100,7 +100,7 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled),
 html.theme-new-dark .btn-link.is-personalizable:not(:disabled),
 html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled) .icon,
 html.theme-new-dark .btn-link.is-personalizable:not(:disabled) .icon {
-  color: ${colors.lighter};
+  color: ${colors.btnTertiaryHoverColor};
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled):hover,
@@ -110,7 +110,7 @@ html.theme-new-dark .btn-link.is-personalizable:not(:disabled):hover .icon,
 html.theme-new-dark .is-personalizable:not(.header) .btn-menu.is-open:not(.btn-secondary):not([disabled]):not(:disabled),
 html.theme-new-dark .is-personalizable:not(.header) .btn-menu:not(.btn-secondary):not([disabled]):not(:disabled):hover,
 html.theme-new-dark .is-personalizable:not(.header) .btn-menu:not(.btn-secondary):not([disabled]):not(:disabled):hover .icon {
-  color: ${colors.lightest};
+  color: ${colors.btnTertiaryHoverColor};
 }
 
 .is-personalizable button.is-pressed,
@@ -136,7 +136,7 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructiv
 
 html[class*="new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 html[class*="new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-secondary.btn-menu.is-open:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) {
-  background-color: ${colors.btnTertiaryBgHoverColor}; 
+  background-color: ${colors.lightestPalette};
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
@@ -160,9 +160,15 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-butto
   color: ${colors.lightest};
 }
 
-html[class*="new-"] .is-personalizable:not(.header):not(.hero-widget) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.btnTertiaryBgHoverColor};
+html[class*="new-"] .is-personalizable:not(.header):not(.hero-widget) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
+html[class*="new-"] .is-personalizable:not(.header):not(.hero-widget) .btn-link:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+  background-color: ${colors.lightestPalette};
   color: ${colors.btnTertiaryHoverColor};
+}
+
+html.theme-new-dark .is-personalizable:not(.header):not(.hero-widget) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
+html.theme-new-dark .is-personalizable:not(.header):not(.hero-widget) .btn-link:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+  background-color: ${colors.btnTertiaryBgHoverColor};
 }
 
 html.theme-new-dark .is-personalizable:not(.hero-widget) .btn-tertiary:not:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
@@ -903,7 +909,7 @@ html[class*="-dark"] .is-personalizable .btn-tertiary:not(.destructive):not(:dis
 html[class*="-dark"] .is-personalizable .btn-link:not(:disabled):hover,
 html[class*="-dark"] .is-personalizable:not(.header) .btn-menu:not(.btn-secondary):not(:disabled):hover,
 html[class*="-dark"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: #28282A;
+  background-color: ${colors.btnTertiaryBgHoverColor};
 }
 
 html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane .accordion-header {
