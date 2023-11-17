@@ -5703,7 +5703,7 @@ Datagrid.prototype = {
     // Set selector
     const selector = {
       th: '.datagrid-header th',
-      td: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
+      td: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"]',
       rowstatus: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"] .icon-rowstatus',
       headerIcon: '.datagrid-header th .datagrid-header-icon'
     };
@@ -10449,7 +10449,7 @@ Datagrid.prototype = {
       this.addToDirtyArray(idx, cell, data);
     }
 
-    if (typeof this.editor.focus === 'function') {
+    if (typeof this.editor.focus === 'function' && this.editor.name !== 'date') {
       this.editor.focus();
     }
 
@@ -10766,7 +10766,8 @@ Datagrid.prototype = {
         placement: 'bottom',
         content: message,
         isError: type === 'error' || type === 'dirtyerror',
-        wrapper: icon
+        wrapper: icon,
+        y: 5
       };
       this.cacheTooltip(icon, tooltip);
       this.setupTooltips(false, true);

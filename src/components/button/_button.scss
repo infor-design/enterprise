@@ -596,7 +596,8 @@ a.btn-close {
 
   &:hover {
     color: $button-color-tertiary-hover-font;
-
+    background-color: $button-color-tertiary-hover-background;
+    
     .icon {
       color: $button-color-tertiary-hover-font;
     }
