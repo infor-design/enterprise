@@ -49,11 +49,11 @@ describe('ColorPicker Methods', () => {
   });
 
   it('should get the hex value based on a label', () => {
-    expect(colorpickerObj.getHexFromLabel('Turquoise10')).toEqual('#0E5B52');
+    expect(colorpickerObj.getHexFromLabel('Turquoise10')).toEqual('#1F5E5E');
   });
 
   it('should get the label value based on a hex', () => {
-    expect(colorpickerObj.getLabelFromHex('#0E5B52')).toEqual('Turquoise10');
+    expect(colorpickerObj.getLabelFromHex('#1F5E5E')).toEqual('Turquoise10');
   });
 
   it('should set custom width', () => {
@@ -72,7 +72,7 @@ describe('ColorPicker Methods', () => {
 
   it('should get the current label value', () => {
     colorpickerObj.settings.showLabel = true;
-    colorpickerObj.setColor('#1a1a1a');
+    colorpickerObj.setColor('#161618');
 
     expect(colorpickerObj.getLabelValue()).toEqual('Slate10');
   });
