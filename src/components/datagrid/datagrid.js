@@ -11460,9 +11460,13 @@ Datagrid.prototype = {
 
       let oldCompare = oldValue;
       let newCompare = value;
-      if (oldCompare instanceof Date) {
-        newCompare = Locale.parseDate(newCompare).getTime();
-        oldCompare = oldCompare.getTime();
+      if (col.editor.name === 'Date') {
+        if (oldCompare instanceof Date) {
+          newCompare = Locale.parseDate(newCompare).getTime();
+          oldCompare = oldCompare.getTime();
+        } else {
+          oldCompare = oldValue === '00000000' ? '' : oldValue;
+        }
       }
 
       // Update and set trackdirty
