@@ -11322,10 +11322,9 @@ Datagrid.prototype = {
    * @param {any} value The value to use.
    * @param {boolean} fromApiCall Comes from an api call.
    * @param {boolean} isInline If the editor is an inline value.
-   * @param {any} oldValue The old value of the input.
    * @returns {void}
    */
-  updateCellNode(row, cell, value, fromApiCall, isInline, oldValue) {
+  updateCellNode(row, cell, value, fromApiCall, isInline) {
     let coercedVal;
     let rowNodes = this.settings.groupable ? this.rowNodesByDataIndex(row) : this.rowNodes(row);
     let cellNode = rowNodes.find('td').eq(cell);
