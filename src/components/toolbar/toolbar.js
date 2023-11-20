@@ -123,8 +123,9 @@ Toolbar.prototype = {
     // Check for a "title" element.  This element is optional.
     // If a title element exists, a tooltip will be created for when it's not
     // possible to show the entire title text on screen.
+    this.isModalToolbar = this.element.parent().is('.modal-body');
     this.title = this.element.children('.title');
-    if (this.title.length) {
+    if (this.title.length && !this.isModalToolbar) {
       this.element[0].classList.add('has-title');
 
       this.cutoffTitle = false;

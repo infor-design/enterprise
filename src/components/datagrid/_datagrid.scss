@@ -1500,11 +1500,17 @@ $datagrid-small-row-height: 25px;
     }
   }
 
+  &.medium-rowheight {
+    .datagrid-expand-btn {
+      margin-top: 0;
+    }
+  }
+
   &.medium-rowheight,
   &.normal-rowheight {
     .datagrid-expand-btn {
       .icon.plus-minus {
-        left: -6px;
+        left: -10px;
       }
     }
   }
@@ -1560,9 +1566,9 @@ $datagrid-small-row-height: 25px;
           width: 22px;
 
           .icon {
-            left: -8px;
+            left: -10px;
             position: relative;
-            top: -8px;
+            top: -7px;
           }
         }
 
@@ -4642,13 +4648,22 @@ td .btn-actions {
       }
     }
 
+    &.extra-small-rowheight,
+    &.small-rowheight {
+      .datagrid-expand-btn {
+        .icon {
+          top: -6px;
+        }
+      }
+    }
+
     .datagrid-trigger-cell .icon.icon-clock {
       top: 0;
     }
   }
 
   .datagrid-expand-btn {
-    line-height: 27px !important;
+    line-height: 19px !important;
   }
 
   .datagrid-filter-wrapper .dropdown {
@@ -6320,6 +6335,10 @@ html[class*='theme-classic-'] .datagrid {
   }
 
   &.medium-rowheight {
+    .datagrid-expand-btn {
+      margin-top: -5px;
+    }
+
     .datagrid-trigger-cell.has-editor:not(.is-readonly) {
       &.is-fileupload .datagrid-cell-wrapper .icon:not(.datagrid-alert-icon) {
         &.icon-error {
@@ -6523,6 +6542,25 @@ html[class*='theme-classic-'] .datagrid {
             left: 94%;
           }
         }
+      }
+    }
+  }
+
+  &.small-rowheight,
+  &.extra-small-rowheight {
+    .datagrid-expand-btn {
+      .icon {
+        top: -8px;
+      }
+    }
+  }
+}
+
+html[class*='theme-classic-'].is-firefox {
+  .datagrid {
+    .datagrid-expand-btn {
+      .icon {
+        top: -7px;
       }
     }
   }
