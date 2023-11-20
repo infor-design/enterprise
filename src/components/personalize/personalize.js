@@ -327,11 +327,16 @@ Personalize.prototype = {
     const isClassicDark = this.currentTheme.indexOf('classic-dark') >= 0;
     const isNewContrast = this.currentTheme.indexOf('new-contrast') >= 0;
     colors.btnTertiaryBgHoverColor = isAlabaster ? '#E6F1FD' : colors.lightest;
+    colors.btnTertiaryBgHoverColorHeader = 'rgba(0, 0, 0, 0.3)';
+    colors.btnTertiaryHoverColorHeader = themeColors.palette.white.value;
     colors.borderActiveSearchHeader = colors.darkest;
     colors.shadowActiveSearchHeader = 'none';
     colors.borderActiveSearchMobile = colors.contrast;
 
     if (isNewDark || isClassicDark) {
+      colors.btnLinkColor = colors.lighter;
+      colors.btnTertiaryBgHoverColor = themeColors.palette.slate[70].value;
+      colors.btnTertiaryHoverColor = colors.lighter;
       colors.tabVerticalColor = themeColors.palette.slate[90].value;
       colors.tabVerticalSelectedColor = themeColors.palette.slate[100].value;
       colors.tabVerticalHoverColor = themeColors.palette.slate[70].value;
@@ -360,6 +365,8 @@ Personalize.prototype = {
       colors.btnSecondaryBorderColor = themeColors.palette.azure[60].value;
       colors.btnTertiaryBgHoverColor = themeColors.palette.azure[20].value;
       colors.btnTertiaryHoverColor = themeColors.palette.azure[60].value;
+      colors.btnTertiaryBgHoverColorHeader = '#E6F1FD';
+      colors.btnTertiaryHoverColorHeader = themeColors.palette.azure[60].value;
       colors.btnLinkColor = themeColors.palette.azure[60].value;
       colors.tabBottomBorderColor = themeColors.palette.slate[30].value;
       colors.btnActionsHoverColor = themeColors.palette.slate[100].value;
@@ -416,8 +423,10 @@ Personalize.prototype = {
         colors.btnSecondaryColor = colors.darkest;
         colors.btnSecondaryBorderColor = colors.base;
         colors.btnTertiaryBgHoverColor = themeColors.palette.slate[70].value;
-        colors.btnTertiaryHoverColor = colors.light;
-        colors.btnLinkColor = colors.light;
+        colors.btnTertiaryHoverColor = colors.lightest;
+        colors.btnTertiaryBgHoverColorHeader = themeColors.palette.slate[70].value;
+        colors.btnTertiaryHoverColorHeader = themeColors.palette.white.value;
+        colors.btnLinkColor = colors.lighter;
         colors.btnBgHoverColor = themeColors.palette.slate[80].value;
         colors.tabBottomBorderColor = themeColors.palette.slate[60].value;
         colors.btnActionsHoverColor = themeColors.palette.white.value;
@@ -497,12 +506,15 @@ Personalize.prototype = {
     }
 
     const darkestColorMap = this.getColorMap(100);
-    const lightestColorMap = this.getColorMap(20);
+    const lightestColorMap = contrast ? this.getColorMap(20) : this.getColorMap(10);
     colors.darkestPalette = darkestColorMap[colors.base] || colors.subheader;
     colors.lightestPalette = lightestColorMap[colors.base] || colors.subheader;
 
     if (isAlabaster) {
-      colors.lightestPalette = themeColors.palette.azure[20].value;
+      colors.lightestPalette = themeColors.palette.azure[10].value;
+      if (contrast) {
+        colors.lightestPalette = themeColors.palette.azure[20].value;
+      }
     }
 
     // Some disabled colors on some preset color schemes come out terrible,
