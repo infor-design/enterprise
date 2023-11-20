@@ -912,6 +912,14 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
   font-weight: ${colors.tabTextSelectedWeight} !important;
 }
 
+html[class*="theme-new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-icon:not(.destructive):not(:disabled):hover {
+  background-color: ${colors.lightestPalette};
+}
+
+html[class*="theme-new-"] .is-personalizable:not(.header) .btn-icon:not(.destructive):not(:disabled):hover .icon {
+  color: ${colors.btnTertiaryHoverColor};
+}
+
 html[class*="-dark"] .is-personalizable .btn-tertiary:not(.destructive):not(:disabled):hover,
 html[class*="-dark"] .is-personalizable .btn-link:not(:disabled):hover,
 html[class*="-dark"] .is-personalizable:not(.header) .btn-menu:not(.btn-secondary):not(:disabled):hover,
