@@ -11458,19 +11458,8 @@ Datagrid.prototype = {
       // Validate the cell
       this.validateCell(dataRowIndex, cell);
 
-      let oldCompare = oldValue;
-      let newCompare = value;
-      if (col.editor.name === 'Date') {
-        if (oldCompare instanceof Date) {
-          newCompare = Locale.parseDate(newCompare).getTime();
-          oldCompare = oldCompare.getTime();
-        } else {
-          oldCompare = oldValue === '00000000' ? '' : oldValue;
-        }
-      }
-
       // Update and set trackdirty
-      if (oldCompare !== newCompare && !this.isDirtyCellUndefined(dataRowIndex, cell)) {
+      if (!this.isDirtyCellUndefined(dataRowIndex, cell)) {
         this.dirtyArray[dataRowIndex][cell].value = value;
         this.dirtyArray[dataRowIndex][cell].coercedVal = coercedVal;
         this.dirtyArray[dataRowIndex][cell].escapedCoercedVal = xssUtils.escapeHTML(coercedVal);
@@ -11664,7 +11653,7 @@ Datagrid.prototype = {
       (d.originalVal === d.cellNodeText)
     );
 
-    if (isDirty || d.originalVal.length !== d.value.length) {
+    if (isDirty || (d.originalVal.length !== d.value.length && d.originalVal.length !== d.cellNodeText.length)) {
       this.dirtyArray[row][cell].isDirty = true;
       cellNode[0].classList.add('is-dirty-cell');
       this.setDirtyIndicator(row, cell, true);
