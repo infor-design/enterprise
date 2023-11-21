@@ -10616,7 +10616,8 @@ Datagrid.prototype = {
       cell,
       newValue,
       false,
-      isInline
+      isInline,
+      oldValue
     );
     const value = this.fieldValue(rowData, col.field);
 
@@ -11649,7 +11650,7 @@ Datagrid.prototype = {
       (d.originalVal === d.cellNodeText)
     );
 
-    if (isDirty || d.originalVal.length !== d.value.length) {
+    if (isDirty || (d.originalVal.length !== d.value.length && d.originalVal.length !== d.cellNodeText.length)) {
       this.dirtyArray[row][cell].isDirty = true;
       cellNode[0].classList.add('is-dirty-cell');
       this.setDirtyIndicator(row, cell, true);
