@@ -544,7 +544,6 @@ Soho.Locale.addCulture('hu-HU', {
     Tall: { id: 'Tall', value: 'Magas', comment: 'Describes a taller row height in a grid/list' },
     Target: { id: 'Target', value: 'Cél', comment: 'Label for an input to enter a Target (Url Attribute)' },
     TeamEvent: { id: 'TeamEvent', value: 'Csapatesemény', comment: 'Having an event with a work team' },
-    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test Locale Defaults', comment: 'Do not translate' },
     TextBtnCancel: { id: 'TextBtnCancel', value: 'Fájl feltöltésének megszakítása', comment: 'text for cancel button for advanced fileupload' },
     TextBtnCloseError: { id: 'TextBtnCloseError', value: 'Hibaüzenet bezárása', comment: 'text for error close button for advanced fileupload' },
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Hibaüzenet bezárása', comment: 'text for remove button for advanced fileupload' },

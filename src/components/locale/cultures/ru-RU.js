@@ -544,7 +544,6 @@ Soho.Locale.addCulture('ru-RU', {
     Tall: { id: 'Tall', value: 'Длинная', comment: 'Describes a taller row height in a grid/list' },
     Target: { id: 'Target', value: 'Цель', comment: 'Label for an input to enter a Target (Url Attribute)' },
     TeamEvent: { id: 'TeamEvent', value: 'Событие команды', comment: 'Having an event with a work team' },
-    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test Locale Defaults', comment: 'Do not translate' },
     TextBtnCancel: { id: 'TextBtnCancel', value: 'Отменить передачу данного файла', comment: 'text for cancel button for advanced fileupload' },
     TextBtnCloseError: { id: 'TextBtnCloseError', value: 'Закрыть это сообщение об ошибке', comment: 'text for error close button for advanced fileupload' },
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Закрыть это сообщение об ошибке', comment: 'text for remove button for advanced fileupload' },
