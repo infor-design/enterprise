@@ -128,7 +128,7 @@
     .title {
       font-size: $ids-size-font-lg;
       height: inherit;
-      margin-left: 15px;
+      margin-inline-start: 15px;
       top: 0;
     }
 
@@ -203,7 +203,7 @@
 
   .buttonset {
     [class^='btn']:last-child {
-      margin-right: 12px;
+      margin-inline-end: 10px;
     }
   }
 
