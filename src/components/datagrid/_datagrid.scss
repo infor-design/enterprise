@@ -5822,12 +5822,6 @@ html[dir='rtl'] {
 // Firefox on Mac only
 .is-mac.is-firefox {
   .has-draggable-columns {
-    th {
-      .handle {
-        padding: 4px 0 0 5px;
-      }
-    }
-
     &.small-rowheight,
     &.extra-small-rowheight {
       th {
