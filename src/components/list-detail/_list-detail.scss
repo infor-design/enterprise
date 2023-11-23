@@ -211,6 +211,20 @@ html[dir='rtl'] {
     }
   }
 
+  .modal-content {
+    .list-detail {
+      .sidebar {
+        transform: none;
+      }
+
+      .main.is-right-side {
+        transform: none;
+        margin-left: 3px;
+        border: unset;
+      }
+    }
+  }
+
   .list-detail {
     overflow: hidden;
 
@@ -227,7 +241,7 @@ html[dir='rtl'] {
       }
     }
 
-    > .main:not(.is-right-side) {
+    > .main {
       @include css3(transform, translateX(100%));
     }
 
