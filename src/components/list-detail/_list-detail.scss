@@ -227,7 +227,7 @@ html[dir='rtl'] {
       }
     }
 
-    > .main {
+    > .main:not(.is-right-side) {
       @include css3(transform, translateX(100%));
     }
 
