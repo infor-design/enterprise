@@ -1287,6 +1287,24 @@ html[dir='rtl'] {
         }
       }
     }
+
+    .datagrid.medium-rowheight {
+      .datagrid-trigger-cell.has-editor {
+        &.is-editing .datepicker + .trigger.btn-icon {
+          margin-top: 2px;
+        }
+      }
+    }
+
+    .datagrid.extra-small-rowheight {
+      .datagrid-trigger-cell.has-editor:not(.is-readonly) {
+        .datagrid-cell-wrapper {
+          .trigger + .icon.icon-calendar {
+            top: -2.5px;
+          }
+        }
+      }
+    }
   }
 }
 
