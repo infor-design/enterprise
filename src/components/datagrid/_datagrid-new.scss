@@ -1278,6 +1278,16 @@ html[dir='rtl'] {
       }
     }
   }
+
+  &.is-firefox {
+    .datagrid.medium-rowheight {
+      .datagrid-trigger-cell.has-editor {
+        &.is-editing .datepicker + .trigger.btn-icon {
+          margin-top: 5px;
+        }
+      }
+    }
+  }
 }
 
 .android.is-firefox {
