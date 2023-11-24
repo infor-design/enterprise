@@ -3102,6 +3102,11 @@ $datagrid-small-row-height: 25px;
             > .icon {
               top: 0;
             }
+
+            &:hover > .icon {
+              background-color: transparent;
+              box-shadow: none;
+            }
           }
 
           &.align-text-right {
