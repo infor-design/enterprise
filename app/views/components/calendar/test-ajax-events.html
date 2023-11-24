@@ -45,6 +45,8 @@
       }
     }).on('contextmenu', function (e, args) {
       console.log('contextmenu fired', args);
-    });
+    }).on('eventclick', () => {
+      console.log('eventclick fired');
+    })
   });
 </script>

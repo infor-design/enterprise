@@ -1055,15 +1055,18 @@ Calendar.prototype = {
             eventTarget = self.element.find(`.event-day-start[data-id="${target.attr('data-id')}"] .calendar-event-title`);
           }
           this.showModalWithCallback(eventData[0], false, eventTarget);
-          /**
-           * Fires when an event in the calendar is clicked.
-           * @event eventclick
-           * @memberof Calendar
-           * @property {number} args.month - The zero based month number.
-           * @property {number} args.year - The year currently rendered in the calendar.
-           * @property {object} args.event - The data for the event.
-           */
-          this.element.triggerHandler('eventclick', { month: this.settings.month, year: this.settings.year, event: eventData[0] });
+
+          if (!self.weekView || self.activeView === 'month') {
+            /**
+             * Fires when an event in the calendar is clicked.
+             * @event eventclick
+             * @memberof Calendar
+             * @property {number} args.month - The zero based month number.
+             * @property {number} args.year - The year currently rendered in the calendar.
+             * @property {object} args.event - The data for the event.
+             */
+            this.element.triggerHandler('eventclick', { month: this.settings.month, year: this.settings.year, event: eventData[0] });
+          }
         }
         prevent = false;
       }, delay);
