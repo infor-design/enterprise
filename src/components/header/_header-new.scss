@@ -289,4 +289,18 @@ html[dir='rtl'] {
       }
     }
   }
+
+  .subheader {
+    .full-searchfield-container {
+      .searchfield-wrapper.context.non-collapsible {
+        &.has-go-button {
+          &.show-category .btn-icon.close {
+            margin: 0;
+            right: auto;
+            left: 54px;
+          }
+        }
+      }
+    }
+  }
 }
