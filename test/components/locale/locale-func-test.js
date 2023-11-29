@@ -989,10 +989,10 @@ describe('Locale API', () => {
   it('should treat no-NO and nb-NO as the same locale', () => {
     Locale.set('no-NO');
 
-    expect(Locale.translate('Loading')).toEqual('Laster');
+    expect(Locale.translate('Loading')).toEqual('Laden');
     Locale.set('nb-NO');
 
-    expect(Locale.translate('Loading')).toEqual('Laster');
+    expect(Locale.translate('Loading')).toEqual('Laden');
     expect(Locale.calendar().timeFormat).toEqual('HH:mm');
     Locale.set('en-US');
   });
@@ -1634,7 +1634,7 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('en-US');
 
     Locale.setLanguage('nb').done(() => {
-      expect(Locale.translate('Actions')).toEqual('Handlinger');
+      expect(Locale.translate('Actions')).toEqual('Acties');
       expect(Locale.currentLanguage.name).toEqual('no');
       expect(Locale.currentLocale.name).toEqual('en-US');
       done();
@@ -1649,7 +1649,7 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('en-US');
 
     Locale.setLanguage('nn').done(() => {
-      expect(Locale.translate('Actions')).toEqual('Handlinger');
+      expect(Locale.translate('Actions')).toEqual('Acties');
       expect(Locale.currentLanguage.name).toEqual('no');
       expect(Locale.currentLocale.name).toEqual('en-US');
       done();
@@ -2115,13 +2115,13 @@ describe('Locale API', () => {
 
     expect(Locale.currentLocale.name).toEqual('nb-NO');
     expect(Locale.currentLanguage.name).toEqual('no');
-    expect(Locale.translate('Required')).toEqual('Obligatorisk');
+    expect(Locale.translate('Required')).toEqual('Vereist');
 
     Locale.set('no-NO');
 
     expect(Locale.currentLocale.name).toEqual('no-NO');
     expect(Locale.currentLanguage.name).toEqual('no');
-    expect(Locale.translate('Required')).toEqual('Obligatorisk');
+    expect(Locale.translate('Required')).toEqual('Vereist');
   });
 
   it('should provide a different fr-CA and fr-FR', () => {

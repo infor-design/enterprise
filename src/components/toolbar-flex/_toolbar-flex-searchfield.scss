@@ -15,6 +15,7 @@ $responsive-searchfield-filled-out-width: 34px;
 
     &.has-focus {
       width: $flex-toolbar-searchfield-focus-width;
+      height: 38px;
     }
 
     .collapse-button {
