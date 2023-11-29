@@ -2718,6 +2718,17 @@ $datagrid-small-row-height: 25px;
       outline: 1px solid $datagrid-cell-focus-border-color;
       outline-offset: -1px;
       transform: scale(1);
+
+      &.datagrid-trigger-cell .datagrid-cell-wrapper {
+        padding-top: 2px;
+
+        span.trigger {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          vertical-align: middle;
+          white-space: nowrap;
+        }
+      }
     }
 
     // Make all content fit in singleline
