@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { xssUtils } from '../../utils/xss';
 
 // The Name of this component.
 const COMPONENT_NAME = 'busyindicator';
@@ -455,6 +456,10 @@ BusyIndicator.prototype = {
    * @returns {this} component instance.
    */
   updated(settings) {
+    if (settings.text) {
+      settings.text = xssUtils.unescapeHTML(settings.text);
+    }
+
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
     return this.setup();
   },
