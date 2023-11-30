@@ -26,6 +26,7 @@
 - `[Page-Patterns]` Fixed background on hovered selected tab. ([#8088](https://github.com/infor-design/enterprise/issues/8088))
 - `[ProcessIndicator]` Fixed icon alignment in RTL. ([#8168](https://github.com/infor-design/enterprise/issues/8168))
 - `[Popupmenu]` Added fix for icon size in new. ([#8175](https://github.com/infor-design/enterprise/issues/8175))
+- `[Popupmenu]` Added fix for extra space in submenu text. ([#8161](https://github.com/infor-design/enterprise/issues/8161))
 - `[Searchfield]` Fixed animation of collapsible searchfield. ([#8076](https://github.com/infor-design/enterprise/issues/8076))
 - `[Searchfield]` Adjusted height so that focus is fully seen. ([#8085](https://github.com/infor-design/enterprise/issues/8085))
 - `[Tabs Header]` Fixed gradient color for personalizable overflowing header tabs. ([#8110](https://github.com/infor-design/enterprise/issues/8110))
