@@ -5913,7 +5913,7 @@ Datagrid.prototype = {
     for (let j = 0; j < this.settings.columns.length; j++) {
       const col = this.settings.columns[j];
 
-      if (col.hidden) {
+      if (col.hidden || (col.component && this.settings.onPostRenderCell)) {
         continue;
       }
 

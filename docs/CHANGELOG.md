@@ -13,6 +13,7 @@
 - `[Colorpicker]` Updated color palette for colorpicker. ([#8165](https://github.com/infor-design/enterprise/issues/8165))
 - `[ContextualActionPanel]` Fixed close button layout for RTL. ([#8166](https://github.com/infor-design/enterprise/issues/8166))
 - `[Datagrid]` Adjusted hover styling for search and expand buttons. ([#8078](https://github.com/infor-design/enterprise/issues/8078))
+- `[Datagrid]` Fixed issue where cells with custom component are changed on update row. ([NG#1564](https://github.com/infor-design/enterprise-ng/issues/1564))
 - `[Datagrid]` Fixed misalignment on date cells when selected. ([#8021](https://github.com/infor-design/enterprise/issues/8021))
 - `[Datagrid]` Fixed an issue where the new row did not display an error tooltip on the first cell. ([#8071](https://github.com/infor-design/enterprise/issues/8071))
 - `[Datagrid]` Fixed an issue where dirty tracker will appear even no change was made from the cell. ([#8020](https://github.com/infor-design/enterprise/issues/8020))
