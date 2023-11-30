@@ -6,6 +6,7 @@
 
 ## v4.90.0 Fixes
 
+- `[Accordion]` Fixed a bug where the plus-minus icon shows ellipsis on mobile viewport. ([#8044](https://github.com/infor-design/enterprise/issues/8044))
 - `[Badges]` Adjusted color and positioning of dismissible button in multiselect dropdown tags. ([#8036](https://github.com/infor-design/enterprise/issues/8036))
 - `[Breadcrumb]` Fixed misaligned item in RTL in Safari browser. ([#8167](https://github.com/infor-design/enterprise/issues/8167))
 - `[BusyIndicator]` Fixed unescaped html strings not rendering properly. ([#8189](https://github.com/infor-design/enterprise/issues/8189))
