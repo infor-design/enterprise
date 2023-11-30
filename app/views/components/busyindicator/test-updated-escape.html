@@ -1,0 +1,52 @@
+<div id="main-content" class="page-container scrollable">
+  <div class="row">
+    <div class="twelve columns">
+      <button class="btn-secondary" type="button" id="busy-start">Start Busy Indicator</button>
+    </div>
+  </div>
+</div>
+
+<script>
+$(function () {
+  var body = $('body');
+
+  $('#busy-start').on('click', function () {
+    var options = {
+      'displayDelay': 300,
+      'text': "VÃ©rification du statut de l&#39;utilisateur"
+    };
+    body.busyindicator(options);
+    body.trigger('start.busyindicator');
+
+    setTimeout(function () {
+      body.data('busyindicator').updated({ 'text': "Called Updated Method. VÃ©rification du statut de l&#39;utilisateur"});
+      // body.trigger('updated.busyindicator');
+      setTimeout(function () {
+        body.trigger('complete.busyindicator');
+      }, 10000);
+    }, 3000);
+  });
+
+});
+</script>
+
+
+<script>
+// Initialize all IDS Enterprise Controls and set the locale
+var initialLocale = 'fr-FR';
+Soho.Locale.set(initialLocale);
+</script>
+
+<script>
+// Initialize the demo info popup
+$('#info-btn:not(.invisible)').popover({
+  closebutton: true,
+  content: $('#info-popup'),
+  extraClass: 'alternate',
+  placement: 'bottom',
+  popover: true,
+  tooltipElement: '#info-popup-tooltip',
+  title: 'Example Information',
+  trigger: 'click'
+});
+</script>

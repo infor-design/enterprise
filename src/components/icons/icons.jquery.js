@@ -75,13 +75,11 @@ $.fn.icon = function (settings) {
     }
 
     // Use SVG with an official IDS Icon
-    return `<svg
-      class="${options.classes.join(' ')}"
-      focusable="false"
-      role="presentation"
-      aria-hidden="true">
-        <use href="#icon-${options.icon}"></use>
-      </svg>`;
+    return [
+      `<svg class="${options.classes.join(' ')}" focusable="false" aria-hidden="true" role="presentation">` +
+        `<use href="#icon-${options.icon}"></use>` +
+      '</svg>'
+    ].join('');
   };
 
   // Returns a jQuery-wrapped element containing a new icon
