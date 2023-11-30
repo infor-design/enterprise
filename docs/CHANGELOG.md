@@ -13,6 +13,7 @@
 - `[Calendar]` Added additional check on triggering `eventclick` to avoid executing twice. ([#8051](https://github.com/infor-design/enterprise/issues/8051))
 - `[Colorpicker]` Updated color palette for colorpicker. ([#8165](https://github.com/infor-design/enterprise/issues/8165))
 - `[ContextualActionPanel]` Fixed close button layout for RTL. ([#8166](https://github.com/infor-design/enterprise/issues/8166))
+- `[Datagrid]` Fixed a bug where error icon was not showing in the correct position in RTL mode. ([#8022](https://github.com/infor-design/enterprise/issues/8022))
 - `[Datagrid]` Fixed a bug where the drag handle was overlapping the header text in firefox. ([#8012](https://github.com/infor-design/enterprise/issues/8012))
 - `[Datagrid]` Adjusted hover styling for search and expand buttons. ([#8078](https://github.com/infor-design/enterprise/issues/8078))
 - `[Datagrid]` Fixed misalignment on date cells when selected. ([#8021](https://github.com/infor-design/enterprise/issues/8021))

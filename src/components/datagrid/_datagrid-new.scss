@@ -1107,6 +1107,47 @@ html[dir='rtl'] {
         margin-top: 5px;
       }
     }
+
+    .datagrid-trigger-cell.has-editor {
+      .datepicker ~ .trigger {
+        left: 1px;
+        top: 1px;
+      }
+
+      .icon-error {
+        left: 0 !important;
+        margin-top: 0 !important;
+        top: 11px;
+      }
+    }
+  }
+
+  .datagrid.small-rowheight {
+    .is-editing .datepicker {
+      + .trigger.btn-icon {
+        left: -9px;
+        margin-top: 0;
+        top: 5px;
+      }
+    }
+
+    .datagrid-trigger-cell.has-editor {
+      .icon-calendar {
+        top: 0 !important;
+      }
+
+      .icon-error {
+        top: 6px;
+      }
+    }
+  }
+
+  .datagrid.extra-small-rowheight {
+    .datagrid-trigger-cell.has-editor {
+      &.is-editing .trigger {
+        top: 2px;
+      }
+    }
   }
 
   .datagrid {
@@ -1114,7 +1155,7 @@ html[dir='rtl'] {
       .datagrid-cell-wrapper {
         .trigger + .icon-calendar + .icon-error {
           left: 0;
-          margin-top: 1px;
+          margin-top: 0;
         }
       }
     }
@@ -1232,6 +1273,34 @@ html[dir='rtl'] {
         input.timepicker {
           + .trigger {
             margin-top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  &.is-firefox {
+    .datagrid.medium-rowheight {
+      .datagrid-trigger-cell.has-editor {
+        &.is-editing .datepicker + .trigger.btn-icon {
+          margin-top: 5px;
+        }
+      }
+    }
+
+    .datagrid.medium-rowheight {
+      .datagrid-trigger-cell.has-editor {
+        &.is-editing .datepicker + .trigger.btn-icon {
+          margin-top: 2px;
+        }
+      }
+    }
+
+    .datagrid.extra-small-rowheight {
+      .datagrid-trigger-cell.has-editor:not(.is-readonly) {
+        .datagrid-cell-wrapper {
+          .trigger + .icon.icon-calendar {
+            top: -2.5px;
           }
         }
       }
