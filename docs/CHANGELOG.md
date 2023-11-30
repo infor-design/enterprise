@@ -20,6 +20,7 @@
 - `[Datagrid]` Fixed misalignment on date cells when selected. ([#8021](https://github.com/infor-design/enterprise/issues/8021))
 - `[Datagrid]` Fixed an issue where the new row did not display an error tooltip on the first cell. ([#8071](https://github.com/infor-design/enterprise/issues/8071))
 - `[Datagrid]` Fixed an issue where dirty tracker will appear even no change was made from the cell. ([#8020](https://github.com/infor-design/enterprise/issues/8020))
+- `[Dropdown]` Fixed a bug where values containing double quotes threw an error. ([#8179](https://github.com/infor-design/enterprise/issues/8179))
 - `[Homepage]` Improve hover animation after resize. ([#8201](https://github.com/infor-design/enterprise/issues/8201))
 - `[Fileupload]` Added condition to not allow for input clearing for readonly and disabled. ([#8024](https://github.com/infor-design/enterprise/issues/8024))
 - `[Locale]` Added new locales from the translation team. ([#8196](https://github.com/infor-design/enterprise/issues/8196))
