@@ -315,6 +315,19 @@
     }
   }
 
+  .modal-content {
+    .modal-header.splitter-header {
+      padding: 16px 16px 16px;
+    }
+
+    .modal-body-wrapper.splitter-wrapper {
+      position: relative;
+      border-top: 1px solid $modal-splitter-top-border-color;
+    }
+
+  }
+  
+
   &:not(.display-fullsize):not(.about) {
     .modal-content {
       h1 {
