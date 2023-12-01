@@ -11406,8 +11406,6 @@ Datagrid.prototype = {
       }
     }
 
-    coercedVal = xssUtils.unescapeHTML(coercedVal);
-
     if (col.field && coercedVal !== oldVal) {
       if (col.field.indexOf('.') > -1) {
         let rowDataObj = rowData;
