@@ -466,16 +466,18 @@ html[dir='rtl'] {
 
       .searchfield {
         border-right: 0;
+        padding-left: 10px;
+        padding-right: 8px;
+      }
+
+      .btn {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 8px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 8px;
       }
 
       &:not(.context) {
-        .btn {
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 3px;
-          border-top-left-radius: 0;
-          border-top-right-radius: 3px;
-        }
-
         .category:empty {
           width: 0;
         }
@@ -521,12 +523,34 @@ html[dir='rtl'] {
 
         .searchfield {
           border-left: 1px solid $input-color-initial-border;
+
+          &:focus {
+            border-left: 1px solid $input-color-focus-border;
+          }
+        }
+
+        &:not(.has-focus) {
+          .searchfield {
+            &:hover {
+              border-left:1px solid $input-color-hover-border;
+            }
+          }
         }
       }
-    }
 
-    .btn {
-      border-radius: 0 8px 8px 0;
+      &.has-focus {
+        .btn {
+          border-right: 1px solid $input-color-focus-border;
+        }
+      }
+
+      &:not(.has-focus) {
+        &.is-hovered {
+          .btn {
+            border-right: 1px solid $input-color-hover-border;
+          }
+        }
+      }
     }
   }
 }
