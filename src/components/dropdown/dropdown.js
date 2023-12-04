@@ -2996,7 +2996,8 @@ Dropdown.prototype = {
    * @returns {void}
    */
   renderListItem(optionEl) {
-    const optionVal = optionEl.value;
+    let optionVal = optionEl.value;
+    optionVal = optionVal?.replace(/"/g, '/quot/');
     const selected = optionEl.selected;
     const li = this.listUl.find(`li[data-val="${optionVal}"]`);
     const a = li.children('a');
