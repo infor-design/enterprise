@@ -301,10 +301,9 @@ Bar.prototype = {
     const parentAvailableHeight = utils.getParentAvailableHeight(self.element[0]);
     const useHeight = s.fitHeight ? parentAvailableHeight : parseInt(parent.height(), 10);
     const height = useHeight - margins.top - margins.bottom - legendHeight;
-    const isSingle = dataset?.length === 1;
     const w = parseInt(parent.width(), 10) - margins.left;
 
-    let h = useHeight - margins.bottom - (s.isStacked ? 0 : (legendHeight / 2)) - (isSingle ? 30 : 0);
+    let h = useHeight - margins.bottom - (s.isStacked ? 0 : (legendHeight / 2));
     let textWidth = charts.calculateTextRenderWidth(largestText);
     if (textWidth < 200) {
       textWidth += 26;

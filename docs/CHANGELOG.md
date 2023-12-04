@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.91.0
+
+## v4.91.0 Fixes
+
+- `[Bar Chart]` Displayed the x-axis ticks for the bar grouped when single group. ([#7976](https://github.com/infor-design/enterprise/issues/7976))
+
 ## v4.90.0
 
 ## v4.90.0 Features
