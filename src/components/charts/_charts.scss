@@ -166,20 +166,19 @@
         float: none;
         margin: 2px -5px;
         min-width: 58%;
-        padding: 4px 5px 5px;
+        padding: 4px 5px 4px 5px;
         width: auto;
       }
 
       .chart-legend-color {
         height: 15px;
         margin: 0;
-        top: 1px;
         min-width: 15px;
         max-width: 15px;
       }
 
       .chart-legend-item-text {
-        line-height: 18px;
+        line-height: 17px;
         padding-left: 7px;
         position: relative;
         white-space: pre-line;
