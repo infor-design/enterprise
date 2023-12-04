@@ -307,6 +307,8 @@
   }
 
   .chart-legend-item {
+    display: inline-flex;
+    align-items: center;
     border: 1px solid transparent;
     cursor: pointer;
     float: left;
@@ -348,7 +350,6 @@
     height: 12px;
     margin-right: 10px;
     position: relative;
-    top: 0;
     width: 12px;
   }
 
