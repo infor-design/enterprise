@@ -32,6 +32,7 @@
 - `[Page-Patterns]` Fixed background on hovered selected tab. ([#8088](https://github.com/infor-design/enterprise/issues/8088))
 - `[ProcessIndicator]` Fixed icon alignment in RTL. ([#8168](https://github.com/infor-design/enterprise/issues/8168))
 - `[Popupmenu]` Added fix for icon size in new. ([#8175](https://github.com/infor-design/enterprise/issues/8175))
+- `[Popupmenu]` Fixed submenu icon is overlapped with the item label in RTL. ([#8172](https://github.com/infor-design/enterprise/issues/8172))
 - `[Popupmenu]` Fixed popupmenu submenu not closing in some scenarios. ([#8043](https://github.com/infor-design/enterprise/issues/8043))
 - `[Popupmenu]` Added fix for extra space in submenu text. ([#8161](https://github.com/infor-design/enterprise/issues/8161))
 - `[Searchfield]` Fixed animation of collapsible searchfield. ([#8076](https://github.com/infor-design/enterprise/issues/8076))
