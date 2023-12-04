@@ -19,6 +19,7 @@
 - `[Datagrid]` Fixed a bug where error icon was not showing in the correct position in RTL mode. ([#8022](https://github.com/infor-design/enterprise/issues/8022))
 - `[Datagrid]` Fixed a bug where the drag handle was overlapping the header text in firefox. ([#8012](https://github.com/infor-design/enterprise/issues/8012))
 - `[Datagrid]` Adjusted hover styling for search and expand buttons. ([#8078](https://github.com/infor-design/enterprise/issues/8078))
+- `[Datagrid]` Fixed issue where cells with custom component are changed on update row. ([NG#1564](https://github.com/infor-design/enterprise-ng/issues/1564))
 - `[Datagrid]` Fixed misalignment on date cells when selected. ([#8021](https://github.com/infor-design/enterprise/issues/8021))
 - `[Datagrid]` Fixed an issue where the new row did not display an error tooltip on the first cell. ([#8071](https://github.com/infor-design/enterprise/issues/8071))
 - `[Datagrid]` Fixed an issue where script values are executed on updating cell. ([#8083](https://github.com/infor-design/enterprise/issues/8083))
