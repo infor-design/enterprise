@@ -12,6 +12,7 @@
 - `[BusyIndicator]` Fixed unescaped html strings not rendering properly. ([#8189](https://github.com/infor-design/enterprise/issues/8189))
 - `[Button]` Adjusted personalize button hover colors. ([#8035](https://github.com/infor-design/enterprise/issues/8035))
 - `[Calendar]` Added additional check on triggering `eventclick` to avoid executing twice. ([#8051](https://github.com/infor-design/enterprise/issues/8051))
+- `[Charts]` Improved the positioning of chart legend color. ([#8159](https://github.com/infor-design/enterprise/issues/8159))
 - `[Colorpicker]` Updated color palette for colorpicker. ([#8165](https://github.com/infor-design/enterprise/issues/8165))
 - `[ContextualActionPanel]` Fixed close button layout for RTL. ([#8166](https://github.com/infor-design/enterprise/issues/8166))
 - `[Datagrid]` Fixed a bug where error icon was not showing in the correct position in RTL mode. ([#8022](https://github.com/infor-design/enterprise/issues/8022))
