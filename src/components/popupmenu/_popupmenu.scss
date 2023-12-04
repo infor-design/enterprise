@@ -717,7 +717,6 @@ html[dir='rtl'] {
       > .icon.icon-dropdown {
         left: 5px;
         right: auto;
-        top: 5px;
         transform: rotate(90deg);
       }
     }
@@ -734,7 +733,7 @@ html[dir='rtl'] {
       &.is-selectable,
       &.is-multiselectable {
         > a {
-          padding-left: 10px;
+          padding-left: 45px;
           padding-right: 35px;
         }
       }
