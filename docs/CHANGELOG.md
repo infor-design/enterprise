@@ -13,6 +13,7 @@
 - `[Button]` Adjusted personalize button hover colors. ([#8035](https://github.com/infor-design/enterprise/issues/8035))
 - `[Calendar]` Added additional check on triggering `eventclick` to avoid executing twice. ([#8051](https://github.com/infor-design/enterprise/issues/8051))
 - `[Colorpicker]` Updated color palette for colorpicker. ([#8165](https://github.com/infor-design/enterprise/issues/8165))
+- `[ColumnChart]` Fixed position of rotate feature of column chart in RTL. ([#8010](https://github.com/infor-design/enterprise/issues/8010))
 - `[ContextualActionPanel]` Fixed close button layout for RTL. ([#8166](https://github.com/infor-design/enterprise/issues/8166))
 - `[ContextualActionPanel]` Removed 'Run' button from vertical examples. ([#8120](https://github.com/infor-design/enterprise/issues/8120))
 - `[Datagrid]` Fixed a bug where error icon was not showing in the correct position in RTL mode. ([#8022](https://github.com/infor-design/enterprise/issues/8022))
