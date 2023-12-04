@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.91.0
+
+## v4.91.0 Fixes
+
+- `[Accordion]` Fixed a bug where focus border was not fully shown in subheader. ([#8109](https://github.com/infor-design/enterprise/issues/8109))
+
 ## v4.90.0
 
 ## v4.90.0 Features
