@@ -430,14 +430,14 @@ Line.prototype = {
     }
 
     if (isAxisXRotate) {
+      const rotateQuery = self.isRTL ? `scale(-1, 1) rotate(${xRotate.use}deg)` : `rotate(${xRotate.use}deg)`;
       self.svg.selectAll('.x.axis .tick text') // select all the text for the xaxis
         .attr('y', 0)
         .attr('x', function () {
-          return -(this.getBBox().width + 10);
+          return self.isRTL ? -10 : -(this.getBBox().width + 10);
         })
         .attr('dy', '1em')
-        .attr('transform', `rotate(${xRotate.use})`)
-        .style('text-anchor', 'start');
+        .attr('style', `text-anchor: start; transform: ${rotateQuery} !important;`);
     }
 
     if (s.xAxis && s.xAxis.formatText) {
