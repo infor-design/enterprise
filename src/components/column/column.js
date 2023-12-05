@@ -1278,14 +1278,14 @@ Column.prototype = {
     }
 
     if (isAxisXRotate && self.settings.xAxis && self.settings.xAxis?.rotate) {
+      const rotateQuery = isRTL ? `scale(-1, 1) rotate(${xRotate.use}deg)` : `rotate(${xRotate.use}deg)`;
       self.svg.selectAll('.x.axis .tick text')
         .attr('y', 0)
         .attr('x', function () {
-          return -(this.getBBox().width + 10);
+          return isRTL ? -10 : -(this.getBBox().width + 10);
         })
         .attr('dy', '1em')
-        .attr('transform', `rotate(${xRotate.use})`)
-        .style('text-anchor', 'start');
+        .attr('style', `text-anchor: start; transform: ${rotateQuery} !important;`);
     }
 
     if (self.settings.xAxis && self.settings.xAxis.formatText) {
