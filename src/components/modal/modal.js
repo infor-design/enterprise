@@ -304,12 +304,13 @@ Modal.prototype = {
   appendContent() {
     let isAppended = false;
     const maxWidth = this.settings.maxWidth ? ` style="max-width: ${this.settings.maxWidth}px;"` : '';
+    const isSplitter = this.settings.content.hasClass('splitter-container');
 
     this.element = $(`
       <div class="modal">
         <div class="modal-content"${maxWidth}>
-          <div class="modal-header"><h1 class="modal-title"></h1></div>
-          <div class="modal-body-wrapper">
+          <div class="modal-header ${isSplitter ? 'splitter-header' : ''}"><h1 class="modal-title"></h1></div>
+          <div class="modal-body-wrapper ${isSplitter ? 'splitter-wrapper' : ''}">
             <div class="modal-body${this.settings.forceOverflow ? ' overflow' : ''}"></div>
           </div>
         </div>
