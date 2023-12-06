@@ -796,7 +796,6 @@ Dropdown.prototype = {
         return iconEl.value === optionEl.value;
       });
 
-
       target.each((j, el) => el.remove());
 
       if (listIconEl.length === 0) {
