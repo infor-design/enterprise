@@ -40,6 +40,7 @@
 - `[Searchfield]` Adjusted height so that focus is fully seen. ([#8085](https://github.com/infor-design/enterprise/issues/8085))
 - `[Searchfield]` Fixed border and height for searchfield with categories in RTL. ([#8101](https://github.com/infor-design/enterprise/issues/8101))
 - `[Searchfield]` Fixed border radius for searchfield with dropdown in RTL. ([#8102](https://github.com/infor-design/enterprise/issues/8102))
+- `[Splitter]` Fixed position of splitter when using in modal. ([#8005](https://github.com/infor-design/enterprise/issues/8005))
 - `[Tabs Header]` Fixed gradient color for personalizable overflowing header tabs. ([#8110](https://github.com/infor-design/enterprise/issues/8110))
 - `[Tabs-Module]` Removed padding in embedded mode. ([#8060](https://github.com/infor-design/enterprise/issues/8060))
 - `[Timepicker]` Removed `disabled` prop in trigger button on enable call. ([NG#1567](https://github.com/infor-design/enterprise-ng/issues/1567))
