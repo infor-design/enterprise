@@ -439,7 +439,7 @@ ListDetail.prototype = {
     }
 
     // Make sure the list is always re-enabled on desktop
-    if (breakpoints.isAbove('desktop')) {
+    if (breakpoints.isAbove('desktop') && listAPI !== undefined) {
       listAPI.enable();
     }
   },

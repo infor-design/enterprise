@@ -1,0 +1,138 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" id="list-detail-modal">Show Modal</button>
+
+    <!-- Modal Example -->
+    <div id="list-detail-container" class="list-detail two-column page-container fixed hidden">
+
+      <div class="sidebar scrollable">
+        <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree"></ul>
+        <div id="splitter" class="splitter splitter-right splitter-drag-handle"></div>
+      </div>
+
+      <div id="maincontent" class="main" role="main">
+        <div class="page-container scrollable">
+          <div class="content" style="padding: 10px;">
+            <p>Action-items holistic bandwidth paradigms networking reinvent A-list impactful technologies seamless back-end mashups; one-to-one generate mesh niches communities leading-edge revolutionary--interfaces, repurpose iterate." Synergies drive target, integrated enable widgets disintermediate B2B long-tail deliverables mindshare one-to-one whiteboard experiences. Synergize, generate aggregate platforms content. Back-end viral benchmark holistic enable platforms collaborative scalable, maximize networkeffects networks B2C methodologies web-readiness user-centric embrace. Create synergistic expedite.</p>
+            <p>E-enable extensible, networks synergies reinvent feeds cross-platform deliver disintermediate cross-platform widgets e-tailers e-commerce social functionalities widgets mashups collaborative. Best-of-breed; magnetic proactive target: extend? Users social reinvent transition folksonomies applications vortals cultivate e-commerce grow platforms bricks-and-clicks user-centred--eyeballs experiences communities, methodologies ecologies. Viral; whiteboard: viral remix social ubiquitous vortals, reinvent reinvent monetize markets disintermediate transition global.</p>
+            <p>Blogospheres drive; functionalities data-driven e-commerce extensible peer-to-peer repurpose rich applications synergistic enterprise recontextualize harness back-end. IntegrateAJAX-enabled drive reintermediate extend architectures weblogs weblogs, enhance solutions orchestrate embedded peer-to-peer incentivize standards-compliant implement reinvent incentivize mesh, incentivize networks. Beta-test productize web-enabled mashups, initiatives facilitate out-of-the-box tagclouds: B2B.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  var modals = {
+      'list-detail-modal': {
+        'title': 'List Detail Modal',
+        'id': 'my-id',
+        'content': $('#list-detail-container')
+      },
+    };
+
+  var setModal = function (opt) {
+      opt = $.extend({
+        showCloseBtn: true,
+        fullsize: 'always'
+      }, opt);
+
+      $('body').modal(opt);
+    };
+
+  $('#list-detail-modal').on('click', function () {
+    $(this).focus();
+    setModal(modals[this.id]);
+  });
+
+
+  var sampleData;
+
+  sampleData = [{
+    "id": "node1",
+    "text": "Node One",
+    "open": false,
+    "selected": false,
+    "href": '/somelink/'
+  }, {
+    "id": "node2",
+    "text": "Node Two",
+    "open": true,
+    "selected": true,
+    "focus": true,
+    "children": [{
+      "id": "node3",
+      "text": "Node 2.1"
+    }, {
+      "id": "node4",
+      "text": "Node 2.2",
+      "children": [{
+        "id": "node5",
+        "text": "Node 2.2.1",
+        "icon": "icon-tree-chart",
+        "children": [{
+          "id": "node6",
+          "text": "Node 2.2.1.1",
+          "icon": "icon-tree-chart"
+        }]
+      }]
+    }]
+  }, {
+    "id": "node7",
+    "text": "Node Three",
+    "open": true,
+    "selected": true,
+    "focus": true,
+    "children": [{
+      "id": "node8",
+      "text": "Node 3.1"
+    }, {
+      "id": "node9",
+      "text": "Node 3.2",
+      "open": true,
+      "children": [{
+        "id": "node10",
+        "text": "Node 3.2.1",
+        "icon": "icon-tree-chart",
+        "open": true,
+        "children": [{
+          "id": "node11",
+          "text": "Node 3.2.1.1",
+          "icon": "icon-tree-chart"
+        }]
+      }]
+    }]
+  }, {
+    "id": "node12",
+    "text": "Node Four",
+    "open": true,
+    "selected": true,
+    "focus": true,
+    "children": [{
+      "id": "node13",
+      "text": "Node 4.1"
+    }, {
+      "id": "node14",
+      "text": "Node 4.2",
+      "open": true,
+      "children": [{
+        "id": "node15",
+        "text": "Node 4.2.1",
+        "icon": "icon-tree-chart",
+        "open": true,
+        "children": [{
+          "id": "node16",
+          "text": "Node 4.2.1.1",
+          "icon": "icon-tree-chart"
+        }]
+      }]
+    }]
+  }];
+
+  $('#json-tree').tree({dataset: sampleData});
+
+
+</script>
