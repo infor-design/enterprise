@@ -229,6 +229,12 @@
         color: $input-color-hover-border;
       }
     }
+
+    &:not(.has-focus) {
+      .btn:hover {
+        border-color: $input-color-initial-border;
+      }
+    }
   }
 
   &.has-focus {
@@ -280,9 +286,9 @@
 
     background-color: transparent;
     border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
     border-color: $input-color-initial-border;
     border-right: 0;
-    border-top-right-radius: 0;
     color: $font-color;
     font-weight: $ids-number-font-weight-base;
     margin: 0;
@@ -292,8 +298,8 @@
     text-transform: none;
 
     + .searchfield {
-      border-bottom-left-radius: 0;
       border-left: 1px solid transparent;
+      border-bottom-left-radius: 0;
       border-top-left-radius: 0;
       padding-left: 8px;
     }
@@ -371,6 +377,9 @@
 }
 
 .searchfield-category-button {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+
   .category {
     margin-bottom: 2px;
     padding-left: 5px;
@@ -458,7 +467,7 @@ html[dir='rtl'] {
     }
 
     &.has-categories {
-      .btn {
+      .btn:not(.hide-focus) {
         border-left: 0;
         padding-left: 0;
         padding-right: 10px;
@@ -466,16 +475,18 @@ html[dir='rtl'] {
 
       .searchfield {
         border-right: 0;
+        padding-left: 10px;
+        padding-right: 8px;
+      }
+
+      .btn {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 3px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 3px;
       }
 
       &:not(.context) {
-        .btn {
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 3px;
-          border-top-left-radius: 0;
-          border-top-right-radius: 3px;
-        }
-
         .category:empty {
           width: 0;
         }
@@ -521,7 +532,42 @@ html[dir='rtl'] {
 
         .searchfield {
           border-left: 1px solid $input-color-initial-border;
-          padding-bottom: 7px;
+
+          &:focus {
+            border-left: 1px solid $input-color-focus-border;
+          }
+        }
+
+        &.has-focus {
+          .searchfield {
+            border-left: 1px solid $input-color-focus-border;
+          }
+        }
+
+        &:not(.has-focus) {
+          .searchfield {
+            &:hover {
+              border-left:1px solid $input-color-hover-border;
+            }
+          }
+        }
+      }
+
+      &.has-focus {
+        .btn {
+          border-right: 1px solid $input-color-focus-border;
+        }
+      }
+
+      &:not(.has-focus) {
+        &.is-hovered {
+          .btn {
+            border-right: 1px solid $input-color-hover-border;
+
+            &:hover {
+              border-right: 1px solid $input-color-initial-border;
+            }
+          }
         }
       }
     }
