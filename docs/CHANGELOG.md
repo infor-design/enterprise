@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.91.0
+
+## v4.91.0 Features
+
+## v4.91.0 Fixes
+
+- `[Datagrid]` Fixed extra space increase on editable fields when clicking in and out of it. ([#8155](https://github.com/infor-design/enterprise/issues/8155))
+
 ## v4.90.0
 
 ## v4.90.0 Features
