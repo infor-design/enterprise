@@ -2001,13 +2001,14 @@ PopupMenu.prototype = {
 
       const hasWrapper = menuToClose.parent('.wrapper').length > 0;
       const isLeft = (hasWrapper ? parseInt(menuToClose.parent('.wrapper')[0].style.left, 10) : 0) < 0;
+      const isSubMenu = menuToClose.parents('.submenu').length > 0;
       let canClose = (tracker - startY) < 3.5;
 
       if (isLeft) {
         canClose = (tracker - startY) >= 0;
       }
 
-      if (canClose) { // We are moving slopie to the menu
+      if (canClose || isSubMenu) { // We are moving slopie to the menu
         menuToClose.removeClass('is-open').removeAttr('style');
         menuToClose.parent('.wrapper').removeAttr('style');
         menuToClose.parent().parent().removeClass('is-submenu-open');

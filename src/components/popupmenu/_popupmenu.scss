@@ -514,13 +514,13 @@
         @include css3(transform, rotate(-90deg));
 
         border-width: 0;
-        height: 24px;
+        height: 18px;
         left: auto;
         pointer-events: none;
         position: absolute;
-        right: 4px;
-        top: 3px;
-        width: 16px;
+        right: 3px;
+        top: 8px;
+        width: 18px;
       }
     }
   }
@@ -717,7 +717,6 @@ html[dir='rtl'] {
       > .icon.icon-dropdown {
         left: 5px;
         right: auto;
-        top: 5px;
         transform: rotate(90deg);
       }
     }
@@ -734,7 +733,7 @@ html[dir='rtl'] {
       &.is-selectable,
       &.is-multiselectable {
         > a {
-          padding-left: 10px;
+          padding-left: 45px;
           padding-right: 35px;
         }
       }

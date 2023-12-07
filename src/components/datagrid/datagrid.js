@@ -5703,7 +5703,7 @@ Datagrid.prototype = {
     // Set selector
     const selector = {
       th: '.datagrid-header th',
-      td: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
+      td: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"]',
       rowstatus: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"] .icon-rowstatus',
       headerIcon: '.datagrid-header th .datagrid-header-icon'
     };
@@ -5913,7 +5913,7 @@ Datagrid.prototype = {
     for (let j = 0; j < this.settings.columns.length; j++) {
       const col = this.settings.columns[j];
 
-      if (col.hidden) {
+      if (col.hidden || (col.component && this.settings.onPostRenderCell)) {
         continue;
       }
 
@@ -10449,7 +10449,7 @@ Datagrid.prototype = {
       this.addToDirtyArray(idx, cell, data);
     }
 
-    if (typeof this.editor.focus === 'function') {
+    if (typeof this.editor.focus === 'function' && this.editor.name !== 'date') {
       this.editor.focus();
     }
 
@@ -10616,7 +10616,8 @@ Datagrid.prototype = {
       cell,
       newValue,
       false,
-      isInline
+      isInline,
+      oldValue
     );
     const value = this.fieldValue(rowData, col.field);
 
@@ -10766,7 +10767,8 @@ Datagrid.prototype = {
         placement: 'bottom',
         content: message,
         isError: type === 'error' || type === 'dirtyerror',
-        wrapper: icon
+        wrapper: icon,
+        y: 5
       };
       this.cacheTooltip(icon, tooltip);
       this.setupTooltips(false, true);
@@ -11404,8 +11406,6 @@ Datagrid.prototype = {
       }
     }
 
-    coercedVal = xssUtils.unescapeHTML(coercedVal);
-
     if (col.field && coercedVal !== oldVal) {
       if (col.field.indexOf('.') > -1) {
         let rowDataObj = rowData;
@@ -11650,7 +11650,7 @@ Datagrid.prototype = {
       (d.originalVal === d.cellNodeText)
     );
 
-    if (isDirty || d.originalVal.length !== d.value.length) {
+    if (isDirty || (d.originalVal.length !== d.value.length && d.originalVal.length !== d.cellNodeText.length)) {
       this.dirtyArray[row][cell].isDirty = true;
       cellNode[0].classList.add('is-dirty-cell');
       this.setDirtyIndicator(row, cell, true);

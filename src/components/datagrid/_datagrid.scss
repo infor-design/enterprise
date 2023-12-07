@@ -1500,11 +1500,17 @@ $datagrid-small-row-height: 25px;
     }
   }
 
+  &.medium-rowheight {
+    .datagrid-expand-btn {
+      margin-top: 0;
+    }
+  }
+
   &.medium-rowheight,
   &.normal-rowheight {
     .datagrid-expand-btn {
       .icon.plus-minus {
-        left: -6px;
+        left: -10px;
       }
     }
   }
@@ -1560,9 +1566,9 @@ $datagrid-small-row-height: 25px;
           width: 22px;
 
           .icon {
-            left: -8px;
+            left: -10px;
             position: relative;
-            top: -8px;
+            top: -7px;
           }
         }
 
@@ -2712,6 +2718,17 @@ $datagrid-small-row-height: 25px;
       outline: 1px solid $datagrid-cell-focus-border-color;
       outline-offset: -1px;
       transform: scale(1);
+
+      &.datagrid-trigger-cell .datagrid-cell-wrapper {
+        padding-top: 2px;
+
+        span.trigger {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          vertical-align: middle;
+          white-space: nowrap;
+        }
+      }
     }
 
     // Make all content fit in singleline
@@ -3090,11 +3107,16 @@ $datagrid-small-row-height: 25px;
           padding-right: 20px;
 
           + .trigger {
-            margin-left: -13px;
-            margin-top: 2px;
+            margin-left: -15px;
+            margin-top: 9px;
 
             > .icon {
               top: 0;
+            }
+
+            &:hover > .icon {
+              background-color: transparent;
+              box-shadow: none;
             }
           }
 
@@ -3411,7 +3433,7 @@ $datagrid-small-row-height: 25px;
     }
 
     &.is-dirty-cell,
-    &.error {
+    &.has-editor.error {
       .icon-rowstatus {
         display: none;
       }
@@ -4401,10 +4423,10 @@ td .btn-actions {
   }
 
   .icon.icon-calendar {
-    height: 16px;
-    left: 5px;
-    top: -2px;
-    width: 16px;
+    height: 18px;
+    left: 4px;
+    top: -3px;
+    width: 18px;
   }
 
   .icon-fileupload {
@@ -4642,13 +4664,22 @@ td .btn-actions {
       }
     }
 
+    &.extra-small-rowheight,
+    &.small-rowheight {
+      .datagrid-expand-btn {
+        .icon {
+          top: -6px;
+        }
+      }
+    }
+
     .datagrid-trigger-cell .icon.icon-clock {
       top: 0;
     }
   }
 
   .datagrid-expand-btn {
-    line-height: 27px !important;
+    line-height: 19px !important;
   }
 
   .datagrid-filter-wrapper .dropdown {
@@ -4962,11 +4993,34 @@ html[dir='rtl'] {
     }
   }
 
+  .datagrid.small-rowheight {
+    .datagrid-trigger-cell.has-editor {
+      &:not(.is-readonly) {
+        &:hover,
+        &:focus {
+          svg.icon + .icon-error,
+          svg.icon + .icon-info,
+          svg.icon + .icon-alert {
+            &:not(.datagrid-alert-icon) {
+              margin-left: 26px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .datagrid {
     .is-editing .datepicker {
-      + .trigger svg {
-        width: 16px;
-        height: 16px;
+      + .trigger {
+        &.btn-icon:hover {
+          background-color: transparent;
+        }
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
       }
     }
   }
@@ -4984,6 +5038,45 @@ html[dir='rtl'] {
       ~ .trigger {
         left: 0;
         margin-right: 0;
+      }
+    }
+
+    .is-editing.has-editor {
+      .datepicker ~ .trigger {
+        left: -15px;
+        top: -1px;
+      }
+    }
+  }
+
+  .datagrid.small-rowheight {
+    .datagrid-trigger-cell.has-editor {
+      .icon-error {
+        left: 0 !important;
+      }
+
+      &.is-editing {
+        .trigger {
+          left: -8px;
+          margin-right: 0;
+          top: -2px;
+        }
+      }
+    }
+  }
+
+  .datagrid.extra-small-rowheight {
+    .datagrid-trigger-cell.has-editor {
+      .icon-error {
+        left: 0 !important;
+      }
+
+      &.is-editing {
+        .trigger {
+          left: -6px;
+          margin-right: 0;
+          top: 0;
+        }
       }
     }
   }
@@ -5032,7 +5125,7 @@ html[dir='rtl'] {
 
             .icon {
               margin-right: 3px;
-              top: -1px;
+              top: -2px;
             }
           }
         }
@@ -5807,12 +5900,6 @@ html[dir='rtl'] {
 // Firefox on Mac only
 .is-mac.is-firefox {
   .has-draggable-columns {
-    th {
-      .handle {
-        padding: 4px 0 0 5px;
-      }
-    }
-
     &.small-rowheight,
     &.extra-small-rowheight {
       th {
@@ -6320,6 +6407,10 @@ html[class*='theme-classic-'] .datagrid {
   }
 
   &.medium-rowheight {
+    .datagrid-expand-btn {
+      margin-top: -5px;
+    }
+
     .datagrid-trigger-cell.has-editor:not(.is-readonly) {
       &.is-fileupload .datagrid-cell-wrapper .icon:not(.datagrid-alert-icon) {
         &.icon-error {
@@ -6523,6 +6614,25 @@ html[class*='theme-classic-'] .datagrid {
             left: 94%;
           }
         }
+      }
+    }
+  }
+
+  &.small-rowheight,
+  &.extra-small-rowheight {
+    .datagrid-expand-btn {
+      .icon {
+        top: -8px;
+      }
+    }
+  }
+}
+
+html[class*='theme-classic-'].is-firefox {
+  .datagrid {
+    .datagrid-expand-btn {
+      .icon {
+        top: -7px;
       }
     }
   }
