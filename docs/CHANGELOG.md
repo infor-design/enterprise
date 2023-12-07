@@ -5,6 +5,8 @@
 ## v4.91.0 Fixes
 
 - `[Charts]` Improved the positioning of chart legend color. ([#8159](https://github.com/infor-design/enterprise/issues/8159))
+- `[Bar Chart]` Displayed the x-axis ticks for the bar grouped when single group. ([#7976](https://github.com/infor-design/enterprise/issues/7976))
+- `[Dropdown]` Fixed a bug where list is broken when empty icon is in the first option. ([#8105](https://github.com/infor-design/enterprise/issues/8105))
 
 ## v4.90.0
 
@@ -12,6 +14,7 @@
 
 ## v4.90.0 Fixes
 
+- `[About]` Removed operating system field. ([#8118](https://github.com/infor-design/enterprise/issues/8118))
 - `[Accordion]` Fixed a bug where the plus-minus icon shows ellipsis on mobile viewport. ([#8044](https://github.com/infor-design/enterprise/issues/8044))
 - `[Badges]` Adjusted color and positioning of dismissible button in multiselect dropdown tags. ([#8036](https://github.com/infor-design/enterprise/issues/8036))
 - `[Breadcrumb]` Fixed misaligned item in RTL in Safari browser. ([#8167](https://github.com/infor-design/enterprise/issues/8167))
@@ -44,6 +47,9 @@
 - `[Popupmenu]` Added fix for extra space in submenu text. ([#8161](https://github.com/infor-design/enterprise/issues/8161))
 - `[Searchfield]` Fixed animation of collapsible searchfield. ([#8076](https://github.com/infor-design/enterprise/issues/8076))
 - `[Searchfield]` Adjusted height so that focus is fully seen. ([#8085](https://github.com/infor-design/enterprise/issues/8085))
+- `[Searchfield]` Fixed border and height for searchfield with categories in RTL. ([#8101](https://github.com/infor-design/enterprise/issues/8101))
+- `[Searchfield]` Fixed border radius for searchfield with dropdown in RTL. ([#8102](https://github.com/infor-design/enterprise/issues/8102))
+- `[Splitter]` Fixed position of splitter when using in modal. ([#8005](https://github.com/infor-design/enterprise/issues/8005))
 - `[Tabs Header]` Fixed gradient color for personalizable overflowing header tabs. ([#8110](https://github.com/infor-design/enterprise/issues/8110))
 - `[Tabs-Module]` Removed padding in embedded mode. ([#8060](https://github.com/infor-design/enterprise/issues/8060))
 - `[Timepicker]` Removed `disabled` prop in trigger button on enable call. ([NG#1567](https://github.com/infor-design/enterprise-ng/issues/1567))
