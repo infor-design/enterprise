@@ -98,6 +98,13 @@
   }
 }
 
+.module-nav-search-container {
+  &.hidden,
+  [hidden] {
+    display: none;
+  }
+}
+
 // =====================================================
 // Display Mode: Collapsed
 
