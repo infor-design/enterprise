@@ -676,7 +676,12 @@ Dropdown.prototype = {
           value: el.value || null
         });
 
-        if (self.listIcon.items[i] && self.listIcon.items[i].isIcon) {
+        const listIconEl = self.listIcon.items.filter(function (iconEl) {
+          return (iconEl.icon === icon || iconEl.icon === icon.icon) &&
+            iconEl.value === el.value;
+        });
+
+        if ((self.listIcon.items[i] && self.listIcon.items[i].isIcon) || listIconEl.length > 0) {
           count++;
         }
       });
@@ -785,8 +790,19 @@ Dropdown.prototype = {
       const target = self.pseudoElem.find('.listoption-icon');
       const i = opt.index();
       const iconRef = self.listIcon.items[i];
+      const optionEl = opt[0];
       
+      const listIconEl = self.listIcon.items.filter(function (iconEl) {
+        return iconEl.value === optionEl.value;
+      });
+
       target.each((j, el) => el.remove());
+
+      if (listIconEl.length === 0) {
+        self.listIcon.pseudoElemIcon = '';
+        self.listIcon.idx = i;
+        return;
+      }
 
       // Return out if this item has no icon
       if (!iconRef) {
@@ -1070,8 +1086,12 @@ Dropdown.prototype = {
     const trueValue = (value && 'value' in value ? value.value : text).replace(/"/g, '/quot/');
     let iconHtml = '';
 
-    if (self.listIcon.hasIcons && self.listIcon.items[index]) {
-      iconHtml = self.listIcon.items[index].html;
+    const listIconEl = self.listIcon.items.filter(function (iconEl) {
+      return iconEl.value === option.value;
+    });
+
+    if (self.listIcon.hasIcons && listIconEl.length > 0) {
+      iconHtml = listIconEl[0].html;
     }
 
     if (copiedDataAttrs === ' ') {
