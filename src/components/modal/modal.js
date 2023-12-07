@@ -304,7 +304,7 @@ Modal.prototype = {
   appendContent() {
     let isAppended = false;
     const maxWidth = this.settings.maxWidth ? ` style="max-width: ${this.settings.maxWidth}px;"` : '';
-    const isSplitter = this.settings.content.hasClass('splitter-container');
+    const isSplitter = $(this.settings.content).hasClass('splitter-container');
 
     this.element = $(`
       <div class="modal">
