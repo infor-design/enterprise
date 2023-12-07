@@ -2,10 +2,9 @@
 
 ## v4.91.0
 
-## v4.91.0 Features
-
 ## v4.91.0 Fixes
 
+- `[Bar Chart]` Displayed the x-axis ticks for the bar grouped when single group. ([#7976](https://github.com/infor-design/enterprise/issues/7976))
 - `[Dropdown]` Fixed a bug where list is broken when empty icon is in the first option. ([#8105](https://github.com/infor-design/enterprise/issues/8105))
 
 ## v4.90.0
