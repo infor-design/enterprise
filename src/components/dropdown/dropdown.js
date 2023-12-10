@@ -2365,7 +2365,10 @@ Dropdown.prototype = {
     let parentScrollableArea = $('.modal.is-visible .modal-body-wrapper');
     const subScrollableSection = self.element.parents('.scrollable, .scrollable-x, .scrollable-y, .card-content');
     if (subScrollableSection.length) {
-      parentScrollableArea = subScrollableSection;
+      const hasScrollbar = subScrollableSection.get(0).scrollHeight > subScrollableSection.get(0).clientHeight;
+      if (hasScrollbar) {
+        parentScrollableArea = subScrollableSection;
+      }
     }
     if (parentScrollableArea.length) {
       this.parentScrollableArea = parentScrollableArea;
