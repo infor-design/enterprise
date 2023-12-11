@@ -10360,7 +10360,7 @@ Datagrid.prototype = {
 
     const isEditor = $('.is-editor', cellParent).length > 0;
     const isPlaceholder = $('.is-placeholder', cellNode).length > 0;
-    let cellValue = (cellNode.text() ?
+    let cellValue = (cellNode.text() && cellNode.text().trim().length > 0 ?
       cellNode.text() : this.fieldValue(rowData, col.field));
 
     if (isEditor || isPlaceholder) {
