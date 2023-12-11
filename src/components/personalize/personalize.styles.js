@@ -291,9 +291,14 @@ a.is-personalizable svg.ripple-effect {
 .tab-container.personalize-header.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected,
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected,
-.personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
-.personalize-header.tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible {
+.personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
   border-color: ${colors.headerTabsSelectedTextColor} !important;
+}
+
+.tab-container.is-personalizable.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
+.tab-container.personalize-header.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
+.personalize-header.tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible {
   box-shadow: ${colors.tabFocusBoxShadow} !important;
 }
 
