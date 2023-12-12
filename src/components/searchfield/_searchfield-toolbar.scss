@@ -1286,6 +1286,10 @@ html[dir='rtl'] {
     padding-right: 34px;
   }
 
+  .searchfield-wrapper.active.has-close-icon-button.has-custom-button .searchfield {
+    padding-left: 60px;
+  }
+
   .flex-toolbar .toolbar-section .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button .custom-button {
     right: calc(100% - 72px);
     top: 7px;
