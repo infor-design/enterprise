@@ -187,11 +187,7 @@ html[dir='rtl'] {
           }
 
           .searchfield {
-            width: calc(85% + 35px);
-
-            @media (max-width: $breakpoint-slim) {
-              width: 80%;
-            }
+            width: calc(100% - 40px);
           }
 
           .collapse-button {
