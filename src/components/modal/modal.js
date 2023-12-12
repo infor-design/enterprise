@@ -333,7 +333,9 @@ Modal.prototype = {
       }
 
       this.element.find('.modal-content').append(closeBtn);
-      closeBtn.on(`click.${this.namespace}`, () => this.close()).tooltip();
+      closeBtn.on(`click.${this.namespace}`, () => {
+        this.close();
+      }).tooltip();
 
       if (this.settings.closeBtnOptions.attributes) {
         utils.addAttributes(closeBtn, this, this.settings.closeBtnOptions.attributes, '', true);
