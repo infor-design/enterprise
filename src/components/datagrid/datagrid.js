@@ -10418,6 +10418,10 @@ Datagrid.prototype = {
     }
 
     this.editor =  new col.editor(idx, cell, cellValue, cellNode, col, event, this, rowData); // eslint-disable-line
+
+    if (this.editor.input.is('.dropdown') && this.editor.input.parent().is('.datagrid-cell-wrapper')) {
+      this.editor.input.parent().addClass('is-dropdown-wrapper');
+    }
     this.editor.row = idx;
     this.editor.cell = cell;
 
@@ -11534,7 +11538,7 @@ Datagrid.prototype = {
       args.rowData = isTreeGrid && this.settings.treeDepth[row] ?
         this.settings.treeDepth[row].node : rowData;
 
-      if (!this.isCellDirty(row, cell)) {
+      if (!this.isCellDirty(row, cell) && !this.settings.actionableMode) {
         this.setActiveCell(row, cell);
       }
 

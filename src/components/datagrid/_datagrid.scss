@@ -2526,6 +2526,20 @@ $datagrid-small-row-height: 25px;
       overflow: hidden;
       padding: 4px 16px 0;
 
+      &.is-dropdown-wrapper {
+        .dropdown-wrapper {
+          margin-top: 2px;
+          .dropdown {
+            padding: 0 8px 10px 4px;
+          }
+
+          .icon {
+            top: 4px;
+            right: -8px;
+          }
+        }
+      }
+
       .colorpicker-container {
         background-color: transparent;
         border: 0;
