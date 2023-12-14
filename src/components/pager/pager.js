@@ -1034,7 +1034,7 @@ Pager.prototype = {
         elem.val(lastValue);
         return;
       }
-
+      lastValue = newValue;
       let currentPage = self.activePage;
       if (self.state.filteredPages) {
         currentPage = self.state.filteredActivePage;
