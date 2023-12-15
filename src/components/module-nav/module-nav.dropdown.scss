@@ -74,6 +74,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 
       + span {
         padding-inline-start: 0;
+        padding-inline-end: 1px;
       }
     }
   }
@@ -138,7 +139,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     a {
       color: $module-nav-switcher-dropdown-item-text-color;
       padding-inline-start: 44px;
-      padding-block-start: $module-nav-switcher-button-gutter-size - 1px;
+      padding-block-start: $module-nav-switcher-button-gutter-size + 1;
     }
 
     .listoption-icon {
@@ -199,6 +200,20 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     }
   }
 }
+
+html[dir='rtl'] .dropdown-list.role-dropdown > .trigger .icon {
+  margin-right: 10px;
+}
+
+html[dir='rtl'] .dropdown-list.role-dropdown.has-icons .dropdown-search {
+  width: calc(100% - 55px);
+}
+
+html[dir='rtl'] .module-nav-search-container .searchfield-wrapper.has-close-icon-button.has-text .btn-icon.close {
+  top: 9px;
+  right: calc(300px - 20px);
+}
+
 
 // =====================================================
 // Scrollable, non-pinned (changes some component sizes)
