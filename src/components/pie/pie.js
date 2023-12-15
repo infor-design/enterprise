@@ -142,6 +142,11 @@ Pie.prototype = {
     const self = this;
     const s = this.settings;
 
+    // Fixing Angular Issue for Async Dataset
+    if (this.element.data('emptymessage') && s.dataset.length > 0) {
+      this.element.data('emptymessage').destroy();
+    }
+
     self.svg = d3.select(this.element[0])
       .append('svg');
 
@@ -160,6 +165,7 @@ Pie.prototype = {
       this.element.addClass(`has-${s.legendPlacement}-legend`);
     }
 
+    const hasParentBordered = this.element.parents('.widget').hasClass('bordered');
     const w = parseInt(this.element.width(), 10);
     let h = parseInt(this.element.height(), 10);
 
@@ -167,7 +173,7 @@ Pie.prototype = {
       height: h,
       width: w
     };
-    dims.isSmallView = dims.width < 360;
+    dims.isSmallView = dims.width - (hasParentBordered ? 2 : 0) < 360;
     const legendBotOnSingleWidget = s.legendPlacement === 'bottom' &&
       dims.isSmallView && !s.showMobile;
 
