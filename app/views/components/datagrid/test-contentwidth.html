@@ -1,15 +1,5 @@
 <div class="row">
   <div class="twelve columns">
-    <br />
-    <h3>Grid Example: Customization</h3>
-    <p>
-    Shows how to create an form button column. Also using the contentVisible function on the column you can customize on which rows it should be visible.
-    </p><br />
-  </div>
-</div>
-
-<div class="row">
-  <div class="twelve columns">
     <div id="datagrid">
     </div>
   </div>
@@ -17,12 +7,10 @@
 
 <script>
     $('body').on('initialized', function () {
-     //Locale.set('en-US').done(function () {
-      var grid,
+      let grid,
         columns = [],
         data = [];
 
-      // Some Sample Data
       data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action', ordered: 1, setting: {optionOne: 'One', optionTwo: 'One'}});
       data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold', ordered: true, setting: {optionOne: 'One', optionTwo: 'One'}});
       data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action', ordered: true, comment: 'Dynamic harness out-of-the-box /n syndicate models deliver. Disintermediate, technologies /n scale deploy social streamline, methodologies, killer podcasts innovate. Platforms A-list disintermediate, value visualize dot-com /n tagclouds platforms incentivize interactive vortals disintermediate networking, webservices envisioneer; tag share value-added, disintermediate, revolutionary.'});
@@ -32,14 +20,11 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', ordered: 0});
       data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '100.99', status: 'OK', orderDate: new Date(2014, 6, 9, 12, 12, 12), action: 'On Hold', ordered: 0});
 
-      //Define Columns for the Grid.
 
-      columns.push({ width: 100, contentWidth: '100%', id: 'action', name: 'Active', field: 'action', text: 'Action', sortable: false, align: 'center',formatter: Soho.Formatters.Button, click: function (e, args) {$('body').toast({ title: 'Click Fired', message: 'Id : ' + args[0].item.id + ' was clicked.' })}
+      columns.push({ width: 70, contentWidth: '100%', id: 'action', name: 'Active', field: 'action', text: 'Action', sortable: false, align: 'center',formatter: Soho.Formatters.Button, click: function (e, args) {$('body').toast({ title: 'Click Fired', message: 'Id : ' + args[0].item.id + ' was clicked.' })}
       , contentVisible: function (row, cell, data, col, item) { return (item.status === 'OK');} });
       columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly });
       columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', formatter: Soho.Formatters.Hyperlink});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
       columns.push({ id: 'actionLink', name: 'As Link', field: 'action', sortable: false, align: 'center', formatter: Soho.Formatters.Hyperlink, icon: 'reset'});
 
       //Init and get the api for the grid
