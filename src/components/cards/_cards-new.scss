@@ -361,11 +361,6 @@
     text-overflow: ellipsis;
   }
 
-  &.detail-title {
-    position: relative;
-    top: 2px;
-  }
-
   &.title + &.custom-action {
     text-align: right;
   }
