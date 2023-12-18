@@ -21,7 +21,7 @@
       data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '100.99', status: 'OK', orderDate: new Date(2014, 6, 9, 12, 12, 12), action: 'On Hold', ordered: 0});
 
 
-      columns.push({ width: 70, contentWidth: '100%', id: 'action', name: 'Active', field: 'action', text: 'Action', sortable: false, align: 'center',formatter: Soho.Formatters.Button, click: function (e, args) {$('body').toast({ title: 'Click Fired', message: 'Id : ' + args[0].item.id + ' was clicked.' })}
+      columns.push({ width: 90, contentWidth: '100%', id: 'action', name: 'Active', field: 'action', text: 'Action', sortable: false, align: 'center',formatter: Soho.Formatters.Button, click: function (e, args) {$('body').toast({ title: 'Click Fired', message: 'Id : ' + args[0].item.id + ' was clicked.' })}
       , contentVisible: function (row, cell, data, col, item) { return (item.status === 'OK');} });
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
