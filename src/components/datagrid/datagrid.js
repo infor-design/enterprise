@@ -6715,7 +6715,8 @@ Datagrid.prototype = {
         const diff = currentColWidth - (left - leftOffset);
 
         // Enforce Column or Default min and max widths
-        widthToSet = cssWidth - diff;
+        const newWidthToSet = cssWidth - diff;
+        widthToSet = widthToSet && Math.abs(newWidthToSet - widthToSet) <= 3 ? widthToSet : newWidthToSet;
 
         if (widthToSet < minWidth || widthToSet > maxWidth) {
           self.resizeHandle.css('cursor', 'inherit');
@@ -6725,6 +6726,7 @@ Datagrid.prototype = {
         if (widthToSet === cssWidth) {
           return;
         }
+
         currentCol.style.width = (`${widthToSet}px`);
 
         const inRange = (idx === this.settings.frozenColumns.left.length - 1) ||
