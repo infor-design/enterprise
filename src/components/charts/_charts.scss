@@ -51,7 +51,7 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      padding-left: 30px;
+      justify-content: center;
 
       .chart-legend-item.is-two-column {
         display: flex;
@@ -563,7 +563,7 @@
 
 // RTL Styles
 html[dir='rtl'] {
-  .chart-legend {
+  .chart-legend:not(.is-bottom) {
     margin-left: inherit;
     margin-right: 55px;
 
@@ -574,6 +574,13 @@ html[dir='rtl'] {
 
     .chart-legend-item {
       float: right;
+      margin-left: 10px;
+      margin-right: 0;
+    }
+  }
+
+  .chart-legend.is-bottom {
+    .chart-legend-color {
       margin-left: 10px;
       margin-right: 0;
     }
