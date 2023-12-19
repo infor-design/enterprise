@@ -677,7 +677,7 @@ utils.isPlainObject = function isPlainObject(obj) {
 };
 
 /**
- * Merge an array be each index position
+ * Merge an array by each index position
  * @param  {array} arr1 The first array
  * @param  {array} arr2  The second array
  * @returns {array} The merged array
@@ -1395,6 +1395,33 @@ utils.waitForTransitionEnd = function (el, property) {
     };
     el.addEventListener('transitionend', transitionEnded);
   });
+};
+
+/**
+ * Simple deep merge function for nested objects
+ * @param {object} targetObject the target object
+ * @param {object} sourceObject the object to merge on
+ * @returns {object} the merged object
+ */
+utils.deepMergeObject = function (targetObject = {}, sourceObject = {}) {
+  // clone the source and target objects to avoid the mutation
+  const copyTargetObject = JSON.parse(JSON.stringify(targetObject));
+  const copySourceObject = JSON.parse(JSON.stringify(sourceObject));
+  // Iterating through all the keys of source object
+  Object.keys(copySourceObject).forEach((key) => {
+    if (typeof copySourceObject[key] === 'object' && !Array.isArray(copySourceObject[key])) {
+      // If property has nested object, call the function recursively
+      copyTargetObject[key] = utils.deepMergeObject(
+        copyTargetObject[key],
+        copySourceObject[key]
+      );
+    } else {
+      // else merge the object source to target
+      copyTargetObject[key] = copySourceObject[key];
+    }
+  });
+
+  return copyTargetObject;
 };
 
 export { utils, math };

@@ -521,6 +521,7 @@
     width: calc(100% - 1px);
 
     > span {
+      margin-top: -1px;
       display: inline-block; // to allow offsetWidth
       overflow: hidden;
       text-overflow: ellipsis;

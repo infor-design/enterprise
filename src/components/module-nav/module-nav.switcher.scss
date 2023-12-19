@@ -2,6 +2,12 @@
 
 // Module Nav Switcher Component
 //================================================== //
+.module-nav-header {
+  &.hidden,
+  [hidden] {
+    display: none;
+  }
+}
 
 .module-nav-switcher {
   @include nav-item-style;

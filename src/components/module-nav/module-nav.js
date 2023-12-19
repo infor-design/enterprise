@@ -36,6 +36,9 @@ const MODULE_NAV_DEFAULTS = {
   mobileBehavior: true,
   breakpoint: 'phone-to-tablet', // Can be 'tablet' or 'phone-to-tablet'(+ 767), 'phablet (+610)', 'desktop' + (1024) or 'tablet-to-desktop'(+1280).Default is 'phone-to-tablet'(767)
   showOverlay: true,
+  showModuleSwitcher: true,
+  showGuestSection: false,
+  showSearchBar: true,
   enableOutsideClick: false,
   autoCollapseOnMobile: true
 };
@@ -85,10 +88,31 @@ ModuleNav.prototype = {
   },
 
   /**
- * @returns {HTMLElement | undefined} container element for Module Nav component and page content
- */
+   * @returns {HTMLElement | undefined} container element for Module Nav component and page content
+   */
   get pageContainerEl() {
     return this.element.next('.page-container');
+  },
+
+  /**
+   * @returns {HTMLElement | undefined} container element for module nav switcher area
+   */
+  get moduleSwitcherEl() {
+    return this.element.find('.module-nav-header')[0];
+  },
+
+  /**
+   * @returns {HTMLElement | undefined} container element for module nav search
+   */
+  get moduleSearchEl() {
+    return this.element.find('.module-nav-search-container')[0];
+  },
+
+  /**
+   * @returns {HTMLElement | undefined} container element for module nav guest section
+   */
+  get moduleGuestSectionEl() {
+    return this.element.find('.module-nav-guest')[0];
   },
 
   /**
@@ -137,6 +161,9 @@ ModuleNav.prototype = {
     this.setPinSections(this.settings.pinSections);
     this.setScrollable();
     this.setShowDetailView(this.settings.showDetailView);
+    this.setShowModuleSwitcher(this.settings.showModuleSwitcher);
+    this.setShowModuleSearch(this.settings.showSearchBar);
+    this.setShowGuestSection(this.settings.showGuestSection);
     this.configureResize();
     return this;
   },
@@ -506,6 +533,33 @@ ModuleNav.prototype = {
   },
 
   /**
+   * Configures display of the Module Nav's module switcher section
+   * @param {boolean} val true if the module switcher section should be shown
+   * @returns {void}
+   */
+  setShowModuleSwitcher(val) {
+    this.moduleSwitcherEl?.classList[!val ? 'add' : 'remove']('hidden');
+  },
+
+  /**
+   * Configures display of the Module Nav's module search section
+   * @param {boolean} val true if the module search section should be shown
+   * @returns {void}
+   */
+  setShowModuleSearch(val) {
+    this.moduleSearchEl?.classList[!val ? 'add' : 'remove']('hidden');
+  },
+
+  /**
+   * Configures display of the Module Nav's module guest section
+   * @param {boolean} val true if the module guest section should be shown
+   * @returns {void}
+   */
+  setShowGuestSection(val) {
+    this.moduleGuestSectionEl?.classList[val ? 'remove' : 'add']('hidden');
+  },
+
+  /**
    * Checks the window size against the defined breakpoint.
    * @private
    * @returns {boolean} whether or not the window size is larger than the settings-defined breakpoint
@@ -538,7 +592,7 @@ ModuleNav.prototype = {
    */
   updated(settings) {
     if (settings) {
-      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+      this.settings = utils.deepMergeObject(this.settings, settings);
       if (this.switcherAPI) this.switcherAPI.settings.displayMode = this.settings.displayMode;
       if (this.settingsAPI) this.settingsAPI.settings.displayMode = this.settings.displayMode;
     }

@@ -463,7 +463,7 @@ Breadcrumb.prototype = {
         }
 
         const menuItemHTML = `<li class="${liDisabled}">
-          <a href="#" data-breadcrumb-index="${i}"${aDisabled}>${breadcrumb.settings.content || ''}</a>
+          <a href="${breadcrumb.settings.href || '#'}" data-breadcrumb-index="${i}"${aDisabled}>${breadcrumb.settings.content || ''}</a>
         </li>`;
         menuHTML += menuItemHTML;
       });
@@ -726,7 +726,7 @@ Breadcrumb.prototype = {
         const liItem = args[0];
         const index = liItem[0].getAttribute('data-breadcrumb-index');
         const breadcrumbAPI = this.overflowed[Number(index)];
-        $(breadcrumbAPI.a).trigger('click');
+        $(breadcrumbAPI.element).trigger('click');
       });
     }
 

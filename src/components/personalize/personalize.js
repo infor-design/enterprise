@@ -434,7 +434,7 @@ Personalize.prototype = {
         colors.headerTextColor = themeColors.palette.slate[10].value;
         colors.headerTabsTextColor = themeColors.palette.slate[10].value;
 
-        colors.headerTabBorder = themeColors.palette.slate[60].value;
+        colors.headerTabBorder = themeColors.palette.slate[70].value;
         colors.verticalTabBorder = themeColors.palette.slate[60].value;
         colors.tabFocusIndicator = themeColors.palette.white.value;
         colors.tabSelectedColor = themeColors.palette.slate[90].value;

@@ -1,0 +1,109 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2 class="fieldset-title">Soho Data Grid - Tab Navigation</h2>
+    <!-- <p>
+      This demo illustrates the use of a summary row.
+    </p> -->
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div role="toolbar" class="toolbar">
+
+      <div class="title">
+        Partner Map Line
+       </div>
+
+      <div class="buttonset">
+        <button type="button" id="add-row-button" class="btn">
+          <span>Add Row</span>
+        </button>
+      </div>
+    </div>
+    <div id="datagrid" class="datagrid">
+    </div>
+  </div>
+</div>
+
+<script id="datagrid-script">
+  $('body').one('initialized', function () {
+
+      var columns = [], grid;
+      var businessKeysList = [{ label: 'BUYER', value: 'BUYER' }, { label: 'SELLER', value: 'SELLER' }, {label: '', value: '' }];
+      var accountingEntityList = [{ label: 'AE1', value: 'AE1' }, {value: 'AE2', label: 'AE2'}, {value: 'AE3', label: 'AE3'}];
+      var locationList = [{ label: 'AE1', value: 'AE1' }, {value: 'AE2', label: 'AE2'}, {value: 'AE3', label: 'AE3'}];
+
+      $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
+
+        // Define Columns for the Grid.
+
+        columns.push({
+          id: 'selectionCheckbox',
+          name: '',
+          field: '',
+          sortable: false,
+          formatter: Soho.Formatters.SelectionCheckbox,
+          align: 'center'
+        });
+        columns.push({
+          id: 'externalValue',
+          name: 'Source Value',
+          field: 'externalValue',
+          formatter: Soho.Formatters.Text,
+          editor: Soho.Editors.Input
+        });
+        columns.push({
+          id: 'internalValue',
+          name: 'Target Value',
+          field: 'internalValue',
+          formatter: Soho.Formatters.Text,
+          editor: Soho.Editors.Input
+        });
+        columns.push({
+          id: 'businessKey',
+          name: 'Assignment Type',
+          field: 'businessKey',
+          formatter: Soho.Formatters.Dropdown,
+          options: businessKeysList,
+          editor: Soho.Editors.Dropdown
+        });
+        columns.push({
+          id: 'accountingEntityId',
+          name: 'Accounting Entity',
+          field: 'accountingEntityId',
+          formatter: Soho.Formatters.Dropdown,
+          options: accountingEntityList,
+          editor: Soho.Editors.Dropdown
+        });
+        columns.push({
+          id: 'locationId',
+          name: 'Location',
+          field: 'locationId',
+          formatter: Soho.Formatters.Dropdown,
+          options: locationList,
+          editor: Soho.Editors.Dropdown
+        });
+
+        // Init and get the api for the grid
+        grid = $('#datagrid').datagrid({
+          columns: columns,
+          saveColumns: false,
+          actionableMode: true,
+          rowNavigation: true,
+          showNewRowIndicator: true,
+          editable: true,
+          attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
+          toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true}
+        });
+
+        var gridApi = grid.data('datagrid');
+
+        $('#add-row-button').on('click', function (e) {
+          gridApi.addRow({ externalValue: '', internalValue: '', businessKey: '', accountingEntityID: '', locationId: '' }, 0);
+        });
+      });
+
+      
+ });
+</script>
