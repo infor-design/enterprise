@@ -5,6 +5,7 @@
 ## v4.90.1 Features
 
 - `[ModuleNav]` Added a new "guest" section and some new settings to toggle the search and module switcher section. ([#8232](https://github.com/infor-design/enterprise/issues/8232))
+- `[ModuleNav]` Added `attributes` setting (for automation id) in the module nav switcher. ([#8270](https://github.com/infor-design/enterprise/issues/8270))
 
 ## v4.90.1 Fixes
 
