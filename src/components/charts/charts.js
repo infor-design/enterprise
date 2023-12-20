@@ -544,6 +544,12 @@ charts.addLegend = function (series, chartType, settings, container) {
         menu: popupList
       });
 
+      const widgetHeight = $(container).parents('.widget').height();
+      const widgetHeader = $($(container).parents('.widget').children().get(0)).height();
+      const widgetContent = $($(container).parents('.widget').children().get(1)).height();
+      const additionalPadding = (widgetHeight - (widgetHeader + widgetContent)) / 2;
+      legend.css('padding-top', `${additionalPadding}px`);
+
       listButton.on('selected', (e, args) => {
         const idx = $(args[0]).attr('index-id').match(regex)[1];
         charts.handleElementClick(idx, this, series, settings, container);
