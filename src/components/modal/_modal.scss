@@ -307,7 +307,7 @@
     .modal-body-wrapper {
       flex-grow: 1;
 
-      .splitter-container, 
+      .splitter-container,
       .splitter-container .is-right-side,
       .splitter-container .is-right-side, .page-container {
         position: initial;
@@ -326,7 +326,7 @@
     }
 
   }
-  
+
 
   &:not(.display-fullsize):not(.about) {
     .modal-content {
@@ -727,6 +727,16 @@ html.ie {
     .field {
       textarea {
         max-width: 100%;
+      }
+    }
+  }
+}
+
+.is-mac {
+  .modal-content {
+    h1.is-success {
+      .icon {
+        margin-top: 0;
       }
     }
   }
