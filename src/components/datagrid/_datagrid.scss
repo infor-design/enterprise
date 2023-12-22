@@ -2309,7 +2309,8 @@ $datagrid-small-row-height: 25px;
       td {
         color: $disabled-color;
 
-        .trigger {
+        .trigger,
+        .trigger .colorpicker {
           color: $disabled-color;
         }
 
