@@ -7425,6 +7425,12 @@ Datagrid.prototype = {
       }
     });
 
+    if (this.contextualToolbar.length > 0) {
+      this.contextualToolbar.find('.buttonset').children().on('click', () => {
+        self.unSelectAllRows();
+      });
+    }
+
     if (this.stretchColumn !== 'last') {
       $(window).on('orientationchange.datagrid', () => {
         this.rerender();
