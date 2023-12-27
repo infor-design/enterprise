@@ -1790,7 +1790,14 @@ Datagrid.prototype = {
           // just the button
           break;
         case 'date':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker" ${attrs} ${enterKeyHint}/>`;
+          let isRangeDefault = false;
+          if (col.filterConditions.map(e => e.value).indexOf('in-range') > 0) {
+            isRangeDefault = col.filterConditions[2].selected && col.filterConditions[2].value === 'in-range';
+          } else if (col.filterConditions.indexOf('in-range') === 0) {
+            isRangeDefault = true;
+          }
+
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker" ${isRangeDefault ? 'data-options="{range: {useRange: true}}"' : ''} ${attrs} ${enterKeyHint}/>`;
           break;
         case 'integer': {
           integerDefaults = {
