@@ -2553,10 +2553,6 @@ $datagrid-small-row-height: 25px;
           top: 4px;
         }
 
-        .trigger .icon {
-          top: 14px;
-        }
-
         .colorpicker {
           background-color: transparent;
           padding: 15px 10px 8px;
@@ -3280,7 +3276,6 @@ $datagrid-small-row-height: 25px;
 
       .colorpicker-container .icon {
         left: 3px;
-        top: 10px;
       }
 
       // Date Picker
@@ -4453,8 +4448,8 @@ td .btn-actions {
   }
 
   .colorpicker-container span.trigger {
-    width: 30px;
-    left: 100%;
+    width: 20px;
+    left: 95%;
   }
 
   span.trigger {
@@ -4546,6 +4541,11 @@ td .btn-actions {
         background-color: transparent;
         box-shadow: none;
       }
+    }
+
+    .datagrid-cell-wrapper .colorpicker-container.is-open .trigger .icon {
+      background-color: transparent;
+      box-shadow: none;
     }
   }
 }
