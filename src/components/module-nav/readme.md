@@ -1,6 +1,6 @@
 ---
 title: Module Nav
-description: null
+description:
 demo:
   embedded:
   - name: Example
