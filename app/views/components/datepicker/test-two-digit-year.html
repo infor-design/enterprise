@@ -1,0 +1,32 @@
+
+<div class="row">
+  <div class="four columns">
+    <div class="field">
+      <label for="date-field-a" class="label">Date Field</label>
+      <input id="date-field-a" class="datepicker" name="date-field" type="text" data-init="false" value="74-12-11" />
+    </div>
+
+    <div class="field">
+      <label for="date-field-b" class="label">Date Field</label>
+      <input id="date-field-b" class="datepicker" name="date-field" type="text" data-init="false" value="06/12/77"/>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    Soho.Locale.twoDigitYearCutoff = 75;
+
+    $('#date-field-a').datepicker({
+      dateFormat: 'yy-MM-dd'
+    });
+
+    $('#date-field-b')
+      .datepicker({ dateFormat: 'dd/MM/yy' })
+      .on('change', function () {
+        console.log('Change Event Fired')
+      });
+  });
+</script>
