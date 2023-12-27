@@ -1,18 +1,12 @@
 # What's New with Enterprise
 
-## v4.90.1
+## v4.91.0
 
-## v4.90.1 Features
+## v4.91.0 Features
 
+- `[Dates]` Added a new `twoDigitYear` setting to set the switch over for two digit years. ([#8061](https://github.com/infor-design/enterprise/issues/8061))
 - `[ModuleNav]` Added a new "guest" section and some new settings to toggle the search and module switcher section. ([#8232](https://github.com/infor-design/enterprise/issues/8232))
 - `[ModuleNav]` Added `attributes` setting (for automation id) in the module nav switcher. ([#8270](https://github.com/infor-design/enterprise/issues/8270))
-
-## v4.90.1 Fixes
-
-- `[ModuleNav]` Removed usage guidance from readme.md to support updated doc site structure. ([#8282](https://github.com/infor-design/enterprise/issues/8282))
-- `[Popupmenu]` Fixed a bug where menu buttons did not close when toggled. ([#8232](https://github.com/infor-design/enterprise/issues/8232))
-
-## v4.91.0
 
 ## v4.91.0 Fixes
 
@@ -22,6 +16,8 @@
 - `[Charts]` Improved the positioning of chart legend color. ([#8159](https://github.com/infor-design/enterprise/issues/8159))
 - `[Circlepager]` Fixed the positioning of the next and previous buttons. ([#8266](https://github.com/infor-design/enterprise/issues/8266))
 - `[Bar Chart]` Displayed the x-axis ticks for the bar grouped when single group. ([#7976](https://github.com/infor-design/enterprise/issues/7976))
+- `[Button]` Fixed wrong hover color on button. ([#8220](https://github.com/infor-design/enterprise/issues/8220))
+- `[BusyIndicator]` Fixed updated method of busy indicator throwing error when calling with no parameters. ([#8257](https://github.com/infor-design/enterprise/issues/8257))
 - `[Datagrid]` Fixed a bug where dropdown remains open when scrolling and modal is closed. ([#8127](https://github.com/infor-design/enterprise/issues/8127))
 - `[Datagrid]` Fixed extra space increase on editable fields when clicking in and out of it. ([#8155](https://github.com/infor-design/enterprise/issues/8155))
 - `[Datagrid]` Added `contentWidth` column setting to set width in formatters. ([#8132](https://github.com/infor-design/enterprise/issues/8132))
@@ -30,9 +26,11 @@
 - `[Datagrid]` Fixed invisible color on required icon in datagrid. ([#8260](https://github.com/infor-design/enterprise/issues/8260))
 - `[Dropdown]` Fixed a bug where list is broken when empty icon is in the first option. ([#8105](https://github.com/infor-design/enterprise/issues/8105))
 - `[Message]` Fixed success icon alignment in message header. ([#8240](https://github.com/infor-design/enterprise/issues/8240))
+- `[ModuleNav]` Removed usage guidance from readme.md to support updated doc site structure. ([#8282](https://github.com/infor-design/enterprise/issues/8282))
 - `[Pager]` Fixed double call on update pager when using keydown. ([#8156](https://github.com/infor-design/enterprise/issues/8156))
 - `[Pie/Donut]` Fixed rendering issues when having bordered class in the widget. ([#8164](https://github.com/infor-design/enterprise/issues/8164))
 - `[Personalization]` Removed box shadow on selected tabs. ([#8086](https://github.com/infor-design/enterprise/issues/8086))
+- `[Popupmenu]` Fixed a bug where menu buttons did not close when toggled. ([#8232](https://github.com/infor-design/enterprise/issues/8232))
 - `[Searchfield]` Fixed styling issues in RTL. ([#6982](https://github.com/infor-design/enterprise/issues/6982))
 
 ## v4.90.0

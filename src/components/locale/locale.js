@@ -38,6 +38,7 @@ const Locale = {  // eslint-disable-line
   cultures: {},
   languages: {},
   dff: [],
+  twoDigitYearCutoff: 39,
   culturesPath: existingCulturePath,
   defaultLocales: [
     { lang: 'af', default: 'af-ZA' },
@@ -1407,7 +1408,8 @@ const Locale = {  // eslint-disable-line
    * @returns {number} Converted 3 digit year.
    */
   twoToFourDigitYear(twoDigitYear) {
-    return parseInt((twoDigitYear > 39 ? '19' : '20') + twoDigitYear, 10);
+    // eslint-disable-next-line no-undef
+    return parseInt((twoDigitYear > this.twoDigitYearCutoff ? '19' : '20') + twoDigitYear, 10);
   },
 
   /**

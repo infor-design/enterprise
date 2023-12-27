@@ -4591,6 +4591,8 @@ td .btn-actions {
   }
 
   &:hover:not([disabled]) {
+    background-color: $button-color-tertiary-hover-background;
+
     .icon.plus-minus::before,
     .icon.plus-minus::after {
       background-color: $button-color-tertiary-hover-font;
