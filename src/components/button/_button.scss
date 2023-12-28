@@ -594,10 +594,9 @@ a.btn-close {
   color: $button-color-tertiary-initial-font;
   overflow: hidden;
 
-  &:hover:not(:disabled) {
+  &:hover {
     color: $button-color-tertiary-hover-font;
-    background-color: $button-color-tertiary-hover-background;
-    
+
     .icon {
       color: $button-color-tertiary-hover-font;
     }
