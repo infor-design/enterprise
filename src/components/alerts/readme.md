@@ -32,7 +32,7 @@ Alerts are just specially classed icons. You can added alert icons by adding an 
 
 ```
 
-Also see [Badges](./badges) for more options.
+Also see [Badges](../badges/readme.md) for more options.
 
 ## Accessibility
 
