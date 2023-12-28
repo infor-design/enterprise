@@ -27,4 +27,3 @@ A badge is a CSS only component that uses a `<span>` with the class `badge`. In 
 ## Keyboard Shortcuts
 
 Badges do not have tab stops and have no keyboard interaction on their own, but they may be placed in a grid cell or object that has tab focus.
-
