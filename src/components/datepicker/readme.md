@@ -30,7 +30,7 @@ demo:
 
 The setup for a datepicker involves creating an `<input>` with the class `datepicker`. Remember to always associate a label correctly with the input field. We always use four-digit years in all locales.
 
-This plugin requires the Locale plugin which provides data for the calendar, including calendar format for [all supported locales](./locale).
+This plugin requires the Locale plugin which provides data for the calendar, including calendar format for [all supported locales](../locale/readme.md).
 
 ```html
 <div class="field">
