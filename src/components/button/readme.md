@@ -67,7 +67,7 @@ You can also use the button component to make a toggle button. Here is an exampl
 </button>
 ```
 
-If you need a menu button, note that it is comprised of the [popupmenu](./popupmenu) and the button component.
+If you need a menu button, note that it is comprised of the [popupmenu](../popupmenu/readme.md) and the button component.
 
 Once the proper markup is in place calling `$(elem).button()` will correctly initialize a menu button. If the arrow icon is missing in the markup it will be added. For example:
 
@@ -122,7 +122,7 @@ $('#my-button').button({
 ## Keyboard Shortcuts
 
 - <kbd>Spacebar</kbd> or <kbd>Enter</kbd> keys execute the action for that button. If the button activation closes the containing entity or launches another entity, then focus moves to the newly-opened entity. If the button activation does not close or dismiss the containing entity, then focus remains on the button. An example might be an "Apply" or "Recalculate" button.
-- <kbd>Enter</kbd> If the button is a menu button the enter key will toggle the menu. Use the arrow keys and enter to select in the menu. See [popupmenu]( ./popupmenu) for details on using the keyboard in the the open menu.
+- <kbd>Enter</kbd> If the button is a menu button the enter key will toggle the menu. Use the arrow keys and enter to select in the menu. See [popupmenu](../popupmenu/readme.md) for details on using the keyboard in the the open menu.
 
 ## Responsive Guidelines
 
