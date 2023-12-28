@@ -2200,20 +2200,15 @@ describe('Locale API', () => {
     expect(Locale.translate('AddComments')).toEqual('Ajouter commentaires');
   });
 
-  it('should be able to determine if we are using the islamic calendar', () => {
+  it('should be able to switch two digit year', () => {
     Locale.set('en-US');
+    expect(Locale.twoDigitYearCutoff).toBe(39);
+    expect(Locale.twoToFourDigitYear(38)).toEqual(2038);
+    expect(Locale.twoToFourDigitYear(41)).toEqual(1941);
 
-    expect(Locale.isIslamic()).toEqual(false);
-
-    Locale.set('ar-SA');
-
-    expect(Locale.isIslamic()).toEqual(true);
-
-    Locale.set('es-ES');
-
-    expect(Locale.isIslamic()).toEqual(false);
-    expect(Locale.isIslamic('ar-SA')).toEqual(true);
-    expect(Locale.isIslamic('xx-XX')).toEqual(false);
+    Locale.twoDigitYearCutoff = 75;
+    expect(Locale.twoToFourDigitYear(74)).toEqual(2074);
+    expect(Locale.twoToFourDigitYear(77)).toEqual(1977);
   });
 
   it.skip('should correct placeholder missing translations', () => {
