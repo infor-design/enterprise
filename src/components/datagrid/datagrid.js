@@ -7427,7 +7427,9 @@ Datagrid.prototype = {
 
     if (this.contextualToolbar.length > 0) {
       this.contextualToolbar.find('.buttonset').children().on('click', () => {
-        self.unSelectAllRows();
+        this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
+          this.contextualToolbar.css('display', 'none');
+        }).animateClosed();
       });
     }
 
