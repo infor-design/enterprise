@@ -27,6 +27,7 @@
 - `[Datagrid]` Fixed disabled color for colorpicker. ([#8218](https://github.com/infor-design/enterprise/issues/8218))
 - `[Dropdown]` Fixed a bug where list is broken when empty icon is in the first option. ([#8105](https://github.com/infor-design/enterprise/issues/8105))
 - `[Message]` Fixed success icon alignment in message header. ([#8240](https://github.com/infor-design/enterprise/issues/8240))
+- `[ModuleNav]` Removed usage guidance from readme.md to support updated doc site structure. ([#8282](https://github.com/infor-design/enterprise/issues/8282))
 - `[Pager]` Fixed double call on update pager when using keydown. ([#8156](https://github.com/infor-design/enterprise/issues/8156))
 - `[Pie/Donut]` Fixed rendering issues when having bordered class in the widget. ([#8164](https://github.com/infor-design/enterprise/issues/8164))
 - `[Personalization]` Removed box shadow on selected tabs. ([#8086](https://github.com/infor-design/enterprise/issues/8086))
