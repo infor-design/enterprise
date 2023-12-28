@@ -26,7 +26,7 @@ demo:
 
 ## Important Notes
 
-The [popover](./popover) component shares a common API with the tooltip Component.  When a popover component is invoked, any methods and events used by the tooltip will also be available in the popover.
+The [popover](../popover/readme.md) component shares a common API with the tooltip Component.  When a popover component is invoked, any methods and events used by the tooltip will also be available in the popover.
 
 ## Behavior Guidelines
 
@@ -36,7 +36,7 @@ For accessibility, the tooltip should be shown when you keyboard onto an element
 
 ### Simple Tooltips
 
-If using the [initializer](./initialize), any elements with a `title` attribute will be picked up and turned into a tooltip when the element becomes hovered (or tapped in a mobile scenario). It may be needed to reinitialize a component or page section which has been added.
+If using the [initializer](../../behaviors/initialize/readme.md), any elements with a `title` attribute will be picked up and turned into a tooltip when the element becomes hovered (or tapped in a mobile scenario). It may be needed to reinitialize a component or page section which has been added.
 
 ```html
 <button id="btn" class="btn" type="button" title="Tooltips Provide Additional Information">
@@ -44,7 +44,7 @@ If using the [initializer](./initialize), any elements with a `title` attribute 
 </button>
 ```
 
-The code above is demoed in the [common tooltip example](./demo/components/tooltip/example-index?font=source-sans).
+The code above is demoed in the [common tooltip example](../../../app/views/components/tooltip/example-index.html).
 
 ### Custom HTML Tooltips
 
@@ -56,7 +56,7 @@ It's also possible to use inline HTML inside of the `title` attribute:
 </button>
 ```
 
-The code above is demoed in the [HTML tooltip example](./demo/components/tooltip/example-html-tooltip?font=source-sans).
+The code above is demoed in the [HTML tooltip example](../../../app/views/components/tooltip/example-html-tooltip.html).
 
 Another possible method of defining custom tooltips is to create a hidden HTML element that will be referenced by its ID attribute.  When defining your `title` attribute on your trigger element, simply place use ID selector instead of the actual content, and the initializer will pick it up:
 
@@ -75,7 +75,7 @@ Another possible method of defining custom tooltips is to create a hidden HTML e
 
 To prevent Cross-site Scripting (XSS) attacks the tooltip plugin will strip all tags except for the following tags. `<div><p><span><ul><br><svg><use><li><a><abbr><b><i><kbd><small><strong><sub>`
 
-The code above is demoed in the [icons in tooltips example](./demo/components/tooltip/example-icon-in-tooltip?font=source-sans) icons in tooltips example</a>.
+The code above is demoed in the [icons in tooltips example](../../../app/views/components/tooltip/example-icon-in-tooltip.html) icons in tooltips example</a>.
 
 ## Accessibility
 

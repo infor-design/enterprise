@@ -16,7 +16,7 @@ demo:
 
 Below is an example of a default wizard control with no extra settings. Classes are added to indicate the current task with `class="current"`. Classes are added to the complete tasks using `class="complete"`. Links should always contain an inner span. It's also possible to make an in-page wizard where the links aren't actionable. To do this, just remove the link and keep the span.
 
-In addition, a wizard can be used for header navigation. This is a full page pattern and must be shown on its own page. Take a look at the [header wizard examples](./grid) for more details.
+In addition, a wizard can be used for header navigation. This is a full page pattern and must be shown on its own page. Take a look at the [header wizard examples](../grid/readme.md) for more details.
 
 Actionable Wizard Example:
 
