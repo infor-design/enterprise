@@ -12,7 +12,7 @@ demo:
     slug: example-fields
 ---
 
-A field set uses the standard HTML `<fieldset>` and `<legend>` element and simply adds CSS to style the `<legend>` element text. A `<fieldset>` is not expandable. For that, you can use the [expandable area](./expandablearea) component.
+A field set uses the standard HTML `<fieldset>` and `<legend>` element and simply adds CSS to style the `<legend>` element text. A `<fieldset>` is not expandable. For that, you can use the [expandable area](../expandablearea/readme.md) component.
 
 Here is an example showing a few input fields in a `<fieldset>`. Anything can go inside a `<fieldset>` but is usually used for input fields.
 
