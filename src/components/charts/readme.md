@@ -19,7 +19,7 @@ All of the charts are documented separately by type. See the respective pages fo
 1. Line [View Example]( ../line)
 1. Positive Negative [View Example]( ../positive-negative)
 1. Sparkline [View Example]( ../sparkline)
-1. Step Chart [View Example]( ../step-chart)
+1. Step Chart [View Example]( ../stepchart)
 1. Targeted Achievement [View Example]( ../targeted-achievement)
 1. Timeline [View Example]( ../timeline)
 

@@ -356,12 +356,12 @@ The menu should respond responsively as follows:
 
 When setting up the application menu for automated testing, ensure that the inner accordion component's links and expander buttons are labelled with id's and automation id's per the [Accordion component's testability guidelines](https://design.infor.com/code/ids-enterprise/latest/accordion#testability).  The same rules apply for Role Switcher accordions.
 
-For Application Menus that contain a Searchfield, defer to the [Searchfield component's testability guidelines](https://design.infor.com/code/ids-enterprise/latest/searchfield#testability) for the required elements inside the Searchfield wrapper.
+For Application Menus that contain a Searchfield, defer to the [Searchfield component's testability guidelines](https://design.infor.com/components/components/search-field/#testability) for the required elements inside the Searchfield wrapper.
 
 For Application Menus that contain user information, personalized role switching, etc., ensure the following:
 
 - All Buttons follow the [Button component's testability guidelines](https://design.infor.com/code/ids-enterprise/latest/button#testability).
-- All Toolbars are implemented using the Flex Toolbar component, and follow the [Flex Toolbar component's testability guidelines](https://design.infor.com/code/ids-enterprise/latest/toolbar-flex#testability).
+- All Toolbars are implemented using the Flex Toolbar component, and follow the [Flex Toolbar component's testability guidelines](https://design.infor.com/components/components/toolbar-flex/#testability).
 
 ## Keyboard Shortcuts
 
@@ -371,7 +371,7 @@ In IDS Enterprise Controls, the following keyboard shortcuts are implemented in 
 - When pressing <kbd>Escape</kbd> while the Application Menu is opened, the Application Menu will close and (if applicable) the Trigger Button that originally caused the Application Menu to open will be re-focused.
 - Pressing <kbd>F10</kbd> will toggle the menu open or closed, depending on the current state.
 
-In all other cases, the Application Menu uses a IDS Enterprise [Accordion Control](./accordion) internally, and will utilize its keyboard shortcuts when focus lies inside of the menu.
+In all other cases, the Application Menu uses a IDS Enterprise [Accordion Control](../accordion/readme.md) internally, and will utilize its keyboard shortcuts when focus lies inside of the menu.
 
 ## States and Variations
 
