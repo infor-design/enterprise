@@ -1789,7 +1789,7 @@ Datagrid.prototype = {
         case 'checkbox':
           // just the button
           break;
-        case 'date':
+        case 'date': {
           let isRangeDefault = false;
           if (col.filterConditions.map(e => e.value).indexOf('in-range') > 0) {
             isRangeDefault = col.filterConditions[2].selected && col.filterConditions[2].value === 'in-range';
@@ -1799,6 +1799,7 @@ Datagrid.prototype = {
 
           filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker" ${isRangeDefault ? 'data-options="{range: {useRange: true}}"' : ''} ${attrs} ${enterKeyHint}/>`;
           break;
+        }
         case 'integer': {
           integerDefaults = {
             patternOptions: {
