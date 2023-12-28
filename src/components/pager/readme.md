@@ -18,7 +18,7 @@ demo:
 
 ## Code Example
 
-The auto initializer will search for `<ul>` elements with a `paginated` class and add a pager to them. You can add the option `data-options="{'pagesize': 10}"` to set the page size desired. For [listview](./listview) and [datagrid](./datagrid) components, this is built into those components.
+The auto initializer will search for `<ul>` elements with a `paginated` class and add a pager to them. You can add the option `data-options="{'pagesize': 10}"` to set the page size desired. For [listview](../listview/readme.md) and [datagrid](../datagrid/readme.md) components, this is built into those components.
 
 ```html
     <ul id="listview" class="paginated listview" data-options="{'pagesize': 10}">
@@ -89,4 +89,4 @@ For the pager if you set the attributes on the root message, you will get an ID 
 ## Upgrading from 3.X
 
 - This did not exist as a standalone component
-- Datagrid paging has new options - [see datagrid docs]( ./datagrid)
+- Datagrid paging has new options - [see datagrid docs](../datagrid/readme.md)

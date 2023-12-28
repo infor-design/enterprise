@@ -20,9 +20,9 @@ demo:
     slug: example-no-all-results-link
 ---
 
-There is a specific component wrapper for searchfield components that reside inside of [toolbars](./toolbar/) entitled [toolbar searchfield](./toolbar-searchfield). These components are very different from regular searchfields and have an expanded API.
+There is a specific component wrapper for searchfield components that reside inside of [toolbars](../toolbar/readme.md) entitled [toolbar searchfield](../toolbarsearchfield/readme.md). These components are very different from regular searchfields and have an expanded API.
 
-Defining the `source` setting on Searchfield will cause it to invoke an [autocomplete](./autocomplete). The source is not directly handled by the searchfield component and is passed directly into this new autocomplete instance.
+Defining the `source` setting on Searchfield will cause it to invoke an [autocomplete](../autocomplete/readme.md). The source is not directly handled by the searchfield component and is passed directly into this new autocomplete instance.
 
 ## Code Example
 
