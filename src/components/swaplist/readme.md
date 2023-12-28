@@ -20,7 +20,7 @@ demo:
 
 ## Code Example
 
-The swap list uses the underlying [listview component](./basic-list). Like the listview, a list template is needed. This template can either by dynamic or static. In the example below, a template with a basic list value and support for drag and drop and disabled is shown in `id="swaplist-tmpl"` section.
+The swap list uses the underlying [listview component](../listview/readme.md). Like the listview, a list template is needed. This template can either by dynamic or static. In the example below, a template with a basic list value and support for drag and drop and disabled is shown in `id="swaplist-tmpl"` section.
 
 The markup structure of the component itself is made up of a parent container that has an available and selected div section. Each of these has a title, buttons for moving, and a div in which the list template will be generated.
 

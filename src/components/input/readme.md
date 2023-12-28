@@ -45,12 +45,12 @@ With structured formatting, the system requires values be entered in a specific 
 
 A standard Text Input is a basic input element with `type="text"`. Password type can also be used. To implement one, create an input element with `type="text"`. You can also add various related features, some of these are separate components documented on separate pages, including:
 
-- [Masking](./mask) - We include a mask component to handle structured formatting.
+- [Masking](../mask/readme.md) - We include a mask component to handle structured formatting.
 - Placeholder - Is supported on most input fields via the standard `placeholder` attribute. This should only be used in certain cases and not on EVERY form field
-- [Tooltip](./tooltip) - We include a tooltip component to handle stylized tooltips. This is supported on most input fields via the standard `title` attribute and invoking the tooltip plugin
-- [Required](./validation) Is a special type of validation. This is handled via the validation plugin.
-- [Validation](./validation) Allows you to customize alerts and errors on a field.
-- [Dirty Indicator](./trackdirty) We include a plugin to track if the field is modified and show a small indicator.
+- [Tooltip](../tooltip/readme.md) - We include a tooltip component to handle stylized tooltips. This is supported on most input fields via the standard `title` attribute and invoking the tooltip plugin
+- [Required](../validation/readme.md) Is a special type of validation. This is handled via the validation plugin.
+- [Validation](../validation/readme.md) Allows you to customize alerts and errors on a field.
+- [Dirty Indicator](../trackdirty/readme.md) We include a plugin to track if the field is modified and show a small indicator.
 - Enabled/Read-only - Is supported on most input fields via the standard `disabled` and `readonly` attributes.
 
 ```html
@@ -129,8 +129,8 @@ If automation id's or other attributes are needed for the Input component, simpl
 
 ## Responsive Guidelines
 
-- Default size is 300px wide but there are a number of widths. [View example](./demo/components/input/example-sizes?font=source-sans).
-- You can also use the responsive grid. [View example](./demo/components/form/example-inputs-simple?font=source-sans).
+- Default size is 300px wide but there are a number of widths. [View example](../../../app/views/components/input/example-sizes.html).
+- You can also use the responsive grid. [View example](../../../app/views/components/form/example-inputs-simple.html).
 
 ## Upgrading from 3.X
 
