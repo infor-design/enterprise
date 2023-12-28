@@ -84,8 +84,6 @@ expect(await element(by.id('custom-id-btn-picklist-2018')).getAttribute('id')).t
 - Each month in the month/year picker  - gets `btn-picklist-n` appended where n is the zero based month number (0-11)
 - Each year in the month/year picker  - gets `btn-picklist-n` appended where n is the four digit year
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> - like other widgets, the Date Picker widget receives focus to become active by tabbing into it. A second <kbd>Tab</kbd> will take the user out of the date picker widget. Focus is initially placed on today's date when the calendar is opened.

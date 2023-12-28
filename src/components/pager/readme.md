@@ -86,8 +86,6 @@ For the pager if you set the attributes on the root message, you will get an ID 
 - Each option in the page size select menu gets `pagesize-opt-<n>` for example `pagesize-opt-50`
 - The input selector button gets `pagesize-inpu`
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Upgrading from 3.X
 
 - This did not exist as a standalone component

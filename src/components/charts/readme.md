@@ -42,10 +42,6 @@ We still have some work to do to make charts accessible. Some todo's:
 - When keying in to the legend elements it should read the data
 - Have a table option to display the data in optional data form.
 
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> Tab throughout the tabbable elements in the chart.

@@ -80,8 +80,6 @@ var twoLines = [{
 
 Providing the data this will add an ID added to each point with `point-{dataIndex}`, medianrange with `-medianrange` and connected-line with `-connected-line` appended.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Future
 
 - A datagrid formatter for showing this data in lists

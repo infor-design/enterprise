@@ -145,8 +145,6 @@ In this example, the attributes automatically added were:
 
 If you are implementing a more complex tooltip with user-defined HTML content -- for example one that adds a hyperlink -- you must manually add custom attributes and automation id's to this content.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## States and Variations
 
 - Hidden

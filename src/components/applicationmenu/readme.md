@@ -363,8 +363,6 @@ For Application Menus that contain user information, personalized role switching
 - All Buttons follow the [Button component's testability guidelines](https://design.infor.com/code/ids-enterprise/latest/button#testability).
 - All Toolbars are implemented using the Flex Toolbar component, and follow the [Flex Toolbar component's testability guidelines](https://design.infor.com/code/ids-enterprise/latest/toolbar-flex#testability).
 
-In general, please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 In IDS Enterprise Controls, the following keyboard shortcuts are implemented in the Application Menu

@@ -83,8 +83,6 @@ Setting the id/automation id with a string value or function. The function will 
 
 Providing the data this will add an ID added to each area with `-area`, stroke with `-stroke`, circle with `-circle` and invisible-circle with `-invisible-circle` appended. In addition the related legend item will get the same id with `-legend` appended after it.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Keyboard Shortcuts
 
 - None

@@ -70,8 +70,6 @@ Non Actionable Wizard Example:
 
 You can add custom id's/automation id's to the wizard component in the markup inline on the anchor tags. For this reason there is no `attributes` setting like some other components.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details on automation id's.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> to navigate forward among the wizard's ticks

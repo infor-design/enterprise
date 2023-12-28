@@ -169,8 +169,6 @@ Providing the data this will add an ID to the top calendar div. In addition the 
 - Week/Day Page View Changer Dropdown day value - gets `week-view-changer-month-day` appended
 - Week/Day Page View Changer Dropdown month value - gets `week-view-changer-month-month` appended
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Upgrading from 3.X
 
 - This is a new component for 4.x

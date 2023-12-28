@@ -34,5 +34,3 @@ If using the `.tab-list-info` element with extra content above or underneath the
   </div>
 </div>
 ```
-
-Please also refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

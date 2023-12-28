@@ -77,5 +77,3 @@ Setting the id/automation id with a string value:
 ```
 
 Providing the data, this will add an ID added to each timepicker trigger with `-trigger`, timepicker hours with `-hours`, timepicker minutes with `-minutes`, timepicker seconds with `-seconds`, timepicker period with `-period`, timepicker button trigger with `-btn`, and the timepicker element appended.
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

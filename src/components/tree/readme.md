@@ -64,5 +64,3 @@ $('#json-tree').tree({dataset: data});
 ```
 
 Providing the data this will add an ID added to each link with `-tree-link`, link-text with `-tree-link-text`, icon with `-tree-icon`, expand target icon with `-tree-icon-expand-target` and checkbox with `-tree-checkbox` appended after it.
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.

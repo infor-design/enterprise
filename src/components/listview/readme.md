@@ -166,8 +166,6 @@ Setting the id/automation id with a string value:
 
 The Listview component automatically appends these attributes to the top-level Listview component, as well as each item in the list.  The items have an index appended to each to distinguish them from the rest.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Upgrading from 3.X
 
 - Single select roughly replaces the inforListBox component.

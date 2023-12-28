@@ -86,8 +86,6 @@ For the colorpicker if you set the attributes on the input element with the `id`
 - Each color in the picker will get `colorNN` for example `azure80`
 - The clear button in the picker in the picker will get `clear` appended
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Responsive Guidelines
 
 - Follows form guidelines or has specific sizes that you can specify

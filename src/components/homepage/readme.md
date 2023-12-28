@@ -48,10 +48,6 @@ See also the [Cards](./cards) documentation for widget structure.
 
 - The component respects element tab order which is important between the main containers
 
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> Moves between the card sections

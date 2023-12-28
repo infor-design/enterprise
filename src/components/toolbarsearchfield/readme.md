@@ -87,5 +87,3 @@ Setting the id/automation id with a string value:
 The toolbarsearchfield wrapper will get an id with `-wrapper` appended after the id given.
 
 If setting the id/automation id with a function, the id will be a running total of open toolbarsearchfield.
-
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

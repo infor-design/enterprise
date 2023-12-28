@@ -90,8 +90,6 @@ $('#example1').swaplist({
 
 Providing the data this will add an ID added to each list container with `-swaplist-{containerClass}`, item with `-swaplist-{containerClass}{index}` and buttons with `-swaplist-btn-{containerClass}` also if container is selected `-{left|right}` appended after it.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> moves in and out of the list boxes and the between the buttons on the toolbars and the adjacent objects

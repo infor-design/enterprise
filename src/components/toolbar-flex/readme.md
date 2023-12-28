@@ -401,5 +401,3 @@ A "More Actions" button -- being a type of Menu Button itself -- will contain si
 For other component types, such as [Colorpicker]('./colorpicker'), [Searchfield]('./searchfield'), etc., attribute values are similarly passed down.  This provides a way for a developer to simply implement a single ID on the Toolbar API that will be respected for all components the Toolbar contains.
 
 If you only need to test a specific Flex Toolbar Item, and not the entire component (for example, one button out of five), please either set attributes directly on those elements, or use their respective component API's `attributes` setting, if applicable.
-
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

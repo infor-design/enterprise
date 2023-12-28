@@ -122,5 +122,3 @@ Setting the id/automation id with a string value:
 ```
 
 If you set the attributes on the contextual action panel, you will get an ID added to the root of the dialog. Also the close button will get an id with `-btn-close` appended after the id provided. Note that if you provide buttons on the toolbar you can manually set the id/automation id on the button markup for these.
-
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

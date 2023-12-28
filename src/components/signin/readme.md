@@ -82,10 +82,6 @@ Displays one or more selectable values. A user can select exactly one value at a
 
 - Make sure all fields have id's that much the labels.
 
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> Between Fields

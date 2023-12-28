@@ -81,8 +81,6 @@ $('#my-breadcrumb').breadcrumb({
 });
 ```
 
-Please refer to the [Application Testability Checklist](/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> moves focus to the link. A second <kbd>tab</kbd> moves focus to the next focusable item.

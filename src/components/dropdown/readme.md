@@ -115,8 +115,6 @@ Setting the id/automation id with a string value:
 
 If setting the id/automation id with a function, the id will be a running total of open dropdown.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> and <kbd>Shift + Tab</kbd> moves focus into and out of the dropdown. If the list is open, <kbd>Tab</kbd> will close the list, selecting the current item, and tab to the next focusable element

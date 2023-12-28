@@ -98,7 +98,3 @@ Insert this object in a script that runs before IDS is loaded.
 ## Accessibility
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. Choose colors that pass contrast guidelines.
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

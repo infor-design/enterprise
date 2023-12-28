@@ -324,8 +324,6 @@ You must manually add an id or automation id to the root datagrid div. The setti
 
 To target a cell you can use a combination of the `aria-describedby` which is the column ID along with the aria-rowindex on the parent row. Or the aria-colindex may be used with the aria-rowindex.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd>The initial tab enters the grid with focus on the first cell of the first row, often a header. A second tab moves out of the grid to the next tab stop on the page. Once focus is established in the grid, a TAB into or a Shift Tab into the grid will return to the cell which last had focus.

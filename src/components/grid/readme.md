@@ -92,7 +92,3 @@ For guidance on how to use the breakpoints to tailor your layout for different d
 ## Accessibility
 
 - No special requirements, but do watch that tab order is respected.
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

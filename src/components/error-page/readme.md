@@ -64,10 +64,6 @@ $('body').about({
 
 - All the page should be readable and contain the information the screen reader users need.
 
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - Not Applicable as this is a static page

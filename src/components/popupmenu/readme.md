@@ -216,8 +216,6 @@ The numeric indexes also take into account nesting of menu items.  For each leve
 </div>
 ```
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Shift + F10</kbd> opens the popup menu when it is used as a <a href="http://en.wikipedia.org/wiki/Context_menu" target="_blank">Context Menu</a> and places input focus on the first available menu item in the Popup Menu. Note that the browser's contextual menu pops up if the element with input focus does not have a popup menu attached

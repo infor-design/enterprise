@@ -96,8 +96,6 @@ Setting the id/automation id with a string value:
 
 These attributes will be attached to the emptymessage root and in button components. The button will also get the same id and will append `-btn` in the id value.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - None - But screen readers can navigate the text.
