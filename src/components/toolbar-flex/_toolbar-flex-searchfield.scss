@@ -172,8 +172,6 @@ html[dir='rtl'] {
       .searchfield-wrapper,
       .toolbar-searchfield-wrapper {
         &.is-open.has-collapse-button {
-          width: calc(98% + 35px);
-
           &.has-go-button {
             width: calc(94% + 35px);
 
