@@ -1791,9 +1791,9 @@ Datagrid.prototype = {
           break;
         case 'date': {
           let isRangeDefault = false;
-          if (col.filterConditions.map(e => e.value).indexOf('in-range') > 0) {
+          if (col.filterConditions?.map(e => e.value).indexOf('in-range') > 0) {
             isRangeDefault = col.filterConditions[2].selected && col.filterConditions[2].value === 'in-range';
-          } else if (col.filterConditions.indexOf('in-range') === 0) {
+          } else if (col.filterConditions?.indexOf('in-range') === 0) {
             isRangeDefault = true;
           }
 
