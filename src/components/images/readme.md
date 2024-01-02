@@ -33,7 +33,7 @@ This example shows how to invoke a small sized placeholder image.
 
 ## Code Tips
 
-The [example image list pattern](../../../app/views/components/images/example-image-list.html) is created by using a toolbar above the block grid layout.
+The [example image list pattern](https://latest-enterprise.demo.design.infor.com/components/images/example-image-list.html) is created by using a toolbar above the block grid layout.
 
 ## Upgrading from 3.X
 

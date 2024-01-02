@@ -116,7 +116,7 @@ Some cases call for an "Eyebrow" (or subheader) on a Title section to contain mo
 Currently, the only types of components that can be present inside the buttonset are:
 
 - Standard [IDS Buttons](../button/readme.md)
-- [IDS Menu Buttons](../../../app/views/components/button/example-menubutton.html)
+- [IDS Menu Buttons](https://latest-enterprise.demo.design.infor.com/components/button/example-menubutton.html)
 - [IDS Hyperlinks](../hyperlinks/readme.md)
 - [IDS Colorpickers](../colorpicker/readme.md)
 
@@ -341,7 +341,7 @@ For example, a standard button might appear as:
 </button>
 ```
 
-A menu button might look like the following example. Internally, the extraneous "trigger" text is appended to this element because Flex Toolbar is aware that this is a [MenuButton](../../../app/views/components/button/example-menubutton.html), and defers to that component to apply attributes.  The Flex Toolbar concatenates the attribute value internally:
+A menu button might look like the following example. Internally, the extraneous "trigger" text is appended to this element because Flex Toolbar is aware that this is a [MenuButton](https://latest-enterprise.demo.design.infor.com/components/button/example-menubutton.html), and defers to that component to apply attributes.  The Flex Toolbar concatenates the attribute value internally:
 
 ```html
 <button class="btn-menu" data-automation-id="my-toolbar-menubutton-1-trigger">

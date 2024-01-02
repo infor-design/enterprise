@@ -29,7 +29,7 @@ $('.empty-message').emptymessage({
 
 ### Invoking with Html/Css in a Card/Widget
 
-You can invoke an empty message manually by adding it in a widget container. This is shown in the [example page for widgets](../../../app/views/components/emptymessage/example-widgets.html). The following structure and classes may be used.
+You can invoke an empty message manually by adding it in a widget container. This is shown in the [example page for widgets](https://latest-enterprise.demo.design.infor.com/components/emptymessage/example-widgets.html). The following structure and classes may be used.
 
 ```html
 <div class="card-content">

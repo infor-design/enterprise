@@ -39,12 +39,12 @@ This is an example showing a breadcrumb component with four items. The current i
 
 ## Breadcrumb Positioning and Variations
 
-The above example just shows an in-page breadcrumb. But usually the breadcrumb would be the top level element in the page. In some cases it is actually in or just below the header. These examples are shown in the [headers section](../../../app/views/components/header/).
+The above example just shows an in-page breadcrumb. But usually the breadcrumb would be the top level element in the page. In some cases it is actually in or just below the header. These examples are shown in the [headers section](https://latest-enterprise.demo.design.infor.com/components/header/).
 
 Examples:
 
-- [In Header](../../../app/views/components/header/example-breadcrumbs.html) this variation is used when the breadcrumb acts as the sole top level navigation.
-- [Below Header](../../../app/views/components/header/example-breadcrumbs-alternate.html) this variation is used when the breadcrumb acts as a secondary top level navigation. For example if its part of the page pattern.
+- [In Header](https://latest-enterprise.demo.design.infor.com/components/header/example-breadcrumbs.html) this variation is used when the breadcrumb acts as the sole top level navigation.
+- [Below Header](https://latest-enterprise.demo.design.infor.com/components/header/example-breadcrumbs-alternate.html) this variation is used when the breadcrumb acts as a secondary top level navigation. For example if its part of the page pattern.
 
 ## Accessibility
 

@@ -129,8 +129,8 @@ If automation id's or other attributes are needed for the Input component, simpl
 
 ## Responsive Guidelines
 
-- Default size is 300px wide but there are a number of widths. [View example](../../../app/views/components/input/example-sizes.html).
-- You can also use the responsive grid. [View example](../../../app/views/components/form/example-inputs-simple.html).
+- Default size is 300px wide but there are a number of widths. [View example](https://latest-enterprise.demo.design.infor.com/components/input/example-sizes.html).
+- You can also use the responsive grid. [View example](https://latest-enterprise.demo.design.infor.com/components/form/example-inputs-simple.html).
 
 ## Upgrading from 3.X
 

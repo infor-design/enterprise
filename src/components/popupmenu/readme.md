@@ -27,7 +27,7 @@ The structure of a popupmenu is a `<ul>` element with `<li>` elements containing
 
 The class `popupmenu` should be added to the `<ul>` elements at both the top and sub-menu level. You can create rows as space separators for grouping with the class `separator`. You can create rows as groups with titles with the class `group`.
 
-Here is an example of a menu button using a popupmenu. This is also described on the [menu button](../../../app/views/components/button/example-menubutton.html) page as the components are linked.
+Here is an example of a menu button using a popupmenu. This is also described on the [menu button](https://latest-enterprise.demo.design.infor.com/components/button/example-menubutton.html) page as the components are linked.
 
 ```html
 <button id="btn-menu" class="btn-menu">

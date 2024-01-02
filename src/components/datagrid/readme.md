@@ -162,17 +162,17 @@ $('#datagrid').datagrid({
 |`Integer` | Formats the numeric data in the current columns integer format. Or you can use the `numberFormat` option for customization. See [locale]( ../locale) for number formatting patterns.|
 |`Hyperlink` | Formats the current data into a clickable hyperlink. You can use the `href` value to pass the links href value in the column (this defaults to '#'). You can use the `text` column value to change the text of the link, in doing so the column value becomes the link contents. `hyperlinkTooltip` can be added to give tooltip text for the link. The `icon` option can be added to provide a icon next to the link.|
 |`Drilldown` | Formats the cell with a drill down icon button in it. This type of column is used to drill into this records details. Use the `click` column option to provide the javascript for that logic.|
-|`RowReorder` | Formats the cell with a reorder icon button in it. This should be used in conjunction with the row-reorder feature. See [Example](../../../app/views/components/datagrid/example-row-reorder.html)|
+|`RowReorder` | Formats the cell with a reorder icon button in it. This should be used in conjunction with the row-reorder feature. See [Example](https://latest-enterprise.demo.design.infor.com/components/datagrid/example-row-reorder.html)|
 |`Checkbox` | Formats the cell with a checkbox in it. It can made null or undefined to unchecked and handles either 1/0 as checked un/checked or true/false.|
 |`SelectionCheckbox` | Formats the cell with a selection checkbox in it. The selection functionality of the grid will populate this with the current rows selection attributes and populate the header with a select all / deselect all checkbox.|
 |`Actions` | Formats the cell with a .. actions button icon. You can use the `menuId` option to pass in an id of a ul item. The menu will be the same structure as the standard popupmenu.|
 |`Textarea` | Formats the cell with readonly multi line text area. The column rows will size to the contents of the largest Textarea cell.|
-|`Editor` | Formats the cell with readonly Rich Text Editor. See [Example](../../../app/views/components/datagrid/test-editable-editor-singleline.html). The `singleline` option if set to true will cut the text to single line and show a tooltip.|
-|`Expander` | Formats the cell with an expander chevron. This will act on the `click` option or toggle the collapsed row, when using the [expandable row option](../../../app/views/components/datagrid/example-expandable-row.html)|
-|`GroupRow` | Formats this cell / column as the group row. If a `groupRowFormatter` is provided this can be used to return customized html for the group row details. If not it will show the expander icon with the data of the group name. You can pass `expanded` true in the column to expend the row, this can also be a function that dynamically can determine if the row should be expanded. See the [grouping examples](../../../app/views/components/datagrid/example-grouping.html)|
-|`GroupFooterRow` | Formats this entire row as the last row in a group when using grouping. The option should be a function that returns the `<tr>` markup for the last group row. See the [group totals example](../../../app/views/components/datagrid/example-grouping-totals.html)|
-|`SummaryRow` | Formats this entire column / row as the summary row. The option should be a function that returns the `<tr>` markup for the summary (last) row. See the [summary row example](../../../app/views/components/datagrid/example-summary-row.html)|
-|`Tree` | Formats this entire column as the tree row when using the [tree grid example](../../../app/views/components/datagrid/example-tree.html). This interacts with the `treeDepth`, `children` and `depth` options to format into a tree structure.|
+|`Editor` | Formats the cell with readonly Rich Text Editor. See [Example](https://latest-enterprise.demo.design.infor.com/components/datagrid/test-editable-editor-singleline.html). The `singleline` option if set to true will cut the text to single line and show a tooltip.|
+|`Expander` | Formats the cell with an expander chevron. This will act on the `click` option or toggle the collapsed row, when using the [expandable row option](https://latest-enterprise.demo.design.infor.com/components/datagrid/example-expandable-row.html)|
+|`GroupRow` | Formats this cell / column as the group row. If a `groupRowFormatter` is provided this can be used to return customized html for the group row details. If not it will show the expander icon with the data of the group name. You can pass `expanded` true in the column to expend the row, this can also be a function that dynamically can determine if the row should be expanded. See the [grouping examples](https://latest-enterprise.demo.design.infor.com/components/datagrid/example-grouping.html)|
+|`GroupFooterRow` | Formats this entire row as the last row in a group when using grouping. The option should be a function that returns the `<tr>` markup for the last group row. See the [group totals example](https://latest-enterprise.demo.design.infor.com/components/datagrid/example-grouping-totals.html)|
+|`SummaryRow` | Formats this entire column / row as the summary row. The option should be a function that returns the `<tr>` markup for the summary (last) row. See the [summary row example](https://latest-enterprise.demo.design.infor.com/components/datagrid/example-summary-row.html)|
+|`Tree` | Formats this entire column as the tree row when using the [tree grid example](https://latest-enterprise.demo.design.infor.com/components/datagrid/example-tree.html). This interacts with the `treeDepth`, `children` and `depth` options to format into a tree structure.|
 |`Badge` | Formats this entire column as a badge element. You can pass in ranges option to format the badge colors for example `ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]` for example any value between 151 and 999 will add the info class which formats the color in info blue. Default color is grey.|
 |`Tag` | Formats this entire column as a tag element. You can use the ranges element like the tag and badge formatter.|
 |`Alert` | Formats this entire column as a alert element with text and an alert icon. You can use the ranges element like the tag and badge formatter.|
@@ -181,8 +181,8 @@ $('#datagrid').datagrid({
 |`Dropdown` | Formats the cell to go along with a dropdown editor. It will lookup the value in the column `options` array and display the label for the given key. This can be used to resolve code to label displays. It supports the `inlineEditor` option as well for list grids.|
 |`Spinbox` | Formats the cell as text for use with a Spinbox editor. Also supports the `inlineEditor` option as well for list grids.|
 |`Favorite` | Formats the cell with a favorite star. The star's value (checked or unchecked) is populated like the checkbox column with a boolean or truthy value in the data. The `isChecked` function or boolean can be used to more dynamically check set state.|
-|`TargetedAchievement` | Formats the cell with the a targeted achievement chart. The row value will be divided by 100 to form a percent and the chart will show the percent value. See the [targeted achievement example](../../../app/views/components/datagrid/test-targeted-achievement.html)|
-|`RowNumber` | Formats the cell with a row number column that is shown 1 to n no matter the sort order. See the [row numbers example](../../../app/views/components/datagrid/example-row-numbers.html)|
+|`TargetedAchievement` | Formats the cell with the a targeted achievement chart. The row value will be divided by 100 to form a percent and the chart will show the percent value. See the [targeted achievement example](https://latest-enterprise.demo.design.infor.com/components/datagrid/test-targeted-achievement.html)|
+|`RowNumber` | Formats the cell with a row number column that is shown 1 to n no matter the sort order. See the [row numbers example](https://latest-enterprise.demo.design.infor.com/components/datagrid/example-row-numbers.html)|
 |`ProcessIndicator` | Formats the cell with a compact version of the Process indicator component. You should pass the following data in any column to render the process steps `{ steps: 5 , current: 2}`
 
 ## Creating Custom Formatters
@@ -218,8 +218,8 @@ The formatter is then linked to the column on the formatter setting. `columns.pu
 
 ## Other Features
 
-- Alternate row shading - For better scan-ability you can shade the rows with the `alternateRowShading=true` option. See the [alternate row shading](../../../app/views/components/datagrid/example-alternate-row-shading.html)|
-- Column Spanning - If possible to make a column span across other columns with the `colspan` column option. See the [column span example](../../../app/views/components/datagrid/example-colspan.html)|
+- Alternate row shading - For better scan-ability you can shade the rows with the `alternateRowShading=true` option. See the [alternate row shading](https://latest-enterprise.demo.design.infor.com/components/datagrid/example-alternate-row-shading.html)|
+- Column Spanning - If possible to make a column span across other columns with the `colspan` column option. See the [column span example](https://latest-enterprise.demo.design.infor.com/components/datagrid/example-colspan.html)|
 
 ## Grouping Data
 
