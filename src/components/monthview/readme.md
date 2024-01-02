@@ -26,7 +26,7 @@ The monthview is a very complex component to code for accessibility. We take the
 - Add an `aria` label to the calendar element
 - Add `aria-selected=true` to selected day
 - Each calendar item should have an audible label to announce the day of week while arrowing through days
-- For comparison, see a similar <a href="http://oaa-accessibility.org/example/15/" target="_blank">example</a>
+- For comparison, see a similar [example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/)
 
 ## Keyboard Shortcuts
 
