@@ -33,6 +33,7 @@
 - `[Personalization]` Removed box shadow on selected tabs. ([#8086](https://github.com/infor-design/enterprise/issues/8086))
 - `[Popupmenu]` Fixed a bug where menu buttons did not close when toggled. ([#8232](https://github.com/infor-design/enterprise/issues/8232))
 - `[Searchfield]` Fixed styling issues in RTL. ([#6982](https://github.com/infor-design/enterprise/issues/6982))
+- `[Searchfield]` Fixed searchfield stylings in RTL and in mobile viewport. ([#8103](https://github.com/infor-design/enterprise/issues/8103))
 
 ## v4.90.0
 
