@@ -7425,6 +7425,14 @@ Datagrid.prototype = {
       }
     });
 
+    if (this.contextualToolbar.length > 0) {
+      this.contextualToolbar.find('.buttonset').children().on('click', () => {
+        this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
+          this.contextualToolbar.css('display', 'none');
+        }).animateClosed();
+      });
+    }
+
     if (this.stretchColumn !== 'last') {
       $(window).on('orientationchange.datagrid', () => {
         this.rerender();
