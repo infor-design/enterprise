@@ -58,8 +58,6 @@ Setting the id/automation id with a string value or function. The function will 
 
 Providing the data this will add an ID added to each button with `-editor-toolbar-button-{index}`, fontpicker options with `-editor-fontpicker-option-{index}`, colors in color-picker with `-editor-toolbar-colorpicker-{btnIndex}-{colorIndex}`, modal input with `-editor-modal-input{inputIndex}`, modal dropdown options with -`editor-modal-option-{itemIndex}` and modal button with `-editor-modal-button{btnIndex}` appended after it.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> and <kbd>Shift + Tab</kbd> – Moves into and out of the edit control and toolbar

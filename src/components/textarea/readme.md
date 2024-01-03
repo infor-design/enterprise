@@ -84,8 +84,6 @@ Setting the id/automation id with a string value:
 
 These attributes will be attached to the textarea component root.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Upgrading from 3.X
 
 - Change class inforLabel to label

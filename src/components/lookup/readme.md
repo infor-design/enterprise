@@ -132,8 +132,6 @@ When using the attributes setting, the following elements are appended:
 
 Additionally, if any of the Lookup's content is manually defined -- such as the Datagrid, inner-Searchfield, or Toolbar, you should label those with automation id's manually.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Upgrading from 3.X
 
 - `inforLookup` class changed to `lookup`

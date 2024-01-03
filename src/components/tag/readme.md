@@ -30,10 +30,6 @@ Tags may also have a close button to remove them or contain a link.
 
 - Since you should not use color alone to indicate states, this should be either supplemented with offscreen or visual labels near the element explaining the state
 
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab/Shift+Tab</kbd>: If the tab is focusable this will focus or unfocus the tag.

@@ -57,8 +57,6 @@ Setting the id/automation id with a string value:
 
 The close button will get an id with `-btn-close` appended after the id given.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Upgrading from 3.X
 
 - Replaced `inforSlideInMessage()` so rename that to `toast()`.

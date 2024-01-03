@@ -80,8 +80,6 @@ Setting the id/automation id with a string value:
 
 Providing the data, this will add an ID added to each busyindicator overlay with `-overlay`, active busyindicator with `-busyindicator`, busyindicator text with `-text` and to the root busyindicator element appended.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Responsive Guidelines
 
 Busy Indicators that block UI will usually be placed at a "container" or "form" level, and will cover the container or form elements with an overlay. The overlay should stretch to cover the width and height of the container or form.

@@ -122,8 +122,6 @@ Providing the data this will add an ID to the top calendar div. In addition the 
 
 Note that there is an extra week-view added as this can be on the same page as month-view which will have month-view appended.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Upgrading from 3.X
 
 - This is a new component for 4.x

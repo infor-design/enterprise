@@ -91,7 +91,3 @@ So the correct markup for an accessible required label is:
 ```
 
 Labels are always on top of the field but for "data labels" the label may possibly be the left. [See The Labels Example](./demo/components/form/example-labels.html) for more info on variations of labels.
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](/resources/application-testability-checklist) for further details.

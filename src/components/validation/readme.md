@@ -143,10 +143,6 @@ $('#form-id').resetForm();
 
 - Errors will be read audibly by the API using an aria-alert (polite)
 
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Upgrading from 3.X
 
 This api is (mostly) backwards compatible.
