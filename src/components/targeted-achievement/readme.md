@@ -77,8 +77,6 @@ var dataset1 = [{
 
 Providing the data this will add an ID added to each name with `-name`, completed-bar with `-completed-bar`, completed-value with `-completed-value`, completed-text with `-completed-text`, remaining-bar with `-remaining-bar`, remaining-value with `-remaining-value`, remaining-text with `-remaining-text`, total-bar with `-total-bar`, total-value with `-total-value`, and percent-text with `-percent-text` appended after it.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Keyboard Shortcuts
 
 - None

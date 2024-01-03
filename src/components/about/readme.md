@@ -50,8 +50,6 @@ Setting the id/automation id with a string value:
 
 If you set the attributes on the about dialog, you will get an ID added to the root of the dialog. Also the close button will get an id with `-btn-close` appended after the id provided.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Esc</kbd>: If pressed while open will close the about component and return focus to the triggering element

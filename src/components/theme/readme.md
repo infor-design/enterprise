@@ -13,7 +13,3 @@ Soho.theme.themes() // Lists the available themes.
 Soho.theme.themeColors() // Lists the color palette for the current theme
 Soho.theme.personalizationColors() // Lists the colors recommended for some default personalization options along with names and translations for the current theme .
 ```
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

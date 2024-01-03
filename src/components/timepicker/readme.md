@@ -38,7 +38,7 @@ A time field is created by adding an input field with `type="text"` and a `.time
 </div>
 ```
 
-It's also possible to configure the timepicker with a custom time format.  This allows the timepicker to be configured in [24-hour/Miliary time](./demo/components/timepicker/example-24-hour?font=source-sans) and/or with a [seconds picker](./demo/components/timepicker/example-seconds-picker?font=source-sans) for more accurate time.
+It's also possible to configure the timepicker with a custom time format.  This allows the timepicker to be configured in [24-hour/Miliary time](https://latest-enterprise.demo.design.infor.com/components/timepicker/test-24-hour.html) and/or with a [seconds picker](https://latest-enterprise.demo.design.infor.com/components/timepicker/test-seconds-picker.html) for more accurate time.
 
 ```html
 <div class="field">
@@ -47,7 +47,7 @@ It's also possible to configure the timepicker with a custom time format.  This 
 </div>
 ```
 
-In [another configuration](./demo/components/timepicker/example-intervals?font=source-sans), it's also possible to pass the Timepicker settings that control the intervals of minutes and seconds available for picking, as well as if the timepicker will allow "off-timing"-intervals to be entered manually with a keyboard.
+In [another configuration](https://latest-enterprise.demo.design.infor.com/components/timepicker/test-intervals.html), it's also possible to pass the Timepicker settings that control the intervals of minutes and seconds available for picking, as well as if the timepicker will allow "off-timing"-intervals to be entered manually with a keyboard.
 
 ```html
 <div class="field">
@@ -77,5 +77,3 @@ Setting the id/automation id with a string value:
 ```
 
 Providing the data, this will add an ID added to each timepicker trigger with `-trigger`, timepicker hours with `-hours`, timepicker minutes with `-minutes`, timepicker seconds with `-seconds`, timepicker period with `-period`, timepicker button trigger with `-btn`, and the timepicker element appended.
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

@@ -107,8 +107,6 @@ When passing attributes in this manner, the following elements within the Toolba
 - One exception to the button rule is the More Actions button, which will be `my-toolbar-actionbutton`. The attributes setting is passed into the [Popupmenu API]('./popupmenu#testability') using this suffix.  All action button menu items are labeled at the Popupmenu API level.
 - If a [Searchfield]('./searchfield') is present, it will be labeled with `my-toolbar-searchfield`.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> moves focus to the first enabled toolbar item

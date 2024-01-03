@@ -57,5 +57,3 @@ If automation id's or other attributes are needed for the Process Indicator comp
  </div>
 </div>
 ```
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

@@ -31,7 +31,3 @@ Skip links are an accessibility feature. Adding one to your page will aid users 
 
 - When you <kbd>Tab</kbd> from the browser bar into the page the skip link will appear on and be focused
 - <kbd>Enter</kbd> will follow the link to the `id` of the content area you specify
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

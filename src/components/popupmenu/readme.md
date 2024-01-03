@@ -27,7 +27,7 @@ The structure of a popupmenu is a `<ul>` element with `<li>` elements containing
 
 The class `popupmenu` should be added to the `<ul>` elements at both the top and sub-menu level. You can create rows as space separators for grouping with the class `separator`. You can create rows as groups with titles with the class `group`.
 
-Here is an example of a menu button using a popupmenu. This is also described on the [menu button](./menubutton) page as the components are linked.
+Here is an example of a menu button using a popupmenu. This is also described on the [menu button](https://latest-enterprise.demo.design.infor.com/components/button/example-menubutton.html) page as the components are linked.
 
 ```html
 <button id="btn-menu" class="btn-menu">
@@ -45,7 +45,7 @@ Here is an example of a menu button using a popupmenu. This is also described on
 
 ### Initialization as a context menu
 
-In addition to invoking popupmenus on menu button clicks, menus can also be invoked as a right click menu. This is covered under the [contextmenu example](./contextmenu). The contextmenu is really just the popupmenu using the `rightClick` trigger option. Here is an example invoking the popupmenu on the body / page. The `menu` option refers to the id of the `ul` in the page with the menu items, and the `trigger` option is set to `rightClick`.
+In addition to invoking popupmenus on menu button clicks, menus can also be invoked as a right click menu. This is covered under the [contextmenu example](../contextmenu/readme.md). The contextmenu is really just the popupmenu using the `rightClick` trigger option. Here is an example invoking the popupmenu on the body / page. The `menu` option refers to the id of the `ul` in the page with the menu items, and the `trigger` option is set to `rightClick`.
 
 ```javascript
 $('body').popupmenu({
@@ -215,8 +215,6 @@ The numeric indexes also take into account nesting of menu items.  For each leve
   </ul>
 </div>
 ```
-
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

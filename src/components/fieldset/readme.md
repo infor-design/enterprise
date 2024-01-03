@@ -12,7 +12,7 @@ demo:
     slug: example-fields
 ---
 
-A field set uses the standard HTML `<fieldset>` and `<legend>` element and simply adds CSS to style the `<legend>` element text. A `<fieldset>` is not expandable. For that, you can use the [expandable area](./expandablearea) component.
+A field set uses the standard HTML `<fieldset>` and `<legend>` element and simply adds CSS to style the `<legend>` element text. A `<fieldset>` is not expandable. For that, you can use the [expandable area](../expandablearea/readme.md) component.
 
 Here is an example showing a few input fields in a `<fieldset>`. Anything can go inside a `<fieldset>` but is usually used for input fields.
 
@@ -66,8 +66,6 @@ There are some added classes to style sections to look like `<fieldsets>` in cas
 ## Testability
 
 You can add custom id's/automation id's to the fieldset component in the input markup inline. For this reason there is no `attributes` setting like some other components.
-
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

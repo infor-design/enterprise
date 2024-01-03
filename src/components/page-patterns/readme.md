@@ -47,7 +47,3 @@ Most of the examples require a unique structure attached to or under the page-co
 - `example-tree-detail` - The Tree/Detail pattern has a tree of items on the left and a details pane for content. When an item in the tree is selected, the details pane is updated. [See Example](./demo/components/page-patterns/example-tree-detail)
 
 - `example-settings-page` - The Vertical Tab /Detail pattern has a vertical tab on the left of high level navigation items , when they are clicked a section of those details is shown in the detail pane. This is very useful as a an application settings page. [See Example](./demo/components/page-patterns/example-settings-page)
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](/resources/application-testability-checklist) for further details.
