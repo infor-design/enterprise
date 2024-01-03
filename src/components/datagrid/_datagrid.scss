@@ -5958,6 +5958,27 @@ html[dir='rtl'] {
       left: 13px;
     }
   }
+
+  &.flex-toolbar {
+    .toolbar-section {
+      &.title {
+        padding-top: 5px;
+      }
+
+      &.buttonset {
+        [class^='btn'] {
+          &:hover {
+            color: $contextual-toolbar-button-hover-color;
+            background-color: rgba(0, 0, 0, .3) !important;
+    
+            .icon {
+              color: $contextual-toolbar-button-hover-color !important;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 // Columns Personalization

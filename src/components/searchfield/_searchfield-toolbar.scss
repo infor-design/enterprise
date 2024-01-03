@@ -1087,7 +1087,7 @@ html[dir='rtl'] {
       &.active {
         .btn,
         .collapse-button {
-          border-bottom-color: rgba($searchfield-border-color, 1);
+          border-color: transparent;
         }
       }
     }
@@ -1297,6 +1297,10 @@ html[dir='rtl'] {
     @media (min-width: $breakpoint-phone-to-tablet) {
       right: 193px;
     }
+  }
+
+  .flex-toolbar .toolbar-section .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.active:not(.is-open) .custom-button {
+    right: calc(100% - 30px);
   }
 
   .flex-toolbar .toolbar-section .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.has-text.active.has-close-icon-button .custom-button {

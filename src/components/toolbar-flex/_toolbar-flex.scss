@@ -417,6 +417,14 @@
 
 // RTL Styles
 html[dir='rtl'] {
+  .flex-toolbar {
+    .toolbar-section.search .toolbar-searchfield-wrapper.has-custom-button.has-close-icon-button.is-open {
+      .btn-icon.close {
+        right: calc(100% - 70px);
+      }
+    }
+  }
+
   .toolbar-section {
     &.title + .toolbar-section.buttonset {
       text-align: left;

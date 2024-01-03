@@ -124,18 +124,6 @@ html[dir='rtl'] {
   }
 }
 
-html[dir='rtl'] {
-  &.is-firefox {
-    .toolbar-section.search {
-      .toolbar-searchfield-wrapper {
-        .icon:not(.close) {
-          top: 10px;
-        }
-      }
-    }
-  }
-}
-
 .flex-toolbar .toolbar-searchfield-wrapper > svg.icon {
   top: 10px;
   width: 20px;
