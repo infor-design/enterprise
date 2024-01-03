@@ -1199,7 +1199,7 @@ $datagrid-small-row-height: 25px;
 
           .dropdown-trigger {
             margin-left: -1px;
-            margin-top: -1px;
+            margin-top: 5px;
 
             + .icon {
               top: 0;
@@ -5012,18 +5012,24 @@ html[dir='rtl'] {
   }
 
   .datagrid.small-rowheight {
-    .datagrid-trigger-cell.has-editor {
-      &:not(.is-readonly) {
-        &:hover,
-        &:focus {
-          svg.icon + .icon-error,
-          svg.icon + .icon-info,
-          svg.icon + .icon-alert {
-            &:not(.datagrid-alert-icon) {
-              margin-left: 26px !important;
+    .datagrid-trigger-cell {
+      &.has-editor {
+        &:not(.is-readonly) {
+          &:hover,
+          &:focus {
+            svg.icon + .icon-error,
+            svg.icon + .icon-info,
+            svg.icon + .icon-alert {
+              &:not(.datagrid-alert-icon) {
+                margin-left: 26px !important;
+              }
             }
           }
         }
+      }
+
+      .dropdown-trigger:not(.colorpicker-container) + .icon {
+        left: 5px;
       }
     }
   }
@@ -5084,17 +5090,23 @@ html[dir='rtl'] {
   }
 
   .datagrid.extra-small-rowheight {
-    .datagrid-trigger-cell.has-editor {
-      .icon-error {
-        left: 0 !important;
+    .datagrid-trigger-cell {
+      &.has-editor {
+        .icon-error {
+          left: 0 !important;
+        }
+
+        &.is-editing {
+          .trigger {
+            left: -6px;
+            margin-right: 0;
+            top: 0;
+          }
+        }
       }
 
-      &.is-editing {
-        .trigger {
-          left: -6px;
-          margin-right: 0;
-          top: 0;
-        }
+      .dropdown-trigger:not(.colorpicker-container) + .icon {
+        left: 7px !important;
       }
     }
   }
@@ -5970,7 +5982,7 @@ html[dir='rtl'] {
           &:hover {
             color: $contextual-toolbar-button-hover-color;
             background-color: rgba(0, 0, 0, .3) !important;
-    
+
             .icon {
               color: $contextual-toolbar-button-hover-color !important;
             }
