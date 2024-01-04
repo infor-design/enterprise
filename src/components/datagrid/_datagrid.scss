@@ -5682,7 +5682,7 @@ html[dir='rtl'] {
       content: '';
     }
 
-    .required::before {
+    .required::after {
       @include required-indicator();
 
       color: $datagrid-required-icon-color;
@@ -5690,7 +5690,7 @@ html[dir='rtl'] {
       top: 0;
     }
 
-    th .datagrid-header-text.required::before {
+    th .datagrid-header-text.required::after {
       font-size: 1.8rem;
     }
 
