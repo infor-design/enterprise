@@ -5690,6 +5690,10 @@ html[dir='rtl'] {
       top: 0;
     }
 
+    th .datagrid-header-text.required::before {
+      font-size: 1.8rem;
+    }
+
     &.left {
       th:last-child {
         border-right: 0;
