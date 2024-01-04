@@ -44,8 +44,6 @@ The icon will get an id with `-icon` appended after the id given.
 
 If setting the id/automation id with a function, the id will be a running total of open fileupload-advanced.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - Not keyboard friendly at this time. Will need a browse button.

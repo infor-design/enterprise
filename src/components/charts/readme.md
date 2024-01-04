@@ -19,7 +19,7 @@ All of the charts are documented separately by type. See the respective pages fo
 1. Line [View Example]( ../line)
 1. Positive Negative [View Example]( ../positive-negative)
 1. Sparkline [View Example]( ../sparkline)
-1. Step Chart [View Example]( ../step-chart)
+1. Step Chart [View Example]( ../stepchart)
 1. Targeted Achievement [View Example]( ../targeted-achievement)
 1. Timeline [View Example]( ../timeline)
 
@@ -41,10 +41,6 @@ We still have some work to do to make charts accessible. Some todo's:
 - Should be keyboard friendly. Can focus the legend and hit enter to select.
 - When keying in to the legend elements it should read the data
 - Have a table option to display the data in optional data form.
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

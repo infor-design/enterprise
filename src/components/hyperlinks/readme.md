@@ -26,10 +26,6 @@ A hyperlink uses a standard anchor tag element and styles it with CSS. No JS is 
 - Avoid <a href="https://en.wikipedia.org/wiki/Idiom" target="_blank">idioms</a>
 - Be consistent; for example, use "Forward" and "Back" or "Next" and "Previous", but don't mix "Forward" and "Next"
 
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> moves focus to the Link. A second tab moves focus to the next focusable item

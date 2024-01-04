@@ -93,5 +93,3 @@ Setting the id/automation id with a string value:
 ```
 
 If setting the id/automation id with a function, the id will be a running total of open autocomplete.
-
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

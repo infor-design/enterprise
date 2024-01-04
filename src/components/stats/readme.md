@@ -81,8 +81,6 @@ You can add custom id to the root of the component.
 </div>
 ```
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Enter</kbd> causes the stat to be executed

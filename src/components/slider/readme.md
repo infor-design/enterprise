@@ -127,8 +127,6 @@ Setting the id/automation id with a string value:
 
 Providing the data, this will add an ID added to each slider wrapper with `-wrapper`, slider hitarea with `-hitarea`, slider range with `-range`, slider handle with `-handle`, slider ticks and ticks complete with `-tick-{idx}`, and the hidden slider element appended.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 Keyboard functionality of the slider control differs based on whether or not the slider is single-thumbed (one handle), or a "range" (multi-handle). The keyboard applies to all types of sliders in these ways:

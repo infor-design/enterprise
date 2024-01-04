@@ -83,7 +83,7 @@ $('dropdown-id')
 
 ## Accessibility
 
-The dropdown list has been coded to act similar to the [aria best practices collapsible dropdown listbox](https://w3c.github.io/aria-practices/examples/listbox/listbox-collapsible.html). With some variations such as not having `aria-selected` as the value is only selected when you press enter. Also when opening the dropdown there is a filter field where you can type to filter.
+The dropdown list has been coded to act similar to the [aria best practices collapsible dropdown listbox](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/examples/listbox-collapsible). With some variations such as not having `aria-selected` as the value is only selected when you press enter. Also when opening the dropdown there is a filter field where you can type to filter.
 
 1. Make sure that there is a `<label>` which matches both the `<input>` and any shadow element `<inputs>`, identifies the field, and is correctly matched using the `<label>` for the `<input>` `id`
 1. Uses the following aria tags:
@@ -114,8 +114,6 @@ Setting the id/automation id with a string value:
 ```
 
 If setting the id/automation id with a function, the id will be a running total of open dropdown.
-
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

@@ -61,8 +61,6 @@ The trigger close button will get an id with `-btn-trigger-close` appended after
 
 If setting the id/automation id with a function, the id will be a running total of open fileupload.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Spacebar</kbd> or <kbd>Enter</kbd> opens the dialog for selection

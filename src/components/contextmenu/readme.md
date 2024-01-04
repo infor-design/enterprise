@@ -7,7 +7,7 @@ demo:
     slug: example-index
 ---
 
-For all API information see the [popup menu](./popupmenu) as this component is used to make a context menu via its option `trigger: 'right-click'`.
+For all API information see the [popup menu](../popupmenu/readme.md) as this component is used to make a context menu via its option `trigger: 'right-click'`.
 
 ## Code Example
 
@@ -57,10 +57,8 @@ The popup menu can be linked as a right-click menu item by adding the attribute 
 - The context menu should not be used as a navigation method
 - A right-click menu should never be the only method of performing specific actions as the actions are not easily discoverable by the user
 
-For all additional information, see the [popup menu](./popupmenu) as this component is used to make a context menu via it's option `trigger: 'right-click'`.
+For all additional information, see the [popup menu](../popupmenu/readme.md) as this component is used to make a context menu via it's option `trigger: 'right-click'`.
 
 ## Testability
 
 You can add custom id's/automation id's to the contextmenu component in the input markup inline. For this reason there is no `attributes` setting like some other components.
-
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

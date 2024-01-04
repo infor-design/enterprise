@@ -70,8 +70,6 @@ var dataset1 = [{
 
 Providing the data this will add an ID added to each name with `-name`, info-value with `-info-value`, info-text with `-info-text`, completed-bar with `-completed-bar`, completed-value with `-completed-value`, completed-text with `-completed-text`, remaining-bar with `-remaining-bar`, remaining-value with `-remaining-value`, remaining-text with `-remaining-text`, targetline-bar with `-targetline-bar`, targetline-value with `-targetline-value`, targetline-text with `-targetline-text`, total-bar with `-total-bar` and total-value with `-total-value` appended after it.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Keyboard Shortcuts
 
 - This is a visual only component.

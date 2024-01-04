@@ -17,7 +17,3 @@ The Composite form pattern combines a summary area with a responsive [Tabs Compo
 ## Code Example
 
 See Example pages. This is a new pattern for 4.X.
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

@@ -27,7 +27,7 @@ To use each theme you need to:
 1. Import the correct style stylesheet which would be one of `theme-classic-contrast.css`, `theme-classic-dark.css`, `theme-classic-light.css`, `theme-new-contrast.css`, `theme-new-dark.css`, `theme-new-light.css` . The files `theme-uplift-*.css`, `theme-soho-*.css` are there for backwards compatibility and will later be removed.
 2. Add the correct SVG Block Element to the top of the page document (`theme-new-svg.html` or `theme-classic-svg.html`). The file `theme-uplift-*.html` and `theme-soho-*`  is there for backwards compatibility and will later be removed.
 
-It's also possible to get information about the themes from the theme api For info on that see the [theme api]( ./theme)
+It's also possible to get information about the themes from the theme api For info on that see the [theme api](../theme/readme.md)
 
 ## Personalization
 
@@ -63,11 +63,11 @@ For reduction of FOUC (flash of unstyled content) run the personalize logic befo
 
 Only a subset of components support personalization:
 
-- [Headers and Subheaders]( ./header) - Each gets a contrasting back color and all elements in it are reflected.
-- [Module Tabs]( ./tabs-module) - The tabs and sub tabs and states.
-- [Button (Primary)]( ./button) - The selection states.
-- [Hyperlinks]( ./hyperlinks) - The link color no longer changes
-- [Hero Widget]( ./homepage) - No longer changes
+- [Headers and Subheaders](../header/readme.md) - Each gets a contrasting back color and all elements in it are reflected.
+- [Module Tabs](../tabs-module/readme.md) - The tabs and sub tabs and states.
+- [Button (Primary)](../button/readme.md) - The selection states.
+- [Hyperlinks](../hyperlinks/readme.md) - The link color no longer changes
+- [Hero Widget](../homepage/readme.md) - No longer changes
 
 ## Personalize Classes
 
@@ -98,7 +98,3 @@ Insert this object in a script that runs before IDS is loaded.
 ## Accessibility
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. Choose colors that pass contrast guidelines.
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
