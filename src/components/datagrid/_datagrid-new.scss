@@ -1125,6 +1125,13 @@ html[dir='rtl'] {
         top: 11px;
       }
     }
+
+    .datagrid-cell-wrapper {
+      .dropdown-trigger:not(.colorpicker-container) + .icon {
+        top: 2px !important;
+        left: -4px !important;
+      }
+    }
   }
 
   .datagrid.small-rowheight {
