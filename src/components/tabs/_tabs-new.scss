@@ -122,11 +122,12 @@
   margin-top: 7px;
   padding: 0;
   width: 35px;
+  height: 30px;
   color: $tab-add-tab-color;
 
   span[aria-hidden] {
     font-size: 25px;
-    top: 1px;
+    top: 8px;
   }
 }
 
