@@ -6,7 +6,7 @@
 
 ## v4.92.0 Fixes
 
-- `[Modal]` Fixed a bug where the modal body would shift up when toggling a switch inside the modal. ([#8018](https://github.com/infor-design/enterprise/issues/8018))
+- `[Modal]` Fixed a bug where the modal would shift up when toggling a switch inside of it. ([#8018](https://github.com/infor-design/enterprise/issues/8018))
 
 ## v4.91.0
 
