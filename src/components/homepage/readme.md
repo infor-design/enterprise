@@ -22,7 +22,7 @@ demo:
 
 The homepage component requires JS for its layout mechanism. Call the `.homepage()` plugin on the prescribed structure. On resize, the plugin will take care that everything is laid out in the best order and use of space it can be. It is possible to toggle viewin 3 or 4 columns depending on how much screen real estate you want to use by adding the `data-columns` attribute with a value of `3` or `4`.
 
-See also the [Cards](./cards) documentation for widget structure.
+See also the [Cards](../cards/readme.md) documentation for widget structure.
 
 ```html
 <div class="homepage page-container scrollable" data-columns="3">
@@ -47,10 +47,6 @@ See also the [Cards](./cards) documentation for widget structure.
 ## Accessibility
 
 - The component respects element tab order which is important between the main containers
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

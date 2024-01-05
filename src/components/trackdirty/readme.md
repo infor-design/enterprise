@@ -21,10 +21,6 @@ You can use the `form.resetForm()` function to clear all dirty fields on a form.
 - Make sure the input has a matching label which is meaningful.
 - Add aria-required for required elements
 
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Upgrading from 3.X
 
 Be sure to wrap inside of a field div.

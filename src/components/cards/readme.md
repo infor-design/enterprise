@@ -224,10 +224,6 @@ You can add a search field that operates search typeahead on a list. See the exa
 </div>
 ```
 
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - The header contains a toolbar. Arrow keys should be used between buttons on the toolbar.

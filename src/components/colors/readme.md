@@ -27,7 +27,3 @@ Background colors can also be set by using the color palette name and appending 
 ## Accessibility
 
 - Do not use color alone to indicate state. If you use a color then also use an icon or text to explain the meaning in case someone is color blind and unable to discern the meaning of the status based on the color.
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

@@ -117,7 +117,7 @@ See example <a href="https://design.infor.com/code/ids-enterprise/latest/demo/co
 - <kbd>Tab</kbd> When a list is tabbed to, select the first item if nothing else is already selected. A second tab will take the user out of the widget to the next tab stop on the page.
 - <kbd>Up/down arrow</kbd> navigate up and down the list.
 - <kbd>Shift+F10</kbd> If the current item has an associated context menu, then this key combination will launch that menu.
-- <kbd>Space</kbd> toggles <a href="http://access.aol.com/dhtml-style-guide-working-group/#checkbox" target="_blank">checkboxes</a> in the case of multi select or a list item in case of normal select
+- <kbd>Space</kbd> toggles the selection state if single or multiple selection is enabled.
 
 ## States and Variations
 
@@ -141,7 +141,7 @@ See example <a href="https://design.infor.com/code/ids-enterprise/latest/demo/co
 
 - The list is 100% of the parent container in height and width so can be used in a widget object or responsive grid object.
 - The list body will expand vertically and horizontally to fill it the size of its parent container.
-- When used in [homepages]( ../homepage), special rules apply with sizes.
+- When used in [homepages]( ../homepage/readme.md), special rules apply with sizes.
 
 ## Testability
 
@@ -165,8 +165,6 @@ Setting the id/automation id with a string value:
 ```
 
 The Listview component automatically appends these attributes to the top-level Listview component, as well as each item in the list.  The items have an index appended to each to distinguish them from the rest.
-
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Upgrading from 3.X
 

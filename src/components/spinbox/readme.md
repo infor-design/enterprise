@@ -62,8 +62,6 @@ Setting the id/automation id with a string value:
 
 Providing the data, this will add an ID added to each spinbox wrapper with `-wrapper`, spinbox with `-spinbox`, spinbox button + with `-btn-up`, and spinbox button - with `-btn-down` appended.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Right</kbd> and <kbd>Up</kbd> arrows increase the value

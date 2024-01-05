@@ -60,8 +60,6 @@ For the message this can be set either on the root settings or in each button el
 
 If you set the attributes on the root message, you will get an ID added to the root of the message dialog. Also the message area will get an id with `-message` appended after the id given. And the main modal div will get an id `-modal` appended after the id given. And finally the h1 area will get an id with `-title` appended after the id given.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Enter</kbd> should serve as the default submit action or if focus is on a button will activate that button

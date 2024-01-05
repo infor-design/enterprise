@@ -84,8 +84,6 @@ Setting the id/automation id with a string value:
 
 Providing the data, this will add an ID added to each expandablearea header with `-header`, expandablearea content with `-content`, expandablearea expander with `-expander`, expandablearea footer with `-footer`, and to the root expandablearea element appended.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - Press <kbd>Tab</kbd> to focus the Expandable Area's link

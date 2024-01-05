@@ -119,5 +119,3 @@ In this example, the attributes automatically added were:
 Popovers can also optionally have the (X) Button displayed in the Popover header when using the `closebutton` setting. If attributes are also passed, a `-close-btn` label will be applied with attributes on the (X) button.
 
 In the Popover's user-defined HTML content, you must manually add custom attributes and automation id's.  The component doesn't try to assume what elements may be present inside the Popover due to too much potential variation.
-
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

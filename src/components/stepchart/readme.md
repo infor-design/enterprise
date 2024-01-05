@@ -62,8 +62,6 @@ Setting the id/automation id with a string value or function. The function will 
 
 Providing the data this will add an ID added to each label with `-label`, label-icon with `-label-icon`, label-small with `-label-small`, and step with `-step{index}` appended after it.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Keyboard Shortcuts
 
 - None

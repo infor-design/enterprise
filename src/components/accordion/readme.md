@@ -195,8 +195,6 @@ You can add custom id's/automation id's to various parts of the accordion. If yo
 </div>
 ```
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> - When focus is on an accordion header a <kbd>Tab</kbd> keystroke will move focus in the following manner:

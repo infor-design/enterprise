@@ -72,10 +72,6 @@ The masthead can be added to applications when not running inside mingle to add 
 - Use the `role="banner"` Landmark role
 - Should use html5 section or nav type
 
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 The header action buttons should function as a toolbar, see [toolbar](./toolbar) page for guidelines.

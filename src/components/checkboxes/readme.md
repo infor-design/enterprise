@@ -85,10 +85,6 @@ The checkbox has now a hitbox style. With this feature, the checkbox has more ro
 
 - Make sure you have matching `for` and `id` values to associate the label with the appropriate form control. Make sure `id`s are unique on each page and only one label can be associated to each unique form element
 
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - For a two-State checkbox:

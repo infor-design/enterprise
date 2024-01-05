@@ -76,7 +76,3 @@ Counts also have a style for use within a widget. Also called instance Counts fr
 - Be careful to select a color that passes <a href="http://webaim.org/resources/contrastchecker/" target="_blank">WCAG AA or AAA contrast</a> between the background and text color.
 - Screen readers can access the information via a virtual keyboard since these are not focusable.
 - Make sure to augment the labels with `audible` only spans to add additional context if needed.
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

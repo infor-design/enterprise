@@ -53,10 +53,6 @@ status, something like an embellishment. For error messages and alerts use an al
 - When used alone (icon with out text) an audible span should be added for screen readers.
 - Tooltips should be shown on icons (but not on icons with text as it is redundant)
 
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - Icons are usually on buttons, so the usual keyboard shortcuts of <kbd>Tab</kbd> and <kbd>Shift + Tab</kbd> apply. Buttons can also be disabled

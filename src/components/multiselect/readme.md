@@ -60,8 +60,6 @@ The multi-select list is fairly complex to make accessible. But generally this c
 
 You can add custom id's/automation id's to the multiselect component via the dropdown component. For this reason there is no `attributes` setting like some other components.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> and <kbd>Shift+Tab</kbd> moves focus into and out of the dropdown. If the list is open, <kbd>Tab</kbd> will close the list, selecting the current item, and move to the next focusable element
