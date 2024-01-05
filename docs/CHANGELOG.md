@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.92.0
+
+## v4.92.0 Features
+
+## v4.92.0 Fixes
+
+- `[Modal]` Fixed a bug where the modal body would shift up when toggling a switch inside the modal. ([#8018](https://github.com/infor-design/enterprise/issues/8018))
+
 ## v4.91.0
 
 ## v4.91.0 Features
