@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.92.0
+
+## v4.92.0 Fixes
+
+- `[Tabs]` Fixed size in close button of tab list. ([#8274](https://github.com/infor-design/enterprise/issues/8274))
+
 ## v4.91.0
 
 ## v4.91.0 Features
@@ -37,7 +43,6 @@
 - `[Popupmenu]` Fixed a bug where menu buttons did not close when toggled. ([#8232](https://github.com/infor-design/enterprise/issues/8232))
 - `[Searchfield]` Fixed styling issues in RTL. ([#6982](https://github.com/infor-design/enterprise/issues/6982))
 - `[Searchfield]` Fixed searchfield stylings in RTL and in mobile viewport. ([#8103](https://github.com/infor-design/enterprise/issues/8103))
-- `[Tabs]` Fixed size in close button of tab list. ([#8274](https://github.com/infor-design/enterprise/issues/8274))
 
 ## v4.90.0
 
