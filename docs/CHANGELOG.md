@@ -5,6 +5,7 @@
 ## v4.92.0 Fixes
 
 - `[Tabs]` Fixed size in close button of tab list. ([#8274](https://github.com/infor-design/enterprise/issues/8274))
+- `[Tabs]` Adjusted icon alignment and color for searchfield in tabs. ([#8272](https://github.com/infor-design/enterprise/issues/8272))
 
 ## v4.91.0
 
