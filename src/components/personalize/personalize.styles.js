@@ -92,6 +92,12 @@ html[class*="new-"] .is-personalizable:not(.header) .btn-menu:not(.btn-secondary
   color: ${colors.btnLinkColor} !important;
 }
 
+.is-personalizable:not(.header) .btn-link:not(:disabled):hover .icon,
+.btn-link.is-personalizable:not(:disabled):hover .icon,
+.is-personalizable:not(.header) .btn-menu:not(.btn-secondary):not([disabled]):not(:disabled):hover .icon {
+  color: ${colors.btnTertiaryHoverColor} !important;
+}
+
 .is-personalizable:not(.header) .btn-menu:not(.btn-secondary):not(.hide-focus):focus {
   box-shadow: ${colors.btnBoxShadow};
 }
@@ -100,7 +106,7 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled),
 html.theme-new-dark .btn-link.is-personalizable:not(:disabled),
 html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled) .icon,
 html.theme-new-dark .btn-link.is-personalizable:not(:disabled) .icon {
-  color: ${colors.lighter};
+  color: ${colors.btnLighter};
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled):hover,
@@ -110,7 +116,7 @@ html.theme-new-dark .btn-link.is-personalizable:not(:disabled):hover .icon,
 html.theme-new-dark .is-personalizable:not(.header) .btn-menu.is-open:not(.btn-secondary):not([disabled]):not(:disabled),
 html.theme-new-dark .is-personalizable:not(.header) .btn-menu:not(.btn-secondary):not([disabled]):not(:disabled):hover,
 html.theme-new-dark .is-personalizable:not(.header) .btn-menu:not(.btn-secondary):not([disabled]):not(:disabled):hover .icon {
-  color: ${colors.lightest};
+  color: ${colors.btnTertiaryHoverColor};
 }
 
 .is-personalizable button.is-pressed,
@@ -136,7 +142,7 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructiv
 
 html[class*="new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 html[class*="new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-secondary.btn-menu.is-open:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) {
-  background-color: ${colors.btnTertiaryBgHoverColor}; 
+  background-color: ${colors.lightestPalette};
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
@@ -160,7 +166,14 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-butto
   color: ${colors.lightest};
 }
 
-html[class*="new-"] .is-personalizable:not(.header):not(.hero-widget) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+html[class*="new-"] .is-personalizable:not(.header):not(.hero-widget) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
+html[class*="new-"] .is-personalizable:not(.header):not(.hero-widget) .btn-link:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+  background-color: ${colors.lightestPalette};
+  color: ${colors.btnTertiaryHoverColor};
+}
+
+html.theme-new-dark .is-personalizable:not(.header):not(.hero-widget) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
+html.theme-new-dark .is-personalizable:not(.header):not(.hero-widget) .btn-link:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   background-color: ${colors.btnTertiaryBgHoverColor};
   color: ${colors.btnTertiaryHoverColor};
 }
@@ -429,7 +442,7 @@ a.is-personalizable svg.ripple-effect {
 }
 
 html[class*="theme-new"] .header.is-personalizable button:not(.close):not(:disabled):hover .icon {
-  color: ${colors.btnTertiaryHoverColor} !important;
+  color: ${colors.btnTertiaryHoverColorHeader} !important;
 }
 
 html[class*="-dark"] .is-personalizable .personalize-subheader button:not(:disabled),
@@ -475,8 +488,8 @@ html[class*="theme-new-"] .personalize-subheader .toolbar [class^='btn']:hover:n
 }
 
 html[class*="theme-new-"] .header.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover {
-  background-color: ${colors.btnTertiaryBgHoverColor} !important;
-  color: ${colors.btnTertiaryHoverColor} !important;
+  background-color: ${colors.btnTertiaryBgHoverColorHeader} !important;
+  color: ${colors.btnTertiaryHoverColorHeader} !important;
 }
 
 .header .flex-toolbar [class^='btn'][disabled] {
@@ -865,22 +878,22 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
+  background-image: linear-gradient(to right, ${colors.tabHeaderColor} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
 }
 
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to left, ${colors.base}, ${colorUtils.hexToRgba(colors.base, 0)}) !important;
+  background-image: linear-gradient(to left, ${colors.tabHeaderColor}, ${colorUtils.hexToRgba(colors.base, 0)}) !important;
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.tabHeaderColor}) !important;
 }
 
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.tabHeaderColor}) !important;
 }
 
 .is-personalizable.header .section-title {
@@ -904,11 +917,19 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
   font-weight: ${colors.tabTextSelectedWeight} !important;
 }
 
+html[class*="theme-new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-icon:not(.destructive):not(:disabled):hover {
+  background-color: ${colors.lightestPalette};
+}
+
+html[class*="theme-new-"] .is-personalizable:not(.header) .btn-icon:not(.destructive):not(:disabled):hover .icon {
+  color: ${colors.btnTertiaryHoverColor};
+}
+
 html[class*="-dark"] .is-personalizable .btn-tertiary:not(.destructive):not(:disabled):hover,
 html[class*="-dark"] .is-personalizable .btn-link:not(:disabled):hover,
 html[class*="-dark"] .is-personalizable:not(.header) .btn-menu:not(.btn-secondary):not(:disabled):hover,
 html[class*="-dark"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: #28282A;
+  background-color: ${colors.btnTertiaryBgHoverColor};
 }
 
 html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane .accordion-header {

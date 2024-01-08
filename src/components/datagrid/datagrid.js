@@ -5913,7 +5913,7 @@ Datagrid.prototype = {
     for (let j = 0; j < this.settings.columns.length; j++) {
       const col = this.settings.columns[j];
 
-      if (col.hidden) {
+      if (col.hidden || (col.component && this.settings.onPostRenderCell)) {
         continue;
       }
 
@@ -10616,7 +10616,8 @@ Datagrid.prototype = {
       cell,
       newValue,
       false,
-      isInline
+      isInline,
+      oldValue
     );
     const value = this.fieldValue(rowData, col.field);
 
@@ -11405,8 +11406,6 @@ Datagrid.prototype = {
       }
     }
 
-    coercedVal = xssUtils.unescapeHTML(coercedVal);
-
     if (col.field && coercedVal !== oldVal) {
       if (col.field.indexOf('.') > -1) {
         let rowDataObj = rowData;
@@ -11651,7 +11650,7 @@ Datagrid.prototype = {
       (d.originalVal === d.cellNodeText)
     );
 
-    if (isDirty || d.originalVal.length !== d.value.length) {
+    if (isDirty || (d.originalVal.length !== d.value.length && d.originalVal.length !== d.cellNodeText.length)) {
       this.dirtyArray[row][cell].isDirty = true;
       cellNode[0].classList.add('is-dirty-cell');
       this.setDirtyIndicator(row, cell, true);

@@ -306,8 +306,27 @@
 
     .modal-body-wrapper {
       flex-grow: 1;
+
+      .splitter-container, 
+      .splitter-container .is-right-side,
+      .splitter-container .is-right-side, .page-container {
+        position: initial;
+      }
     }
   }
+
+  .modal-content {
+    .modal-header.splitter-header {
+      padding: 16px;
+    }
+
+    .modal-body-wrapper.splitter-wrapper {
+      position: relative;
+      border-top: 1px solid $modal-splitter-top-border-color;
+    }
+
+  }
+  
 
   &:not(.display-fullsize):not(.about) {
     .modal-content {
