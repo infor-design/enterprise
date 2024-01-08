@@ -1,5 +1,14 @@
 # What's New with Enterprise
 
+## v4.92.0
+
+## v4.92.0 Features
+
+## v4.92.0 Fixes
+
+- `[Modal]` Fixed a bug where the modal would shift up when toggling a switch inside of it. ([#8018](https://github.com/infor-design/enterprise/issues/8018))
+- `[Tabs]` Fixed size in close button of tab list. ([#8274](https://github.com/infor-design/enterprise/issues/8274))
+
 ## v4.91.0
 
 ## v4.91.0 Features
@@ -27,6 +36,7 @@
 - `[Datagrid]` Fixed tab key navigation when using actionable mode when having formatter. ([#8245](https://github.com/infor-design/enterprise/issues/8245))
 - `[Datagrid]` Fixed invisible color on required icon in datagrid. ([#8260](https://github.com/infor-design/enterprise/issues/8260))
 - `[Datagrid]` Fixed disabled color for colorpicker. ([#8218](https://github.com/infor-design/enterprise/issues/8218))
+- `[Datagrid]` Fixed dropdown icon misalignment in extra small rowheight. ([#8216](https://github.com/infor-design/enterprise/issues/8216))
 - `[Dropdown]` Fixed a bug where list is broken when empty icon is in the first option. ([#8105](https://github.com/infor-design/enterprise/issues/8105))
 - `[Message]` Fixed success icon alignment in message header. ([#8240](https://github.com/infor-design/enterprise/issues/8240))
 - `[ModuleNav]` Removed usage guidance from readme.md to support updated doc site structure. ([#8282](https://github.com/infor-design/enterprise/issues/8282))
