@@ -2,8 +2,11 @@
 
 ## v4.92.0
 
+## v4.92.0 Features
+
 ## v4.92.0 Fixes
 
+- `[Modal]` Fixed a bug where the modal would shift up when toggling a switch inside of it. ([#8018](https://github.com/infor-design/enterprise/issues/8018))
 - `[Tabs]` Fixed size in close button of tab list. ([#8274](https://github.com/infor-design/enterprise/issues/8274))
 
 ## v4.91.0
