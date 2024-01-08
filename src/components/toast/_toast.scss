@@ -74,16 +74,17 @@
 
   // Close Buttons on Toast Message are positioned and sized differently
   .btn-close {
-    cursor: pointer;
     height: 20px;
     position: absolute;
-    right: 1px;
-    top: 7px;
+    right: 3px;
+    top: 9px;
     width: 20px;
+    min-height: 28px;
+    min-width: 28px;
 
     .icon {
-      height: 14px;
-      width: 14px;
+      height: 18px;
+      width: 18px;
     }
   }
 }

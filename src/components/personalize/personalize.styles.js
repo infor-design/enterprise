@@ -441,6 +441,11 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.headerIconColor} !important;
 }
 
+.header .flex-toolbar [class^='btn']:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable),
+.header .flex-toolbar [class^='btn']:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable) svg.icon {
+  color: ${colors.btnHoverColor} !important;
+}
+
 html[class*="theme-new"] .header.is-personalizable button:not(.close):not(:disabled):hover .icon {
   color: ${colors.btnTertiaryHoverColorHeader} !important;
 }
