@@ -437,7 +437,8 @@ a.is-personalizable svg.ripple-effect {
 .subheader.is-personalizable button:not(:disabled):not(.searchfield-category-button) .app-header.icon > span,
 .is-personalizable .personalize-subheader button:not(:disabled),
 .is-personalizable .personalize-subheader button:not(:disabled):not(.close):not(.notification-close) .icon,
-.is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span  {
+.is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span,
+.tab-container.module-tabs.is-personalizable .toolbar div:is(.more) [class^='btn']:not(.btn-menu) .icon  {
   color: ${colors.headerIconColor} !important;
 }
 
