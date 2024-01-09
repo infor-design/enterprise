@@ -333,7 +333,7 @@
     overflow: hidden;
 
     .buttonset {
-      height: 34px;
+      height: 38px;
       text-align: right;
 
       > * {
@@ -476,6 +476,7 @@
 
   > .toolbar-searchfield-wrapper.active {
     width: calc(100% - 1px);
+    min-height: 38px;
   }
 
   &.has-add-button {
@@ -701,6 +702,7 @@
   .toolbar-searchfield-wrapper.has-categories {
     .searchfield-category-button {
       padding-right: 5px;
+      height: 38px;
     }
 
     .searchfield {
@@ -710,6 +712,7 @@
       border-right: 0;
       border-top: 0;
       border-top-left-radius: 0;
+      height: 38px;
 
       + .close {
         transform: translateY(50%);
