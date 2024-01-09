@@ -1189,15 +1189,6 @@ Pager.prototype = {
     }
   },
 
-  show() {
-    debugger;
-    this.renderBar();
-  },
-
-  hide() {
-    this.hidePagerBar();
-  },
-
   /**
    * Renders the pager bar based on derived or forced settings.
    * @private
