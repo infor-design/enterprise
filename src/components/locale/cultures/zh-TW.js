@@ -20,13 +20,13 @@ Soho.Locale.addCulture('zh-TW', {
       month: 'M月d日',
       year: 'yyyy年 M月',
       dayOfWeek: 'd日 EEE',
-      timestamp: 'ah:mm:ss',
-      timestampMillis: 'ah:mm:ss.SSS',
-      hour: 'ah:mm',
-      datetime: 'yyyy/M/d ah:mm',
-      datetimeMillis: 'yyyy/M/d ah:mm:ss.SSS',
-      timezone: 'yyyy/M/d ah:mm zz',
-      timezoneLong: 'yyyy/M/d ah:mm zzzz'
+      timestamp: 'HH:mm:ss',
+      timestampMillis: 'HH:mm:ss.SSS',
+      hour: 'HH:mm',
+      datetime: 'yyyy/M/d HH:mm',
+      datetimeMillis: 'yyyy/M/d HH:mm:ss.SSS',
+      timezone: 'yyyy/M/d HH:mm zz',
+      timezoneLong: 'yyyy/M/d HH:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
     days: {
@@ -40,7 +40,7 @@ Soho.Locale.addCulture('zh-TW', {
       abbreviated: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    timeFormat: 'ah:mm',
+    timeFormat: 'HH:mm',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['上午', '下午'],
     firstDayofWeek: 1 // Starts on Mon

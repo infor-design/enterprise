@@ -169,7 +169,7 @@ describe('Timepicker Puppeteer Tests', () => {
       await page.click('.set-time');
 
       // ah:mm
-      expect(await page.evaluate(el => el.value, timepickerEl)).toEqual('上午1:00');
+      expect(await page.evaluate(el => el.value, timepickerEl)).toEqual('01:00');
       // eslint-disable-next-line jasmine/prefer-jasmine-matcher
       expect(errorMessage === null).toBeTruthy(); // Error message should not be shown/presented.
     });
