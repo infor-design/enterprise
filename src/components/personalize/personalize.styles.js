@@ -437,7 +437,8 @@ a.is-personalizable svg.ripple-effect {
 .subheader.is-personalizable button:not(:disabled):not(.searchfield-category-button) .app-header.icon > span,
 .is-personalizable .personalize-subheader button:not(:disabled),
 .is-personalizable .personalize-subheader button:not(:disabled):not(.close):not(.notification-close) .icon,
-.is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span  {
+.is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span,
+.tab-container.module-tabs.is-personalizable .toolbar div:is(.more) [class^='btn']:not(.btn-menu) .icon  {
   color: ${colors.headerIconColor} !important;
 }
 
@@ -690,6 +691,10 @@ html[class*="-dark"] .header .toolbar-searchfield-wrapper.active.has-focus .sear
 
 html[class*='classic-'] .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab.is-selected:not(.is-disabled) {
   border-color: ${colors.contrast};
+}
+
+html[class*='classic-contrast'] .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab.is-selected:not(.is-disabled) {
+  border-color: ${colors.light};
 }
 
 .tab-container.header-tabs.alternate > .tab-list-container .tab.is-disabled {
