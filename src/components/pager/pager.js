@@ -780,6 +780,22 @@ Pager.prototype = {
   },
 
   /**
+   * Hides the pager bar.
+   * @returns {void}
+   */
+  hidePager() {
+    this.pagerBar.hide();
+  },
+
+  /**
+   * Shows the pager bar.
+   * @returns {void}
+   */
+  showPager() {
+    this.pagerBar.show();
+  },
+
+  /**
    * Renders a row of numbers that can be used to select pages (Blockgrid/Listview)
    * @returns {void}
    */
@@ -1171,6 +1187,15 @@ Pager.prototype = {
     if (this.preserveFocus) {
       this.element.find('.pager-pagesize button').focus();
     }
+  },
+
+  show() {
+    debugger;
+    this.renderBar();
+  },
+
+  hide() {
+    this.hidePagerBar();
   },
 
   /**
