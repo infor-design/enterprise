@@ -1,0 +1,436 @@
+<div class="row">
+	<div class="twelve columns">
+
+		<button class="btn-secondary" type="button" id="add-comment">Show Modal</button>
+
+		<div id="modal-add-comment" style="display: none; height: 400px;">
+
+			<div class="row">
+        <div class="six columns">
+          <div class="switch hide-focus">
+            <input type="checkbox" checked="" id="displayBlank-switch" name="displayBlank-switch" class="switch hide-focus">
+            <label for="displayBlank-switch">Blank Fields</label>
+          </div>
+        </div>
+        <div class="six columns">
+          <div class="switch hide-focus">
+          <input type="checkbox" checked="" id="displayTitle-switch" name="displayTitle-switch" class="switch hide-focus">
+          <label for="displayTitle-switch">Title</label>
+        </div>
+      </div>
+    
+      <h1 class="fieldset-title">Business Classes</h1>
+    
+      <div class="switch hide-focus" style="margin-bottom: 10px;">
+        <input type="checkbox" checked="" id="employee-switch" name="employee-switch" class="switch hide-focus">
+        <label for="employee-switch">Employee</label>
+      </div>
+      <div id="employee-fields" class="row">
+        <div class="six columns">
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employee-field-Name.PreferredFirstAndLastName">
+            <label for="employee-field-Name.PreferredFirstAndLastName" class="checkbox-label">Name</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employee-field-Employee">
+            <label for="employee-field-Employee" class="checkbox-label">Employee ID</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employee-field-PrimaryWorkAssignment.Location.Description">
+            <label for="employee-field-PrimaryWorkAssignment.Location.Description" class="checkbox-label">Location</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employee-field-PrimaryWorkAssignment.Position.Description">
+            <label for="employee-field-PrimaryWorkAssignment.Position.Description" class="checkbox-label">Position</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employee-field-EmployeeWorkEmailAddress">
+            <label for="employee-field-EmployeeWorkEmailAddress" class="checkbox-label">Work Email</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employee-field-EmployeeWorkTelephone">
+            <label for="employee-field-EmployeeWorkTelephone" class="checkbox-label">Work Phone</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employee-field-ActivePrimaryWorkAssignmentRel.LRCPayRateAndCurrencyMF">
+            <label for="employee-field-ActivePrimaryWorkAssignmentRel.LRCPayRateAndCurrencyMF" class="checkbox-label">Pay</label>
+          </div>
+        </div>
+        <div class="six columns">
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employee-field-Birthdate anniversary">
+            <label for="employee-field-Birthdate anniversary" class="checkbox-label">Birthdate</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employee-field-StartDate">
+            <label for="employee-field-StartDate" class="checkbox-label">Start Date</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employee-field-StartDateLengthOfServiceYears">
+            <label for="employee-field-StartDateLengthOfServiceYears" class="checkbox-label">Length of Service</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employee-field-HomeCountry.Name">
+            <label for="employee-field-HomeCountry.Name" class="checkbox-label">Home Country</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employee-field-RelationshipToOrganization.Description">
+            <label for="employee-field-RelationshipToOrganization.Description" class="checkbox-label">Relationship To Organization</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employee-field-RelationshipStatus.Description">
+            <label for="employee-field-RelationshipStatus.Description" class="checkbox-label">Relationship Status</label>
+          </div>
+        </div>
+      </div>
+    
+      <div class="switch hide-focus" style="margin-bottom: 10px;">
+        <input type="checkbox" checked="" id="workAssignment-switch" name="workAssignment-switch" class="switch hide-focus">
+        <label for="workAssignment-switch">WorkAssignment</label>
+      </div>
+      <div id="workAssignment-fields" class="row">
+        <div class="six columns">
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-Position.Description">
+            <label for="workAssignment-field-Position.Description" class="checkbox-label">Position</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-Job.Description">
+            <label for="workAssignment-field-Job.Description" class="checkbox-label">Job</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-HROrganizationUnit.Description">
+            <label for="workAssignment-field-HROrganizationUnit.Description" class="checkbox-label">Org Unit</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-Location.Description">
+            <label for="workAssignment-field-Location.Description" class="checkbox-label">Location</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-Location.Address.Country.Name">
+            <label for="workAssignment-field-Location.Address.Country.Name" class="checkbox-label">Work Country/Jurisdiction</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-WorkSchedule">
+            <label for="workAssignment-field-WorkSchedule" class="checkbox-label">Work Schedule</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-DirectSupervisor.SupervisorEmployeeNameLabelSnapshot">
+            <label for="workAssignment-field-DirectSupervisor.SupervisorEmployeeNameLabelSnapshot" class="checkbox-label">Manager</label>
+          </div>
+        </div>
+        <div class="six columns">
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-IndirectSupervisor.SupervisorEmployeeNameLabelSnapshot">
+            <label for="workAssignment-field-IndirectSupervisor.SupervisorEmployeeNameLabelSnapshot" class="checkbox-label">Dotted Line Manager</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-AssignmentType">
+            <label for="workAssignment-field-AssignmentType" class="checkbox-label">Assignment Type</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-FTE">
+            <label for="workAssignment-field-FTE" class="checkbox-label">FTE</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-LRCPayRateAndCurrencyMF">
+            <label for="workAssignment-field-LRCPayRateAndCurrencyMF" class="checkbox-label">Pay Rate</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-TotalAnnualTargetCashCompensation">
+            <label for="workAssignment-field-TotalAnnualTargetCashCompensation" class="checkbox-label">Total Annual Salary</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-Primary">
+            <label for="workAssignment-field-Primary" class="checkbox-label">Is Primary</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="workAssignment-field-Active">
+            <label for="workAssignment-field-Active" class="checkbox-label">Active</label>
+          </div>
+        </div>
+      </div>
+    
+      <div class="switch hide-focus" style="margin-bottom: 10px;">
+        <input type="checkbox" checked="" id="position-switch" name="position-switch" class="switch hide-focus">
+        <label for="position-switch">Position</label>
+      </div>
+      <div id="position-fields" class="row">
+        <div class="six columns">
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-Position">
+            <label for="position-field-Position" class="checkbox-label">Position</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-Description">
+            <label for="position-field-Description" class="checkbox-label">Description</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-Job.Description">
+            <label for="position-field-Job.Description" class="checkbox-label">Job</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-HROrganizationUnit.Description">
+            <label for="position-field-HROrganizationUnit.Description" class="checkbox-label">Org Unit</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-WorkSchedule.Description">
+            <label for="position-field-WorkSchedule.Description" class="checkbox-label">Work Schedule</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-Shift">
+            <label for="position-field-Shift" class="checkbox-label">Shift</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-FTE">
+            <label for="position-field-FTE" class="checkbox-label">FTE</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-AnnualHoursBasedOnFTE">
+            <label for="position-field-AnnualHoursBasedOnFTE" class="checkbox-label">Annual Hours</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-PaymentSchedule">
+            <label for="position-field-PaymentSchedule" class="checkbox-label">Payment Schedule</label>
+          </div>
+        </div>
+        <div class="six columns">
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-Location.Description">
+            <label for="position-field-Location.Description" class="checkbox-label">Location</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-PositionCategory.Description">
+            <label for="position-field-PositionCategory.Description" class="checkbox-label">Category</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-PositionSubCategory.Description">
+            <label for="position-field-PositionSubCategory.Description" class="checkbox-label">Sub Category</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-ActiveWorkAssignmentCount">
+            <label for="position-field-ActiveWorkAssignmentCount" class="checkbox-label">Active Resources</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-KeyPosition">
+            <label for="position-field-KeyPosition" class="checkbox-label">Key Position</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-CriticalPosition">
+            <label for="position-field-CriticalPosition" class="checkbox-label">Critical Position</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-Summary">
+            <label for="position-field-Summary" class="checkbox-label">Summary</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="position-field-Active">
+            <label for="position-field-Active" class="checkbox-label">Active</label>
+          </div>
+        </div>
+      </div>
+    
+      <div class="switch hide-focus" style="margin-bottom: 10px;">
+        <input type="checkbox" checked="" id="jobApplication-switch" name="jobApplication-switch" class="switch hide-focus">
+        <label for="jobApplication-switch">JobApplication</label>
+      </div>
+      <div id="jobApplication-fields" class="row">
+        <div class="six columns">
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-FirstLastNameWithTypeMF">
+            <label for="jobApplication-field-FirstLastNameWithTypeMF" class="checkbox-label">Candidate Name</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-Candidate.LinkedEmployee">
+            <label for="jobApplication-field-Candidate.LinkedEmployee" class="checkbox-label">Employee Number</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-Candidate.LinkedEmployee.PrimaryWorkAssignment.Position.Description">
+            <label for="jobApplication-field-Candidate.LinkedEmployee.PrimaryWorkAssignment.Position.Description" class="checkbox-label">Primary Position</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-DerivedTimeInPrimaryPositionVersusYearsOfService">
+            <label for="jobApplication-field-DerivedTimeInPrimaryPositionVersusYearsOfService" class="checkbox-label">Time In Position/Years Of Service</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-Candidate.LinkedEmployee.PrimaryWorkAssignment.Location.Description">
+            <label for="jobApplication-field-Candidate.LinkedEmployee.PrimaryWorkAssignment.Location.Description" class="checkbox-label">Work Location</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-Candidate.LinkedEmployee.PrimaryWorkAssignment.HROrganizationUnit.Description">
+            <label for="jobApplication-field-Candidate.LinkedEmployee.PrimaryWorkAssignment.HROrganizationUnit.Description" class="checkbox-label">Org Unit</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-Candidate.LinkedEmployee.PrimaryWorkAssignment.FTE">
+            <label for="jobApplication-field-Candidate.LinkedEmployee.PrimaryWorkAssignment.FTE" class="checkbox-label">FTE</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-Candidate.LinkedEmployee.PrimaryWorkAssignment.Union">
+            <label for="jobApplication-field-Candidate.LinkedEmployee.PrimaryWorkAssignment.Union" class="checkbox-label">Union</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-Candidate.LinkedEmployee.ActivePrimaryWorkAssignmentRel.DirectSupervisor.first ActiveAssignmentIsSupervisorWorkAssignment.Employee.Name.PreferredFirstAndLastName">
+            <label for="jobApplication-field-Candidate.LinkedEmployee.ActivePrimaryWorkAssignmentRel.DirectSupervisor.first ActiveAssignmentIsSupervisorWorkAssignment.Employee.Name.PreferredFirstAndLastName" class="checkbox-label">Supervisor</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-CandidateRecentJobTitle">
+            <label for="jobApplication-field-CandidateRecentJobTitle" class="checkbox-label">Title</label>
+          </div>
+        </div>
+        <div class="six columns">
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-CandidateRecentEmployerName">
+            <label for="jobApplication-field-CandidateRecentEmployerName" class="checkbox-label">Employer</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-DerivedStartDateEndDate">
+            <label for="jobApplication-field-DerivedStartDateEndDate" class="checkbox-label">Start Date/End Date</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-Source">
+            <label for="jobApplication-field-Source" class="checkbox-label">Source</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-SpecificSource">
+            <label for="jobApplication-field-SpecificSource" class="checkbox-label">Specific Source</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-ReferringSource">
+            <label for="jobApplication-field-ReferringSource" class="checkbox-label">Referring Source</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-RecruitingRank">
+            <label for="jobApplication-field-RecruitingRank" class="checkbox-label">Rank</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-JobRequisition">
+            <label for="jobApplication-field-JobRequisition" class="checkbox-label">Job ID</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-JobRequisitionWorkflowStep.ATSWorkflowStep.Description">
+            <label for="jobApplication-field-JobRequisitionWorkflowStep.ATSWorkflowStep.Description" class="checkbox-label">Workflow Step</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-CandidatePhoneDisplay">
+            <label for="jobApplication-field-CandidatePhoneDisplay" class="checkbox-label">Preferred</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="jobApplication-field-CandidateCityStateZip">
+            <label for="jobApplication-field-CandidateCityStateZip" class="checkbox-label">Home Address</label>
+          </div>
+        </div>
+      </div>
+    
+      <div class="switch hide-focus" style="margin-bottom: 10px;">
+        <input type="checkbox" checked="" id="employeeAppraisal-switch" name="employeeAppraisal-switch" class="switch hide-focus">
+        <label for="employeeAppraisal-switch">EmployeeAppraisal</label>
+      </div>
+      <div id="employeeAppraisal-fields" class="row">
+        <div class="six columns">
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-Employee.Name.PreferredFirstAndLastName">
+            <label for="employeeAppraisal-field-Employee.Name.PreferredFirstAndLastName" class="checkbox-label">Name</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-Position.Description">
+            <label for="employeeAppraisal-field-Position.Description" class="checkbox-label">Position</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-AppraisalForm.Description">
+            <label for="employeeAppraisal-field-AppraisalForm.Description" class="checkbox-label">Appraisal</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-AppraisalPeriod.Begin">
+            <label for="employeeAppraisal-field-AppraisalPeriod.Begin" class="checkbox-label">Period Begin</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-AppraisalPeriod.End">
+            <label for="employeeAppraisal-field-AppraisalPeriod.End" class="checkbox-label">Period End</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-AppraisalsOverDueDisplay">
+            <label for="employeeAppraisal-field-AppraisalsOverDueDisplay" class="checkbox-label">Appraisal Overdue</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-AppraisalsDueDateApproachingDisplay">
+            <label for="employeeAppraisal-field-AppraisalsDueDateApproachingDisplay" class="checkbox-label">Due Date Approaching</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-AppraisalStatus">
+            <label for="employeeAppraisal-field-AppraisalStatus" class="checkbox-label">Status</label>
+          </div>
+        </div>
+        <div class="six columns">
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-AppraisalPrescriptiveText">
+            <label for="employeeAppraisal-field-AppraisalPrescriptiveText" class="checkbox-label">Description</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-PerformanceReviewPeriodMF">
+            <label for="employeeAppraisal-field-PerformanceReviewPeriodMF" class="checkbox-label">Performance Review Period</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-DueDate">
+            <label for="employeeAppraisal-field-DueDate" class="checkbox-label">Due Date</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-OverallRating.Label">
+            <label for="employeeAppraisal-field-OverallRating.Label" class="checkbox-label">Overall Rating</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-AppraisalMeetingDate">
+            <label for="employeeAppraisal-field-AppraisalMeetingDate" class="checkbox-label">Meeting Date</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-EstimatedPercentComplete">
+            <label for="employeeAppraisal-field-EstimatedPercentComplete" class="checkbox-label">Estimated % Complete</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-CurrentAppraisalOwner">
+            <label for="employeeAppraisal-field-CurrentAppraisalOwner" class="checkbox-label">Owner</label>
+          </div>
+          <div class="field">
+            <input type="checkbox" checked="" class="checkbox hide-focus" id="employeeAppraisal-field-NextStep">
+            <label for="employeeAppraisal-field-NextStep" class="checkbox-label">Next Step</label>
+          </div>
+        </div>
+      </div>
+		</div>
+
+	</div>
+  </div>
+</div>
+
+<script>
+var modals = {
+    'add-comment': {
+      'title': 'Dialog Title',
+      'content': $('#modal-add-comment')
+    }
+  },
+
+  setModal = function (opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    $('body').modal(opt);
+  };
+
+  $('#add-comment').on('click', function () {
+    setModal(modals[this.id]);
+  });
+
+</script>
