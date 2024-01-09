@@ -692,6 +692,10 @@ html[class*='classic-'] .is-personalizable .tab-container.header-tabs.alternate 
   border-color: ${colors.contrast};
 }
 
+html[class*='classic-contrast'] .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab.is-selected:not(.is-disabled) {
+  border-color: ${colors.light};
+}
+
 .tab-container.header-tabs.alternate > .tab-list-container .tab.is-disabled {
   color: ${colors.contrast};
   opacity: 0.6;
