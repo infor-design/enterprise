@@ -51,7 +51,7 @@
   }
 
   &.is-selected {
-    border-color: $link-selected-color;
+    border: 2px solid $link-selected-color;
   }
 
   &:focus:not(.is-selected) {
