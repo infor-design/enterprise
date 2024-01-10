@@ -4,6 +4,8 @@
 
 ## v4.92.0 Features
 
+- `[Header]` Added an example configuration with both a hamburger and a back button. ([#8327](https://github.com/infor-design/enterprise/issues/8327))
+
 ## v4.92.0 Fixes
 
 - `[Locale]` Changed all `zh` locales time format as suggested by native speakers. ([#8313](https://github.com/infor-design/enterprise/issues/8313))
