@@ -888,6 +888,11 @@ a.btn-close {
     min-height: $button-size-compact-height;
     min-width: 0;
 
+    &[class*='searchfield'] {
+      height: $searchfield-button-size-compact-height;
+      min-height: $searchfield-button-size-compact-height;
+    }
+
     > .icon:not(.icon-dropdown) {
       height: 14px;
       margin: 0;

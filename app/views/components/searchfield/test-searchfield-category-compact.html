@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="one-half column">
+    <div class="field">
+      <input id="searchfield-1" class="searchfield mp-search-input" />
+    </div>
+    
+    <p>When in Compact Mode:</p>
+    <div class="field-short">
+      <input id="searchfield-2" class="searchfield mp-search-input" />
+    </div>
+
+    <p>When in Compact Mode 2.0:</p>
+    <div class="form-layout-compact">
+      <div class="field">
+        <input id="searchfield-3" class="searchfield mp-search-input" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  var categoryData = [
+    {name: 'Animals', id: 'animals', value: 'an', checked: true},
+    {name: 'Baby', id: 'baby', value: 'ba', checked: false},
+    {name: 'Clothing', id: 'clothing', value: 'cl', checked: true},
+    {name: 'Images', id: 'images', value: 'im', checked: true},
+    {name: 'People', id: 'people', value: 'pe', checked: false},
+    {name: 'Places', id: 'places', value: 'pl', checked: false}
+  ];
+
+  $('#searchfield-1').searchfield({
+    categories: categoryData,
+    clearable: true,
+    placeholder: 'Search',
+    showCategoryText: true
+  });
+
+  $('#searchfield-2').searchfield({
+    categories: categoryData,
+    clearable: true,
+    placeholder: 'Search',
+    showCategoryText: true
+  });
+
+  $('#searchfield-3').searchfield({
+    categories: categoryData,
+    clearable: true,
+    placeholder: 'Search',
+    showCategoryText: true
+  });
+</script>
