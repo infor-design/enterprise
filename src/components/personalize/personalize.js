@@ -408,6 +408,7 @@ Personalize.prototype = {
 
       if (isNewDark) {
         colors.tabCloseInactiveColor = 'rgba(255, 255, 255, 0.85)';
+        colors.baseDisabledText = '#fff';
         colors.base = themeColors.palette.slate[60].value;
         colors.btnPrimaryColor = colors.base;
         colors.dark = colors.base;

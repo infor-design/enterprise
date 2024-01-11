@@ -31,6 +31,11 @@ $homepage-button-color: $ids-color-palette-white;
 $header-hero-widget-bg-color: $ids-color-palette-white;
 $header-default-bg-color: $ids-color-palette-slate-90;
 $header-default-bg-hover-color: $ids-color-palette-slate-80;
+$header-text-default-color: $ids-color-palette-white;
+$label-personalize-text-color: $header-text-default-color;
+$header-button-normal-color: $header-text-default-color;
+$hyperlinks-personalize-text-color: $header-text-default-color;
+$header-text-actionable-color: $header-text-default-color;
 
 // Inputs
 $input-color-focus-border: $ids-color-palette-slate-10;

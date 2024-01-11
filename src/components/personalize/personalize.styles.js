@@ -999,10 +999,6 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
   opacity: .4 !important;
 }
 
-.is-personalizable .personalize-header:not(.header-tabs.alternate) {
-  background-color: ${colors.base} !important;
-}
-
 .is-personalizable .personalize-subheader {
   background-color: ${colors.lighter} !important;
 }

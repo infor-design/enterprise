@@ -58,13 +58,21 @@
   color: $hyperlinks-personalize-text-color;
 }
 
+.is-personalizable .btn-icon.personalize-actionable:hover:not([disabled]) {
+  background-color: $header-default-bg-hover-color;
+}
+
+.is-personalizable .btn-icon:hover:not([disabled]):not(.btn-primary) svg.icon {
+  color: $hyperlinks-personalize-text-color;
+}
+
 .is-personalizable .label+.personalize-text.data {
   color: $label-personalize-text-color;
 }
 
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg {
-  color: $header-text-actionable-color;
+  color: $header-text-actionable-color
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
@@ -98,7 +106,7 @@
 .is-personalizable .personalize-actionable-disabled,
 .is-personalizable .personalize-actionable-disabled:hover {
   cursor: default;
-  opacity: 0.4 !important;
+  opacity: 0.4;
 }
 
 // Compact versions
