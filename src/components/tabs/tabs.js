@@ -3886,8 +3886,9 @@ Tabs.prototype = {
       }
 
       if (isNotHeaderTabs && !self.isVerticalTabs() && !self.isModuleTabs()) {
-        targetRectObj.height -= 1;
-        targetRectObj.top += 2;
+        targetRectObj.height += 4;
+        targetRectObj.top -= 7;
+        console.log('haha');
       }
 
       if (self.isModuleTabs() && !self.isVerticalTabs()) {

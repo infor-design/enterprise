@@ -13,6 +13,38 @@
   }
 }
 
+.tab-container.horizontal {
+  > .tab-list-container {
+    margin-top: 5px;
+    height: 34px;
+
+    .tab {
+      a {
+        padding: 7px 11px 5px;
+      }
+
+      &:not(.is-selected):not(.is-disabled):hover {
+        border-bottom: 2px solid $tab-hover-color;
+      }
+
+      &:not(.is-disabled).is-selected {
+        border-bottom: 2px solid $tab-selected-color;
+      }
+
+    }
+  }
+}
+
+.tab-container.header-tabs {
+  > .tab-list-container {
+    .tab {
+      a {
+        padding: 12px 11px 5px;
+      }
+    }
+  }
+}
+
 .tab-container.horizontal,
 .tab-container.header-tabs {
   &.has-counts {
@@ -45,16 +77,12 @@
       &.dismissible {
         .icon {
           &.close {
-            margin-top: 6px;
+            margin-top: 3px;
           }
         }
       }
 
       top: 0;
-
-      a {
-        padding: 12px 11px 5px;
-      }
 
       // Adds "semi-bold" style to selected/active tabs
       &:not(.is-disabled).is-selected {
@@ -127,7 +155,7 @@
 
   span[aria-hidden] {
     font-size: 25px;
-    top: 8px;
+    top: 2px;
   }
 }
 
