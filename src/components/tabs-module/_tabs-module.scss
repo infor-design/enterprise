@@ -333,7 +333,7 @@
     overflow: hidden;
 
     .buttonset {
-      height: 38px;
+      height: 34px;
       text-align: right;
 
       > * {
@@ -476,7 +476,6 @@
 
   > .toolbar-searchfield-wrapper.active {
     width: calc(100% - 1px);
-    min-height: 38px;
   }
 
   &.has-add-button {
@@ -485,7 +484,7 @@
     }
 
     .add-tab-button {
-      height: 38px;
+      height: 34px;
       right: 0;
       top: 0;
 
@@ -702,7 +701,6 @@
   .toolbar-searchfield-wrapper.has-categories {
     .searchfield-category-button {
       padding-right: 5px;
-      height: 38px;
     }
 
     .searchfield {
@@ -712,10 +710,10 @@
       border-right: 0;
       border-top: 0;
       border-top-left-radius: 0;
-      height: 38px;
 
       + .close {
         transform: translateY(50%);
+        top: 2px;
       }
     }
   }

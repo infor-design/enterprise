@@ -5,6 +5,30 @@
   min-height: 40px;
   max-height: 40px;
 
+  .toolbar {
+    .buttonset {
+      height: 38px;
+    }
+  }
+
+  > .toolbar-searchfield-wrapper.active {
+    min-height: 38px;
+  }
+
+  .toolbar-searchfield-wrapper.has-categories {
+    .searchfield-category-button {
+      height: 38px;
+    }
+
+    .searchfield {
+      height: 38px;
+
+      + .close {
+        top: -5px;
+      }
+    }
+  }
+
   .tab-list-container {
     min-height: 40px;
     max-height: 40px;
@@ -31,7 +55,6 @@
 
         .icon {
           height: 18px;
-          margin-top: -3px;
         }
 
         svg.icon.close {
@@ -71,8 +94,12 @@
   }
 
   &.has-add-button {
-    .add-tab-button span:first-child {
-      font-size: $ids-size-font-lg;
+    .add-tab-button {
+      height: 38px;
+
+      span:first-child {
+        font-size: $ids-size-font-lg;
+      }
     }
   }
 
