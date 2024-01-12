@@ -18,6 +18,10 @@
 // Theme Overrides
 $body-color-primary-background: $ids-color-palette-slate-100;
 
+// Header Colors
+$header-default-bg-color: $ids-color-palette-slate-90;
+$header-default-bg-border-color: $ids-color-palette-slate-70;
+
 // HomePage
 $homepage-background-color: $body-color-primary-background;
 
@@ -27,6 +31,11 @@ $homepage-button-color: $ids-color-palette-white;
 $header-hero-widget-bg-color: $ids-color-palette-white;
 $header-default-bg-color: $ids-color-palette-slate-90;
 $header-default-bg-hover-color: $ids-color-palette-slate-80;
+$header-text-default-color: $ids-color-palette-white;
+$label-personalize-text-color: $header-text-default-color;
+$header-button-normal-color: $header-text-default-color;
+$hyperlinks-personalize-text-color: $header-text-default-color;
+$header-text-actionable-color: $header-text-default-color;
 
 // Inputs
 $input-color-focus-border: $ids-color-palette-slate-10;
@@ -285,7 +294,7 @@ $link-color-text-font: $ids-color-palette-white;
 $link-icon-color: $ids-color-palette-amethyst-30;
 $link-border-color: $ids-color-palette-slate-90;
 $link-hover-color: $ids-color-palette-slate-70;
-$link-selected-color: $ids-color-palette-black;
+$link-selected-color: $ids-color-palette-azure-60;
 $link-background-color: $ids-color-palette-slate-80;
 
 // Link List
@@ -891,6 +900,7 @@ $subheader-input-text-color-focus: $ids-color-palette-slate-20;
 $subheader-searchfield-category-button-font-color: $subheader-input-text-color-focus;
 
 // Header
+$header-text-default-color: $ids-color-palette-white;
 $header-text-color: $ids-color-palette-white;
 $header-toolbar-searchfield-icon-color: rgba($ids-color-palette-white, 1);
 $header-button-hover-color: rgba($ids-color-palette-white, 1);
@@ -902,7 +912,11 @@ $header-primary-btn-background-hover-color: $ids-color-palette-slate-80;
 $header-flex-toolbar-input-searchfield-color: $ids-color-palette-white;
 $header-flex-toolbar-close-icon-color: $header-flex-toolbar-input-searchfield-color;
 
+$hyperlinks-personalize-text-color: $header-text-default-color;
+$counts-personalize-text-color: $header-text-default-color;
+$header-button-hover-color-new: $ids-color-palette-white;
 $header-hero-widget-bg-color: $ids-color-palette-slate-90;
+$header-button-disabled-color: rgba(255, 255, 255, 0.4);
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-slate-90;
@@ -918,7 +932,14 @@ $header-tab-background-initial-color-new: $header-default-bg-color;
 
 $header-flex-toolbar-close-icon-color-hover: $ids-color-palette-white;
 $searchfield-header-hover-icon-color: $ids-color-palette-white;
-$header-tab-background-hover-color-new: $ids-color-palette-slate-80;
+
+$header-tab-background-hover-color-new: $ids-color-palette-slate-70;
+$header-tab-indicator-hover-color-new: $ids-color-palette-white;
+$header-tab-normal-color-new: $ids-color-palette-white;
+$header-tab-hover-color-new: $ids-color-palette-white;
+$header-tab-selected-color-new: $ids-color-palette-white;
+$header-tab-focus-border-color: $ids-color-palette-white;
+$header-tab-disabled-color-new: $ids-color-palette-slate-30;
 
 // Header Breadcrumb
 $header-breadcrumb-current-color: $ids-color-palette-white;

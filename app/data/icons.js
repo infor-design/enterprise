@@ -11,6 +11,10 @@ const __dirname = path.dirname(__filename);
  * http://localhost:4000/api/icons?theme=classic
  * or
  * http://localhost:4000/api/icons?theme=new
+ * or
+ * http://localhost:4000/api/icons?theme=new-default
+ * or
+ * http://localhost:4000/api/icons?theme=new-old
  * @param  {object} req Node request
  * @param  {object} res Node reponse
  */
