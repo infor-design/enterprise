@@ -111,7 +111,7 @@
     "form-data": "^4.0.0",
     "handlebars": "^4.7.7",
     "handlebars-wax": "^6.1.0",
-    "ids-identity": "4.15.5",
+    "ids-identity": "4.16.0",
     "jquery": "^3.7.0",
     "mmm": "^0.2.2",
     "node-sass": "^9.0.0",
