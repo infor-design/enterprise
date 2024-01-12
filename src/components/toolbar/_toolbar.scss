@@ -491,6 +491,26 @@ html[dir='rtl'] {
         }
       }
     }
+
+    &:not(.standalone) .searchfield-wrapper.toolbar-searchfield-wrapper:not(.has-categories):not(.is-open) {
+      input {
+        padding-left: 31px;
+      }
+
+      .icon:not(.icon-dropdown) {
+        right: 9px;
+      }
+
+      &.has-text {
+        input {
+          padding-left: 19px;
+        }
+
+        .icon:not(.icon-dropdown) {
+          right: 71px;
+        }
+      }
+    }
   }
 }
 

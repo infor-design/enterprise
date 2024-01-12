@@ -442,6 +442,11 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.headerIconColor} !important;
 }
 
+.header .flex-toolbar [class^='btn']:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable),
+.header .flex-toolbar [class^='btn']:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable) svg.icon {
+  color: ${colors.btnHoverColor} !important;
+}
+
 html[class*="theme-new"] .header.is-personalizable button:not(.close):not(:disabled):hover .icon {
   color: ${colors.btnTertiaryHoverColorHeader} !important;
 }
@@ -992,10 +997,6 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 html[class*="theme-classic-"] .is-personalizable .tab-container .tab-list-container .tab-list .tab.is-disabled,
 html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-container .tab-list .tab.is-disabled {
   opacity: .4 !important;
-}
-
-.is-personalizable .personalize-header:not(.header-tabs.alternate) {
-  background-color: ${colors.base} !important;
 }
 
 .is-personalizable .personalize-subheader {
