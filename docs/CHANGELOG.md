@@ -4,6 +4,7 @@
 
 ## v4.92.0 Features
 
+- `[Header]` Added an example configuration with both a hamburger and a back button. ([#8327](https://github.com/infor-design/enterprise/issues/8327))
 - `[Icons]` Added new icons which are more substantial in look. ([#8129](https://github.com/infor-design/enterprise/issues/8129))
 
 ## v4.92.0 Fixes
