@@ -9,9 +9,10 @@
 
 ## v4.92.0 Fixes
 
+- `[Cards]` Fixed title alignment for bordered and borderless. ([#8212](https://github.com/infor-design/enterprise/issues/8212))
+- `[Contextual Action Panel]` Fixed alignments of searchfield icons in RTL. ([#8208](https://github.com/infor-design/enterprise/issues/8208))
 - `[Header]` Fixed bottom border styles in dark mode. ([#8152](https://github.com/infor-design/enterprise/issues/8152))
 - `[Header/Personalization]` The default color is now alabaster (white) instead of azure. ([#7861](https://github.com/infor-design/enterprise/issues/7861))
-- `[Contextual Action Panel]` Fixed alignments of searchfield icons in RTL. ([#8208](https://github.com/infor-design/enterprise/issues/8208))
 - `[Link]` Changed selected border color for link card. ([#8225](https://github.com/infor-design/enterprise/issues/8225))
 - `[Locale]` Changed all `zh` locales time format as suggested by native speakers. ([#8313](https://github.com/infor-design/enterprise/issues/8313))
 - `[Modal]` Fixed a bug where the modal would shift up when toggling a switch inside of it. ([#8018](https://github.com/infor-design/enterprise/issues/8018))
