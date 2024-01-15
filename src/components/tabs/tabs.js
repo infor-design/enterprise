@@ -3894,17 +3894,17 @@ Tabs.prototype = {
         targetRectObj.top += 2;
       }
 
-      if (self.isModuleTabs() && !self.isVerticalTabs()) {
-        targetRectObj.top -= 3;
-        targetRectObj.width -= 4;
-        targetRectObj.left += 2;
+      // if (self.isModuleTabs() && !self.isVerticalTabs()) {
+      //   targetRectObj.top -= 3;
+      //   targetRectObj.width -= 4;
+      //   targetRectObj.left += 2;
 
-        if (!isClassic) {
-          targetRectObj.height -= 2;
-        }
-      } else {
-        targetRectObj.height -= 4;
-      }
+      //   if (!isClassic) {
+      //     targetRectObj.height -= 2;
+      //   }
+      // } else {
+      //   targetRectObj.height -= 4;
+      // }
 
       if (!isClassic && !isAlternate && isTabContainerHeader && !isAddTabButton) {
         targetRectObj.top -= 9;
