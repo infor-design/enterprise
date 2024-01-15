@@ -49,6 +49,10 @@
       &:hover {
         border-radius: 8px;
         background-color: $toolbar-btn-actions-hover-bg-color;
+
+        .icon {
+          color: $button-color-tertiary-hover-font-new;
+        }
       }
 
       .icon:not(.icon-dropdown) {
