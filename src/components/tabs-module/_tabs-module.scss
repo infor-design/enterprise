@@ -704,12 +704,8 @@
     }
 
     .searchfield {
-      border-bottom: 0;
-      border-bottom-left-radius: 0;
+      border: none;
       border-left: 1px solid $searchfield-toolbar-border-color;
-      border-right: 0;
-      border-top: 0;
-      border-top-left-radius: 0;
 
       + .close {
         transform: translateY(50%);
@@ -757,6 +753,11 @@ html[dir='rtl'] {
 
       .searchfield {
         padding-left: 30px;
+      }
+
+      &.has-categories .searchfield {
+        border: none;
+        border-right: 1px solid $searchfield-toolbar-border-color;
       }
     }
 
