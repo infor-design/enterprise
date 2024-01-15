@@ -3402,6 +3402,20 @@ Datagrid.prototype = {
                 self.updateGroupHeadersAfterColumnReorder(indexFrom, indexTo);
                 self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
                 self.updateColumns(self.settings.columns);
+
+                /**
+                * Fires after a column is moved to target.
+                * @event columnreorder
+                * @memberof Datagrid
+                * @property {object} event The jquery event object
+                * @property {number} indexTo The ending column index
+                * @property {number} indexFrom The starting column index
+                */
+                self.element.trigger('columnreorder', [{
+                  indexFrom,
+                  indexTo,
+                  columns: self.settings.columns,
+                }]);
               }
             }
           });

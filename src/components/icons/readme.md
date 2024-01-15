@@ -16,12 +16,13 @@ demo:
 
 It is required to inline the SVG icons in HTML markup in order to be able to change dimensions and colors with CSS. To achieve this, follow the following steps:
 
-1. Add a `<div>` containing all icons from `components/icons/theme-new-svg.html`. This should be at the top of the page for wider support (Safari needs this at the top).
-    - Note that you can also choose to use the Uplift theme icons by copying from the `components/icons/theme-new-svg.html` file.
+1. Add a `<div>` containing all icons from `components/icons/theme-new-default-svg.html`. This should be at the top of the page for wider support (Safari needs this at the top).
+    - Note that you can also choose to use the Uplift theme icons by copying from the `components/icons/theme-new-default-svg.html` file.
 2. Add markup as per the example below. Note the following important accessibility criteria:
     - `focusable="false"` is added so that the element does not get a tab stop in some browsers
     - `role="presentation"` is added to stop duplicate control feedback when using down arrows while using assistive technology
     - `aria-hidden="true"` causes the icon to be hidden for assistive technologies
+3. Note if for some reason the older new icons are needed the file is available at `components/icons/theme-new-default-old.html` but the new ones are preferred for next years releases.
 
 ```html
 // As Icon Button

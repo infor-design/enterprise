@@ -1,6 +1,6 @@
 {
   "name": "ids-enterprise",
-  "version": "4.90.0-beta.0",
+  "version": "4.91.0-dev.0",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "keywords": [
     "infor design system",
@@ -27,10 +27,10 @@
     "build:copy": "node ./scripts/build-copy.js",
     "build:css": "node ./scripts/build --disable-js",
     "build:demoapp": "node ./scripts/build-sass --type=app",
-    "build:full": "npm run clean && npm run build -- --types=iife,es && npm run minify && npm run build:verify",
+    "build:full": "npm run clean && npm run build -- --types=iife,es && npm run minify",
     "build:icons": "node ./scripts/build-icons.js",
     "build:js": "node ./scripts/build --disable-css",
-    "build:release": "npm run clean && npm run build -- --types=iife,es && npm run minify && npm run zip && npm run build:verify",
+    "build:release": "npm run clean && npm run build -- --types=iife,es && npm run minify && npm run zip",
     "build:verify": "node ./scripts/verify.js",
     "clean": "npm run clean:dist && npm run clean:app",
     "clean:app": "rimraf app/dist",
@@ -71,7 +71,7 @@
   ],
   "dependencies": {
     "d3": "^7.8.5",
-    "ids-identity": "4.15.5",
+    "ids-identity": "^4.16.0",
     "jquery": "^3.7.1",
     "promise-polyfill": "^8.3.0"
   },
