@@ -3820,7 +3820,6 @@ Tabs.prototype = {
     const focusStateElem = this.focusState[0];
     let targetPos = DOM.getDimensions(target[0]);
     const targetClassList = target[0].classList;
-    const isNotHeaderTabs = (!this.isHeaderTabs() || this.isHeaderTabs() && this.element[0].classList.contains('alternate'));
     const isRTL = Locale.isRTL();
     const tabMoreWidth = !this.isVerticalTabs() ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
@@ -3861,7 +3860,7 @@ Tabs.prototype = {
           targetRectObj.right -= 1;
 
           // On RTL, remove the width of the controls on the left-most side of the tab container
-          if (!isNotHeaderTabs) {
+          if (self.isHeaderTabs() ) {
             targetRectObj.left -= tabMoreWidth;
             targetRectObj.right -= tabMoreWidth;
           }
@@ -3885,10 +3884,9 @@ Tabs.prototype = {
         }
       }
 
-      if (isNotHeaderTabs && !self.isVerticalTabs() && !self.isModuleTabs()) {
+      if (!self.isHeaderTabs()  && !self.isVerticalTabs() && !self.isModuleTabs()) {
         targetRectObj.height += 4;
         targetRectObj.top -= 7;
-        console.log('haha');
       }
 
       if (self.isModuleTabs() && !self.isVerticalTabs()) {
