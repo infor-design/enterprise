@@ -3860,7 +3860,7 @@ Tabs.prototype = {
           targetRectObj.right -= 1;
 
           // On RTL, remove the width of the controls on the left-most side of the tab container
-          if (self.isHeaderTabs() ) {
+          if (self.isHeaderTabs()) {
             targetRectObj.left -= tabMoreWidth;
             targetRectObj.right -= tabMoreWidth;
           }
@@ -3884,12 +3884,12 @@ Tabs.prototype = {
         }
       }
 
-      if (!self.isHeaderTabs()  && !self.isVerticalTabs() && !self.isModuleTabs()) {
+      if (!self.isHeaderTabs() && !self.isVerticalTabs() && !self.isModuleTabs()) {
         targetRectObj.height += 4;
         targetRectObj.top -= 7;
       }
 
-      if (self.isHeaderTabs()  && !self.isVerticalTabs() && !self.isModuleTabs()) {
+      if (self.isHeaderTabs() && !self.isVerticalTabs() && !self.isModuleTabs()) {
         targetRectObj.height -= 1;
         targetRectObj.top += 2;
       }
