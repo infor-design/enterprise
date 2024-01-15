@@ -120,11 +120,34 @@ button {
   }
 }
 
+.btn-ai-teal {
+  padding: 0 24px !important;
+}
+
+.btn-ai-teal {
+  background: var(--Copilot, linear-gradient(107deg, #254A92 17.32%, #10B7A6 95.32%));
+  border: none !important;
+
+  &:hover {
+    border-radius: var(--border-radius-8, 8px);
+    background: var(--Copliot---Hover, linear-gradient(107deg, #1A3362 17.32%, #0B9789 95.32%));
+  }
+
+  &:active {
+    background: var(--Copilot--Pressed, linear-gradient(107deg, #0B9789 5.97%, #1A3362 102.35%));
+  }
+
+  &.btn-primary {
+    color: $button-color-gen-ai;
+  }
+}
+
 // How all button types will deal with iconography
 [class^='btn'],
 .btn-primary,
 .btn-secondary,
-.btn-tertiary {
+.btn-tertiary,
+.btn-ai-teal {
   //Fixes an issue about the circle effect coming out of the button.
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));

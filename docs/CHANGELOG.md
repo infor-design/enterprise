@@ -4,6 +4,10 @@
 
 ## v4.92.0 Features
 
+- `[Button]` Added Generative AI button type. ([#8310](https://github.com/infor-design/enterprise/issues/8310))
+- `[Editor]` Added AI icon button in editor. ([#8311](https://github.com/infor-design/enterprise/issues/8311))
+- `[Loading Indicator]` Added loading indicator for AI action. ([#8312](https://github.com/infor-design/enterprise/issues/8312))
+
 ## v4.92.0 Fixes
 
 - `[Locale]` Changed all `zh` locales time format as suggested by native speakers. ([#8313](https://github.com/infor-design/enterprise/issues/8313))

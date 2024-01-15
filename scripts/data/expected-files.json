@@ -231,6 +231,7 @@
 	"/dist/sass/src/components/listbuilder/_listbuilder.scss",
 	"/dist/sass/src/components/listbuilder/_listbuilder-new.scss",
   "/dist/sass/src/components/listview/_listview.scss",
+	"/dist/sass/src/components/loading-indicator/_loading-indicator.scss",
 	"/dist/sass/src/components/lookup/_lookup-new.scss",
 	"/dist/sass/src/components/lookup/_lookup.scss",
 	"/dist/sass/src/components/mask/_mask.scss",

@@ -282,6 +282,15 @@ $input-readonly-color: $input-color-readonly-font;
 $input-color-border-space: $header-bg-color;
 $input-border-color: $input-color-initial-border;
 
+// Loading Indicator
+$loading-indicator-ai-bar-base-bg-color: $ids-color-palette-amber-60;
+$loading-indicator-ai-bar-one-bg-color: #254A92;
+$loading-indicator-ai-bar-two-bg-color: #10B6A6;
+$loading-indicator-ai-bar-three-bg-color: #CBEFDC;
+
+// Button (Gen AI)
+$button-color-gen-ai: $button-color-primary-initial-font;
+
 // Buttons
 $input-color-border-space: $header-bg-color;
 
