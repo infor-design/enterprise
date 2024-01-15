@@ -3889,6 +3889,11 @@ Tabs.prototype = {
         targetRectObj.top -= 7;
       }
 
+      if (self.isHeaderTabs()  && !self.isVerticalTabs() && !self.isModuleTabs()) {
+        targetRectObj.height -= 1;
+        targetRectObj.top += 2;
+      }
+
       if (self.isModuleTabs() && !self.isVerticalTabs()) {
         targetRectObj.top -= 3;
         targetRectObj.width -= 4;
