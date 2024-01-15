@@ -925,6 +925,12 @@ a.btn-close {
     padding: 0;
   }
 
+  .searchfield-wrapper {
+    .btn-icon.close {
+      top: 1px;
+    }
+  }
+
   .tag {
     .btn-dismissible {
       align-items: center;

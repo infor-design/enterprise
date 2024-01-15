@@ -368,3 +368,19 @@
     }
   }
 }
+
+.field-short,
+.form-layout-compact .field {
+  [class^='btn']:not(.btn-editor):not(.btn-icon) {
+    &[class*='searchfield'] {
+      height: $searchfield-button-size-compact-height-new;
+      min-height: $searchfield-button-size-compact-height-new;
+    }
+  }
+
+  .searchfield-wrapper {
+    .btn-icon.close {
+      top: 4px;
+    }
+  }
+}
