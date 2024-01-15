@@ -296,7 +296,14 @@ const formatters = {
       return '';
     }
 
-    const columnCssClass = col.cssClass(row, cell, value, col, item) || '';
+    let columnCssClass = '';
+    if (typeof col.cssClass === 'string') {
+      columnCssClass = col.cssClass;
+    }
+
+    if (typeof col.cssClass === 'function') {
+      columnCssClass = col.cssClass(row, cell, value, col, item) || '';
+    }
 
     return col.icon ?
       (`<a href="${colHref}"${disableAttr} class="btn-icon row-btn ${columnCssClass}" ${(!api.settings.rowNavigation ? '' : 'tabindex="-1"')}${(col.hyperlinkTooltip ? ` title="${col.hyperlinkTooltip}"` : '')}>
