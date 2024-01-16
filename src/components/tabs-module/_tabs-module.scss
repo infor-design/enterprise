@@ -818,7 +818,6 @@ html[dir='rtl'] {
     .add-tab-button {
       span:first-child {
         position: relative;
-        top: -3px;
       }
     }
 
@@ -827,6 +826,10 @@ html[dir='rtl'] {
         padding-bottom: 8px;
         padding-top: 8px;
       }
+    }
+
+    .tab-list .tab:hover.dismissible svg.icon.close {
+      right: 5px;
     }
   }
 
