@@ -748,6 +748,10 @@ html[dir='rtl'] {
       }
     }
 
+    &:not(:first-child) {
+      border-right: 1px solid $module-tabs-x-border-color;
+    }
+
     .toolbar-searchfield-wrapper {
       text-align: left;
 
@@ -787,11 +791,10 @@ html[dir='rtl'] {
     }
 
     .tab.dismissible {
-      padding-left: 35px;
       padding-right: 0;
 
       a {
-        padding: 10px 10px 10px 35px;
+        padding: 10px;
       }
 
       .icon {
