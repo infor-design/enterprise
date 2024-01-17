@@ -818,6 +818,7 @@ html[dir='rtl'] {
     .add-tab-button {
       span:first-child {
         position: relative;
+        top: -3px;
       }
     }
 
@@ -837,6 +838,10 @@ html[dir='rtl'] {
     .toolbar-searchfield-wrapper,
     .toolbar-searchfield-wrapper .searchfield {
       height: 34px;
+
+      &.has-categories {
+        height: 38px;
+      }
     }
   }
 }

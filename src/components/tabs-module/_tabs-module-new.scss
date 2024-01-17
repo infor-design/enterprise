@@ -146,3 +146,13 @@
     padding-inline-start: unset;
   }
 }
+
+.is-firefox {
+  .tab-container.module-tabs {
+    .add-tab-button {
+      span:first-child {
+        top: -7px;
+      }
+    }
+  }
+}
