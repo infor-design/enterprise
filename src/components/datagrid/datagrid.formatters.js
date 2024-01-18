@@ -296,12 +296,21 @@ const formatters = {
       return '';
     }
 
+    let columnCssClass = '';
+    if (typeof col.cssClass === 'string') {
+      columnCssClass = col.cssClass;
+    }
+
+    if (typeof col.cssClass === 'function') {
+      columnCssClass = col.cssClass(row, cell, value, col, item) || '';
+    }
+
     return col.icon ?
-      (`<a href="${colHref}"${disableAttr} class="btn-icon row-btn ${(col.cssClass || '')}" ${(!api.settings.rowNavigation ? '' : 'tabindex="-1"')}${(col.hyperlinkTooltip ? ` title="${col.hyperlinkTooltip}"` : '')}>
+      (`<a href="${colHref}"${disableAttr} class="btn-icon row-btn ${columnCssClass}" ${(!api.settings.rowNavigation ? '' : 'tabindex="-1"')}${(col.hyperlinkTooltip ? ` title="${col.hyperlinkTooltip}"` : '')}>
           ${$.createIcon({ icon: col.icon, file: col.iconFile })}
           <span class="audible">${textValue}</span>
         </a>`) :
-      (`<a href="${colHref}"${disableAttr} ${(!api.settings.rowNavigation ? '' : 'tabindex="-1"')} class="hyperlink ${(col.cssClass || '')}"${(col.target ? ` target="${col.target}"` : '')}${(col.hyperlinkTooltip ? ` title="${col.hyperlinkTooltip}"` : '')}>${textValue}</a>`);
+      (`<a href="${colHref}"${disableAttr} ${(!api.settings.rowNavigation ? '' : 'tabindex="-1"')} class="hyperlink ${columnCssClass}"${(col.target ? ` target="${col.target}"` : '')}${(col.hyperlinkTooltip ? ` title="${col.hyperlinkTooltip}"` : '')}>${textValue}</a>`);
   },
 
   Template(row, cell, value, col, item) {
