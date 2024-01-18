@@ -27,7 +27,6 @@
 - `[Tabs Header]` Fixed focus border not visible in classic contrast alabaster. ([#8265](https://github.com/infor-design/enterprise/issues/8265))
 - `[Tabs Module]` Fixed more button not visible in alabaster. ([#8271](https://github.com/infor-design/enterprise/issues/8271))
 
-
 ## v4.91.0
 
 ## v4.91.0 Features
