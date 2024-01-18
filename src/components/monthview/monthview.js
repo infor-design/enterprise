@@ -333,6 +333,8 @@ MonthView.prototype = {
     this.showMonth(this.settings.month, this.settings.year);
     this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, this.settings.showWeekNumber ? this.monthAndWeekContainer : useElement);
 
+    this.focusDay(this.focusDate);
+
     if (this.settings.showWeekNumber) {
       this.calendar.addClass('has-monthview-week-table');
     }
@@ -868,8 +870,14 @@ MonthView.prototype = {
           this.currentMonth,
           this.currentDay
         );
+        this.focusDate = Locale.umalquraToGregorian(
+          this.currentYear,
+          this.currentMonth,
+          this.currentDay
+        );
       } else {
         this.currentDate = new Date(this.currentYear, this.currentMonth, this.currentDay);
+        this.focusDate = new Date(this.currentYear, this.currentMonth, this.currentDay);
       }
     }
 
@@ -2204,6 +2212,49 @@ MonthView.prototype = {
     if (insertDate) {
       this.element.trigger('selected', args);
     }
+
+    this.focusDate.setDate(this.currentDate.getDate());
+    this.focusDay(this.focusDate);
+  },
+
+  focusDay(date) {
+    if (!this.isIslamic && typeof date !== 'string') {
+      date = stringUtils.padDate(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+      );
+    }
+
+    let dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
+    const year = parseInt(date.substr(0, 4), 10);
+    const month = parseInt(date.substr(4, 2), 10) - 1;
+    const day = parseInt(date.substr(6, 2), 10);
+
+    if (this.isIslamic) {
+      this.focusDate = Locale.umalquraToGregorian(year, month, day);
+    } else {
+      this.focusDate = new Date(year, month, day);
+    }
+
+    if (dayObj.length === 0 || dayObj[0].elem.hasClass('alternate')) {
+      // Show month
+      this.showMonth(month, year);
+      dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
+    }
+
+    // Error - date not found
+    if (!dayObj.length === 0) {
+      return;
+    }
+
+    const node = dayObj[0].elem[0];
+
+    delete this.isKeyClick;
+    this.element.find('td.is-focused').removeClass('is-focused').removeAttr('tabindex');
+    this.element.find('td.has-adjacent-focused').removeClass('has-adjacent-focused').removeAttr('tabindex');
+    $(node).addClass('is-focused').attr('tabindex', '0').focus();
+    $(node).prev().addClass('has-adjacent-focused');
   },
 
   /**
@@ -2268,8 +2319,10 @@ MonthView.prototype = {
           }
           this.selectDay(this.currentDate, false, false);
         } else {
-          this.currentDate.setDate(this.currentDate.getDate() + 7);
-          this.selectDay(this.currentDate, false, false);
+          this.focusDate.setDate(this.focusDate.getDate() + 7);
+          this.focusDay(this.focusDate);
+          // this.currentDate.setDate(this.currentDate.getDate() + 7);
+          // this.selectDay(this.currentDate, false, false);
         }
       }
 
@@ -2294,8 +2347,10 @@ MonthView.prototype = {
           }
           this.selectDay(this.currentDate, false, false);
         } else {
-          this.currentDate.setDate(this.currentDate.getDate() - 7);
-          this.selectDay(this.currentDate, false, false);
+          this.focusDate.setDate(this.focusDate.getDate() - 7);
+          this.focusDay(this.focusDate);
+          // this.currentDate.setDate(this.currentDate.getDate() - 7);
+          // this.selectDay(this.currentDate, false, false);
         }
       }
 
@@ -2320,8 +2375,10 @@ MonthView.prototype = {
           }
           this.selectDay(this.currentDate, false, false);
         } else {
-          this.currentDate.setDate(this.currentDate.getDate() - 1);
-          this.selectDay(this.currentDate, false, false);
+          this.focusDate.setDate(this.focusDate.getDate() - 1);
+          this.focusDay(this.focusDate);
+          // this.currentDate.setDate(this.currentDate.getDate() - 1);
+          // this.selectDay(this.currentDate, false, false);
         }
       }
 
@@ -2346,8 +2403,10 @@ MonthView.prototype = {
           }
           this.selectDay(this.currentDate, false, false);
         } else {
-          this.currentDate.setDate(this.currentDate.getDate() + 1);
-          this.selectDay(this.currentDate, false, false);
+          this.focusDate.setDate(this.focusDate.getDate() + 1);
+          this.focusDay(this.focusDate);
+          // this.currentDate.setDate(this.currentDate.getDate() + 1);
+          // this.selectDay(this.currentDate, false, false);          
         }
       }
 
