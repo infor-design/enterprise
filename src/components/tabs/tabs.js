@@ -709,10 +709,11 @@ Tabs.prototype = {
       if (!this.addTabButton || !this.addTabButton.length) {
         this.addTabButton = $(`
           <div class="add-tab-button" tabindex="-1" role="button">
-            <span aria-hidden="true" role="presentation">+</span>
             <span class="audible">${Locale.translate('AddNewTab')}</span>
           </div>
         `);
+
+        $.createIconElement({ icon: 'add', classes: 'icon-add' }).prependTo(this.addTabButton);
         this.addTabButton.insertAfter(this.moreButton);
         this.element.addClass('has-add-button');
       }

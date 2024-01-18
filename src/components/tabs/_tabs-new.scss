@@ -15,7 +15,7 @@
 
 .tab-container.horizontal {
   > .tab-list-container {
-    margin-top: 5px;
+    margin-top: 7px;
     height: 34px;
 
     .tab {
@@ -156,6 +156,12 @@
   span[aria-hidden] {
     font-size: 25px;
     top: 2px;
+  }
+
+  svg.icon-add {
+    top: 1px;
+    height: 18px;
+    width: 18px;
   }
 }
 
