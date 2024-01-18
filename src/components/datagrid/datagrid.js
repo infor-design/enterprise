@@ -8028,16 +8028,25 @@ Datagrid.prototype = {
 
     if (this.settings.toolbar && this.settings.toolbar.keywordFilter) {
       const thisSearch = toolbar.find('.searchfield');
-      const xIcon = thisSearch.parent().find('.close.icon');
+      const clearButton = thisSearch.next();
 
+      let typingTimer;
       thisSearch.off('keypress.datagrid').on('keypress.datagrid', (e) => {
         if (e.keyCode === 13 || e.type === 'change') {
+          clearTimeout(typingTimer);
           e.preventDefault();
           self.keywordSearch(thisSearch.val());
         }
+
+        if (self.settings.filterWhenTyping) {
+          clearTimeout(typingTimer);
+          typingTimer = setTimeout(() => {
+            self.keywordSearch(thisSearch.val());
+          }, 400);
+        }
       });
 
-      xIcon.off('click.datagrid').on('click.datagrid', () => {
+      clearButton.off('click.datagrid').on('click.datagrid', () => {
         self.keywordSearch(thisSearch.val());
       });
     }
