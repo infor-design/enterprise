@@ -10,6 +10,7 @@
 ## v4.92.0 Fixes
 
 - `[Cards]` Fixed title alignment for bordered and borderless. ([#8212](https://github.com/infor-design/enterprise/issues/8212))
+- `[Checkbox]` Fixed focus border style. ([#8015](https://github.com/infor-design/enterprise/issues/8015))
 - `[Contextual Action Panel]` Fixed alignments of searchfield icons in RTL. ([#8208](https://github.com/infor-design/enterprise/issues/8208))
 - `[Datagrid]` Replaced the toolbar with a flex toolbar for the editable example. ([#8093](https://github.com/infor-design/enterprise/issues/8093))
 - `[Header]` Fixed bottom border styles in dark mode. ([#8152](https://github.com/infor-design/enterprise/issues/8152))
