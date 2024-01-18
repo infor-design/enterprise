@@ -1389,7 +1389,7 @@ Calendar.prototype = {
    * @param {object} settings The new settings object to use.
    * @returns {void}
    */
-  updateCalendarMonth(settings) {
+  updateMonthDetails(settings) {
     if (!settings || settings === null || settings === undefined) {
       return;
     }
@@ -1400,7 +1400,7 @@ Calendar.prototype = {
     }
 
     this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
-    this.monthView.updateMonth(this.settings);
+    this.monthView.updateMonthDetails(this.settings);
   },
 
   /**

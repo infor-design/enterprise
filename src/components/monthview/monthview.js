@@ -2628,7 +2628,7 @@ MonthView.prototype = {
    * @param {object} settings The new settings object to use.
    * @returns {void}
    */
-  updateMonth(settings) {
+  updateMonthDetails(settings) {
     if (!settings || settings === null || settings === undefined) {
       return;
     }
