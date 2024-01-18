@@ -15,7 +15,7 @@
 
 .tab-container.horizontal {
   > .tab-list-container {
-    margin-top: 7px;
+    margin-top: 5px;
     height: 34px;
 
     .tab {
@@ -62,7 +62,7 @@
   }
 
   > .tab-list-container {
-    margin-bottom: -1px;
+    margin-bottom: -41px;
 
     .tab {
       &.has-popupmenu {
@@ -159,7 +159,7 @@
   }
 
   svg.icon-add {
-    top: 1px;
+    top: 0;
     height: 18px;
     width: 18px;
   }

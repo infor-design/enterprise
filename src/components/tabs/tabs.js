@@ -3887,7 +3887,12 @@ Tabs.prototype = {
 
       if (!self.isHeaderTabs() && !self.isVerticalTabs() && !self.isModuleTabs()) {
         targetRectObj.height += 4;
-        targetRectObj.top -= 7;
+        targetRectObj.top -= 9;
+
+        if (isClassic) {
+          targetRectObj.height -= 4;
+          targetRectObj.top += 5;
+        }
       }
 
       if (self.isHeaderTabs() && !self.isVerticalTabs() && !self.isModuleTabs()) {
