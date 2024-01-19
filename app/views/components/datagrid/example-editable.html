@@ -1,41 +1,32 @@
 
 <div class="row">
   <div class="twelve columns">
-    <div role="toolbar" class="toolbar">
+    <div role="toolbar" class="flex-toolbar">
 
-      <div class="title">
+      <div class="toolbar-section title">
         Data Grid Header Title
         <span class="datagrid-result-count">(N Results)</span>
       </div>
 
-      <div class="buttonset">
-          <button type="button" id="toggle-row-status" class="btn">
-            <span>Add Row Status</span>
-          </button>
-          <button type="button" id="validate" class="btn-menu">
-            <span>Validate</span>
-          </button>
-          <ul class="popupmenu">
-            <li><a href="#" data-action="specific-row-error">Specific Row Error</a></li>
-            <li><a href="#" data-action="all-cells-in-row">All Cells in Row</a></li>
-            <li><a href="#" data-action="all-rows-and-cells">All Rows and Cells</a></li>
-            <li class="separator"></li>
-            <li><a href="#" data-action="clear-specific-row-error">Clear Specific Row Error</a></li>
-            <!-- <li><a href="#" data-action="clear-all-cells-in-row">Clear All Cells in Row</a></li> -->
-            <li><a href="#" data-action="clear-all-rows-and-cells">Clear All Rows and Cells</a></li>
-          </ul>
-        <button class="btn-icon" type="button" id="add-btn">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use href="#icon-add"></use>
-          </svg>
-          <span class="audible">Add</span>
+      <div class="toolbar-section buttonset">
+        <button type="button" id="toggle-row-status" class="btn">
+          <span>Add Row Status</span>
         </button>
-        <button class="btn" type="button" id="clearDirtyRows-btn">
-          <span class="audible">Clear Dirty Row</span>
+        <button type="button" id="validate" class="btn-menu">
+          <span>Validate</span>
         </button>
+        <ul class="popupmenu">
+          <li><a href="#" data-action="specific-row-error">Specific Row Error</a></li>
+          <li><a href="#" data-action="all-cells-in-row">All Cells in Row</a></li>
+          <li><a href="#" data-action="all-rows-and-cells">All Rows and Cells</a></li>
+          <li class="separator"></li>
+          <li><a href="#" data-action="clear-specific-row-error">Clear Specific Row Error</a></li>
+          <!-- <li><a href="#" data-action="clear-all-cells-in-row">Clear All Cells in Row</a></li> -->
+          <li><a href="#" data-action="clear-all-rows-and-cells">Clear All Rows and Cells</a></li>
+        </ul>
       </div>
 
-      <div class="more">
+      <div class="toolbar-section more">
         <button class="btn-actions" type="button">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use href="#icon-more"></use>
@@ -43,6 +34,15 @@
           <span class="audible">More Actions</span>
         </button>
         <ul class="popupmenu">
+          <li role="none" class="is-selectable">
+            <a href="#" role="menuitem" tabindex="-1" id="add-btn">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-add"></use>
+              </svg>
+              <span>Add</span>
+            </a>
+          </li>
+          <li role="none" class="is-selectable"><a href="#" role="menuitem" tabindex="-1" id="clearDirtyRows-btn">Clear Dirty Row</a></li>
           <li class="single-selectable-section"></li>
           <li class="heading">Row Height</li>
           <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>

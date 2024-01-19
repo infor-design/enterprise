@@ -29,6 +29,12 @@
 
   .searchfield-category-button {
     height: 38px;
+
+    &:hover {
+      .category {
+        color: $button-color-tertiary-hover-font-new;
+      }
+    }
   }
 
   &.context {

@@ -380,18 +380,19 @@
     vertical-align: top;
 
     .icon {
-      height: 16px;
+      height: 18px;
       margin: 0;
       vertical-align: middle;
-      width: 32px;
+      width: 18px;
     }
   }
 
   .add-tab-button {
-    margin-top: 3px;
+    top: 10px;
     padding: 6px 0;
     text-align: center;
     width: 35px;
+    height: 30px;
 
     span[aria-hidden] {
       @include font-size(20);
@@ -399,6 +400,12 @@
       left: 0;
       position: relative;
       top: 0;
+    }
+
+    svg.icon-add {
+      height: 12px;
+      width: 12px;
+      top: -2px;
     }
   }
 
@@ -445,7 +452,7 @@
   }
 
   > .tab-list-container {
-    margin-bottom: -18px; // Hide the scrollbar
+    margin-bottom: -42px; // Hide the scrollbars
 
     > .tab-list {
       display: inline-block;

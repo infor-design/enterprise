@@ -18,7 +18,7 @@
 // Override Config
 //================================================== //
 
-$header-default-bg-color: $ids-color-palette-slate-60;
+$header-default-bg-color: $ids-color-palette-slate-70;
 $header-default-bg-hover-color: $ids-color-palette-slate-80;
 
 // Form Background Color
@@ -40,6 +40,9 @@ $header-hero-text-color: $ids-color-palette-white;
 $header-label-text-color: $ids-color-palette-white;
 $homepage-button-color: $ids-color-palette-white;
 $header-hero-widget-bg-color: $ids-color-palette-slate-90;
+
+// Toolbar
+$header-flex-toolbar-close-icon-color-hover: $ids-color-palette-white;
 
 $input-color-focus-border: $ids-color-palette-slate-10;
 
@@ -249,7 +252,7 @@ $link-color-text-font: $ids-color-palette-white;
 $link-icon-color: $ids-color-palette-amethyst-30;
 $link-border-color: $ids-color-palette-slate-90;
 $link-hover-color: $ids-color-palette-slate-70;
-$link-selected-color: $ids-color-palette-black;
+$link-selected-color: $ids-color-palette-azure-60;
 $link-background-color: $ids-color-palette-slate-80;
 
 // Link List
@@ -791,13 +794,17 @@ $header-flex-toolbar-close-icon-color: $ids-color-palette-white;
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-slate-90;
 $header-tab-separator: rgba(255, 255, 255, 0.4);
-$header-tab-selected-color: $inverse-color;
+$header-tab-selected-color: $ids-color-palette-azure-60;
+$header-tab-normal-color: $ids-color-palette-white;
+$header-tab-hover-color: $ids-color-palette-white;
+$header-tab-indicator-hover-color: $ids-color-palette-white;
+$header-tab-focus-border-color: $ids-color-palette-white;
+$header-tab-background-hover-color: $ids-color-palette-slate-80;
 $header-tab-alt-bg-color: $ids-color-palette-slate-60;
 $header-tab-alt-separator: $ids-color-palette-white;
 $header-tab-alt-normal-color: $ids-color-palette-slate-30;
 $header-tab-alt-hover-color: $inverse-color;
 $header-tab-alt-selected-color: $inverse-color;
-$header-tab-background-hover-color: $ids-color-palette-slate-70;
 $header-tab-alt-disabled-color: $ids-color-palette-slate-40;
 
 // Header Breadcrumb

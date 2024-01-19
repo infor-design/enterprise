@@ -86,6 +86,7 @@
 
       &.is-disabled {
         color: $header-tab-disabled-color-new;
+        opacity: 0.8;
       }
 
       &.dismissible {
@@ -111,7 +112,7 @@
   }
 
   .tab-focus-indicator.is-visible {
-    border-color: $header-tab-hover-color;
+    border-color: $header-tab-focus-border-color;
   }
 
   .tab-more,
@@ -283,15 +284,15 @@
         top: -2px;
 
         &:not(.is-disabled) {
-          &:hover {
+          &:not(.is-selected):hover {
             color: $header-tab-hover-color;
             border-bottom: 4px solid $header-tab-indicator-hover-color;
             background-color: $header-tab-background-hover-color;
           }
 
           &.is-selected {
-            color: $header-tab-hover-color;
-            border-bottom: 4px solid $header-tab-hover-color;
+            color: $header-tab-selected-color;
+            border-bottom: 4px solid $header-tab-selected-color;
           }
         }
       }

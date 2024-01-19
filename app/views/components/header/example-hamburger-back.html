@@ -1,0 +1,27 @@
+<header class="header is-personalizable">
+  <div class="flex-toolbar">
+    <div class="toolbar-section">
+      {{> includes/header-appmenu-back}}
+    </div>
+    <div class="toolbar-section title">
+      <h1>Page Title</h1>
+    </div>
+
+    <div class="toolbar-section search">
+      <label for="header-searchfield" class="audible">Search</label>
+      <input id="header-searchfield" class="searchfield" name="header-searchfield" data-options="{'collapsible': true, 'clearable': true}" />
+    </div>
+
+    {{> includes/header-actionbutton}}
+
+  </div>
+</header>
+
+<script>
+  $("#back-button").on('click', () => {
+    $('body').toast({
+      title: 'Go back',
+      message: 'The back button was clicked.'
+    });
+  });
+</script>

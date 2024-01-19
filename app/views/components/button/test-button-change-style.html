@@ -1,4 +1,4 @@
-<div class="row is-personalizable">
+<div class="row">
   <div class="four columns">
     <button class="btn-primary" type="button" id="btn-primary-target">
       <span>Primary Button</span>
@@ -14,8 +14,8 @@
   $('body').on('initialized', () => {
     $('#btn-style-changer').on('click', () => {
       const btn = $('#btn-primary-target');
-      btn.hasClass('btn-primary') ? 
-        btn.addClass('btn-secondary').removeClass('btn-primary') : 
+      btn.hasClass('btn-primary') ?
+        btn.addClass('btn-secondary').removeClass('btn-primary') :
         btn.addClass('btn-primary').removeClass('btn-secondary');
     })
   });
