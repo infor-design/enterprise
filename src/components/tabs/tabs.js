@@ -709,10 +709,11 @@ Tabs.prototype = {
       if (!this.addTabButton || !this.addTabButton.length) {
         this.addTabButton = $(`
           <div class="add-tab-button" tabindex="-1" role="button">
-            <span aria-hidden="true" role="presentation">+</span>
             <span class="audible">${Locale.translate('AddNewTab')}</span>
           </div>
         `);
+
+        $.createIconElement({ icon: 'add', classes: 'icon-add' }).prependTo(this.addTabButton);
         this.addTabButton.insertAfter(this.moreButton);
         this.element.addClass('has-add-button');
       }
@@ -3820,7 +3821,6 @@ Tabs.prototype = {
     const focusStateElem = this.focusState[0];
     let targetPos = DOM.getDimensions(target[0]);
     const targetClassList = target[0].classList;
-    const isNotHeaderTabs = (!this.isHeaderTabs() || this.isHeaderTabs() && this.element[0].classList.contains('alternate'));
     const isRTL = Locale.isRTL();
     const tabMoreWidth = !this.isVerticalTabs() ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
@@ -3861,7 +3861,7 @@ Tabs.prototype = {
           targetRectObj.right -= 1;
 
           // On RTL, remove the width of the controls on the left-most side of the tab container
-          if (!isNotHeaderTabs) {
+          if (self.isHeaderTabs()) {
             targetRectObj.left -= tabMoreWidth;
             targetRectObj.right -= tabMoreWidth;
           }
@@ -3885,13 +3885,19 @@ Tabs.prototype = {
         }
       }
 
-      if (isNotHeaderTabs && !self.isVerticalTabs() && !self.isModuleTabs()) {
-        targetRectObj.height -= 1;
-        targetRectObj.top += 2;
+      if (!self.isHeaderTabs() && !self.isVerticalTabs() && !self.isModuleTabs()) {
+        targetRectObj.height += 4;
+        targetRectObj.top -= 9;
+
+        if (isClassic) {
+          targetRectObj.height -= 4;
+          targetRectObj.top += 5;
+        }
       }
 
-      if (!isNotHeaderTabs) {
-        targetRectObj.height -= 2;
+      if (self.isHeaderTabs() && !self.isVerticalTabs() && !self.isModuleTabs()) {
+        targetRectObj.height -= 1;
+        targetRectObj.top += 2;
       }
 
       if (self.isModuleTabs() && !self.isVerticalTabs()) {
