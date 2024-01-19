@@ -5068,7 +5068,7 @@ Datagrid.prototype = {
         }${isSelected ? ' aria-selected="true"' : ''
         }${cssClass ? ` class="${cssClass}"` : ''
         }${colspan ? ` colspan="${colspan}"` : ''
-        }${col.tooltip && typeof col.tooltip === 'string' && col.enableTooltips !== false ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
+        }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
         }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
         }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper"
         ${col.whiteSpace ? `style="white-space: ${col.whiteSpace}"` : ''}>`;
