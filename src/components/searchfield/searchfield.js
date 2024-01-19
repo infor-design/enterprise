@@ -1600,7 +1600,6 @@ SearchField.prototype = {
       }
 
       targetWidthProp = `calc(${isAlternate ? '100%' : baseWidth} - ${subtractWidth}px)`;
-      console.log(targetWidthProp);
     }
     if (targetWidthProp) {
       this.element[0].style.width = targetWidthProp;
