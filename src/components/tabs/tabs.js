@@ -3831,6 +3831,8 @@ Tabs.prototype = {
     const isAlternate = parentContainer.hasClass('alternate');
     const isTabContainerHeader = parentContainer.hasClass('header-tabs');
     const isAddTabButton = target.is('.add-tab-button');
+    const tabListScrollHeight = scrollingTablist.prop('scrollHeight');
+    const tabListClientHeight = scrollingTablist.prop('clientHeight');
 
     function adjustForParentContainer(targetRectObj, parentElement, tablistContainer, transformPercentage) {
       const parentRect = parentElement[0].getBoundingClientRect();
@@ -3919,6 +3921,10 @@ Tabs.prototype = {
 
       if (isClassic && isAlternate && isTabContainerHeader) {
         targetRectObj.height -= 4;
+      }
+
+      if (self.isVerticalTabs() && scrollingTablist.is('.scrollable-y') && tabListScrollHeight > tabListClientHeight) {
+        targetRectObj.width -= 15;
       }
 
       return targetRectObj;
