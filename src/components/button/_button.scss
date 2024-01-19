@@ -1092,7 +1092,8 @@ html[dir='rtl'] {
     }
   }
 
-  &.is-chrome {
+  &.is-chrome,
+  &.is-safari {
     .field-short,
     .form-layout-compact .field {
       .searchfield-wrapper.has-close-icon-button.has-text {
