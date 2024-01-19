@@ -9,7 +9,7 @@
   <div class="twelve columns">
 
     <div class="field">
-      <button id="popover-trigger" class="btn-primary" type="button" title="test">
+      <button id="popover-trigger" class="btn-secondary" type="button" title="test">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-upload"></use>
         </svg>
@@ -23,7 +23,8 @@
 <div id="popover-contents" class="popover-content-area hidden">
   <p>Purchase <strong>2</strong> more to save <a href="#" class="hyperlink"><strong>$100</strong></a> total</p>
   <div class="demo-popover">
-    <table role="grid" class="l-pull-left">
+    <br><br>
+    <table role="grid">
       <thead>
         <tr>
           <th scope="col" role="columnheader">Quantity</th>
@@ -39,10 +40,6 @@
         </tr>
       </tbody>
     </table>
-    <button class="btn-primary" type="button">Apply</button>
-  </div>
-  <div class="modal-buttonset">
-    <button type="button" class="btn-modal-primary">View more</button>
   </div>
 </div>
 
@@ -51,7 +48,6 @@
     closebutton: true,
     popover: true,
     content: $('#popover-contents').html(),
-    extraClass: 'alternate',
     placement: 'right',
     title: 'ABC Engine Company',
     trigger: 'click'
