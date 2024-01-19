@@ -120,10 +120,6 @@
     textarea {
       max-width: 300px;
 
-      @media (max-width: $breakpoint-slim) {
-        max-width: 100%;
-      }
-
       &[data-error-type='tooltip'] ~ .icon-error,
       &[data-error-type='tooltip'] ~ .icon-success {
         top: 20px;

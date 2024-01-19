@@ -10,7 +10,7 @@ Object.defineProperty(window, 'getComputedStyle', {
   })
 });
 
-const buttonHTML = `<div class="row is-personalizable">
+const buttonHTML = `<div class="row">
   <div class="twelve columns">
     <div class="row">
       <div class="four column">
