@@ -940,7 +940,7 @@ a.btn-close {
 html.is-chrome {
   .field-short,
   .form-layout-compact .field {
-    .searchfield-wrapper {
+    .searchfield-wrapper.has-close-icon-button.has-text {
       .btn-icon.close {
         top: 0;
       }
@@ -1088,6 +1088,34 @@ html[dir='rtl'] {
           transform: scale(1) translate(-50%, 50%);
           transform-origin: 0% 100%;
         }
+      }
+    }
+  }
+
+  &.is-chrome {
+    .field-short,
+    .form-layout-compact .field {
+      .searchfield-wrapper.has-close-icon-button.has-text {
+        .btn-icon.close {
+          top: 0;
+        }
+      }
+    }
+  }
+
+  .field-short {
+    .searchfield-wrapper.has-close-icon-button.has-text {
+      .btn-icon.close {
+        right: 235px;
+      }
+    }
+  }
+
+  .field-short,
+  .form-layout-compact .field {
+    .searchfield-wrapper.has-close-icon-button.has-text {
+      .btn-icon.close {
+        top: 5px;
       }
     }
   }
