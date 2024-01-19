@@ -1113,13 +1113,14 @@ html[dir='rtl'] {
         }
       }
 
-    [class^='btn'],
-    .btn-primary,
-    .btn-secondary,
-    .btn-teritary {
-      span {
-        + .icon {
-          margin-bottom: 6px;
+      [class^='btn'],
+      .btn-primary,
+      .btn-secondary,
+      .btn-teritary {
+        span {
+          + .icon {
+            margin-bottom: 6px;
+          }
         }
       }
     }
