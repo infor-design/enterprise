@@ -1103,6 +1103,27 @@ html[dir='rtl'] {
     }
   }
 
+  &.is-firefox {
+    .field-short,
+    .form-layout-compact .field {
+      .searchfield-wrapper.has-close-icon-button.has-text {
+        .btn-icon.close {
+          top: 4px;
+        }
+      }
+
+    [class^='btn'],
+    .btn-primary,
+    .btn-secondary,
+    .btn-teritary {
+      span {
+        + .icon {
+          margin-bottom: 6px;
+        }
+      }
+    }
+  }
+
   .field-short {
     .searchfield-wrapper.has-close-icon-button.has-text {
       .btn-icon.close {
