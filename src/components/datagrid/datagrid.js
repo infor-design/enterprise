@@ -5062,12 +5062,13 @@ Datagrid.prototype = {
       }
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
-        ` ${ariaDescribedby
+        ` ${col.disableTooltip ? 'disabletooltip ' : ''}` +
+        `${ariaDescribedby
         }${ariaChecked
         }${isSelected ? ' aria-selected="true"' : ''
         }${cssClass ? ` class="${cssClass}"` : ''
         }${colspan ? ` colspan="${colspan}"` : ''
-        }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
+        }${col.tooltip && typeof col.tooltip === 'string' && col.enableTooltips !== false ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
         }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
         }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper"
         ${col.whiteSpace ? `style="white-space: ${col.whiteSpace}"` : ''}>`;
@@ -5765,9 +5766,10 @@ Datagrid.prototype = {
         const isHeaderIcon = DOM.hasClass(elem, 'datagrid-header-icon');
         const isPopup = isHeaderFilter ?
           elem.parentNode.querySelectorAll('.popupmenu.is-open').length > 0 : false;
-        const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
         const containerEl = isHeaderColumn ? elem.parentNode : isHeaderIcon ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
+
+        const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
@@ -13005,6 +13007,10 @@ Datagrid.prototype = {
    * @returns {object} tooltip object.
    */
   cacheTooltip(elem, tooltip) {
+    if ($(elem).attr('disabletooltip') !== undefined) {
+      return tooltip;
+    }
+
     if (typeof tooltip === 'undefined') {
       const contentTooltip = elem.querySelector('.is-editor.content-tooltip');
       const aTitle = elem.querySelector('a[title]');
