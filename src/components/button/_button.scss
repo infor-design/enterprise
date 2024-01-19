@@ -925,12 +925,6 @@ a.btn-close {
     padding: 0;
   }
 
-  .searchfield-wrapper {
-    .btn-icon.close {
-      top: 1px;
-    }
-  }
-
   .tag {
     .btn-dismissible {
       align-items: center;
@@ -942,6 +936,19 @@ a.btn-close {
     }
   }
 }
+
+html.is-chrome {
+  .field-short,
+  .form-layout-compact .field {
+    .searchfield-wrapper {
+      .btn-icon.close {
+        top: 0;
+      }
+    }
+  }
+}
+
+
 
 // RTL Styles
 html[dir='rtl'] {
