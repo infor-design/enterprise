@@ -1401,6 +1401,7 @@ Calendar.prototype = {
 
     this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     this.monthView.updateMonthDetails(this.settings);
+    this.renderEventLegend();
   },
 
   /**
