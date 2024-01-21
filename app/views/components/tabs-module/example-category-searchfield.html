@@ -56,5 +56,10 @@
     });
 
     $('.more').header();
+
+    if (Soho.Locale.isRTL()) {
+      $('.toolbar').css('direction', 'ltr');
+      $('.buttonset').css('direction', 'rtl');
+    }
   });
 </script>
