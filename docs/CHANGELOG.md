@@ -14,6 +14,7 @@
 - `[Cards]` Fixed title alignment for bordered and borderless. ([#8212](https://github.com/infor-design/enterprise/issues/8212))
 - `[Contextual Action Panel]` Fixed alignments of searchfield icons in RTL. ([#8208](https://github.com/infor-design/enterprise/issues/8208))
 - `[Datagrid]` Replaced the toolbar with a flex toolbar for the editable example. ([#8093](https://github.com/infor-design/enterprise/issues/8093))
+- `[Dropdown]` Fixed handling for null, undefined objects passed to updateItemIcon method. ([#8353](https://github.com/infor-design/enterprise/issues/8353))
 - `[Datagrid]` Fixed contextual toolbar auto hide when performing action. ([#8352](https://github.com/infor-design/enterprise/issues/8352))
 - `[Header]` Fixed bottom border styles in dark mode. ([#8152](https://github.com/infor-design/enterprise/issues/8152))
 - `[Header/Personalization]` The default color is now alabaster (white) instead of azure. ([#7861](https://github.com/infor-design/enterprise/issues/7861))
