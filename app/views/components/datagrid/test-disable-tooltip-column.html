@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="open-modal">Open Modal</button><br><br>
+
+    <div id="modal-content" style="display: none;">
+      <div id="datagrid">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    let grid;
+    const modals = {
+      'open-modal': {
+        'title': 'Open Modal',
+        'content': $('#modal-content')
+      }
+    },
+    columns = [
+      {
+        id: 'Order',
+        name: 'P.O',
+        field: 'productionOrder',
+        formatter: Soho.Formatters.Readonly,
+        align: 'left',
+      },
+      {
+        id: 'order',
+        name: 'Order',
+        field: 'orderStatus',
+        formatter: Soho.Formatters.Readonly,
+        align: 'left',
+      },
+      {
+        id: 'ItemCode',
+        name: 'Code',
+        field: 'itemCode',
+        formatter: Soho.Formatters.Readonly,
+        sortable: false,
+        align: 'left',
+      },
+      {
+        id: 'plannedDeliveryDate',
+        name: 'Del Date',
+        field: 'plannedDeliveryDate',
+        formatter: Soho.Formatters.Date,
+        dateFormat: 'MM/dd/yyyy',
+        sortable: false,
+        align: 'left',
+        disableTooltip: true,
+      }
+    ],
+    data = [
+        {
+          productionOrder: 'PO12345',
+          orderStatus: 'Active',
+          itemCode: 'BQR12345',
+          plannedDeliveryDate: new Date(),
+        },
+        {
+          productionOrder: 'PO12345',
+          orderStatus: 'Active',
+          itemCode: 'BQR12345',
+          plannedDeliveryDate: new Date(),
+        },
+        {
+          productionOrder: 'PO12345',
+          orderStatus: 'Active',
+          itemCode: 'BQR12345',
+          plannedDeliveryDate: new Date(),
+        },
+        {
+          productionOrder: 'PO12345',
+          orderStatus: 'Active',
+          itemCode: 'BQR12345',
+          plannedDeliveryDate: new Date(),
+        },
+      ];
+
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      editable: true,
+      filterable: false,
+      redrawOnResize: false,
+      rowHeight: 'small',
+      selectable: 'mixed',
+      showDirty: true,
+      cellNavigation: true,
+      actionableMode: true,
+      enableTooltips: true,
+      toolbar: {
+        title: data.length + ' ' + 'Machine Issues'
+      },
+    }).data('datagrid');
+
+    setModal = function (opt) {
+      opt = $.extend({
+        autoFocus: true,
+        showCloseBtn: true,
+        buttons: [{
+          text: 'Cancel',
+          id: 'modal-button-1',
+          click: function(e, modal) {
+            modal.close();
+          }
+        }, {
+          text: 'Save',
+          id: 'modal-button-2',
+          click: function(e, modal) {
+            modal.close();
+          },
+          validate: false,
+          isDefault: true
+        }],
+        maxWidth: 1000
+      }, opt);
+
+      $('body').modal(opt);
+    };
+
+    $('#open-modal').on('click', function () {
+      setModal(modals[this.id]);
+    });
+  });
+</script>
