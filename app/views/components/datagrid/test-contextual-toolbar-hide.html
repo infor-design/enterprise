@@ -4,7 +4,8 @@
     <div class="contextual-toolbar toolbar is-hidden">
       <div class="title">Contextual Toolbar</div>
       <div class="buttonset">
-        <button class="btn-primary" id="actionButton">Perform Action</button>
+        <button class="btn-primary" id="performAction">Perform Action</button>
+        <button class="btn-primary" id="hideAction">Hide Action</button>
       </div>
     </div>
     <div id="datagrid">
@@ -41,8 +42,17 @@
 
     });
 
-    $('#actionButton').on('click', () => {
-      console.log('test action button');
+    $('#performAction').on('click', () => {
+      var datagridAPI = $('#datagrid').data('datagrid');
+      console.log('test perform action button');
+    });
+
+    $('#hideAction').on('click', () => {
+      var datagridAPI = $('#datagrid').data('datagrid');
+
+      // Hides the Contextual Toolbar
+      datagridAPI.hideContextualToolbar();
+      console.log('test hide action button');
     });
   });
 </script>
