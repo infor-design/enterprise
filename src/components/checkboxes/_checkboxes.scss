@@ -55,8 +55,8 @@
 }
 
 @mixin checkbox-focus-state {
-  box-shadow: 0 0 0 2px $input-color-focus-border;
-  outline: solid 1px $checkbox-color-unchecked-initial-background;
+  box-shadow: 0 0 0 3px $input-color-focus-border;
+  outline: solid 2px $checkbox-color-unchecked-initial-background;
 }
 
 @mixin checkbox-hover-state {
@@ -95,7 +95,7 @@ span.checkbox > input {
       + label {
         &::before {
           border-color: $error-color !important;
-          box-shadow: 0 0 0 2px $error-color !important;
+          box-shadow: 0 0 0 3px $error-color !important;
         }
       }
     }
