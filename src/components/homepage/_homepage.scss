@@ -12,7 +12,7 @@
   background-color: $homepage-background-color;
   height: inherit;
   margin: 0 auto;
-  padding: 32px 0;
+  padding: 16px 0;
   position: relative;
 
   .card,
@@ -141,11 +141,17 @@
     height: 14px;
     width: 100%;
   }
+
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 }
 
 .header + .homepage,
 .header + nav + .homepage {
-  height: calc(100% - 60px);
+  height: calc(100% - 46px);
   margin-top: 0 !important;
   overflow: scroll;
 }
