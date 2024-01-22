@@ -28,7 +28,7 @@
 - `[Tabs]` Fixed tabs add tab button focus. ([#8275](https://github.com/infor-design/enterprise/issues/8275))
 - `[Tabs Header]` Fixed focus border not visible in classic contrast alabaster. ([#8265](https://github.com/infor-design/enterprise/issues/8265))
 - `[Tabs Module]` Fixed more button not visible in alabaster. ([#8271](https://github.com/infor-design/enterprise/issues/8271))
-- `[Tabs Vertical]` Fixed focus state outline when having scrollable. ([#8271](https://github.com/infor-design/enterprise/issues/8271))
+- `[Tabs Vertical]` Fixed focus state outline when having scrollable. ([#8269](https://github.com/infor-design/enterprise/issues/8269))
 - `[Datagrid]` Fixed Hyperlink Formatter cssClass string resolution. ([#8340](https://github.com/infor-design/enterprise/issues/8340))
 
 ## v4.91.0
