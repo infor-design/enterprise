@@ -5062,7 +5062,8 @@ Datagrid.prototype = {
       }
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
-        ` ${ariaDescribedby
+        ` ${col.disableTooltip ? 'disabletooltip ' : ''}` +
+        `${ariaDescribedby
         }${ariaChecked
         }${isSelected ? ' aria-selected="true"' : ''
         }${cssClass ? ` class="${cssClass}"` : ''
@@ -5765,9 +5766,10 @@ Datagrid.prototype = {
         const isHeaderIcon = DOM.hasClass(elem, 'datagrid-header-icon');
         const isPopup = isHeaderFilter ?
           elem.parentNode.querySelectorAll('.popupmenu.is-open').length > 0 : false;
-        const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
         const containerEl = isHeaderColumn ? elem.parentNode : isHeaderIcon ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
+
+        const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
@@ -7447,14 +7449,6 @@ Datagrid.prototype = {
       }
     });
 
-    if (this.contextualToolbar.length > 0) {
-      this.contextualToolbar.find('.buttonset').children().on('click', () => {
-        this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
-          this.contextualToolbar.css('display', 'none');
-        }).animateClosed();
-      });
-    }
-
     if (this.stretchColumn !== 'last') {
       $(window).on('orientationchange.datagrid', () => {
         this.rerender();
@@ -8028,16 +8022,25 @@ Datagrid.prototype = {
 
     if (this.settings.toolbar && this.settings.toolbar.keywordFilter) {
       const thisSearch = toolbar.find('.searchfield');
-      const xIcon = thisSearch.parent().find('.close.icon');
+      const clearButton = thisSearch.next();
 
+      let typingTimer;
       thisSearch.off('keypress.datagrid').on('keypress.datagrid', (e) => {
         if (e.keyCode === 13 || e.type === 'change') {
+          clearTimeout(typingTimer);
           e.preventDefault();
           self.keywordSearch(thisSearch.val());
         }
+
+        if (self.settings.filterWhenTyping) {
+          clearTimeout(typingTimer);
+          typingTimer = setTimeout(() => {
+            self.keywordSearch(thisSearch.val());
+          }, 400);
+        }
       });
 
-      xIcon.off('click.datagrid').on('click.datagrid', () => {
+      clearButton.off('click.datagrid').on('click.datagrid', () => {
         self.keywordSearch(thisSearch.val());
       });
     }
@@ -8054,6 +8057,18 @@ Datagrid.prototype = {
 
     this.toolbar = toolbar;
     this.element.addClass('has-toolbar');
+  },
+
+  /**
+   * Hides the contextual toolbar.
+   * @returns {void}
+   */
+  hideContextualToolbar() {
+    if (this.contextualToolbar?.length > 0) {
+      this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
+        this.contextualToolbar.css('display', 'none');
+      }).animateClosed();
+    }
   },
 
   /**
@@ -13005,6 +13020,10 @@ Datagrid.prototype = {
    * @returns {object} tooltip object.
    */
   cacheTooltip(elem, tooltip) {
+    if ($(elem).attr('disabletooltip') !== undefined) {
+      return tooltip;
+    }
+
     if (typeof tooltip === 'undefined') {
       const contentTooltip = elem.querySelector('.is-editor.content-tooltip');
       const aTitle = elem.querySelector('a[title]');
