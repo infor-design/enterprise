@@ -17,10 +17,4 @@ function check_required_vars() {
 function clean_clone_repo() {
   rm -rf $4/{..?*,.[!.]*,*} 2>/dev/null
   git clone https://$1@github.com/$2.git $4
-
-  cd $4
-
-  git remote set-url origin https://$1@github.com/$2.git
-  git fetch --all
-  git checkout $3 > /dev/null
 }
