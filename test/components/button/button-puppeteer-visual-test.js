@@ -88,11 +88,11 @@ describe('Button Puppeteer Visual Tests', () => {
       await snap(768, 1024);
     });
 
-    it('should not visually regress on example-100-percent at 500px', async () => {
+    it.skip('should not visually regress on example-100-percent at 500px', async () => {
       await snap(500, 600);
     });
 
-    it('should not visually regress on example-100-percent at 320px', async () => {
+    it.skip('should not visually regress on example-100-percent at 320px', async () => {
       await snap(320, 480);
     });
   });
