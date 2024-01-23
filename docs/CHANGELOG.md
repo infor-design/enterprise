@@ -14,6 +14,7 @@
 - `[Cards]` Fixed widget header alignment with the parent. ([#8351](https://github.com/infor-design/enterprise/issues/8351))
 - `[Cards]` Fixed title alignment for bordered and borderless. ([#8212](https://github.com/infor-design/enterprise/issues/8212))
 - `[Contextual Action Panel]` Fixed alignments of searchfield icons in RTL. ([#8208](https://github.com/infor-design/enterprise/issues/8208))
+- `[Datagrid]` Fixed frozen columns getting out of sync when columnReorder is set to true. ([#8198](https://github.com/infor-design/enterprise/issues/8198))
 - `[Datagrid]` Replaced the toolbar with a flex toolbar for the editable example. ([#8093](https://github.com/infor-design/enterprise/issues/8093))
 - `[Datagrid]` Fixed Hyperlink Formatter `cssClass` string resolution. ([#8340](https://github.com/infor-design/enterprise/issues/8340))
 - `[Dropdown]` Fixed handling for null, undefined objects passed to updateItemIcon method. ([#8353](https://github.com/infor-design/enterprise/issues/8353))

@@ -3505,6 +3505,30 @@ Datagrid.prototype = {
    * @returns {void}
    */
   arrayIndexMove(arr, from, to) {
+    const frozenCols = this.settings.frozenColumns;
+    const targetArr = [arr[from], arr[to]];
+    let frozenColArr = [];
+    let isFrozenColumn = false;
+
+    if (frozenCols.left.length > 0) {
+      frozenColArr = $.merge(frozenColArr, frozenCols.left);
+    }
+
+    if (frozenCols.right.length > 0) {
+      frozenColArr = $.merge(frozenColArr, frozenCols.right);
+    }
+
+    for (let i = 0; i < frozenColArr.length; i++) {
+      let filteredKey = targetArr.filter(col => col.id === frozenColArr[i]);
+      
+      isFrozenColumn = filteredKey.length > 0;
+      break;
+    }
+
+    if (isFrozenColumn) {
+      return;
+    }
+
     arr.splice(to, 0, arr.splice(from, 1)[0]);
   },
 
