@@ -120,26 +120,170 @@ button {
   }
 }
 
-.btn-ai-teal {
-  padding: 0 24px !important;
-}
-
-.btn-ai-teal {
-  background: var(--Copilot, linear-gradient(107deg, #254A92 17.32%, #10B7A6 95.32%));
-  border: none !important;
+.btn-icon.btn-gen-ai {
+  background: var(--Copilot, $button-gen-ai-bg-color);
+  border: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
-    border-radius: var(--border-radius-8, 8px);
-    background: var(--Copliot---Hover, linear-gradient(107deg, #1A3362 17.32%, #0B9789 95.32%));
+    background: var(--Copliot---Hover, $button-gen-ai-hover-bg-color);
+
+    svg.icon {
+      color: $button-color-gen-ai !important;
+    }
   }
 
   &:active {
-    background: var(--Copilot--Pressed, linear-gradient(107deg, #0B9789 5.97%, #1A3362 102.35%));
+    background: var(--Copilot--Pressed, $button-gen-ai-active-bg-color);
   }
 
-  &.btn-primary {
+  &[disabled] {
+    background: $button-primary-disabled-color-gen-ai;
+    background-color: $ids-color-palette-white !important;
+    color: $button-color-gen-ai !important;
+
+    &:hover {
+      background: $button-primary-disabled-hover-color-gen-ai;
+      background-color: $ids-color-palette-white !important;
+    }
+  }
+
+  svg.icon {
+    color: $button-color-gen-ai;
+    margin-top: 0;
+  }
+
+  .ai-loading-indicator {
+    width: 30px;
+  }
+}
+
+.btn-primary.btn-gen-ai {
+  background: var(--Copilot, $button-gen-ai-bg-color);
+  border: none !important;
+  color: $button-color-gen-ai;
+  padding: 0 24px !important;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    border-radius: var(--border-radius-8, 8px);
+    background: var(--Copliot---Hover, $button-gen-ai-hover-bg-color);
+  }
+
+  &:active {
+    background: var(--Copilot--Pressed, $button-gen-ai-active-bg-color);
+  }
+
+  &[disabled] {
+    background: $button-primary-disabled-color-gen-ai;
+    background-color: $ids-color-palette-white !important;
+    color: $button-color-gen-ai !important;
+
+    &:hover {
+      background: $button-primary-disabled-hover-color-gen-ai;
+      background-color: $ids-color-palette-white !important;
+    }
+  }
+
+  .icon {
     color: $button-color-gen-ai;
   }
+
+  span ~ svg.icon {
+    margin-left: 3px;
+    margin-top: 0;
+  }
+
+  span ~ .ai-loading-indicator {
+    margin-left: 6px;
+  }
+}
+
+.btn-primary.btn-gen-ai {
+  > svg.icon {
+    margin-right: 3px !important;
+    margin-top: 0 !important;
+  }
+}
+
+.btn-tertiary.btn-gen-ai {
+  background: var(--Copilot, $button-tertiary-color-gen-ai);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: var(--Copliot---Hover, $button-tertiary-hover-color-gen-ai);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &:active {
+    background: linear-gradient(107deg, #0B9789 5.97%, #1A3362 102.35%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &[disabled] {
+    background: $button-tertiary-disabled-color-gen-ai;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &.btn-tertiary-gen-ai-right {
+    svg.icon {
+      margin-left: 3px;
+    }
+
+    .ai-loading-indicator {
+      margin-left: 3px;
+    }
+  }
+
+  &.btn-tertiary-gen-ai-left {
+    svg.icon {
+      margin-right: 3px;
+    }
+  }
+
+  svg.icon {
+    margin-top: 0;
+  }
+}
+
+// Hover effect on SVG btn-tertiary AI
+.original-svg,
+.hover-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  // transition: opacity 0.3s ease;
+}
+
+.hover-svg {
+  opacity: 0;
+  /* Initially hide the hover SVG */
+}
+
+.btn-tertiary.btn-gen-ai:hover .original-svg:not(.active-effect) {
+  opacity: 0;
+  /* Hide the original SVG on hover */
+}
+
+.btn-tertiary.btn-gen-ai:hover .hover-svg {
+  opacity: 1;
+  /* Show the hover SVG on hover */
 }
 
 // How all button types will deal with iconography
@@ -147,7 +291,7 @@ button {
 .btn-primary,
 .btn-secondary,
 .btn-tertiary,
-.btn-ai-teal {
+.btn-gen-ai {
   //Fixes an issue about the circle effect coming out of the button.
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
