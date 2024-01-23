@@ -596,6 +596,7 @@ Homepage.prototype = {
    * @returns {void}
    */
   resize(self, animate) {
+    const content = self.element.find('> .content');
     // Sizes of "breakpoints" is  320, 660, 1000, 1340, 1680 (for 320)
     // or 360, 740, 1120, 1500, 1880 or (for 360)
     const bpXl3 = (self.settings.widgetWidth * 6) + (self.settings.gutterSize * 5);
@@ -617,7 +618,6 @@ Homepage.prototype = {
     const tablet = (elemWidth >= bpTablet && elemWidth <= bpDesktop);
     const phone = (elemWidth <= bpTablet);
 
-    const content = self.element.find('> .content');
     this.setColumns();
 
     // Assign columns as breakpoint sizes
@@ -715,6 +715,12 @@ Homepage.prototype = {
       // Mark all spots as unavailable for this block, as we just used this one
       self.fitBlock(available.row, available.col, block);
     }
+
+    // Set height for padding on bottom
+    this.element.css({ height: 'unset' });
+    setTimeout(() => {
+      this.element.height(this.element[0].scrollHeight - 16);
+    }, 300);
 
     /**
     * Fires after the page is resized and layout is set.
