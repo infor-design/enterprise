@@ -1257,8 +1257,14 @@ WeekView.prototype = {
         targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
         if (targetDay.length <= 0) {
           const startDay = new Date(self.focusDateHour);
-          startDay.setDate(self.focusDateHour.getDate() - 6);
-          self.showWeek(startDay, self.focusDateHour);
+          if (self.isDayView) {
+            startDay.setDate(self.focusDateHour.getDate() - 1);
+            self.showWeek(self.focusDateHour, self.focusDateHour);
+          } else {
+            startDay.setDate(self.focusDateHour.getDate() - 6);
+            self.showWeek(startDay, self.focusDateHour);
+          }
+          
           targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
         }
       }
@@ -1269,10 +1275,18 @@ WeekView.prototype = {
         const targetDateKey = Locale.formatDate(self.focusDateHour, {pattern: 'yyyyMMdd'});
         
         targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
+
         if (targetDay.length <= 0) {
           const endDay = new Date(self.focusDateHour);
-          endDay.setDate(self.focusDateHour.getDate() + 6);
-          self.showWeek(self.focusDateHour, endDay);
+          if (self.isDayView) {
+            endDay.setDate(self.focusDateHour.getDate() + 1);
+            self.showWeek(self.focusDateHour, self.focusDateHour);
+          } else {
+            endDay.setDate(self.focusDateHour.getDate() + 6);
+            self.showWeek(self.focusDateHour, endDay);
+          }
+          
+         
           targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
         }
       }
