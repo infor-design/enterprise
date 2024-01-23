@@ -1759,7 +1759,7 @@ MonthView.prototype = {
         });
     }
 
-    $('body').off(`click.monthview-focus`).on(`click.monthview-focus`, (e) => {
+    $('body').off('click.monthview-focus').on('click.monthview-focus', (e) => {
       const el = $(e.target);
       if (el.parents('td').length <= 0) {
         this.element.find('td.is-focused').removeClass('is-focused').removeAttr('tabindex');
@@ -2290,18 +2290,18 @@ MonthView.prototype = {
       );
     }
 
-    let dayObj = this.dayMap.filter(dayFilter => dayFilter.key === todayDate);
+    const dayObj = this.dayMap.filter(dayFilter => dayFilter.key === todayDate);
 
     if (dayObj.length === 0 || dayObj[0].elem.hasClass('alternate')) {
       return;
     }
-  
+
     if (!dayObj.length === 0) {
       return;
     }
-	
-	  const node = dayObj[0].elem[0];
-	  $(node).find('.day-text').addClass('current-day');
+
+    const node = dayObj[0].elem[0];
+    $(node).find('.day-text').addClass('current-day');
   },
 
   /**

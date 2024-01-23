@@ -1174,7 +1174,6 @@ WeekView.prototype = {
         fireEvent(e.currentTarget, 'eventclick');
         e.preventDefault();
       }
-      
     });
 
     this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, '.calendar-event, td', (e) => {
@@ -1210,7 +1209,7 @@ WeekView.prototype = {
       fireEvent(e.currentTarget, 'eventdblclick');
     });
 
-    $('body').off(`click.weekview-focus`).on(`click.weekview-focus`, (e) => {
+    $('body').off('click.weekview-focus').on('click.weekview-focus', (e) => {
       const el = $(e.target);
       if (el.parents('td').length <= 0) {
         this.element.find('td.is-focused').removeClass('is-focused').removeAttr('tabindex');
@@ -1236,7 +1235,7 @@ WeekView.prototype = {
       const el = $(e.currentTarget);
       let rowIndex = el.parent().index();
       self.focusEl = el;
-      let targetDateKey = Locale.formatDate(self.focusDateHour, {pattern: 'yyyyMMdd'});
+      let targetDateKey = Locale.formatDate(self.focusDateHour, { pattern: 'yyyyMMdd' });
       let targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
 
       // Arrow Down: select same day but next 30 mins
@@ -1252,7 +1251,7 @@ WeekView.prototype = {
       // Arrow Left or - key
       if (key === 37 || (key === 189 && !e.shiftKey)) {
         self.focusDateHour.setDate(self.focusDateHour.getDate() - 1);
-        const targetDateKey = Locale.formatDate(self.focusDateHour, {pattern: 'yyyyMMdd'});
+        targetDateKey = Locale.formatDate(self.focusDateHour, { pattern: 'yyyyMMdd' });
         
         targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
         if (targetDay.length <= 0) {
@@ -1272,8 +1271,7 @@ WeekView.prototype = {
       // Arrow Right or + key
       if (key === 39 || (key === 187 && e.shiftKey)) {
         self.focusDateHour.setDate(self.focusDateHour.getDate() + 1);
-        const targetDateKey = Locale.formatDate(self.focusDateHour, {pattern: 'yyyyMMdd'});
-        
+        targetDateKey = Locale.formatDate(self.focusDateHour, { pattern: 'yyyyMMdd' });
         targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
 
         if (targetDay.length <= 0) {
@@ -1285,7 +1283,6 @@ WeekView.prototype = {
             endDay.setDate(self.focusDateHour.getDate() + 6);
             self.showWeek(self.focusDateHour, endDay);
           }
-          
          
           targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
         }
