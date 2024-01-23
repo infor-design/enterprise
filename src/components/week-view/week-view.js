@@ -1210,6 +1210,13 @@ WeekView.prototype = {
       fireEvent(e.currentTarget, 'eventdblclick');
     });
 
+    $('body').off(`click.weekview-focus`).on(`click.weekview-focus`, (e) => {
+      const el = $(e.target);
+      if (el.parents('td').length <= 0) {
+        this.element.find('td.is-focused').removeClass('is-focused').removeAttr('tabindex');
+      }
+    });
+
     $('body').off(`breakpoint-change.${this.id}`).on(`breakpoint-change.${this.id}`, () => this.onBreakPointChange());
     $(window).on(`resize.${this.id}`, () => { this.element.trigger(`breakpoint-change.${this.id}`); });
 

@@ -1759,6 +1759,13 @@ MonthView.prototype = {
         });
     }
 
+    $('body').off(`click.monthview-focus`).on(`click.monthview-focus`, (e) => {
+      const el = $(e.target);
+      if (el.parents('td').length <= 0) {
+        this.element.find('td.is-focused').removeClass('is-focused').removeAttr('tabindex');
+      }
+    });
+
     this.handleMonthYearPane().handleKeys();
     return this;
   },
