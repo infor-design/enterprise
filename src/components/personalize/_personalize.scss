@@ -66,6 +66,10 @@
   color: $hyperlinks-personalize-text-color;
 }
 
+.is-personalizable.subheader .full-searchfield-container .searchfield-wrapper .btn-icon:hover:not([disabled]):not(.btn-primary) svg.icon {
+  color: $header-flex-toolbar-close-icon-color-hover;
+}
+
 .is-personalizable .label+.personalize-text.data {
   color: $label-personalize-text-color;
 }

@@ -793,7 +793,7 @@ Dropdown.prototype = {
       const optionEl = opt[0];
       
       const listIconEl = self.listIcon.items.filter(function (iconEl) {
-        return iconEl.value === optionEl.value;
+        return iconEl?.value === optionEl?.value;
       });
 
       target.each((j, el) => el.remove());
