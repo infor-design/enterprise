@@ -3828,9 +3828,12 @@ Tabs.prototype = {
     const accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
     const widthPercentage = target[0].getBoundingClientRect().width / target[0].offsetWidth * 100;
     const isClassic = $('html[class*="classic-"]').length > 0;
+    const isMac = $('html.is-mac').length > 0;
     const isAlternate = parentContainer.hasClass('alternate');
     const isTabContainerHeader = parentContainer.hasClass('header-tabs');
     const isAddTabButton = target.is('.add-tab-button');
+    const tabListScrollHeight = scrollingTablist.prop('scrollHeight');
+    const tabListClientHeight = scrollingTablist.prop('clientHeight');
 
     function adjustForParentContainer(targetRectObj, parentElement, tablistContainer, transformPercentage) {
       const parentRect = parentElement[0].getBoundingClientRect();
@@ -3919,6 +3922,10 @@ Tabs.prototype = {
 
       if (isClassic && isAlternate && isTabContainerHeader) {
         targetRectObj.height -= 4;
+      }
+
+      if (self.isVerticalTabs() && scrollingTablist.is('.scrollable-y') && tabListScrollHeight > tabListClientHeight) {
+        targetRectObj.width -= !isMac ? 15 : 5;
       }
 
       return targetRectObj;
