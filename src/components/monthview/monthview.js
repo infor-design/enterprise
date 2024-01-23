@@ -2232,6 +2232,15 @@ MonthView.prototype = {
    * @param {date | string} date specific date or a date key (hash string of the date)
   */
   focusDay(date) {
+    if (this.isIslamic && typeof date !== 'string') {
+      const focusDateIslamic = Locale.gregorianToUmalqura(date);
+      date = stringUtils.padDate(
+        focusDateIslamic[0],
+        focusDateIslamic[1],
+        focusDateIslamic[2]
+      );
+    }
+
     if (!this.isIslamic && typeof date !== 'string') {
       date = stringUtils.padDate(
         date.getFullYear(),
