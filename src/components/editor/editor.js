@@ -66,6 +66,7 @@ const EDITOR_DEFAULTS = {
       'separator', 'anchor',
       'separator', 'image',
       'separator', 'clearFormatting',
+      'separator', 'genAIButton',
       'separator', 'source'
     ],
     source: [
@@ -77,6 +78,7 @@ const EDITOR_DEFAULTS = {
       'separator', 'anchor',
       'separator', 'image',
       'separator', 'clearFormatting',
+      'separator', 'genAIButton',
       'separator', 'visual'
     ]
   },
@@ -805,7 +807,8 @@ Editor.prototype = {
       h3: 51, // {Ctrl + 3} h3
       h4: 52, // {Ctrl + 4} h4
       space: 32, // {Ctrl + Space} Clear Formatting
-      sv: 192 // {Ctrl + ~} toggle source -or- visualview
+      sv: 192, // {Ctrl + ~} toggle source -or- visualview
+      g: 71 // {Ctrl + G} toggle for gen AI Button
     };
 
     currentElement.on('keydown.editor', (e) => {
@@ -872,6 +875,9 @@ Editor.prototype = {
           break;
         case keys.space:
           this.triggerClick(e, 'clearFormatting');
+          break;
+        case keys.g:
+          this.triggerClick(e, 'genAIButton');
           break;
         case keys.sv:
           this.triggerClick(e, currentElement === this.element ? 'source' : 'visual');
@@ -1100,6 +1106,8 @@ Editor.prototype = {
 
       clearFormatting: `<button type="button" class="btn btn-editor" title="${Locale.translate('ClearFormatting')}" data-action="clearFormatting" >${buttonLabels.clearFormatting}</button>`,
 
+      genAIButton: `<button type="button" class="btn btn-editor btn-gen-ai" title="${Locale.translate('GenAIButton')}" data-action="genAIButton">${buttonLabels.genAIButton}<button>`,
+
       source: `<button type="button" class="btn btn-editor" title="${Locale.translate('ViewSource')}" data-action="source" >${buttonLabels.source}</button>`,
 
       visual: `<button type="button" class="btn btn-editor" title="${Locale.translate('ViewVisual')}" data-action="visual" >${buttonLabels.visual}</button>`
@@ -1135,6 +1143,7 @@ Editor.prototype = {
       justifyCenter: this.getIcon('JustifyCenter', 'center-text'),
       justifyRight: this.getIcon('JustifyRight', 'right-text-align'),
       clearFormatting: this.getIcon('ClearFormatting', 'clear-formatting'),
+      genAIButton: this.getIcon('GenAIButton', 'insights-smart-panel'),
       source: this.getIcon('ViewSource', 'html', 'html-icon'),
       visual: this.getIcon('ViewVisual', 'visual', 'visual-icon')
     };
@@ -2308,6 +2317,8 @@ Editor.prototype = {
         this.execColorActions(action);
       } else if (action === 'clearFormatting') {
         this.clearFormatting();
+      } else if (action === 'genAIButton') {
+        this.genAIButtonAction();
       } else if (action === 'source' || action === 'visual') {
         this.toggleSource();
       } else {
@@ -2635,6 +2646,28 @@ Editor.prototype = {
     if (align.found) {
       align.elem.style.textAlign = align.textAlign;
     }
+  },
+
+  /**
+   * Actions for Gen AI button
+   * @private
+   * @returns {void}
+   */
+  genAIButtonAction() {
+    const self = this;
+
+    /**
+     * Triggers the 'AIButtonClicked' event on the editor element.
+     *
+     * @memberof Editor
+     * @function
+     * @name triggerAIButtonClickedEvent
+     * @param {Object} eventData - Data to be passed along with the event.
+     * @param {jQuery} self - The main jQuery component.
+     * @param {jQuery} eventData.editor - The jQuery object representing the editor element.
+     * @param {jQuery} eventData.toolbar - The jQuery object representing the toolbar element.
+     */
+    self.element.triggerHandler('AIButtonClicked', [{ self, editor: self.element, toolbar: self.toolbar }]);
   },
 
   /**

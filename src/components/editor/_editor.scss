@@ -454,6 +454,34 @@
     padding: 0;
     text-align: left;
 
+    &.btn-gen-ai {
+      background: var(--Copilot, $button-gen-ai-bg-color);
+      border: none;
+      padding-left: 1px;
+      width: 24px;
+
+      &:hover:not(.destructive):not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable) {
+        background: var(--Copliot---Hover, $button-gen-ai-hover-bg-color);
+        border: none;
+
+        svg.icon {
+          color: $button-color-gen-ai;
+        }
+      }
+
+      &:active {
+        background: var(--Copilot--Pressed, $button-gen-ai-active-bg-color);
+      }
+
+      &:disabled {
+        background: $button-primary-disabled-color-gen-ai;
+      }
+
+      svg.icon {
+        color: $button-color-gen-ai;
+      }
+    }
+
     span:not(.audible) {
       color: $editor-btn-color;
       display: inline-block;
