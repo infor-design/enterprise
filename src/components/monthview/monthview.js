@@ -894,6 +894,8 @@ MonthView.prototype = {
         .attr('tabindex', '0');
     }
 
+    this.setCurrentDay();
+
     /**
     * Fires as the calendar popup is opened.
     * @event monthrendered
@@ -2203,7 +2205,7 @@ MonthView.prototype = {
 
     delete this.isKeyClick;
     this.element.find('td.is-selected').removeClass('is-selected').removeAttr('tabindex');
-    $(node).addClass('is-selected').attr('tabindex', '0').focus();
+    $(node).addClass('is-selected').attr('tabindex', '0');
 
     insertDate = this.settings.headerStyle === 'full' ? true : insertDate;
     if (insertDate && this.settings.onSelected) {
@@ -2213,10 +2215,15 @@ MonthView.prototype = {
       this.element.trigger('selected', args);
     }
 
-    this.focusDate.setDate(this.currentDate.getDate());
+    this.focusDate = this.currentDate;
     this.focusDay(this.focusDate);
   },
 
+  /**
+   * Focus a specific date visually.
+   * @private
+   * @param {date | string} date specific date or a date key (hash string of the date)
+  */
   focusDay(date) {
     if (!this.isIslamic && typeof date !== 'string') {
       date = stringUtils.padDate(
@@ -2252,7 +2259,6 @@ MonthView.prototype = {
 
     delete this.isKeyClick;
     this.element.find('td.is-focused').removeClass('is-focused').removeAttr('tabindex');
-    this.element.find('td.has-adjacent-focused').removeClass('has-adjacent-focused').removeAttr('tabindex');
     $(node).addClass('is-focused').attr('tabindex', '0').focus();
     $(node).prev().addClass('has-adjacent-focused');
   },
@@ -2262,6 +2268,33 @@ MonthView.prototype = {
    */
   setToday() {
     this.selectDay(new Date(), false, true);
+  },
+
+  /**
+   * Checks if the month has the current date and highlights it.
+   */
+  setCurrentDay() {
+    let todayDate = new Date();
+    if (!this.isIslamic && typeof date !== 'string') {
+      todayDate = stringUtils.padDate(
+        todayDate.getFullYear(),
+        todayDate.getMonth(),
+        todayDate.getDate()
+      );
+    }
+
+    let dayObj = this.dayMap.filter(dayFilter => dayFilter.key === todayDate);
+
+    if (dayObj.length === 0 || dayObj[0].elem.hasClass('alternate')) {
+      return;
+    }
+  
+    if (!dayObj.length === 0) {
+      return;
+    }
+	
+	  const node = dayObj[0].elem[0];
+	  $(node).find('.day-text').addClass('current-day');
   },
 
   /**
@@ -2301,7 +2334,7 @@ MonthView.prototype = {
       // Arrow Down: select same day of the week in the next week
       if (key === 40) {
         handled = true;
-        if (!this.validateDisplayRange(dateUtils.add(this.currentDate, 7, 'days'))) return false;
+        if (!this.validateDisplayRange(dateUtils.add(this.focusDate, 7, 'days'))) return false;
         if (s.range.useRange) {
           idx = allCell.index(e.target) + 7;
           selector = allCell.eq(idx);
@@ -2312,24 +2345,22 @@ MonthView.prototype = {
             this.activeTabindex(selector, true);
           }
         } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
-          if (this.currentDate.getMonth() < maxDate.getMonth()) {
-            this.currentDate.setDate(this.currentDate.getDate() + 7);
-          } else if (maxDate.getDate() - 1 >= this.currentDate.getDate() + 7) {
-            this.currentDate.setDate(this.currentDate.getDate() + 7);
+          if (this.focusDate.getMonth() < maxDate.getMonth()) {
+            this.focusDate.setDate(this.focusDate.getDate() + 7);
+          } else if (maxDate.getDate() - 1 >= this.focusDate.getDate() + 7) {
+            this.focusDate.setDate(this.focusDate.getDate() + 7);
           }
-          this.selectDay(this.currentDate, false, false);
+          this.focusDay(this.focusDate);
         } else {
           this.focusDate.setDate(this.focusDate.getDate() + 7);
           this.focusDay(this.focusDate);
-          // this.currentDate.setDate(this.currentDate.getDate() + 7);
-          // this.selectDay(this.currentDate, false, false);
         }
       }
 
       // Arrow Up: select same day of the week in the previous week
       if (key === 38) {
         handled = true;
-        if (!this.validateDisplayRange(dateUtils.subtract(this.currentDate, 7, 'days'))) return false;
+        if (!this.validateDisplayRange(dateUtils.subtract(this.focusDate, 7, 'days'))) return false;
         if (s.range.useRange) {
           idx = allCell.index(e.target) - 7;
           selector = allCell.eq(idx);
@@ -2340,17 +2371,15 @@ MonthView.prototype = {
             this.activeTabindex(selector, true);
           }
         } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
-          if (this.currentDate.getMonth() > minDate.getMonth()) {
-            this.currentDate.setDate(this.currentDate.getDate() - 7);
-          } else if (minDate.getDate() + 1 <= this.currentDate.getDate() - 7) {
-            this.currentDate.setDate(this.currentDate.getDate() - 7);
+          if (this.focusDate.getMonth() > minDate.getMonth()) {
+            this.focusDate.setDate(this.focusDate.getDate() - 7);
+          } else if (minDate.getDate() + 1 <= this.focusDate.getDate() - 7) {
+            this.focusDate.setDate(this.focusDate.getDate() - 7);
           }
-          this.selectDay(this.currentDate, false, false);
+          this.focusDay(this.focusDate);
         } else {
           this.focusDate.setDate(this.focusDate.getDate() - 7);
           this.focusDay(this.focusDate);
-          // this.currentDate.setDate(this.currentDate.getDate() - 7);
-          // this.selectDay(this.currentDate, false, false);
         }
       }
 
@@ -2368,17 +2397,15 @@ MonthView.prototype = {
             this.activeTabindex(selector, true);
           }
         } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
-          if (this.currentDate.getMonth() > minDate.getMonth()) {
-            this.currentDate.setDate(this.currentDate.getDate() - 1);
-          } else if (minDate.getDate() + 1 !== this.currentDate.getDate()) {
-            this.currentDate.setDate(this.currentDate.getDate() - 1);
+          if (this.focusDate.getMonth() > minDate.getMonth()) {
+            this.focusDate.setDate(this.focusDate.getDate() - 1);
+          } else if (minDate.getDate() + 1 !== this.focusDate.getDate()) {
+            this.focusDate.setDate(this.focusDate.getDate() - 1);
           }
-          this.selectDay(this.currentDate, false, false);
+          this.focusDay(this.focusDate);
         } else {
           this.focusDate.setDate(this.focusDate.getDate() - 1);
           this.focusDay(this.focusDate);
-          // this.currentDate.setDate(this.currentDate.getDate() - 1);
-          // this.selectDay(this.currentDate, false, false);
         }
       }
 
@@ -2396,17 +2423,15 @@ MonthView.prototype = {
             this.activeTabindex(selector, true);
           }
         } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
-          if (this.currentDate.getMonth() < maxDate.getMonth()) {
-            this.currentDate.setDate(this.currentDate.getDate() + 1);
-          } else if (maxDate.getDate() - 1 !== this.currentDate.getDate()) {
-            this.currentDate.setDate(this.currentDate.getDate() + 1);
+          if (this.focusDate.getMonth() < maxDate.getMonth()) {
+            this.focusDate.setDate(this.focusDate.getDate() + 1);
+          } else if (maxDate.getDate() - 1 !== this.focusDate.getDate()) {
+            this.focusDate.setDate(this.focusDate.getDate() + 1);
           }
-          this.selectDay(this.currentDate, false, false);
+          this.focusDay(this.focusDate);
         } else {
           this.focusDate.setDate(this.focusDate.getDate() + 1);
-          this.focusDay(this.focusDate);
-          // this.currentDate.setDate(this.currentDate.getDate() + 1);
-          // this.selectDay(this.currentDate, false, false);          
+          this.focusDay(this.focusDate);      
         }
       }
 
@@ -2415,13 +2440,13 @@ MonthView.prototype = {
         handled = true;
         resetRange();
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
-          if (minDate.getMonth() !== this.currentDate.getMonth()) {
-            this.currentDate.setMonth(this.currentDate.getMonth() - 1);
-            this.selectDay(this.currentDate, false, false);
+          if (minDate.getMonth() !== this.focusDate.getMonth()) {
+            this.focusDate.setMonth(this.focusDate.getMonth() - 1);
+            this.focusDay(this.focusDate);
           }
         } else {
-          this.currentDate.setMonth(this.currentDate.getMonth() - 1);
-          this.selectDay(this.currentDate, false, false);
+          this.focusDate.setMonth(this.focusDate.getMonth() - 1);
+          this.focusDay(this.focusDate);
         }
       }
 
@@ -2430,13 +2455,13 @@ MonthView.prototype = {
         handled = true;
         resetRange();
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
-          if (this.currentDate.getMonth() !== maxDate.getMonth()) {
-            this.currentDate.setMonth(this.currentDate.getMonth() + 1);
-            this.selectDay(this.currentDate, false, false);
+          if (this.focusDate.getMonth() !== maxDate.getMonth()) {
+            this.focusDate.setMonth(this.focusDate.getMonth() + 1);
+            this.focusDay(this.focusDate);
           }
         } else {
-          this.currentDate.setMonth(this.currentDate.getMonth() + 1);
-          this.selectDay(this.currentDate, false, false);
+          this.focusDate.setMonth(this.focusDate.getMonth() + 1);
+          this.focusDay(this.focusDate);
         }
       }
 
@@ -2444,27 +2469,27 @@ MonthView.prototype = {
       if (key === 33 && e.ctrlKey) {
         handled = true;
         resetRange();
-        this.currentDate.setFullYear(this.currentDate.getFullYear() - 1);
-        this.selectDay(this.currentDate, false, false);
+        this.focusDate.setFullYear(this.focusDate.getFullYear() - 1);
+        this.focusDay(this.focusDate);
       }
 
       // ctrl + Page Down Selects Same Day next Year
       if (key === 34 && e.ctrlKey) {
         handled = true;
         resetRange();
-        this.currentDate.setFullYear(this.currentDate.getFullYear() + 1);
-        this.selectDay(this.currentDate, false, false);
+        this.focusDate.setFullYear(this.focusDate.getFullYear() + 1);
+        this.focusDay(this.focusDate);
       }
 
       // Home Moves to Start of the month
       if (key === 36) {
         handled = true;
-        const d = this.currentDate;
+        const d = this.focusDate;
         let firstDay;
         resetRange();
 
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
-          if (minDate.getMonth() !== this.currentDate.getMonth()) {
+          if (minDate.getMonth() !== this.focusDate.getMonth()) {
             firstDay = new Date(d.getFullYear(), d.getMonth(), 1);
           } else {
             firstDay = new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate());
@@ -2474,22 +2499,19 @@ MonthView.prototype = {
           firstDay = new Date(d.getFullYear(), d.getMonth(), 1);
         }
 
-        this.currentDate = firstDay;
-        if (this.isIslamic) {
-          this.currentDateIslamic = Locale.gregorianToUmalqura(this.currentDate);
-        }
-        this.selectDay(this.currentDate, false, false);
+        this.focusDate = firstDay;
+        this.focusDay(this.focusDate);
       }
 
       // End Moves to End of the month
       if (key === 35) {
         handled = true;
-        const d = this.currentDate;
+        const d = this.focusDate;
         let lastDay;
         resetRange();
 
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
-          if (this.currentDate.getMonth() !== maxDate.getMonth()) {
+          if (this.focusDate.getMonth() !== maxDate.getMonth()) {
             lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 0);
           } else {
             lastDay = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
@@ -2499,11 +2521,8 @@ MonthView.prototype = {
           lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 0);
         }
 
-        this.currentDate = lastDay;
-        if (this.isIslamic) {
-          this.currentDateIslamic = Locale.gregorianToUmalqura(this.currentDate);
-        }
-        this.selectDay(this.currentDate, false, false);
+        this.focusDate = lastDay;
+        this.focusDay(this.focusDate);
       }
 
       // 't' selects today
