@@ -7449,14 +7449,6 @@ Datagrid.prototype = {
       }
     });
 
-    if (this.contextualToolbar.length > 0) {
-      this.contextualToolbar.find('.buttonset').children().on('click', () => {
-        this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
-          this.contextualToolbar.css('display', 'none');
-        }).animateClosed();
-      });
-    }
-
     if (this.stretchColumn !== 'last') {
       $(window).on('orientationchange.datagrid', () => {
         this.rerender();
@@ -8065,6 +8057,18 @@ Datagrid.prototype = {
 
     this.toolbar = toolbar;
     this.element.addClass('has-toolbar');
+  },
+
+  /**
+   * Hides the contextual toolbar.
+   * @returns {void}
+   */
+  hideContextualToolbar() {
+    if (this.contextualToolbar?.length > 0) {
+      this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
+        this.contextualToolbar.css('display', 'none');
+      }).animateClosed();
+    }
   },
 
   /**
