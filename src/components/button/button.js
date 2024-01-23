@@ -8,7 +8,6 @@ import { xssUtils } from '../../utils/xss';
 import '../icons/icons.jquery';
 import '../tooltip/tooltip.jquery';
 import '../notification-badge/notification-badge.jquery';
-import { active } from 'd3';
 
 // The name of this component.
 const COMPONENT_NAME = 'button';
