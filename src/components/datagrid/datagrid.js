@@ -3433,7 +3433,7 @@ Datagrid.prototype = {
   getFrozenColumnDetails() {
     const frozenCols = this.settings.frozenColumns;
     let frozenColArr = [];
-    let frozenColDtls = [];
+    const frozenColDtls = [];
 
     if (frozenCols.left.length > 0) {
       frozenColArr = $.merge(frozenColArr, frozenCols.left);
@@ -3543,7 +3543,7 @@ Datagrid.prototype = {
     for (let i = 0; i < frozenColDtls.length; i++) {
       const filteredCol = targetArr.filter(col => col.id === frozenColDtls[i].id);
       
-      isFrozenColumn = filteredCol .length > 0;
+      isFrozenColumn = filteredCol.length > 0;
       if (isFrozenColumn) {
         return;
       }
