@@ -163,7 +163,7 @@
 .inline .radio:not(.hide-focus):focus ~ .label-text::before,
 .radio:not(.hide-focus):focus + label::before {
   box-shadow: 0 0 0 3px $radio-color-checked-initial-fill;
-  outline: solid 2px $radio-color-checked-initial-background;
+  outline: solid 2px $radio-focus-border-color;
 }
 
 // Print Support
