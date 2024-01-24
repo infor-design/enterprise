@@ -4,20 +4,28 @@
 
 ## v4.92.0 Features
 
+- `[Datagrid]` Added option to disable tooltip in columns. ([#8252](https://github.com/infor-design/enterprise/issues/8252))
 - `[Header]` Added an example configuration with both a hamburger and a back button. ([#8327](https://github.com/infor-design/enterprise/issues/8327))
 - `[Icons]` Added new icons which are more substantial in look. ([#8129](https://github.com/infor-design/enterprise/issues/8129))
 
 ## v4.92.0 Fixes
 
+- `[Bar Chart]` Fixed thrown errors when having duplicate sets in the dataset for bar chart. ([#8209](https://github.com/infor-design/enterprise/issues/8209))
+- `[Cards]` Fixed widget header alignment with the parent. ([#8351](https://github.com/infor-design/enterprise/issues/8351))
 - `[Cards]` Fixed title alignment for bordered and borderless. ([#8212](https://github.com/infor-design/enterprise/issues/8212))
 - `[Checkbox]` Fixed focus border style. ([#8015](https://github.com/infor-design/enterprise/issues/8015))
 - `[Contextual Action Panel]` Fixed alignments of searchfield icons in RTL. ([#8208](https://github.com/infor-design/enterprise/issues/8208))
 - `[Datagrid]` Replaced the toolbar with a flex toolbar for the editable example. ([#8093](https://github.com/infor-design/enterprise/issues/8093))
+- `[Datagrid]` Fixed Hyperlink Formatter cssClass string resolution. ([#8340](https://github.com/infor-design/enterprise/issues/8340))
+- `[Datagrid]` Fixed Hyperlink Formatter `cssClass` string resolution. ([#8340](https://github.com/infor-design/enterprise/issues/8340))
+- `[Dropdown]` Fixed handling for null, undefined objects passed to updateItemIcon method. ([#8353](https://github.com/infor-design/enterprise/issues/8353))
+- `[Datagrid]` Fixed contextual toolbar auto hide when performing action. ([#8352](https://github.com/infor-design/enterprise/issues/8352))
+- `[Fieldset]` Changed padding in reset for better compatibility. ([#1756](https://github.com/infor-design/enterprise-wc/issues/1756))
 - `[Header]` Fixed bottom border styles in dark mode. ([#8152](https://github.com/infor-design/enterprise/issues/8152))
 - `[Header/Personalization]` The default color is now alabaster (white) instead of azure. ([#7861](https://github.com/infor-design/enterprise/issues/7861))
 - `[Link]` Changed selected border color for link card. ([#8225](https://github.com/infor-design/enterprise/issues/8225))
-- `[Fieldset]` Changed padding in reset for better compatibility. ([#1756](https://github.com/infor-design/enterprise-wc/issues/1756))
 - `[Locale]` Changed all `zh` locales time format as suggested by native speakers. ([#8313](https://github.com/infor-design/enterprise/issues/8313))
+- `[Lookup]` Fixed clear button in keyword search not updating search results on click. ([#8258](https://github.com/infor-design/enterprise/issues/8258))
 - `[Modal]` Fixed a bug where the modal would shift up when toggling a switch inside of it. ([#8018](https://github.com/infor-design/enterprise/issues/8018))
 - `[Modal]` Fixed a bug where textarea field is bigger than other fields on screen widths less that 400px. ([#8125](https://github.com/infor-design/enterprise/issues/8125))
 - `[Process Indicator]` Adjusted alignment of icon in compact process indicator. ([#8241](https://github.com/infor-design/enterprise/issues/8241))
@@ -29,7 +37,7 @@
 - `[Tabs]` Fixed tabs add tab button focus. ([#8275](https://github.com/infor-design/enterprise/issues/8275))
 - `[Tabs Header]` Fixed focus border not visible in classic contrast alabaster. ([#8265](https://github.com/infor-design/enterprise/issues/8265))
 - `[Tabs Module]` Fixed more button not visible in alabaster. ([#8271](https://github.com/infor-design/enterprise/issues/8271))
-- `[Datagrid]` Fixed Hyperlink Formatter cssClass string resolution. ([#8340](https://github.com/infor-design/enterprise/issues/8340))
+- `[Tabs Vertical]` Fixed focus state outline when having scrollable. ([#8269](https://github.com/infor-design/enterprise/issues/8269))
 
 ## v4.91.0
 

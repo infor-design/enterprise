@@ -1,20 +1,35 @@
+CURRENT_DIR=$(shell pwd)
 ORGANIZATION = hookandloop
-WORKER_CONTAINER_NAME = enterprise-publish-docs
-WORKER_CONTAINER_VERSION = 0.0.1
+IMAGE = enterprise-publish-docs
+IMAGE_TAG = 0.0.2
+
 
 ifneq (,$(wildcard ./.env))
 	include .env
 	export
 endif
 
-.PHONY: build-worker-image
-build-worker-image :
-	docker build -t $(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION) .
 
-.PHONY: run-worker
-run-worker :
-	docker run --rm --name $(WORKER_CONTAINER_NAME) \
+.PHONY: all
+all: build tag push
+
+.PHONY: build
+build :
+	DOCKER_BUILDKIT=1 docker build --platform=linux/amd64 -t $(ORGANIZATION)/$(IMAGE):$(IMAGE_TAG) -f $(CURRENT_DIR)/Dockerfile .
+
+.PHONY: tag
+tag:
+	docker tag $(ORGANIZATION)/$(IMAGE):$(IMAGE_TAG) $(ORGANIZATION)/$(IMAGE):$(IMAGE_TAG)
+
+.PHONY: push
+push:
+	docker push $(ORGANIZATION)/$(IMAGE):$(IMAGE_TAG)
+
+.PHONY: run
+run :
+	docker run --platform=linux/amd64 --rm --name $(IMAGE) \
 		--env DOCS_API_KEY=${DOCS_API_KEY} \
+		--env DOCS_API_URL=${DOCS_API_URL} \
 		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
 		--env BUILD_FROM=${BUILD_FROM} \
 		--env SITE=${SITE} \
@@ -22,13 +37,14 @@ run-worker :
 		-v ${PWD}/build:/root/enterprise \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
 		-v ${PWD}/utils.sh:/usr/src/utils.sh \
-		$(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION)
+		$(ORGANIZATION)/$(IMAGE):$(IMAGE_TAG)
 
-.PHONY: shell-worker
-shell-worker :
-	docker run -it --rm --name $(WORKER_CONTAINER_NAME) \
+.PHONY: shell
+shell :
+	docker run --platform=linux/amd64 -it --rm --name $(IMAGE) \
 		--entrypoint /bin/sh \
 		--env DOCS_API_KEY=${DOCS_API_KEY} \
+		--env DOCS_API_URL=${DOCS_API_URL} \
 		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
 		--env BUILD_FROM=${BUILD_FROM} \
 		--env SITE=${SITE} \
@@ -36,4 +52,4 @@ shell-worker :
 		-v ${PWD}/build:/root/enterprise \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
 		-v ${PWD}/utils.sh:/usr/src/utils.sh \
-		$(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION)
+		$(ORGANIZATION)/$(IMAGE):$(IMAGE_TAG)
