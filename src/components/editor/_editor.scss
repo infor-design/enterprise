@@ -455,7 +455,7 @@
     text-align: left;
 
     &.btn-gen-ai {
-      background: var(--Copilot, $button-gen-ai-bg-color);
+      background: $button-gen-ai-bg-color;
       border: none;
       padding-left: 1px;
       width: 24px;
@@ -470,7 +470,7 @@
       }
 
       &:active {
-        background: var(--Copilot--Pressed, $button-gen-ai-active-bg-color);
+        background: $button-gen-ai-active-bg-color;
       }
 
       &:disabled {

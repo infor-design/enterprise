@@ -121,7 +121,7 @@ button {
 }
 
 .btn-icon.btn-gen-ai {
-  background: var(--Copilot, $button-gen-ai-bg-color);
+  background: $button-gen-ai-bg-color;
   border: none;
   display: flex;
   flex-wrap: nowrap;
@@ -129,7 +129,7 @@ button {
   align-items: center;
 
   &:hover {
-    background: var(--Copliot---Hover, $button-gen-ai-hover-bg-color);
+    background: $button-gen-ai-hover-bg-color;
 
     svg.icon {
       color: $button-color-gen-ai !important;
@@ -137,7 +137,7 @@ button {
   }
 
   &:active {
-    background: var(--Copilot--Pressed, $button-gen-ai-active-bg-color);
+    background: $button-gen-ai-active-bg-color;
   }
 
   &[disabled] {
@@ -162,7 +162,7 @@ button {
 }
 
 .btn-primary.btn-gen-ai {
-  background: var(--Copilot, $button-gen-ai-bg-color);
+  background: $button-gen-ai-bg-color;
   border: none !important;
   color: $button-color-gen-ai;
   padding: 0 24px !important;
@@ -170,12 +170,12 @@ button {
   align-items: center;
 
   &:hover {
-    border-radius: var(--border-radius-8, 8px);
-    background: var(--Copliot---Hover, $button-gen-ai-hover-bg-color);
+    border-radius: 8px;
+    background: $button-gen-ai-hover-bg-color;
   }
 
   &:active {
-    background: var(--Copilot--Pressed, $button-gen-ai-active-bg-color);
+    background: $button-gen-ai-active-bg-color;
   }
 
   &[disabled] {
@@ -211,7 +211,7 @@ button {
 }
 
 .btn-tertiary.btn-gen-ai {
-  background: var(--Copilot, $button-tertiary-color-gen-ai);
+  background: $button-tertiary-color-gen-ai;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

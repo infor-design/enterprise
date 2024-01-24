@@ -2657,17 +2657,16 @@ Editor.prototype = {
     const self = this;
 
     /**
-     * Triggers the 'AIButtonClicked' event on the editor element.
-     *
+     * Triggers the 'generateai' event on the editor element.
+     * @event generateai
      * @memberof Editor
-     * @function
-     * @name triggerAIButtonClickedEvent
+     * @type {Object}
      * @param {Object} eventData - Data to be passed along with the event.
      * @param {jQuery} self - The main jQuery component.
      * @param {jQuery} eventData.editor - The jQuery object representing the editor element.
      * @param {jQuery} eventData.toolbar - The jQuery object representing the toolbar element.
      */
-    self.element.triggerHandler('AIButtonClicked', [{ self, editor: self.element, toolbar: self.toolbar }]);
+    self.element.triggerHandler('generateai', [{ self, editor: self.element, toolbar: self.toolbar }]);
   },
 
   /**

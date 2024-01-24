@@ -22,7 +22,7 @@
     var editorElement = $('#editor1');
     var loadingIndicator = $('<div class="ai-loading-indicator"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>');
 
-    editorElement.on('AIButtonClicked', function (e, elements) {
+    editorElement.on('generateai', function (e, elements) {
       e.preventDefault();
 
       // Cache the jQuery objects
