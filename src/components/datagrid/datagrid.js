@@ -3519,14 +3519,12 @@ Datagrid.prototype = {
     }
 
     for (let i = 0; i < frozenColArr.length; i++) {
-      let filteredKey = targetArr.filter(col => col.id === frozenColArr[i]);
+      const filteredKey = targetArr.filter(col => col.id === frozenColArr[i]);
       
       isFrozenColumn = filteredKey.length > 0;
-      break;
-    }
-
-    if (isFrozenColumn) {
-      return;
+      if (isFrozenColumn) {
+        return;
+      }
     }
 
     arr.splice(to, 0, arr.splice(from, 1)[0]);
