@@ -3290,8 +3290,15 @@ Datagrid.prototype = {
                     target = self.draggableColumnTargets[n];
                   }
 
-                  target.el.addClass('is-over');
-                  showTarget.addClass('is-over');
+                  const columnName = target.el.siblings('.datagrid-column-wrapper').find('.datagrid-header-text').text();
+                  const frozenColDtls = self.getFrozenColumnDetails();
+                  const isFrozenColumn = frozenColDtls.filter(col => col.name === columnName).length > 0;
+
+                  if (!isFrozenColumn) {
+                    target.el.addClass('is-over');
+                    showTarget.addClass('is-over');
+                  }
+
                   rect = target.el[0].getBoundingClientRect();
                   showTarget[0].style.left = `${parseInt(rect.left + (Locale.isRTL() ? 2 : 1), 10)}px`;
                   let lastAdjustment = 0;
@@ -3423,6 +3430,30 @@ Datagrid.prototype = {
     });
   },
 
+  getFrozenColumnDetails() {
+    const frozenCols = this.settings.frozenColumns;
+    let frozenColArr = [];
+    let frozenColDtls = [];
+
+    if (frozenCols.left.length > 0) {
+      frozenColArr = $.merge(frozenColArr, frozenCols.left);
+    }
+
+    if (frozenCols.right.length > 0) {
+      frozenColArr = $.merge(frozenColArr, frozenCols.right);
+    }
+
+    for (let i = 0; i < frozenColArr.length; i++) {
+      const filteredCol = this.settings.columns.filter(col => col.id === frozenColArr[i]);
+
+      if (filteredCol.length > 0) {
+        frozenColDtls.push(filteredCol[0]);
+      }
+    }
+
+    return frozenColDtls;
+  },
+
   /**
   * Set draggable columns target elements
   * @private
@@ -3505,23 +3536,14 @@ Datagrid.prototype = {
    * @returns {void}
    */
   arrayIndexMove(arr, from, to) {
-    const frozenCols = this.settings.frozenColumns;
     const targetArr = [arr[from], arr[to]];
-    let frozenColArr = [];
+    const frozenColDtls = this.getFrozenColumnDetails();
     let isFrozenColumn = false;
 
-    if (frozenCols.left.length > 0) {
-      frozenColArr = $.merge(frozenColArr, frozenCols.left);
-    }
-
-    if (frozenCols.right.length > 0) {
-      frozenColArr = $.merge(frozenColArr, frozenCols.right);
-    }
-
-    for (let i = 0; i < frozenColArr.length; i++) {
-      const filteredKey = targetArr.filter(col => col.id === frozenColArr[i]);
+    for (let i = 0; i < frozenColDtls.length; i++) {
+      const filteredCol = targetArr.filter(col => col.id === frozenColDtls[i].id);
       
-      isFrozenColumn = filteredKey.length > 0;
+      isFrozenColumn = filteredCol .length > 0;
       if (isFrozenColumn) {
         return;
       }
