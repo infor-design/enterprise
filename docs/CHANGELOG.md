@@ -29,6 +29,7 @@
 - `[Link]` Changed selected border color for link card. ([#8225](https://github.com/infor-design/enterprise/issues/8225))
 - `[Locale]` Changed all `zh` locales time format as suggested by native speakers. ([#8313](https://github.com/infor-design/enterprise/issues/8313))
 - `[Lookup]` Fixed clear button in keyword search not updating search results on click. ([#8258](https://github.com/infor-design/enterprise/issues/8258))
+- `[Mask]` Alternative approach for checking instanceof RegExp if `instanceof RegExp` returns false. ([8365](https://github.com/infor-design/enterprise/issues/8365))
 - `[Modal]` Fixed a bug where the modal would shift up when toggling a switch inside of it. ([#8018](https://github.com/infor-design/enterprise/issues/8018))
 - `[Modal]` Fixed a bug where textarea field is bigger than other fields on screen widths less that 400px. ([#8125](https://github.com/infor-design/enterprise/issues/8125))
 - `[Process Indicator]` Adjusted alignment of icon in compact process indicator. ([#8241](https://github.com/infor-design/enterprise/issues/8241))
