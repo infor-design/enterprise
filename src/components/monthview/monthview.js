@@ -376,7 +376,7 @@ MonthView.prototype = {
     this.calendarToolbarEl = this.header.find('.calendar-toolbar');
     this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], calendarToolbarSettings);
 
-    this.element.find(`td:not('.alternate')`).attr('tabindex', '-1');
+    this.element.find(`td:not('.alternate')`).attr('tabindex', '-1'); //eslint-disable-line
     this.handleEvents();
 
     this.selectDay(this.currentDate);
@@ -2307,7 +2307,7 @@ MonthView.prototype = {
 
     const node = dayObj[0].elem[0];
 
-    this.element.find('td[tabindex=0]').attr('tabindex', '-1')
+    this.element.find('td[tabindex=0]').attr('tabindex', '-1');
     $(node).attr('tabindex', '0').focus();
   },
 
