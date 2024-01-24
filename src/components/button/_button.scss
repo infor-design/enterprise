@@ -221,7 +221,7 @@ button {
   justify-content: center;
 
   &:hover {
-    background: var(--Copliot---Hover, $button-tertiary-hover-color-gen-ai);
+    background: $button-tertiary-hover-color-gen-ai;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -268,22 +268,18 @@ button {
   position: absolute;
   top: 0;
   left: 0;
-  // transition: opacity 0.3s ease;
 }
 
 .hover-svg {
   opacity: 0;
-  /* Initially hide the hover SVG */
 }
 
 .btn-tertiary.btn-gen-ai:hover .original-svg:not(.active-effect) {
   opacity: 0;
-  /* Hide the original SVG on hover */
 }
 
 .btn-tertiary.btn-gen-ai:hover .hover-svg {
   opacity: 1;
-  /* Show the hover SVG on hover */
 }
 
 // How all button types will deal with iconography
