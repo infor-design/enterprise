@@ -56,7 +56,7 @@
 
 @mixin checkbox-focus-state {
   box-shadow: 0 0 0 3px $input-color-focus-border;
-  outline: solid 2px $checkbox-color-unchecked-initial-background;
+  outline: solid 2px $checkbox-focus-border-color;
 }
 
 @mixin checkbox-hover-state {
