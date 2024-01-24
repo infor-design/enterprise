@@ -16,6 +16,7 @@ run-worker :
 	docker run --rm --name $(WORKER_CONTAINER_NAME) \
 		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
 		--env DOCS_API_KEY=${DOCS_API_KEY} \
+		--env DOCS_API_URL=${DOCS_API_URL} \
 		--env NPM_TOKEN=${NPM_TOKEN} \
 		--env BRANCH=${BRANCH} \
 		--env NPM_COMMAND=${NPM_COMMAND} \
@@ -34,6 +35,7 @@ shell-worker :
 		--entrypoint /bin/bash \
 		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
 		--env DOCS_API_KEY=${DOCS_API_KEY} \
+		--env DOCS_API_URL=${DOCS_API_URL} \
 		--env NPM_TOKEN=${NPM_TOKEN} \
 		--env BRANCH=${BRANCH} \
 		--env NPM_COMMAND=${NPM_COMMAND} \

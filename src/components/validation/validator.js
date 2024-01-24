@@ -447,6 +447,12 @@ Validator.prototype = {
       parentContainer = parentContainer.prev('.tab-container');
     }
     if (parentContainer.is('.tab-container')) {
+      const tabsApi = parentContainer.data('tabs');
+
+      if (type === 'error' && tabsApi.settings.validate === false) {
+        return;
+      }
+
       // Default Tabs
       iconContainer = $(`.tab-list a[href="#${iconTarget}"]`, parentContainer).closest('.tab');
 
@@ -515,7 +521,6 @@ Validator.prototype = {
    */
   validate(field, showTooltip, e) {
     field.data(`handleEvent${[(e.type || '')]}`, null);
-
     if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field.is(':disabled')) {
       return [];
     }

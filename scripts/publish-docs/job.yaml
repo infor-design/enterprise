@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: enterprise-publish-docs
+  namespace: argo
 spec:
   ttlSecondsAfterFinished: 300
   backoffLimit: 0
@@ -12,7 +13,7 @@ spec:
         eks.amazonaws.com/nodegroup: heavy
       containers:
         - name: enterprise-publish-docs
-          image: hookandloop/enterprise-publish-docs:0.0.1
+          image: hookandloop/enterprise-publish-docs:0.0.2
           imagePullPolicy: Always
           resources:
             requests:
@@ -29,11 +30,13 @@ spec:
                 secretKeyRef:
                   name: docs-api-key
                   key: token
+            - name: DOCS_API_URL
+              value: "https://old.design.infor.com"
             - name: SITE
-              value: ""
+              value: "prod"
             - name: BUILD_FROM
-              value: ""
+              value: "4.91.0"
             - name: APP_REPO
-              value: ""
+              value: "infor-design/enterprise"
           command: ["/bin/bash"]
           args: ["-c", ". ./run.sh"]

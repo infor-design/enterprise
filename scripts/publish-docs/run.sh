@@ -11,6 +11,13 @@ REPOROOT=/root/enterprise
 function main() {
   check_required_vars GITHUB_ACCESS_TOKEN BUILD_FROM SITE APP_REPO
   clean_clone_repo $GITHUB_ACCESS_TOKEN $APP_REPO $BUILD_FROM $REPOROOT
+
+  cd $REPOROOT
+
+  git remote set-url origin https://$GITHUB_ACCESS_TOKEN@github.com/$APP_REPO.git
+  git fetch --all
+  git checkout $BUILD_FROM > /dev/null
+
   npm install
   node ./scripts/deploy-documentation.js --site $SITE
 }
