@@ -716,12 +716,6 @@ Homepage.prototype = {
       self.fitBlock(available.row, available.col, block);
     }
 
-    // Set height for padding on bottom
-    this.element.css({ height: 'unset' });
-    setTimeout(() => {
-      this.element.height(this.element[0].scrollHeight - 16);
-    }, 300);
-
     /**
     * Fires after the page is resized and layout is set.
     * Can be used for any special adjustments.
