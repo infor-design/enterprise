@@ -154,11 +154,20 @@ button {
 
 @keyframes dot-flashing {
   0% {
-    background-color: #fff;
+    background-color: $button-primary-dot-flashing-bg-color-key-one;
   }
 
   50%, 100% {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: $button-primary-dot-flashing-bg-color-key-two;
+  }
+}
+
+@keyframes dot-flashing-colors {
+  0% {
+    background-color: $button-tertiary-dot-flashing-bg-color-key-one;
+  }
+  50%, 100% {
+    background-color: $button-tertiary-dot-flashing-bg-color-key-two;
   }
 }
 
@@ -266,10 +275,22 @@ button {
   }
 
   &:active {
-    background: linear-gradient(107deg, #0B9789 5.97%, #1A3362 102.35%);
+    background: $button-gen-ai-active-bg-color;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+
+    svg.icon {
+      linearGradient#paint0_linear_103_3410 stop {
+        &:first-child {
+          stop-color: $button-tertiary-gradient-active-color-one;
+        }
+
+        &:last-child {
+          stop-color: $button-tertiary-gradient-active-color-two;
+        }
+      }
+    }
   }
 
   &[disabled] {
@@ -277,26 +298,45 @@ button {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-  }
 
-  &.btn-tertiary-gen-ai-right {
     svg.icon {
-      margin-left: 3px;
-    }
-
-    .ai-loading-indicator {
-      margin-left: 3px;
+      opacity: 0.5;
     }
   }
 
-  &.btn-tertiary-gen-ai-left {
+  &:not([disabled]):hover {
     svg.icon {
-      margin-right: 3px;
+      linearGradient#paint0_linear_103_3410 stop {
+        &:first-child {
+          stop-color: $button-tertiary-gradient-hover-color-one;
+        }
+
+        &:last-child {
+          stop-color: $button-tertiary-gradient-hover-color-two;
+        }
+      }
     }
   }
 
   svg.icon {
     margin-top: 0;
+  }
+
+  .dot-flashing-container .dot {
+    &:nth-child(1) {
+      animation: dot-flashing-colors 1s infinite alternate;
+      animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+      animation: dot-flashing-colors 1s infinite linear alternate;
+      animation-delay: 0.5s;
+    }
+
+    &:nth-child(3) {
+      animation: dot-flashing-colors 1s infinite alternate;
+      animation-delay: 1s;
+    }
   }
 }
 

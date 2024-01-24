@@ -166,16 +166,10 @@
       <span class="label">Tertiary</span>
       <button class="btn-tertiary btn-generative btn-tertiary-generative" type="button" id="btn-tertiary-generate-ai-1">
         <span>Generate</span>
-        <!-- <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use href="#icon-insights-smart-panel"></use>
-        </svg> -->
       </button><br><br>
       <button class="btn-tertiary btn-generative" type="button" id="btn-generate-ai-2"
         disabled>
         <span>Generate</span>
-        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use href="#icon-insights-smart-panel"></use>
-        </svg>
       </button><br><br>
     </div>
 
@@ -204,10 +198,10 @@
 </div>
 
 <script>
-  $('#btn-generate-ai-1, #gen-icon-ai-1').on('click keypress', function (e) {
+  $('#btn-generate-ai-1, #gen-icon-ai-1, #btn-tertiary-generate-ai-1').on('click keypress', function (e) {
     e.preventDefault();
     var $btn = $(this);
     var btnApi = $btn.data('button');
-    btnApi.performGenerativeAction($btn.attr('id') === 'btn-generate-ai-1' ? 4000 : 5000);
+    btnApi.performGenerativeAction(10000);
   });
 </script>
