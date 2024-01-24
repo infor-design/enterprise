@@ -2749,6 +2749,24 @@ MonthView.prototype = {
   },
 
   /**
+   * Update the monthview settings for the month
+   * @param {object} settings The new settings object to use.
+   * @returns {void}
+   */
+  updateMonthDetails(settings) {
+    if (!settings || settings === null || settings === undefined) {
+      return;
+    }
+
+    this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    this.settings.legend = settings.legend;
+
+    if (this.settings.showLegend) {
+      this.addLegend();
+    }
+  },
+
+  /**
    * Set range on given cell -or- current month/year.
    * @private
    * @param {object} cell to set range.

@@ -6,8 +6,6 @@ demo:
   - name: Common Configuration
     slug: example-index
   pages:
-  - name: Attached To Textbox's Info Icon
-    slug: example-attached-to-textbox
   - name: Alternate (Flipped) Positioning
     slug: example-alternate-positions
   - name: Demo of `extraCssClass` Setting

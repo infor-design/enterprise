@@ -666,7 +666,7 @@
           }
         }
 
-        &:hover {
+        &:hover:not(.is-disabled) {
           background-color: $calendar-hover-bg-color;
           color: $datepicker-day-color;
 
