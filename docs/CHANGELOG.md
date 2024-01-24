@@ -30,6 +30,8 @@
 - `[Lookup]` Fixed clear button in keyword search not updating search results on click. ([#8258](https://github.com/infor-design/enterprise/issues/8258))
 - `[Modal]` Fixed a bug where the modal would shift up when toggling a switch inside of it. ([#8018](https://github.com/infor-design/enterprise/issues/8018))
 - `[Modal]` Fixed a bug where textarea field is bigger than other fields on screen widths less that 400px. ([#8125](https://github.com/infor-design/enterprise/issues/8125))
+- `[Process Indicator]` Adjusted alignment of icon in compact process indicator. ([#8241](https://github.com/infor-design/enterprise/issues/8241))
+- `[Popover]` Fixed string rendering issues for content. ([#1609](https://github.com/infor-design/enterprise/issues/1609))
 - `[Pager]` Added `showPager` and `hidePager` method to show and hide the pager bar. ([#8094](https://github.com/infor-design/enterprise/issues/8094))
 - `[Process Indicator]` Adjusted alignment of icon in compact process indicator. ([#8241](https://github.com/infor-design/enterprise/issues/8241))
 - `[Scatterplot]` Fixed legend position to be centered inside the div parent. ([#8194](https://github.com/infor-design/enterprise/issues/8194))
@@ -37,8 +39,10 @@
 - `[Tabs]` Fixed size in close button of tab list. ([#8274](https://github.com/infor-design/enterprise/issues/8274))
 - `[Tabs]` Adjusted icon alignment and color for searchfield in tabs. ([#8272](https://github.com/infor-design/enterprise/issues/8272))
 - `[Tabs]` Fixed tabs add tab button focus. ([#8275](https://github.com/infor-design/enterprise/issues/8275))
+- `[Tabs]` Added setting to disable error icon in validation. ([#8254](https://github.com/infor-design/enterprise/issues/8254))
 - `[Tabs Header]` Fixed focus border not visible in classic contrast alabaster. ([#8265](https://github.com/infor-design/enterprise/issues/8265))
 - `[Tabs Module]` Fixed more button not visible in alabaster. ([#8271](https://github.com/infor-design/enterprise/issues/8271))
+- `[Tabs Vertical]` Fixed focus state outline when having scrollable. ([#8269](https://github.com/infor-design/enterprise/issues/8269))
 
 ## v4.91.0
 

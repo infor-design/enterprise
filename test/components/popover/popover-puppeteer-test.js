@@ -2,7 +2,7 @@ describe('Popover Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/popover';
 
   describe('Popover as a tooltip with maxWidth', () => {
-    const url = `${baseUrl}/example-using-max-width-setting`;
+    const url = `${baseUrl}/test-using-max-width-setting`;
 
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
@@ -13,7 +13,7 @@ describe('Popover Puppeteer Tests', () => {
       await popoverBtn.click();
 
       await page.evaluate(() => document.querySelector('.popover.is-open').style.maxWidth)
-        .then(maxWidth => expect(maxWidth).toBe('250px'));
+        .then(maxWidth => expect(maxWidth).toBe('350px'));
     });
   });
 });
