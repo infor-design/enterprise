@@ -100,6 +100,7 @@ It's possible to publish docs locally but this as done as part of the `npm relea
     GITHUB_ACCESS_TOKEN=
     # For uploading docs
     DOCS_API_KEY=
+    DOCS_API_URL=
     # For Jenkins Deploys
     JENKINS_JOB_TOKEN=
     JENKINS_API_TOKEN=

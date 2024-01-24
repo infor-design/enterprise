@@ -82,6 +82,12 @@
 
   // Mobile Legend
   @include respond-to(phabletdown) {
+    .calendar-monthview {
+      .monthview-legend {
+        padding: 10px 5px;
+      }
+    }
+
     .calendar-event-legend {
       display: block;
       padding: 20px 20px 0;

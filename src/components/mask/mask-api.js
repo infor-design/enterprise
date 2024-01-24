@@ -497,7 +497,7 @@ MaskAPI.prototype = {
         `The mask that was received is: ${JSON.stringify(mask)}`);
     }
 
-    const ret = mask.map(char => ((char instanceof RegExp) ?
+    const ret = mask.map(char => ((char instanceof RegExp || Object.prototype.toString.call(char) === '[object RegExp]') ?
       placeholderChar : char)).join(masks.EMPTY_STRING);
 
     return ret;

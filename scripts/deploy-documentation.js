@@ -108,7 +108,7 @@ const serverURIs = {
   static: paths.static.root,
   local: 'http://localhost/api/docs/',
   localDebug: 'http://localhost:9002/api/docs/',
-  prod: 'https://old.design.infor.com/api/docs/'
+  prod: `${process.env.DOCS_API_URL}/api/docs/`
 };
 
 const packageJson = getJSONFile('../../../package.json');
