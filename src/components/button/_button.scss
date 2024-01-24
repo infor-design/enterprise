@@ -638,16 +638,13 @@ button {
 
   &[disabled],
   &[disabled]:hover {
-    &:not(.destructive),
-    &:not(.btn-generative) {
-      background-color: $button-color-primary-disabled-background;
-      border-color: $button-color-primary-disabled-border;
-      box-shadow: none;
-      color: $button-color-primary-disabled-font;
+    background-color: $button-color-primary-disabled-background;
+    border-color: $button-color-primary-disabled-border;
+    box-shadow: none;
+    color: $button-color-primary-disabled-font;
 
-      .icon {
-        color: $button-color-primary-disabled-icon;
-      }
+    .icon {
+      color: $button-color-primary-disabled-icon;
     }
   }
 
