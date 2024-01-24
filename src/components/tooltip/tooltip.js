@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { keyboard } from '../../utils/keyboard';
 import { DOM } from '../../utils/dom';
@@ -81,9 +80,7 @@ const TOOLTIP_DEFAULTS = {
 function Tooltip(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TOOLTIP_DEFAULTS);
   this.element = $(element);
-  debug.logTimeStart(this.componentName);
   this.init();
-  debug.logTimeEnd(this.componentName);
 }
 
 Tooltip.prototype = {
@@ -592,7 +589,7 @@ Tooltip.prototype = {
     const extraClass = this.settings.extraClass;
     const contentArea = this.tooltip.find('.tooltip-content');
     let title = this.tooltip[0].querySelector('.tooltip-title');
-    let content = this.content;
+    const content = this.content;
     let classes = 'popover is-hidden';
 
     if (extraClass) {
@@ -608,8 +605,7 @@ Tooltip.prototype = {
     const useHtml = env.browser.name === 'ie' && env.browser.isIE11() && content instanceof $ && content.length && this.settings.trigger === 'hover';
 
     if (typeof content === 'string') {
-      content = $(content);
-      DOM.replaceHtml(contentArea, content);
+      contentArea.html(content);
       contentArea.find('.hidden').removeClass('hidden');
     } else if (useHtml) {
       const clone = content[0].cloneNode(true);
@@ -633,7 +629,7 @@ Tooltip.prototype = {
     }
 
     if (!useHtml) {
-      content[0].classList.remove('hidden');
+      contentArea.find('.hidden').removeClass('hidden');
     }
 
     contentArea[0].firstElementChild.classList.remove('hidden');
@@ -683,7 +679,7 @@ Tooltip.prototype = {
 
     if (this.settings.initializeContent) {
       this.settings.initializeContent = false;
-      content.initialize();
+      contentArea.initialize();
     }
   },
 
