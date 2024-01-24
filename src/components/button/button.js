@@ -594,8 +594,24 @@ Button.prototype = {
     return elementSettings;
   },
 
+  /**
+   * Performs a generative action by replacing the content of a button with a loading indicator,
+   * then replacing it with generated AI content after a specified delay.
+   *
+   * @param {number} delay - The delay (in milliseconds) before replacing the loading indicator.
+   * @returns {void}
+   */
   performGenerativeAction(delay) {
+    /**
+     * The element representing the button.
+     * @type {jQuery}
+     */
     const $elem = this.element;
+
+    /**
+     * The SVG element within the button.
+     * @type {jQuery}
+     */
     const $svg = $elem.find('svg');
 
     // Define HTML markup for the loading indicator
