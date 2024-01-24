@@ -379,7 +379,6 @@ MonthView.prototype = {
     this.element.find(`td:not('.alternate')`).attr('tabindex', '-1'); //eslint-disable-line
     this.handleEvents();
 
-    this.selectDay(this.currentDate);
     utils.addAttributes(this.element, this, this.settings.attributes);
     return this;
   },
