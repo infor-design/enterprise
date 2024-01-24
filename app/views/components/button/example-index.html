@@ -148,45 +148,41 @@
 
     <div class="four columns">
       <span class="label">Primary</span>
-      <button class="btn-primary btn-gen-ai" type="button" id="btn-generate-ai-1">
+      <button class="btn-primary btn-generative" type="button" id="btn-generate-ai-1">
         <span>Generate</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use href="#icon-insights-smart-panel"></use>
         </svg>
-      </button><br><br><br>
-      <button class="btn-primary btn-gen-ai" type="button" id="btn-generate-ai-2" disabled>Generate</button><br><br><br>
-      <button class="btn-primary btn-gen-ai" type="button" id="btn-generate-ai-3">
+      </button><br><br>
+      <button class="btn-primary btn-generative" type="button" id="btn-generate-ai-2" disabled>
+        <span>Generate</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use href="#icon-insights-smart-panel"></use>
         </svg>
-        <span>Generate</span>
-      </button><br><br><br>
+      </button><br><br>
     </div>
 
     <div class="three columns">
       <span class="label">Tertiary</span>
-      <button class="btn-tertiary btn-gen-ai btn-tertiary-gen-ai-right" type="button" id="btn-tertiary-generate-ai-1">
+      <button class="btn-tertiary btn-generative btn-tertiary-generative" type="button" id="btn-tertiary-generate-ai-1">
         <span>Generate</span>
         <!-- <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use href="#icon-insights-smart-panel"></use>
         </svg> -->
-      </button><br><br><br>
-      <button class="btn-tertiary btn-gen-ai" type="button" id="btn-generate-ai-2"
+      </button><br><br>
+      <button class="btn-tertiary btn-generative" type="button" id="btn-generate-ai-2"
         disabled>
         <span>Generate</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use href="#icon-insights-smart-panel"></use>
         </svg>
-      </button><br><br><br>
-      <button class="btn-tertiary btn-gen-ai btn-tertiary-gen-ai-left" type="button" id="btn-generate-ai-3">
-        <span>Generate</span>
-      </button><br><br><br>
+      </button><br><br>
     </div>
 
     <div class="two columns">
       <span class="label">New Icon Button</span>
 
-      <button type="button" class="btn-icon btn-gen-ai" id="gen-icon-ai-1">
+      <button type="button" class="btn-icon btn-generative" id="gen-icon-ai-1">
         <span>Date</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use href="#icon-insights-smart-panel"></use>
@@ -194,65 +190,24 @@
       </button>
       <br><br>
 
-      <button type="button" class="btn-icon btn-gen-ai" id="gen-icon-ai-disabled" disabled>
+      <button type="button" class="btn-icon btn-generative" id="gen-icon-ai-disabled" disabled>
         <span>Date</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use href="#icon-insights-smart-panel"></use>
         </svg>
       </button>
 
-      <br><br><br><br>
+      <br><br>
     </div>
 
   </div>
 </div>
 
 <script>
-  function handleButtonClick(buttonId, delay = 3000) {
-    // Attach click and keypress event handler to the button
-    $(buttonId).on('click keypress', function (e) {
-      // Check if the event is a click or Enter keypress
-      if (e.type === 'click' || (e.type === 'keypress' && e.which === 13)) {
-        // Prevent the default action of the event
-        e.preventDefault();
-
-        // Define HTML markup for the loading indicator
-        var loader = `
-          <div class="ai-loading-indicator">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-          </div>
-        `;
-
-        // Define HTML markup for the generated AI content
-        var genAi = `
-          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-            <use href="#icon-insights-smart-panel"></use>
-          </svg>
-        `;
-
-        // Replace the content of the button with the loading indicator
-        $(buttonId + ' svg').replaceWith(loader);
-
-        // Disable user interactions with the button during the loading process
-        $(buttonId).css('pointer-events', 'none');
-
-        // Simulate a delay (e.g., 3000 milliseconds) for loading or processing
-        setTimeout(function () {
-          // Replace the loading indicator with the generated AI content
-          $(buttonId + ' .ai-loading-indicator').replaceWith(genAi);
-
-          // Enable user interactions with the button after the loading process is complete
-          $(buttonId).css('pointer-events', '');
-        }, delay);
-      }
-    });
-  }
-
-  // Call the function for each button
-  handleButtonClick('#btn-generate-ai-1', 1113500);
-  handleButtonClick('#gen-icon-ai-1', 4000);
-  handleButtonClick('#btn-tertiary-generate-ai-1');
-
+  $('#btn-generate-ai-1, #gen-icon-ai-1').on('click keypress', function (e) {
+    e.preventDefault();
+    var $btn = $(this);
+    var btnApi = $btn.data('button');
+    btnApi.performGenerativeAction($btn.attr('id') === 'btn-generate-ai-1' ? 4000 : 5000);
+  });
 </script>

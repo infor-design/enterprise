@@ -1106,7 +1106,7 @@ Editor.prototype = {
 
       clearFormatting: `<button type="button" class="btn btn-editor" title="${Locale.translate('ClearFormatting')}" data-action="clearFormatting" >${buttonLabels.clearFormatting}</button>`,
 
-      genAIButton: `<button type="button" class="btn btn-editor btn-gen-ai" title="${Locale.translate('GenAIButton')}" data-action="genAIButton">${buttonLabels.genAIButton}<button>`,
+      genAIButton: `<button type="button" class="btn btn-editor btn-generative" title="${Locale.translate('GenAIButton')}" data-action="genAIButton">${buttonLabels.genAIButton}<button>`,
 
       source: `<button type="button" class="btn btn-editor" title="${Locale.translate('ViewSource')}" data-action="source" >${buttonLabels.source}</button>`,
 

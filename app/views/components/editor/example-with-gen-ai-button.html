@@ -33,12 +33,12 @@
       loadingIndicator.appendTo(editor);
 
       // Disable button interactions during processing
-      toolbar.find('.btn-gen-ai').css('pointer-events', 'none');
+      toolbar.find('.btn-generative').css('pointer-events', 'none');
 
       setTimeout(function () {
         // Remove the loading indicator after a delay
         editor.find('.ai-loading-indicator').remove();
-        toolbar.find('.btn-gen-ai').css('pointer-events', '');
+        toolbar.find('.btn-generative').css('pointer-events', '');
       }, 4000);
     });
   });

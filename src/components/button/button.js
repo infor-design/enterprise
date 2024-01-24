@@ -318,7 +318,7 @@ Button.prototype = {
       delete this.settings.forceDisable;
     }
 
-    if (this.element.hasClass('btn-tertiary') && this.element.hasClass('btn-gen-ai')) {
+    if (this.element.hasClass('btn-tertiary') && this.element.hasClass('btn-generative')) {
       const isDarkTheme = $('html[class*=theme-classic-dark], html[class*=theme-new-dark]').length > 0;
       const svgOrigColor1 = isDarkTheme ? '#10B6A6' : '#254A92';
       const svgOrigColor2 = isDarkTheme ? '#10B6A6' : '#10B7A6';
@@ -621,6 +621,41 @@ Button.prototype = {
     }
 
     return elementSettings;
+  },
+
+  performGenerativeAction(delay) {
+    const $elem = this.element;
+    const $svg = $elem.find('svg');
+
+    // Define HTML markup for the loading indicator
+    const loader = `
+      <div class="dot-flashing-container">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    `;
+
+    // Define HTML markup for the generated AI content
+    const generativeIcon = `
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use href="#icon-insights-smart-panel"></use>
+      </svg>
+    `;
+
+    // Replace the content of the button with the loading indicator
+    $svg.replaceWith(loader);
+
+    // Disable user interactions with the button during the loading process
+    $elem.css('pointer-events', 'none');
+
+    setTimeout(() => {
+      // Replace the loading indicator with the generated AI content
+      $elem.find('.dot-flashing-container').replaceWith(generativeIcon);
+
+      // Enable user interactions with the button after the loading process is complete
+      $elem.css('pointer-events', '');
+    }, delay);
   },
 
   /**

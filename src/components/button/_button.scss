@@ -120,7 +120,48 @@ button {
   }
 }
 
-.btn-icon.btn-gen-ai {
+.dot-flashing-container {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  gap: 3px;
+
+  .dot {
+    display: inline-flex;
+    position: relative;
+    width: 4px;
+    height: 4px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #fff;
+
+    &:nth-child(1) {
+      animation: dot-flashing 1s infinite alternate;
+      animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+      animation: dot-flashing 1s infinite linear alternate;
+      animation-delay: 0.5s;
+    }
+
+    &:nth-child(3) {
+      animation: dot-flashing 1s infinite alternate;
+      animation-delay: 1s;
+    }
+  }
+}
+
+@keyframes dot-flashing {
+  0% {
+    background-color: #fff;
+  }
+  50%, 100% {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+}
+
+.btn-icon.btn-generative {
   background: $button-gen-ai-bg-color;
   border: none;
   display: flex;
@@ -161,13 +202,14 @@ button {
   }
 }
 
-.btn-primary.btn-gen-ai {
+.btn-primary.btn-generative {
   background: $button-gen-ai-bg-color;
   border: none !important;
   color: $button-color-gen-ai;
   padding: 0 24px !important;
   display: flex;
   align-items: center;
+  gap: 6px;
 
   &:hover {
     border-radius: 8px;
@@ -194,23 +236,17 @@ button {
   }
 
   span ~ svg.icon {
-    margin-left: 3px;
     margin-top: 0;
-  }
-
-  span ~ .ai-loading-indicator {
-    margin-left: 6px;
   }
 }
 
-.btn-primary.btn-gen-ai {
+.btn-primary.btn-generative {
   > svg.icon {
-    margin-right: 3px !important;
     margin-top: 0 !important;
   }
 }
 
-.btn-tertiary.btn-gen-ai {
+.btn-tertiary.btn-generative {
   background: $button-tertiary-color-gen-ai;
   background-clip: text;
   -webkit-background-clip: text;
@@ -219,6 +255,7 @@ button {
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
+  gap: 6px;
 
   &:hover {
     background: $button-tertiary-hover-color-gen-ai;
@@ -274,11 +311,11 @@ button {
   opacity: 0;
 }
 
-.btn-tertiary.btn-gen-ai:hover .original-svg:not(.active-effect) {
+.btn-tertiary.btn-generative:hover .original-svg:not(.active-effect) {
   opacity: 0;
 }
 
-.btn-tertiary.btn-gen-ai:hover .hover-svg {
+.btn-tertiary.btn-generative:hover .hover-svg {
   opacity: 1;
 }
 
@@ -287,7 +324,7 @@ button {
 .btn-primary,
 .btn-secondary,
 .btn-tertiary,
-.btn-gen-ai {
+.btn-generative {
   //Fixes an issue about the circle effect coming out of the button.
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
@@ -560,7 +597,8 @@ button {
 
   &[disabled],
   &[disabled]:hover {
-    &:not(.destructive) {
+    &:not(.destructive),
+    &:not(.btn-generative) {
       background-color: $button-color-primary-disabled-background;
       border-color: $button-color-primary-disabled-border;
       box-shadow: none;
@@ -1123,7 +1161,7 @@ html[dir='rtl'] {
       }
     }
 
-    span {
+    &:not(.btn-generative) span {
       + .icon {
         margin-right: 5px;
       }
