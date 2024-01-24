@@ -1385,6 +1385,26 @@ Calendar.prototype = {
   },
 
   /**
+   * Update the calendar settings for the month
+   * @param {object} settings The new settings object to use.
+   * @returns {void}
+   */
+  updateMonthDetails(settings) {
+    if (!settings || settings === null || settings === undefined) {
+      return;
+    }
+
+    if (settings.dayLegend) {
+      settings.showLegend = settings.dayLegend !== null;
+      settings.legend = settings.dayLegend;
+    }
+
+    this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    this.monthView.updateMonthDetails(this.settings);
+    this.renderEventLegend();
+  },
+
+  /**
    * Show a modal used to add/edit events. This uses the modalTemplate setting for the modal contents.
    * @param {object} event The event object with common event properties for defaulting fields in the template.
    * @param {function} done The callback for when the modal closes.
