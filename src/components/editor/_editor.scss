@@ -461,7 +461,7 @@
       width: 24px;
 
       &:hover:not(.destructive):not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable) {
-        background: var(--Copliot---Hover, $button-gen-ai-hover-bg-color);
+        background: $button-gen-ai-hover-bg-color;
         border: none;
 
         svg.icon {
