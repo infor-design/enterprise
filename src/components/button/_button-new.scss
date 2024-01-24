@@ -385,6 +385,17 @@
   }
 }
 
+html.is-chrome {
+  .field-short,
+  .form-layout-compact .field {
+    .searchfield-wrapper.has-close-icon-button.has-text {
+      .btn-icon.close {
+        top: 4px;
+      }
+    }
+  }
+}
+
 html[dir='rtl'] {
   &.is-chrome,
   &.is-safari {
