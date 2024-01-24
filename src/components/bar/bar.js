@@ -1019,7 +1019,7 @@ Bar.prototype = {
         values.forEach((key, i) => {
           if (key && key.constructor === Array) {
             key.forEach((k, i2) => {
-              if (keys[i] !== 'attributes') {
+              if (keys[i] !== 'attributes' && elems[i2] !== undefined) {
                 elems[i2].textContent = getText(k, i2);
               }
             });
