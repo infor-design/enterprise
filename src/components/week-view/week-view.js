@@ -156,6 +156,8 @@ WeekView.prototype = {
     this.showWeek(this.settings.startDate, this.settings.endDate);
     this.handleEvents();
     this.handleKeys();
+
+    this.element.find('td[data-key]').attr('tabindex', '-1');
     utils.addAttributes(this.element, this, this.settings.attributes);
     return this;
   },
@@ -1167,9 +1169,7 @@ WeekView.prototype = {
         self.focusEl = target;
         self.focusDateHour = day;
         self.element.find('td.is-selected').removeClass('is-selected');
-        self.element.find('td.is-focused').removeClass('is-focused').removeAttr('tabindex');
-        target.addClass('is-selected');
-        target.addClass('is-focused').attr('tabindex', '0').focus();
+        target.addClass('is-selected').attr('tabindex', '0').focus();
       } else {
         fireEvent(e.currentTarget, 'eventclick');
         e.preventDefault();
@@ -1207,13 +1207,6 @@ WeekView.prototype = {
         self.element.trigger('updated');
       }
       fireEvent(e.currentTarget, 'eventdblclick');
-    });
-
-    $('body').off('click.weekview-focus').on('click.weekview-focus', (e) => {
-      const el = $(e.target);
-      if (el.parents('td').length <= 0) {
-        this.element.find('td.is-focused').removeClass('is-focused').removeAttr('tabindex');
-      }
     });
 
     $('body').off(`breakpoint-change.${this.id}`).on(`breakpoint-change.${this.id}`, () => this.onBreakPointChange());
@@ -1290,8 +1283,8 @@ WeekView.prototype = {
 
       const targetContainer = $(self.element[0].querySelectorAll(`td:nth-child(${targetDay[0].elem.cellIndex + 1})`)[rowIndex]);
       if (targetContainer.length > 0) {
-        self.element.find('td.is-focused').removeClass('is-focused').removeAttr('tabindex');
-        targetContainer.addClass('is-focused').attr('tabindex', '0').focus();
+        self.element.find('td[tabindex=0]').removeAttr('tabindex');
+        targetContainer.attr('tabindex', '0').focus();
       }
     });
 

@@ -333,8 +333,6 @@ MonthView.prototype = {
     this.showMonth(this.settings.month, this.settings.year);
     this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, this.settings.showWeekNumber ? this.monthAndWeekContainer : useElement);
 
-    this.focusDay(this.focusDate);
-
     if (this.settings.showWeekNumber) {
       this.calendar.addClass('has-monthview-week-table');
     }
@@ -378,7 +376,10 @@ MonthView.prototype = {
     this.calendarToolbarEl = this.header.find('.calendar-toolbar');
     this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], calendarToolbarSettings);
 
+    this.element.find(`td:not('.alternate')`).attr('tabindex', '-1');
     this.handleEvents();
+
+    this.selectDay(this.currentDate);
     utils.addAttributes(this.element, this, this.settings.attributes);
     return this;
   },
@@ -1759,13 +1760,6 @@ MonthView.prototype = {
         });
     }
 
-    $('body').off('click.monthview-focus').on('click.monthview-focus', (e) => {
-      const el = $(e.target);
-      if (el.parents('td').length <= 0) {
-        this.element.find('td.is-focused').removeClass('is-focused').removeAttr('tabindex');
-      }
-    });
-
     this.handleMonthYearPane().handleKeys();
     return this;
   },
@@ -2211,8 +2205,8 @@ MonthView.prototype = {
     };
 
     delete this.isKeyClick;
-    this.element.find('td.is-selected').removeClass('is-selected').removeAttr('tabindex');
-    $(node).addClass('is-selected').attr('tabindex', '0');
+    this.element.find('td.is-selected').removeClass('is-selected');
+    $(node).addClass('is-selected');
 
     insertDate = this.settings.headerStyle === 'full' ? true : insertDate;
     if (insertDate && this.settings.onSelected) {
@@ -2223,7 +2217,7 @@ MonthView.prototype = {
     }
 
     this.focusDate = this.currentDate;
-    this.focusDay(this.focusDate);
+    this.focusDay();
   },
 
   /**
@@ -2231,7 +2225,8 @@ MonthView.prototype = {
    * @private
    * @param {date | string} date specific date or a date key (hash string of the date)
   */
-  focusDay(date) {
+  focusDay() {
+    let date = this.focusDate;
     if (this.isIslamic && typeof date !== 'string') {
       const focusDateIslamic = Locale.gregorianToUmalqura(date);
       date = stringUtils.padDate(
@@ -2241,7 +2236,7 @@ MonthView.prototype = {
       );
     }
 
-    if (!this.isIslamic && typeof date !== 'string') {
+    if (!this.isIslamic && typeof this.focusDate !== 'string') {
       date = stringUtils.padDate(
         date.getFullYear(),
         date.getMonth(),
@@ -2253,12 +2248,51 @@ MonthView.prototype = {
     const year = parseInt(date.substr(0, 4), 10);
     const month = parseInt(date.substr(4, 2), 10) - 1;
     const day = parseInt(date.substr(6, 2), 10);
-
+    
     if (this.isIslamic) {
       this.focusDate = Locale.umalquraToGregorian(year, month, day);
     } else {
       this.focusDate = new Date(year, month, day);
     }
+    
+    // let el = $(node);
+    // if (node === null || node === undefined) {
+    //   el = this.element.find(`td[tabindex=0]`);
+    // }
+    // console.log(el);
+    // el.attr('tabindex', '-1');
+
+    // switch (mode) {
+    //   case 'next':
+    //     el.next().attr('tabindex', '0').focus();
+    //     break;
+    //   case 'prev':
+    //     el.prev().attr('tabindex', '0').focus();
+    //     break;
+    //   case 'up':
+    //     if (el.parent().prev().find(`td:nth-child(${el.index() + 1})`).length > 0) {
+    //       el.parent().prev().find(`td:nth-child(${el.index() + 1})`).attr('tabindex', '0').focus();
+    //     } else {
+    //       this.showMonth(month, year);
+    //       const dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
+    //       const node = dayObj[0].elem[0];
+    //       $(node).attr('tabindex', '0').focus();
+    //     }
+    //     break;
+    //   case 'down':
+    //     if (el.parent().next().find(`td:nth-child(${el.index() + 1})`).length > 0) {
+    //       el.parent().next().find(`td:nth-child(${el.index() + 1})`).attr('tabindex', '0').focus();
+    //     } else {
+    //       this.showMonth(month, year);
+    //       const dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
+    //       const node = dayObj[0].elem[0];
+    //       $(node).attr('tabindex', '0').focus();
+    //     }
+    //     break;
+    //   default:
+    //     el.attr('tabindex', '0').focus();
+    //     break;
+    // }
 
     if (dayObj.length === 0 || dayObj[0].elem.hasClass('alternate')) {
       // Show month
@@ -2266,17 +2300,15 @@ MonthView.prototype = {
       dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
     }
 
-    // Error - date not found
+    // // Error - date not found
     if (!dayObj.length === 0) {
       return;
     }
 
     const node = dayObj[0].elem[0];
 
-    delete this.isKeyClick;
-    this.element.find('td.is-focused').removeClass('is-focused').removeAttr('tabindex');
-    $(node).addClass('is-focused').attr('tabindex', '0').focus();
-    $(node).prev().addClass('has-adjacent-focused');
+    this.element.find('td[tabindex=0]').attr('tabindex', '-1')
+    $(node).attr('tabindex', '0').focus();
   },
 
   /**
@@ -2366,10 +2398,10 @@ MonthView.prototype = {
           } else if (maxDate.getDate() - 1 >= this.focusDate.getDate() + 7) {
             this.focusDate.setDate(this.focusDate.getDate() + 7);
           }
-          this.focusDay(this.focusDate);
+          this.focusDay();
         } else {
           this.focusDate.setDate(this.focusDate.getDate() + 7);
-          this.focusDay(this.focusDate);
+          this.focusDay();
         }
       }
 
@@ -2392,10 +2424,10 @@ MonthView.prototype = {
           } else if (minDate.getDate() + 1 <= this.focusDate.getDate() - 7) {
             this.focusDate.setDate(this.focusDate.getDate() - 7);
           }
-          this.focusDay(this.focusDate);
+          this.focusDay();
         } else {
           this.focusDate.setDate(this.focusDate.getDate() - 7);
-          this.focusDay(this.focusDate);
+          this.focusDay();
         }
       }
 
@@ -2418,10 +2450,10 @@ MonthView.prototype = {
           } else if (minDate.getDate() + 1 !== this.focusDate.getDate()) {
             this.focusDate.setDate(this.focusDate.getDate() - 1);
           }
-          this.focusDay(this.focusDate);
+          this.focusDay();
         } else {
           this.focusDate.setDate(this.focusDate.getDate() - 1);
-          this.focusDay(this.focusDate);
+          this.focusDay();
         }
       }
 
@@ -2444,10 +2476,10 @@ MonthView.prototype = {
           } else if (maxDate.getDate() - 1 !== this.focusDate.getDate()) {
             this.focusDate.setDate(this.focusDate.getDate() + 1);
           }
-          this.focusDay(this.focusDate);
+          this.focusDay();
         } else {
           this.focusDate.setDate(this.focusDate.getDate() + 1);
-          this.focusDay(this.focusDate);      
+          this.focusDay();
         }
       }
 
@@ -2458,11 +2490,11 @@ MonthView.prototype = {
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
           if (minDate.getMonth() !== this.focusDate.getMonth()) {
             this.focusDate.setMonth(this.focusDate.getMonth() - 1);
-            this.focusDay(this.focusDate);
+            this.focusDay();
           }
         } else {
           this.focusDate.setMonth(this.focusDate.getMonth() - 1);
-          this.focusDay(this.focusDate);
+          this.focusDay();
         }
       }
 
@@ -2473,11 +2505,11 @@ MonthView.prototype = {
         if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
           if (this.focusDate.getMonth() !== maxDate.getMonth()) {
             this.focusDate.setMonth(this.focusDate.getMonth() + 1);
-            this.focusDay(this.focusDate);
+            this.focusDay();
           }
         } else {
           this.focusDate.setMonth(this.focusDate.getMonth() + 1);
-          this.focusDay(this.focusDate);
+          this.focusDay();
         }
       }
 
@@ -2486,7 +2518,7 @@ MonthView.prototype = {
         handled = true;
         resetRange();
         this.focusDate.setFullYear(this.focusDate.getFullYear() - 1);
-        this.focusDay(this.focusDate);
+        this.focusDay();
       }
 
       // ctrl + Page Down Selects Same Day next Year
@@ -2494,7 +2526,7 @@ MonthView.prototype = {
         handled = true;
         resetRange();
         this.focusDate.setFullYear(this.focusDate.getFullYear() + 1);
-        this.focusDay(this.focusDate);
+        this.focusDay();
       }
 
       // Home Moves to Start of the month
@@ -2516,7 +2548,7 @@ MonthView.prototype = {
         }
 
         this.focusDate = firstDay;
-        this.focusDay(this.focusDate);
+        this.focusDay();
       }
 
       // End Moves to End of the month
@@ -2538,7 +2570,7 @@ MonthView.prototype = {
         }
 
         this.focusDate = lastDay;
-        this.focusDay(this.focusDate);
+        this.focusDay();
       }
 
       // 't' selects today

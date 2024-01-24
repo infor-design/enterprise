@@ -695,7 +695,7 @@
           }
         }
 
-        &.is-focused {
+        &:focus {
           -webkit-box-shadow: inset 0 0 0 1px $calendar-selected-border-color;
           -moz-box-shadow: inset 0 0 0 1px $calendar-selected-border-color;
           box-shadow: inset 0 0 0 1px $calendar-selected-border-color;

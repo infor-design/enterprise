@@ -158,7 +158,7 @@ $week-view-cell-height: 25px;
         background-color: $calendar-selected-bg-color;
       }
 
-      &.is-focused {
+      &:focus {
         -webkit-box-shadow: inset 0 0 0 1px $calendar-selected-border-color;
         -moz-box-shadow: inset 0 0 0 1px $calendar-selected-border-color;
         box-shadow: inset 0 0 0 1px $calendar-selected-border-color;
