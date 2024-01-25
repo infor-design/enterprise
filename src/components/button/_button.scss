@@ -302,10 +302,20 @@ button {
 
     svg.icon {
       opacity: 0.5;
+
+      linearGradient#paint-linear-disabled stop {
+        &:first-child {
+          stop-color: $button-tertiary-disabled-icon-color-gen-ai-key-one;
+        }
+  
+        &:last-child {
+          stop-color: $button-tertiary-disabled-icon-color-gen-ai-key-two;
+        }
+      }
     }
   }
 
-  &:not([disabled]):hover {
+  &:hover {
     svg.icon {
       linearGradient#paint-linear stop {
         &:first-child {
@@ -321,6 +331,24 @@ button {
 
   svg.icon {
     margin-top: 0;
+
+    linearGradient#paint-linear stop {
+      &:first-child {
+        stop-color: $button-tertiary-gradient-color-one;
+      }
+
+      &:last-child {
+        stop-color: $button-tertiary-gradient-color-two;
+      }
+    }
+  }
+
+  &.loading {
+    background: $button-gen-ai-active-bg-color;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
   }
 
   .dot-flashing-container .dot {
