@@ -534,6 +534,10 @@ $card-header-section: '.card-header-section', '.widget-header-section';
     &:hover .icon {
       color: $card-actions-toolbar-button-hover-color !important;
     }
+
+    &.go-back {
+      margin-top: -2px;
+    }
   }
 
   &:not(.has-toolbar) {
