@@ -47,7 +47,11 @@
 
     .trigger {
       margin-left: -29px;
-      margin-top: 4px;
+      margin-top: -1px;
+      min-height: 32px;
+      min-width: 32px;
+      width: 32px;
+      height: 32px;
 
       span.hitbox-area {
         left: -7px;

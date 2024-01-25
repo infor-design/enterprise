@@ -140,6 +140,7 @@ $week-view-cell-height: 25px;
     th.week-view-header-cell {
       .week-view-header-wrapper.is-today {
         height: calc(100% - 49px);
+        min-height: 58px;
 
         span.week-view-header-day-of-week.is-emphasis {
           background-color: $calendar-current-day-bg-color;
@@ -286,6 +287,7 @@ $week-view-cell-height: 25px;
           margin: 0 auto;
           margin-bottom: 2px;
           font-size: 1.6rem;
+          text-indent: 1px;
         }
 
         span.week-view-header-day-of-week {
