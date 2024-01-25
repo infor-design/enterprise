@@ -32,93 +32,122 @@
   <li><a href="#" data-action="show-event"><span data-translate="text">ShowEvent</span></a></li>
 </ul>
 
-<script id="test-script">
+<script>
+$('body').one('initialized', function () {
+  // Get the Event Type and Events to show in the calendar
+  var eventTypes = [];
   var events = [];
-  $('body').one('initialized', function () {
-    // Get the Event Type and Events to show in the calendar
-    var eventTypes = [];
 
-    $.getJSON('{{basepath}}api/event-types', function(res) {
-      eventTypes = res;
+  $.getJSON('{{basepath}}api/event-types', function(res) {
+    eventTypes = res;
 
-      $.getJSON('{{basepath}}api/events', function(res) {
-        events = res;
-
-        $('.calendar').calendar({
-          eventTypes: eventTypes,
-          events: events,
-          day: 5,
-          template: 'tmpl-readonly',
-          mobileTemplate: 'tmpl-mbl-readonly',
-          modalTemplate: 'tmpl-modal',
-          menuId: 'calendar-actions-menu',
-          attributes: [{ name: 'id', value: 'calendar-id' }, { name: 'data-automation-id', value: 'calendar-automation-id' } ],
-        });
+    $.getJSON('{{basepath}}api/events', function(res) {
+      events = res;
+      $('.calendar').calendar({
+        month: 11,
+        year: 2023,
+        day: 15,
+        eventTypes: eventTypes,
+        disable: {
+          dates: ['12/12/2023', '12/19/2023']
+        },
+        dayLegend: [
+          { name: 'Public Holiday', color: 'emerald02', dates: ['12/7/2023', '12/8/2023']},
+          { name: 'Other', color: 'amethyst02', dates: ['12/21/2023', '12/22/2023']}
+        ],
+        events: events,
+        upcomingEventDays: 0,
+        template: 'tmpl-readonly',
+        mobileTemplate: 'tmpl-mbl-readonly',
+        modalTemplate: 'tmpl-modal',
+        menuId: 'calendar-actions-menu'
       });
     });
   });
+});
 
-  $('#actions').on('selected', function(e, args) {
-    var action = args[0].getAttribute('data-action');
-    var api = $('.calendar').data('calendar');
-    var selectedDate = api.getDayEvents();
-    var events = api.settings.events;
-    var defaultHours = 8;
-    var startDate = new Date(selectedDate.date);
-    var endDate = new Date(selectedDate.date);
-    var isAllDay = true;
-    startDate.setHours(0, 0, 0, 0);
-    endDate.setHours(startDate.getHours() + defaultHours);
-    // To default all day use
-    if (isAllDay) {
-      endDate.setHours(23, 59, 59, 999);
-    }
+// Wire up the actions
+$('#actions').on('selected', function(e, args) {
+  var action = args[0].getAttribute('data-action');
+  var api = $('.calendar').data('calendar');
+  var selectedDate = api.getDayEvents();
+  var events = api.settings.events;
+  var defaultHours = 8;
+  var startDate = new Date(selectedDate.date);
+  var endDate = new Date(selectedDate.date);
+  var isAllDay = true;
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(startDate.getHours() + defaultHours);
+  // To default all day use
+  if (isAllDay) {
+    endDate.setHours(23, 59, 59, 999);
+  }
 
-    if (action === 'add-api') {
-      var newEvent = {
-        id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
-        subject: 'New Random Event',
-        comments: 'New Random Event Details',
-        starts: Soho.Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
-        ends: Soho.Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
-        type: 'team',
-        isAllDay: isAllDay
-      };
+  if (action === 'add-api') {
+    var newEvent = {
+      id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
+      subject: 'New Random Event',
+      comments: 'New Random Event Details',
+      starts: Soho.Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      ends: Soho.Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      type: 'team',
+      isAllDay: isAllDay
+    };
+    api.addEvent(newEvent);
+  }
+
+  if (action === 'add-modal') {
+    var newEvent = {
+      id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
+      title: 'Request Time Off',
+      subject: 'New Random Event',
+      comments: 'New Random Event Details',
+      starts: Soho.Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      ends: Soho.Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+      type: 'dto',
+      isAllDay: isAllDay
+    };
+
+    var done = function(elem, event) {
+      // Collect the data and popuplate the event object
+      var inputs = elem.querySelectorAll('input, textarea, select');
+      for (var i = 0; i < inputs.length; i++) {
+        newEvent[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
+      }
+
       api.addEvent(newEvent);
-    }
+      return;
+    };
 
-    if (action === 'add-modal') {
-      var newEvent = {
-        id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
-        title: 'Request Time Off',
-        subject: 'New Random Event',
-        comments: 'New Random Event Details',
-        starts: Soho.Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
-        ends: Soho.Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
-        type: 'dto',
-        isAllDay: isAllDay
-      };
+    api.showEventModal(newEvent, done);
+  }
 
-      var done = function(elem, event) {
-        // Collect the data and popuplate the event object
-        var inputs = elem.querySelectorAll('input, textarea, select');
-        for (var i = 0; i < inputs.length; i++) {
-          newEvent[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
-        }
+  if (action === 'clear') {
+    api.clearEvents(selectedDate.date);
+  }
+});
 
-        api.addEvent(newEvent);
-        return;
-      };
+$(".calendar").on('beforemonthrendered', () => {
+  var api = $(".calendar").data("calendar");
 
-      api.showEventModal(newEvent, done);
-    }
+  var settings = {
+    disable: {
+      dates: ['1/22/2024', '1/2/2024']
+    },
+    dayLegend: [
+      { name: 'Special Holiday', color: 'amber03', dates: ['1/18/2024', '1/19/2024']}
+      // { name: 'Public Holiday', color: 'emerald02', dates: ['1/23/2024', '1/24/2024']},
+      // { name: 'Other', color: 'amethyst02', dates: ['1/29/2024', '1/30/2024']}
+    ]
+  };
 
-    if (action === 'clear') {
-      api.clearEvents(selectedDate.date);
-    }
-  });
+  if (api) {
+    api.updateMonthDetails(settings);
+  }
+});
+
+
 </script>
-
 
 <script id="tmpl-mbl-readonly" type="text/html">
   {{={{{ }}}=}}

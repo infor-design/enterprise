@@ -85,6 +85,44 @@ Once the proper markup is in place calling `$(elem).button()` will correctly ini
 </ul>
 ```
 
+We introduce a new style button in generative AI purpose. This example button is an generative AI button specifically crafted for triggering the generation of AI insights.
+
+Here's the example markup:
+
+```html
+<!-- Primary -->
+<button class="btn-primary btn-generative" type="button" id="btn-generate-ai-1">
+  <span>Generate</span>
+  <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+    <use href="#icon-insights-smart-panel"></use>
+  </svg>
+</button>
+
+<!-- Tertiary -->
+<button class="btn-tertiary btn-generative" type="button" id="btn-tertiary-generate-ai-1">
+  <span>Generate</span>
+</button>
+
+<!--Generative Button Icon -->
+<button type="button" class="btn-icon btn-generative" id="gen-icon-ai-1">
+  <span>Date</span>
+  <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+    <use href="#icon-insights-smart-panel"></use>
+  </svg>
+</button>
+```
+
+We created an API called `performGenerativeAction()` by replacing the content of a button with a loading indicator, then replacing it with generated AI content after a specified delay.
+
+```javascript
+$('#btn-tertiary-generate-ai-1').on('click keypress', function (e) {
+  e.preventDefault();
+  var $btn = $(this);
+  var btnApi = $btn.data('button');
+  btnApi.performGenerativeAction(10000);
+});
+```
+
 ## Implementation Tips
 
 - Make sure to add an automation-id or permanently unique id for testing that remains the same across versions.

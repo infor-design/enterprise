@@ -1,0 +1,51 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label class="label" for="title">Title</label>
+      <input type="text" id="title" placeholder="Example"/>
+    </div>
+
+    <div class="field">
+      <span id="comments-label" class="label">Comments</span>
+      <div class="editor" id="editor1" aria-label="Comments" data-init="false">
+        <p>Embrace <a href="http://en.wikipedia.org/wiki/e-commerce" class="hyperlink">e-commerce action-items</a>, reintermediate, ecologies paradigms wireless share life-hacks create innovative harness. Evolve solutions rich-clientAPIs synergies harness relationships virtual vertical facilitate end-to-end, wireless, evolve synergistic synergies.</p>
+        <p>Cross-platform, evolve, ROI scale cultivate eyeballs addelivery, e-services content cross-platform leverage extensible viral incentivize integrateAJAX-enabled sticky evolve magnetic cultivate leverage; cutting-edge. Innovate, end-to-end podcasting, whiteboard streamline e-business social; compelling, "cross-media exploit infomediaries innovative integrate integrateAJAX-enabled." Killer interactive reinvent, cultivate widgets leverage morph.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var editorElement = $('#editor1');
+    var loadingIndicator = $('<div class="ai-loading-indicator"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>');
+
+    editorElement.editor({
+      excludeButtons: {
+        editor: ['backColor']
+      }
+    });
+
+    editorElement.on('generateai', function (e, elements) {
+      e.preventDefault();
+
+      // Cache the jQuery objects
+      var editor = $(elements.editor[0]);
+      var toolbar = $(elements.toolbar);
+
+      // Add the loading indicator to the editor element
+      loadingIndicator.appendTo(editor);
+
+      // Disable button interactions during processing
+      toolbar.find('.btn-generative').css('pointer-events', 'none');
+
+      setTimeout(function () {
+        // Remove the loading indicator after a delay
+        editor.find('.ai-loading-indicator').remove();
+        toolbar.find('.btn-generative').css('pointer-events', '');
+      }, 4000);
+    });
+  });
+</script>

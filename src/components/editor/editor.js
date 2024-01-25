@@ -66,6 +66,7 @@ const EDITOR_DEFAULTS = {
       'separator', 'anchor',
       'separator', 'image',
       'separator', 'clearFormatting',
+      'separator', 'generative',
       'separator', 'source'
     ],
     source: [
@@ -77,12 +78,13 @@ const EDITOR_DEFAULTS = {
       'separator', 'anchor',
       'separator', 'image',
       'separator', 'clearFormatting',
-      'separator', 'visual'
+      'separator', 'generative',
+      'separator', 'visual',
     ]
   },
   excludeButtons: {
-    editor: ['backColor'],
-    source: ['backColor']
+    editor: ['backColor', 'generative'],
+    source: ['backColor', 'generative']
   },
   rows: {
     editor: null,
@@ -125,7 +127,9 @@ function Editor(element, settings) {
   if (settings?.buttons) {
     this.settings.buttons = settings.buttons;
   }
-
+  if (settings?.excludeButtons) {
+    this.settings.excludeButtons = settings.excludeButtons;
+  }
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -805,7 +809,8 @@ Editor.prototype = {
       h3: 51, // {Ctrl + 3} h3
       h4: 52, // {Ctrl + 4} h4
       space: 32, // {Ctrl + Space} Clear Formatting
-      sv: 192 // {Ctrl + ~} toggle source -or- visualview
+      sv: 192, // {Ctrl + ~} toggle source -or- visualview
+      g: 71 // {Ctrl + G} toggle for gen AI Button
     };
 
     currentElement.on('keydown.editor', (e) => {
@@ -872,6 +877,9 @@ Editor.prototype = {
           break;
         case keys.space:
           this.triggerClick(e, 'clearFormatting');
+          break;
+        case keys.g:
+          this.triggerClick(e, 'generative');
           break;
         case keys.sv:
           this.triggerClick(e, currentElement === this.element ? 'source' : 'visual');
@@ -1100,6 +1108,8 @@ Editor.prototype = {
 
       clearFormatting: `<button type="button" class="btn btn-editor" title="${Locale.translate('ClearFormatting')}" data-action="clearFormatting" >${buttonLabels.clearFormatting}</button>`,
 
+      generative: `<button type="button" class="btn btn-editor btn-generative" title="${Locale.translate('GenerateWithAI')}" data-action="generative">${buttonLabels.generative}</button>`,
+
       source: `<button type="button" class="btn btn-editor" title="${Locale.translate('ViewSource')}" data-action="source" >${buttonLabels.source}</button>`,
 
       visual: `<button type="button" class="btn btn-editor" title="${Locale.translate('ViewVisual')}" data-action="visual" >${buttonLabels.visual}</button>`
@@ -1135,6 +1145,7 @@ Editor.prototype = {
       justifyCenter: this.getIcon('JustifyCenter', 'center-text'),
       justifyRight: this.getIcon('JustifyRight', 'right-text-align'),
       clearFormatting: this.getIcon('ClearFormatting', 'clear-formatting'),
+      generative: this.getIcon('GenerateWithAI', 'insights-smart-panel'),
       source: this.getIcon('ViewSource', 'html', 'html-icon'),
       visual: this.getIcon('ViewVisual', 'visual', 'visual-icon')
     };
@@ -2308,6 +2319,8 @@ Editor.prototype = {
         this.execColorActions(action);
       } else if (action === 'clearFormatting') {
         this.clearFormatting();
+      } else if (action === 'generative') {
+        this.generativeButtonAction();
       } else if (action === 'source' || action === 'visual') {
         this.toggleSource();
       } else {
@@ -2635,6 +2648,27 @@ Editor.prototype = {
     if (align.found) {
       align.elem.style.textAlign = align.textAlign;
     }
+  },
+
+  /**
+   * Actions for Gen AI button
+   * @private
+   * @returns {void}
+   */
+  generativeButtonAction() {
+    const self = this;
+
+    /**
+     * Triggers the 'generateai' event on the editor element.
+     * @event generateai
+     * @memberof Editor
+     * @type {Object}
+     * @param {Object} eventData - Data to be passed along with the event.
+     * @param {jQuery} self - The main jQuery component.
+     * @param {jQuery} eventData.editor - The jQuery object representing the editor element.
+     * @param {jQuery} eventData.toolbar - The jQuery object representing the toolbar element.
+     */
+    self.element.triggerHandler('generateai', [{ self, editor: self.element, toolbar: self.toolbar }]);
   },
 
   /**

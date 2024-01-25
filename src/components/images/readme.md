@@ -8,8 +8,8 @@ demo:
   pages:
   - name: A Pattern showing a toolbar over a list of Images
     slug: example-image-list
-  - name: People Photos and initials
-    slug: example-photos
+  - name: People, avatars and initials
+    slug: example-avatar
 ---
 
 The image component is a CSS only component to handle placeholder images, empty images, and the various sizes of images that can appear in an application. Placeholder images can be in sizes `image-lg`, `image-md`, and `image-sm`.
@@ -26,6 +26,19 @@ This example shows how to invoke a small sized placeholder image.
   <span class="audible">Placeholder Image</span>
 </div>
 ```
+
+This example shows how to create an initials avatar
+
+```html
+<div class="avatar azure05">AC</div>
+<div class="avatar large azure05">Ac</div>
+```
+
+For the avatar class you can use the following classes.
+
+- `round` To make it round, or else it has a small border radius. The top level items in module nav should have the border radius. The guest area and other legacy areas should use the fully round one.
+- `none` or `large` To adjust the size to be larger add class `large`. Normal size is used in module nav and the app nav area and other legacy areas should use the `large` one.
+- `<colorname><0-9>` To set the background color, the color name is from the colors palette. For example `azure05, emerald05` depending on contrast should avoid 0-4 and use 5-8 range. When in doubt follow the designs.
 
 ## Accessibility
 

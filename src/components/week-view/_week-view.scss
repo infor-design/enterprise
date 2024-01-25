@@ -41,7 +41,6 @@ $week-view-cell-height: 25px;
 
   // Style todays date
   .week-view-header-wrapper.is-today {
-    border-bottom-color: $ids-color-brand-primary-base;
     color: $ids-color-brand-primary-base;
     font-weight: $ids-number-font-weight-bold;
   }
@@ -138,6 +137,40 @@ $week-view-cell-height: 25px;
       height: $week-view-cell-height;
     }
 
+    th.week-view-header-cell {
+      .week-view-header-wrapper.is-today {
+        height: calc(100% - 49px);
+        min-height: 58px;
+
+        span.week-view-header-day-of-week.is-emphasis {
+          background-color: $calendar-current-day-bg-color;
+          width: 30px;
+          height: 30px;
+          border-radius: 15px;
+          line-height: 1.5;
+          color: $ids-color-palette-white;
+          margin: 0 auto;
+        }
+      }
+    }
+
+    td {
+      &.is-selected {
+        background-color: $calendar-selected-bg-color;
+      }
+
+      &:focus {
+        -webkit-box-shadow: inset 0 0 0 1px $calendar-selected-border-color;
+        -moz-box-shadow: inset 0 0 0 1px $calendar-selected-border-color;
+        box-shadow: inset 0 0 0 1px $calendar-selected-border-color;
+        outline: 0;
+      }
+
+      &:hover {
+        background-color: $calendar-hover-bg-color;
+      }
+    }
+
     // Legend Row with times
     th:nth-child(1) {
       font-size: $ids-size-font-xs;
@@ -154,7 +187,7 @@ $week-view-cell-height: 25px;
     }
 
     // Alternate row style
-    tr:nth-child(odd) td {
+    tr:nth-child(odd) td:not(.is-focused) {
       border-bottom: 1px solid $calendar-line-color-light;
     }
   }
@@ -243,11 +276,22 @@ $week-view-cell-height: 25px;
 
   // Adjust the day Version
   &.is-day-view {
-    .week-view-header-wrapper {
-      .week-view-header-day-of-week {
-        &.is-emphasis {
-          font-size: 3rem;
-          line-height: 4rem;
+    th.week-view-header-cell {
+      .week-view-header-wrapper.is-today {
+        span.week-view-header-day-of-week.is-emphasis {
+          width: 25px;
+          height: 25px;
+          border-radius: 15px;
+          line-height: 1.5;
+          color: $ids-color-palette-white;
+          margin: 0 auto;
+          margin-bottom: 2px;
+          font-size: 1.6rem;
+          text-indent: 1px;
+        }
+
+        span.week-view-header-day-of-week {
+          color: $calendar-current-day-bg-color;
         }
       }
     }

@@ -101,6 +101,21 @@ $hyperlink-disabled-color: $disabled-color;
 $hr-top-color: $ids-color-palette-slate-90;
 $hr-bottom-color: transparent;
 
+// Buttons Gen AI
+$button-color-gen-ai: $ids-color-palette-white;
+$button-tertiary-color-gen-ai: linear-gradient(107deg, #10B6A6 17.32%, #10B7A6 95.32%);
+$button-tertiary-hover-color-gen-ai: linear-gradient(107deg, #10B7A6 17.32%, #0B9789 95.32%);
+$button-tertiary-disabled-color-gen-ai: linear-gradient(107deg, rgba(187, 187, 191, 0.50) 17.32%, rgba(187, 187, 191, 0.50) 95.32%);
+$button-gen-ai-active-bg-color: linear-gradient(107deg, #0B9789 5.97%, #1A3362 102.35%);
+$button-tertiary-gradient-color-one: #10B6A6;
+$button-tertiary-gradient-color-two: #10B6A6;
+$button-tertiary-gradient-hover-color-one: #10B7A6;
+$button-tertiary-gradient-hover-color-two: #0B9789;
+$button-tertiary-gradient-active-color-one: #0B9789;
+$button-tertiary-gradient-active-color-two: #1A3362;
+$button-tertiary-disabled-icon-color-gen-ai-key-one: #BBBBBF;
+$button-tertiary-disabled-icon-color-gen-ai-key-two: $button-tertiary-disabled-icon-color-gen-ai-key-one;
+
 // Buttons
 $button-color-secondary-focus-background: $ids-color-palette-slate-10;
 $button-color-primary-disabled-background: $ids-color-palette-slate-80;
@@ -127,7 +142,7 @@ $button-color-secondary-initial-background: transparent;
 
 $button-color-tertiary-disabled-background-new: $ids-color-palette-slate-90;
 $button-color-tertiary-hover-background-new: $ids-color-palette-slate-70;
-$button-color-tertiary-hover-font-new: $ids-color-palette-azure-40;
+$button-color-tertiary-hover-font-new: $ids-color-palette-white;
 $button-color-tertiary-disabled-font: $ids-color-palette-slate-60;
 
 $button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-60;
@@ -998,9 +1013,9 @@ $calendar-bg-color: $panel-bg-color;
 $calendar-event-color: $ids-color-palette-slate-100;
 $calendar-line-color: $ids-color-palette-slate-70;
 $calendar-line-color-light: $ids-color-palette-slate-70;
-$calendar-selected-border-color: $ids-color-brand-primary-base;
-$calendar-selected-bg-color: $ids-color-palette-slate-70;
-$calendar-hover-bg-color: rgba(49, 50, 54, 0.2);
+$calendar-selected-border-color: $ids-color-palette-azure-60;
+$calendar-selected-bg-color: $ids-color-palette-slate-80;
+$calendar-hover-bg-color: $ids-color-palette-slate-70;
 $calendar-disabled-bg-color: $ids-color-palette-slate-80;
 $calendar-disabled-color: $ids-color-palette-slate-40;
 

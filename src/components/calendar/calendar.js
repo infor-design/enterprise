@@ -1139,6 +1139,7 @@ Calendar.prototype = {
         this.showModalWithCallback(mobileEventData[0], false, target);
         this.element.triggerHandler('eventclick', { month: this.settings.month, year: this.settings.year, event: mobileEventData[0] });
       });
+
     return this;
   },
 
@@ -1382,6 +1383,26 @@ Calendar.prototype = {
     if (this.weekView) {
       this.weekView.clearEvents();
     }
+  },
+
+  /**
+   * Update the calendar settings for the month
+   * @param {object} settings The new settings object to use.
+   * @returns {void}
+   */
+  updateMonthDetails(settings) {
+    if (!settings || settings === null || settings === undefined) {
+      return;
+    }
+
+    if (settings.dayLegend) {
+      settings.showLegend = settings.dayLegend !== null;
+      settings.legend = settings.dayLegend;
+    }
+
+    this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    this.monthView.updateMonthDetails(this.settings);
+    this.renderEventLegend();
   },
 
   /**
