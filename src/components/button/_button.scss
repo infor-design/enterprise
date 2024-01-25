@@ -124,13 +124,13 @@ button {
   display: flex;
   position: relative;
   flex-direction: row;
-  gap: 3px;
+  gap: 2px;
 
   .dot {
     display: inline-flex;
     position: relative;
-    width: 4px;
-    height: 4px;
+    width: 3px;
+    height: 3px;
     border-radius: 5px;
     background-color: #fff;
     color: #fff;

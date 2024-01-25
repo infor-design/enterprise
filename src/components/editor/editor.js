@@ -66,7 +66,7 @@ const EDITOR_DEFAULTS = {
       'separator', 'anchor',
       'separator', 'image',
       'separator', 'clearFormatting',
-      'separator', 'genAIButton',
+      'separator', 'generative',
       'separator', 'source'
     ],
     source: [
@@ -78,7 +78,7 @@ const EDITOR_DEFAULTS = {
       'separator', 'anchor',
       'separator', 'image',
       'separator', 'clearFormatting',
-      'separator', 'genAIButton',
+      'separator', 'generative',
       'separator', 'visual'
     ]
   },
@@ -877,7 +877,7 @@ Editor.prototype = {
           this.triggerClick(e, 'clearFormatting');
           break;
         case keys.g:
-          this.triggerClick(e, 'genAIButton');
+          this.triggerClick(e, 'generative');
           break;
         case keys.sv:
           this.triggerClick(e, currentElement === this.element ? 'source' : 'visual');
@@ -1106,7 +1106,7 @@ Editor.prototype = {
 
       clearFormatting: `<button type="button" class="btn btn-editor" title="${Locale.translate('ClearFormatting')}" data-action="clearFormatting" >${buttonLabels.clearFormatting}</button>`,
 
-      genAIButton: `<button type="button" class="btn btn-editor btn-generative" title="${Locale.translate('GenAIButton')}" data-action="genAIButton">${buttonLabels.genAIButton}<button>`,
+      generative: `<button type="button" class="btn btn-editor btn-generative" title="${Locale.translate('GenAIButton')}" data-action="generative">${buttonLabels.generative}<button>`,
 
       source: `<button type="button" class="btn btn-editor" title="${Locale.translate('ViewSource')}" data-action="source" >${buttonLabels.source}</button>`,
 
@@ -1143,7 +1143,7 @@ Editor.prototype = {
       justifyCenter: this.getIcon('JustifyCenter', 'center-text'),
       justifyRight: this.getIcon('JustifyRight', 'right-text-align'),
       clearFormatting: this.getIcon('ClearFormatting', 'clear-formatting'),
-      genAIButton: this.getIcon('GenAIButton', 'insights-smart-panel'),
+      generative: this.getIcon('GenAIButton', 'insights-smart-panel'),
       source: this.getIcon('ViewSource', 'html', 'html-icon'),
       visual: this.getIcon('ViewVisual', 'visual', 'visual-icon')
     };
@@ -2317,8 +2317,8 @@ Editor.prototype = {
         this.execColorActions(action);
       } else if (action === 'clearFormatting') {
         this.clearFormatting();
-      } else if (action === 'genAIButton') {
-        this.genAIButtonAction();
+      } else if (action === 'generative') {
+        this.generativeButtonAction();
       } else if (action === 'source' || action === 'visual') {
         this.toggleSource();
       } else {
@@ -2653,7 +2653,7 @@ Editor.prototype = {
    * @private
    * @returns {void}
    */
-  genAIButtonAction() {
+    generativeButtonAction() {
     const self = this;
 
     /**
