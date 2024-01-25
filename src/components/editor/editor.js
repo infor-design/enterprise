@@ -2653,7 +2653,7 @@ Editor.prototype = {
    * @private
    * @returns {void}
    */
-    generativeButtonAction() {
+  generativeButtonAction() {
     const self = this;
 
     /**
