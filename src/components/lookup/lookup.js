@@ -100,6 +100,7 @@ const LOOKUP_DEFAULTS = {
   tabbable: true,
   dblClickApply: false,
   allowDuplicates: false,
+  cssClass: null
 };
 
 function Lookup(element, settings) {
@@ -546,7 +547,7 @@ Lookup.prototype = {
       title: labelText,
       content,
       buttons,
-      cssClass: `lookup-modal${!hasKeywordSearch ? ' lookup-no-search' : ''}`,
+      cssClass: `lookup-modal${!hasKeywordSearch ? ' lookup-no-search' : ''} ${this.settings.cssClass ? this.settings.cssClass : ''}`,
       attributes: addSuffixToAttributes(this.settings.attributes, [], 'modal')
     };
 
