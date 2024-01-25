@@ -188,7 +188,7 @@
       }
 
       .datepicker + .btn-icon.trigger {
-        margin-top: 9px;
+        margin-top: 8px;
       }
     }
   }
@@ -254,6 +254,7 @@
                 .datepicker + .trigger {
                   margin-left: 11px;
                   margin-top: -0.2px;
+                  background-color: transparent;
                 }
 
                 .trigger {
@@ -279,7 +280,8 @@
             .datepicker {
               + .trigger {
                 > .icon {
-                  top: -3px;
+                  top: -1px;
+                  left: -1px;
                 }
               }
             }
@@ -377,7 +379,7 @@
 
       .dropdown-trigger:not(.colorpicker-container) {
         + .icon {
-          top: 3px !important;
+          top: 1px !important;
           left: 4px !important;
         }
       }
@@ -385,7 +387,7 @@
 
     .datagrid-trigger-cell {
       .icon.icon-calendar {
-        left: 5px;
+        left: 4px;
         top: 0;
       }
     }
@@ -413,7 +415,11 @@
 
         + .trigger.btn-icon {
           margin-left: 14px;
-          margin-top: 0.5px;
+          margin-top: 3px;
+
+          &:hover {
+            background-color: transparent;
+          }
         }
       }
 
@@ -777,13 +783,13 @@
   }
 
   tbody tr td.is-editing .dropdown {
-    padding: 6px 22px 0 5px;
+    padding: 4px 22px 0 3px !important;
   }
 
   tbody tr td.is-editing .dropdown-wrapper .dropdown + .icon {
     height: 16px;
-    right: 4px;
-    top: 6px !important;
+    right: 1px;
+    top: 5px !important;
     width: 16px;
   }
 
@@ -848,8 +854,8 @@
 }
 
 .datagrid-dropdown-list.extra-small-rowheight .trigger .icon {
-  left: 3.5px !important;
-  top: 8.5px;
+  left: 4px !important;
+  top: 8px;
 }
 
 .datagrid-dropdown-list.small-rowheight .trigger .icon {
@@ -871,6 +877,7 @@
       td.is-editing {
         .datepicker + .btn-icon.trigger {
           margin-top: 1px;
+          background-color: transparent;
         }
       }
     }

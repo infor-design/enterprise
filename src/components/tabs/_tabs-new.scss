@@ -13,10 +13,10 @@
   }
 }
 
-.tab-container.horizontal {
+.tab-container.horizontal:not(.has-counts) {
   > .tab-list-container {
-    margin-top: 5px;
-    height: 34px;
+    margin-top: 6px;
+    height: 36px;
 
     .tab {
       a {
@@ -24,11 +24,11 @@
       }
 
       &:not(.is-selected):not(.is-disabled):hover {
-        border-bottom: 2px solid $tab-hover-color;
+        border-bottom: 4px solid $tab-hover-color;
       }
 
       &:not(.is-disabled).is-selected {
-        border-bottom: 2px solid $tab-selected-color;
+        border-bottom: 4px solid $tab-selected-color;
       }
 
     }

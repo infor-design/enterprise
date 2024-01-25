@@ -28,6 +28,7 @@
 - `[Datagrid]` Fixed contextual toolbar auto hide when performing action. ([#8352](https://github.com/infor-design/enterprise/issues/8352))
 - `[Dropdown]` Fixed handling for null, undefined objects passed to updateItemIcon method. ([#8353](https://github.com/infor-design/enterprise/issues/8353))
 - `[Datagrid]` Fixed Hyperlink Formatter `cssClass` string resolution. ([#8340](https://github.com/infor-design/enterprise/issues/8340))
+- `[Datagrid]` Fixed position of icons in trigger fields in datagrid editors. ([#8379](https://github.com/infor-design/enterprise/issues/8379))
 - `[Dropdown]` Fixed handling for null, undefined objects passed to updateItemIcon method. ([#8353](https://github.com/infor-design/enterprise/issues/8353))
 - `[Datagrid]` Fixed contextual toolbar auto hide when performing action. ([#8352](https://github.com/infor-design/enterprise/issues/8352))
 - `[Fieldset]` Changed padding in reset for better compatibility. ([#1756](https://github.com/infor-design/enterprise-wc/issues/1756))
@@ -52,9 +53,11 @@
 - `[Tabs]` Adjusted icon alignment and color for searchfield in tabs. ([#8272](https://github.com/infor-design/enterprise/issues/8272))
 - `[Tabs]` Fixed tabs add tab button focus. ([#8275](https://github.com/infor-design/enterprise/issues/8275))
 - `[Tabs]` Added setting to disable error icon in validation. ([#8254](https://github.com/infor-design/enterprise/issues/8254))
+- `[Tabs]` Fixed UI issues on counts. ([#8385](https://github.com/infor-design/enterprise/issues/8385))
 - `[Tabs Header]` Fixed focus border not visible in classic contrast alabaster. ([#8265](https://github.com/infor-design/enterprise/issues/8265))
 - `[Tabs Module]` Fixed more button not visible in alabaster. ([#8271](https://github.com/infor-design/enterprise/issues/8271))
 - `[Tabs Vertical]` Fixed focus state outline when having scrollable. ([#8269](https://github.com/infor-design/enterprise/issues/8269))
+- `[Widgets]` Removed small invisible border on borderless widget. ([#8380](https://github.com/infor-design/enterprise/issues/8380))
 
 ## v4.91.0
 

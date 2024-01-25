@@ -152,7 +152,7 @@
 .btn {
   border-radius: 8px;
 
-  &:hover:not([disabled]):not(.btn-primary) {
+  &:hover:not([disabled]):not(.btn-primary):not(.trigger) {
     &:not(:disabled) {
       background-color: $button-color-tertiary-hover-background-new;
       color: $button-color-tertiary-hover-font-new;
@@ -398,7 +398,7 @@ html {
       }
     }
   }
-  
+
   .field-short,
   .form-layout-compact .field {
     .searchfield-wrapper.has-close-icon-button.has-text {
