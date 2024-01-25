@@ -4,11 +4,13 @@
 
 ## v4.92.0 Features
 
+- `[Avatar]` Added a new `avatar` class that can show initials and can be used in the module nav guest area. ([#8374](https://github.com/infor-design/enterprise/issues/8374))
 - `[Calendar]` Added new design for selected, hover, focused and current day in Calendar Monthview, Week View and Day View. ([#5065](https://github.com/infor-design/enterprise/issues/5065))
 - `[Calendar]` Added feature of updating legends and disabled dates on before render of month. ([#8248](https://github.com/infor-design/enterprise/issues/8248))
 - `[Datagrid]` Added option to disable tooltip in columns. ([#8252](https://github.com/infor-design/enterprise/issues/8252))
 - `[Header]` Added an example configuration with both a hamburger and a back button. ([#8327](https://github.com/infor-design/enterprise/issues/8327))
 - `[Icons]` Added new icons which are more substantial in look. ([#8129](https://github.com/infor-design/enterprise/issues/8129))
+- `[Lookup]` Added css setting for lookup. ([#8206](https://github.com/infor-design/enterprise/issues/8206))
 
 ## v4.92.0 Fixes
 
@@ -30,6 +32,7 @@
 - `[Link]` Changed selected border color for link card. ([#8225](https://github.com/infor-design/enterprise/issues/8225))
 - `[Locale]` Changed all `zh` locales time format as suggested by native speakers. ([#8313](https://github.com/infor-design/enterprise/issues/8313))
 - `[Lookup]` Fixed clear button in keyword search not updating search results on click. ([#8258](https://github.com/infor-design/enterprise/issues/8258))
+- `[Mask]` Alternative approach for checking instanceof RegExp if `instanceof RegExp` returns false. ([8365](https://github.com/infor-design/enterprise/issues/8365))
 - `[Modal]` Fixed a bug where the modal would shift up when toggling a switch inside of it. ([#8018](https://github.com/infor-design/enterprise/issues/8018))
 - `[Modal]` Fixed a bug where textarea field is bigger than other fields on screen widths less that 400px. ([#8125](https://github.com/infor-design/enterprise/issues/8125))
 - `[Process Indicator]` Adjusted alignment of icon in compact process indicator. ([#8241](https://github.com/infor-design/enterprise/issues/8241))
@@ -37,6 +40,7 @@
 - `[Pager]` Added `showPager` and `hidePager` method to show and hide the pager bar. ([#8094](https://github.com/infor-design/enterprise/issues/8094))
 - `[Process Indicator]` Adjusted alignment of icon in compact process indicator. ([#8241](https://github.com/infor-design/enterprise/issues/8241))
 - `[Scatterplot]` Fixed legend position to be centered inside the div parent. ([#8194](https://github.com/infor-design/enterprise/issues/8194))
+- `[Searchfield]` Fixed compact size height. ([NG#1605](https://github.com/infor-design/enterprise-ng/issues/1605))
 - `[Searchfield]` Updated hover color for header searchfield clear icon. ([#8223](https://github.com/infor-design/enterprise/issues/8223))
 - `[Tabs]` Fixed size in close button of tab list. ([#8274](https://github.com/infor-design/enterprise/issues/8274))
 - `[Tabs]` Adjusted icon alignment and color for searchfield in tabs. ([#8272](https://github.com/infor-design/enterprise/issues/8272))
