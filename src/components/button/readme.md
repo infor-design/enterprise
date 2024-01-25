@@ -123,7 +123,6 @@ $('#btn-tertiary-generate-ai-1').on('click keypress', function (e) {
 });
 ```
 
-
 ## Implementation Tips
 
 - Make sure to add an automation-id or permanently unique id for testing that remains the same across versions.
