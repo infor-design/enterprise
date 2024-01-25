@@ -1139,6 +1139,7 @@ Calendar.prototype = {
         this.showModalWithCallback(mobileEventData[0], false, target);
         this.element.triggerHandler('eventclick', { month: this.settings.month, year: this.settings.year, event: mobileEventData[0] });
       });
+
     return this;
   },
 

@@ -1281,11 +1281,12 @@ $calendar-bg-color: $panel-bg-color;
 $calendar-line-color: $ids-color-palette-graphite-20;
 $calendar-line-color-light: $ids-color-palette-graphite-10;
 $calendar-event-color: $ids-color-font-base;
-$calendar-selected-border-color: $ids-color-brand-primary-base;
-$calendar-selected-bg-color: $ids-color-palette-graphite-10;
-$calendar-hover-bg-color: rgba(240, 240, 240, 0.5);
+$calendar-selected-border-color: $ids-color-palette-azure-60;
+$calendar-selected-bg-color: $ids-color-palette-azure-10;
+$calendar-hover-bg-color: $ids-color-palette-slate-20;
 $calendar-disabled-bg-color: $ids-color-palette-graphite-10;
 $calendar-disabled-color: $ids-color-brand-secondary-contrast;
+$calendar-current-day-bg-color: $ids-color-palette-azure-60;
 
 // Breakpoint sizes - Grid
 $breakpoint-phone: 320px;
@@ -1327,3 +1328,5 @@ $swipeaction-right-hover-color: $ids-color-palette-white;
 //Misc
 $cubic-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 $button-size-compact-height: 24px;
+$searchfield-button-size-compact-height-new: 28px;
+$searchfield-button-size-compact-height: 26px;

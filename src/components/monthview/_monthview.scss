@@ -637,6 +637,16 @@
           top: 0;
           width: 10px;
 
+          &.current-day {
+            left: calc(100% - 35px);
+            background-color: $calendar-current-day-bg-color;
+            color: $ids-color-palette-white;
+            width: 30px;
+            height: 30px;
+            line-height: 2.1;
+            border-radius: 15px;
+          }
+
           &.month-label {
             font-weight: 600;
             left: auto;
@@ -656,11 +666,11 @@
           }
         }
 
-        &:hover:not(.is-disabled) {
+        &:hover:not(.is-disabled):not(.is-selected) {
           background-color: $calendar-hover-bg-color;
           color: $datepicker-day-color;
 
-          .day-text {
+          .day-text:not(.current-day) {
             background-color: transparent;
             color: $datepicker-day-color;
           }
@@ -670,7 +680,7 @@
           background-color: $calendar-hover-bg-color;
           color: $datepicker-day-color;
 
-          .day-text {
+          .day-text:not(.current-day) {
             background-color: transparent;
             color: $datepicker-day-color;
           }
@@ -678,16 +688,17 @@
 
         &.is-selected {
           background-color: $calendar-selected-bg-color;
-          box-shadow: inset 0 5px 0 0 $calendar-selected-border-color;
 
-          .day-text {
+          .day-text:not(.current-day) {
             background-color: inherit;
             color: $datepicker-day-color;
           }
+        }
 
-          &:focus {
-            box-shadow: 0 0 2px 2px $focus-box-shadow-color, inset 0 5px 0 0 $calendar-selected-border-color;
-          }
+        &:focus {
+          -webkit-box-shadow: inset 0 0 0 1px $calendar-selected-border-color;
+          -moz-box-shadow: inset 0 0 0 1px $calendar-selected-border-color;
+          box-shadow: inset 0 0 0 1px $calendar-selected-border-color;
         }
       }
 
