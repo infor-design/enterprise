@@ -39,6 +39,7 @@
 - `[Pager]` Added `showPager` and `hidePager` method to show and hide the pager bar. ([#8094](https://github.com/infor-design/enterprise/issues/8094))
 - `[Process Indicator]` Adjusted alignment of icon in compact process indicator. ([#8241](https://github.com/infor-design/enterprise/issues/8241))
 - `[Scatterplot]` Fixed legend position to be centered inside the div parent. ([#8194](https://github.com/infor-design/enterprise/issues/8194))
+- `[Searchfield]` Fixed compact size height. ([NG#1605](https://github.com/infor-design/enterprise-ng/issues/1605))
 - `[Searchfield]` Updated hover color for header searchfield clear icon. ([#8223](https://github.com/infor-design/enterprise/issues/8223))
 - `[Tabs]` Fixed size in close button of tab list. ([#8274](https://github.com/infor-design/enterprise/issues/8274))
 - `[Tabs]` Adjusted icon alignment and color for searchfield in tabs. ([#8272](https://github.com/infor-design/enterprise/issues/8272))
