@@ -300,6 +300,35 @@ $input-readonly-color: $input-color-readonly-font;
 $input-color-border-space: $header-bg-color;
 $input-border-color: $input-color-initial-border;
 
+// Loading Indicator
+$loading-indicator-ai-bar-base-bg-color: $ids-color-palette-amber-60;
+$loading-indicator-ai-bar-one-bg-color: #254A92;
+$loading-indicator-ai-bar-two-bg-color: #10B6A6;
+$loading-indicator-ai-bar-three-bg-color: #CBEFDC;
+
+// Button (Gen AI)
+$button-color-gen-ai: $button-color-primary-initial-font;
+$button-gen-ai-bg-color: linear-gradient(107deg, #254A92 17.32%, #10B7A6 95.32%);
+$button-gen-ai-hover-bg-color: linear-gradient(107deg, #1A3362 17.32%, #0B9789 95.32%);
+$button-gen-ai-active-bg-color: linear-gradient(107deg, #0B9789 5.97%, #1A3362 102.35%);
+$button-primary-disabled-color-gen-ai: linear-gradient(107deg, rgba(37, 74, 146, 0.50) 17.32%, rgba(16, 183, 166, 0.50) 95.32%);
+$button-primary-disabled-hover-color-gen-ai: linear-gradient(107deg, rgba(37, 74, 146, 0.50) 17.32%, rgba(16, 183, 166, 0.50) 95.32%);
+$button-tertiary-color-gen-ai: linear-gradient(107deg, #254A92 17.32%, #10B7A6 95.32%);
+$button-tertiary-hover-color-gen-ai: linear-gradient(107deg, #1A3362 17.32%, #0B9789 95.32%);
+$button-tertiary-disabled-color-gen-ai: linear-gradient(107deg, rgba(37, 74, 146, 0.50) 17.32%, rgba(16, 183, 166, 0.50) 95.32%);
+$button-tertiary-gradient-color-one: #254A92;
+$button-tertiary-gradient-color-two: #10B7A6;
+$button-tertiary-gradient-hover-color-one: #1A3362;
+$button-tertiary-gradient-hover-color-two: #0B9789;
+$button-tertiary-gradient-active-color-one: #0B9789;
+$button-tertiary-gradient-active-color-two: #1A3362;
+$button-primary-dot-flashing-bg-color-key-one: $ids-color-palette-white;
+$button-primary-dot-flashing-bg-color-key-two: rgba(255, 255, 255, 0.4);
+$button-tertiary-dot-flashing-bg-color-key-one: #0B9789;
+$button-tertiary-dot-flashing-bg-color-key-two: #1A3362;
+$button-tertiary-disabled-icon-color-gen-ai-key-one: #254A92;
+$button-tertiary-disabled-icon-color-gen-ai-key-two: #10B7A6;
+
 // Buttons
 $input-color-border-space: $header-bg-color;
 

@@ -174,6 +174,7 @@
         if (parts[1] !== shortThemeName) {
           shortThemeName = parts[1];
           shortThemeName = shortThemeName.replace('soho', 'classic').replace('uplift', 'new');
+          shortThemeName = shortThemeName.replace('new', 'new-default');
           var path = window.location.pathname;
 
           if (path.indexOf('/icons/') > -1) {

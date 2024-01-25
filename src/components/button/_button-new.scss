@@ -51,7 +51,7 @@
   }
 }
 
-.btn-primary[disabled]:not(.destructive) {
+.btn-primary[disabled]:not(.destructive):not(.btn-generative) {
   background-color: $button-color-primary-disabled-background-new;
   border: 2px solid $button-color-primary-disabled-background-new;
   color: $button-color-primary-disabled-font-new;
