@@ -249,7 +249,7 @@ Soho.Locale.addCulture('en-US', {
     French: { id: 'French', value: 'French', comment: 'Language name for French' },
     From: { id: 'From', value: 'From', comment: 'Start of a range (of dates)' },
     FullView: { id: 'FullView', value: 'Full view', comment: 'Full View tooltip' },
-    GenAIButton: { id: 'GenAIButton', value: 'Generative AI Button', comment: 'Button for Generative AI' },
+    GenerateWithAI: { id: 'GenerateWithAI', value: 'Generate with AI', comment: 'Button for Generative AI' },
     German: { id: 'German', value: 'German', comment: 'Language name for german' },
     Go: { id: 'Go', value: 'Go', comment: 'Go, perform a movement, start a search, move to the next thing in a workflow.' },
     GoBack: { id: 'GoBack', value: 'Go back', comment: 'Move Page / object this directionp' },

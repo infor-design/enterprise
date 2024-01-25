@@ -79,12 +79,12 @@ const EDITOR_DEFAULTS = {
       'separator', 'image',
       'separator', 'clearFormatting',
       'separator', 'generative',
-      'separator', 'visual'
+      'separator', 'visual',
     ]
   },
   excludeButtons: {
-    editor: ['backColor'],
-    source: ['backColor']
+    editor: ['backColor', 'generative'],
+    source: ['backColor', 'generative']
   },
   rows: {
     editor: null,
@@ -127,7 +127,9 @@ function Editor(element, settings) {
   if (settings?.buttons) {
     this.settings.buttons = settings.buttons;
   }
-
+  if (settings?.excludeButtons) {
+    this.settings.excludeButtons = settings.excludeButtons;
+  }
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -1106,7 +1108,7 @@ Editor.prototype = {
 
       clearFormatting: `<button type="button" class="btn btn-editor" title="${Locale.translate('ClearFormatting')}" data-action="clearFormatting" >${buttonLabels.clearFormatting}</button>`,
 
-      generative: `<button type="button" class="btn btn-editor btn-generative" title="${Locale.translate('GenAIButton')}" data-action="generative">${buttonLabels.generative}<button>`,
+      generative: `<button type="button" class="btn btn-editor btn-generative" title="${Locale.translate('GenerateWithAI')}" data-action="generative">${buttonLabels.generative}</button>`,
 
       source: `<button type="button" class="btn btn-editor" title="${Locale.translate('ViewSource')}" data-action="source" >${buttonLabels.source}</button>`,
 
@@ -1143,7 +1145,7 @@ Editor.prototype = {
       justifyCenter: this.getIcon('JustifyCenter', 'center-text'),
       justifyRight: this.getIcon('JustifyRight', 'right-text-align'),
       clearFormatting: this.getIcon('ClearFormatting', 'clear-formatting'),
-      generative: this.getIcon('GenAIButton', 'insights-smart-panel'),
+      generative: this.getIcon('GenerateWithAI', 'insights-smart-panel'),
       source: this.getIcon('ViewSource', 'html', 'html-icon'),
       visual: this.getIcon('ViewVisual', 'visual', 'visual-icon')
     };

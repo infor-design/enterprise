@@ -454,34 +454,6 @@
     padding: 0;
     text-align: left;
 
-    &.btn-generative {
-      background: $button-gen-ai-bg-color;
-      border: none;
-      padding-left: 1px;
-      width: 24px;
-
-      &:hover:not(.destructive):not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable) {
-        background: $button-gen-ai-hover-bg-color;
-        border: none;
-
-        svg.icon {
-          color: $button-color-gen-ai;
-        }
-      }
-
-      &:active {
-        background: $button-gen-ai-active-bg-color;
-      }
-
-      &:disabled {
-        background: $button-primary-disabled-color-gen-ai;
-      }
-
-      svg.icon {
-        color: $button-color-gen-ai;
-      }
-    }
-
     span:not(.audible) {
       color: $editor-btn-color;
       display: inline-block;
@@ -514,7 +486,7 @@
       }
     }
 
-    &:focus:not(.hide-focus),
+    &:focus:not(.hide-focus):not(.btn-generative),
     &.is-active:not(.error),
     &.is-open,
     &.is-open:hover:not(:disabled) {
@@ -688,6 +660,34 @@
         max-width: 90px;
         width: 90px;
       }
+    }
+  }
+
+  .btn-generative {
+    background: $button-gen-ai-bg-color;
+    border: none;
+    padding-left: 1px;
+    width: 24px;
+
+    &:hover:not(.destructive):not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable) {
+      background: $button-gen-ai-hover-bg-color;
+      border: none;
+
+      svg.icon {
+        color: $button-color-gen-ai;
+      }
+    }
+
+    &:active {
+      background: $button-gen-ai-active-bg-color;
+    }
+
+    &:disabled {
+      background: $button-primary-disabled-color-gen-ai;
+    }
+
+    svg.icon {
+      color: $button-color-gen-ai;
     }
   }
 }
