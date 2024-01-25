@@ -3831,6 +3831,7 @@ Tabs.prototype = {
     const isMac = $('html.is-mac').length > 0;
     const isAlternate = parentContainer.hasClass('alternate');
     const isTabContainerHeader = parentContainer.hasClass('header-tabs');
+    const isCounts = parentContainer.hasClass('has-counts');
     const isAddTabButton = target.is('.add-tab-button');
     const tabListScrollHeight = scrollingTablist.prop('scrollHeight');
     const tabListClientHeight = scrollingTablist.prop('clientHeight');
@@ -3841,7 +3842,7 @@ Tabs.prototype = {
       let tablistScrollLeft;
 
       // Adjust from the top
-      targetRectObj.top -= parentRect.top - 2;
+      targetRectObj.top -= parentRect.top - (isCounts ? 10 : 3);
       if (self.isVerticalTabs()) {
         targetRectObj.top += parentElement[0].scrollTop;
       }
