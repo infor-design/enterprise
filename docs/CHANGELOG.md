@@ -5,6 +5,7 @@
 ## v4.92.0 Features
 
 - `[Avatar]` Added a new `avatar` class that can show initials and can be used in the module nav guest area. ([#8374](https://github.com/infor-design/enterprise/issues/8374))
+- `[Calendar]` Added new design for selected, hover, focused and current day in Calendar Monthview, Week View and Day View. ([#5065](https://github.com/infor-design/enterprise/issues/5065))
 - `[Calendar]` Added feature of updating legends and disabled dates on before render of month. ([#8248](https://github.com/infor-design/enterprise/issues/8248))
 - `[Datagrid]` Added option to disable tooltip in columns. ([#8252](https://github.com/infor-design/enterprise/issues/8252))
 - `[Header]` Added an example configuration with both a hamburger and a back button. ([#8327](https://github.com/infor-design/enterprise/issues/8327))
