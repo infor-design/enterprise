@@ -386,11 +386,29 @@
 }
 
 html.is-chrome {
+  .field {
+    .searchfield-wrapper.has-close-icon-button.has-text {
+      .btn-icon.close {
+        border-radius: 11px;
+
+        svg.close {
+          position: relative;
+          top: 1px;
+        }
+      }
+    }
+  }
+  
   .field-short,
   .form-layout-compact .field {
     .searchfield-wrapper.has-close-icon-button.has-text {
       .btn-icon.close {
-        top: 4px;
+        top: 2px;
+
+        svg.close {
+          position: relative;
+          top: 2px;
+        }
       }
     }
   }

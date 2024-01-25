@@ -938,11 +938,30 @@ a.btn-close {
 }
 
 html.is-chrome {
+  .field {
+    .searchfield-wrapper.has-close-icon-button.has-text {
+      .btn-icon.close {
+        border-radius: 11px;
+        top: 5px;
+
+        svg.close {
+          position: relative;
+          top: 0;
+        }
+      }
+    }
+  }
+
   .field-short,
   .form-layout-compact .field {
     .searchfield-wrapper.has-close-icon-button.has-text {
       .btn-icon.close {
-        top: 0;
+        top: 1px;
+
+        svg.close {
+          position: relative;
+          top: 0;
+        }
       }
     }
   }
