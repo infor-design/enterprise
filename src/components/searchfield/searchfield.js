@@ -1562,6 +1562,7 @@ SearchField.prototype = {
    */
   calculateSearchfieldWidth() {
     const inlineStyleProp = this.element[0].getAttribute('style');
+    const isFieldShort = this.element.parents('.field-short').length > 0;
     let baseWidth = '100%';
     let subtractWidth = 0;
     let targetWidthProp;
@@ -1576,7 +1577,7 @@ SearchField.prototype = {
     }
 
     // Subtract width of extraneous buttons/elems
-    if (this.hasCategories()) {
+    if (this.hasCategories() && !isFieldShort) {
       subtractWidth += this.categoryButton.outerWidth(true);
 
       if (this.element.parents('.header').length === 1 && breakpoints.isBelow('phone-to-tablet')) {
