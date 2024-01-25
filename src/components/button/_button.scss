@@ -273,6 +273,20 @@ button {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+
+    &:active {
+      svg.icon {
+        linearGradient#paint-linear stop {
+          &:first-child {
+            stop-color: $button-tertiary-gradient-active-color-one;
+          }
+  
+          &:last-child {
+            stop-color: $button-tertiary-gradient-active-color-two;
+          }
+        }
+      }
+    }
   }
 
   &:active {
