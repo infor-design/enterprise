@@ -166,6 +166,7 @@ button {
   0% {
     background-color: $button-tertiary-dot-flashing-bg-color-key-one;
   }
+
   50%, 100% {
     background-color: $button-tertiary-dot-flashing-bg-color-key-two;
   }
@@ -281,7 +282,7 @@ button {
     -webkit-text-fill-color: transparent;
 
     svg.icon {
-      linearGradient#paint0_linear_103_3410 stop {
+      linearGradient#paint-linear stop {
         &:first-child {
           stop-color: $button-tertiary-gradient-active-color-one;
         }
@@ -306,7 +307,7 @@ button {
 
   &:not([disabled]):hover {
     svg.icon {
-      linearGradient#paint0_linear_103_3410 stop {
+      linearGradient#paint-linear stop {
         &:first-child {
           stop-color: $button-tertiary-gradient-hover-color-one;
         }
