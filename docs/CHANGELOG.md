@@ -39,7 +39,7 @@
 - `[Homepage]` Adjusted top and bottom padding of the widgets. ([#8362](https://github.com/infor-design/enterprise-wc/issues/8362))
 - `[Locale]` Changed all `zh` locales time format as suggested by native speakers. ([#8313](https://github.com/infor-design/enterprise/issues/8313))
 - `[Lookup]` Fixed clear button in keyword search not updating search results on click. ([#8258](https://github.com/infor-design/enterprise/issues/8258))
-- `[Mask]` Alternative approach for checking instanceof RegExp if `instanceof RegExp` returns false. ([8365](https://github.com/infor-design/enterprise/issues/8365))
+- `[Mask]` Alternative approach for checking instance of RegExp if `instanceof RegExp` returns false. ([8365](https://github.com/infor-design/enterprise/issues/8365))
 - `[Modal]` Fixed a bug where the modal would shift up when toggling a switch inside of it. ([#8018](https://github.com/infor-design/enterprise/issues/8018))
 - `[Modal]` Fixed a bug where textarea field is bigger than other fields on screen widths less that 400px. ([#8125](https://github.com/infor-design/enterprise/issues/8125))
 - `[Process Indicator]` Adjusted alignment of icon in compact process indicator. ([#8241](https://github.com/infor-design/enterprise/issues/8241))
@@ -69,7 +69,7 @@
 
 ## v4.91.0 Fixes
 
-- `[Accordion]` Fixed a bug where focus border was not fully shown in subheader. ([#8109](https://github.com/infor-design/enterprise/issues/8109))
+- `[Accordion]` Fixed a bug where focus border was not fully shown in sub header. ([#8109](https://github.com/infor-design/enterprise/issues/8109))
 - `[Breadcrumb]` Fixed a bug where overflow menu items don't fire a callback function. ([#8154](https://github.com/infor-design/enterprise/issues/8154))
 - `[Cards/Widget]` Fixed vertical alignment of detail title in cards/widget. ([#8235](https://github.com/infor-design/enterprise/issues/8235))
 - `[Charts]` Improved the positioning of chart legend color. ([#8159](https://github.com/infor-design/enterprise/issues/8159))
@@ -78,7 +78,7 @@
 - `[Button]` Fixed wrong hover color on button. ([#8220](https://github.com/infor-design/enterprise/issues/8220))
 - `[BusyIndicator]` Fixed updated method of busy indicator throwing error when calling with no parameters. ([#8257](https://github.com/infor-design/enterprise/issues/8257))
 - `[Datagrid]` Fixed rendering issues on filter range when selected by render default. ([#8147](https://github.com/infor-design/enterprise/issues/8147))
-- `[Datagrid]` Fixed the contextual toolbar not hiding after peforming button action. ([NG#1580](https://github.com/infor-design/enterprise-ng/issues/1580))
+- `[Datagrid]` Fixed the contextual toolbar not hiding after performing button actions. ([NG#1580](https://github.com/infor-design/enterprise-ng/issues/1580))
 - `[Datagrid]` Fixed a bug where dropdown remains open when scrolling and modal is closed. ([#8127](https://github.com/infor-design/enterprise/issues/8127))
 - `[Datagrid]` Fixed extra space increase on editable fields when clicking in and out of it. ([#8155](https://github.com/infor-design/enterprise/issues/8155))
 - `[Datagrid]` Added `contentWidth` column setting to set width in formatters. ([#8132](https://github.com/infor-design/enterprise/issues/8132))
@@ -86,7 +86,7 @@
 - `[Datagrid]` Fixed tab key navigation when using actionable mode when having formatter. ([#8245](https://github.com/infor-design/enterprise/issues/8245))
 - `[Datagrid]` Fixed invisible color on required icon in datagrid. ([#8260](https://github.com/infor-design/enterprise/issues/8260))
 - `[Datagrid]` Fixed disabled color for colorpicker. ([#8218](https://github.com/infor-design/enterprise/issues/8218))
-- `[Datagrid]` Fixed dropdown icon misalignment in extra small rowheight. ([#8216](https://github.com/infor-design/enterprise/issues/8216))
+- `[Datagrid]` Fixed dropdown icon misalignment in extra small row height. ([#8216](https://github.com/infor-design/enterprise/issues/8216))
 - `[Dropdown]` Fixed a bug where list is broken when empty icon is in the first option. ([#8105](https://github.com/infor-design/enterprise/issues/8105))
 - `[Message]` Fixed success icon alignment in message header. ([#8240](https://github.com/infor-design/enterprise/issues/8240))
 - `[ModuleNav]` Removed usage guidance from readme.md to support updated doc site structure. ([#8282](https://github.com/infor-design/enterprise/issues/8282))
