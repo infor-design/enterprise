@@ -280,7 +280,7 @@ button {
           &:first-child {
             stop-color: $button-tertiary-gradient-active-color-one;
           }
-  
+
           &:last-child {
             stop-color: $button-tertiary-gradient-active-color-two;
           }
@@ -321,7 +321,7 @@ button {
         &:first-child {
           stop-color: $button-tertiary-disabled-icon-color-gen-ai-key-one;
         }
-  
+
         &:last-child {
           stop-color: $button-tertiary-disabled-icon-color-gen-ai-key-two;
         }
@@ -1535,5 +1535,14 @@ html[lang^='fr-'] {
         text-overflow: ellipsis;
       }
     }
+  }
+}
+
+html.theme-classic-light,
+html.theme-classic-dark,
+html.theme-classic-contrast {
+  .btn-generative,
+  .generative-section {
+    display: none;
   }
 }
