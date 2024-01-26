@@ -28,7 +28,7 @@ demo:
 
 ## Code Examples
 
-To build an IDS Flex Toolbar that is similar to a [legacy IDS Toolbar]('./toolbar'):
+To build an IDS Flex Toolbar that is similar to a [legacy IDS Toolbar](../toolbar/readme.md):
 
 ```html
 <div class="flex-toolbar">
@@ -73,7 +73,7 @@ The Flex Toolbar was designed to be more customizable with CSS than the legacy t
 </div>
 ```
 
-These `.toolbar-section` elements can be designed to align their contents to the left, right, or center of the container.  This can be done with IDS's built-in [typography CSS classes]('./typography'), or by writing your own CSS for your own custom sections.
+These `.toolbar-section` elements can be designed to align their contents to the left, right, or center of the container.  This can be done with IDS's built-in [typography CSS classes](../typography/readme.md), or by writing your own CSS for your own custom sections.
 
 By default a `.toolbar-section` element will take on the Flexbox alignment rules designated by its parent `.flex-toolbar` element.  Since there are no default rules on these sections about how to shrink or grow, the toolbar section will simply take on the size of its contained elements and align to the left by default (or to the right in RTL scenarios).
 
@@ -115,10 +115,10 @@ Some cases call for an "Eyebrow" (or subheader) on a Title section to contain mo
 
 Currently, the only types of components that can be present inside the buttonset are:
 
-- Standard [IDS Buttons]('./button')
-- [IDS Menu Buttons]('./menubutton')
-- [IDS Hyperlinks]('./hyperlinks')
-- [IDS Colorpickers]('./colorpicker')
+- Standard [IDS Buttons](../button/readme.md)
+- [IDS Menu Buttons](https://latest-enterprise.demo.design.infor.com/components/button/example-menubutton.html)
+- [IDS Hyperlinks](../hyperlinks/readme.md)
+- [IDS Colorpickers](../colorpicker/readme.md)
 
 Note that while Searchfield components are supported by the Flex Toolbar, they will not display or function properly if they are placed inside of a Buttonset section.
 
@@ -162,7 +162,7 @@ The "More Actions" button has its own `.toolbar-section.more` container:
 </div>
 ```
 
-When the area of your page containing the toolbar is resized, or is otherwise too small to contain all actions present on the Toolbar, the "More Actions" button's attached [IDS Popupmenu component]('./popupmenu') will begin to display these actions as menu items instead of buttons.
+When the area of your page containing the toolbar is resized, or is otherwise too small to contain all actions present on the Toolbar, the "More Actions" button's attached [IDS Popupmenu component](../popupmenu/readme.md) will begin to display these actions as menu items instead of buttons.
 
 Because some of the buttons may not be visible at some breakpoints they can not always be clicked in order to fire a click event. To handle this the flex toolbar will instead omit a `selected` event that will fire when any item in the overflow menu is clicked from the menu or when any toolbar item is clicked. So it my be advisable to always use the `selected` event fire handling when any toolbar item is clicked or selected from the menu. For example:
 
@@ -203,7 +203,7 @@ The same behavior will occur when a "More Actions" button is present on the Flex
 
 #### Always Display a More Actions button
 
-Alternatively, it's possible to always display a "More Actions" button by pre-defining menu items in its attached [Popupmenu]('./popupmenu'). While the Flex Toolbar automatically converts its inline buttons into overflowed menu items if it can't display those buttons, it's more performant and preferable to pre-define "More Actions" menu items instead if these menu items may be overflowed most or all of the time.
+Alternatively, it's possible to always display a "More Actions" button by pre-defining menu items in its attached [Popupmenu](../popupmenu/readme.md). While the Flex Toolbar automatically converts its inline buttons into overflowed menu items if it can't display those buttons, it's more performant and preferable to pre-define "More Actions" menu items instead if these menu items may be overflowed most or all of the time.
 
 ```html
 <div class="toolbar-section more">
@@ -260,7 +260,7 @@ The Flex Toolbar is different in that it allows for multiple, indeterminate numb
 
 ## States and Variations
 
-Each [button](./buttons) or [text input field](./input) in the toolbar will inherit the usual states that can be expected for those components.
+Each [button](../button/readme.md) or [text input field](../input/readme.md) in the toolbar will inherit the usual states that can be expected for those components.
 
 ### Enable/Disable
 
@@ -292,7 +292,7 @@ If you create custom CSS classes to add to your `.toolbar-section` containers, e
 
 ## Responsive Guidelines
 
-When there are too many buttons, inputs, or other items present on the toolbar to fit on one line, items that would normally wrap to a second line are hidden. The hidden items will move to an overflow [action button.](./menubutton).
+When there are too many buttons, inputs, or other items present on the toolbar to fit on one line, items that would normally wrap to a second line are hidden. The hidden items will move to an overflow action button.
 
 ## Testability
 
@@ -341,7 +341,7 @@ For example, a standard button might appear as:
 </button>
 ```
 
-A menu button might look like the following example. Internally, the extraneous "trigger" text is appended to this element because Flex Toolbar is aware that this is a [MenuButton]('./menubutton'), and defers to that component to apply attributes.  The Flex Toolbar concatenates the attribute value internally:
+A menu button might look like the following example. Internally, the extraneous "trigger" text is appended to this element because Flex Toolbar is aware that this is a [MenuButton](https://latest-enterprise.demo.design.infor.com/components/button/example-menubutton.html), and defers to that component to apply attributes.  The Flex Toolbar concatenates the attribute value internally:
 
 ```html
 <button class="btn-menu" data-automation-id="my-toolbar-menubutton-1-trigger">
@@ -398,8 +398,6 @@ A "More Actions" button -- being a type of Menu Button itself -- will contain si
 </div>
 ```
 
-For other component types, such as [Colorpicker]('./colorpicker'), [Searchfield]('./searchfield'), etc., attribute values are similarly passed down.  This provides a way for a developer to simply implement a single ID on the Toolbar API that will be respected for all components the Toolbar contains.
+For other component types, such as [Colorpicker](../colorpicker/readme.md), [Searchfield](../searchfield/readme.md), etc., attribute values are similarly passed down.  This provides a way for a developer to simply implement a single ID on the Toolbar API that will be respected for all components the Toolbar contains.
 
 If you only need to test a specific Flex Toolbar Item, and not the entire component (for example, one button out of five), please either set attributes directly on those elements, or use their respective component API's `attributes` setting, if applicable.
-
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

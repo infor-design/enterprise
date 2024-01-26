@@ -75,7 +75,3 @@ For example:
 ### More details
 
 Find guidance for capitalization, date formats, and other UI copy in [UX Writing](https://design.infor.com/product/ux-writing/introduction).
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

@@ -52,8 +52,6 @@ Setting the id/automation id with a string value:
 
 Providing the data, this will add an ID added to each notification icon with `-icon`, notification text with `-text`, notification link with `-link`, button notification close with `-btn-close`, notification icon close with `-icon-close` and to the root notification element appended.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Upgrading from 3.X
 
 - This component is comparable to the inforSlideInDialog in 3.X

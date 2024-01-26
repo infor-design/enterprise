@@ -1789,9 +1789,17 @@ Datagrid.prototype = {
         case 'checkbox':
           // just the button
           break;
-        case 'date':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker" ${attrs} ${enterKeyHint}/>`;
+        case 'date': {
+          let isRangeDefault = false;
+          if (col.filterConditions?.map(e => e.value).indexOf('in-range') > 0) {
+            isRangeDefault = col.filterConditions[2].selected && col.filterConditions[2].value === 'in-range';
+          } else if (col.filterConditions?.indexOf('in-range') === 0) {
+            isRangeDefault = true;
+          }
+
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker" ${isRangeDefault ? 'data-options="{range: {useRange: true}}"' : ''} ${attrs} ${enterKeyHint}/>`;
           break;
+        }
         case 'integer': {
           integerDefaults = {
             patternOptions: {
@@ -6715,7 +6723,8 @@ Datagrid.prototype = {
         const diff = currentColWidth - (left - leftOffset);
 
         // Enforce Column or Default min and max widths
-        widthToSet = cssWidth - diff;
+        const newWidthToSet = cssWidth - diff;
+        widthToSet = widthToSet && Math.abs(newWidthToSet - widthToSet) <= 3 ? widthToSet : newWidthToSet;
 
         if (widthToSet < minWidth || widthToSet > maxWidth) {
           self.resizeHandle.css('cursor', 'inherit');
@@ -6725,6 +6734,7 @@ Datagrid.prototype = {
         if (widthToSet === cssWidth) {
           return;
         }
+
         currentCol.style.width = (`${widthToSet}px`);
 
         const inRange = (idx === this.settings.frozenColumns.left.length - 1) ||
@@ -7422,6 +7432,14 @@ Datagrid.prototype = {
         }, 0);
       }
     });
+
+    if (this.contextualToolbar.length > 0) {
+      this.contextualToolbar.find('.buttonset').children().on('click', () => {
+        this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
+          this.contextualToolbar.css('display', 'none');
+        }).animateClosed();
+      });
+    }
 
     if (this.stretchColumn !== 'last') {
       $(window).on('orientationchange.datagrid', () => {
@@ -10360,7 +10378,7 @@ Datagrid.prototype = {
 
     const isEditor = $('.is-editor', cellParent).length > 0;
     const isPlaceholder = $('.is-placeholder', cellNode).length > 0;
-    let cellValue = (cellNode.text() ?
+    let cellValue = (cellNode.text() && cellNode.text().trim().length > 0 ?
       cellNode.text() : this.fieldValue(rowData, col.field));
 
     if (isEditor || isPlaceholder) {
@@ -10418,6 +10436,10 @@ Datagrid.prototype = {
     }
 
     this.editor =  new col.editor(idx, cell, cellValue, cellNode, col, event, this, rowData); // eslint-disable-line
+
+    if (this.editor.input.is('.dropdown') && this.editor.input.parent().is('.datagrid-cell-wrapper')) {
+      this.editor.input.parent().addClass('is-dropdown-wrapper');
+    }
     this.editor.row = idx;
     this.editor.cell = cell;
 
@@ -11534,7 +11556,7 @@ Datagrid.prototype = {
       args.rowData = isTreeGrid && this.settings.treeDepth[row] ?
         this.settings.treeDepth[row].node : rowData;
 
-      if (!this.isCellDirty(row, cell)) {
+      if (!this.isCellDirty(row, cell) && !this.settings.actionableMode) {
         this.setActiveCell(row, cell);
       }
 

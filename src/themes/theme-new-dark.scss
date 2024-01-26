@@ -612,6 +612,7 @@ $module-nav-input-text-color: $ids-color-palette-slate-10;
 
 // Module Nav Item (Accordion Header/Menu Button)
 $module-nav-item-text-color: $ids-color-palette-slate-10;
+$module-nav-item-light-text-color: $ids-color-palette-slate-40;
 $module-nav-item-hover-bg-color: $ids-color-palette-slate-80;
 $module-nav-item-hover-text-color: $ids-color-palette-slate-10;
 $module-nav-item-selected-bg-color: $ids-color-palette-azure-60;
@@ -705,7 +706,7 @@ $datagrid-header-active-color: $ids-color-palette-slate-80;
 $datagrid-header-checkbox-border-color: $ids-color-palette-slate-30;
 $datagrid-sort-icon-color: $ids-color-palette-slate-30;
 $datagrid-sort-icon-sorted-color: $ids-color-palette-slate-10;
-$datagrid-required-icon-color: $ids-color-palette-slate-100;
+$datagrid-required-icon-color: $ids-color-palette-white;
 
 $datagrid-cell-color: $ids-color-palette-slate-10;
 $datagrid-cell-bg-color: $ids-color-palette-slate-90;

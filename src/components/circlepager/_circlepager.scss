@@ -294,4 +294,13 @@ html[dir='rtl'] {
       }
     }
   }
+
+  .btn-controls-previous,
+  .btn-controls-next {
+    .icon {
+      -moz-transform: rotateY(180deg);
+      -webkit-transform: rotateY(180deg);
+      transform: rotateY(180deg);
+    }
+  }
 }

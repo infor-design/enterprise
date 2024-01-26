@@ -87,10 +87,6 @@ Adding the class `is-personalizable` allows this element to get the personalizat
 - Use HTML 5 header elements
 - Use F1 (or F2 if the layout prescribes) for the title element for correct page structure
 
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Upgrading from 3.X
 
 - Replaces Module Header

@@ -38,6 +38,16 @@ By default, it will fetch the JS files on your server from the `cultures/` folde
 SohoConfig.culturesPath = 'myserver/path/cultures/';
 ```
 
+## Code Example - Two Digit Year
+
+Two digit years are confusing to users and should be avoided at all costs. If for legacy reasons you need to support two digit years you can use `yy` in a date format and most behavior will work. Two digit years work on a cut over. By default this is `39` this means > 38 will produce `2038` and < 39 will produce `1938`. You can configure this globally with the setting `Locale.twoDigitYearCutoff`
+
+```javascript
+Locale.twoDigitYearCutoff = 75;
+Locale.twoToFourDigitYear(74) // 2074
+Locale.twoToFourDigitYear(77) // 1977
+```
+
 ## Code Example - Using minified files
 
 IDS ships with a minified set of Culture files.  To configure the Locale system to pull in these files instead of the uncompressed ones, you can use SohoConfig:

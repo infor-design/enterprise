@@ -46,5 +46,3 @@ Setting id and automation id together with a string value:
 ```
 
 Providing the data, this will add an ID added to each notification badge container with `-container`, notification badge icon with `-icon`, and notification dot with `-dot`.
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.

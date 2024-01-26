@@ -485,7 +485,7 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 
   &.has-text {
-    width: $toolbarsearchfield-filled-out-width - 10; 
+    width: $toolbarsearchfield-filled-out-width - 10;
 
     &.has-collapse-button {
       &:not(.is-open) {
@@ -1085,10 +1085,9 @@ html[dir='rtl'] {
 
     &.has-focus {
       &.active {
-        .searchfield,
         .btn,
         .collapse-button {
-          border-bottom-color: rgba($searchfield-border-color, 1);
+          border-color: transparent;
         }
       }
     }
@@ -1263,8 +1262,52 @@ html[dir='rtl'] {
       padding-top: 6px !important;
     }
 
-    .toolbar-searchfield-wrapper.non-collapsible .icon:not(.close) {
-      top: 10px;
+    @media (min-width: $breakpoint-phone-to-tablet) {
+      .toolbar-searchfield-wrapper.non-collapsible .icon:not(.close) {
+        top: 10px;
+      }
+    }
+  }
+
+  @media (min-width: $breakpoint-phone-to-tablet) {
+    .toolbar-searchfield-wrapper.non-collapsible .searchfield:not(:focus) {
+      border: 1px solid $searchfield-toolbar-border-color;
+    }
+  }
+
+  .searchfield-wrapper.non-collapsible.is-open > .icon:not(.close):not(.icon-error) {
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .searchfield-wrapper.active.has-close-icon-button.has-custom-button .searchfield,
+  .searchfield-wrapper.has-close-icon-button.has-custom-button .searchfield {
+    padding-right: 34px;
+  }
+
+  .searchfield-wrapper.active.has-close-icon-button.has-custom-button .searchfield {
+    padding-left: 60px;
+  }
+
+  .flex-toolbar .toolbar-section .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button .custom-button {
+    right: calc(100% - 72px);
+    top: 7px;
+
+    @media (min-width: $breakpoint-phone-to-tablet) {
+      right: 193px;
+    }
+  }
+
+  .flex-toolbar .toolbar-section .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.active:not(.is-open) .custom-button {
+    right: calc(100% - 30px);
+  }
+
+  .flex-toolbar .toolbar-section .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.has-text.active.has-close-icon-button .custom-button {
+    right: calc(100% - 96px);
+
+    @media (min-width: $breakpoint-phone-to-tablet) {
+      right: calc(100% - 56px);
     }
   }
 }

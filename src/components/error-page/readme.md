@@ -17,7 +17,7 @@ This example shows how to render a page in an IDS application that shows an unkn
 4. If possible suggest links to get the user back on track
 5. Consider adding support or contact options
 
-To render an error page you need the class `error-page` added to the body. Then add the structure as noted below with the elements `error-page-context`, `error-page-content`. Also add an empty message icon in `error-page-icon` see the [empty message component](./emptymessage) for icon options.
+To render an error page you need the class `error-page` added to the body. Then add the structure as noted below with the elements `error-page-context`, `error-page-content`. Also add an empty message icon in `error-page-icon` see the [empty message component](../emptymessage/readme.md) for icon options.
 
 Also include a `error-page-title` and additional `error-page-info` information.
 
@@ -63,10 +63,6 @@ $('body').about({
 ## Accessibility
 
 - All the page should be readable and contain the information the screen reader users need.
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
 
 ## Keyboard Shortcuts
 

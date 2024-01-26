@@ -109,8 +109,6 @@ Setting the id/automation id with a string value:
 
 For the treemap you can set attributes on the root element, you will get an ID/attributed added to each slice, which will get the `name` value in the data appended.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Responsive Information
 
 As you resize the chart will redraw with in the width of the parent width and height. The nodes in the treemap are sized in proportion.

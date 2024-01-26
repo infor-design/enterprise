@@ -974,7 +974,10 @@ PopupMenu.prototype = {
         self.holdingDownClick = true;
       }
 
-      self.close();
+      if (self.isOpen) {
+        self.close();
+        return;
+      }
       doOpen(e);
     }
 

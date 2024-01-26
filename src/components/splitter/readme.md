@@ -63,8 +63,6 @@ Setting the id/automation id with a string value:
 
 Providing the data, this will add an ID added to each splitter handle with `-handle`, splitter icon with `-icon`, and the splitter element appended.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - This is an open item

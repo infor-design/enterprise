@@ -229,8 +229,6 @@ As well as a panel that looks like:
 </div>
 ```
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details.
-
 ## Keyboard Shortcuts
 
 - <kbd>Down</kbd> and <kbd>Right</kbd> arrows:

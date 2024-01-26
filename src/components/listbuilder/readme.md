@@ -62,8 +62,6 @@ $('#example1').listbuilder({
 
 Providing the data this will add an ID added to each list item with `-listbuilder-listview-item-{index}`, buttons with `-listbuilder-btn-{btnName}`, and list container with `-listbuilder-listview` appended after it.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Upgrading from 3.X
 
 - This replaces the list view examples with toolbar. We made this a component with some default functionality

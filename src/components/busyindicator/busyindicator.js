@@ -456,7 +456,7 @@ BusyIndicator.prototype = {
    * @returns {this} component instance.
    */
   updated(settings) {
-    if (settings.text) {
+    if (settings?.text) {
       settings.text = xssUtils.unescapeHTML(settings.text);
     }
 

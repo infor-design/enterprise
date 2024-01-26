@@ -120,8 +120,7 @@ About.prototype = {
       const frLocales = Locale.currentLocale.name === 'fr-FR' || Locale.currentLocale.name === 'fr-CA';
       const localeColon = frLocales ? ' :' : ':';
       const specs = this.getDeviceSpecs();
-      const text = `<span class="ds">${Locale.translate('OperatingSystem')}${localeColon}  ${env.devicespecs.os.replace(env.devicespecs.currentOSVersion, '')} ${env.devicespecs.currentOSVersion}</span><br>
-        <span class="platform">${Locale.translate('Platform')}${localeColon} ${specs.os}</span><br>
+      const text = `<span class="platform">${Locale.translate('Platform')}${localeColon} ${specs.os}</span><br>
         <span class="ds">${Locale.translate('Mobile')}${localeColon} ${env.devicespecs.isMobile}</span><br>
         <span class="locale">${Locale.translate('Locale')}${localeColon} ${Locale.currentLocale.name}</span><br>
         <span class="locale">${Locale.translate('Language')}${localeColon} ${Locale.currentLanguage.name}</span><br>

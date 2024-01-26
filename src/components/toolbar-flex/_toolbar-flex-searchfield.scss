@@ -172,8 +172,6 @@ html[dir='rtl'] {
       .searchfield-wrapper,
       .toolbar-searchfield-wrapper {
         &.is-open.has-collapse-button {
-          width: calc(98% + 35px);
-
           &.has-go-button {
             width: calc(94% + 35px);
 
@@ -187,11 +185,7 @@ html[dir='rtl'] {
           }
 
           .searchfield {
-            width: calc(85% + 35px);
-
-            @media (max-width: $breakpoint-slim) {
-              width: 80%;
-            }
+            width: calc(100% - 40px);
           }
 
           .collapse-button {

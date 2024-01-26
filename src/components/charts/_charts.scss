@@ -14,11 +14,11 @@
 
     .chart-legend.is-bottom {
       .chart-legend-item.is-one-line {
-        margin: 10px 44px 0 100px !important;
+        margin: 0 auto !important;
         padding: 0 2px 1px;
 
         + .list-button {
-          margin-top: 9px;
+          margin-top: 3px;
         }
       }
     }
@@ -51,7 +51,7 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      padding-left: 30px;
+      justify-content: center;
 
       .chart-legend-item.is-two-column {
         display: flex;
@@ -166,20 +166,19 @@
         float: none;
         margin: 2px -5px;
         min-width: 58%;
-        padding: 4px 5px 5px;
+        padding: 4px 5px;
         width: auto;
       }
 
       .chart-legend-color {
         height: 15px;
         margin: 0;
-        top: 1px;
         min-width: 15px;
         max-width: 15px;
       }
 
       .chart-legend-item-text {
-        line-height: 18px;
+        line-height: 17px;
         padding-left: 7px;
         position: relative;
         white-space: pre-line;
@@ -307,6 +306,8 @@
   }
 
   .chart-legend-item {
+    display: inline-flex;
+    align-items: center;
     border: 1px solid transparent;
     cursor: pointer;
     float: left;
@@ -348,7 +349,6 @@
     height: 12px;
     margin-right: 10px;
     position: relative;
-    top: 0;
     width: 12px;
   }
 
@@ -357,6 +357,7 @@
 
     color: $chart-font-color;
     font-size: $ids-size-font-sm;
+    line-height: 1.4rem;
     width: auto;
   }
 
@@ -562,7 +563,7 @@
 
 // RTL Styles
 html[dir='rtl'] {
-  .chart-legend {
+  .chart-legend:not(.is-bottom) {
     margin-left: inherit;
     margin-right: 55px;
 
@@ -573,6 +574,13 @@ html[dir='rtl'] {
 
     .chart-legend-item {
       float: right;
+      margin-left: 10px;
+      margin-right: 0;
+    }
+  }
+
+  .chart-legend.is-bottom {
+    .chart-legend-color {
       margin-left: 10px;
       margin-right: 0;
     }

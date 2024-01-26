@@ -99,8 +99,6 @@ var dataGroupedBullet = [{
 
 Providing the data this will add an ID added to each range with `-range{index}`, measure with `-measure{index}`, difference with `-difference`, title with `-title`, subtitle with `-subtitle`, marker with `-marker` and if more then one marker `-marker{index}` appended. In addition if data grouped the related items will get the same id with `-group{index}` appended after it.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Keyboard Shortcuts
 
 Not Applicable

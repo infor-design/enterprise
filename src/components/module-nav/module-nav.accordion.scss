@@ -119,7 +119,7 @@
 
       [class^='btn'] {
         &:focus:not(.hide-focus) {
-          border-color: transparent;
+          border-color: transparent !important;
         }
 
         .icon {

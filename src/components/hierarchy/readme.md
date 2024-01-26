@@ -83,8 +83,6 @@ var dataset = [{
 
 Providing the data this will add an ID added to each leaf with `-hierarchy-leaf`, toggle button with `-hierarchy-btn-toggle`, actions button with `-hierarchy-popupmenu-trigger` and action button options with `-hierarchy-popupmenu-option-{index}` appended after it.
 
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
-
 ## Upgrading from 3.X
 
 - This component was very similar in 3.5, just rename `inforHierarchy` to `hierarchy`

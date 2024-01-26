@@ -113,23 +113,11 @@ html[dir='rtl'] {
   .toolbar-section.search {
     .toolbar-searchfield-wrapper {
       .btn-icon.close {
-        right: calc(100% - 110px);
+        right: calc(100% - 70px);
         top: 50%;
 
         @media (min-width: $breakpoint-phone-to-tablet) {
           right: calc(100% - 30px);
-        }
-      }
-    }
-  }
-}
-
-html[dir='rtl'] {
-  &.is-firefox {
-    .toolbar-section.search {
-      .toolbar-searchfield-wrapper {
-        .icon:not(.close) {
-          top: 10px;
         }
       }
     }

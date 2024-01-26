@@ -13,12 +13,51 @@
 ## v4.88.1 Features
 
 - `[Module Nav]` Fixed a bug where the settings was behind the main module nav element. ([#8063](https://github.com/infor-design/enterprise/issues/8063))
+## v4.91.0
+
+## v4.91.0 Features
+
+- `[Dates]` Added a new `twoDigitYear` setting to set the switch over for two digit years. ([#8061](https://github.com/infor-design/enterprise/issues/8061))
+- `[ModuleNav]` Added a new "guest" section and some new settings to toggle the search and module switcher section. ([#8232](https://github.com/infor-design/enterprise/issues/8232))
+- `[ModuleNav]` Added `attributes` setting (for automation id) in the module nav switcher. ([#8270](https://github.com/infor-design/enterprise/issues/8270))
+
+## v4.91.0 Fixes
+
+- `[Accordion]` Fixed a bug where focus border was not fully shown in subheader. ([#8109](https://github.com/infor-design/enterprise/issues/8109))
+- `[Breadcrumb]` Fixed a bug where overflow menu items don't fire a callback function. ([#8154](https://github.com/infor-design/enterprise/issues/8154))
+- `[Cards/Widget]` Fixed vertical alignment of detail title in cards/widget. ([#8235](https://github.com/infor-design/enterprise/issues/8235))
+- `[Charts]` Improved the positioning of chart legend color. ([#8159](https://github.com/infor-design/enterprise/issues/8159))
+- `[Circlepager]` Fixed the positioning of the next and previous buttons. ([#8266](https://github.com/infor-design/enterprise/issues/8266))
+- `[Bar Chart]` Displayed the x-axis ticks for the bar grouped when single group. ([#7976](https://github.com/infor-design/enterprise/issues/7976))
+- `[Button]` Fixed wrong hover color on button. ([#8220](https://github.com/infor-design/enterprise/issues/8220))
+- `[BusyIndicator]` Fixed updated method of busy indicator throwing error when calling with no parameters. ([#8257](https://github.com/infor-design/enterprise/issues/8257))
+- `[Datagrid]` Fixed rendering issues on filter range when selected by render default. ([#8147](https://github.com/infor-design/enterprise/issues/8147))
+- `[Datagrid]` Fixed the contextual toolbar not hiding after peforming button action. ([NG#1580](https://github.com/infor-design/enterprise-ng/issues/1580))
+- `[Datagrid]` Fixed a bug where dropdown remains open when scrolling and modal is closed. ([#8127](https://github.com/infor-design/enterprise/issues/8127))
+- `[Datagrid]` Fixed extra space increase on editable fields when clicking in and out of it. ([#8155](https://github.com/infor-design/enterprise/issues/8155))
+- `[Datagrid]` Added `contentWidth` column setting to set width in formatters. ([#8132](https://github.com/infor-design/enterprise/issues/8132))
+- `[Datagrid]` Fixed tab key navigation when using actionable mode when having editor. ([#8141](https://github.com/infor-design/enterprise/issues/8141))
+- `[Datagrid]` Fixed tab key navigation when using actionable mode when having formatter. ([#8245](https://github.com/infor-design/enterprise/issues/8245))
+- `[Datagrid]` Fixed invisible color on required icon in datagrid. ([#8260](https://github.com/infor-design/enterprise/issues/8260))
+- `[Datagrid]` Fixed disabled color for colorpicker. ([#8218](https://github.com/infor-design/enterprise/issues/8218))
+- `[Datagrid]` Fixed dropdown icon misalignment in extra small rowheight. ([#8216](https://github.com/infor-design/enterprise/issues/8216))
+- `[Dropdown]` Fixed a bug where list is broken when empty icon is in the first option. ([#8105](https://github.com/infor-design/enterprise/issues/8105))
+- `[Message]` Fixed success icon alignment in message header. ([#8240](https://github.com/infor-design/enterprise/issues/8240))
+- `[ModuleNav]` Removed usage guidance from readme.md to support updated doc site structure. ([#8282](https://github.com/infor-design/enterprise/issues/8282))
+- `[Pager]` Fixed double call on update pager when using keydown. ([#8156](https://github.com/infor-design/enterprise/issues/8156))
+- `[Pie/Donut]` Fixed rendering issues when having bordered class in the widget. ([#8164](https://github.com/infor-design/enterprise/issues/8164))
+- `[Personalization]` Removed box shadow on selected tabs. ([#8086](https://github.com/infor-design/enterprise/issues/8086))
+- `[Popupmenu]` Fixed a bug where menu buttons did not close when toggled. ([#8232](https://github.com/infor-design/enterprise/issues/8232))
+- `[Searchfield]` Fixed styling issues in RTL. ([#6982](https://github.com/infor-design/enterprise/issues/6982))
+- `[Searchfield]` Fixed searchfield stylings in RTL and in mobile viewport. ([#8103](https://github.com/infor-design/enterprise/issues/8103))
+
 ## v4.90.0
 
 ## v4.90.0 Features
 
 ## v4.90.0 Fixes
 
+- `[About]` Removed operating system field. ([#8118](https://github.com/infor-design/enterprise/issues/8118))
 - `[Accordion]` Fixed a bug where the plus-minus icon shows ellipsis on mobile viewport. ([#8044](https://github.com/infor-design/enterprise/issues/8044))
 - `[Badges]` Adjusted color and positioning of dismissible button in multiselect dropdown tags. ([#8036](https://github.com/infor-design/enterprise/issues/8036))
 - `[Breadcrumb]` Fixed misaligned item in RTL in Safari browser. ([#8167](https://github.com/infor-design/enterprise/issues/8167))
@@ -51,6 +90,8 @@
 - `[Popupmenu]` Added fix for extra space in submenu text. ([#8161](https://github.com/infor-design/enterprise/issues/8161))
 - `[Searchfield]` Fixed animation of collapsible searchfield. ([#8076](https://github.com/infor-design/enterprise/issues/8076))
 - `[Searchfield]` Adjusted height so that focus is fully seen. ([#8085](https://github.com/infor-design/enterprise/issues/8085))
+- `[Searchfield]` Fixed border and height for searchfield with categories in RTL. ([#8101](https://github.com/infor-design/enterprise/issues/8101))
+- `[Searchfield]` Fixed border radius for searchfield with dropdown in RTL. ([#8102](https://github.com/infor-design/enterprise/issues/8102))
 - `[Splitter]` Fixed position of splitter when using in modal. ([#8005](https://github.com/infor-design/enterprise/issues/8005))
 - `[Tabs Header]` Fixed gradient color for personalizable overflowing header tabs. ([#8110](https://github.com/infor-design/enterprise/issues/8110))
 - `[Tabs-Module]` Removed padding in embedded mode. ([#8060](https://github.com/infor-design/enterprise/issues/8060))

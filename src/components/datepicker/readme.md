@@ -30,7 +30,7 @@ demo:
 
 The setup for a datepicker involves creating an `<input>` with the class `datepicker`. Remember to always associate a label correctly with the input field. We always use four-digit years in all locales.
 
-This plugin requires the Locale plugin which provides data for the calendar, including calendar format for [all supported locales](./locale).
+This plugin requires the Locale plugin which provides data for the calendar, including calendar format for [all supported locales](../locale/readme.md).
 
 ```html
 <div class="field">
@@ -48,7 +48,7 @@ The Date Picker is a complex control to code for accessibility.
 - Add `aria-selected=true` to selected day
 - Add instructional information like "Use down arrow to select" to the input as an audible label
 - Each calendar item should have an audible label to announce the day of week while arrowing through days
-- For comparison, see a similar <a href="http://oaa-accessibility.org/example/15/" target="_blank">example</a>
+- For comparison, see a similar [example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/)
 
 ## Testability
 
@@ -83,8 +83,6 @@ expect(await element(by.id('custom-id-btn-picklist-2018')).getAttribute('id')).t
 - Up a set of years Button - gets `btn-picklist-year-up` appended
 - Each month in the month/year picker  - gets `btn-picklist-n` appended where n is the zero based month number (0-11)
 - Each year in the month/year picker  - gets `btn-picklist-n` appended where n is the four digit year
-
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.
 
 ## Keyboard Shortcuts
 

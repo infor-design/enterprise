@@ -36,8 +36,6 @@ When the markup is established, you can call the `updated` method or trigger the
 
 You can add custom id's/automation id's to the progress component in the markup inline. For this reason there is no `attributes` setting like some other components.
 
-Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for further details on automation id's.
-
 ## Keyboard Shortcuts
 
 - No Keyboard is used on the progress component

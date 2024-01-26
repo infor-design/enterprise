@@ -68,7 +68,3 @@ We also have a number of detail patterns (tree-detail main-detail ect). Details 
 - `example-scrolling-two-column` - This example shows scrolling below the header in a body with a two column layout with the smaller side on the right. [See Example](./demo/components/page-layouts/example-scrolling-two-column)
 - `example-three-column-fixed` - This example shows a fixed height page (no scrolling) with the page divided in three sections. [See Example](./demo/components/page-layouts/example-three-column-fixed)
 - `example-three-column-fixed` - This example shows a fixed height page (no scrolling) with the page divided in two sections, you can change the size of the right section with some option class combinations by adding a size to the two column sections: `two-column fixed-xl` `two-column fixed-lg` `two-column fixed-md` `two-column fixed-mm` `two-column fixed-sm`. [See Example](./demo/components/page-layouts/example-two-column-fixed)
-
-## Testability
-
-- Please refer to the [Application Testability Checklist](/resources/application-testability-checklist) for further details.

@@ -96,5 +96,3 @@ Setting the id/automation id with a string value or function. The function will 
 ```
 
 Providing the data this will add an ID added to each checkbox with `-blockgrid-checkbox{index}` and checkbox-label with `-blockgrid-checkbox-label{index}` appended after it.
-
-- Please refer to the [Application Testability Checklist](https://design.infor.com/resources/application-testability-checklist) for general information.

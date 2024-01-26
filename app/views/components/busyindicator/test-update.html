@@ -18,6 +18,9 @@
       <div class="field">
         <button type="submit" id="submit" class="btn-primary">Submit</button>
       </div>
+      <div class="field">
+        <button id="submit-2" class="btn-secondary">Submit (Update No Arguments)</button>
+      </div>
     </form>
   </div>
 
@@ -35,6 +38,17 @@
       setTimeout(function () {
         i++;
         form.data('busyindicator').updated({ text: 'New Text 1'});
+      }, 0);
+    });
+
+    $('#submit-2').click(function(e) {
+      e.preventDefault();
+      form.trigger('start.busyindicator');
+
+      var i = 0;
+      setTimeout(function () {
+        i++;
+        form.data('busyindicator').updated();
       }, 0);
     });
 

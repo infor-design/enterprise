@@ -1,0 +1,57 @@
+@import './module-nav.common.scss';
+
+// Module Nav Guest Section
+//================================================== //
+.module-nav-guest {
+  border-top: 1px solid $module-nav-separator-color;
+
+  &.hidden,
+  [hidden] {
+    display: none;
+  }
+}
+
+// Link Styles
+.module-nav-guest a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: $module-nav-item-padding-size 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.mode-expanded .module-nav-guest a {
+  justify-content: flex-start;
+
+  svg {
+    margin-inline-start: 4px;
+  }
+}
+
+// Text Styles
+.module-nav-guest-text {
+  display: flex;
+  flex-direction: column;
+  margin-inline-start: 13px;
+  max-width: 257px;
+}
+
+.module-nav-guest-title,
+.module-nav-guest-subtext {
+  color: $module-nav-item-text-color;
+  font-size: 16px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.module-nav-guest-subtext {
+  color: $module-nav-item-light-text-color;
+  font-size: 14px;
+}
+
+.mode-collapsed .module-nav-guest-text {
+  display: none;
+}

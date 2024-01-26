@@ -1,0 +1,48 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title">Contextual Toolbar</div>
+      <div class="buttonset">
+        <button class="btn-primary" id="actionButton">Perform Action</button>
+      </div>
+    </div>
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var columns = [];
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Soho.Formatters.Tree});
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Hyperlink});
+    columns.push({ id: 'desc', name: 'Description', field: 'desc'});
+    columns.push({ id: 'time', name: 'Time', field: 'time'});
+
+    //Get some data via ajax
+    var url = '{{basepath}}api/tree-tasks';
+
+    $.getJSON(url, function(data) {
+
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        selectable: 'mixed',
+        treeGrid: true,
+        toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
+      })
+      .on('selected', function (e, rows, type, rowData) {
+        console.log(rows, 'type: ' + type, rowData);
+      });
+
+    });
+
+    $('#actionButton').on('click', () => {
+      console.log('test action button');
+    });
+  });
+</script>

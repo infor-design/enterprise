@@ -524,7 +524,15 @@ html[dir='rtl'] {
 
     > .trigger {
       .icon {
-        margin-right: -24px;
+        margin-right: -16px;
+      }
+    }
+  }
+
+  .datagrid-dropdown-list {
+    &.extra-small-rowheight {
+      input {
+        padding-right: 5px;
       }
     }
   }
