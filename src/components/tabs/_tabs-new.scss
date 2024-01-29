@@ -13,6 +13,38 @@
   }
 }
 
+.tab-container.horizontal:not(.has-counts) {
+  > .tab-list-container {
+    margin-top: 6px;
+    height: 36px;
+
+    .tab {
+      a {
+        padding: 7px 11px 5px;
+      }
+
+      &:not(.is-selected):not(.is-disabled):hover {
+        border-bottom: 4px solid $tab-hover-color;
+      }
+
+      &:not(.is-disabled).is-selected {
+        border-bottom: 4px solid $tab-selected-color;
+      }
+
+    }
+  }
+}
+
+.tab-container.header-tabs {
+  > .tab-list-container {
+    .tab {
+      a {
+        padding: 12px 11px 5px;
+      }
+    }
+  }
+}
+
 .tab-container.horizontal,
 .tab-container.header-tabs {
   &.has-counts {
@@ -30,7 +62,7 @@
   }
 
   > .tab-list-container {
-    margin-bottom: -1px;
+    margin-bottom: -41px;
 
     .tab {
       &.has-popupmenu {
@@ -45,16 +77,12 @@
       &.dismissible {
         .icon {
           &.close {
-            margin-top: 6px;
+            margin-top: 3px;
           }
         }
       }
 
       top: 0;
-
-      a {
-        padding: 12px 11px 5px;
-      }
 
       // Adds "semi-bold" style to selected/active tabs
       &:not(.is-disabled).is-selected {
@@ -119,14 +147,21 @@
 }
 
 .tab-container.horizontal .add-tab-button {
-  margin-top: 7px;
+  top: 10px;
   padding: 0;
   width: 35px;
+  height: 30px;
   color: $tab-add-tab-color;
 
   span[aria-hidden] {
     font-size: 25px;
-    top: 1px;
+    top: 2px;
+  }
+
+  svg.icon-add {
+    top: 0;
+    height: 18px;
+    width: 18px;
   }
 }
 

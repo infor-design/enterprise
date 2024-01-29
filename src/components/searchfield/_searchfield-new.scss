@@ -15,6 +15,10 @@
     }
   }
 
+  .btn-icon.close {
+    top: 8px;
+  }
+
   .go-button {
     height: 100%;
   }
@@ -25,6 +29,12 @@
 
   .searchfield-category-button {
     height: 38px;
+
+    &:hover {
+      .category {
+        color: $button-color-tertiary-hover-font-new;
+      }
+    }
   }
 
   &.context {
@@ -167,7 +177,7 @@ html[dir='rtl'] {
 
     &.has-close-icon-button.has-text {
       .btn-icon.close {
-        top: 7px;
+        top: 9px;
 
         svg.close.icon {
           top: 0;

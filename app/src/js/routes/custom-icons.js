@@ -41,7 +41,13 @@ export default (url, theme) => {
   const fileName = path.basename(url, '.html');
   const iconSet = fileName.includes('example-empty-states') ? 'empty' : 'standard';
 
-  const metaPath = `node_modules/ids-identity/dist/theme-${theme}/icons/${iconSet}/metadata.json`;
+  let metaPath = `node_modules/ids-identity/dist/theme-${theme}/icons/${iconSet}/metadata.json`;
+  if (iconSet === 'standard' && theme === 'new') {
+    metaPath = 'node_modules/ids-identity/dist/theme-new/icons/default/metadata.json';
+  }
+  if (iconSet === 'empty' && theme === 'new') {
+    metaPath = 'node_modules/ids-identity/dist/theme-new/icons/old/empty/metadata.json';
+  }
   const meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8').toString());
 
   if (iconSet === 'empty') {

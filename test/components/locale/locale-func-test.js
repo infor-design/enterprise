@@ -251,7 +251,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2019, 12, 1), { date: 'short' })).toEqual('2020/1/1');
     expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'medium' })).toEqual('2019年11月8日');
     expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'long' })).toEqual('2019年11月8日');
-    expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'datetime' })).toEqual('2019/11/8 上午12:00');
+    expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'datetime' })).toEqual('2019/11/8 00:00');
   });
 
   it('should format year in es-ES', () => {
@@ -524,20 +524,20 @@ describe('Locale API', () => {
   it('should format hours in zh-Hant', () => {
     Locale.set('zh-Hant');
 
-    expect(Locale.formatHour(0)).toEqual('上午12:00');
-    expect(Locale.formatHour('0:30')).toEqual('上午12:30');
-    expect(Locale.formatHour(5)).toEqual('上午5:00');
-    expect(Locale.formatHour('5:30')).toEqual('上午5:30');
-    expect(Locale.formatHour(10)).toEqual('上午10:00');
-    expect(Locale.formatHour('10:30')).toEqual('上午10:30');
-    expect(Locale.formatHour(12)).toEqual('下午12:00');
-    expect(Locale.formatHour('12:30')).toEqual('下午12:30');
-    expect(Locale.formatHour(15)).toEqual('下午3:00');
-    expect(Locale.formatHour('15:30')).toEqual('下午3:30');
-    expect(Locale.formatHour(20)).toEqual('下午8:00');
-    expect(Locale.formatHour('20:30')).toEqual('下午8:30');
-    expect(Locale.formatHour(24)).toEqual('上午12:00');
-    expect(Locale.formatHour('24:30')).toEqual('上午12:30');
+    expect(Locale.formatHour(0)).toEqual('00:00');
+    expect(Locale.formatHour('0:30')).toEqual('00:30');
+    expect(Locale.formatHour(5)).toEqual('05:00');
+    expect(Locale.formatHour('5:30')).toEqual('05:30');
+    expect(Locale.formatHour(10)).toEqual('10:00');
+    expect(Locale.formatHour('10:30')).toEqual('10:30');
+    expect(Locale.formatHour(12)).toEqual('12:00');
+    expect(Locale.formatHour('12:30')).toEqual('12:30');
+    expect(Locale.formatHour(15)).toEqual('15:00');
+    expect(Locale.formatHour('15:30')).toEqual('15:30');
+    expect(Locale.formatHour(20)).toEqual('20:00');
+    expect(Locale.formatHour('20:30')).toEqual('20:30');
+    expect(Locale.formatHour(24)).toEqual('00:00');
+    expect(Locale.formatHour('24:30')).toEqual('00:30');
 
     Locale.set('en-US');
   });
@@ -1570,13 +1570,13 @@ describe('Locale API', () => {
 
     Locale.set('zh-Hant');
 
-    expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('2020/7/22 下午8:11');
-    expect(['2020/7/22 下午8:11', '2020/7/22 下午9:11 EST', '2020/7/22 下午9:11 EDT']).toContain(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' }));
+    expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('2020/7/22 20:11');
+    expect(['2020/7/22 20:11', '2020/7/22 下午9:11 EST', '2020/7/22 下午9:11 EDT', '2020/7/22 21:11 EST']).toContain(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' }));
 
     Locale.set('zh-TW');
 
-    expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('2020/7/22 下午8:11');
-    expect(['2020/7/22 下午8:11', '2020/7/22 下午9:11 EST', '2020/7/22 下午9:11 EDT']).toContain(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' }));
+    expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('2020/7/22 20:11');
+    expect(['2020/7/22 20:11', '2020/7/22 下午9:11 EST', '2020/7/22 下午9:11 EDT', '2020/7/22 21:11 EST']).toContain(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' }));
   });
 
   it.skip('should be able to display dates into another timezone including short timezone name', () => {

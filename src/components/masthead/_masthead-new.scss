@@ -66,7 +66,7 @@
 // Reset toolbar buttons hover
 html[class*='theme-new-'] .masthead .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar):not(.contextual-toolbar) .toolbar-section [class^='btn']:not(:disabled):not(.searchfield-category-button),
 .masthead .toolbar:not(.standalone) .buttonset [class^='btn']:not(.searchfield-category-button) {
-  border-radius: unset;
+  border-radius: 2px;
 
   &:not(:disabled):hover {
     background-color: transparent;

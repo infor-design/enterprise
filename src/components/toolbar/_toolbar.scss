@@ -29,8 +29,6 @@ $toolbar-buttonset-height: 40px;
     }
 
     .searchfield-category-button {
-      background-color: transparent;
-
       .icon {
         transform: translateY(0);
       }
@@ -490,6 +488,26 @@ html[dir='rtl'] {
         .title {
           left: auto;
           right: 10px;
+        }
+      }
+    }
+
+    &:not(.standalone) .searchfield-wrapper.toolbar-searchfield-wrapper:not(.has-categories):not(.is-open) {
+      input {
+        padding-left: 31px;
+      }
+
+      .icon:not(.icon-dropdown) {
+        right: 9px;
+      }
+
+      &.has-text {
+        input {
+          padding-left: 19px;
+        }
+
+        .icon:not(.icon-dropdown) {
+          right: 71px;
         }
       }
     }

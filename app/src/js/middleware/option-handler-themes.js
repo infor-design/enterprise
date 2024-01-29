@@ -77,8 +77,17 @@ export default function (app) {
       res.opts.theme.mode = req.query.mode.toString().toLowerCase();
     }
     logger('info', `Setting theme to "theme-${res.opts.theme.name}-${res.opts.theme.mode || req.query.variant}"`);
-    const svgHtmlPartial = fs.readFileSync(`${iconsPath}/theme-${res.opts.theme.name}-svg.html`).toString();
-    const svgEmptyHtmlPartial = fs.readFileSync(`${iconsEmptyPath}/theme-${res.opts.theme.name}-svg-empty.html`).toString();
+
+    let svgHtmlPartial = '';
+    let svgEmptyHtmlPartial = '';
+
+    if (res.opts.theme.name === 'new') {
+      svgHtmlPartial = fs.readFileSync(`${iconsPath}/theme-new-default-svg.html`).toString();
+      svgEmptyHtmlPartial = fs.readFileSync(`${iconsEmptyPath}/theme-new-svg-empty.html`).toString();
+    } else {
+      svgHtmlPartial = fs.readFileSync(`${iconsPath}/theme-classic-svg.html`).toString();
+      svgEmptyHtmlPartial = fs.readFileSync(`${iconsEmptyPath}/theme-classic-svg-empty.html`).toString();
+    }
 
     // Set icons to the partials
     app.locals.partials = {

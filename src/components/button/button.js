@@ -246,6 +246,19 @@ Button.prototype = {
     this.renderAttributes();
     this.createNotificationBadge();
 
+    const isDisabled = this.element.prop('disabled');
+    this.tertiaryGenerativeIcon = `
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" class="icon tertiary">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M6 2H4.5V6.25C4.5 6.80228 4.05228 7.25 3.5 7.25H2V8.75H3.5C4.05228 8.75 4.5 9.19772 4.5 9.75V14H6V9.75C6 9.19772 6.44772 8.75 7 8.75H8.5V7.25H7C6.44772 7.25 6 6.80228 6 6.25V2ZM15 3H13.5V4.25C13.5 4.80228 13.0523 5.25 12.5 5.25H11.5V6.75H12.5C13.0523 6.75 13.5 7.19772 13.5 7.75V9H15V7.75C15 7.19772 15.4477 6.75 16 6.75H17V5.25H16C15.4477 5.25 15 4.80228 15 4.25V3ZM10.5 11H12V11.75C12 12.3023 12.4477 12.75 13 12.75H13.5V14.25H13C12.4477 14.25 12 14.6977 12 15.25V16H10.5V15.25C10.5 14.6977 10.0523 14.25 9.5 14.25H9V12.75H9.5C10.0523 12.75 10.5 12.3023 10.5 11.75V11Z" fill="${isDisabled ? 'url(#paint-linear-disabled)' : 'url(#paint-linear)'}"></path>
+        <defs>
+          <linearGradient id="${isDisabled ? 'paint-linear-disabled' : 'paint-linear'}" x1="14.6681" y1="-32.5625" x2="31.7256" y2="-26.8896" gradientUnits="userSpaceOnUse">
+          <stop offset="0.117757" stop-color="#254A92"></stop>
+          <stop offset="0.927091" stop-color="#10B7A6"></stop>
+          </linearGradient>
+        </defs>
+      </svg>
+    `;
+
     const elemClasses = this.element[0].classList;
     // Style = "primary/secondary/tertiary" hierarchy/context
     if (buttonStyles.indexOf(this.settings.style) > 0) {
@@ -316,6 +329,10 @@ Button.prototype = {
       this.disabled = this.settings.disabled;
       delete this.settings.disabled;
       delete this.settings.forceDisable;
+    }
+
+    if (this.element.hasClass('btn-tertiary') && this.element.hasClass('btn-generative')) {
+      this.element.find('span').after(this.tertiaryGenerativeIcon);
     }
 
     // // Handle a one-time `disabled` setting, if defined.
@@ -576,6 +593,65 @@ Button.prototype = {
     }
 
     return elementSettings;
+  },
+
+  /**
+   * Performs a generative action by replacing the content of a button with a loading indicator,
+   * then replacing it with generated AI content after a specified delay.
+   *
+   * @param {number} delay - The delay (in milliseconds) before replacing the loading indicator.
+   * @returns {void}
+   */
+  performGenerativeAction(delay) {
+    /**
+     * The element representing the button.
+     * @type {jQuery}
+     */
+    const $elem = this.element;
+
+    /**
+     * The SVG element within the button.
+     * @type {jQuery}
+     */
+    const $svg = $elem.find('svg');
+
+    // Define HTML markup for the loading indicator
+    const loader = `
+      <div class="dot-flashing-container">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    `;
+
+    // Define HTML markup for the generated AI content
+    const generativeIcon = `
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use href="#icon-insights-smart-panel"></use>
+      </svg>
+    `;
+
+    // Replace the content of the button with the loading indicator
+    $svg.replaceWith(loader);
+
+    $elem.addClass('loading');
+
+    // Disable user interactions with the button during the loading process
+    $elem.css('pointer-events', 'none');
+
+    setTimeout(() => {
+      // Replace the loading indicator with the generated AI content
+      if ($elem.hasClass('btn-tertiary') && $elem.hasClass('btn-generative')) {
+        $elem.find('.dot-flashing-container').replaceWith(this.tertiaryGenerativeIcon);
+      } else {
+        $elem.find('.dot-flashing-container').replaceWith(generativeIcon);
+      }
+
+      $elem.removeClass('loading');
+
+      // Enable user interactions with the button after the loading process is complete
+      $elem.css('pointer-events', '');
+    }, delay);
   },
 
   /**

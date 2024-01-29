@@ -18,6 +18,10 @@
 // Theme Overrides
 $body-color-primary-background: $ids-color-palette-slate-100;
 
+// Header Colors
+$header-default-bg-color: $ids-color-palette-slate-90;
+$header-default-bg-border-color: $ids-color-palette-slate-70;
+
 // HomePage
 $homepage-background-color: $body-color-primary-background;
 
@@ -27,6 +31,11 @@ $homepage-button-color: $ids-color-palette-white;
 $header-hero-widget-bg-color: $ids-color-palette-white;
 $header-default-bg-color: $ids-color-palette-slate-90;
 $header-default-bg-hover-color: $ids-color-palette-slate-80;
+$header-text-default-color: $ids-color-palette-white;
+$label-personalize-text-color: $header-text-default-color;
+$header-button-normal-color: $header-text-default-color;
+$hyperlinks-personalize-text-color: $header-text-default-color;
+$header-text-actionable-color: $header-text-default-color;
 
 // Inputs
 $input-color-focus-border: $ids-color-palette-slate-10;
@@ -92,6 +101,21 @@ $hyperlink-disabled-color: $disabled-color;
 $hr-top-color: $ids-color-palette-slate-90;
 $hr-bottom-color: transparent;
 
+// Buttons Gen AI
+$button-color-gen-ai: $ids-color-palette-white;
+$button-tertiary-color-gen-ai: linear-gradient(107deg, #10B6A6 17.32%, #10B7A6 95.32%);
+$button-tertiary-hover-color-gen-ai: linear-gradient(107deg, #10B7A6 17.32%, #0B9789 95.32%);
+$button-tertiary-disabled-color-gen-ai: linear-gradient(107deg, rgba(187, 187, 191, 0.50) 17.32%, rgba(187, 187, 191, 0.50) 95.32%);
+$button-gen-ai-active-bg-color: linear-gradient(107deg, #0B9789 5.97%, #1A3362 102.35%);
+$button-tertiary-gradient-color-one: #10B6A6;
+$button-tertiary-gradient-color-two: #10B6A6;
+$button-tertiary-gradient-hover-color-one: #10B7A6;
+$button-tertiary-gradient-hover-color-two: #0B9789;
+$button-tertiary-gradient-active-color-one: #0B9789;
+$button-tertiary-gradient-active-color-two: #1A3362;
+$button-tertiary-disabled-icon-color-gen-ai-key-one: #BBBBBF;
+$button-tertiary-disabled-icon-color-gen-ai-key-two: $button-tertiary-disabled-icon-color-gen-ai-key-one;
+
 // Buttons
 $button-color-secondary-focus-background: $ids-color-palette-slate-10;
 $button-color-primary-disabled-background: $ids-color-palette-slate-80;
@@ -118,7 +142,7 @@ $button-color-secondary-initial-background: transparent;
 
 $button-color-tertiary-disabled-background-new: $ids-color-palette-slate-90;
 $button-color-tertiary-hover-background-new: $ids-color-palette-slate-70;
-$button-color-tertiary-hover-font-new: $ids-color-palette-azure-40;
+$button-color-tertiary-hover-font-new: $ids-color-palette-white;
 $button-color-tertiary-disabled-font: $ids-color-palette-slate-60;
 
 $button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-60;
@@ -285,7 +309,7 @@ $link-color-text-font: $ids-color-palette-white;
 $link-icon-color: $ids-color-palette-amethyst-30;
 $link-border-color: $ids-color-palette-slate-90;
 $link-hover-color: $ids-color-palette-slate-70;
-$link-selected-color: $ids-color-palette-black;
+$link-selected-color: $ids-color-palette-azure-60;
 $link-background-color: $ids-color-palette-slate-80;
 
 // Link List
@@ -891,6 +915,7 @@ $subheader-input-text-color-focus: $ids-color-palette-slate-20;
 $subheader-searchfield-category-button-font-color: $subheader-input-text-color-focus;
 
 // Header
+$header-text-default-color: $ids-color-palette-white;
 $header-text-color: $ids-color-palette-white;
 $header-toolbar-searchfield-icon-color: rgba($ids-color-palette-white, 1);
 $header-button-hover-color: rgba($ids-color-palette-white, 1);
@@ -902,7 +927,11 @@ $header-primary-btn-background-hover-color: $ids-color-palette-slate-80;
 $header-flex-toolbar-input-searchfield-color: $ids-color-palette-white;
 $header-flex-toolbar-close-icon-color: $header-flex-toolbar-input-searchfield-color;
 
+$hyperlinks-personalize-text-color: $header-text-default-color;
+$counts-personalize-text-color: $header-text-default-color;
+$header-button-hover-color-new: $ids-color-palette-white;
 $header-hero-widget-bg-color: $ids-color-palette-slate-90;
+$header-button-disabled-color: rgba(255, 255, 255, 0.4);
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-slate-90;
@@ -918,7 +947,14 @@ $header-tab-background-initial-color-new: $header-default-bg-color;
 
 $header-flex-toolbar-close-icon-color-hover: $ids-color-palette-white;
 $searchfield-header-hover-icon-color: $ids-color-palette-white;
-$header-tab-background-hover-color-new: $ids-color-palette-slate-80;
+
+$header-tab-background-hover-color-new: $ids-color-palette-slate-70;
+$header-tab-indicator-hover-color-new: $ids-color-palette-white;
+$header-tab-normal-color-new: $ids-color-palette-white;
+$header-tab-hover-color-new: $ids-color-palette-white;
+$header-tab-selected-color-new: $ids-color-palette-white;
+$header-tab-focus-border-color: $ids-color-palette-white;
+$header-tab-disabled-color-new: $ids-color-palette-slate-30;
 
 // Header Breadcrumb
 $header-breadcrumb-current-color: $ids-color-palette-white;
@@ -977,9 +1013,9 @@ $calendar-bg-color: $panel-bg-color;
 $calendar-event-color: $ids-color-palette-slate-100;
 $calendar-line-color: $ids-color-palette-slate-70;
 $calendar-line-color-light: $ids-color-palette-slate-70;
-$calendar-selected-border-color: $ids-color-brand-primary-base;
-$calendar-selected-bg-color: $ids-color-palette-slate-70;
-$calendar-hover-bg-color: rgba(49, 50, 54, 0.2);
+$calendar-selected-border-color: $ids-color-palette-azure-60;
+$calendar-selected-bg-color: $ids-color-palette-slate-80;
+$calendar-hover-bg-color: $ids-color-palette-slate-70;
 $calendar-disabled-bg-color: $ids-color-palette-slate-80;
 $calendar-disabled-color: $ids-color-palette-slate-40;
 

@@ -1199,7 +1199,7 @@ $datagrid-small-row-height: 25px;
 
           .dropdown-trigger {
             margin-left: -1px;
-            margin-top: 5px;
+            margin-top: 2px;
 
             + .icon {
               top: 0;
@@ -1249,8 +1249,12 @@ $datagrid-small-row-height: 25px;
             }
 
             input.datepicker {
-              margin-top: -6px;
+              margin-top: -5px;
             }
+          }
+
+          .btn-icon.trigger:hover:not(:disabled) {
+            background-color: transparent;
           }
 
           &:not(.datagrid-trigger-cell) .datepicker {
@@ -1277,7 +1281,7 @@ $datagrid-small-row-height: 25px;
             margin-left: -1px;
 
             &.datepicker {
-              margin-left: 1px;
+              margin-left: 0;
             }
 
             &.lookup {
@@ -1339,13 +1343,13 @@ $datagrid-small-row-height: 25px;
 
           .dropdown {
             height: inherit;
-            padding: 8px 23px 0 14px;
+            padding: 0 22px 0 0 !important;
           }
 
           div.dropdown + .icon,
           div.multiselect + .icon {
             left: auto;
-            top: 4px;
+            top: 1px;
           }
 
           &.datagrid-trigger-cell .icon.icon-close {
@@ -1454,7 +1458,7 @@ $datagrid-small-row-height: 25px;
         }
 
         &.icon-calendar {
-          top: -2px;
+          top: 0;
         }
 
         &.icon-close {
@@ -1640,8 +1644,8 @@ $datagrid-small-row-height: 25px;
 
             &.icon-calendar {
               height: 15px;
-              left: 1px;
-              top: -2px;
+              left: 0;
+              top: -1px;
             }
 
             &.icon-fileupload {
@@ -1677,8 +1681,8 @@ $datagrid-small-row-height: 25px;
             margin-top: 1px;
 
             + .icon {
-              left: -5px;
-              top: 0;
+              left: -3px;
+              top: -1px;
             }
           }
 
@@ -1761,10 +1765,10 @@ $datagrid-small-row-height: 25px;
           .dropdown {
             height: inherit;
             margin: 0;
-            padding: 5px 27px 0 9px;
+            padding: 0 24px 0 0 !important;
 
             + .icon {
-              right: 2px;
+              right: -3px;
               top: 6px;
             }
           }
@@ -1986,7 +1990,7 @@ $datagrid-small-row-height: 25px;
     }
 
     .is-editing .datagrid-cell-wrapper {
-      padding: 2px 5px 0 !important;
+      padding: 2px 4px 0 !important;
     }
 
     .datagrid-cell-wrapper {
@@ -2536,7 +2540,7 @@ $datagrid-small-row-height: 25px;
           }
 
           .icon {
-            top: 4px;
+            top: 3px;
             right: -8px;
           }
         }
@@ -2732,8 +2736,6 @@ $datagrid-small-row-height: 25px;
       transform: scale(1);
 
       &.datagrid-trigger-cell .datagrid-cell-wrapper {
-        padding-top: 2px;
-
         span.trigger {
           overflow: hidden;
           text-overflow: ellipsis;
@@ -2854,7 +2856,7 @@ $datagrid-small-row-height: 25px;
 
           + .icon-calendar + .icon-error {
             left: 98%;
-            margin-top: 2px;
+            margin-top: 1px;
           }
 
           + .icon-clock + .icon-error {
@@ -4097,7 +4099,7 @@ $datagrid-small-row-height: 25px;
 // Sorting
 .sort-indicator {
   display: inline-block;
-  margin: 3px 3px 0;
+  margin: 4px 3px 0;
   vertical-align: top;
 
   .icon {
@@ -4115,7 +4117,7 @@ $datagrid-small-row-height: 25px;
 
   span {
     display: block;
-    height: 10px;
+    height: 8px;
   }
 }
 
@@ -4428,7 +4430,7 @@ td .btn-actions {
 
   .dropdown-trigger {
     + .icon:not(.icon-calendar) {
-      top: -1px;
+      top: -2px;
       left: -1px;
     }
   }
@@ -4954,7 +4956,7 @@ td .btn-actions {
 
     .trigger .icon {
       left: -1px;
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
     &.dropdown-list .trigger .icon {
@@ -4965,10 +4967,10 @@ td .btn-actions {
   .icon {
     color: $ids-color-font-base;
     left: 0 !important;
-    margin-top: 8px;
+    margin-top: 7px;
 
     &.search {
-      margin-top: 8px !important;
+      margin-top: 7px !important;
     }
   }
 }
@@ -5824,10 +5826,6 @@ html[dir='rtl'] {
           left: -2px;
           top: 7px;
           width: 21px;
-        }
-
-        &:hover .icon {
-          color: $datagrid-header-color;
         }
       }
     }

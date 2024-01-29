@@ -16,6 +16,7 @@
 @import '../core/config';
 
 $header-toolbar-button-hover-color: transparent;
+$header-default-bg-color: $ids-color-palette-white;
 $toolbar-btn-actions-hover-bg-color: transparent;
 
 // Accordion
@@ -26,6 +27,9 @@ $accordion-selected-text-color: $ids-color-palette-white;
 $button-disabled-background-color: transparent;
 $button-icon-disabled-color: $ids-color-palette-slate-30;
 $button-color-secondary-initial-background: $ids-color-palette-graphite-30;
+
+// Datagrid
+$datagrid-sort-icon-sorted-color: $ids-color-palette-slate-40;
 
 //================================================== //
 // Core Components

@@ -120,11 +120,295 @@ button {
   }
 }
 
+.dot-flashing-container {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  gap: 2px;
+
+  .dot {
+    display: inline-flex;
+    position: relative;
+    width: 3px;
+    height: 3px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #fff;
+
+    &:nth-child(1) {
+      animation: dot-flashing 1s infinite alternate;
+      animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+      animation: dot-flashing 1s infinite linear alternate;
+      animation-delay: 0.5s;
+    }
+
+    &:nth-child(3) {
+      animation: dot-flashing 1s infinite alternate;
+      animation-delay: 1s;
+    }
+  }
+}
+
+@keyframes dot-flashing {
+  0% {
+    background-color: $button-primary-dot-flashing-bg-color-key-one;
+  }
+
+  50%, 100% {
+    background-color: $button-primary-dot-flashing-bg-color-key-two;
+  }
+}
+
+@keyframes dot-flashing-colors {
+  0% {
+    background-color: $button-tertiary-dot-flashing-bg-color-key-one;
+  }
+
+  50%, 100% {
+    background-color: $button-tertiary-dot-flashing-bg-color-key-two;
+  }
+}
+
+.btn-icon.btn-generative {
+  background: $button-gen-ai-bg-color;
+  border: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background: $button-gen-ai-hover-bg-color;
+
+    svg.icon {
+      color: $button-color-gen-ai !important;
+    }
+  }
+
+  &:active {
+    background: $button-gen-ai-active-bg-color;
+  }
+
+  &[disabled] {
+    background: $button-primary-disabled-color-gen-ai;
+    background-color: $ids-color-palette-white !important;
+    color: $button-color-gen-ai !important;
+
+    &:hover {
+      background: $button-primary-disabled-hover-color-gen-ai;
+      background-color: $ids-color-palette-white !important;
+    }
+  }
+
+  svg.icon {
+    color: $button-color-gen-ai;
+    margin-top: 0;
+  }
+
+  .ai-loading-indicator {
+    width: 30px;
+  }
+}
+
+.btn-primary.btn-generative {
+  background: $button-gen-ai-bg-color;
+  border: none !important;
+  color: $button-color-gen-ai;
+  padding: 0 24px !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &:hover {
+    border-radius: 8px;
+    background: $button-gen-ai-hover-bg-color;
+  }
+
+  &:active {
+    background: $button-gen-ai-active-bg-color;
+  }
+
+  &[disabled] {
+    background: $button-primary-disabled-color-gen-ai;
+    background-color: $ids-color-palette-white !important;
+    color: $button-color-gen-ai !important;
+
+    &:hover {
+      background: $button-primary-disabled-hover-color-gen-ai;
+      background-color: $ids-color-palette-white !important;
+    }
+  }
+
+  .icon {
+    color: $button-color-gen-ai;
+  }
+
+  span ~ svg.icon {
+    margin-top: 0;
+  }
+}
+
+.btn-primary.btn-generative {
+  > svg.icon {
+    margin-top: 0 !important;
+  }
+}
+
+.btn-tertiary.btn-generative {
+  background: $button-tertiary-color-gen-ai;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  &:hover {
+    background: $button-tertiary-hover-color-gen-ai;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    &:active {
+      svg.icon {
+        linearGradient#paint-linear stop {
+          &:first-child {
+            stop-color: $button-tertiary-gradient-active-color-one;
+          }
+
+          &:last-child {
+            stop-color: $button-tertiary-gradient-active-color-two;
+          }
+        }
+      }
+    }
+  }
+
+  &:active {
+    background: $button-gen-ai-active-bg-color;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    svg.icon {
+      linearGradient#paint-linear stop {
+        &:first-child {
+          stop-color: $button-tertiary-gradient-active-color-one;
+        }
+
+        &:last-child {
+          stop-color: $button-tertiary-gradient-active-color-two;
+        }
+      }
+    }
+  }
+
+  &[disabled] {
+    background: $button-tertiary-disabled-color-gen-ai;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    svg.icon {
+      opacity: 0.5;
+
+      linearGradient#paint-linear-disabled stop {
+        &:first-child {
+          stop-color: $button-tertiary-disabled-icon-color-gen-ai-key-one;
+        }
+
+        &:last-child {
+          stop-color: $button-tertiary-disabled-icon-color-gen-ai-key-two;
+        }
+      }
+    }
+  }
+
+  &:hover {
+    svg.icon {
+      linearGradient#paint-linear stop {
+        &:first-child {
+          stop-color: $button-tertiary-gradient-hover-color-one;
+        }
+
+        &:last-child {
+          stop-color: $button-tertiary-gradient-hover-color-two;
+        }
+      }
+    }
+  }
+
+  svg.icon {
+    margin-top: 0;
+
+    linearGradient#paint-linear stop {
+      &:first-child {
+        stop-color: $button-tertiary-gradient-color-one;
+      }
+
+      &:last-child {
+        stop-color: $button-tertiary-gradient-color-two;
+      }
+    }
+  }
+
+  &.loading {
+    background: $button-gen-ai-active-bg-color;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
+  }
+
+  .dot-flashing-container .dot {
+    &:nth-child(1) {
+      animation: dot-flashing-colors 1s infinite alternate;
+      animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+      animation: dot-flashing-colors 1s infinite linear alternate;
+      animation-delay: 0.5s;
+    }
+
+    &:nth-child(3) {
+      animation: dot-flashing-colors 1s infinite alternate;
+      animation-delay: 1s;
+    }
+  }
+}
+
+// Hover effect on SVG btn-tertiary AI
+.original-svg,
+.hover-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.hover-svg {
+  opacity: 0;
+}
+
+.btn-tertiary.btn-generative:hover .original-svg:not(.active-effect) {
+  opacity: 0;
+}
+
+.btn-tertiary.btn-generative:hover .hover-svg {
+  opacity: 1;
+}
+
 // How all button types will deal with iconography
 [class^='btn'],
 .btn-primary,
 .btn-secondary,
-.btn-tertiary {
+.btn-tertiary,
+.btn-generative {
   //Fixes an issue about the circle effect coming out of the button.
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
@@ -397,15 +681,13 @@ button {
 
   &[disabled],
   &[disabled]:hover {
-    &:not(.destructive) {
-      background-color: $button-color-primary-disabled-background;
-      border-color: $button-color-primary-disabled-border;
-      box-shadow: none;
-      color: $button-color-primary-disabled-font;
+    background-color: $button-color-primary-disabled-background;
+    border-color: $button-color-primary-disabled-border;
+    box-shadow: none;
+    color: $button-color-primary-disabled-font;
 
-      .icon {
-        color: $button-color-primary-disabled-icon;
-      }
+    .icon {
+      color: $button-color-primary-disabled-icon;
     }
   }
 
@@ -756,7 +1038,7 @@ a.btn-close {
 
   &.btn-primary,
   &.btn-secondary {
-    padding: 0 16px;
+    padding: 0 12px 0 16px;
   }
 }
 
@@ -888,6 +1170,11 @@ a.btn-close {
     min-height: $button-size-compact-height;
     min-width: 0;
 
+    &[class*='searchfield'] {
+      height: $searchfield-button-size-compact-height;
+      min-height: $searchfield-button-size-compact-height;
+    }
+
     > .icon:not(.icon-dropdown) {
       height: 14px;
       margin: 0;
@@ -932,6 +1219,38 @@ a.btn-close {
   }
 }
 
+html {
+  .field {
+    .searchfield-wrapper.has-close-icon-button.has-text {
+      .btn-icon.close {
+        border-radius: 11px;
+        top: 5px;
+
+        svg.close {
+          position: relative;
+          top: 0;
+        }
+      }
+    }
+  }
+
+  .field-short,
+  .form-layout-compact .field {
+    .searchfield-wrapper.has-close-icon-button.has-text {
+      .btn-icon.close {
+        top: 1px;
+
+        svg.close {
+          position: relative;
+          top: 0;
+        }
+      }
+    }
+  }
+}
+
+
+
 // RTL Styles
 html[dir='rtl'] {
   button {
@@ -960,7 +1279,7 @@ html[dir='rtl'] {
       }
     }
 
-    span {
+    &:not(.btn-generative) span {
       + .icon {
         margin-right: 5px;
       }
@@ -1073,6 +1392,57 @@ html[dir='rtl'] {
       }
     }
   }
+
+  &.is-chrome,
+  &.is-safari {
+    .field-short,
+    .form-layout-compact .field {
+      .searchfield-wrapper.has-close-icon-button.has-text {
+        .btn-icon.close {
+          top: 0;
+        }
+      }
+    }
+  }
+
+  &.is-firefox {
+    .field-short,
+    .form-layout-compact .field {
+      .searchfield-wrapper.has-close-icon-button.has-text {
+        .btn-icon.close {
+          top: 4px;
+        }
+      }
+
+      [class^='btn'],
+      .btn-primary,
+      .btn-secondary,
+      .btn-teritary {
+        span {
+          + .icon {
+            margin-bottom: 6px;
+          }
+        }
+      }
+    }
+  }
+
+  .field-short {
+    .searchfield-wrapper.has-close-icon-button.has-text {
+      .btn-icon.close {
+        right: 235px;
+      }
+    }
+  }
+
+  .field-short,
+  .form-layout-compact .field {
+    .searchfield-wrapper.has-close-icon-button.has-text {
+      .btn-icon.close {
+        top: 5px;
+      }
+    }
+  }
 }
 
 //Do not allow upper case in french
@@ -1165,5 +1535,14 @@ html[lang^='fr-'] {
         text-overflow: ellipsis;
       }
     }
+  }
+}
+
+html.theme-classic-light,
+html.theme-classic-dark,
+html.theme-classic-contrast {
+  .btn-generative,
+  .generative-section {
+    display: none;
   }
 }

@@ -24,7 +24,8 @@
 .mode-expanded .module-nav-guest a {
   justify-content: flex-start;
 
-  svg {
+  svg,
+  .avatar {
     margin-inline-start: 4px;
   }
 }

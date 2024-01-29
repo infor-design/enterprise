@@ -3290,8 +3290,15 @@ Datagrid.prototype = {
                     target = self.draggableColumnTargets[n];
                   }
 
-                  target.el.addClass('is-over');
-                  showTarget.addClass('is-over');
+                  const columnName = target.el.siblings('.datagrid-column-wrapper').find('.datagrid-header-text').text();
+                  const frozenColDtls = self.getFrozenColumnDetails();
+                  const isFrozenColumn = frozenColDtls.filter(col => col.name === columnName).length > 0;
+
+                  if (!isFrozenColumn) {
+                    target.el.addClass('is-over');
+                    showTarget.addClass('is-over');
+                  }
+
                   rect = target.el[0].getBoundingClientRect();
                   showTarget[0].style.left = `${parseInt(rect.left + (Locale.isRTL() ? 2 : 1), 10)}px`;
                   let lastAdjustment = 0;
@@ -3402,11 +3409,49 @@ Datagrid.prototype = {
                 self.updateGroupHeadersAfterColumnReorder(indexFrom, indexTo);
                 self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
                 self.updateColumns(self.settings.columns);
+
+                /**
+                * Fires after a column is moved to target.
+                * @event columnreorder
+                * @memberof Datagrid
+                * @property {object} event The jquery event object
+                * @property {number} indexTo The ending column index
+                * @property {number} indexFrom The starting column index
+                */
+                self.element.trigger('columnreorder', [{
+                  indexFrom,
+                  indexTo,
+                  columns: self.settings.columns,
+                }]);
               }
             }
           });
       });
     });
+  },
+
+  getFrozenColumnDetails() {
+    const frozenCols = this.settings.frozenColumns;
+    let frozenColArr = [];
+    const frozenColDtls = [];
+
+    if (frozenCols.left.length > 0) {
+      frozenColArr = $.merge(frozenColArr, frozenCols.left);
+    }
+
+    if (frozenCols.right.length > 0) {
+      frozenColArr = $.merge(frozenColArr, frozenCols.right);
+    }
+
+    for (let i = 0; i < frozenColArr.length; i++) {
+      const filteredCol = this.settings.columns.filter(col => col.id === frozenColArr[i]);
+
+      if (filteredCol.length > 0) {
+        frozenColDtls.push(filteredCol[0]);
+      }
+    }
+
+    return frozenColDtls;
   },
 
   /**
@@ -3491,6 +3536,19 @@ Datagrid.prototype = {
    * @returns {void}
    */
   arrayIndexMove(arr, from, to) {
+    const targetArr = [arr[from], arr[to]];
+    const frozenColDtls = this.getFrozenColumnDetails();
+    let isFrozenColumn = false;
+
+    for (let i = 0; i < frozenColDtls.length; i++) {
+      const filteredCol = targetArr.filter(col => col.id === frozenColDtls[i].id);
+
+      isFrozenColumn = filteredCol.length > 0;
+      if (isFrozenColumn) {
+        return;
+      }
+    }
+
     arr.splice(to, 0, arr.splice(from, 1)[0]);
   },
 
@@ -5048,7 +5106,8 @@ Datagrid.prototype = {
       }
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
-        ` ${ariaDescribedby
+        ` ${col.disableTooltip ? 'disabletooltip ' : ''}` +
+        `${ariaDescribedby
         }${ariaChecked
         }${isSelected ? ' aria-selected="true"' : ''
         }${cssClass ? ` class="${cssClass}"` : ''
@@ -5751,9 +5810,10 @@ Datagrid.prototype = {
         const isHeaderIcon = DOM.hasClass(elem, 'datagrid-header-icon');
         const isPopup = isHeaderFilter ?
           elem.parentNode.querySelectorAll('.popupmenu.is-open').length > 0 : false;
-        const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
         const containerEl = isHeaderColumn ? elem.parentNode : isHeaderIcon ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
+
+        const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
@@ -7433,14 +7493,6 @@ Datagrid.prototype = {
       }
     });
 
-    if (this.contextualToolbar.length > 0) {
-      this.contextualToolbar.find('.buttonset').children().on('click', () => {
-        this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
-          this.contextualToolbar.css('display', 'none');
-        }).animateClosed();
-      });
-    }
-
     if (this.stretchColumn !== 'last') {
       $(window).on('orientationchange.datagrid', () => {
         this.rerender();
@@ -8014,16 +8066,25 @@ Datagrid.prototype = {
 
     if (this.settings.toolbar && this.settings.toolbar.keywordFilter) {
       const thisSearch = toolbar.find('.searchfield');
-      const xIcon = thisSearch.parent().find('.close.icon');
+      const clearButton = thisSearch.next();
 
+      let typingTimer;
       thisSearch.off('keypress.datagrid').on('keypress.datagrid', (e) => {
         if (e.keyCode === 13 || e.type === 'change') {
+          clearTimeout(typingTimer);
           e.preventDefault();
           self.keywordSearch(thisSearch.val());
         }
+
+        if (self.settings.filterWhenTyping) {
+          clearTimeout(typingTimer);
+          typingTimer = setTimeout(() => {
+            self.keywordSearch(thisSearch.val());
+          }, 400);
+        }
       });
 
-      xIcon.off('click.datagrid').on('click.datagrid', () => {
+      clearButton.off('click.datagrid').on('click.datagrid', () => {
         self.keywordSearch(thisSearch.val());
       });
     }
@@ -8040,6 +8101,18 @@ Datagrid.prototype = {
 
     this.toolbar = toolbar;
     this.element.addClass('has-toolbar');
+  },
+
+  /**
+   * Hides the contextual toolbar.
+   * @returns {void}
+   */
+  hideContextualToolbar() {
+    if (this.contextualToolbar?.length > 0) {
+      this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
+        this.contextualToolbar.css('display', 'none');
+      }).animateClosed();
+    }
   },
 
   /**
@@ -10437,7 +10510,7 @@ Datagrid.prototype = {
 
     this.editor =  new col.editor(idx, cell, cellValue, cellNode, col, event, this, rowData); // eslint-disable-line
 
-    if (this.editor.input.is('.dropdown') && this.editor.input.parent().is('.datagrid-cell-wrapper')) {
+    if (this.editor?.input?.is('.dropdown') && this.editor?.input?.parent()?.is('.datagrid-cell-wrapper')) {
       this.editor.input.parent().addClass('is-dropdown-wrapper');
     }
     this.editor.row = idx;
@@ -12991,6 +13064,10 @@ Datagrid.prototype = {
    * @returns {object} tooltip object.
    */
   cacheTooltip(elem, tooltip) {
+    if ($(elem).attr('disabletooltip') !== undefined) {
+      return tooltip;
+    }
+
     if (typeof tooltip === 'undefined') {
       const contentTooltip = elem.querySelector('.is-editor.content-tooltip');
       const aTitle = elem.querySelector('a[title]');

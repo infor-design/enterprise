@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <form id="test-form" autocomplete="off" data-validate-on="submit">
+
+      <div class="field">
+        <label for="credit-code">Code</label>
+        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-validate="required customErrorRule customErrorRule2" data-mask="###" data-mask-mode="number"/>
+      </div>
+
+      <button type="submit" id="submit" class="btn-primary">Submit</button>
+    </form>
+
+    <script>
+      $(function() {
+        $.fn.validation.rules.customErrorRule = {
+          check: function (value) {
+
+            return false;
+          },
+          message: 'Custom Error 1',
+		      type: 'error'
+        };
+
+        $.fn.validation.rules.customErrorRule2 = {
+          check: function (value) {
+
+            return false;
+          },
+          message: 'Custom Error 2',
+          type: 'error'
+        };
+
+        $('input').on('change', function() {
+          $('#test-form').data('validate').validateForm(function (result) {
+          console.log('validateForm result:', result);
+          });
+        });
+      });
+    </script>
+  </div>
+</div>

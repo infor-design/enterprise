@@ -20,7 +20,7 @@
     <div class="page-container no-scroll">
 
       <!-- Vertical Tabs inside of a tab panel -->
-      <div id="tabs-vertical" class="vertical tab-container no-scroll is-personalizable" data-options='{ "verticalResponsive": true }'>
+      <div id="tabs-vertical" class="vertical tab-container no-scroll is-personalizable" data-options='{ "verticalResponsive": true, "validate": false }'>
 
         <div class="tab-list-container scrollable-y">
 
@@ -66,6 +66,9 @@
             </li>
             <li class="tab">
               <a id="tab-excluded-vendors-a" data-automation-id="tab-excluded-vendors-a" href="#excluded-vendors">Excluded Vendors</a>
+            </li>
+            <li class="tab">
+              <a id="tab-datagrid-test" data-automation-id="tab-datagrid-test" href="#datagrid-test">Datagrid Test</a>
             </li>
           </ul>
           <div class="tab-list-info">
@@ -140,9 +143,160 @@
           <h3>Excluded Vendors</h3>
           <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
         </div>
-
+        <div id="datagrid-test" data-automation-id="tab-datagrid-test-panel" class="tab-panel" style="height: fit-content">
+          <div id="datagrid"></div>
+        </div>
       </div>
 
     </div>
 
   </div>
+
+  <script>
+    var gridApi = null;
+
+    $('body').one('initialized', function () {
+      var grid;
+      const fiscalIdOptions = [
+        { id: 'Yes', value: 'yes', label: 'Yes' },
+        { id: 'No', value: 'no', label: 'No' },
+      ];
+      const data = [
+        {
+          country: 'NLD - Netherlands',
+          registrationType: '',
+          jurisdiction: '',
+          effectiveFrom: '11/15/2023',
+          expiry: '11/15/2023',
+          fiscalId: 'Yes',
+          taxRegistrationOrFiscalId: '1234567',
+          isExtended: false,
+        },
+        {
+          country: 'NLD - Netherlands',
+          registrationType: '',
+          jurisdiction: '',
+          effectiveFrom: '11/15/2023',
+          expiry: '11/15/2023',
+          fiscalId: 'No',
+          taxRegistrationOrFiscalId: '12345678',
+          isExtended: false,
+        },
+      ];
+      const columns = [
+        {
+          id: 'Country',
+          name: 'Country',
+          field: 'country',
+          sortable: true,
+          formatter: Soho.Formatters.Lookup,
+          editor: Soho.Editors.Lookup,
+        },
+        {
+        id: 'EffectiveFrom',
+        name: 'Effective From',
+        field: 'effectiveFrom',
+        sortable: true,
+        formatter: Soho.Formatters.Date,
+        editor: Soho.Editors.Date,
+        validate: 'date effectiveDateValidation',
+        },
+        {
+          id: 'Expiry',
+          name: 'Expiry Date',
+          field: 'expiry',
+          sortable: true,
+          formatter: Soho.Formatters.Date,
+          editor: Soho.Editors.Date,
+          validate: 'date expiryDateValidation',
+        },
+        {
+          id: 'FiscalId',
+          name: 'Fiscal Id',
+          field: 'fiscalId',
+          sortable: true,
+          formatter: Soho.Formatters.Dropdown,
+          editor: Soho.Editors.Dropdown,
+          options: fiscalIdOptions,
+        },
+        {
+          id: 'TaxRegistrationOrFiscalId',
+          name: 'Registration Number Or FiscalId',
+          field: 'taxRegistrationOrFiscalId',
+          sortable: true,
+          formatter: Soho.Formatters.Input,
+          editor: Soho.Editors.Input,
+        },
+        {
+          id: 'IsExtended',
+          name: '',
+          field: 'isExtended',
+          sortable: false,
+          hidden: true,
+        },
+      ];
+
+      $.fn.validation.rules.expiryDateValidation = {
+        check: (value, field, grid) => {
+          if (value && grid.item.effectiveFrom) {
+            const expiryDate = new Date(value);
+            const effectiveFrom = new Date(grid.item.effectiveFrom);
+            if (
+              Soho.Locale.isValidDate(expiryDate) &&
+              Soho.Locale.isValidDate(effectiveFrom) &&
+              expiryDate < effectiveFrom
+            ) {
+              return false;
+            } else {
+            }
+          }
+          return true;
+        },
+        id: 'custom',
+        type: 'error',
+        message: 'Expiry date must be grather than effective date',
+      };
+
+      $.fn.validation.rules.effectiveDateValidation = {
+        check: (value, field, grid) => {
+          if (value && grid.item.expiry) {
+            const effectiveFrom = new Date(value);
+            const expiryDate = new Date(grid.item.expiry);
+            if (
+              Soho.Locale.isValidDate(expiryDate) &&
+              Soho.Locale.isValidDate(effectiveFrom) &&
+              effectiveFrom > expiryDate
+            ) {
+              return false;
+            } else {
+            }
+          }
+          return true;
+        },
+        id: 'custom',
+        type: 'error',
+        message: 'Effective date must be less than expiry date',
+      };
+
+      //Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        clickToSelect: false,
+        selectable: 'single',
+        showNewRowIndicator: false,
+        enableTooltips: true,
+        showDirty: true,
+        editable: true,
+        frozenColumns: {
+          right: ['delete'],
+        },
+        emptyMessage: {
+          title: '',
+          height: 'small',
+        },
+      });
+    });
+
+  </script>
+

@@ -74,6 +74,10 @@ $images-size: (
   height: 48px;
   width: 48px;
 
+  &.round {
+    border-radius: 50%;
+  }
+
   &:focus {
     @include focus-state();
   }
@@ -93,21 +97,50 @@ $images-size: (
 }
 
 // Initials for when photo is absent
-.image-initials {
-  background: $ids-color-palette-amethyst-50;
+.image-initials,
+.avatar {
+  background: $ids-color-palette-emerald-50;
   border: 1px solid transparent; // to prevent jump on focus
-  border-radius: 50%;
+  border-radius: 8px;
   color: $ids-color-palette-white;
   display: inline-block;
-  font-size: $ids-size-font-lg;
-  height: 4.8rem;
-  line-height: 4.8rem;
+  font-size: 14px;
+  font-weight: 600;
+  height: 32px;
+  line-height: 30px;
   text-align: center;
+  text-transform: uppercase;
   vertical-align: middle;
-  width: 4.8rem;
+  width: 32px;
+  user-select: none;
+
+  &.three-char {
+    text-transform: capitalize;
+  }
+
+  &.large {
+    height: 48px;
+    font-size: 20px;
+    line-height: 48px;
+    width: 48px;
+  }
+
+  &.round {
+    border-radius: 50%;
+  }
 
   &:focus {
     @include focus-state();
+  }
+}
+
+@each $name in $color-names {
+  $i: index($color-names, $name);
+  $color: nth($color-vars, $i);
+
+  //Classes for Tags
+  .avatar.#{$name} {
+    background: nth($color-vars, $i);
   }
 }
 

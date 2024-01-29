@@ -18,10 +18,10 @@
   }
 
   &.personalize-actionable {
-    color: rgba(255, 255, 255, 0.8);
+    color: $hyperlinks-personalize-actionable-text-color;
 
     &:not([disabled]):not(.personalize-actionable-disabled):hover {
-      color: $ids-color-palette-white;
+      color: $hyperlink-hover-color;
       opacity: 1;
     }
   }

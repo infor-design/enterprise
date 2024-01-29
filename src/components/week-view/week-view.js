@@ -155,6 +155,9 @@ WeekView.prototype = {
     this.addToolbar();
     this.showWeek(this.settings.startDate, this.settings.endDate);
     this.handleEvents();
+    this.handleKeys();
+
+    this.element.find('td[data-key]').attr('tabindex', '-1');
     utils.addAttributes(this.element, this, this.settings.attributes);
     return this;
   },
@@ -1085,6 +1088,8 @@ WeekView.prototype = {
    * @private
    */
   handleEvents() {
+    const self = this;
+
     this.element.off(`updated.${COMPONENT_NAME}`).on(`updated.${COMPONENT_NAME}`, () => {
       this.updated();
     });
@@ -1149,9 +1154,26 @@ WeekView.prototype = {
       this.element.trigger(eventName, { settings: this.settings, event: eventData[0] });
     };
 
-    this.element.off(`click.${COMPONENT_NAME}`).on(`click.${COMPONENT_NAME}`, '.calendar-event', (e) => {
-      fireEvent(e.currentTarget, 'eventclick');
-      e.preventDefault();
+    this.element.off(`click.${COMPONENT_NAME}`).on(`click.${COMPONENT_NAME}`, '.calendar-event, td', (e) => {
+      const target = $(e.currentTarget);
+      if (target.is('td')) {
+        const key = e.currentTarget.getAttribute('data-key');
+        const time = $(e.currentTarget).parent().attr('data-hour');
+        const hour = Math.floor(time);
+        const min = (time - hour) * 60;
+        if (!key) {
+          return;
+        }
+        const day = new Date(key.substr(0, 4), key.substr(4, 2) - 1, key.substr(6, 2), hour, min);
+
+        self.focusEl = target;
+        self.focusDateHour = day;
+        self.element.find('td.is-selected').removeClass('is-selected');
+        target.addClass('is-selected').attr('tabindex', '0').focus();
+      } else {
+        fireEvent(e.currentTarget, 'eventclick');
+        e.preventDefault();
+      }
     });
 
     this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, '.calendar-event, td', (e) => {
@@ -1181,14 +1203,90 @@ WeekView.prototype = {
           this.settings.events,
           this.settings.eventTypes
         );
-        this.showModalWithCallback(day, eventData, true, $(e.currentTarget));
-        this.element.trigger('updated');
+        self.showModalWithCallback(day, eventData, true, $(e.currentTarget));
+        self.element.trigger('updated');
       }
       fireEvent(e.currentTarget, 'eventdblclick');
     });
 
     $('body').off(`breakpoint-change.${this.id}`).on(`breakpoint-change.${this.id}`, () => this.onBreakPointChange());
     $(window).on(`resize.${this.id}`, () => { this.element.trigger(`breakpoint-change.${this.id}`); });
+
+    return this;
+  },
+
+  /**
+   * Sets up key handlers for this component and its sub-elements.
+   * @returns {object} The Calendar prototype, useful for chaining.
+   * @private
+   */
+  handleKeys() {
+    const self = this;
+
+    this.element.off(`keydown.${COMPONENT_NAME}`).on(`keydown.${COMPONENT_NAME}`, 'td', (e) => {
+      const key = e.keyCode || e.charCode || 0;
+      const el = $(e.currentTarget);
+      let rowIndex = el.parent().index();
+      self.focusEl = el;
+      let targetDateKey = Locale.formatDate(self.focusDateHour, { pattern: 'yyyyMMdd' });
+      let targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
+
+      // Arrow Down: select same day but next 30 mins
+      if (key === 40) {
+        rowIndex++;
+      }
+
+      // Arrow Up: select same day but earlier 30 mins
+      if (key === 38) {
+        rowIndex--;
+      }
+
+      // Arrow Left or - key
+      if (key === 37 || (key === 189 && !e.shiftKey)) {
+        self.focusDateHour.setDate(self.focusDateHour.getDate() - 1);
+        targetDateKey = Locale.formatDate(self.focusDateHour, { pattern: 'yyyyMMdd' });
+        
+        targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
+        if (targetDay.length <= 0) {
+          const startDay = new Date(self.focusDateHour);
+          if (self.isDayView) {
+            startDay.setDate(self.focusDateHour.getDate() - 1);
+            self.showWeek(self.focusDateHour, self.focusDateHour);
+          } else {
+            startDay.setDate(self.focusDateHour.getDate() - 6);
+            self.showWeek(startDay, self.focusDateHour);
+          }
+          
+          targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
+        }
+      }
+
+      // Arrow Right or + key
+      if (key === 39 || (key === 187 && e.shiftKey)) {
+        self.focusDateHour.setDate(self.focusDateHour.getDate() + 1);
+        targetDateKey = Locale.formatDate(self.focusDateHour, { pattern: 'yyyyMMdd' });
+        targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
+
+        if (targetDay.length <= 0) {
+          const endDay = new Date(self.focusDateHour);
+          if (self.isDayView) {
+            endDay.setDate(self.focusDateHour.getDate() + 1);
+            self.showWeek(self.focusDateHour, self.focusDateHour);
+          } else {
+            endDay.setDate(self.focusDateHour.getDate() + 6);
+            self.showWeek(self.focusDateHour, endDay);
+          }
+         
+          targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
+        }
+      }
+
+      const targetContainer = $(self.element[0].querySelectorAll(`td:nth-child(${targetDay[0].elem.cellIndex + 1})`)[rowIndex]);
+      if (targetContainer.length > 0) {
+        self.element.find('td[tabindex=0]').removeAttr('tabindex');
+        targetContainer.attr('tabindex', '0').focus();
+      }
+    });
 
     return this;
   },

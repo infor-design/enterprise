@@ -51,7 +51,7 @@
   }
 }
 
-.btn-primary[disabled]:not(.destructive) {
+.btn-primary[disabled]:not(.destructive):not(.btn-generative) {
   background-color: $button-color-primary-disabled-background-new;
   border: 2px solid $button-color-primary-disabled-background-new;
   color: $button-color-primary-disabled-font-new;
@@ -152,7 +152,7 @@
 .btn {
   border-radius: 8px;
 
-  &:hover:not([disabled]):not(.btn-primary) {
+  &:hover:not([disabled]):not(.btn-primary):not(.trigger) {
     &:not(:disabled) {
       background-color: $button-color-tertiary-hover-background-new;
       color: $button-color-tertiary-hover-font-new;
@@ -364,6 +364,87 @@
       .notification-dot.notification-dot-lower-right {
         left: -11px;
         top: 10px;
+      }
+    }
+  }
+}
+
+.field-short,
+.form-layout-compact .field {
+  [class^='btn']:not(.btn-editor):not(.btn-icon) {
+    &[class*='searchfield'] {
+      height: $searchfield-button-size-compact-height-new;
+      min-height: $searchfield-button-size-compact-height-new;
+    }
+  }
+
+  .searchfield-wrapper {
+    .btn-icon.close {
+      top: 4px;
+    }
+  }
+}
+
+html {
+  .field {
+    .searchfield-wrapper.has-close-icon-button.has-text {
+      .btn-icon.close {
+        border-radius: 11px;
+
+        svg.close {
+          position: relative;
+          top: 1px;
+        }
+      }
+    }
+  }
+
+  .field-short,
+  .form-layout-compact .field {
+    .searchfield-wrapper.has-close-icon-button.has-text {
+      .btn-icon.close {
+        top: 2px;
+
+        svg.close {
+          position: relative;
+          top: 2px;
+        }
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  &.is-chrome,
+  &.is-safari {
+    .field-short,
+    .form-layout-compact .field {
+      .searchfield-wrapper.has-close-icon-button.has-text {
+        .btn-icon.close {
+          top: 4px;
+        }
+      }
+    }
+  }
+
+  &.is-firefox {
+    .field-short,
+    .form-layout-compact .field {
+      .searchfield-wrapper.has-close-icon-button.has-text {
+        .btn-icon.close {
+          top: 6px;
+        }
+      }
+
+      [class^='btn'],
+      .btn-primary,
+      .btn-secondary,
+      .btn-teritary {
+        span {
+          + .icon {
+            margin-bottom: 0;
+          }
+        }
       }
     }
   }

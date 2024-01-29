@@ -437,8 +437,14 @@ a.is-personalizable svg.ripple-effect {
 .subheader.is-personalizable button:not(:disabled):not(.searchfield-category-button) .app-header.icon > span,
 .is-personalizable .personalize-subheader button:not(:disabled),
 .is-personalizable .personalize-subheader button:not(:disabled):not(.close):not(.notification-close) .icon,
-.is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span  {
+.is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span,
+.tab-container.module-tabs.is-personalizable .toolbar div:is(.more) [class^='btn']:not(.btn-menu) .icon  {
   color: ${colors.headerIconColor} !important;
+}
+
+.header .flex-toolbar [class^='btn']:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable),
+.header .flex-toolbar [class^='btn']:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable) svg.icon {
+  color: ${colors.btnHoverColor} !important;
 }
 
 html[class*="theme-new"] .header.is-personalizable button:not(.close):not(:disabled):hover .icon {
@@ -690,6 +696,10 @@ html[class*="-dark"] .header .toolbar-searchfield-wrapper.active.has-focus .sear
 
 html[class*='classic-'] .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab.is-selected:not(.is-disabled) {
   border-color: ${colors.contrast};
+}
+
+html[class*='classic-contrast'] .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab.is-selected:not(.is-disabled) {
+  border-color: ${colors.light};
 }
 
 .tab-container.header-tabs.alternate > .tab-list-container .tab.is-disabled {
@@ -987,10 +997,6 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 html[class*="theme-classic-"] .is-personalizable .tab-container .tab-list-container .tab-list .tab.is-disabled,
 html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-container .tab-list .tab.is-disabled {
   opacity: .4 !important;
-}
-
-.is-personalizable .personalize-header:not(.header-tabs.alternate) {
-  background-color: ${colors.base} !important;
 }
 
 .is-personalizable .personalize-subheader {

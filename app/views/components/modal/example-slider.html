@@ -30,8 +30,18 @@
               </div>
 
               <div class="field">
-                <label for="slider-regular">Regular</label>
+                <label for="slider-regular">Regular Slider</label>
                 <input id="slider-regular" name="slider-regular" value="10" class="slider" type="range" data-options="{'persistTooltip': false, tooltipContent: [''], attributes: [{ name: 'id', value: 'slider-id-1' }, { name: 'data-automation-id', value: 'slider-automation-id-1' }]}"/>
+              </div>
+
+              <div class="field">
+                <label for="slider-quality">Ticks &amp; Colors Slider</label>
+                <input id="slider-quality" name="slider-quality" class="slider" type="range" min="0" max="5" value="2" step="1"
+                  data-ticks='[
+                      {"value": 1, "description": "Poor", "color": "poor"},
+                      {"value": 3, "description": "Good", "color": "good"},
+                      {"value": 5, "description": "Super", "color": "superior"}
+                    ]' />
               </div>
             </div>
           </div>

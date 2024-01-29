@@ -709,10 +709,11 @@ Tabs.prototype = {
       if (!this.addTabButton || !this.addTabButton.length) {
         this.addTabButton = $(`
           <div class="add-tab-button" tabindex="-1" role="button">
-            <span aria-hidden="true" role="presentation">+</span>
             <span class="audible">${Locale.translate('AddNewTab')}</span>
           </div>
         `);
+
+        $.createIconElement({ icon: 'add', classes: 'icon-add' }).prependTo(this.addTabButton);
         this.addTabButton.insertAfter(this.moreButton);
         this.element.addClass('has-add-button');
       }
@@ -3820,7 +3821,6 @@ Tabs.prototype = {
     const focusStateElem = this.focusState[0];
     let targetPos = DOM.getDimensions(target[0]);
     const targetClassList = target[0].classList;
-    const isNotHeaderTabs = (!this.isHeaderTabs() || this.isHeaderTabs() && this.element[0].classList.contains('alternate'));
     const isRTL = Locale.isRTL();
     const tabMoreWidth = !this.isVerticalTabs() ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
@@ -3828,9 +3828,13 @@ Tabs.prototype = {
     const accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
     const widthPercentage = target[0].getBoundingClientRect().width / target[0].offsetWidth * 100;
     const isClassic = $('html[class*="classic-"]').length > 0;
+    const isMac = $('html.is-mac').length > 0;
     const isAlternate = parentContainer.hasClass('alternate');
     const isTabContainerHeader = parentContainer.hasClass('header-tabs');
+    const isCounts = parentContainer.hasClass('has-counts');
     const isAddTabButton = target.is('.add-tab-button');
+    const tabListScrollHeight = scrollingTablist.prop('scrollHeight');
+    const tabListClientHeight = scrollingTablist.prop('clientHeight');
 
     function adjustForParentContainer(targetRectObj, parentElement, tablistContainer, transformPercentage) {
       const parentRect = parentElement[0].getBoundingClientRect();
@@ -3838,7 +3842,7 @@ Tabs.prototype = {
       let tablistScrollLeft;
 
       // Adjust from the top
-      targetRectObj.top -= parentRect.top - 2;
+      targetRectObj.top -= parentRect.top - (isCounts ? 10 : 3);
       if (self.isVerticalTabs()) {
         targetRectObj.top += parentElement[0].scrollTop;
       }
@@ -3861,7 +3865,7 @@ Tabs.prototype = {
           targetRectObj.right -= 1;
 
           // On RTL, remove the width of the controls on the left-most side of the tab container
-          if (!isNotHeaderTabs) {
+          if (self.isHeaderTabs()) {
             targetRectObj.left -= tabMoreWidth;
             targetRectObj.right -= tabMoreWidth;
           }
@@ -3885,7 +3889,17 @@ Tabs.prototype = {
         }
       }
 
-      if (isNotHeaderTabs && !self.isVerticalTabs() && !self.isModuleTabs()) {
+      if (!self.isHeaderTabs() && !self.isVerticalTabs() && !self.isModuleTabs()) {
+        targetRectObj.height += 4;
+        targetRectObj.top -= 9;
+
+        if (isClassic) {
+          targetRectObj.height -= 4;
+          targetRectObj.top += 5;
+        }
+      }
+
+      if (self.isHeaderTabs() && !self.isVerticalTabs() && !self.isModuleTabs()) {
         targetRectObj.height -= 1;
         targetRectObj.top += 2;
       }
@@ -3909,6 +3923,10 @@ Tabs.prototype = {
 
       if (isClassic && isAlternate && isTabContainerHeader) {
         targetRectObj.height -= 4;
+      }
+
+      if (self.isVerticalTabs() && scrollingTablist.is('.scrollable-y') && tabListScrollHeight > tabListClientHeight) {
+        targetRectObj.width -= !isMac ? 15 : 5;
       }
 
       return targetRectObj;
