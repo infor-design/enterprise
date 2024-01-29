@@ -185,7 +185,8 @@
       &:hover:not([disabled]) {
         color: $masthead-button-hover-color;
 
-        .icon {
+        .icon,
+        svg.icon {
           color: $masthead-button-hover-color;
         }
       }
