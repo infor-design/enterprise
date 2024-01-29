@@ -3542,7 +3542,7 @@ Datagrid.prototype = {
 
     for (let i = 0; i < frozenColDtls.length; i++) {
       const filteredCol = targetArr.filter(col => col.id === frozenColDtls[i].id);
-      
+
       isFrozenColumn = filteredCol.length > 0;
       if (isFrozenColumn) {
         return;
@@ -10510,7 +10510,7 @@ Datagrid.prototype = {
 
     this.editor =  new col.editor(idx, cell, cellValue, cellNode, col, event, this, rowData); // eslint-disable-line
 
-    if (this.editor.input.is('.dropdown') && this.editor.input.parent().is('.datagrid-cell-wrapper')) {
+    if (this.editor?.input?.is('.dropdown') && this.editor?.input?.parent()?.is('.datagrid-cell-wrapper')) {
       this.editor.input.parent().addClass('is-dropdown-wrapper');
     }
     this.editor.row = idx;
