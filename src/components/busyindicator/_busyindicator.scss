@@ -10,6 +10,10 @@ $delay: 0.14s; // Define common delay value
   position: relative;
   width: 56px;
 
+  &[hidden] {
+    display: none;
+  }
+
   .bar {
     margin-right: 2px;
     margin-left: 2px;
