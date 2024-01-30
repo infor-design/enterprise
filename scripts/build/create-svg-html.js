@@ -117,7 +117,7 @@ const convertSvgMarkup = (id, contents) => {
   }
 
   if (id === 'user-status-unknown') {
-    changed = changed.replace(/><\/circle>/g, 'fill="currentColor" ></circle>');
+    changed = changed.replace(/><\/circle>/g, ' fill="currentColor"></circle>');
   }
   return changed;
 };

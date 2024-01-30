@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.92.1
+
+## v4.92.1 Features
+
+- `[Icons]` Added new icon `widgets-smart-panel`. ([#8403](https://github.com/infor-design/enterprise/issues/8403))
+- `[Icons]` Fixed spaces in `icon-user-status-unknown` icon. ([#8403](https://github.com/infor-design/enterprise/issues/8403))
+
 ## v4.92.0
 
 ## v4.92.0 Features
