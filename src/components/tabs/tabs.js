@@ -3833,6 +3833,7 @@ Tabs.prototype = {
     const isTabContainerHeader = parentContainer.hasClass('header-tabs');
     const isCounts = parentContainer.hasClass('has-counts');
     const isAddTabButton = target.is('.add-tab-button');
+    const isSelected = target.is('.is-selected');
     const tabListScrollHeight = scrollingTablist.prop('scrollHeight');
     const tabListClientHeight = scrollingTablist.prop('clientHeight');
 
@@ -3900,8 +3901,19 @@ Tabs.prototype = {
       }
 
       if (self.isHeaderTabs() && !self.isVerticalTabs() && !self.isModuleTabs()) {
-        targetRectObj.height -= 1;
-        targetRectObj.top += 2;
+        targetRectObj.height -= 4;
+        targetRectObj.top -= isSelected ? 2 : 0;
+
+        if (!isSelected && !isAddTabButton) {
+          targetRectObj.height += 2;
+          targetRectObj.top -= 1;
+        }
+
+        if (isAddTabButton) {
+          targetRectObj.height += 5;
+          targetRectObj.top -= 1;
+        }
+        console.log(targetRectObj.height, targetRectObj.top);
       }
 
       if (self.isModuleTabs() && !self.isVerticalTabs()) {
