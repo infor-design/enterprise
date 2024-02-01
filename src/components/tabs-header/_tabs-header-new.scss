@@ -30,7 +30,7 @@
     }
 
     > .tab-list-container {
-      margin-top: 7px;
+      margin-top: 5px;
       border-bottom: 0;
 
       .tab {
@@ -59,7 +59,7 @@
 
         &:hover:not(.is-selected):not(.is-disabled) {
           color: $header-tab-hover-color-new;
-          border-bottom: 2px solid $header-tab-indicator-hover-color-new;
+          border-bottom: 4px solid $header-tab-indicator-hover-color-new;
           background-color: $header-tab-background-hover-color-new;
         }
 
@@ -69,7 +69,7 @@
 
         &.is-selected:not(.is-disabled) {
           color: $header-tab-selected-color-new;
-          border-bottom: 2px solid $header-tab-selected-color-new;
+          border-bottom: 4px solid $header-tab-selected-color-new;
 
           &::before {
             background-color: rgba($header-tab-hover-color-new, 1);
@@ -117,7 +117,7 @@
 
       &:not(.is-selected) {
         border-color: $header-tab-focus-border-color;
-        border-radius: 7px;
+        border-radius: 2px 2px 0 0;
       }
     }
 
@@ -131,7 +131,8 @@
 
       .icon {
         color: $header-tab-normal-color-new;
-        top: -2px;
+        inset-inline-start: 5px;
+        top: 0;
       }
 
       &:hover {
@@ -156,7 +157,6 @@
       padding: 9px 4px 11px 14px;
 
       &::before {
-        background-color: $header-tab-separator-new;
         content: '';
         display: inline-block;
         height: 30px;
@@ -168,7 +168,9 @@
     }
 
     .add-tab-button {
-      padding: 4px 4px 1px 6px;
+      inset-inline-start: 15px;
+      padding: 0;
+      position: relative;
     }
   }
 
@@ -330,4 +332,15 @@ html[dir='rtl'] {
       right: auto;
     }
   }
+}
+
+.tab-container.header-tabs>.tab-list-container .tab.dismissible .icon.close {
+  height: 14px;
+  margin-left: -3px;
+  right: -2px;
+  top: 1px;
+}
+
+.tab-container.header-tabs>.tab-list-container {
+  margin-bottom: -42px;
 }
