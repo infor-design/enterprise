@@ -6,6 +6,12 @@
 
 - `[Masthead]` Fixed incorrect color on hover. ([8391](https://github.com/infor-design/enterprise/issues/8391))
 
+## v4.92.2
+
+## v4.92.2 Fixes
+
+- `[Masthead]` Fixed incorrect color on hover. ([8391](https://github.com/infor-design/enterprise/issues/8391))
+
 ## v4.92.1
 
 ## v4.92.1 Features
