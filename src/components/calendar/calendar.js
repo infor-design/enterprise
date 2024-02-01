@@ -231,17 +231,44 @@ Calendar.prototype = {
       return this;
     }
 
-    for (let i = 0; i < this.settings.eventTypes.length; i++) {
-      const eventType = this.settings.eventTypes[i];
-      const classColor = eventType.custom ? eventType.color : `${eventType.color}07`;
-      const eventTypeMarkup = `<input type="checkbox" class="checkbox ${classColor}" name="${eventType.id}" id="${eventType.id}" ${eventType.checked ? 'checked="true"' : ''} ${eventType.disabled ? 'disabled="true"' : ''} />
-          <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name, language: this.language }) : eventType.label}</label><br/>`;
-      this.eventTypeContainer.insertAdjacentHTML('beforeend', eventTypeMarkup);
+    if (this.settings.isEventTree) {
+      const treeNodes = this.settings.eventTypes.map((eventType) => {
+        const eventNode = { ...eventType };
+        eventNode.text = eventNode.label;
+        eventNode.selected = eventNode.checked;
+        eventNode.icon = '';
+        delete eventNode.checked;
+        delete eventNode.label;
+        if (eventNode.children) {
+          const children = eventNode.children.map(({
+            label: text, checked: selected, ...rest
+          }) => ({ text, selected, icon: '', ...rest }));
+          eventNode.children = children;
+        }
+        return eventNode;
+      });
 
-      // Add attributes to the checkbox, copy the ID to its label's [for] attribute.
-      const checkboxEl = $(this.eventTypeContainer).find(`#${eventType.id}`);
-      utils.addAttributes($(this.eventTypeContainer).find(`#${eventType.id}`), this, this.settings.attributes, `legend-${eventType.id}`, true);
-      checkboxEl.next('label').attr('for', checkboxEl[0].id);
+      const eventTree = $('<ul role="tree" class="tree"></ul>');
+      $(this.eventTypeContainer).append(eventTree);
+      eventTree.tree({
+        dataset: treeNodes,
+        selectable: 'multiple',
+        folderIconOpen: 'caret-down',
+        folderIconClosed: 'caret-right',
+      });
+    } else {
+      for (let i = 0; i < this.settings.eventTypes.length; i++) {
+        const eventType = this.settings.eventTypes[i];
+        const classColor = eventType.custom ? eventType.color : `${eventType.color}07`;
+        const eventTypeMarkup = `<input type="checkbox" class="checkbox ${classColor}" name="${eventType.id}" id="${eventType.id}" ${eventType.checked ? 'checked="true"' : ''} ${eventType.disabled ? 'disabled="true"' : ''} />
+            <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name, language: this.language }) : eventType.label}</label><br/>`;
+        this.eventTypeContainer.insertAdjacentHTML('beforeend', eventTypeMarkup);
+
+        // Add attributes to the checkbox, copy the ID to its label's [for] attribute.
+        const checkboxEl = $(this.eventTypeContainer).find(`#${eventType.id}`);
+        utils.addAttributes($(this.eventTypeContainer).find(`#${eventType.id}`), this, this.settings.attributes, `legend-${eventType.id}`, true);
+        checkboxEl.next('label').attr('for', checkboxEl[0].id);
+      }
     }
     return this;
   },

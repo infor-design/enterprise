@@ -158,6 +158,10 @@
     .checkbox-label {
       margin: $label-size-regular-margin;
     }
+
+    .tree li.is-selected > a {
+      background-color: transparent;
+    }
   }
 
   .calendar-event-more {

@@ -270,6 +270,16 @@
             left: 9px;
             top: 1px;
           }
+
+          @each $name in $color-names {
+            $i: index($color-names, $name);
+            $color: nth($color-vars, $i);
+
+            &.#{$name}::before {
+              background-color: $color;
+              border-color: $color;
+            }
+          }
         }
 
         > a.is-disabled .tree-checkbox {
