@@ -117,7 +117,7 @@
 
       &:not(.is-selected) {
         border-color: $header-tab-focus-border-color;
-        border-radius: 2px 2px 0 0;
+        border-radius: 2px;
       }
     }
 
@@ -155,6 +155,7 @@
 
     .tab-more {
       padding: 9px 4px 11px 14px;
+      left: 3px;
 
       &::before {
         content: '';
@@ -168,9 +169,10 @@
     }
 
     .add-tab-button {
-      inset-inline-start: 15px;
+      inset-inline-start: 5px;
       padding: 0;
       position: relative;
+      top: 9px;
     }
   }
 
@@ -331,6 +333,15 @@ html[dir='rtl'] {
       left: 51px;
       right: auto;
     }
+  }
+
+  .tab-panel-container .tab-panel {
+    padding-inline-end: 4px;
+    padding-inline-start: 0;
+  }
+
+  .tab-container.header-tabs>.tab-list-container .tab.dismissible .icon.close {
+    top: 0;
   }
 }
 

@@ -1704,13 +1704,18 @@ Tabs.prototype = {
       targetLi = self.tablist.find(filter).first();
     }
 
+    function lastTab() {
+      e.preventDefault();
+      self.findLastVisibleTab();
+    }
+
     switch (key) {
       case 37: // left
         if (isRTL) {
           firstTab();
           break;
         }
-        openMenu();
+        lastTab();
         break;
       case 38: // up
         openMenu();
@@ -1721,7 +1726,7 @@ Tabs.prototype = {
         return this.handleAddButton();
       case 39: // right
         if (isRTL) {
-          openMenu();
+          lastTab();
           break;
         }
         firstTab();
@@ -3898,11 +3903,20 @@ Tabs.prototype = {
           targetRectObj.height -= 4;
           targetRectObj.top += 5;
         }
+
+        if (!isSelected && !isAddTabButton) {
+          targetRectObj.height = 36;
+          targetRectObj.top += 1;
+        }
       }
 
       if (self.isHeaderTabs() && !self.isVerticalTabs() && !self.isModuleTabs()) {
         targetRectObj.height -= 4;
         targetRectObj.top -= isSelected ? 2 : 0;
+
+        if (isRTL) {
+          targetRectObj.right -= 19;
+        }
 
         if (!isSelected && !isAddTabButton) {
           targetRectObj.height += 2;
@@ -3910,10 +3924,11 @@ Tabs.prototype = {
         }
 
         if (isAddTabButton) {
-          targetRectObj.height += 5;
-          targetRectObj.top -= 1;
+          targetRectObj.height += 7;
+          targetRectObj.top -= 6;
+          targetRectObj.left += 5;
+          if (isRTL) targetRectObj.right += 46;
         }
-        console.log(targetRectObj.height, targetRectObj.top);
       }
 
       if (self.isModuleTabs() && !self.isVerticalTabs()) {

@@ -374,4 +374,9 @@ html[dir='rtl'] {
       }
     }
   }
+
+  .tab-container.vertical > .tab-list-container {
+    border-right: 0;
+    border-left: 1px solid $vertical-tab-sidebar-border-color;
+  }
 }
