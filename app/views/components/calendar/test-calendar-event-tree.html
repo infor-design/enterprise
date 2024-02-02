@@ -37,8 +37,9 @@
   $('body').one('initialized', function () {
     // Get the Event Type and Events to show in the calendar
     let eventTypes = [
-      { id: "dto", label: "Discretionary Time Off", translationKey: "DiscretionaryTimeOff", color: "azure", checked: true,
+      { id: "timeoff", label: "All Time Offs", translationKey: "AllTimeOff", color: "azure", checked: true,
         children: [
+          { id: "dto", label: "Discretionary Time Off", translationKey: "DiscretionaryTimeOff", color: "ruby", checked: true },
           { id: "sick", label: "Sick Time", translationKey: "SickTime", color: "amber", checked: true },
           { id: "holiday", label: "Company Holiday", translationKey: "CompanyHoliday", color: "slate", checked: true, disabled: true }
       ]},
@@ -48,7 +49,6 @@
 
     $.getJSON('{{basepath}}api/events', function(res) {
       events = res;
-      console.log(events)
       $('.calendar').calendar({
         eventTypes: eventTypes,
         events: events,

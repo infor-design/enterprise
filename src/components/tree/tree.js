@@ -1812,6 +1812,23 @@ Tree.prototype = {
     return selected;
   },
 
+  /**
+   * Get unselected nodes
+   * @returns {object} unselected nodes
+   */
+  getUnselectedNodes() {
+    let node;
+    let data;
+    const unselected = [];
+
+    $('li:not(.is-selected)', this.element).each(function () {
+      node = $('a:first', this);
+      data = node.data('jsonData');
+      unselected.push({ node, data });
+    });
+    return unselected;
+  },
+
   getNextNode(target) {
     let next = target.parent().next().find('a:first');
     const subTarget = target.next();

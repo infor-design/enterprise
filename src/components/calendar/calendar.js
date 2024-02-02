@@ -248,13 +248,13 @@ Calendar.prototype = {
         return eventNode;
       });
 
-      const eventTree = $('<ul role="tree" class="tree"></ul>');
-      $(this.eventTypeContainer).append(eventTree);
-      eventTree.tree({
+      this.eventTree = $('<ul role="tree" class="tree"></ul>');
+      $(this.eventTypeContainer).append(this.eventTree);
+      this.eventTree.tree({
         dataset: treeNodes,
         selectable: 'multiple',
         folderIconOpen: 'caret-down',
-        folderIconClosed: 'caret-right',
+        folderIconClosed: 'caret-right'
       });
     } else {
       for (let i = 0; i < this.settings.eventTypes.length; i++) {
@@ -650,10 +650,17 @@ Calendar.prototype = {
    * @private
    */
   filterEventTypes() {
-    const types = [];
+    let types = [];
     if (!this.eventTypeContainer) {
       return types;
     }
+
+    if (this.eventTree) {
+      const treeApi = this.eventTree.data('tree');
+      types = treeApi.getUnselectedNodes().map(({ data }) => data.id);
+      return types;
+    }
+
     const checkboxes = this.eventTypeContainer.querySelectorAll('.checkbox');
 
     for (let i = 0; i < checkboxes.length; i++) {
@@ -662,6 +669,7 @@ Calendar.prototype = {
         types.push(input.getAttribute('name'));
       }
     }
+
     return types;
   },
 
@@ -1019,6 +1027,21 @@ Calendar.prototype = {
     $(this.monthViewContainer).off(`selected.${COMPONENT_NAME}`).on(`selected.${COMPONENT_NAME}`, () => {
       this.renderSelectedEventDetails();
     });
+
+    if (this.eventTree) {
+      this.eventTree.on('selected', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        this.renderAllEvents(true);
+      })
+        .on('unselected', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          this.renderAllEvents(true);
+        });
+    }
 
     this.element.off(`click.${COMPONENT_NAME}-upcoming`).on(`click.${COMPONENT_NAME}-upcoming`, '.calendar-upcoming-event', (e) => {
       const key = e.currentTarget.getAttribute('data-key');
