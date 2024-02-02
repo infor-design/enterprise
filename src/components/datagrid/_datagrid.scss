@@ -1645,7 +1645,7 @@ $datagrid-small-row-height: 25px;
             &.icon-calendar {
               height: 15px;
               left: 0;
-              top: -1px;
+              top: -3px;
             }
 
             &.icon-fileupload {
@@ -2529,7 +2529,7 @@ $datagrid-small-row-height: 25px;
       display: block;
       min-height: $datagrid-row-height + 6;
       overflow: hidden;
-      padding: 4px 16px 0;
+      padding: 6px 16px 0;
 
       &.is-dropdown-wrapper {
         .dropdown-wrapper {
@@ -2739,7 +2739,7 @@ $datagrid-small-row-height: 25px;
         span.trigger {
           overflow: hidden;
           text-overflow: ellipsis;
-          vertical-align: middle;
+          vertical-align: top;
           white-space: nowrap;
         }
       }
