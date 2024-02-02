@@ -224,7 +224,16 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
   }
 
   // Revalidates if the event type and current event has the same color.
-  const eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
+  let eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
+
+  if (eventInfo.length === 0) {
+    for (let i = 0; i < eventTypes.length || eventInfo.length === 0; i++) {
+      if (eventTypes[i].children) {
+        eventInfo = eventTypes[i].children.filter(eventType => eventType.id === event.type);
+      }
+    }
+  }
+
   if (event.color !== undefined && eventInfo.length === 1) {
     if (eventInfo[0].color !== event.color) {
       return eventInfo[0].color;
