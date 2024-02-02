@@ -2,6 +2,10 @@
 
 ## v4.93.0
 
+## v4.93.0 Features
+
+- `[Calendar]` Added event tree option for calendar. ([3870](https://github.com/infor-design/enterprise/issues/3870))
+
 ## v4.93.0 Fixes
 
 - `[Masthead]` Fixed incorrect color on hover. ([8391](https://github.com/infor-design/enterprise/issues/8391))
