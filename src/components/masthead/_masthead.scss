@@ -35,9 +35,11 @@
       color: $masthead-button-color;
       vertical-align: middle;
       margin-inline-start: 1px;
+      margin-inline-end: 2px;
+      margin-top: -5px;
 
       &.icon-dropdown {
-        margin-top: -2px;
+        margin-top: -3px;
       }
     }
 
