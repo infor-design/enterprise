@@ -1324,7 +1324,7 @@ Calendar.prototype = {
       }
     }
 
-    event.color = calendarShared.getEventTypeColor(event, this.settings.eventTypes);
+    event.color = calendarShared.getEventTypeColor(event, this.settings.eventTypes, this.settings.isEventTree);
     event.startsLong = Locale.formatDate(event.starts, { date: 'long', locale: this.locale.name });
     event.endsLong = Locale.formatDate(event.ends, { date: 'long', locale: this.locale.name });
     event.startsHoursLong = `${Locale.formatDate(event.starts, { date: 'long', locale: this.locale.name })} ${Locale.formatDate(event.starts, { date: 'hour', locale: this.locale.name })}`;
