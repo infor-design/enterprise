@@ -10544,7 +10544,8 @@ Datagrid.prototype = {
       this.addToDirtyArray(idx, cell, data);
     }
 
-    if (typeof this.editor.focus === 'function' && this.editor.name !== 'date') {
+    // Focus
+    if (!col.inlineEditor) {
       this.editor.focus();
     }
 

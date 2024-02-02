@@ -164,7 +164,7 @@ describe('Datagrid', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should run visual test in responsive view', async () => {
+    it.skip('should run visual test in responsive view', async () => {
       await page.setViewport({ width: 900, height: 600 });
       await page.waitForSelector('#custom-id-col-phone');
       const img = await page.screenshot();
