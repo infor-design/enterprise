@@ -125,6 +125,8 @@
 
     .icon {
       color: $header-tab-normal-color;
+      inset-inline-start: 5px;
+      top: -2px;
     }
 
     &:hover {

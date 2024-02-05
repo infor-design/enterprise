@@ -180,6 +180,10 @@ html[dir='rtl'] {
       }
     }
   }
+
+  .tab-container.horizontal:not(.has-counts)>.tab-list-container .tab:not(.is-disabled).is-selected {
+    border-bottom: 6px solid $tab-selected-color;
+  }
 }
 
 html[dir='rtl'] .tab-container.horizontal .tab:not(.last-child).is-error a[role='tab'],
