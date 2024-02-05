@@ -2,6 +2,10 @@
 
 ## v4.93.0
 
+## v4.93.0 Features
+
+- `[Datagrid]` Added data automation id of the column's filter operator. ([#8372](https://github.com/infor-design/enterprise/issues/8372))
+
 ## v4.93.0 Fixes
 
 - `[Datagrid]` Fixed cell editable not getting focused on click. ([8408](https://github.com/infor-design/enterprise/issues/8408))
