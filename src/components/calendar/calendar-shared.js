@@ -218,7 +218,7 @@ calendarShared.formateTimeString = function formateTimeString(event, locale, lan
  * @param {boolean} isEventTree Check if event type will be for a tree (has children)
  * @returns {object} The Calendar prototype, useful for chaining.
  */
-calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes, isEventTree = false) {
+calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes) {
   let color = 'azure';
   if (!event.type && !event.color) {
     return color;
@@ -227,10 +227,12 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes,
   // Revalidates if the event type and current event has the same color.
   let eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
 
-  if (eventInfo.length === 0 && isEventTree) {
-    for (let i = 0; i < eventTypes.length || eventInfo.length === 0; i++) {
+  if (eventInfo.length === 0) {
+    for (let i = 0; i < eventTypes.length; i++) {
       if (eventTypes[i].children) {
         eventInfo = eventTypes[i].children.filter(eventType => eventType.id === event.type);
+        eventInfo[0].color = eventTypes[i].color;
+        break;
       }
     }
   }

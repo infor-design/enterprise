@@ -61,6 +61,7 @@ const COMPONENT_NAME_DEFAULTS = {
     restrictMonths: false
   },
   showEventLegend: true,
+  isEventTree: false,
   dayLegend: null,
   displayRange: {
     start: '',
@@ -242,7 +243,7 @@ Calendar.prototype = {
         if (eventNode.children) {
           const children = eventNode.children.map(({
             label: text, checked: selected, ...rest
-          }) => ({ text, selected, icon: '', ...rest }));
+          }) => ({ text, selected, icon: '', color: eventType.color, ...rest }));
           eventNode.children = children;
         }
         return eventNode;
@@ -1324,7 +1325,7 @@ Calendar.prototype = {
       }
     }
 
-    event.color = calendarShared.getEventTypeColor(event, this.settings.eventTypes, this.settings.isEventTree);
+    event.color = calendarShared.getEventTypeColor(event, this.settings.eventTypes);
     event.startsLong = Locale.formatDate(event.starts, { date: 'long', locale: this.locale.name });
     event.endsLong = Locale.formatDate(event.ends, { date: 'long', locale: this.locale.name });
     event.startsHoursLong = `${Locale.formatDate(event.starts, { date: 'long', locale: this.locale.name })} ${Locale.formatDate(event.starts, { date: 'hour', locale: this.locale.name })}`;

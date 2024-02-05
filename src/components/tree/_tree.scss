@@ -256,6 +256,21 @@
         }
       }
 
+      &.is-partial,
+      &.is-selected {
+        > a .tree-checkbox {
+          @each $name in $color-names {
+            $i: index($color-names, $name);
+            $color: nth($color-vars, $i);
+
+            &.#{$name}::before {
+              background-color: $color;
+              border-color: $color;
+            }
+          }
+        }
+      }
+
       &.is-selected {
         > a .tree-checkbox {
           &::before {
@@ -269,16 +284,6 @@
 
             left: 9px;
             top: 1px;
-          }
-
-          @each $name in $color-names {
-            $i: index($color-names, $name);
-            $color: nth($color-vars, $i);
-
-            &.#{$name}::before {
-              background-color: $color;
-              border-color: $color;
-            }
           }
         }
 
@@ -447,6 +452,8 @@
   min-width: 200px;
   padding: 20px;
 }
+
+
 
 //IE
 .ie {
