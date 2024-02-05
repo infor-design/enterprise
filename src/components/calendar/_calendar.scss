@@ -155,6 +155,10 @@
     margin-bottom: -3px;
     margin-right: 5px;
 
+    &.event-tree {
+      padding-left: 10px;
+    }
+
     .checkbox-label {
       margin: $label-size-regular-margin;
     }

@@ -37,14 +37,17 @@
   $('body').one('initialized', function () {
     // Get the Event Type and Events to show in the calendar
     let eventTypes = [
-      { id: "timeoff", label: "All Time Offs", translationKey: "AllTimeOff", color: 'ruby', checked: true,
+      { id: "timeoff", label: "All Time Offs", translationKey: "AllTimeOff", color: "ruby",
         children: [
-          { id: "dto", label: "Discretionary Time Off", translationKey: "DiscretionaryTimeOff", checked: true },
-          { id: "sick", label: "Sick Time", translationKey: "SickTime", checked: true },
-          { id: "holiday", label: "Company Holiday", translationKey: "CompanyHoliday", checked: true, disabled: true }
+          { id: "dto", label: "Discretionary Time Off", translationKey: "DiscretionaryTimeOff", checked: false },
+          { id: "sick", label: "Sick Time", translationKey: "SickTime", checked: true }
       ]},
       { id: "admin", label: "Admin", translationKey: "AdministrativeLeave", color: "amethyst", checked: true },
-      { id: "team", label: "Team Event", translationKey: "TeamEvent", color: "emerald", checked: true }
+      { id: "team", label: "Team Event", translationKey: "TeamEvent", color: "emerald", checked: true,
+        children: [
+          { id: "holiday", label: "Company Holiday", translationKey: "CompanyHoliday", checked: true, disabled: true }
+        ]
+      }
     ];
 
     $.getJSON('{{basepath}}api/events', function(res) {

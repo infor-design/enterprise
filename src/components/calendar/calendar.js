@@ -233,6 +233,7 @@ Calendar.prototype = {
     }
 
     if (this.settings.isEventTree) {
+      $(this.eventTypeContainer).addClass('event-tree');
       const treeNodes = this.settings.eventTypes.map((eventType) => {
         const eventNode = { ...eventType };
         eventNode.text = eventNode.label;

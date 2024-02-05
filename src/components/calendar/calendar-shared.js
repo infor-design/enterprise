@@ -231,8 +231,11 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
     for (let i = 0; i < eventTypes.length; i++) {
       if (eventTypes[i].children) {
         eventInfo = eventTypes[i].children.filter(eventType => eventType.id === event.type);
-        eventInfo[0].color = eventTypes[i].color;
-        break;
+
+        if (eventInfo.length > 0) {
+          eventInfo[0].color = eventTypes[i].color || 'azure';
+          break;
+        }
       }
     }
   }
