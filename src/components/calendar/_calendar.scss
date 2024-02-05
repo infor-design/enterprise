@@ -157,6 +157,17 @@
 
     &.event-tree {
       padding-left: 10px;
+
+      .tree ul {
+        a,
+        a .tree-text {
+          margin: 0;
+        }
+
+        li {
+          margin-left: 4px;
+        }
+      }
     }
 
     .checkbox-label {
