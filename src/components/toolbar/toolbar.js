@@ -38,7 +38,7 @@ const COMPONENT_NAME = 'toolbar';
  * @param {boolean} [settings.noSearchfieldReinvoke=false] If true, does not manage the lifecycle
  *  of an internal toolbarsearchfield automatically.  Allows an external controller
  *  to do it instead.
- * @param {Array} [settings.attributes] If defined, passes user-defined attributes into the Toolbar
+ * @param {array|object} [settings.attributes=null] If defined, passes user-defined attributes into the Toolbar
  *  and some of its subcomponents
  */
 const TOOLBAR_DEFAULTS = {

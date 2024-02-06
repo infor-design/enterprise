@@ -64,7 +64,7 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * @param {boolean} [settings.tabCounts=false] If true, Displays a modifiable count above each tab.
  * @param {boolean} [settings.verticalResponsive=false] If Vertical Tabs & true, will automatically
  * switch to Horizontal Tabs on smaller breakpoints.
- * @param {Array} [settings.attributes=null] If set, adds additional attributes to some tabs and elements.
+ * @param {array|object} [settings.attributes=null] If set, adds additional attributes to some tabs and elements.
  * @param {boolean} [settings.sortable=false] If true, tabs can be sortable by drag and drop.
  */
 const TABS_DEFAULTS = {
@@ -2520,7 +2520,7 @@ Tabs.prototype = {
    * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
    * @param {object} options incoming options for the new tab.
    * @param {string} [options.name] the text title of the new tab.
-   * @param {Array} [options.attributes] additional attributes needed for the new tab.
+   * @param {array|object} [options.attributes] additional attributes needed for the new tab.
    * @param {boolean} [options.doActivate=false] if true, causes the newly-added tab to become activated and focused.
    * @param {boolean} [options.isDismissible=false] if true, causes the tab to become dismissible (closable) with an "X" button.
    * @param {boolean} [options.isDropdown=false] if true, causes the tab to become a dropdown tab.

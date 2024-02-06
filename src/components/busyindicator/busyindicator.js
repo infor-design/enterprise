@@ -19,7 +19,7 @@ const COMPONENT_NAME = 'busyindicator';
  * @param {string} [settings.transparentOverlay=false] If true, allows the "blockUI" setting to display
  * an overlay that prevents interaction, but appears transparent instead of gray.
  * @param {string} [settings.overlayOnly=false] If true, the busy indicator will only be the overlay.
- * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 const BUSYINDICATOR_DEFAULTS = {
   blockUI: true,

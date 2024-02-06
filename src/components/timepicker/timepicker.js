@@ -51,7 +51,7 @@ const TIMEPICKER_DEFAULTS = function () {
  * @param {null|jQuery[]} [settings.parentElement] if defined as a jQuery-wrapped element, will be used as the target element.
  * @property {string} [settings.returnFocus = true]  If set to false, focus will not be returned to
  *  the calling element. It usually should be for accessibility purposes.
- * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.tabbable=true] If true, causes the Timepicker's trigger icon to be focusable with the keyboard.
  * @param {number[]} [settings.hourRange=] Sets the range of hours in the timepicker.
  */

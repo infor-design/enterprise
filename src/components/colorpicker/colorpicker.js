@@ -27,7 +27,7 @@ const COMPONENT_NAME = 'colorpicker';
  * @param {boolean} [settings.clearable=true] If true will add clearable option.
  * @param {string} [settings.clearableText] The text to show in tooltip.
  * @param {object} [settings.popupmenuSettings] optional Popupmenu settings that will supersede the defaults.
- * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 const COLORPICKER_DEFAULTS = {
   // Theme key: MUST match with theme file name (ie: [filename: 'light-theme.css' -> 'light-theme'])
