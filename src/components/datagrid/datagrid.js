@@ -13080,6 +13080,7 @@ Datagrid.prototype = {
       const isHeaderFilter = DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
       const cell = elem.getAttribute('aria-colindex') - 1;
       const col = this.columnSettings(cell);
+      const gridTooltip = $('.grid-tooltip');
       let title;
 
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
@@ -13219,6 +13220,12 @@ Datagrid.prototype = {
 
         if (isTh) {
           tooltip.textwidth = stringUtils.textWidth(tooltip.content);
+        }
+
+        if (gridTooltip) {
+          const gridTooltipId = gridTooltip.attr('id');
+          gridTooltip.attr('data-automation-id', `${gridTooltipId}-grid-tooltip`);
+          $(this.tooltip).find('.tooltip-content').attr('data-automation-id', `${gridTooltipId}-content`);
         }
 
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
