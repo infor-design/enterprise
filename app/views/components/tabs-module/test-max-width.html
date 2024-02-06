@@ -1,0 +1,220 @@
+<header class="header is-personalizable">
+  <div class="flex-toolbar">
+    <div class="toolbar-section title">
+      <h1>IDS Enterprise</h1>
+    </div>
+
+    {{> includes/header-actionbutton}}
+  </div>
+</header>
+
+<div class="row top-padding">
+  <div class="twelve column">
+    <!-- Module Tabs -->
+    <section id="module-tabs-example" class="tab-container module-tabs is-personalizable" data-options="{ containerElement: '#module-tabs-container', 'changeTabOnHashChange': true, 'maxWidth': 200, 'moduleTabsTooltips': true }">
+      <div class="tab-list-container">
+        <ul class="tab-list">
+          <li class="tab is-selected dismissible">
+            <a id="tab-order-1" data-automation-id="tab-order-1" href="#order-1">CRS852 SMS Data. Create from Sales Statistics. Tab 1</a>
+          </li>
+          <li class="tab dismissible">
+            <a id="tab-order-2" data-automation-id="tab-order-2" href="#order-2">CRS852 SMS Data. Create from Sales Statistics. Tab 2</a>
+          </li>
+          <li class="tab dismissible">
+            <a id="tab-order-3" data-automation-id="tab-order-3" href="#order-3">CRS852 SMS Data. Create from Sales Statistics. Tab 3</a>
+          </li>
+          <li class="tab dismissible">
+            <a id="tab-order-4" data-automation-id="tab-order-3" href="#order-4">CRS852 SMS Data. Create from Sales Statistics. Tab 4</a>
+          </li>
+          <li class="tab dismissible">
+            <a id="tab-order-5" data-automation-id="tab-order-3" href="#order-5">CRS852 SMS Data. Create from Sales Statistics. Tab 5</a>
+          </li>
+          <li class="tab dismissible">
+            <a id="tab-order-6" data-automation-id="tab-order-3" href="#order-6">CRS852 SMS Data. Create from Sales Statistics. Tab 6</a>
+          </li>
+          <li class="tab dismissible">
+            <a id="tab-order-7" data-automation-id="tab-order-3" href="#order-7">CRS852 SMS Data. Create from Sales Statistics. Tab 7</a>
+          </li>
+          <li class="tab dismissible">
+            <a id="tab-order-8" data-automation-id="tab-order-3" href="#order-8">CRS852 SMS Data. Create from Sales Statistics. Tab 8</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <div id="module-tabs-container" class="no-scroll">
+
+      <!-- Tab Panels -->
+      <div id="order-1" class="tab-panel no-scroll">
+        <div class="row">
+          <div class="twelve columns">
+            <p>1 Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.'</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="order-2" class="tab-panel no-scroll">
+        <div class="row">
+          <div class="twelve columns">
+            <p>2 Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.'</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="order-3" class="tab-panel no-scroll">
+        <div class="row">
+          <div class="twelve columns">
+            <p>3 Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.'</p>
+          </div>
+        </div>
+      </div>
+      
+      <div id="order-4" class="tab-panel no-scroll">
+        <div class="row">
+          <div class="twelve columns">
+            <p>4 Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.'</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="order-5" class="tab-panel no-scroll">
+        <div class="row">
+          <div class="twelve columns">
+            <p>5 Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.'</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="order-6" class="tab-panel no-scroll">
+        <div class="row">
+          <div class="twelve columns">
+            <p>6 Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.'</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="order-7" class="tab-panel no-scroll">
+        <div class="row">
+          <div class="twelve columns">
+            <p>7 Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.'</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="order-8" class="tab-panel no-scroll">
+        <div class="row">
+          <div class="twelve columns">
+            <p>8 Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.'</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  </div>
+</div>
+
+  <script>
+
+    function wrapInPageMarkup(name, content) {
+      return '<header class="header is-personalizable">' +
+        '<div class="toolbar">' +
+          '<div class="title">' +
+            '<h1>' + name + '</h1>' +
+          '</div>' +
+          '<div class="buttonset"></div>' +
+        '</div>' +
+      '</header>' +
+      '<div class="page-container scrollable"><div class="row"><div class="twelve columns">' + content + '</div></div></div>';
+    }
+
+    $('body').on('initialized', function() {
+      var tabsAPI = $('#module-tabs-example').data('tabs');
+
+      function toggleFields(fillAutomatically) {
+        if (fillAutomatically) {
+          $('#create-tab-name, #create-tab-content').disable();
+          return;
+        }
+
+        $('#create-tab-name, #create-tab-content').enable();
+        return;
+      }
+
+      function buildRandomParagraphs(numberOfParagraphs) {
+        if (!buildRandomParagraphs || typeof numberOfParagraphs !== 'number') {
+          buildRandomParagraphs = 1;
+        }
+
+        var ret = '';
+        for (var i = 0; i < buildRandomParagraphs; i++) {
+          ret += '<p>' + $.get('{{basepath}}api/garbage?size=120') + '</p>';
+        }
+        return ret;
+      }
+
+      function paragraph(text) {
+        return '<p>' + text + '</p>';
+      }
+
+      $('#use-garbage').on('change.test', function() {
+        var checked = $(this).prop('checked');
+        toggleFields(checked);
+      });
+
+      $('#add-tab').on('submit.test', function(e) {
+        e.preventDefault();
+
+        function completeTab(name, content) {
+          // Wrap the content in a page-wrapper and header
+          content = wrapInPageMarkup(name, content);
+
+          var id = Soho.utils.uniqueId($('a'), 'tab');
+          tabsAPI.add(id, {
+            name: name,
+            content: content,
+            isDismissible: true
+          });
+        }
+
+        // Get a baseline for tab content.
+        var name = '' + $('#create-tab-name').val(),
+          content = '' + $('#create-tab-content').val();
+
+        // Do different things depending on the checkbox
+        if ($('#use-garbage').prop('checked')) {
+          var title = $.get('{{basepath}}api/garbage?size=1'),
+            body1 = $.get('{{basepath}}api/garbage?size=120'),
+            body2 = $.get('{{basepath}}api/garbage?size=120'),
+            body3 = $.get('{{basepath}}api/garbage?size=120'),
+            body4 = $.get('{{basepath}}api/garbage?size=120'),
+            body5 = $.get('{{basepath}}api/garbage?size=120');
+
+          $.when(title, body1, body2, body3, body4, body5).done(function completed(title, body1, body2, body3, body4, body5) {
+
+            // Unwrap quotes from response
+            function unwrap(content) {
+              return content = content.substring(1, (content.length - 1));
+            }
+
+            name = '' + unwrap(title[0]);
+            content += '<h3>'+ name +'</h3>' +
+              paragraph(unwrap(body1[0])) +
+              paragraph(unwrap(body2[0])) +
+              paragraph(unwrap(body3[0])) +
+              paragraph(unwrap(body4[0])) +
+              paragraph(unwrap(body5[0]));
+
+            completeTab(name, content);
+          })
+
+        } else {
+          completeTab(name, content);
+        }
+      });
+
+      // Run the field toggle method on start
+      toggleFields($('#use-garbage').prop('checked'));
+    });
+  </script>

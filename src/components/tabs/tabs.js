@@ -65,6 +65,7 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * @param {boolean} [settings.verticalResponsive=false] If Vertical Tabs & true, will automatically
  * switch to Horizontal Tabs on smaller breakpoints.
  * @param {Array} [settings.attributes=null] If set, adds additional attributes to some tabs and elements.
+ * @param {number} [settings.maxWidth=null] If not null, set the initial width of the tabs.
  * @param {boolean} [settings.sortable=false] If true, tabs can be sortable by drag and drop.
  */
 const TABS_DEFAULTS = {
@@ -88,6 +89,7 @@ const TABS_DEFAULTS = {
   tabCounts: false,
   verticalResponsive: false,
   attributes: null,
+  maxWidth: null,
   sortable: false
 };
 
@@ -3273,7 +3275,11 @@ Tabs.prototype = {
 
     // Remove overflowed tabs
     sizeableTabs.children('a').removeAttr('style');
-    sizeableTabs.removeAttr('style').each(function () {
+    sizeableTabs.removeAttr('style');
+
+    this.setMaxWidth();
+    
+    sizeableTabs.each(function () {
       const t = $(this);
       if (self.isTabOverflowed(t)) {
         sizeableTabs = sizeableTabs.not(t);
@@ -3335,6 +3341,25 @@ Tabs.prototype = {
     }
 
     this.adjustSpilloverNumber();
+  },
+
+  /**
+   * Sets the initial width of the tabs indicated in the settings
+   * @private
+   * @returns {void}
+   */
+  setMaxWidth() {
+    if (this.settings.maxWidth === null || this.settings.maxWidth === undefined) {
+      return;
+    }
+
+    const sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(:hidden)');
+    for (let i = 0; i < sizeableTabs.length; i++) {
+      const a = sizeableTabs.eq(i).children('a');
+      sizeableTabs[i].style.width = `${this.settings.maxWidth}px`;
+      a[0].style.width = `${this.settings.maxWidth}px`;
+
+    }
   },
 
   /**
