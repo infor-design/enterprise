@@ -3358,7 +3358,6 @@ Tabs.prototype = {
       const a = sizeableTabs.eq(i).children('a');
       sizeableTabs[i].style.width = `${this.settings.maxWidth}px`;
       a[0].style.width = `${this.settings.maxWidth}px`;
-
     }
   },
 
