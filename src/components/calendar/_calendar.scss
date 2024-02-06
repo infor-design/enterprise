@@ -159,9 +159,12 @@
       padding-left: 10px;
 
       .tree ul {
-        a,
-        a .tree-text {
-          margin: 0;
+        a {
+          display: inline-block;
+          width: calc(90%);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
         }
 
         li {
