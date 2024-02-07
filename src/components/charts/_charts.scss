@@ -74,6 +74,7 @@
     .chart-legend-title {
       color: $chart-legend-title-color;
       display: block;
+      font-size: $ids-size-font-px-16;
       font-weight: 400;
       margin-bottom: 2px;
     }
@@ -178,10 +179,10 @@
       }
 
       .chart-legend-color {
-        height: 15px;
+        height: 14px;
         margin: 0;
-        min-width: 15px;
-        max-width: 15px;
+        min-width: 14px;
+        max-width: 14px;
       }
 
       .chart-legend-item-text {

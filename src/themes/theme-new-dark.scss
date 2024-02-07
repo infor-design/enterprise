@@ -715,6 +715,8 @@ $chart-font-color-inverse: $ids-color-palette-slate-60;
 $chart-arc-stroke: $ids-color-palette-slate-70;
 $chart-legend-border-color: $ids-color-palette-slate-70;
 $chart-legend-title-color: $ids-color-palette-slate-10;
+$chart-legend-item-text-color: $chart-legend-title-color;
+$chart-container-text-color: $chart-legend-title-color;
 
 // DataGrid
 $datagrid-border-color: $ids-color-palette-slate-60;
