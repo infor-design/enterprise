@@ -72,7 +72,10 @@
     }
 
     .chart-legend-title {
+      color: $chart-legend-title-color;
       display: block;
+      font-weight: 400;
+      margin-bottom: 2px;
     }
   }
 
@@ -106,8 +109,8 @@
   text {
     @include antialiased();
 
-    color: $chart-font-color;
-    fill: $chart-font-color;
+    color: $chart-container-text-color;
+    fill: $chart-container-text-color;
     font-size: $ids-size-font-sm;
 
     &::selection {
@@ -182,6 +185,7 @@
       }
 
       .chart-legend-item-text {
+        color: $chart-legend-item-text-color;
         line-height: 17px;
         padding-left: 7px;
         position: relative;

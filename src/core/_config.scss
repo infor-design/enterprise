@@ -937,6 +937,9 @@ $chart-font-color-inverse: $ids-color-brand-secondary-contrast;
 $chart-bar-stroke: $ids-color-palette-white;
 $chart-arc-stroke: $ids-color-palette-white;
 $chart-legend-border-color: $ids-color-palette-graphite-20;
+$chart-legend-title-color: $ids-color-palette-slate-100;
+$chart-legend-item-text-color: $chart-legend-title-color;
+$chart-container-text-color: $chart-legend-title-color;
 
 // DataGrid
 $datagrid-border-color: $ids-color-palette-graphite-20;
