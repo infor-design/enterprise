@@ -33,7 +33,7 @@ const TEXTAREA_DEFAULTS = {
 * text defaulting to a localized 'Characters Left'.
 * @param {null|String} [settings.charMaxText = 'Character count maximum of']  Text that will be used in place of the "Max" text.
 * Defaults to a localized Version of 'Character count maximum of'.
-* @param {string} [settings.attributes = null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
+* @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 function Textarea(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TEXTAREA_DEFAULTS);

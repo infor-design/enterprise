@@ -31,7 +31,7 @@ const COMPONENT_NAME = 'calendartoolbar';
  * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  * @param {boolean} [settings.showViewChanger=false] If false the dropdown to change views will not be shown.
  * @param {string} [settings.viewChangerValue='month'] The value to show selected in the view changer. Can be month, week, day or schedule.
- * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.inPage=false] If true, will set inPage style for the month view in page option.
  * @param {boolean} [settings.inPageTitleAsButton=true] if true, will set the month-year title as button for inPage.
  * @param {boolean} [settings.hitbox=false] if true, add hitbox to the buttons.

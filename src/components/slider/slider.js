@@ -46,7 +46,7 @@ const SLIDER_DEFAULTS = {
  * @param {boolean} [settings.persistTooltip = false] If true the tooltip will stay visible.
  * @param {boolean} [settings.showTooltipOnLoad = false] If true the tooltip will be visible on load.
  * @param {boolean} [settings.sliderBox = false] If true the slider will have input box beside it showing its value.
- * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 function Slider(element, settings) {
   this.element = $(element);
