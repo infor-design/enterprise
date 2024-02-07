@@ -143,7 +143,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.showNextPrevious=true] If true the Next Previous buttons will shown on the header.
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  * @param {boolean} [settings.hitbox=false] Enable hitbox for toolbar buttons.
- * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 function MonthView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -2247,13 +2247,13 @@ MonthView.prototype = {
     const year = parseInt(date.substr(0, 4), 10);
     const month = parseInt(date.substr(4, 2), 10) - 1;
     const day = parseInt(date.substr(6, 2), 10);
-    
+
     if (this.isIslamic) {
       this.focusDate = Locale.umalquraToGregorian(year, month, day);
     } else {
       this.focusDate = new Date(year, month, day);
     }
-    
+
     // let el = $(node);
     // if (node === null || node === undefined) {
     //   el = this.element.find(`td[tabindex=0]`);

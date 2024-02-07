@@ -76,7 +76,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {function} [settings.onRenderMonth] Fires when a week is rendered, allowing you to pass back events or event types to show.
  * @param {string | function} [settings.eventTooltip] The content of event tooltip. Default value is 'overflow'
  * @param {string | function} [settings.iconTooltip] The content of event icon tooltip. Default value is 'overflow'
- * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 function WeekView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -1245,7 +1245,7 @@ WeekView.prototype = {
       if (key === 37 || (key === 189 && !e.shiftKey)) {
         self.focusDateHour.setDate(self.focusDateHour.getDate() - 1);
         targetDateKey = Locale.formatDate(self.focusDateHour, { pattern: 'yyyyMMdd' });
-        
+
         targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
         if (targetDay.length <= 0) {
           const startDay = new Date(self.focusDateHour);
@@ -1256,7 +1256,7 @@ WeekView.prototype = {
             startDay.setDate(self.focusDateHour.getDate() - 6);
             self.showWeek(startDay, self.focusDateHour);
           }
-          
+
           targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
         }
       }
@@ -1276,7 +1276,7 @@ WeekView.prototype = {
             endDay.setDate(self.focusDateHour.getDate() + 6);
             self.showWeek(self.focusDateHour, endDay);
           }
-         
+
           targetDay = self.dayMap.filter(day => day.key >= targetDateKey && day.key <= targetDateKey);
         }
       }

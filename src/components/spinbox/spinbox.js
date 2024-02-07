@@ -30,7 +30,7 @@ const SPINBOX_DEFAULTS = {
  * @param {Number} [settings.min = -2147483647] if defined, provides a minimum numeric limit
  * @param {Number} [settings.max = 2147483647]  if defined, provides a maximum numeric limit
  * @param {Number} [settings.maskOptions = null]  if defined this is passed to the internal mask component
- * @param {string} [settings.attributes = null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {null|Number} [settings.step = null]  if defined, increases or decreases the spinbox value
  *  by a specific interval whenever the control buttons are used.
  *  the spinbox value after the spinbox has lost focus.

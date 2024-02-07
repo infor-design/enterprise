@@ -43,7 +43,7 @@ const TREEMAP_DEFAULTS = {
  *  button: {text: 'xxx', click: <function>}
  *  }`
  * Set this to null for no message or will default to 'No Data Found with an icon.'
- * @param {string} [settings.attributes] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 function Treemap(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TREEMAP_DEFAULTS);
