@@ -11543,8 +11543,8 @@ Datagrid.prototype = {
       }
     }
 
-    if (!isInline) {
-      cellNode.find('.datagrid-cell-wrapper').html(formatted);
+    if (!isInline && typeof formatted === 'string') {
+      cellNode.find('.datagrid-cell-wrapper').html(xssUtils.unescapeHTML(formatted));
     }
 
     if (!fromApiCall) {
