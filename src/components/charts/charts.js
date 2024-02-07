@@ -488,7 +488,7 @@ charts.addLegend = function (series, chartType, settings, container) {
   if ((chartType === 'pie' || chartType === 'donut') && legendTitle && settings.legendPlacement === 'right') {
     const legendTitleElem = `<span class="chart-legend-title">${legendTitle}</span>`;
 
-    //prepend the legend title to the legend container
+    // Prepend the legend title to the legend container
     legend.prepend(legendTitleElem);
   }
 
