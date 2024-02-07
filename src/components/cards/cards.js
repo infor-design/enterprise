@@ -24,7 +24,7 @@ const COMPONENT_NAME = 'cards';
  * @param {string} [settings.template] Html Template String.
  * @param {string} [seettings.detailRefId] The id of the detail element that will be used to display the detail content.
  * @param {string} [settings.selectable=false] Ability to enable the selection state e.g. 'single', 'multiple' or false.
- * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 
 const CARDS_DEFAULTS = {

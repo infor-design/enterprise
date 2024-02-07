@@ -17,7 +17,7 @@ const COMPONENT_NAME = 'circlepager';
  * @param {Integer} [settings.slidesToShow=1] The number of slides to show in one view / pane
  * @param {Integer} [settings.startingSlide] First showing slide/group, an 0-based integer
  * @param {boolean} [settings.loop=false] Setting loop: true will loop back after next/previous reached to end
- * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.showArrows=false] If true, will show arrow around bullets nav
  * @param {boolean} [settings.footerContainment = false] If true will append bullet/pager nav to card or widget footer
  * @param {boolean} [settings.hideBulletsOnOverflow = false] If true will hide bullets nav

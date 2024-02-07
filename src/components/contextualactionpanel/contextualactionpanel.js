@@ -24,7 +24,7 @@ const COMPONENT_NAME = 'contextualactionpanel';
 * @param {string} [settings.modalSettings.trigger = 'click'] Can be 'click' or 'immediate'.
 * @param {string} [settings.modalSettings.title = undefined] Ability to set title via modalSettings.
 * @param {boolean} [settings.modalSettings.useFlexToolbar = false] If true the new flex toolbar will be used (For CAP)
-* @param {string} [settings.modalSettings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+* @param {array|object} [settings.modalSettings.attributes = null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const CONTEXTUALACTIONPANEL_DEFAULTS = {
   content: null,
