@@ -1,0 +1,55 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Pie Chart Legend with Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var pieData = [{
+    data: [{
+        name: 'Wages',
+        shortName: 'Wages',
+        value: 646.6,
+      }, {
+        name: 'Pre-tax Deductions',
+        shortName: 'Pre-tax',
+        value: 48,
+      }, {
+        name: 'Company Taxes',
+        shortName: 'C Tax',
+        value: 122,
+      }, {
+        name: 'Taxes',
+        shortName: 'Taxes',
+        value: 61,
+      }, {
+        name: 'After-tax Deductions',
+        shortName: 'Af-tax',
+        value: 183,
+      }, {
+        name: 'Company Deductions',
+        shortName: 'C Dedc',
+        value: 158.6,
+      }],
+      legendTitle: 'Legend Title'
+    }];
+
+  $('#pie-chart-example').chart({
+    type: 'pie',
+    dataset: pieData,
+    showLegend: true
+  });
+
+});
+</script>
