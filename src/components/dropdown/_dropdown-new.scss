@@ -549,11 +549,18 @@ html[dir='rtl'] {
 
       + .icon {
         left: 5px;
-        top: 0;
+        top: 2px;
       }
 
       .listoption-icon {
         top: 5px;
+      }
+    }
+
+    div.has-tags {
+      +.icon {
+        left: 5px;
+        top: 10px;
       }
     }
   }
