@@ -65,9 +65,9 @@ Only a subset of components support personalization:
 
 - [Headers and Subheaders](../header/readme.md) - Each gets a contrasting back color and all elements in it are reflected.
 - [Module Tabs](../tabs-module/readme.md) - The tabs and sub tabs and states.
-- [Button (Primary)](../button/readme.md) - The selection states.
-- [Hyperlinks](../hyperlinks/readme.md) - The link color no longer changes
-- [Hero Widget](../homepage/readme.md) - No longer changes
+- [Button (Primary)](../button/readme.md) - No longer changes (did in old version)
+- [Hyperlinks](../hyperlinks/readme.md) - The link color no longer changes  (did in old version)
+- [Hero Widget](../homepage/readme.md) - No longer changes (did in old version)
 
 ## Personalize Classes
 
