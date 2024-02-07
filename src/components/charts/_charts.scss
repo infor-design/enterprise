@@ -74,7 +74,6 @@
     .chart-legend-title {
       color: $chart-legend-title-color;
       display: block;
-      font-size: $ids-size-font-px-16;
       font-weight: 400;
       margin-bottom: 2px;
     }
@@ -172,7 +171,7 @@
       .is-two-column {
         display: inline-flex;
         float: none;
-        margin: 2px -5px;
+        margin: 1px -5px;
         min-width: 58%;
         padding: 4px 5px;
         width: auto;
@@ -187,7 +186,7 @@
 
       .chart-legend-item-text {
         color: $chart-legend-item-text-color;
-        line-height: 17px;
+        font-weight: 300;
         padding-left: 7px;
         position: relative;
         white-space: pre-line;
