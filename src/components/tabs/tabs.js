@@ -3323,6 +3323,11 @@ Tabs.prototype = {
         if (prevWidth > (visibleTabSize - anchorPadding)) {
           cutoff = 'yes';
         }
+
+        if (this.settings.maxWidth !== null && a.width() !== prevWidth) {
+          cutoff = 'yes';
+        }
+
         a.data('cutoffTitle', cutoff);
       }
 
