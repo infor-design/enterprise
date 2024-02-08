@@ -47,7 +47,7 @@ const TOOLTIP_TRIGGER_METHODS = ['hover', 'immediate', 'click', 'focus'];
  * @param {string} [settings.headerClass] If set this color will be used on the header (if a popover).
  * @param {string} [settings.delay] The delay before showing the tooltip
  * @param {string} [settings.attachToBody] The if true (default) the popup is added to the body. In some cases like popups with tab stops you may want to append the element next to the item.
- * @param {Array} [settings.attributes] allows user-defined attributes on generated Tooltip markup.
+ * @param {array|object} [settings.attributes=null] allows user-defined attributes on generated Tooltip markup.
  */
 const TOOLTIP_DEFAULTS = {
   content: null,

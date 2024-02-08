@@ -174,7 +174,7 @@
         border-color: transparent;
       }
 
-      span {
+      span:not(.audible) {
         color: inherit;
         position: relative;
         top: -1px;
