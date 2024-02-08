@@ -834,6 +834,16 @@ html[dir='rtl'] {
       right: 0;
     }
   }
+
+  &.is-safari {
+    .calendar-event-types {
+      &.event-tree {
+        .tree.is-multiselect li .tree-checkbox::before {
+          right: 0;
+        }
+      }
+    }
+  }
 }
 
 .monthview-header .calendar-toolbar,
