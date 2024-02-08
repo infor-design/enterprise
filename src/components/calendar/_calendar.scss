@@ -783,11 +783,31 @@ html[dir='rtl'] {
     border: 0;
   }
 
-  .calendar-event-types .checkbox-label {
-    padding-right: 25px;
+  .calendar-event-types {
+    .checkbox-label {
+      padding-right: 25px;
 
-    &::after {
-      right: 6px !important;
+      &::after {
+        right: 6px !important;
+      }
+    }
+
+    &.event-tree {
+      .tree li {
+        margin-right: 0;
+
+        &.is-partial > a .tree-checkbox::after {
+          right: 3px;
+        }
+
+        .tree-checkbox  {
+          left: 24px;
+
+          &::after {
+            right: 5px;
+          }
+        }
+      }
     }
   }
 

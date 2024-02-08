@@ -256,7 +256,7 @@ Calendar.prototype = {
         dataset: treeNodes,
         selectable: 'multiple',
         folderIconOpen: 'caret-down',
-        folderIconClosed: 'caret-right'
+        folderIconClosed: Locale.isRTL() ? 'caret-left' : 'caret-right'
       });
     } else {
       for (let i = 0; i < this.settings.eventTypes.length; i++) {
