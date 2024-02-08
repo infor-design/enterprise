@@ -40,7 +40,7 @@ const TOAST_DEFAULTS = {
  * @param {boolean} [settings.draggable = false] if true, allows user to drag/drop the toast container.
  * @param {boolean} [settings.savePosition] Save positon to local storage.
  * @param {string} [settings.uniqueId] A uniqueId to save positon to local storage, so same saved positon can be use for whole app.
- * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 function Toast(element, settings) {
   this.element = $(element);

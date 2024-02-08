@@ -31,7 +31,7 @@ const SPLITTER_DEFAULTS = {
 * @param {HTMLElement|jQuery[]} [settings.containment = null] When to stop the splitter, this can be document, or a parent element
 * @param {boolean} [settings.save = true] If true the split size will automatically be saved for next time
 * @param {object} [settings.maxWidth = {left: 'auto', right: 'auto'}] Ability to stop dragging at a max left or right size.
-* @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
+* @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 function Splitter(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SPLITTER_DEFAULTS);
