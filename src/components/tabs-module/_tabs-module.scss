@@ -510,8 +510,6 @@
       top: 0;
 
       .more-text {
-        display: none;
-
         @media (min-width: $breakpoint-big-phone) {
           display: inline-block;
         }
