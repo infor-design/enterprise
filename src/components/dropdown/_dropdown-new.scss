@@ -413,7 +413,7 @@ html.is-firefox:not([dir='rtl']) {
 
     &.datagrid-dropdown-list.is-editing .trigger .icon {
       top: 8.5px;
-      margin-left: -0.5px;
+      margin-left: 1px;
     }
 
     &.small-rowheight {
@@ -627,7 +627,11 @@ html[dir='rtl'] {
         padding: 2px 5px 2px 16px;
 
         + .icon {
-          top: -2px;
+          top: 3px;
+        }
+
+        &.has-tags +.icon {
+          top: 6px;
         }
       }
     }
