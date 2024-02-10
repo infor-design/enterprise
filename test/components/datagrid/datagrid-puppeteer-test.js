@@ -2,7 +2,6 @@
 const path = require('path');
 const { getConfig } = require('../../helpers/e2e-utils.cjs');
 const { getComputedStyle } = require('../../helpers/e2e-utils.cjs');
-const { xssUtils } = require('../../../src/utils/xss');
 
 describe('Datagrid', () => {
   const baseUrl = 'http://localhost:4000/components/datagrid';
