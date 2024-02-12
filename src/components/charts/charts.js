@@ -480,6 +480,18 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
   }
 
+  // Retrieve the legend title
+  const legendTitle = settings.dataset[0]?.legendTitle;
+
+  // Check if the chart type is either pie or donut,
+  // legend title exists, and legend placement is 'right'
+  if ((chartType === 'pie' || chartType === 'donut') && legendTitle && settings.legendPlacement === 'right') {
+    const legendTitleElem = `<span class="chart-legend-title">${legendTitle}</span>`;
+
+    // Prepend the legend title to the legend container
+    legend.prepend(legendTitleElem);
+  }
+
   if (legend instanceof $) {
     const regex = /^chart-legend-(.+)/;
 
