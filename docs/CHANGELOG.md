@@ -8,8 +8,9 @@
 
 ## v4.93.0 Fixes
 
-- `[Datagrid]` Fixed cell editable not getting focused on click. ([8408](https://github.com/infor-design/enterprise/issues/8408))
-- `[Docs]` Changed `attributes` property type to array/object. ([8228](https://github.com/infor-design/enterprise/issues/8228))
+- `[Datagrid]` Fixed cell editable not getting focused on click. ([#8408](https://github.com/infor-design/enterprise/issues/8408))
+- `[Docs]` Changed `attributes` property type to array/object. ([#8228](https://github.com/infor-design/enterprise/issues/8228))
+- `[Lookup]` Fixed unexpected multiselect selecting lookup when entering manual input. ([NG#1635](https://github.com/infor-design/enterprise-ng/issues/1635))
 - `[Masthead]` Fixed incorrect color on hover. ([8391](https://github.com/infor-design/enterprise/issues/8391))
 - `[Masthead]` Fixed incorrectly visible `audible` spans. ([8422](https://github.com/infor-design/enterprise/issues/8422))
 - `[TabsHeader]` Added fixes for the focus state and minor layout issue in left and right to left. ([#8405](https://github.com/infor-design/enterprise/issues/8405))
