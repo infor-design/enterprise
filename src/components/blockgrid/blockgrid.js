@@ -17,7 +17,7 @@ const COMPONENT_NAME = 'blockgrid';
  * @param {object} [settings.pagerSettings={}] if paging is enabled, the settings inside this object will be passed to the pager for configuration.
  * @param {number} [settings.pagerSettings.pagesize=25] Number of rows per page
  * @param {array} [settings.pagerSettings.pagesizes=[]] Array of page sizes to show in the page size dropdown.
- * @param {string|array} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const BLOCKGRID_DEFAULTS = {
   dataset: [],

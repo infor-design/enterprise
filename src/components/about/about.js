@@ -18,7 +18,7 @@ const COMPONENT_NAME = 'about';
  * @param {string} [settings.productName] Additional product name information to display.
  * @param {boolean} [settings.useDefaultCopyright=true] Add the Legal Approved Infor Copyright Text.
  * @param {string} [settings.version] Semantic Version Number for example (4.0.0).
- * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const ABOUT_DEFAULTS = {
   appName: 'Infor Application Name',

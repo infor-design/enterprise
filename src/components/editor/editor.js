@@ -53,7 +53,7 @@ const EDITOR_PARENT_ELEMENTS = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockq
 * @param {boolean} [settings.useSourceFormatter = false] true will format the html content in source mode.
 * @param {boolean} [settings.formatterTabsize = 4] number of spaces can use for indentation.
 * @param {boolean} [settings.rows = null] Number of rows that will be shown in each part of the editor. Set like textarea rows attributes to adjust the height of the editor without css. Example: `{ editor: 10, source: 20 }`
-* @param {string|array} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+* @param {array|object} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const EDITOR_DEFAULTS = {
   buttons: {

@@ -72,7 +72,7 @@ const FOCUSABLE_SELECTOR = [
 * @param {boolean} [settings.nextPageTooltip = 'Next Page'] Tooltip for the first page, defaults to an internally translated tooltip.
 * @param {boolean} [settings.lastPageTooltip = 'Last Page'] Tooltip for the first page, defaults to an internally translated tooltip.
 * @param {boolean} [settings.pageSizeMenuSettings = {}] customizable popupmenu settings for the Page Size Selector.
-* @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+* @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 * @param {boolean} [settings.tabbable] If true, will use tab key to navigate instead of arrow keys.
 */
 const PAGER_DEFAULTS = {
