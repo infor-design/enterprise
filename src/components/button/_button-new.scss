@@ -299,7 +299,7 @@
 }
 
 .field-short [class^='btn']:not(.btn-editor):not(.btn-icon),
-.form-layout-compact .field [class^='btn']:not(.btn-editor):not(.btn-icon) {
+.form-layout-compact .field [class^='btn']:not(.btn-editor):not(.btn-icon):not(.btn-dismissible) {
   min-height: $button-size-compact-height;
 
   > .icon + span:not(.audible):not(:empty) {

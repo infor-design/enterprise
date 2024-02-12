@@ -1164,7 +1164,7 @@ a.btn-close {
 // Short field buttons
 .field-short,
 .form-layout-compact .field {
-  [class^='btn']:not(.btn-editor):not(.btn-icon) {
+  [class^='btn']:not(.btn-editor):not(.btn-icon):not(.btn-dismissible) {
     height: $button-size-compact-height;
     margin-bottom: 10px;
     min-height: $button-size-compact-height;
