@@ -35,7 +35,7 @@ const DEFAULT_STEPCHART_OPTIONS = {
  * @param {string} [settings.completedColor = null] The color to show completed steps. Defaults to primary color.
  * @param {string} [settings.allCompletedColor = null] The color to steps when all are completed. Defaults to primary color.
  * @param {string} [settings.inProgressColor = null] The color to show in-progress steps. Defaults to ruby02.
- * @param {string|array} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 function StepChart(element, settings) {
   return this.init(element, settings);

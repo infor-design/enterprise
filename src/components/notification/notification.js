@@ -25,7 +25,7 @@ const NOTIFICATION_DEFAULTS = {
  * @param {string} [settings.parent] The jQuery selector to find where to insert the message into (prepended). By default this will appear under the .header on the page.
  * @param {string} [settings.link] The url to use for the hyperlink
  * @param {string} [settings.linkText] The text to show in the hyperlink. Leave empty for no link.
- * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 function Notification(element, settings) {
   this.settings = utils.mergeSettings(element, settings, NOTIFICATION_DEFAULTS);
