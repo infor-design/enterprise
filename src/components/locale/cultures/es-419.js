@@ -24,6 +24,7 @@ Soho.Locale.addCulture('es-419', {
       timestampMillis: 'HH:mm:ss.SSS',
       hour: 'HH:mm',
       datetime: 'd/M/yyyy HH:mm',
+      dateTimestamp: 'yyyy-MM-dd HH:mm:ss',
       datetimeMillis: 'd/M/yyyy HH:mm:ss.SSS',
       timezone: 'd/M/yyyy HH:mm zz',
       timezoneLong: 'd/M/yyyy HH:mm zzzz'

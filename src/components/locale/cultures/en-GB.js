@@ -21,6 +21,7 @@ Soho.Locale.addCulture('en-GB', {
       year: 'MMMM yyyy',
       dayOfWeek: 'EEE d',
       timestamp: 'HH:mm:ss',
+      dateTimestamp: 'yyyy-MM-dd HH:mm:ss',
       timestampMillis: 'HH:mm:ss.SSS',
       hour: 'HH:mm',
       datetime: 'dd/MM/yyyy HH:mm',
