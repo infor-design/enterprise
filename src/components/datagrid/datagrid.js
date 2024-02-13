@@ -11985,7 +11985,7 @@ Datagrid.prototype = {
 
     if (typeof row === 'number') {
       rowNum = row;
-      rowElem = this.tableBody.find('tr:visible').eq(row);
+      rowElem = this.settings.treeGrid ? this.actualRowNode(row) : this.tableBody.find('tr:visible').eq(row);
       rowIndex = this.actualRowIndex(rowElem);
       dataRowNum = this.dataRowIndex(rowElem);
     }
