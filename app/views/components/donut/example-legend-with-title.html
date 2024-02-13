@@ -1,0 +1,67 @@
+
+<div class="row">
+  <div class="two-thirds column" style="min-width: 300px !important; max-width: 400px !important;">
+      <div class="widget auto-height">
+        <div class="widget-header">
+          <h2 class="widget-title">Legend with Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var pieData = [{
+  centerLabel: '<tspan x="0" dy="-0.4em">Total Hours</tspan> <tspan x="0" dy="1.4em">265</tspan>',
+  data: [{
+      name: 'Reg',
+      value: 192,
+      tooltip: 'Regular 192'
+    }, {
+      name: 'Unpaid',
+      value: 24,
+      tooltip: 'Unpaid 24'
+    }, {
+      name: 'Sick',
+      value: 22,
+      tooltip: 'Sick 22'
+    }, {
+      name: 'Half Time',
+      value: 7,
+      tooltip: 'Half Time 24'
+    }, {
+      name: 'Other',
+      value: 5,
+      tooltip: 'Other Leave 5'
+    }, {
+      name: 'Overtime',
+      value: 5,
+      tooltip: 'Overtime 5'
+    }, {
+      name: 'Other',
+      value: 10,
+      tooltip: 'Other 10'
+    }],
+    legendTitle: 'Legend Title'
+  }];
+
+  $('#pie-chart-example').chart({
+    type: 'donut',
+    dataset: pieData,
+    showLegend: true,
+    labels: {
+      contentsTop: 'value',
+      formatterTop: '.0f',
+      formatterBottom: '.0f',
+      hideLabels: false
+    },
+    legendFormatter: '.0f'
+  });
+
+});
+</script>
