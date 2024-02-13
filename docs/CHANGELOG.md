@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.90.1
+
+## v4.90.1 Fixes
+
+- `[Datagrid]` Fixed cell value replacing special characters on cell change. ([8285](https://github.com/infor-design/enterprise/issues/8285))
+
 ## v4.90.0
 
 ## v4.90.0 Features
