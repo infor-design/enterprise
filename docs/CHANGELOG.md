@@ -18,6 +18,7 @@
 - `[Masthead]` Fixed incorrectly visible `audible` spans. ([8422](https://github.com/infor-design/enterprise/issues/8422))
 - `[TabsHeader]` Added fixes for the focus state and minor layout issue in left and right to left. ([#8405](https://github.com/infor-design/enterprise/issues/8405))
 - `[TabsModule]` Added setting `maxWidth` for tabs for long titles. ([#8017](https://github.com/infor-design/enterprise/issues/8017))
+- `[Tooltip]` Allowed tooltip to be shown by fixing expression error when having special characters. ([#8017](https://github.com/infor-design/enterprise/issues/8017))
 
 ## v4.92.2
 
