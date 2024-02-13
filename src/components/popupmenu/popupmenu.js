@@ -2249,11 +2249,6 @@ PopupMenu.prototype = {
 
     // If the entire menu is "selectable", place the checkmark where it's supposed to go.
     if ((parent.hasClass('is-selectable') && !anchor.find('.icon').length) || singleMenu || singleSection) {
-      if (parent.hasClass('is-checked')) {
-        parent.removeClass('is-checked');
-        returnObj.push('deselected');
-        return returnObj;
-      }
       parent.prevUntil('.heading, .separator').add(parent.nextUntil('.heading, .separator')).removeClass('is-checked');
       parent.addClass('is-checked');
       returnObj.push('selected');
@@ -2261,11 +2256,6 @@ PopupMenu.prototype = {
     }
 
     if (parent.hasClass('is-multiselectable') || multipleMenu || multipleSection) {
-      if (parent.hasClass('is-checked')) {
-        parent.removeClass('is-checked');
-        returnObj.push('deselected');
-        return returnObj;
-      }
       parent.addClass('is-checked');
       returnObj.push('selected');
       return returnObj;
