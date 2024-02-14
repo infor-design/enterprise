@@ -3386,7 +3386,8 @@ Tabs.prototype = {
     for (let i = 0; i < tabs.length; i++) {
       a = tabs.eq(i).children('a');
       a[0].style.width = '';
-      if (this.settings.moduleTabsTooltips === true || this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
+      if (this.settings.moduleTabsTooltips === true || this.settings.multiTabsTooltips 
+        || this.settings.headerTabsTooltips) {
         cutoff = 'no';
 
         prevWidth = parseInt(window.getComputedStyle(tabs[i]).width, 10);
