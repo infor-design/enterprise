@@ -5,10 +5,13 @@
 ## v4.93.0 Features
 
 - `[Datagrid]` Added data automation id of the column's filter operator. ([#8372](https://github.com/infor-design/enterprise/issues/8372))
+- `[Locale]` Added `dateTimestamp` date format. ([#8373](https://github.com/infor-design/enterprise/issues/8373))
 - `[Donut/Pie]` Added a legend title in donut and pie chart legends. ([#7933](https://github.com/infor-design/enterprise/issues/7933))
 
 ## v4.93.0 Fixes
 
+- `[Datagrid]` Fixed cell editable not getting focused on click. ([#8408](https://github.com/infor-design/enterprise/issues/8408))
+- `[Datagrid]` Fixed wrong cell focus on blur in tree grid. ([NG#1616](https://github.com/infor-design/enterprise-ng/issues/1616))
 - `[Datagrid]` Fixed cell editable not getting focused on click. ([8408](https://github.com/infor-design/enterprise/issues/8408))
 - `[Datagrid]` Fixed cell value replacing special characters on cell change. ([8285](https://github.com/infor-design/enterprise/issues/8285))
 - `[Docs]` Changed `attributes` property type to array/object. ([#8228](https://github.com/infor-design/enterprise/issues/8228))
@@ -17,6 +20,7 @@
 - `[Multiselect]` Fixed misaligned `x` buttons. ([8421](https://github.com/infor-design/enterprise/issues/8421))
 - `[Masthead]` Fixed incorrectly visible `audible` spans. ([8422](https://github.com/infor-design/enterprise/issues/8422))
 - `[Popupmenu]` Fixed a bug where single select check items were getting deselected. ([8422](https://github.com/infor-design/enterprise/issues/8422))
+- `[Slider]` Fixed visiblity of slider ticks inside of a modal.([#8397](https://github.com/infor-design/enterprise/issues/8397))
 - `[TabsHeader]` Added fixes for the focus state and minor layout issue in left and right to left. ([#8405](https://github.com/infor-design/enterprise/issues/8405))
 - `[TabsModule]` Added setting `maxWidth` for tabs for long titles. ([#8017](https://github.com/infor-design/enterprise/issues/8017))
 

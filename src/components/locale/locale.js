@@ -1791,7 +1791,8 @@ const Locale = {  // eslint-disable-line
           month: 'MMMM d',
           year: 'MMMM yyyy',
           timestamp: 'h:mm:ss a',
-          datetime: 'M/d/yyyy h:mm a'
+          datetime: 'M/d/yyyy h:mm a',
+          dateTimestamp: 'yyyy-MM-dd HH:mm:ss'
         },
         timeFormat: 'HH:mm:ss',
         dayPeriods: ['AM', 'PM']
