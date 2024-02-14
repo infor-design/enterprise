@@ -454,7 +454,7 @@ charts.addLegend = function (series, chartType, settings, container) {
         float: 'none',
         display: 'block',
         margin: '0 auto',
-        width: `${width}px`,
+        width: `${width + 15}px`,
       });
     }
 
@@ -651,7 +651,7 @@ charts.handleElementClick = function (idx, line, series, settings, container) {
 
     chartLegendItem.empty();
     chartLegendItem.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
-
+    chartLegendItem.attr('index-id', `chart-legend-${idx}`);
     container.find('.list-button').data('popupmenu').menu.children().removeClass('is-hidden');
     $(container.find('.list-button').data('popupmenu').menu.children().get(idx)).addClass('is-hidden');
   }

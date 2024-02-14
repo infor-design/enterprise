@@ -3285,7 +3285,7 @@ Tabs.prototype = {
     sizeableTabs.removeAttr('style');
 
     this.setMaxWidth();
-    
+
     sizeableTabs.each(function () {
       const t = $(this);
       if (self.isTabOverflowed(t)) {
@@ -3953,8 +3953,8 @@ Tabs.prototype = {
     const isCounts = parentContainer.hasClass('has-counts');
     const isAddTabButton = target.is('.add-tab-button');
     const isSelected = target.is('.is-selected');
-    const tabListScrollHeight = scrollingTablist.prop('scrollHeight');
-    const tabListClientHeight = scrollingTablist.prop('clientHeight');
+    const tabListScrollHeight = scrollingTablist?.prop('scrollHeight');
+    const tabListClientHeight = scrollingTablist?.prop('clientHeight');
 
     function adjustForParentContainer(targetRectObj, parentElement, tablistContainer, transformPercentage) {
       const parentRect = parentElement[0].getBoundingClientRect();

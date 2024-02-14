@@ -308,8 +308,6 @@ Pie.prototype = {
 
       s.svg = self.svg;
       charts.addLegend(series, 'pie', s, this.element);
-      const setClass = heightAdjusted > 0 ? 'addClass' : 'removeClass';
-      this.element.find('.chart-legend')[setClass]('adjusted-height');
     }
 
     this.setInitialSelected();
