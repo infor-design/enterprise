@@ -67,7 +67,7 @@
       }
 
       .chart-legend-item.is-one-line {
-        margin: 15px auto !important;
+        margin: 22px auto !important;
       }
     }
   }
@@ -141,7 +141,7 @@
   .list-button {
     float: right;
     margin-right: 17px;
-    margin-top: 1px;
+    margin-top: -4px;
     margin-bottom: 1px;
   }
 
@@ -286,6 +286,7 @@
         align-items: center;
         display: flex !important;
         font-size: 0;
+        padding: 0 4px 2px;
 
         &.is-two-column {
           padding: 2px 5px 4px 2px;
@@ -313,7 +314,7 @@
     float: left;
     margin: 7px 10px 7px 0;
     outline: none;
-    padding: 0 7px 0 3px;
+    padding: 3px 4px 0 !important;
 
     &[tabindex='-1'] {
       cursor: inherit;
@@ -382,7 +383,7 @@
   .chart-popup-menu-color {
     height: 15px;
     width: 15px;
-    margin: 8% 5px;
+    margin: 12px 8px 0 0;
   }
 
   .chart-popup-menu-text {

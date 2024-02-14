@@ -51,6 +51,8 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * @param {boolean} [settings.lazyLoad=true] if true, when using full URLs in tab HREFs,
  * or when using Ajax calls, tabs will be loaded as needed instead of the markup
  * all being established at once.
+ * @param {boolean} [settings.headerTabsTooltips=false] if true, will display a tooltip on
+ * Header Tabs with cut-off text content.
  * @param {boolean} [settings.moduleTabsTooltips=false] if true, will display a tooltip on
  * Module Tabs with cut-off text content.
  * @param {boolean} [settings.multiTabsTooltips=false] if true, will display a tooltip on
@@ -65,6 +67,7 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * @param {boolean} [settings.verticalResponsive=false] If Vertical Tabs & true, will automatically
  * switch to Horizontal Tabs on smaller breakpoints.
  * @param {Array} [settings.attributes=null] If set, adds additional attributes to some tabs and elements.
+ * @param {number} [settings.maxWidth=null] If not null, set the initial width of the tabs.
  * @param {boolean} [settings.sortable=false] If true, tabs can be sortable by drag and drop.
  */
 const TABS_DEFAULTS = {
@@ -80,6 +83,7 @@ const TABS_DEFAULTS = {
   changeTabOnHashChange: false,
   hashChangeCallback: null,
   lazyLoad: true,
+  headerTabsTooltips: false,
   moduleTabsTooltips: false,
   multiTabsTooltips: false,
   countsPosition: undefined,
@@ -88,6 +92,7 @@ const TABS_DEFAULTS = {
   tabCounts: false,
   verticalResponsive: false,
   attributes: null,
+  maxWidth: null,
   sortable: false
 };
 
@@ -456,6 +461,10 @@ Tabs.prototype = {
     if (this.isModuleTabs() && tabs.filter('.application-menu-trigger').length > 0) {
       tabs.find('a[tabindex="0"]').attr('tabindex', '-1');
       tabs.filter('.application-menu-trigger').find('a').attr('tabindex', '0');
+    }
+
+    if (!this.isModuleTabs() && this.isHeaderTabs()) {
+      this.adjustTabs();
     }
 
     this.setOverflow();
@@ -2520,7 +2529,7 @@ Tabs.prototype = {
    * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
    * @param {object} options incoming options for the new tab.
    * @param {string} [options.name] the text title of the new tab.
-   * @param {Array} [options.attributes] additional attributes needed for the new tab.
+   * @param {array|object} [options.attributes] additional attributes needed for the new tab.
    * @param {boolean} [options.doActivate=false] if true, causes the newly-added tab to become activated and focused.
    * @param {boolean} [options.isDismissible=false] if true, causes the tab to become dismissible (closable) with an "X" button.
    * @param {boolean} [options.isDropdown=false] if true, causes the tab to become a dropdown tab.
@@ -3273,7 +3282,11 @@ Tabs.prototype = {
 
     // Remove overflowed tabs
     sizeableTabs.children('a').removeAttr('style');
-    sizeableTabs.removeAttr('style').each(function () {
+    sizeableTabs.removeAttr('style');
+
+    this.setMaxWidth();
+
+    sizeableTabs.each(function () {
       const t = $(this);
       if (self.isTabOverflowed(t)) {
         sizeableTabs = sizeableTabs.not(t);
@@ -3287,9 +3300,6 @@ Tabs.prototype = {
       this.moreButton[0].style.width = `${visibleTabSize}px`;
       return;
     }
-    const anchorStyle = window.getComputedStyle(sizeableTabs.eq(0).children()[0]);
-    const anchorPadding = parseInt(anchorStyle.paddingLeft, 10) +
-      parseInt(anchorStyle.paddingRight, 10);
 
     if (this.moreButton[0].hasAttribute('style')) {
       this.moreButton[0].removeAttribute('style');
@@ -3307,22 +3317,89 @@ Tabs.prototype = {
       visibleTabSize = defaultTabSize;
     }
 
+    this.checkCutOffTitle(sizeableTabs, visibleTabSize);
+    this.adjustSpilloverNumber();
+  },
+
+  /**
+   * @private
+   * @returns {void}
+   */
+  adjustTabs() {
+    if (this.settings.maxWidth === null || this.settings.maxWidth === undefined) {
+      return;
+    }
+
+    const self = this;
+    let sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(:hidden)');
+    const tabContainerW = this.tablist.parent().outerWidth();
+    const defaultTabSize = 120;
+    let visibleTabSize = 120;
+
+    // Remove overflowed tabs
+    sizeableTabs.children('a').removeAttr('style');
+    sizeableTabs.removeAttr('style');
+
+    this.setMaxWidth();
+
+    sizeableTabs.each(function () {
+      const t = $(this);
+      if (self.isHeaderTabOverflowed(t)) {
+        sizeableTabs = sizeableTabs.not(t);
+      }
+    });
+
+    if (!sizeableTabs.length) {
+      visibleTabSize = (tabContainerW - 101);
+      this.moreButton[0].style.width = `${visibleTabSize}px`;
+      return;
+    }
+
+    if (this.moreButton[0].hasAttribute('style')) {
+      this.moreButton[0].removeAttribute('style');
+    }
+
+    visibleTabSize = ((tabContainerW) / sizeableTabs.length);
+
+    if (visibleTabSize < defaultTabSize) {
+      visibleTabSize = defaultTabSize;
+    }
+
+    this.checkCutOffTitle(sizeableTabs, visibleTabSize);
+    this.adjustSpilloverNumber();
+  },
+
+  /**
+   * Checks cut off title for tabs.
+   * @private
+   * @returns {void}
+   */
+  checkCutOffTitle(tabs, visibleTabSize) {
+    const anchorStyle = window.getComputedStyle(tabs.eq(0).children()[0]);
+    const anchorPadding = parseInt(anchorStyle.paddingLeft, 10) +
+      parseInt(anchorStyle.paddingRight, 10);
     let a;
     let prevWidth;
     let cutoff = 'no';
     const isSideBySide = this.element.closest('.side-by-side').length === 1;
 
-    for (let i = 0; i < sizeableTabs.length; i++) {
-      a = sizeableTabs.eq(i).children('a');
+    for (let i = 0; i < tabs.length; i++) {
+      a = tabs.eq(i).children('a');
       a[0].style.width = '';
-      if (this.settings.moduleTabsTooltips === true || this.settings.multiTabsTooltips) {
+      if (this.settings.moduleTabsTooltips === true ||
+        this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
         cutoff = 'no';
 
-        prevWidth = parseInt(window.getComputedStyle(sizeableTabs[i]).width, 10);
+        prevWidth = parseInt(window.getComputedStyle(tabs[i]).width, 10);
 
-        if (prevWidth > (visibleTabSize - anchorPadding)) {
+        if (prevWidth > (visibleTabSize - this.settings.headerTabsTooltips ? 0 : anchorPadding)) {
           cutoff = 'yes';
         }
+
+        if (this.settings.maxWidth !== null && a[0].offsetWidth < a[0].scrollWidth) {
+          cutoff = 'yes';
+        }
+
         a.data('cutoffTitle', cutoff);
       }
 
@@ -3330,11 +3407,27 @@ Tabs.prototype = {
       if (env.os.name === 'ios' && env.devicespecs.isMobile && isSideBySide) {
         diff = 25;
       }
-      sizeableTabs[i].style.width = `${visibleTabSize - diff}px`;
+      tabs[i].style.width = `${visibleTabSize - diff}px`;
       a[0].style.width = `${visibleTabSize - diff}px`;
     }
+  },
 
-    this.adjustSpilloverNumber();
+  /**
+   * Sets the initial width of the tabs indicated in the settings
+   * @private
+   * @returns {void}
+   */
+  setMaxWidth() {
+    if (this.settings.maxWidth === null || this.settings.maxWidth === undefined) {
+      return;
+    }
+
+    const sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(:hidden)');
+    for (let i = 0; i < sizeableTabs.length; i++) {
+      const a = sizeableTabs.eq(i).children('a');
+      sizeableTabs[i].style.width = `${this.settings.maxWidth}px`;
+      a[0].style.width = `${this.settings.maxWidth}px`;
+    }
   },
 
   /**
@@ -3713,6 +3806,27 @@ Tabs.prototype = {
     }
 
     return liTop > tablistTop;
+  },
+
+  /**
+   * Used for checking if a particular tab (in the form of a jquery-wrapped list item)
+   * is spilled into the overflow area of the tablist container <UL>.
+   * @param {jQuery} li tab list item
+   * @returns {boolean} whether or not the tab is overflowed.
+   */
+  isHeaderTabOverflowed(li) {
+    if (this.isHeaderTabs() && (this.settings.maxWidth === null || this.settings.maxWidth === undefined)) {
+      return false;
+    }
+
+    if (!li) {
+      return false;
+    }
+
+    const liRight = li[0].getBoundingClientRect().right;
+    const tabListWidth = li.parent().parent()[0].getBoundingClientRect().width;
+
+    return liRight > tabListWidth;
   },
 
   /**

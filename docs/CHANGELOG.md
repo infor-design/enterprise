@@ -1,12 +1,13 @@
 # What's New with Enterprise
 
-## v4.93.0
+## v4.92.3
 
-## v4.93.0 Fixes
+## v4.92.3 Fixes
 
-- `[TabsHeader]` Added fixes for the focus state and minor layout issue in left and right to left. ([#8405](https://github.com/infor-design/enterprise/issues/8405))
 - `[Datagrid]` Fixed cell editable not getting focused on click. ([8408](https://github.com/infor-design/enterprise/issues/8408))
-- `[Masthead]` Fixed incorrect color on hover. ([8391](https://github.com/infor-design/enterprise/issues/8391))
+- `[Datagrid]` Fixed cell value replacing special characters on cell change. ([8285](https://github.com/infor-design/enterprise/issues/8285))
+- `[Popupmenu]` Fixed a bug where single select check items were getting deselected. ([8422](https://github.com/infor-design/enterprise/issues/8422))
+- `[TabsHeader]` Added setting `maxWidth` for tabs for long titles. ([#8434](https://github.com/infor-design/enterprise/issues/8434))
 
 ## v4.92.2
 
