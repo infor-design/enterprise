@@ -21,6 +21,7 @@
 - `[Masthead]` Fixed incorrectly visible `audible` spans. ([8422](https://github.com/infor-design/enterprise/issues/8422))
 - `[Slider]` Fixed visiblity of slider ticks inside of a modal.([#8397](https://github.com/infor-design/enterprise/issues/8397))
 - `[TabsHeader]` Added fixes for the focus state and minor layout issue in left and right to left. ([#8405](https://github.com/infor-design/enterprise/issues/8405))
+- `[TabsHeader]` Added setting `maxWidth` for tabs for long titles. ([#8434](https://github.com/infor-design/enterprise/issues/8434))
 - `[TabsModule]` Added setting `maxWidth` for tabs for long titles. ([#8017](https://github.com/infor-design/enterprise/issues/8017))
 
 ## v4.92.2
