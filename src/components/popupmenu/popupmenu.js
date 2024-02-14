@@ -2256,6 +2256,11 @@ PopupMenu.prototype = {
     }
 
     if (parent.hasClass('is-multiselectable') || multipleMenu || multipleSection) {
+      if (parent.hasClass('is-checked')) {
+        parent.removeClass('is-checked');
+        returnObj.push('deselected');
+        return returnObj;
+      }
       parent.addClass('is-checked');
       returnObj.push('selected');
       return returnObj;
