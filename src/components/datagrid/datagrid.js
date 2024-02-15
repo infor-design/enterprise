@@ -11502,7 +11502,7 @@ Datagrid.prototype = {
       }
     }
 
-    const containsScriptTag = coercedVal.includes('script');
+    const containsScriptTag = coercedVal?.includes('script');
     coercedVal = containsScriptTag ? xssUtils.sanitizeHTML(coercedVal) : xssUtils.unescapeHTML(coercedVal);
 
     if (col.field && coercedVal !== oldVal) {
