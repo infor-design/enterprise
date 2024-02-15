@@ -11502,6 +11502,9 @@ Datagrid.prototype = {
       }
     }
 
+    const containsScriptTag = coercedVal.includes('script');
+    coercedVal = containsScriptTag ? xssUtils.sanitizeHTML(coercedVal) : xssUtils.unescapeHTML(coercedVal);
+
     if (col.field && coercedVal !== oldVal) {
       if (col.field.indexOf('.') > -1) {
         let rowDataObj = rowData;
