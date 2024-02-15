@@ -11532,9 +11532,7 @@ Datagrid.prototype = {
     };
 
     // update cell value
-    const escapedVal = xssUtils.containsHtmlEntities(coercedVal) ?
-      xssUtils.unescapeHTML(coercedVal) :
-      xssUtils.escapeHTML(coercedVal);
+    const escapedVal = xssUtils.escapeHTML(coercedVal);
 
     let val = (isEditor ? coercedVal : escapedVal);
 
