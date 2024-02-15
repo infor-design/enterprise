@@ -11502,6 +11502,8 @@ Datagrid.prototype = {
       }
     }
 
+    coercedVal = xssUtils.unescapeHTML(coercedVal);
+
     if (col.field && coercedVal !== oldVal) {
       if (col.field.indexOf('.') > -1) {
         let rowDataObj = rowData;
@@ -11543,21 +11545,13 @@ Datagrid.prototype = {
       }
     }
 
-    if (!isInline) {
-      const wrapper = cellNode.find('.datagrid-cell-wrapper');
-      wrapper.html(formatted);
+    const wrapper = cellNode.find('.datagrid-cell-wrapper');
+    if (!isInline && wrapper[0]) {
+      wrapper[0].innerHTML = formatted;
 
       const children = wrapper.children();
       if (children.length === 0) {
-        wrapper.html(xssUtils.unescapeHTML(formatted));
-      } else {
-        for (let i = 0; i < children.length; i++) {
-          const c = children[i];
-
-          if (c.innerText) {
-            c.innerText = xssUtils.unescapeHTML(c.innerText);
-          }
-        }
+        wrapper.innerText = xssUtils.unescapeHTML(formatted);
       }
     }
 
