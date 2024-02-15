@@ -11502,6 +11502,8 @@ Datagrid.prototype = {
       }
     }
 
+    coercedVal = xssUtils.unescapeHTML(coercedVal);
+
     if (col.field && coercedVal !== oldVal) {
       if (col.field.indexOf('.') > -1) {
         let rowDataObj = rowData;
@@ -11549,7 +11551,7 @@ Datagrid.prototype = {
 
       const children = wrapper.children();
       if (children.length === 0) {
-        wrapper.html(xssUtils.unescapeHTML(formatted));
+        wrapper.innerText = xssUtils.unescapeHTML(formatted);
       } else {
         for (let i = 0; i < children.length; i++) {
           const c = children[i];
