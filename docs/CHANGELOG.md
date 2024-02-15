@@ -10,6 +10,7 @@
 
 ## v4.93.0 Fixes
 
+- `[Datagrid]` Fixed a bug where editing a cell with special character will show its html character entity and not the actual character. ([#8444](https://github.com/infor-design/enterprise/issues/8444))
 - `[Datagrid]` Fixed cell editable not getting focused on click. ([#8408](https://github.com/infor-design/enterprise/issues/8408))
 - `[Datagrid]` Fixed wrong cell focus on blur in tree grid. ([NG#1616](https://github.com/infor-design/enterprise-ng/issues/1616))
 - `[Datagrid]` Fixed cell editable not getting focused on click. ([8408](https://github.com/infor-design/enterprise/issues/8408))

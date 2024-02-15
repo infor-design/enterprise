@@ -11529,8 +11529,12 @@ Datagrid.prototype = {
     };
 
     // update cell value
-    const escapedVal = xssUtils.escapeHTML(coercedVal);
+    const escapedVal = xssUtils.containsHtmlEntities(coercedVal) ?
+      xssUtils.unescapeHTML(coercedVal) :
+      xssUtils.escapeHTML(coercedVal);
+
     let val = (isEditor ? coercedVal : escapedVal);
+
     if (typeof val === 'string') {
       val = `${adj(val, /^\s*/)}${val.trim()}${adj(val, /\s*$/)}`;
     }
@@ -11544,21 +11548,7 @@ Datagrid.prototype = {
     }
 
     if (!isInline) {
-      const wrapper = cellNode.find('.datagrid-cell-wrapper');
-      wrapper.html(formatted);
-
-      const children = wrapper.children();
-      if (children.length === 0) {
-        wrapper.html(xssUtils.unescapeHTML(formatted));
-      } else {
-        for (let i = 0; i < children.length; i++) {
-          const c = children[i];
-
-          if (c.innerText) {
-            c.innerText = xssUtils.unescapeHTML(c.innerText);
-          }
-        }
-      }
+      cellNode.find('.datagrid-cell-wrapper').html(formatted);
     }
 
     if (!fromApiCall) {

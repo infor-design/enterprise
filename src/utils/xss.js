@@ -192,6 +192,15 @@ xssUtils.unescapeHTML = function (value) {
 };
 
 /**
+ * Check if the given value contains HTML character entities.
+ * @param {string} value - The input string to check for HTML character entities.
+ * @returns {boolean} - If true, the HTML character entities are found, false otherwise.
+ */
+xssUtils.containsHtmlEntities = function (value) {
+  return /&[a-zA-Z]+;/.test(value);
+};
+
+/**
  * htmlentities() is a PHP function which converts special characters (like <)
  * into their escaped/encoded values (like &lt;). This is a JS verson of it.
  * This allows you to show to display the string without the browser reading it as HTML.
