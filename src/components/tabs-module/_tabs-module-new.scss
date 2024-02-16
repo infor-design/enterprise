@@ -4,8 +4,37 @@
 .tab-container.module-tabs {
   min-height: 40px;
   max-height: 40px;
+  border-top: 1px solid $module-tabs-x-border-color;
+  border-bottom: 1px solid $module-tabs-x-border-color;
+  background-color: $module-tabs-list-container-bg-color;
+
+  &.has-toolbar {
+    .tab-list-container {
+      + .toolbar {
+        border-left: 1px solid $module-tabs-y-border-color;
+
+        .more {
+          .btn-actions {
+            svg.icon {
+              color: $module-tabs-normal-text-color;
+            }
+
+            &:hover {
+              background-color: $module-tabs-more-button-hover-color;
+
+              svg.icon {
+                color: $module-tabs-more-text-hover-color;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
   .toolbar {
+    background-color: $module-tabs-normal-bg-color;
+
     .buttonset {
       height: 38px;
     }
@@ -32,6 +61,7 @@
   .tab-list-container {
     min-height: 40px;
     max-height: 40px;
+    background-color: $module-tabs-list-container-bg-color;
   }
 
   .tab-list {
@@ -39,13 +69,20 @@
     max-height: inherit;
 
     .tab {
+      background-color: $module-tabs-normal-bg-color;
+      color: $module-tabs-normal-text-color;
       min-height: inherit;
       max-height: inherit;
+
+      &:not(:first-child) {
+        border-left: 1px solid $module-tabs-y-border-color;
+      }
 
       > a {
         height: 40px;
         padding: 7px 16px;
         line-height: 1.5;
+        font-weight: 400;
       }
 
       &.dismissible {
@@ -60,6 +97,24 @@
         svg.icon.close {
           display: none;
         }
+
+        &:hover {
+          background-color: $module-tabs-hover-bg-color;
+
+          svg.icon.close {
+            color: $module-tabs-close-hover-color;
+            display: block;
+          }
+        }
+      }
+
+      &.is-selected {
+        background-color: $module-tabs-active-bg-color;
+        color: $module-tabs-active-text-color;
+
+        > a {
+          font-weight: 700;
+        }
       }
 
       &.application-menu-trigger {
@@ -68,27 +123,34 @@
           width: 100%;
         }
       }
-
-      &:hover {
-        &.dismissible {
-          svg.icon.close {
-            display: block;
-          }
-        }
-      }
     }
   }
 
   &.has-more-button {
     .tab-more {
       padding: 6px 6px 7px;
+      background-color: $module-tabs-normal-bg-color;
+      border-left: 1px solid $module-tabs-y-border-color;
 
       .more-text {
+        color: $module-tabs-normal-text-color;
         left: -2px;
         position: relative;
         top: -2px;
         font-weight: 400;
         line-height: 1.8;
+      }
+
+      svg {
+        color: $module-tabs-normal-text-color;
+      }
+
+      &:hover {
+        background-color: $module-tabs-hover-bg-color;
+
+        svg.icon {
+          color: $module-tabs-normal-text-color;
+        }
       }
     }
   }
@@ -96,9 +158,23 @@
   &.has-add-button {
     .add-tab-button {
       height: 38px;
+      background-color: $module-tabs-normal-bg-color;
+      border-left: 1px solid $module-tabs-y-border-color;
 
       span:first-child {
         font-size: $ids-size-font-lg;
+      }
+
+      .icon {
+        color: $module-tabs-icon-normal-color;
+      }
+
+      &:hover {
+        background-color: $module-tabs-hover-bg-color;
+
+        .icon {
+          color: $module-tabs-icon-hover-color;
+        }
       }
     }
   }

@@ -100,7 +100,19 @@ $modal-color: $ids-color-palette-slate-60;
 $modal-secondary-color: $ids-color-palette-slate-60;
 
 // Module
-$module-tabs-active-bg-color: $ids-color-brand-primary-base;
+$module-tabs-normal-bg-color: $ids-color-palette-slate-10;
+$module-tabs-hover-bg-color: $ids-color-palette-slate-20;
+$module-tabs-active-bg-color: $ids-color-palette-white;
+$module-tabs-list-container-bg-color: $ids-color-palette-white;
+$module-tabs-x-border-color: $ids-color-palette-white;
+$module-tabs-y-border-color: $ids-color-palette-slate-30;
+$module-tabs-normal-text-color: $ids-color-palette-slate-100;
+$module-tabs-active-text-color: $ids-color-palette-azure-60;
+$module-tabs-close-hover-color: $ids-color-palette-slate-60;
+$module-tabs-icon-normal-color: $ids-color-palette-slate-60;
+$module-tabs-icon-hover-color: $ids-color-palette-slate-100;
+$module-tabs-more-button-hover-color: $ids-color-palette-azure-10;
+$module-tabs-more-text-hover-color: $ids-color-palette-azure-60;
 
 // DataGrid
 $datagrid-header-bg-color: $ids-color-palette-slate-10;
