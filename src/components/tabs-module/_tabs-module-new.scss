@@ -37,6 +37,10 @@
 
     .buttonset {
       height: 38px;
+
+      > * {
+        margin: 2px 5px 0 0;
+      }
     }
   }
 
