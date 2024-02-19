@@ -1,0 +1,73 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Column Chart Example &mdash; Format y-axis as integer</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-bar-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+$('body').on('initialized', function () {
+
+  var dataset = [{
+    data: [{
+      name: 'Automotive',
+      shortName: 'Auto',
+      abbrName: 'A',
+      value: 0.7,
+      tooltip: 'Custom Tooltip - {{value}}'
+    }, {
+      name: 'Distribution',
+      shortName: 'Dist',
+      abbrName: 'D',
+      value: 0.10
+    }, {
+      name: 'Equipment',
+      shortName: 'Equip',
+      abbrName: 'E',
+      value: .4
+    }, {
+      name: 'Fashion',
+      shortName: 'Fash',
+      abbrName: 'F',
+      value: 1.0
+    }, {
+      name: 'Food',
+      shortName: 'Food',
+      abbrName: 'F',
+      value: 0.14
+    }, {
+      name: 'Healthcare',
+      shortName: 'Health',
+      abbrName: 'H',
+      value: .8
+    }, {
+      name: 'Other',
+      shortName: 'Other',
+      abbrName: 'O',
+      value: .7
+    }]
+  }];
+
+  $('#column-bar-example').chart({
+    type: 'column',
+    dataset: dataset,
+    yAxis: {
+      ticks: {
+        number: 5,
+        format: '.0%'
+      }
+    }
+  });
+
+});
+</script>
