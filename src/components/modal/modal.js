@@ -1464,7 +1464,16 @@ Modal.prototype = {
 
     // Closing other sub components popover (timepicker, colorpicker, etc.)
     if (this.openSubComponents.length > 0 && !force) {
-      this.openSubComponents[0].popup.data('popover').hide();
+      const openComponent = this.openSubComponents[0];
+
+      if (openComponent.element.hasClass('colorpicker')) {
+        openComponent.close();
+      } else {
+        const popoverData = openComponent?.popup?.data('popover');
+        if (popoverData) {
+          popoverData.hide();
+        }
+      }
     } else {
       this.visible = false;
       this.active = false;
