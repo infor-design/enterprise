@@ -310,6 +310,7 @@ Personalize.prototype = {
     colors.tabVerticalSelectedTextColor = colors.base;
     colors.tabVerticalSelectedColor = themeColors.palette.white.value;
     colors.tabDivider = colors.darkest;
+    colors.tabTextColor = themeColors.palette.white.value;
 
     colors.tabFocusIndicator = colors.contrast;
     colors.tabFocusIndicatorVert = colors.base;
@@ -345,6 +346,7 @@ Personalize.prototype = {
 
     // Alabaster is different so readjust the colors
     if (isAlabaster) {
+      colors.tabTextColor = themeColors.palette.slate[100].value;
       colors.tabHoverColor = themeColors.palette.slate[20].value;
       colors.text = themeColors.palette.azure[60].value;
       colors.darker = themeColors.palette.azure[10].value;

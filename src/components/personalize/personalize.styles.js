@@ -333,7 +333,7 @@ a.is-personalizable svg.ripple-effect {
 .module-tabs.is-personalizable .add-tab-button,
 .module-tabs.is-personalizable .toolbar {
   background-color: ${colors.tabColor} !important;
-  color: white;
+  color: ${colors.tabTextColor} !important;
 }
 
 .module-tabs.is-personalizable .add-tab-button svg.icon {
