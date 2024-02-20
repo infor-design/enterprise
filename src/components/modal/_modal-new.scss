@@ -7,6 +7,14 @@
       line-height: 3.5rem;
     }
   }
+
+  .colorpicker-container .trigger .icon {
+    top: 0;
+  }
+
+  .datagrid td.is-editing .colorpicker-container .icon {
+    top: 1px;
+  }
 }
 
 .modal-buttonset {
