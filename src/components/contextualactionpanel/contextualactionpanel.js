@@ -504,15 +504,15 @@ ContextualActionPanel.prototype = {
    * Builds the content detail
    */
   buildContent() {
-    const self = this;
     if (this.settings.detailRefId === undefined) {
       return;
     }
 
+    const detailTranslate = Locale.isRTL() ? '-32px' : '32px';
     const mainWidth = this.panel.find('.content-main').width() + 16;
     this.panel.find('.modal-body').width(mainWidth);
     this.panel.find('.content-main').css('transform', 'translateX(0)');
-    this.panel.find('.content-detail').css('transform', 'translateX(32px)');
+    this.panel.find('.content-detail').css('transform', `translateX(${detailTranslate})`);
   },
 
   /**
@@ -520,12 +520,16 @@ ContextualActionPanel.prototype = {
    */
   showContentDetail() {
     this.showContentDetailFlag = true;
-    const mainWidth = this.panel.find('.content-main').width() + 32;
+    let baseWidth = this.panel.find('.content-main').width();
+    let mainWidth = baseWidth + 32;
+
+    baseWidth = Locale.isRTL() ? Math.abs(baseWidth) : -Math.abs(baseWidth);
+    mainWidth = Locale.isRTL() ? Math.abs(mainWidth) : -Math.abs(mainWidth);
 
     if (this.showContentDetailFlag) {
       this.panel.addClass('show-content-detail');
-      this.panel.find('.content-main').css('transform', `translateX(-${mainWidth}px)`);
-      this.panel.find('.content-detail').css('transform', `translateX(-${this.panel.find('.content-main').width()}px)`);
+      this.panel.find('.content-main').css('transform', `translateX(${mainWidth}px)`);
+      this.panel.find('.content-detail').css('transform', `translateX(${baseWidth}px)`);
     }
 
     this.addBackButton();
@@ -536,13 +540,14 @@ ContextualActionPanel.prototype = {
    */
   hideContentDetail() {
     this.showContentDetailFlag = false;
+    const detailTranslate = Locale.isRTL() ? '-32px' : '32px';
 
     this.panel.removeClass('show-content-detail');
     this.header.removeClass('has-back-button');
     this.header.find('.go-back-button').remove();
 
     this.panel.find('.content-main').css('transform', 'translateX(0)');
-    this.panel.find('.content-detail').css('transform', 'translateX(32px)');
+    this.panel.find('.content-detail').css('transform', `translateX(${detailTranslate})`);
   },
 
   /**

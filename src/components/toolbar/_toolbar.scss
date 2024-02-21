@@ -465,7 +465,8 @@ html[dir='rtl'] {
       text-align: left;
     }
 
-    .title {
+    .title,
+    .title-detail {
       text-align: right;
 
       + .buttonset {
@@ -481,7 +482,8 @@ html[dir='rtl'] {
     }
 
     &.do-resize {
-      .title {
+      .title,
+      .title-detail {
         left: auto;
         right: 0;
       }
