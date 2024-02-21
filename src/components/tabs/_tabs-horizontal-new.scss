@@ -269,5 +269,11 @@ html[dir='rtl'] {
           );
       }
     }
+
+    .add-tab-button {
+      svg.icon {
+        top: 6px;
+      }
+    }
   }
 }
