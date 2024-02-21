@@ -337,7 +337,7 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .module-tabs.is-personalizable .add-tab-button svg.icon {
-  color: white !important;
+  color: ${colors.tabTextColor} !important;
 }
 
 .tab-container.module-tabs.has-toolbar .tab-list-container + .toolbar .more .btn-actions:hover {
