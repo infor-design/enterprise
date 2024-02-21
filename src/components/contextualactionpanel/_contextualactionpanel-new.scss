@@ -2,6 +2,7 @@
 //================================================== //
 
 .modal.contextual-action-panel .toolbar .title,
+.modal.contextual-action-panel .toolbar .title-detail,
 .modal.contextual-action-panel .flex-toolbar .title,
 .modal.contextual-action-panel .flex-toolbar .title {
   font-size: 2.2rem;
@@ -18,6 +19,27 @@
 
       .title h2 {
         font-size: 1.8rem;
+      }
+    }
+  }
+}
+
+.modal.contextual-action-panel {
+  .modal-header {
+    .go-back-button {
+      .go-back {
+        svg {
+          height: 18px;
+          width: 18px;
+        }
+      }
+
+      + .toolbar {
+        width: calc(100% - 41px);
+
+        .title-detail {
+          line-height: 2;
+        }
       }
     }
   }
