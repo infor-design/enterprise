@@ -16,6 +16,7 @@
 - `[Datagrid]` Fixed wrong cell focus on blur in tree grid. ([NG#1616](https://github.com/infor-design/enterprise-ng/issues/1616))
 - `[Datagrid]` Fixed cell editable not getting focused on click. ([8408](https://github.com/infor-design/enterprise/issues/8408))
 - `[Datagrid]` Fixed cell value replacing special characters on cell change. ([8285](https://github.com/infor-design/enterprise/issues/8285))
+- `[Datepicker]` Fixed datepicker popover footer button position in RTL. ([#8400](https://github.com/infor-design/enterprise/issues/8400))
 - `[Docs]` Changed `attributes` property type to array/object. ([#8228](https://github.com/infor-design/enterprise/issues/8228))
 - `[Lookup]` Fixed unexpected multiselect selecting lookup when entering manual input. ([NG#1635](https://github.com/infor-design/enterprise-ng/issues/1635))
 - `[Lookup]` Fixed close button icon in lookup modal RTL. ([#8303](https://github.com/infor-design/enterprise/issues/8303))
