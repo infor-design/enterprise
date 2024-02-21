@@ -4,7 +4,7 @@
     <div>
       <% if (typeof nested === 'undefined') { %>
       <h3 id='<%- slug(section.namespace) %>'>
-        <%= md(section.namespace) %>
+        <%- slug(section.namespace) %>
       </h3>
       <% } %>
       <% if (section.context && section.context.github) { %>
