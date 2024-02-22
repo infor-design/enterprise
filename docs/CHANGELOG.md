@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.68.5
+
+## v4.68.5 Fixes
+
+- `[Editor]` Fixed a bug in editor where paste and plain text is not cleaning the text/html properly. ([#6892](https://github.com/infor-design/enterprise/issues/6892))
+
 ## v4.68.4
 
 ## v4.68.4 Fixes

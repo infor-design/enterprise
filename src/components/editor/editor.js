@@ -690,7 +690,7 @@ Editor.prototype = {
     const offset = { old: getOffset(this.savedSelection), new: getOffset(newSelection) };
 
     if (!((offset.old !== null && offset.new !== null) &&
-        (offset.old.start === offset.new.start) && (offset.old.end === offset.new.end))) {
+      (offset.old.start === offset.new.start) && (offset.old.end === offset.new.end))) {
       this.restoreSelection(this.savedSelection);
     }
   },
@@ -1177,7 +1177,7 @@ Editor.prototype = {
 
       e.preventDefault();
       currentElem.focus();
-      
+
       self.checkSelection();
 
       if (!self.sourceViewActive()) {
@@ -1614,7 +1614,7 @@ Editor.prototype = {
       current = range.commonAncestorContainer;
       parent = current.parentNode;
       result = current.getAttribute('data-editor') ? current : getElement(parent);
-    // If not search in the parent nodes.
+      // If not search in the parent nodes.
     } catch (err) {
       result = getElement(parent);
     }
@@ -1710,8 +1710,8 @@ Editor.prototype = {
   rangeSelectsSingleNode(range) {
     const startNode = range.startContainer;
     return startNode === range.endContainer &&
-        startNode.hasChildNodes() &&
-        range.endOffset === range.startOffset + 1;
+      startNode.hasChildNodes() &&
+      range.endOffset === range.startOffset + 1;
   },
 
   getSelectedParentElement() {
@@ -1797,7 +1797,7 @@ Editor.prototype = {
         if (e.clipboardData && e.clipboardData.types) {
           clipboardData = e.clipboardData;
         } else if (e.originalEvent && e.originalEvent.clipboardData &&
-           e.originalEvent.clipboardData.getData) {
+          e.originalEvent.clipboardData.getData) {
           clipboardData = e.originalEvent.clipboardData;
         }
       }
@@ -1805,17 +1805,17 @@ Editor.prototype = {
       if (clipboardData && clipboardData.types) {
         types = clipboardData.types;
         if ((types instanceof DOMStringList && types.contains('text/html')) ||
-            (types.indexOf && types.indexOf('text/html') !== -1) || env.browser.isEdge()) {
+          (types.indexOf && types.indexOf('text/html') !== -1) || env.browser.isEdge()) {
           pastedData = e.originalEvent.clipboardData.getData('text/html');
         }
         if (types instanceof DOMStringList && types.contains('text/plain')) {
           pastedData = e.originalEvent.clipboardData.getData('text/plain');
         }
         if ((typeof types === 'object' && types[0] && types[0] === 'text/plain') && !types[1]) {
-          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+          pastedData = xssUtils.escapeHTML(e.originalEvent.clipboardData.getData('text/plain'));
         }
         if (types instanceof Array && types.indexOf('text/plain') > -1 && types.indexOf('text/html') < 0) { // For PDF Windows Reader, no text/html in types found.
-          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+          pastedData = xssUtils.escapeHTML(e.originalEvent.clipboardData.getData('text/plain'));
         }
       } else {
         paste = window.clipboardData ? window.clipboardData.getData('Text') : '';
@@ -2248,7 +2248,7 @@ Editor.prototype = {
 
       // Look for an element *within* the selected range
       if (!rng.collapsed && (rng.text === undefined || rng.text) &&
-       selparent.getElementsByTagName) {
+        selparent.getElementsByTagName) {
         el = selparent.getElementsByTagName(tagname);
         comprng = document.createRange ? document.createRange() : document.body.createTextRange();
 
@@ -2257,7 +2257,7 @@ Editor.prototype = {
           if (document.createRange) { // w3c
             comprng.selectNodeContents(el[i]);
             if (rng.compareBoundaryPoints(Range.END_TO_START, comprng) < 0 &&
-             rng.compareBoundaryPoints(Range.START_TO_END, comprng) > 0) {
+              rng.compareBoundaryPoints(Range.START_TO_END, comprng) > 0) {
               return el[i];
             }
           } else { // microsoft
