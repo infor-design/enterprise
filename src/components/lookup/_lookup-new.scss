@@ -159,9 +159,10 @@ html[dir='rtl'] {
 }
 
 html[dir='rtl'] .modal-content .toolbar .buttonset .searchfield-wrapper .btn-icon.close {
-  top: 4px;
+  top: 50%;
 
   svg.icon.close {
-    left: -4px;
+    position: relative;
+    top: 1px;
   }
 }
