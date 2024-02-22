@@ -165,10 +165,26 @@
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
+          padding-left: 0;
+          margin-left: 0;
+
+          &.is-disabled {
+            color: $tree-disabled-color;
+          }
         }
 
         li {
           margin-left: 4px;
+
+          &.is-selected > a .tree-checkbox {
+            &::before {
+              background-color: transparent;
+            }
+
+            &::after {
+              border-color: $ids-color-palette-slate-60;
+            }
+          }
         }
       }
     }

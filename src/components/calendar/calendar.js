@@ -61,7 +61,6 @@ const COMPONENT_NAME_DEFAULTS = {
     restrictMonths: false
   },
   showEventLegend: true,
-  isEventTree: false,
   dayLegend: null,
   displayRange: {
     start: '',
@@ -244,7 +243,7 @@ Calendar.prototype = {
         if (eventNode.children) {
           const children = eventNode.children.map(({
             label: text, checked: selected, ...rest
-          }) => ({ text, selected, icon: '', color: eventType.color, ...rest }));
+          }) => ({ text, selected, icon: '', ...rest }));
           eventNode.children = children;
         }
         return eventNode;
