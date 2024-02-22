@@ -132,10 +132,12 @@
       vertical-align: top;
 
       .icon {
-        height: 10px;
+        height: 12px;
         margin: 0;
+        margin-inline-end: -2px;
         vertical-align: unset;
-        width: 10px;
+        top: 1px;
+        width: 12px;
       }
     }
   }
@@ -355,7 +357,7 @@
     .tag-list .tag.is-dismissible {
       .btn-dismissible {
         .icon {
-          top: -1px;
+          top: -.5px;
           vertical-align: middle;
         }
       }
@@ -515,7 +517,7 @@ html.theme-new-contrast {
       .tag-list .tag.is-dismissible {
         .btn-dismissible {
           .icon {
-            top: -2px;
+            top: 4px;
             vertical-align: middle;
           }
         }

@@ -454,7 +454,7 @@ charts.addLegend = function (series, chartType, settings, container) {
         float: 'none',
         display: 'block',
         margin: '0 auto',
-        width: `${width}px`,
+        width: `${width + 15}px`,
       });
     }
 
@@ -478,6 +478,18 @@ charts.addLegend = function (series, chartType, settings, container) {
       series[i].data.legendShortName) {
       textBlock.replaceWith(`<span class="chart-legend-item-text">${series[i].data.legendShortName}</span>`);
     }
+  }
+
+  // Retrieve the legend title
+  const legendTitle = settings.dataset[0]?.legendTitle;
+
+  // Check if the chart type is either pie or donut,
+  // legend title exists, and legend placement is 'right'
+  if ((chartType === 'pie' || chartType === 'donut') && legendTitle && settings.legendPlacement === 'right') {
+    const legendTitleElem = `<span class="chart-legend-title">${legendTitle}</span>`;
+
+    // Prepend the legend title to the legend container
+    legend.prepend(legendTitleElem);
   }
 
   if (legend instanceof $) {
@@ -639,7 +651,7 @@ charts.handleElementClick = function (idx, line, series, settings, container) {
 
     chartLegendItem.empty();
     chartLegendItem.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
-
+    chartLegendItem.attr('index-id', `chart-legend-${idx}`);
     container.find('.list-button').data('popupmenu').menu.children().removeClass('is-hidden');
     $(container.find('.list-button').data('popupmenu').menu.children().get(idx)).addClass('is-hidden');
   }

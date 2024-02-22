@@ -19,7 +19,9 @@ function main() {
   git checkout $BUILD_FROM > /dev/null
 
   npm install
-  node ./scripts/deploy-documentation.js --site $SITE
+
+  cp /usr/src/scripts/publish-docs.js $REPOROOT/scripts/publish-docs.js
+  node ./scripts/publish-docs.js --site $SITE
 }
 
 main "$@"

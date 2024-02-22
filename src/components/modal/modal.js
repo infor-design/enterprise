@@ -1461,8 +1461,23 @@ Modal.prototype = {
     $('body').off(`resize.${this.namespace} focusin.${self.namespace}`);
 
     this.element.off(`keypress.${this.namespace} keydown.${this.namespace}`);
-    this.visible = false;
-    this.active = false;
+
+    // Closing other sub components popover (timepicker, colorpicker, etc.)
+    if (this.openSubComponents.length > 0 && !force) {
+      const openComponent = this.openSubComponents[0];
+
+      if (openComponent.element.hasClass('colorpicker')) {
+        openComponent.close();
+      } else {
+        const popoverData = openComponent?.popup?.data('popover');
+        if (popoverData) {
+          popoverData.hide();
+        }
+      }
+    } else {
+      this.visible = false;
+      this.active = false;
+    }
 
     delete this.dontCheckFocus;
 

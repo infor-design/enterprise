@@ -783,9 +783,9 @@ Lookup.prototype = {
     if (this.settings.options.source) {
       this.grid.element.one('afterrender.lookup', () => {
         const hasServersideSelection = this.settings.options.source && this.selectedRows?.length;
-        if (!this.initValues || (this.initValues && !this.initValues.length) || hasServersideSelection) {
-          this.initValues = [];
-          if (hasServersideSelection) {
+        if (!self.initValues || (self.initValues && !self.initValues.length) || hasServersideSelection) {
+          self.initValues = [];
+          if (hasServersideSelection && !self.element.val()) {
             setTimeout(() => {
               const pagingInfo = this.grid?.pagerAPI?.state;
               if (pagingInfo) {
@@ -794,15 +794,17 @@ Lookup.prototype = {
                   max: ((pagingInfo.activePage * pagingInfo.pagesize) - 1)
                 };
                 const inRange = x => x.pagingIdx >= records.min && x.pagingIdx <= records.max;
-                this.selectedRows.forEach((row) => {
-                  this.initValues.push({
-                    value: row.data[this.settings.field],
-                    visited: inRange(row)
-                  });
+                self.selectedRows.forEach((row) => {
+                  if (self.initValues !== null && self.initValues !== undefined) {
+                    self.initValues.push({
+                      value: row.data[this.settings.field],
+                      visited: inRange(row)
+                    });
+                  }
                 });
-                this.grid._selectedRows = this.selectedRows.slice();
-                this.grid.syncSelectedRows();
-                this.grid.syncSelectedUI();
+                self.grid._selectedRows = self.selectedRows.slice();
+                self.grid.syncSelectedRows();
+                self.grid.syncSelectedUI();
               }
             }, 310);
           } else {
@@ -812,7 +814,7 @@ Lookup.prototype = {
               const fieldValues = (fieldVal.indexOf(this.settings.delimiter) > 1) ?
                 fieldVal.split(this.settings.delimiter) : [fieldVal];
               fieldValues.forEach((v) => {
-                this.initValues.push({
+                self.initValues.push({
                   value: v,
                   visited: !!(this.grid.settings.dataset.filter(node => isMatch(node, v)).length) // eslint-disable-line
                 });
@@ -946,6 +948,7 @@ Lookup.prototype = {
         if (isRemoved) {
           continue;
         }
+        
         isFound = this.selectRowByValue(this.settings.field, selectedIds[i]);
 
         if (this.grid && this.settings.options.source && !isFound) {

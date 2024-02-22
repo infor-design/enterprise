@@ -2,7 +2,6 @@
 const path = require('path');
 const { getConfig } = require('../../helpers/e2e-utils.cjs');
 const { getComputedStyle } = require('../../helpers/e2e-utils.cjs');
-const { xssUtils } = require('../../../src/utils/xss');
 
 describe('Datagrid', () => {
   const baseUrl = 'http://localhost:4000/components/datagrid';
@@ -438,7 +437,7 @@ describe('Datagrid', () => {
       await page.waitForSelector('table > tbody > tr:nth-child(1) > td.datagrid-trigger-cell.is-fileupload.has-editor > div', { visible: true })
         .then(async (element) => {
           const fakePath = await element.$eval('#datagrid > div.datagrid-wrapper.center.scrollable-x.scrollable-y > table > tbody > tr:nth-child(1) > td.datagrid-trigger-cell.is-fileupload.has-editor > div > span', e => e.textContent);
-          expect(fakePath).toEqual(xssUtils.escapeHTML(`C:\\fakepath\\${fileName}`));
+          expect(fakePath).toEqual(`C:\\fakepath\\${fileName}`);
         });
     });
   });

@@ -535,7 +535,7 @@ $pager-hover-color: $font-color-extrahighcontrast;
 $pager-disabled-color: $ids-color-palette-slate-60;
 
 // Slider
-$slider-bg-color: $ids-color-palette-slate-80;
+$slider-bg-color: $ids-color-palette-slate-50;
 $slider-active-bg-color: $ids-color-brand-primary-base;
 $slider-labels-color: $ids-color-palette-slate-30;
 $slider-disabled-color: $ids-color-palette-slate-60;
@@ -714,6 +714,9 @@ $chart-font-color: $ids-color-palette-slate-10;
 $chart-font-color-inverse: $ids-color-palette-slate-60;
 $chart-arc-stroke: $ids-color-palette-slate-70;
 $chart-legend-border-color: $ids-color-palette-slate-70;
+$chart-legend-title-color: $ids-color-palette-slate-10;
+$chart-legend-item-text-color: $chart-legend-title-color;
+$chart-container-text-color: $chart-legend-title-color;
 
 // DataGrid
 $datagrid-border-color: $ids-color-palette-slate-60;
@@ -735,7 +738,7 @@ $datagrid-required-icon-color: $ids-color-palette-white;
 $datagrid-cell-color: $ids-color-palette-slate-10;
 $datagrid-cell-bg-color: $ids-color-palette-slate-90;
 $datagrid-cell-editing-bg-color: $panel-bg-color;
-$datagrid-cell-readonly-bg-color: rgba(62, 62, 66, 0.5);
+$datagrid-cell-readonly-bg-color: rgba(62, 62, 66, 0.8);
 $datagrid-cell-readonly-color: $ids-color-palette-white;
 $datagrid-cell-border-color: $ids-color-palette-slate-60;
 $datagrid-group-row-border-color: $ids-color-palette-slate-60;

@@ -498,12 +498,17 @@ Tooltip.prototype = {
       // and store the reference only.
       // Adding a condition if it's really uses the ID attribute.
       if (content.indexOf('#') === 0 && content.indexOf('/') < 0) { // Needs to check / before puting it in a content check because it breaks the string and makes jQuery think that it is an expression
-        const contentCheck = $(`${content}`);
-        if (contentCheck.length) {
-          this.content = contentCheck;
-          doRender();
-          return true;
+        try {
+          const contentCheck = $(`${content}`);
+          if (contentCheck.length) {
+            this.content = contentCheck;
+            doRender();
+            return true;
+          }
+        } catch (err) {
+          this.content = xssUtils.sanitizeHTML(content);
         }
+
         this.content = content;
         doRender();
         return true;

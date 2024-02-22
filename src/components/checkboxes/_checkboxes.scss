@@ -385,7 +385,7 @@ html[dir='rtl'] {
   }
 
   .dirty-checkbox {
-    right: 8px;
+    right: 13px;
   }
 
   .field-short,
@@ -421,6 +421,13 @@ html[dir='rtl'] {
   span.checkbox > input {
     left: auto;
     right: -99999px;
+
+    + .checkbox-label {
+      span.required {
+        margin-right: 5px;
+      }
+    }
+    
   }
 }
 
