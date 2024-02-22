@@ -1,0 +1,240 @@
+
+<div class="row top-padding">
+  <div class="one-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Pie Chart Title</h2>
+      </div>
+      <div class="widget-content">
+        <div id="pie-chart-example"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+$('body').on('initialized', function () {
+
+  var pieData = [
+    {
+      data: [
+        {
+          name: 'A',
+          value: 14,
+          id: '1',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component A <b>{{percent}}</b>',
+        },
+        {
+          name: 'B',
+          value: 14.35,
+          id: '2',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component B <b>{{percent}}</b>',
+        },
+        {
+          name: 'C',
+          value: 14.35,
+          id: '3',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component C Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'D',
+          value: 14.35,
+          id: '4',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component D Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'E',
+          value: 14.35,
+          id: '5',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component E Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'F',
+          value: 14.35,
+          id: '6',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component F Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'G',
+          value: 14.35,
+          id: '7',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component G Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'H',
+          value: 14.35,
+          id: '8',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component H Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'I',
+          value: 14.35,
+          id: '9',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component I Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'J',
+          value: 14.35,
+          id: '10',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component J Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'K',
+          value: 14.35,
+          id: '11',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component K Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'L',
+          value: 14.35,
+          id: '12',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component L Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'M',
+          value: 14.35,
+          id: '13',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component M Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'N',
+          value: 14.35,
+          id: '14',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component N Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'O',
+          value: 14.35,
+          id: '15',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component O Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'P',
+          value: 14.35,
+          id: '16',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component P Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'Q',
+          value: 14.35,
+          id: '17',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component Q Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'R',
+          value: 14.35,
+          id: '18',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component R Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'S',
+          value: 14.35,
+          id: '19',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component S Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'T',
+          value: 14.35,
+          id: '20',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component T Is Very Cool<b>{{percent}}</b>',
+        },
+        {
+          name: 'U',
+          value: 14.35,
+          id: '21',
+          attributes: [
+            { name: 'id', value: 'item-a' },
+            { name: 'data-automation-id', value: 'item-a-automation-id' },
+          ],
+          tooltip: 'Component U Is Very Cool<b>{{percent}}</b>',
+        },
+      ],
+    },
+  ];
+
+  $('#pie-chart-example').chart({ type: 'pie', dataset: pieData });
+
+});
+</script>

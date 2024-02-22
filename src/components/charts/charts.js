@@ -398,7 +398,7 @@ charts.addLegend = function (series, chartType, settings, container) {
     const colorName = charts.chartColorName(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
 
     let color = '';
-    if (colorName.substr(0, 1) === '#') {
+    if (colorName?.substr(0, 1) === '#') {
       color = $('<span class="chart-legend-color"></span>');
       if (!series[i].pattern) {
         color.css('background-color', hexColor);
