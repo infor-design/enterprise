@@ -10628,7 +10628,7 @@ Datagrid.prototype = {
         if (format === undefined) {
           newValue = isNaN(Date.parse(editorValue)) && this.editor.name === 'date' ? '' : editorValue;
         } else {
-          newValue = isNaN(Locale.parseDate(editorValue, { dateFormat: 'dd/MM/yyyy' })) && this.editor.name === 'date' ? '' : editorValue;
+          newValue = isNaN(Locale.parseDate(editorValue, { dateFormat: format })) && this.editor.name === 'date' ? '' : editorValue;
         }
       }
       this.commitCellEditUtil(input, newValue, isEditor, isFileupload, isUseActiveRow, isCallback);
