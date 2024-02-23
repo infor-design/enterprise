@@ -390,6 +390,10 @@ $trigger-size: 30px;
 
 // RTL Styles
 html[dir='rtl'] {
+  .popupmenu.colorpicker {
+    padding: 10px 10px 10px 0px;
+  }
+
   .colorpicker-container {
     .colorpicker {
       padding: 7px 10px 8px 0;
