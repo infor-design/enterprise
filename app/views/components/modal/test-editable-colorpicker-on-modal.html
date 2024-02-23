@@ -1,0 +1,68 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="show">Show Modal</button>
+    <div id="modal" class="modal">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="modal-title" >Add Comment</h1>
+        </div>
+
+        <div class="modal-body-wrapper">
+          <div class="modal-body">
+            <div class="twelve columns">
+              <div id="datagrid">
+              </div>
+            </div>
+            <div class="modal-buttonset">
+              <button type="button" class="btn-modal">Cancel</button>
+              <button type="button" id="submit" class="btn-modal-primary">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#show').on('click', function () {
+
+    $('body').modal({
+      content: $('#modal')
+    });
+
+  });
+  $('body').on('initialized', function () {
+    //Locale.set('en-US').done(function () {
+    var grid,
+        columns = [],
+        data = [];
+
+    // Some Sample Data
+    data.push({ id: 1, productId: 2241202, productName: 'Different Compressor', comment: 'Some comments about the item', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold', ordered: true, setting: {optionOne: 'One', optionTwo: 'One'}, color: '#66A140'});
+    data.push({ id: 2, productId: 2445204, productName: 'Another Compressor', comment: 'Some comments about the item', activity:  'Assemble Paint', quantity: 9, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action', ordered: true});
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'productDesc', resizable: false, name: 'Product Desc', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, width: 200});
+    columns.push({ id: 'comment', name: 'Comment', field: 'comment', width: '60%' });
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 160 });
+    columns.push({ id: 'colorpickerId', name: 'Colorpicker', field: 'color', formatter: Soho.Formatters.Colorpicker, editor: Soho.Editors.Colorpicker, width: 190});
+
+    //Init and get the api for the grid
+    $grid = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      editable: true,
+      showDirty: true,
+      toolbar: {title: 'Colorpickers', results: true, actions: true, rowHeight: true}
+    });
+
+    $grid.on('click', function(event, data) {
+      //console.log(data, 'datagrid - on click');
+    }).on('cellchange', function (e, args) {
+      console.log('cellchange', args);
+      //console.log(args.oldValue, args.value);
+    });
+  });
+</script>

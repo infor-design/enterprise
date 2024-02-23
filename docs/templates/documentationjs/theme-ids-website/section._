@@ -3,9 +3,9 @@
   <% if (typeof nested === 'undefined' || (section.context && section.context.github)) { %>
     <div>
       <% if (typeof nested === 'undefined') { %>
-      <h2 id='<%- slug(section.namespace) %>'>
-        API Details
-      </h2>
+      <h3 id='<%- slug(section.namespace) %>'>
+        <%- slug(section.namespace) %>
+      </h3>
       <% } %>
       <% if (section.context && section.context.github) { %>
         <a href='<%= section.context.github.url %>' class="jsdoc-githublink"><%= section.context.github.path %></a>

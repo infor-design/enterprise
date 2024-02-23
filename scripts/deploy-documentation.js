@@ -87,9 +87,9 @@ const paths = {
     docjs: `${rootPath}/docs/templates/documentationjs`
   },
   idsWebsite: {
-    root: `${rootPath}/${idsWebsitePath}`,
-    dist: `${rootPath}/${idsWebsitePath}/dist`,
-    distDocs: `${rootPath}/${idsWebsitePath}/dist/docs`
+    root: `./${idsWebsitePath}`,
+    dist: `./${idsWebsitePath}/dist`,
+    distDocs: `./${idsWebsitePath}/dist/docs`
   },
   static: {
     root: `${rootPath}/${staticWebsitePath}`,
