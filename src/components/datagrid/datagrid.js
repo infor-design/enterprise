@@ -10549,7 +10549,13 @@ Datagrid.prototype = {
     } else {
       if (typeof this.editor.val === 'function') {
         const editorValue = this.editor.val();
-        newValue = isNaN(Date.parse(editorValue)) && this.editor.name === 'date' ? '' : editorValue;
+        const format = this.columnSettings(this.editor.cell)?.dateFormat;
+
+        if (format === undefined) {
+          newValue = isNaN(Date.parse(editorValue)) && this.editor.name === 'date' ? '' : editorValue;
+        } else {
+          newValue = isNaN(Locale.parseDate(editorValue, { dateFormat: format })) && this.editor.name === 'date' ? '' : editorValue;
+        }
       }
       this.commitCellEditUtil(input, newValue, isEditor, isFileupload, isUseActiveRow, isCallback);
     }
@@ -11428,6 +11434,8 @@ Datagrid.prototype = {
       }
     }
 
+    coercedVal = xssUtils.unescapeHTML(coercedVal);
+
     if (col.field && coercedVal !== oldVal) {
       if (col.field.indexOf('.') > -1) {
         let rowDataObj = rowData;
@@ -11469,8 +11477,14 @@ Datagrid.prototype = {
       }
     }
 
-    if (!isInline) {
-      cellNode.find('.datagrid-cell-wrapper').html(formatted);
+    const wrapper = cellNode.find('.datagrid-cell-wrapper');
+    if (!isInline && wrapper[0]) {
+      wrapper[0].innerHTML = formatted;
+
+      const children = wrapper.children();
+      if (children.length === 0) {
+        wrapper.innerText = xssUtils.unescapeHTML(formatted);
+      }
     }
 
     if (!fromApiCall) {

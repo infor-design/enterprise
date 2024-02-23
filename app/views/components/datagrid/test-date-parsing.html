@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid" class="datagrid">
+    </div>
+  </div>
+</div>
+
+<script id="datagrid-script">
+  $('body').one('initialized', function () {
+
+    var columns = [];
+    var data = [];
+    // Some Sample Data
+    data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity: '<svg/onload=alert(1)>', quantity: 1, price: 210.99, status: 'OK', state: 'California', orderDate: new Date(2016, 2, 15, 12, 30, 36, 120), portable: false, description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning' });
+    data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity: 'Inspect and Repair', quantity: 2, price: 210.991, status: '', state: 'Oklahoma', orderDate: new Date(2016, 2, 15, 0, 30, 36, 010), portable: false, description: 'The kit has an air blow gun that can be used for cleaning' });
+    data.push({ id: 3, productId: 2342203, productName: 'Portable Compressor', activity: 'Inspect and Repair', portable: true, quantity: 1, price: 120.992, status: null, state: 'Wisconsin', orderDate: new Date(2014, 6, 3, 001) });
+    data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity: 'Assemble Paint', portable: true, quantity: 3, price: null, status: 'OK', state: 'Michigan', orderDate: new Date(2015, 3, 3), description: 'Compressor comes with with air tool kit' });
+    data.push({ id: 5, productId: 2542205, productName: 'De Wallt Compressor', activity: 'Inspect and Repair', portable: false, quantity: 4, price: 210.99, status: 'OK', state: 'Northern Mariana Island Teritory', orderDate: new Date(2015, 5, 5) });
+    data.push({ id: 6, productId: 2642205, productName: 'Air Compressors', activity: 'Inspect and Repair', portable: false, quantity: 41, price: 120.99, status: 'OK', state: 'New York', orderDate: new Date(2014, 6, 9) });
+    data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity: 'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', state: 'Idaho', orderDate: new Date(2014, 6, 9) });
+    data.push({ id: 8, productId: 2642207, productName: 'Some Compressor', activity: 'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', state: 'Idaho', orderDate: '2015-01-02T06:00:00.120Z' });
+
+    // Define Columns for the Grid.
+    columns.push({ id: 'orderDate', name: 'Date (Normal)', field: 'orderDate', formatter: Soho.Formatters.Date, filterType: 'date' });
+    columns.push({ id: 'orderDate1', name: 'Date (Time 24hr)', field: 'orderDate', formatter: Soho.Formatters.Date, filterType: 'date', dateFormat: 'dd/MM/yyyy', editor: Soho.Editors.Date });
+    columns.push({ id: 'orderDate2', name: 'Date (Time Am/Pm)', field: 'orderDate', formatter: Soho.Formatters.Date, filterType: 'date', dateFormat: Soho.Locale.calendar().dateFormat.datetime });
+    columns.push({ id: 'orderDate3', name: 'Date (Time Millis)', field: 'orderDate', formatter: Soho.Formatters.Date, filterType: 'date', dateFormat: 'yyyy-MM-ddTHH:mm:ss.SSS' });
+    columns.push({ id: 'orderDate4', name: 'Date (Normal w settings)', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: Soho.Locale.calendar().dateFormat.date });
+    columns.push({ id: 'orderTime', name: 'Order Time', field: 'orderDate', formatter: Soho.Formatters.Time, filterType: 'time', timeFormat: Soho.Locale.calendar().dateFormat.timestamp });
+
+    // Init and get the api for the grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      editable: true,
+      filterable: false,
+      toolbar: { title: 'Compressors', results: true, actions: true, rowHeight: true }
+    });
+  });
+</script>

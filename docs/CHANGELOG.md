@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.91.1
+
+## v4.91.1 Fixes
+
+- `[Datagrid]` Fix problems parsing dates in certain date formats. ([#8479](https://github.com/infor-design/enterprise/issues/8479))
+- `[Datagrid]` Fixed cell value replacing special characters on cell change. ([#8285](https://github.com/infor-design/enterprise/issues/8285))
+
 ## v4.91.0
 
 ## v4.91.0 Features
