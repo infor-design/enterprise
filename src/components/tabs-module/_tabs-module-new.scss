@@ -16,7 +16,7 @@
         .more {
           .btn-actions {
             svg.icon {
-              color: $module-tabs-normal-text-color;
+              color: $module-tabs-icon-normal-color;
             }
 
             &:hover {
@@ -232,6 +232,16 @@
     .add-tab-button {
       span:first-child {
         top: -7px;
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .tab-container.module-tabs {
+    .tab-list {
+      .tab:first-child {
+        border-left: 1px solid $module-tabs-y-border-color;
       }
     }
   }

@@ -294,6 +294,7 @@ Personalize.prototype = {
     colors.headerTextColor = colors.contrast;
     colors.headerIconColor = colors.contrast;
     colors.tabHoverColor = colors.darkest;
+    colors.toolbarBtnHoverColor = colors.darkest;
     colors.tabVerticalHoverColor = themeColors.palette.slate[20].value;
     colors.tabHoverTextColor = themeColors.palette.slate[100].value;
     colors.tabTextWeight = '400';
@@ -311,6 +312,7 @@ Personalize.prototype = {
     colors.tabVerticalSelectedColor = themeColors.palette.white.value;
     colors.tabDivider = colors.darkest;
     colors.tabTextColor = themeColors.palette.white.value;
+    colors.toolbarBtnHoverColor = colors.darker;
 
     colors.tabFocusIndicator = colors.contrast;
     colors.tabFocusIndicatorVert = colors.base;
@@ -336,7 +338,6 @@ Personalize.prototype = {
 
     if (isNewDark || isClassicDark) {
       colors.btnLinkColor = colors.lighter;
-      colors.btnTertiaryBgHoverColor = themeColors.palette.slate[70].value;
       colors.btnTertiaryHoverColor = colors.lighter;
       colors.tabVerticalColor = themeColors.palette.slate[90].value;
       colors.tabVerticalSelectedColor = themeColors.palette.slate[100].value;
@@ -348,6 +349,7 @@ Personalize.prototype = {
     if (isAlabaster) {
       colors.tabTextColor = themeColors.palette.slate[100].value;
       colors.tabHoverColor = themeColors.palette.slate[20].value;
+      colors.toolbarBtnHoverColor = themeColors.palette.slate[20].value;
       colors.text = themeColors.palette.azure[60].value;
       colors.darker = themeColors.palette.azure[10].value;
       colors.darkest = themeColors.palette.slate[100].value;
@@ -375,7 +377,7 @@ Personalize.prototype = {
       colors.moduleTabsSelectedTextColor = themeColors.palette.azure[60].value;
       colors.headerTabsSelectedTextColor = themeColors.palette.azure[60].value;
       colors.headerTextColor = themeColors.palette.slate[100].value;
-      colors.headerIconColor = themeColors.palette.slate[80].value;
+      colors.headerIconColor = themeColors.palette.slate[100].value;
       colors.btnMenu = themeColors.palette.azure[60].value;
       colors.btnBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.btnMenu}, 0 0 4px 3px rgba(54, 138, 192, 0.1)`;
 
@@ -390,6 +392,7 @@ Personalize.prototype = {
       colors.verticalTabBorder = themeColors.palette.slate[30].value;
       colors.tabDivider = themeColors.palette.slate[30].value;
       colors.tabHoverColor = themeColors.palette.slate[20].value;
+      colors.toolbarBtnHoverColor = themeColors.palette.slate[20].value;
       colors.tabVerticalHoverColor = themeColors.palette.slate[20].value;
       colors.tabSelectedColor = themeColors.palette.white.value;
       colors.tabHeaderColor = themeColors.palette.white.value;
@@ -403,12 +406,13 @@ Personalize.prototype = {
 
       colors.tabCloseInactiveColor = 'rgb(111, 111, 118)';
       colors.tabCloseHoverColor = colors.contrast;
-
+      
       if (!newTheme) {
         colors.btnTertiaryBgHoverColor = themeColors.palette.slate[30].value;
       }
 
       if (isNewDark) {
+        colors.tabTextColor = themeColors.palette.slate[10].value;
         colors.tabCloseInactiveColor = 'rgba(255, 255, 255, 0.85)';
         colors.baseDisabledText = '#fff';
         colors.base = themeColors.palette.slate[60].value;
@@ -445,6 +449,7 @@ Personalize.prototype = {
         colors.tabBorderColor = themeColors.palette.slate[90].value;
         colors.tabColor = themeColors.palette.slate[80].value;
         colors.tabHoverColor = themeColors.palette.slate[70].value;
+        colors.toolbarBtnHoverColor = themeColors.palette.slate[70].value;
         colors.tabVerticalHoverColor = themeColors.palette.slate[70].value;
         colors.tabSelectedTextColor = themeColors.palette.slate[10].value;
         colors.tabVerticalSelectedTextColor = themeColors.palette.slate[10].value;
@@ -490,6 +495,7 @@ Personalize.prototype = {
         colors.tabSelectedColor = themeColors.palette.slate[70].value;
         colors.tabColor = themeColors.palette.slate[80].value;
         colors.tabHoverColor = themeColors.palette.slate[80].value;
+        colors.toolbarBtnHoverColor = themeColors.palette.slate[80].value;
         colors.tabBorderColor = themeColors.palette.slate[70].value;
         colors.tabSelectedTextColor = themeColors.palette.white.value;
         colors.tabVerticalSelectedTextColor = themeColors.palette.white.value;
@@ -502,6 +508,7 @@ Personalize.prototype = {
       if (isNewContrast) {
         colors.tabBorderColor = themeColors.palette.white.value;
         colors.tabHoverColor = themeColors.palette.slate[20].value;
+        colors.toolbarBtnHoverColor = themeColors.palette.slate[20].value;
         colors.tabVerticalSelectedTextColor = themeColors.palette.azure[90].value;
         colors.headerTabsSelectedTextColor = themeColors.palette.azure[90].value;
         colors.moduleTabsSelectedTextColor = themeColors.palette.azure[90].value;

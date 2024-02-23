@@ -330,6 +330,7 @@ a.is-personalizable svg.ripple-effect {
 
 .module-tabs.is-personalizable .tab:not(.is-selected),
 .module-tabs.is-personalizable .tab-more,
+.module-tabs.is-personalizable .tab-more .more-text,
 .module-tabs.is-personalizable .add-tab-button,
 .module-tabs.is-personalizable .toolbar {
   background-color: ${colors.tabColor} !important;
@@ -337,11 +338,11 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .module-tabs.is-personalizable .add-tab-button svg.icon {
-  color: ${colors.tabTextColor} !important;
+  color: ${colors.headerIconColor} !important;
 }
 
 .tab-container.module-tabs.has-toolbar .tab-list-container + .toolbar .more .btn-actions:hover {
-  background-color: ${colors.darker} !important;
+  background-color: ${colors.toolbarBtnHoverColor} !important;
 }
 
 .module-tabs.is-personalizable .tab {
@@ -881,7 +882,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 }
 
 .module-tabs.is-personalizable .add-tab-button:hover {
-  background-color: ${colors.darker} !important;
+  background-color: ${colors.toolbarBtnHoverColor} !important;
 }
 
 .module-tabs.is-personalizable .toolbar-searchfield-wrapper > .searchfield {
@@ -990,7 +991,8 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
   border-color: ${colors.contrast} !important;
 }
 
-.is-personalizable.tab-container {
+.is-personalizable.tab-container,
+.is-personalizable.tab-container .tab-list-container {
   background-color: ${colors.tabColor} !important;
 }
 
