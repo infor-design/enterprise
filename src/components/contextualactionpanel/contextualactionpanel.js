@@ -513,6 +513,7 @@ ContextualActionPanel.prototype = {
     this.panel.find('.modal-body').width(mainWidth);
     this.panel.find('.content-main').css('transform', 'translateX(0)');
     this.panel.find('.content-detail').css('transform', `translateX(${detailTranslate})`);
+    this.panel.find('.content-detail').css('display', 'none');
   },
 
   /**
@@ -527,9 +528,12 @@ ContextualActionPanel.prototype = {
     mainWidth = Locale.isRTL() ? Math.abs(mainWidth) : -Math.abs(mainWidth);
 
     if (this.showContentDetailFlag) {
-      this.panel.addClass('show-content-detail');
-      this.panel.find('.content-main').css('transform', `translateX(${mainWidth}px)`);
-      this.panel.find('.content-detail').css('transform', `translateX(${baseWidth}px)`);
+      this.panel.find('.content-detail').css('display', 'flex');
+      setTimeout(() => {
+        this.panel.addClass('show-content-detail');
+        this.panel.find('.content-main').css('transform', `translateX(${mainWidth}px)`);
+        this.panel.find('.content-detail').css('transform', `translateX(${baseWidth}px)`);
+      }, 50);
     }
 
     this.addBackButton();
@@ -548,6 +552,10 @@ ContextualActionPanel.prototype = {
 
     this.panel.find('.content-main').css('transform', 'translateX(0)');
     this.panel.find('.content-detail').css('transform', `translateX(${detailTranslate})`);
+
+    setTimeout(() => {
+      this.panel.find('.content-detail').css('display', 'none');
+    }, 50);
   },
 
   /**
