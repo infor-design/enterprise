@@ -44,3 +44,20 @@
     }
   }
 }
+
+html[dir='rtl'] {
+  .modal.contextual-action-panel {
+    .modal-header {
+      .go-back-button {
+        margin-top: 3px;
+
+        + .toolbar {
+          .title,
+          .title-detail {
+            line-height: 2.2;
+          }
+        }
+      }
+    }
+  }
+}
