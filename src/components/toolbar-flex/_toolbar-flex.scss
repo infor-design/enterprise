@@ -50,7 +50,7 @@
           right: 45px;
 
           @media (min-width: $breakpoint-phone-to-tablet) {
-            right: 5px;
+            right: 55px;
           }
         }
 
@@ -520,6 +520,16 @@ html[class*='theme-new-'] .flex-toolbar:not(.editor-toolbar):not(.formatter-tool
     &.go-button {
       position: absolute;
       border-left: none;
+      border: 1px solid $searchfield-toolbar-border-color;
+      border-radius: 0;
+      background-color: transparent;
+      color: $searchfield-icon-color;
+      height: 38px;
+      right: 11px;
+
+      @media (max-width: $breakpoint-big-phone) {
+        display: none;
+      }
     }
   }
 }

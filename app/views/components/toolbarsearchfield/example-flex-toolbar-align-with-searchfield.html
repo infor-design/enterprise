@@ -156,7 +156,7 @@
         <div class="searchfield-wrapper">
           <label for="toolbar-searchfield-03" class="audible">Toolbar Search</label>
           <input id="toolbar-searchfield-03" class="searchfield" placeholder="Search..." value="Test Search"
-            data-options="{ clearable: true, collapsible: false }" />
+            data-options="{ clearable: true, collapsible: false, showGoButton: true }" />
         </div>
       </div>
 
@@ -214,17 +214,3 @@
 
   </div>
 </div>
-<script>
-  $('#toolbar-searchfield-03').toolbarsearchfield({
-    categories: [
-      {name: 'Animals', id: 'animals', value: 'an', checked: true},
-      {name: 'Baby', id: 'baby', value: 'ba', checked: false},
-      {name: 'Clothing', id: 'clothing', value: 'cl', checked: true},
-      {name: 'Images', id: 'images', value: 'im', checked: true},
-      {name: 'People', id: 'people', value: 'pe', checked: false},
-      {name: 'Places', id: 'places', value: 'pl', checked: false}
-    ],
-    categoryMultiselect: true,
-    showGoButton: true
-  });
-</script>
