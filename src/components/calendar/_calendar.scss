@@ -179,6 +179,7 @@
           &.is-selected > a .tree-checkbox {
             &::before {
               background-color: transparent;
+              border-color: $checkbox-color-unchecked-initial-border;
             }
 
             &::after {
