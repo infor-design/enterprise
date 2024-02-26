@@ -39,6 +39,20 @@
         position: initial;
       }
 
+      &.non-collapsible.active:not(.is-open) {
+        &:not(.has-text) {
+          .searchfield {
+            border: 1px solid $header-input-border-color;
+          }
+        }
+
+        &.has-text {
+          .searchfield {
+            border-bottom: unset;
+          }
+        }
+      }
+
       &:not(.non-collapsible) {
         .searchfield {
           position: absolute;
