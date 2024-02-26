@@ -6,6 +6,8 @@
 
 - `[Contextual Action Panel]` Added content details and back button arrow. ([#8112](https://github.com/infor-design/enterprise/issues/8112))
 - `[Datagrid]` Added data automation id of the column's filter operator. ([#8372](https://github.com/infor-design/enterprise/issues/8372))
+- `[Datagrid]` Fix problems parsing dates in certain date formats. ([#8479](https://github.com/infor-design/enterprise/issues/8479))
+- `[Locale]` Added `dateTimestamp` date format. ([#8373](https://github.com/infor-design/enterprise/issues/8373))
 - `[Donut/Pie]` Added a legend title in donut and pie chart legends. ([#7933](https://github.com/infor-design/enterprise/issues/7933))
 - `[Locale]` Added `dateTimestamp` date format. ([#8373](https://github.com/infor-design/enterprise/issues/8373))
 
