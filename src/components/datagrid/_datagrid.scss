@@ -2739,7 +2739,6 @@ $datagrid-small-row-height: 25px;
         span.trigger {
           overflow: hidden;
           text-overflow: ellipsis;
-          vertical-align: top;
           white-space: nowrap;
         }
       }
@@ -4348,6 +4347,12 @@ td .btn-actions {
 .datagrid-trigger-cell {
   &:not(.is-readonly) {
     cursor: pointer;
+  }
+
+  &:focus {
+    .datagrid-cell-wrapper span {
+      vertical-align: middle;
+    }
   }
 
   &.text-ellipsis {
