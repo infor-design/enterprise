@@ -328,12 +328,29 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.moduleTabsSelectedTextColor} !important;
 }
 
-.module-tabs.is-personalizable .tab:not(.is-selected) {
+.module-tabs.is-personalizable .tab:not(.is-selected),
+.module-tabs.is-personalizable .tab-more,
+.module-tabs.is-personalizable .tab-more .more-text,
+.module-tabs.is-personalizable .add-tab-button,
+.module-tabs.is-personalizable .toolbar {
   background-color: ${colors.tabColor} !important;
+  color: ${colors.tabTextColor} !important;
+}
+
+.module-tabs.is-personalizable .add-tab-button svg.icon {
+  color: ${colors.headerIconColor} !important;
+}
+
+.tab-container.module-tabs.has-toolbar .tab-list-container + .toolbar .more .btn-actions:hover {
+  background-color: ${colors.toolbarBtnHoverColor} !important;
 }
 
 .module-tabs.is-personalizable .tab {
   color: ${colors.contrast};
+}
+
+.tab-container.module-tabs .tab-list .tab.dismissible:hover svg.icon.close {
+  color: ${colors.tabCloseInactiveColor};
 }
 
 .tab-container.module-tabs.is-personalizable .tab.dismissible svg.close {
@@ -843,7 +860,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 }
 
 .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar {
-  border-left-color: ${colors.darkest} !important;
+  border-left-color: ${colors.tabDivider} !important;
 }
 
 .module-tabs.is-personalizable [class^="btn"] {
@@ -861,11 +878,11 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 }
 
 .module-tabs.is-personalizable .add-tab-button {
-  border-left-color: ${colors.darkest} !important;
+  border-left-color: ${colors.tabDivider} !important;
 }
 
 .module-tabs.is-personalizable .add-tab-button:hover {
-  background-color: ${colors.darker} !important;
+  background-color: ${colors.toolbarBtnHoverColor} !important;
 }
 
 .module-tabs.is-personalizable .toolbar-searchfield-wrapper > .searchfield {
@@ -974,7 +991,8 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
   border-color: ${colors.contrast} !important;
 }
 
-.is-personalizable.tab-container {
+.is-personalizable.tab-container,
+.is-personalizable.tab-container .tab-list-container {
   background-color: ${colors.tabColor} !important;
 }
 
