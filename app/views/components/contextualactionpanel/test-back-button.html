@@ -143,3 +143,9 @@
 
   </div>
 </div>
+
+<script>
+  $('body').on('initialized', () => {
+    $('[data-theme-name="theme-classic"]').parent().addClass('is-disabled');
+  });
+</script>
