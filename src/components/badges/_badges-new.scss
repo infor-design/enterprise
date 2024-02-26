@@ -132,7 +132,7 @@
 
 html.is-mac {
   &.is-chrome {
-    .tag {
+    .multiselect ~ .dropdown-wrapper .dropdown.has-tags .tag-list .tag {
       &.is-dismissible {
         .btn-dismissible {
           .icon {
