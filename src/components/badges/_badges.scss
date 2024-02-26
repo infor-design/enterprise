@@ -506,6 +506,34 @@ html.theme-new-contrast {
   }
 }
 
+html.is-mac {
+  &.is-chrome {
+    .tag {
+      &.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            margin-inline-end: -1px;
+          }
+        }
+      }
+    }
+  }
+
+  &.is-firefox {
+    .multiselect {
+      ~ .dropdown-wrapper .dropdown.has-tags {
+        .tag-list .tag.is-dismissible {
+          .btn-dismissible {
+            .icon {
+              top: -1px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 // Firefox behaves odd
 .is-firefox {
   .tag.is-linkable .btn-linkable .icon {
