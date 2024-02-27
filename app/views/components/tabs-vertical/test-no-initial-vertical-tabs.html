@@ -1,0 +1,95 @@
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  {{> includes/applicationmenu}}
+
+  <div class="page-container no-scroll">
+    <header class="header is-personalizable">
+      <div class="toolbar">
+        <div class="title" id="maincontent">
+          <h1>IDS Enterprise</h1>
+        </div>
+        <div class="buttonset"></div>
+        {{> includes/header-actionbutton}}
+      </div>
+    </header>
+  
+    <div class="row top-padding">
+      <div class="six columns">
+        <h2>Empty Tabset Example</h2>
+      </div>
+    </div>
+    
+    <div class="row top-padding">
+      <div class="twelve columns">
+        <div id="empty" class="tab-container vertical">
+          <ul class="tab-list"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row top-padding">
+      <div class="twelve columns">
+        <div class="field">
+          <button id="addNewTabs" class="btn-primary" type="button">
+            <span>Add Tabs</span>
+          </button>
+        </div>
+    
+        <fieldset class="radio-group">
+          <legend>Settings</legend>
+          <input type="radio" class="radio" name="howToName" id="howToName1" value="add" checked/>
+          <label for="howToName1" class="radio-label">Include the tab name in the <em>add()</em> method</label>
+          <br>
+          <input type="radio" class="radio" name="howToName" id="howToName2" value="rename" />
+          <label for="howToName2" class="radio-label">Use the <em>rename()</em> method after adding the tab</label>
+        </fieldset>
+      </div>
+      
+    </div>
+  </div>
+</body>
+
+
+<script>
+  $('body').on('initialized', function() {
+
+    var demoTabsCounts = 0,
+      settings = {};
+    function getSettings() {
+      settings = {
+        nameMethod: $('input[name="howToName"]:checked').val()
+      };
+    }
+
+    // Setup the settings
+    $('[name="howToName"]').on('click.demo', function() {
+      getSettings();
+    });
+
+    $('#addNewTabs').on('click.demo', function() {
+      var tabSettings = {
+        content: '<h3>New Tab '+ demoTabsCounts + '</h3><p>You created a new tab with an ID of ' + demoTabsCounts + '!</p>',
+        isDismissible: true
+      }, name = 'New Tab ' + demoTabsCounts;
+
+      if (settings.nameMethod === 'add') {
+        tabSettings.name = name;
+      }
+
+      var tabsAPI = $('#empty').data('tabs');
+      tabsAPI.add('new-tab-' + demoTabsCounts, tabSettings);
+
+      if (settings.nameMethod === 'rename') {
+        tabsAPI.rename('new-tab-' + demoTabsCounts, name);
+      }
+
+      demoTabsCounts++;
+    });
+
+    // Trigger stuff
+    getSettings();
+
+  });
+
+</script>
