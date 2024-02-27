@@ -16,7 +16,7 @@
 }
 
 .colorpicker-container .trigger {
-  margin-left: -9px;
+  margin-inline-start: 5px;
   margin-top: -2px;
 
   .icon {
@@ -47,6 +47,10 @@ html[dir='rtl'] {
       position: relative;
       right: -35px;
       text-align: left;
+    }
+
+    .trigger {
+
     }
 
     .trigger .icon {
