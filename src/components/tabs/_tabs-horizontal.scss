@@ -124,6 +124,7 @@ $horizontal-tabs-height: 40px;
 
   .add-tab-button {
     color: $tab-add-tab-color;
+    top: 9px;
   }
 
   .tab-more {
@@ -231,6 +232,14 @@ html[dir='rtl'] {
             rgba($tab-alt-bg-color, 0),
             rgba($tab-alt-bg-color, 1)
           );
+      }
+    }
+
+    .add-tab-button {
+      top: 7px;
+
+      svg.icon {
+        top: 1px;
       }
     }
   }
