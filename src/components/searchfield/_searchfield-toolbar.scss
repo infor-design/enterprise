@@ -164,6 +164,12 @@ $toolbarsearchfield-category-empty-width: 51px;
     .go-button {
       border-bottom-left-radius: 0;
       border-top-left-radius: 0;
+      right: 3px;
+      height: 38px;
+
+      @media (max-width: $breakpoint-big-phone) {
+        display: none;
+      }
     }
 
     > .icon {
@@ -581,7 +587,6 @@ $toolbarsearchfield-category-empty-width: 51px;
         border-radius: 0;
         color: $searchfield-icon-color;
         position: relative;
-        right: 0;
         margin-left: 0;
 
         &:hover {
