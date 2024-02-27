@@ -108,7 +108,7 @@ PlacementObject.prototype = {
       value = 0;
     }
 
-    this[coordinate] = Math.round(value);
+    this[coordinate] = this.parent?.is('.dropdown') ? Math.floor(value) : Math.round(value);
   }
 };
 
