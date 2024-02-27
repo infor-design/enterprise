@@ -931,6 +931,10 @@ html.is-firefox {
           .icon-alert {
             top: 14px;
           }
+
+          &.dismissible .icon.close {
+            right: auto;
+          }
         }
       }
     }

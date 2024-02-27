@@ -968,18 +968,27 @@ $header-breadcrumb-border-color: $ids-color-palette-slate-60;
 
 // Module Tabs
 $module-tabs-bg-color: $header-bg-color;
-$module-tabs-x-border-color: $ids-color-palette-slate-80;
-$module-tabs-y-border-color: $ids-color-palette-slate-100;
 $module-tabs-inactive-bg-color: $header-border-color;
-$module-tabs-active-bg-color: $ids-color-palette-slate-60;
-$module-tabs-hover-bg-color: $ids-color-palette-slate-60;
 $module-tabs-inactive-text-color: rgba($ids-color-palette-white, 0.85);
-$module-tabs-active-text-color: $ids-color-palette-white;
 $module-tabs-hover-text-color: $ids-color-palette-white;
 $module-tabs-disabled-bg-color: $ids-color-palette-slate-60;
 $module-tabs-disabled-x-border-color: $ids-color-palette-slate-40;
 $module-tabs-disabled-y-border-color: $ids-color-palette-slate-70;
 $module-tabs-disabled-text-color: $ids-color-palette-slate-40;
+
+$module-tabs-hover-bg-color: $ids-color-palette-slate-70;
+$module-tabs-list-container-bg-color: $ids-color-palette-slate-90;
+$module-tabs-active-text-color: $ids-color-palette-white;
+$module-tabs-normal-text-color: $ids-color-palette-white;
+$module-tabs-normal-bg-color: $ids-color-palette-slate-80;
+$module-tabs-active-bg-color: $ids-color-palette-slate-90;
+$module-tabs-x-border-color: $ids-color-palette-slate-90;
+$module-tabs-y-border-color: $ids-color-palette-slate-90;
+$module-tabs-close-hover-color: $ids-color-palette-slate-10;
+$module-tabs-icon-normal-color: $ids-color-palette-slate-20;
+$module-tabs-icon-hover-color: $ids-color-palette-slate-10;
+$module-tabs-more-button-hover-color: $ids-color-palette-slate-70;
+$module-tabs-more-text-hover-color: $ids-color-palette-white;
 
 // Composite Tabs
 $composite-tabs-panel-bg-color: $ids-color-palette-slate-100;
