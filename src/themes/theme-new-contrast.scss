@@ -861,18 +861,23 @@ $header-breadcrumb-border-color: $ids-color-palette-slate-60;
 
 // Module Tabs
 $module-tabs-bg-color: $ids-color-palette-azure-90;
-$module-tabs-x-border-color: $ids-color-palette-azure-50;
-$module-tabs-y-border-color: $ids-color-palette-azure-100;
 $module-tabs-inactive-bg-color: $ids-color-palette-azure-100;
-$module-tabs-active-bg-color: $ids-color-palette-azure-80;
-$module-tabs-hover-bg-color: $ids-color-palette-azure-60;
 $module-tabs-inactive-text-color: rgba($ids-color-palette-white, 0.85);
-$module-tabs-active-text-color: $ids-color-palette-white;
 $module-tabs-hover-text-color: $ids-color-palette-white;
 $module-tabs-disabled-bg-color: $ids-color-brand-primary-base;
 $module-tabs-disabled-x-border-color: $ids-color-palette-azure-40;
 $module-tabs-disabled-y-border-color: $ids-color-brand-primary-alt;
 $module-tabs-disabled-text-color: $ids-color-palette-azure-40;
+
+$module-tabs-normal-bg-color: $ids-color-palette-slate-10;
+$module-tabs-hover-bg-color: $ids-color-palette-slate-20;
+$module-tabs-active-text-color: $ids-color-palette-azure-90;
+$module-tabs-list-container-bg-color: $ids-color-palette-white;
+$module-tabs-active-bg-color: $ids-color-palette-white;
+$module-tabs-x-border-color: $ids-color-palette-white;
+$module-tabs-y-border-color: $ids-color-palette-slate-30;
+$module-tabs-more-button-hover-color: $ids-color-palette-azure-10;
+$module-tabs-more-text-hover-color: $ids-color-palette-azure-90;
 
 // Composite Tabs
 $composite-tabs-panel-bg-color: $ids-color-palette-white;

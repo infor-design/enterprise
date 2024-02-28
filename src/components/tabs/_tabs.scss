@@ -405,7 +405,7 @@
     svg.icon-add {
       height: 14px;
       width: 14px;
-      top: -2px;
+      top: 2px;
     }
   }
 
@@ -930,6 +930,10 @@ html.is-firefox {
           .icon-info,
           .icon-alert {
             top: 14px;
+          }
+
+          &.dismissible .icon.close {
+            right: auto;
           }
         }
       }

@@ -717,7 +717,7 @@ Tabs.prototype = {
     if (this.settings.addTabButton) {
       if (!this.addTabButton || !this.addTabButton.length) {
         this.addTabButton = $(`
-          <div class="add-tab-button" tabindex="-1" role="button">
+          <div class="add-tab-button hide-focus" tabindex="-1" role="button">
             <span class="audible">${Locale.translate('AddNewTab')}</span>
           </div>
         `);
@@ -1428,6 +1428,9 @@ Tabs.prototype = {
       }
 
       if (isAddTabButton) {
+        if (self.addTabButton.is('.hide-focus')) {
+          self.addTabButton.data('focused-by-key', true);
+        }
         self.addTabButton.focus();
       } else if (isMoreActionsButton) {
         self.moreActionsBtn.focus();
@@ -1767,7 +1770,12 @@ Tabs.prototype = {
     tabs.add(this.moreButton).removeClass('is-focused');
 
     this.addTabButton.addClass('is-focused');
-    this.positionFocusState(this.addTabButton, true);
+
+    const dataFocusedKey = this.addTabButton.data('focused-by-key');
+    const focusedByKeyboard = dataFocusedKey === undefined ? false : dataFocusedKey;
+
+    $.removeData(this.addTabButton[0], 'focused-by-key');
+    this.positionFocusState(this.addTabButton, focusedByKeyboard);
   },
 
   /**
@@ -3953,6 +3961,7 @@ Tabs.prototype = {
     const isCounts = parentContainer.hasClass('has-counts');
     const isAddTabButton = target.is('.add-tab-button');
     const isSelected = target.is('.is-selected');
+    const isStandardTab = parentContainer.is('.horizontal');
     const tabListScrollHeight = scrollingTablist?.prop('scrollHeight');
     const tabListClientHeight = scrollingTablist?.prop('clientHeight');
 
@@ -4042,6 +4051,24 @@ Tabs.prototype = {
           targetRectObj.top -= 6;
           targetRectObj.left += 5;
           if (isRTL) targetRectObj.right += 46;
+        }
+      }
+
+      if (isStandardTab && isAddTabButton) {
+        targetRectObj.top += 1;
+        targetRectObj.height += 4;
+
+        if (isRTL) {
+          targetRectObj.right += 1;
+        }
+
+        if (!isClassic) {
+          targetRectObj.top += 5;
+          targetRectObj.height -= 3;
+
+          if (isRTL) {
+            targetRectObj.height -= 1;
+          }
         }
       }
 
