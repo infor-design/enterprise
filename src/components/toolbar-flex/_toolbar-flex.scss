@@ -50,7 +50,7 @@
           right: 5px;
 
           @media (max-width: $breakpoint-phone-to-tablet) {
-            right: 45px;
+            right: 50px;
           }
         }
 
@@ -504,7 +504,7 @@ html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrappe
       right: 0;
 
       @media (max-width: $breakpoint-phablet) {
-        right: 11%;
+        right: 13%;
       }
     }
 
@@ -536,11 +536,9 @@ html[class*='theme-new-'] .flex-toolbar:not(.editor-toolbar):not(.formatter-tool
     &.go-button {
       position: absolute;
       border: 1px solid $searchfield-toolbar-border-color;
-      border-left: none;
       border-radius: 0;
       background-color: transparent;
       color: $searchfield-icon-color;
-      right: 11px;
     }
   }
 }
