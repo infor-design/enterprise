@@ -1394,6 +1394,7 @@ Tree.prototype = {
     const s = this.settings;
     const isDisabled = isParentsDisabled || data.disabled || false;
     const isChildren = data.children && Array.isArray(data.children);
+    const classColor = data.custom ? data.color : `${data.color}07`;
     const a = {
       id: typeof data.id !== 'undefined' ? ` id="${data.id}"` : '',
       href: ` href="${typeof data.href !== 'undefined' ? data.href : '#'}"`,
@@ -1404,7 +1405,7 @@ Tree.prototype = {
       text: `<span class="tree-text">${data.text}</span>`,
       class: ['hide-focus'],
       ariaDisabled: isDisabled ? 'aria-disabled="true"' : '',
-      checkbox: this.isMultiselect && (!this.settings.hideCheckboxes || data.hideCheckbox === false) ? '<span class="tree-checkbox"></span>' : '',
+      checkbox: this.isMultiselect && (!this.settings.hideCheckboxes || data.hideCheckbox === false) ? `<span class="tree-checkbox ${classColor || ''}"></span>` : '',
       badge: typeof data.badge === 'object' ? this.getBadgeHtml(data.badge) : '',
       expandTarget: isChildren ? this.getExpandTargetHtml(data.open) : '',
       childrenCount: isChildren ? this.getChildrenCountHtml(data) : ''
@@ -1809,6 +1810,23 @@ Tree.prototype = {
       selected.push({ node, data });
     });
     return selected;
+  },
+
+  /**
+   * Get unselected nodes
+   * @returns {object} unselected nodes
+   */
+  getUnselectedNodes() {
+    let node;
+    let data;
+    const unselected = [];
+
+    $('li:not(.is-selected)', this.element).each(function () {
+      node = $('a:first', this);
+      data = node.data('jsonData');
+      unselected.push({ node, data });
+    });
+    return unselected;
   },
 
   getNextNode(target) {

@@ -746,6 +746,10 @@ html[dir='rtl'] {
       }
     }
 
+   .searchfield-wrapper.has-close-icon-button.has-text .btn-icon.close {
+    right: calc(300px - 25%);
+   }
+
     &:not(:first-child) {
       border-right: 1px solid $module-tabs-x-border-color;
     }
@@ -796,9 +800,13 @@ html[dir='rtl'] {
       }
 
       .icon {
-        left: 10px;
+        left: 8px;
         right: auto;
       }
+    }
+
+    .tab-list .tab:hover.dismissible svg.icon.close {
+      right: auto;
     }
   }
 }
@@ -830,6 +838,7 @@ html[dir='rtl'] {
     .tab-list .tab:hover.dismissible svg.icon.close {
       right: 12px;
     }
+    
   }
 
   .tab-container.module-tabs {
