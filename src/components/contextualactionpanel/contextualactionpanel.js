@@ -16,6 +16,7 @@ const COMPONENT_NAME = 'contextualactionpanel';
 * @param {jQuery|string} [settings.content = null] Pass content through to CAP.
 * @param {boolean} [settings.initializeContent = true] Initialize content before opening with defaults.
 * @param {string} [settings.title = 'Contextual Action Panel'] String that sits in the toolbar's title field.
+* @param {string} [settings.detailRefId] The id of the detail element that will be used to display the detail content.
 * @param {object} [settings.modalSettings = {}] an object containing settings for the internal Modal component.
 * @param {array} [settings.modalSettings.buttons = null] A list of buttons that will sit in the toolbar's Buttonset area.
 * @param {boolean} [settings.modalSettings.centerTitle = false] If true the title will be centered.
@@ -31,6 +32,7 @@ const CONTEXTUALACTIONPANEL_DEFAULTS = {
   initializeContent: true, // initialize content before opening
   title: 'Contextual Action Panel',
   cssClass: null,
+  detailRefId: undefined,
   modalSettings: {
     buttons: null,
     centerTitle: false,
@@ -253,7 +255,7 @@ ContextualActionPanel.prototype = {
       }
 
       if (!isIframe) {
-        children.wrapAll('<div class="modal-content"></div>').wrapAll('<div class="modal-body"></div>');
+        children.wrapAll('<div class="modal-content"></div>').wrapAll(`<div class="modal-body ${this.settings.detailRefId !== null ? 'padding-x-16 has-back-button' : ''}"></div>`);
         this.panel.addClass('modal');
       }
     }
@@ -411,6 +413,23 @@ ContextualActionPanel.prototype = {
   */
   handleEvents() {
     const self = this;
+    const $detailElement = `#${self.settings.detailRefId}`;
+
+    // Attach click event handler to $detailElement within $cardContent
+    this.panel.find($detailElement).on('click', (e) => {
+      e.stopPropagation();
+      self.showContentDetail();
+      console.log('click');
+
+      // // Find goBackElement within self.element
+      const goBackElement = self.header.find('.go-back');
+
+      // Attach click event handler to goBackElement
+      $(goBackElement).on('click', (evt) => {
+        evt.stopPropagation();
+        self.hideContentDetail();
+      });
+    });
 
     // Convenience method that takes an event from the Modal control's panel element,
     // and triggers any listeners that may be looking at the Contextual Action Panel's
@@ -423,6 +442,7 @@ ContextualActionPanel.prototype = {
       .off('open.contextualactionpanel')
       .on('open.contextualactionpanel', (e) => {
         passEvent(e);
+        self.buildContent();
         self.panel.removeClass('is-animating');
       })
       .off('close.contextualactionpanel')
@@ -478,6 +498,85 @@ ContextualActionPanel.prototype = {
     }
 
     return this;
+  },
+
+  /**
+   * Builds the content detail
+   */
+  buildContent() {
+    if (this.settings.detailRefId === undefined) {
+      return;
+    }
+
+    const detailTranslate = Locale.isRTL() ? '-32px' : '32px';
+    const mainWidth = this.panel.find('.content-main').width() + 16;
+    this.panel.find('.modal-body').width(mainWidth);
+    this.panel.find('.content-main').css('transform', 'translateX(0)');
+    this.panel.find('.content-detail').css('transform', `translateX(${detailTranslate})`);
+    this.panel.find('.content-detail').css('display', 'none');
+  },
+
+  /**
+   * Show the content detail
+   */
+  showContentDetail() {
+    this.showContentDetailFlag = true;
+    let baseWidth = this.panel.find('.content-main').width();
+    let mainWidth = baseWidth + 32;
+
+    baseWidth = Locale.isRTL() ? Math.abs(baseWidth) : -Math.abs(baseWidth);
+    mainWidth = Locale.isRTL() ? Math.abs(mainWidth) : -Math.abs(mainWidth);
+
+    if (this.showContentDetailFlag) {
+      this.panel.find('.content-detail').css('display', 'flex');
+      setTimeout(() => {
+        this.panel.addClass('show-content-detail');
+        this.panel.find('.content-main').css('transform', `translateX(${mainWidth}px)`);
+        this.panel.find('.content-detail').css('transform', `translateX(${baseWidth}px)`);
+      }, 50);
+    }
+
+    this.addBackButton();
+  },
+
+  /**
+   * Hide the content detail
+   */
+  hideContentDetail() {
+    this.showContentDetailFlag = false;
+    const detailTranslate = Locale.isRTL() ? '-32px' : '32px';
+
+    this.panel.removeClass('show-content-detail');
+    this.header.removeClass('has-back-button');
+    this.header.find('.go-back-button').remove();
+
+    this.panel.find('.content-main').css('transform', 'translateX(0)');
+    this.panel.find('.content-detail').css('transform', `translateX(${detailTranslate})`);
+
+    setTimeout(() => {
+      this.panel.find('.content-detail').css('display', 'none');
+    }, 50);
+  },
+
+  /**
+   * Add back button in modal header
+   */
+  addBackButton() {
+    if (this.header) {
+      const backButton = `
+      <div class="go-back-button">
+        <button id="go-back" class="btn-icon go-back btn-system" type="button">
+          <span class="audible">Show navigation</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-arrow-left"></use>
+          </svg>
+        </button>
+      </div>
+      `;
+
+      this.header.addClass('has-back-button');
+      this.header.prepend(backButton);
+    }
   },
 
   /**
