@@ -484,7 +484,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
-  &.has-text {
+  &.active {
     width: $toolbarsearchfield-filled-out-width - 10;
 
     &.has-collapse-button {

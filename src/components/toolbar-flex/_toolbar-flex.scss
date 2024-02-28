@@ -42,7 +42,7 @@
       &.non-collapsible.active:not(.is-open) {
         &:not(.has-text) {
           .searchfield {
-            border: 1px solid $header-input-border-color;
+            border-color: transparent;
           }
         }
 
