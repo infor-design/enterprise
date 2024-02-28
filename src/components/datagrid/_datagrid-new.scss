@@ -1088,6 +1088,32 @@
 
 html[dir='rtl'] {
   .datagrid {
+    &.extra-small-rowheight {
+      .datagrid-header .datagrid-column-wrapper.l-center-text .sort-indicator {
+        left: 0px;
+        top: 5px;
+        position: absolute;
+      }
+
+      th .datagrid-column-wrapper .datagrid-header-text {
+        padding: 0 5px 0 5px;
+      }
+
+      .datagrid-header {
+        .datagrid-column-wrapper {
+          &.l-right-text {
+            .sort-indicator {
+              right: -12px;
+              top: 1px;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+
+  .datagrid {
     td.is-editing {
       input.lookup {
         + .trigger {
