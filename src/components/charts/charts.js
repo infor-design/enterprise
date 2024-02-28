@@ -278,7 +278,11 @@ charts.chartColorName = function chartColor(i, chartType, data) {
 
   // Some configuration by specific chart types
   if (/^(pie|donut)$/.test(chartType)) {
-    return this.colorNameRange()[i];
+    let tempSelector = i;
+    if ((i + 1) >= this.colorNameRange().length) { // Checks for more than the array length of the color sets
+      tempSelector = i - i;
+    }
+    return this.colorNameRange()[tempSelector];
   }
   if (/^(bar-single|column-single)$/.test(chartType)) {
     return this.colorNameRange()[0];
