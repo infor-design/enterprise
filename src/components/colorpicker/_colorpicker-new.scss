@@ -36,6 +36,10 @@
 }
 
 html[dir='rtl'] {
+  .popupmenu.colorpicker {
+    padding: 10px 10px 10px 0;
+  }
+
   .colorpicker-container {
     .swatch {
       position: relative;
@@ -47,10 +51,6 @@ html[dir='rtl'] {
       position: relative;
       right: -35px;
       text-align: left;
-    }
-
-    .trigger {
-
     }
 
     .trigger .icon {

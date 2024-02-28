@@ -163,7 +163,7 @@ $trigger-size: 30px;
     cursor: pointer;
     display: inline-block;
     height: 34px;
-    margin-left: -5px;
+    margin-inline-start: 5px;
     vertical-align: top;
     width: 30px;
   }
@@ -396,13 +396,17 @@ html[dir='rtl'] {
 
   .colorpicker-container {
     .colorpicker {
-      padding: 7px 10px 8px 0;
+      padding: 7px 0 8px 10px;
       width: 84px;
+      position: relative;
+      right: -35px;
+      text-align: left;
     }
 
     .swatch {
       left: 0;
-      right: 1px;
+      position: relative;
+      right: 87px;
     }
 
     .trigger .icon {
