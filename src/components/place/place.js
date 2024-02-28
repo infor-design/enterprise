@@ -378,7 +378,7 @@ Place.prototype = {
       return [cX, cY];
     }
 
-    if (placementObj.parent.is('.colorpicker') & Locale.isRTL()) {
+    if (placementObj.parent.is('.colorpicker') && Locale.isRTL()) {
       placementObj.x += 30;
     }
 
