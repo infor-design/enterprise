@@ -5,16 +5,20 @@
 ## v4.93.0 Features
 
 - `[Calendar]` Added event tree option for calendar. ([3870](https://github.com/infor-design/enterprise/issues/3870))
+- `[Contextual Action Panel]` Added content details and back button arrow. ([#8112](https://github.com/infor-design/enterprise/issues/8112))
 - `[Datagrid]` Added data automation id of the column's filter operator. ([#8372](https://github.com/infor-design/enterprise/issues/8372))
 - `[Datagrid]` Fix problems parsing dates in certain date formats. ([#8479](https://github.com/infor-design/enterprise/issues/8479))
 - `[Locale]` Added `dateTimestamp` date format. ([#8373](https://github.com/infor-design/enterprise/issues/8373))
 - `[Donut/Pie]` Added a legend title in donut and pie chart legends. ([#7933](https://github.com/infor-design/enterprise/issues/7933))
+- `[Locale]` Added `dateTimestamp` date format. ([#8373](https://github.com/infor-design/enterprise/issues/8373))
 
 ## v4.93.0 Fixes
 
 - `[Checkboxes]` Fixed RTL alignment for dirty tracker and required label. ([#8308](https://github.com/infor-design/enterprise/issues/8308))
 - `[Colorpicker]` Fixed RTL alignment for color picker. ([#8306](https://github.com/infor-design/enterprise/issues/8306))
+- `[Datagrid]` Fixed a bug unable to use the left/right arrow keys on the text in an editable cell. ([#8457](https://github.com/infor-design/enterprise/issues/8457))
 - `[Datagrid]` Fixed a bug in datagrid cell where readonly background color was not recognizable. ([#8459](https://github.com/infor-design/enterprise/issues/8459))
+- `[Datagrid]` Fixed a bug where the text moves upward when the cell is focused. ([#8472](https://github.com/infor-design/enterprise/issues/8472))
 - `[Datagrid]` Fixed cell editable not getting focused on click. ([#8408](https://github.com/infor-design/enterprise/issues/8408))
 - `[Datagrid]` Fixed wrong cell focus on blur in tree grid. ([NG#1616](https://github.com/infor-design/enterprise-ng/issues/1616))
 - `[Datagrid]` Fixed cell editable not getting focused on click. ([#8408](https://github.com/infor-design/enterprise/issues/8408))

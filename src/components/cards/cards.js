@@ -22,7 +22,7 @@ const COMPONENT_NAME = 'cards';
  * @param {boolean} [settings.verticalButtonAction] Ability to rotate the button action vertically
  * @param {array} [settings.dataset=[]] An array of data objects that will be represented as cards.
  * @param {string} [settings.template] Html Template String.
- * @param {string} [seettings.detailRefId] The id of the detail element that will be used to display the detail content.
+ * @param {string} [settings.detailRefId] The id of the detail element that will be used to display the detail content.
  * @param {string} [settings.selectable=false] Ability to enable the selection state e.g. 'single', 'multiple' or false.
  * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
