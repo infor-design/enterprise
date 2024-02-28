@@ -693,3 +693,11 @@ div.multiselect > .listoption-icon,
     }
   }
 }
+
+// RTL Styles
+html[dir='rtl'] {
+  .dropdown-list > .trigger {
+    left: -22px;
+    margin-left: unset;
+  }
+}
