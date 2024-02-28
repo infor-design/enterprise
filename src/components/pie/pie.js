@@ -944,7 +944,7 @@ Pie.prototype = {
     charts.setSelectedElement({
       task: isSelected ? 'unselected' : 'selected',
       container: self.element,
-      selector: selector,
+      selector,
       isTrigger: self.initialSelectCall ? false : !isSelected,
       d: d.data,
       i,
