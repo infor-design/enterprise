@@ -4093,7 +4093,7 @@ Tabs.prototype = {
         targetRectObj.height -= 4;
       }
 
-      if (self.isVerticalTabs() && scrollingTablist.is('.scrollable-y') && tabListScrollHeight > tabListClientHeight) {
+      if (self.isVerticalTabs() && scrollingTablist?.is('.scrollable-y') && tabListScrollHeight > tabListClientHeight) {
         targetRectObj.width -= !isMac ? 15 : 5;
       }
 

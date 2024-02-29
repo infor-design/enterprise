@@ -10220,7 +10220,7 @@ Datagrid.prototype = {
           self.setNextActiveCell(e);
         } else {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
-          if (self.containsTextField(node) && self.containsTriggerField(node)) {
+          if (self.containsTextField(node) && self.containsTriggerField(node) && self.settings?.actionableMode) {
             self.quickEditMode = true;
           }
         }

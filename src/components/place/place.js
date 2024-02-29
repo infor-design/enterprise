@@ -1,6 +1,7 @@
 import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { Environment as env } from '../../utils/environment';
+import { Locale } from '../locale/locale';
 
 // Component Name
 const COMPONENT_NAME = 'place';
@@ -375,6 +376,10 @@ Place.prototype = {
       }
 
       return [cX, cY];
+    }
+
+    if (placementObj.parent.is('.colorpicker') && Locale.isRTL()) {
+      placementObj.x += 30;
     }
 
     function doPlacementAgainstParent(incomingPlacementObj) {
@@ -948,6 +953,7 @@ Place.prototype = {
     if (target.is('.colorpicker, .datepicker, .timepicker')) {
       target = target.next('.trigger');
     }
+
     if (target.is('.btn-split-menu, .btn-menu, .btn-actions, .btn-filter, .tab, .tab-more')) {
       target = target.find('.icon').last();
     }
