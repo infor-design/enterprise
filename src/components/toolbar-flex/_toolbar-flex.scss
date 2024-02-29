@@ -536,6 +536,7 @@ html[class*='theme-new-'] .flex-toolbar:not(.editor-toolbar):not(.formatter-tool
     &.go-button {
       position: absolute;
       border: 1px solid $searchfield-toolbar-border-color;
+      border-left: none;
       border-radius: 0;
       background-color: transparent;
       color: $searchfield-icon-color;
