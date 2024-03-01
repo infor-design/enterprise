@@ -2355,6 +2355,8 @@ Tree.prototype = {
     }
 
     if (nodeData.text) {
+      nodeData.text = /&#?[^\s].{1,9};/g.test(nodeData.text) ?
+        xssUtils.unescapeHTML(nodeData.text) : nodeData.text;
       nodetext.textContent = nodeData.text;
       elem.text = nodeData.text;
     }
