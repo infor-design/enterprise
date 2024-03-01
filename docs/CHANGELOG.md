@@ -27,6 +27,7 @@
 - `[Lookup]` Fixed unexpected multiselect selecting lookup when entering manual input. ([NG#1635](https://github.com/infor-design/enterprise-ng/issues/1635))
 - `[Masthead]` Fixed incorrect color on hover. ([#8391](https://github.com/infor-design/enterprise/issues/8391))
 - `[Datepicker]` Fixed datepicker popover footer button position in RTL. ([#8400](https://github.com/infor-design/enterprise/issues/8400))
+- `[Datepicker]` Fixed increment/decrement and today key being activated in range mode. ([#8363](https://github.com/infor-design/enterprise/issues/8363))
 - `[Docs]` Changed `attributes` property type to array/object. ([#8228](https://github.com/infor-design/enterprise/issues/8228))
 - `[Header]` Fixed border line of search field in mobile view non collapsible. ([#7112](https://github.com/infor-design/enterprise/issues/7112))
 - `[Lookup]` Fixed unexpected multiselect selecting lookup when entering manual input. ([NG#1635](https://github.com/infor-design/enterprise-ng/issues/1635))

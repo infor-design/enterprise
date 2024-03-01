@@ -431,12 +431,12 @@ DatePicker.prototype = {
       }
 
       // 't' selects today
-      if (key === 84 && this.settings.todayWithKeyboard) {
+      if (!s.range.useRange && (key === 84 && this.settings.todayWithKeyboard)) {
         handled = true;
         this.setToday();
       }
 
-      if (!hasMinusPattern && this.settings.incrementWithKeyboard) {
+      if (!s.range.useRange && (!hasMinusPattern && this.settings.incrementWithKeyboard)) {
         // get input value
         const inputVal = $(e.currentTarget).val();
 
