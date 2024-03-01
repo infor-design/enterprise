@@ -51,6 +51,7 @@
 - `[TabsHeader]` Added setting `maxWidth` for tabs for long titles. ([#8434](https://github.com/infor-design/enterprise/issues/8434))
 - `[TabsModule]` Added setting `maxWidth` for tabs for long titles. ([#8017](https://github.com/infor-design/enterprise/issues/8017))
 - `[TabsModule]` Fixed alabaster in tabs module. ([#8404](https://github.com/infor-design/enterprise/issues/8404))
+- `[Tree]` Added escape HTML in `updateNode`. ([#8427](https://github.com/infor-design/enterprise/issues/8427))
 - `[Tooltip]` Allowed tooltip to be shown by fixing expression error when having special characters. ([#8017](https://github.com/infor-design/enterprise/issues/8017))
 
 ## v4.92.3
