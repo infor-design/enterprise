@@ -2085,7 +2085,7 @@ $datagrid-small-row-height: 25px;
         }
 
         .datepicker {
-          height: $datagrid-extra-small-row-height + 1px;
+          height: $datagrid-extra-small-row-height;
           padding: 0 5px;
         }
 
@@ -2700,7 +2700,6 @@ $datagrid-small-row-height: 25px;
       }
 
       .datepicker {
-        margin-top: unset !important;
         padding: unset !important;
 
         + .btn-icon.trigger {
