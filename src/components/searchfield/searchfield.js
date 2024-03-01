@@ -1488,11 +1488,9 @@ SearchField.prototype = {
     if (this.hasGoButton()) {
       const goButtonStyle = window.getComputedStyle(this.goButton[0]);
       const goButtonWidth = this.goButton.width();
-      const goButtonPadding = parseInt(goButtonStyle.paddingLeft, 10) +
-        parseInt(goButtonStyle.paddingRight, 10);
-      const goButtonBorder = (parseInt(goButtonStyle.borderLeftWidth, 10) * 2);
+      const goButtonBorder = parseInt(goButtonStyle.borderRightWidth, 10);
 
-      subtractWidth += (goButtonWidth + goButtonPadding + goButtonBorder);
+      subtractWidth += (goButtonWidth + goButtonBorder);
     }
 
     if (subtractWidth > 0) {
