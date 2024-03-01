@@ -22,7 +22,6 @@
           </ul>
       </div>
       <div class="card-content">
-
         <div id="datagrid">
         </div>
       </div>
@@ -30,6 +29,10 @@
   </div>
 </div>
 
+<style>
+  .card { height: 500px; }
+  .card-content { height: 450px !important; }
+</style>
 
 <script>
   $('body').one('initialized', function () {
@@ -48,22 +51,32 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
       // Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: '50%', formatter: Soho.Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 175, formatter: Soho.Formatters.Hyperlink, href:'javascript:void(0);'});
-      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
-      columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Soho.Formatters.Text});
-      columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200});
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Text });
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, filterType: 'text' });
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text' });
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'text' });
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, filterType: 'text' });
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'text' });
 
-      // Init and get the api for the grid
-      $('#datagrid').datagrid({
-        columns: columns,
-        dataset: data,
-        rowHeight: 'small',
-        isList: true
+      var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';
+
+      $.getJSON(url, function (res) {
+        //Show the grid
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res.data,
+          selectable: 'multiple',
+          paging: true,
+          pagesize: 25,
+          filterable: true,
+          rowHeight: 'small'
+        }).on('selected', function (e, args) {
+          console.log(args);
+        }).on('unselected', function (e, args) {
+          console.log(args);
+        });
       });
+
     });
  });
 </script>

@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.94.0
+
+## v4.94.0 Fixes
+
+- `[Datagrid/Card]` When in a card/widget the size of the datagrid would be incorrect and the pager would be moved to the wrong place. Now on default widget size the widget will contain the pager correctly. You may need css for custom sized widgets or non default widget sizes ([#8496](https://github.com/infor-design/enterprise/issues/8372))
+
 ## v4.93.0
 
 ## v4.93.0 Features

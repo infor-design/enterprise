@@ -374,7 +374,7 @@ Pager.prototype = {
 
     // Inside of Listviews, place the pager bar inside of the card/widget footer
     const widgetContainer = this.element.closest('.card, .widget');
-    if (widgetContainer.length && this.settings.footerContainment) {
+    if (widgetContainer.length && this.settings.footerContainment && !this.isTable) {
       const self = this;
       const widgetTypes = ['widget', 'card'];
 
