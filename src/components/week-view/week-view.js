@@ -351,6 +351,7 @@ WeekView.prototype = {
    * @param {string} cssClass An extra css class
    */
   appendEventToAllDay(container, event, cssClass) {
+    debugger;
     const allDayContainer = container.querySelector('.week-view-all-day-wrapper');
     if (!allDayContainer) {
       return;
