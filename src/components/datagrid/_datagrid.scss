@@ -1106,6 +1106,12 @@ $datagrid-small-row-height: 25px;
       }
     }
   }
+
+  &.show-icons {
+    .datagrid-trigger-cell .icon:not(.datagrid-alert-icon) {
+      visibility: visible;
+    }
+  }
 }
 
 .full-height .datagrid-container {

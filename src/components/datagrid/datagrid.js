@@ -248,6 +248,7 @@ const DATAGRID_DEFAULTS = {
   dblClickApply: false,
   attributes: null,
   allowPasteFromExcel: false,
+  showIcons: false,
   fallbackImage: 'insert-image',
   fallbackSize: { height: 40, width: 40 },
   fallbackTooltip: {
@@ -497,6 +498,10 @@ Datagrid.prototype = {
     if (this.settings.emptyMessage) {
       self.setEmptyMessage(this.settings.emptyMessage);
       self.checkEmptyMessage();
+    }
+
+    if (this.settings.showIcons) {
+      self.element.addClass('show-icons');
     }
 
     self.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';

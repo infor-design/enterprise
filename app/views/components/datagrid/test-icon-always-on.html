@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid" class="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    Soho.Locale.set('en-US').done(function () {
+      var grid,
+        columns = [],
+        data = [];
+
+      // Some Sample Data
+      data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, eta: '1:00 PM', price: '500', status: 'OK', orderDate: new Date(2014, 12, 8), action: 1 });
+      data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: '2', eta: '2:00 PM', price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 2 });
+      data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: '120.99', eta: '3:00 PM', status: null, orderDate: new Date(2014, 6, 3), action: 3 });
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input });
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Soho.Editors.Input });
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy', editor: Soho.Editors.Date });
+      columns.push({ id: 'eta', name: 'ETA', field: 'eta', formatter: Soho.Formatters.Time, editor: Soho.Editors.Time });
+      columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown,
+      options: [{id: '', label: '', value: -1}, {id: 'oh1', label: 'On Hold', value: 1}, {id: 'sh1', label: 'Shipped', value: 2} , {id: 'ac1', label: 'Action', value: 3}, {id: 'pen', label: 'Pending', value: 4}, {id: 'bk1', label: 'Backorder', value: 5}, {id: 'can', label: 'Cancelled', value: 6}, {id: 'pro', label: 'Processing', value: 7}]
+      });
+
+      //Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        editable: true,
+        selectable: 'single',
+        showIcons: true,
+        toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true}
+      });
+    });
+ });
+</script>
