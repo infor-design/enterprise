@@ -133,6 +133,7 @@ describe('Datagrid Settings', () => {
       onDestroyCell: null,
       onEditCell: null,
       onExpandRow: null,
+      showIcons: false,
       onExpandChildren: null,
       onCollapseChildren: null,
       onKeyDown: null,

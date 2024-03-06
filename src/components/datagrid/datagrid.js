@@ -150,6 +150,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to trigger select row in datagrid.
  * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
+ * @param {boolean} [settings.showIcons=false] If true will always show hoverable icons.
  * @param {string} [settings.fallbackImage='insert-image'] Will set a fall back image if the image formatter cannot load an image.
 */
 const DATAGRID_DEFAULTS = {
