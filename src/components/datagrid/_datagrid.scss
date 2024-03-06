@@ -334,7 +334,7 @@ $datagrid-small-row-height: 25px;
 
   // Heights for scrollbars
   &.paginated {
-    height: calc(100% - 40px);
+    height: calc(100% - 40px) !important;
   }
 
 
@@ -6116,8 +6116,8 @@ html[dir='rtl'] {
 
     .widget-content,
     .card-content {
-      height: 278px;
-      min-height: 278px;
+      height: 319px;
+      min-height: 319px;
     }
 
     .widget-footer {
@@ -6133,10 +6133,6 @@ html[dir='rtl'] {
     .pager-prev,
     .pager-next {
       position: static;
-    }
-
-    .pager-count {
-      vertical-align: middle;
     }
   }
 }

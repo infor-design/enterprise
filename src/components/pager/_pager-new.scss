@@ -49,6 +49,7 @@
 .widget {
   &.card .card-footer .pager-toolbar {
     height: 30px;
+    margin-top: -10px;
 
     > li {
       &.pager-prev,
@@ -57,7 +58,7 @@
       &.pager-next {
         > .btn-icon {
           height: 32px;
-          margin-top: -4px;
+          margin-top: -2px;
           padding: 5px;
         }
       }

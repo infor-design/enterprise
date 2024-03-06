@@ -615,6 +615,14 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   }
 }
 
+.card.has-footer {
+  .widget-content,
+  .card-content {
+    height: 275px;
+    min-height: 275px;
+  }
+}
+
 .card-footer,
 .widget-footer {
   border-top: 1px solid $cardlist-border-color;
