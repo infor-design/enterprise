@@ -81,11 +81,14 @@ Cards.prototype = {
 
     this.cardHeader = this.element.children('.card-header, .widget-header');
     this.cardContentPane = this.element.children('.card-pane, .widget-pane');
+    this.cardFooter = this.element.children('.card-footer');
     this.buttonAction = this.cardHeader.children('.btn-actions');
 
     if (this.settings.selectable !== false) {
       this.cards = this.element;
     }
+
+    if (this.cardFooter.length === 1) this.element.addClass('has-footer');
 
     return this;
   },

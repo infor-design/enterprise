@@ -18,6 +18,9 @@
       <div class="field">
           <button id="open-message" class="btn-secondary" type="button" >Show Message</button>
       </div>
+      <div class="field">
+        <button id="open-tab" class="btn-secondary" type="button">Show Tabs</button>
+      </div>
       <div class="modal-buttonset">
         <button type="button" class="btn-default btn-close">Close</button>
       </div>
@@ -56,6 +59,29 @@
   </div>
 </div>
 
+<div class="modal" id="modal-5" style="height: calc(100% - 40px); margin-bottom: calc(50px - 65%);">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Test Tab</h1>
+    </div>
+
+    <div class="modal-body">
+      <div id="tabs-normal" class="tab-container">
+        <ul class="tab-list">
+          <li class="tab">
+            <a id="tabs-a" data-automation-id="tabs-a-contracts" href="#tabs-normal-contracts">Tab A</a>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-panel-container">
+        <div id="tabs-normal-contracts" data-automation-id="tabs-panel-contracts" class="tab-panel">
+          <p>Hello</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   $('#open-message').on('click', function() {
     $('body').message({
@@ -72,5 +98,22 @@
           isDefault: true
       }]
     });
+  });
+
+  $('#open-tab').on('click', () => {
+    $('body').modal({
+      content: $('#modal-5'),
+			buttons: [{
+				text: 'Cancel',
+				click: function(e, modal) {
+					modal.close();
+				}
+			}, {
+				text: 'Save',
+				click: function(e, modal) {
+					modal.close();
+				}
+			}]
+		})
   });
 </script>

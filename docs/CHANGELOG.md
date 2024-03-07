@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.94.0
+
+## v4.94.0 Fixes
+
+- `[Datagrid/Card]` When in a card/widget the size of the datagrid would be incorrect and the pager would be moved to the wrong place. Now on default widget size the widget will contain the pager correctly. You may need css for custom sized widgets or non default widget sizes ([#8496](https://github.com/infor-design/enterprise/issues/8372))
+
 ## v4.93.0
 
 ## v4.93.0 Features
@@ -24,12 +30,10 @@
 - `[Datagrid]` Fixed wrong cell focus on blur in tree grid. ([NG#1616](https://github.com/infor-design/enterprise-ng/issues/1616))
 - `[Datagrid]` Fixed cell editable not getting focused on click. ([#8408](https://github.com/infor-design/enterprise/issues/8408))
 - `[Datagrid]` Fixed cell value replacing special characters on cell change. ([#8285](https://github.com/infor-design/enterprise/issues/8285))
-- `[Docs]` Changed `attributes` property type to array/object. ([#8228](https://github.com/infor-design/enterprise/issues/8228))
-- `[Lookup]` Fixed unexpected multiselect selecting lookup when entering manual input. ([NG#1635](https://github.com/infor-design/enterprise-ng/issues/1635))
-- `[Masthead]` Fixed incorrect color on hover. ([#8391](https://github.com/infor-design/enterprise/issues/8391))
 - `[Datepicker]` Fixed datepicker popover footer button position in RTL. ([#8400](https://github.com/infor-design/enterprise/issues/8400))
 - `[Datepicker]` Fixed increment/decrement and today key being activated in range mode. ([#8363](https://github.com/infor-design/enterprise/issues/8363))
 - `[Docs]` Changed `attributes` property type to array/object. ([#8228](https://github.com/infor-design/enterprise/issues/8228))
+- `[Fileupload]` Fixed padding in fileupload so that text and clear icon won't overlap. ([#8428](https://github.com/infor-design/enterprise/issues/8428))
 - `[Header]` Fixed border line of search field in mobile view non collapsible. ([#7112](https://github.com/infor-design/enterprise/issues/7112))
 - `[Lookup]` Fixed unexpected multiselect selecting lookup when entering manual input. ([NG#1635](https://github.com/infor-design/enterprise-ng/issues/1635))
 - `[Masthead]` Fixed incorrect color on hover. ([#8391](https://github.com/infor-design/enterprise/issues/8391))
@@ -40,6 +44,7 @@
 - `[Masthead]` Fixed incorrectly visible `audible` spans. ([#8422](https://github.com/infor-design/enterprise/issues/8422))
 - `[Modal]` Fixed a bug where hitting the escape button in a modal with subcomponents popover caused a crash. ([#8344](https://github.com/infor-design/enterprise/issues/8344))
 - `[Modal]` Fixed a bug where the colorpicker did not close when hitting the escape key in the modal datagrid. ([#8411](https://github.com/infor-design/enterprise/issues/8411))
+- `[Modal]` Fixed a bug where parent modal closes instead of currently active modal when pressing the escape key. ([NG#1639](https://github.com/infor-design/enterprise/issues/1639))
 - `[Multiselect]` Fixed misaligned `x` buttons. ([8421](https://github.com/infor-design/enterprise/issues/8421))
 - `[Pie]` Fixed an error encountered when having many records inside the graph. ([#8422](https://github.com/infor-design/enterprise/issues/8422))
 - `[Popupmenu]` Fixed a bug where single select check items were getting deselected. ([8422](https://github.com/infor-design/enterprise/issues/8422))
