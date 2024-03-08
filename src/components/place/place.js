@@ -375,6 +375,10 @@ Place.prototype = {
         }
       }
 
+      if (incomingPlacementObj.parent.is('.datagrid-cell-wrapper')) {
+        cY -= 1;
+      }
+
       return [cX, cY];
     }
 

@@ -164,7 +164,7 @@
 
       + .btn-icon.trigger {
         margin-top: 8px;
-        margin-left: 15px;
+        margin-left: 13px;
       }
     }
 
@@ -178,7 +178,7 @@
 
       + .btn-icon.trigger {
         margin-left: -2px;
-        margin-top: 9px;
+        margin-top: 10px;
       }
     }
 
@@ -188,7 +188,7 @@
       }
 
       .datepicker + .btn-icon.trigger {
-        margin-top: 8px;
+        margin-top: 10px;
       }
     }
   }
@@ -200,7 +200,7 @@
 
     .datagrid-trigger-cell {
       .icon.icon-calendar {
-        left: -2px !important;
+        left: -5px !important;
         top: -1px !important;
       }
     }
@@ -212,7 +212,7 @@
           margin-top: 2px;
 
           > .icon {
-            top: -2px;
+            top: 0;
           }
         }
       }
@@ -221,7 +221,7 @@
         padding: unset !important;
 
         + .btn-icon.trigger {
-          margin-left: 8px;
+          margin-left: 5px;
           margin-top: 1px;
         }
       }
@@ -234,6 +234,12 @@
       tr {
         td {
           &.datagrid-trigger-cell {
+            .dropdown-trigger {
+              + .icon {
+                top: -3px;
+              }
+            }
+
             .icon.icon-calendar {
               left: -1px;
               top: -2px;
@@ -252,8 +258,8 @@
                 }
 
                 .datepicker + .trigger {
-                  margin-left: 11px;
-                  margin-top: -0.2px;
+                  margin-left: 8px;
+                  margin-top: 1px;
                   background-color: transparent;
                 }
 
@@ -321,7 +327,7 @@
           margin-top: -1px;
 
           > .icon {
-            top: -2px;
+            top: 0;
           }
         }
       }
@@ -362,7 +368,7 @@
   &.small-rowheight {
     .datagrid-cell-wrapper {
       .icon-clock.icon {
-        top: -1px !important;
+        top: -2px !important;
       }
     }
   }
@@ -414,7 +420,7 @@
         }
 
         + .trigger.btn-icon {
-          margin-left: 14px;
+          margin-left: 12.5px;
           margin-top: 3px;
 
           &:hover {
@@ -855,7 +861,7 @@
 
 .datagrid-dropdown-list.extra-small-rowheight .trigger .icon {
   left: 4px !important;
-  top: 8px;
+  top: 6px;
 }
 
 .datagrid-dropdown-list.small-rowheight .trigger .icon {
@@ -888,8 +894,8 @@
         padding: unset !important;
 
         + .btn-icon.trigger {
-          margin-left: 5px !important;
-          margin-top: 1px !important;
+          margin-left: 4px !important;
+          margin-top: -1px !important;
         }
       }
     }
