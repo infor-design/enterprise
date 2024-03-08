@@ -279,6 +279,12 @@ calendarShared.getEventTypeBorderColor = function getEventTypeBorderColor(event,
     return event.borderColor;
   }
 
+  // Add colors to the border from the default set of colors available in Design
+  if (event.color !== null && event.color !== undefined && event.color.substr(0, 1) !== '#') {
+    borderColor = event.color;
+    return event.borderColor;
+  }
+
   if (eventInfo.length === 1) {
     borderColor = eventInfo[0].borderColor || 'azure';
     return borderColor;
