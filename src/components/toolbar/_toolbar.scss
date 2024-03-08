@@ -88,6 +88,7 @@ $toolbar-buttonset-height: 40px;
 
     > [class^='btn'] {
       min-width: 34px;
+      padding: unset;
     }
 
     > .separator {
