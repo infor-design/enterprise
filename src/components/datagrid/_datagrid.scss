@@ -1107,7 +1107,7 @@ $datagrid-small-row-height: 25px;
     }
   }
 
-  &.show-icons {
+  &.show-editor-icons {
     .datagrid-trigger-cell .icon:not(.datagrid-alert-icon) {
       visibility: visible;
     }
@@ -2534,7 +2534,7 @@ $datagrid-small-row-height: 25px;
       display: block;
       min-height: $datagrid-row-height + 6;
       overflow: hidden;
-      padding: 6px 16px 0;
+      padding: 3px 16px 0;
 
       &.is-dropdown-wrapper {
         .dropdown-wrapper {

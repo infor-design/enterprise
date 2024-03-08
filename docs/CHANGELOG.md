@@ -4,7 +4,7 @@
 
 ## v4.94.0 Features
 
-- `[Datagrid]` Added setting showIcons to always display icon without hover. ([#8439](https://github.com/infor-design/enterprise/issues/8439))
+- `[Datagrid]` Added setting `showEditorIcons` to always display icon without hover. ([#8439](https://github.com/infor-design/enterprise/issues/8439))
 
 ## v4.94.0 Fixes
 

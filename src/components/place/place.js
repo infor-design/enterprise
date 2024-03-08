@@ -382,6 +382,10 @@ Place.prototype = {
       placementObj.x += 30;
     }
 
+    if ($(placementObj.parent).parent().is('.datagrid-cell-wrapper') && !Locale.isRTL()) {
+      placementObj.x += 30;
+    }
+
     function doPlacementAgainstParent(incomingPlacementObj) {
       const coords = getCoordsFromPlacement(incomingPlacementObj);
       incomingPlacementObj.setCoordinate('x', coords[0]);
