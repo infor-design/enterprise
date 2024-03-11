@@ -348,15 +348,18 @@
       }
     }
 
-    button.close:not(.is-empty) {
-      align-items: center;
-      display: flex;
-      justify-content: center;
-      position: absolute;
+    &.has-close-icon-button,
+    &.has-close-icon-button.has-text {
+      .btn-icon.close:not(.is-empty) {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        position: absolute;
 
-      svg.close {
-        left: 0;
-        top: 1px;
+        svg.close {
+          left: 0;
+          top: 2px;
+        }
       }
     }
   }
