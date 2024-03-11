@@ -128,6 +128,10 @@ html.is-firefox {
         height: 38px;
       }
     }
+
+    &.has-close-icon-button.has-text .btn-icon.close svg.close {
+      top: -0.5px;
+    }
   }
 
   .header.has-searchfield-xl .searchfield-wrapper {
@@ -166,6 +170,14 @@ html.is-firefox {
   }
 }
 
+html.is-safari {
+  .searchfield-wrapper {
+    &.has-close-icon-button.has-text .btn-icon.close svg.close {
+      top: -0.5px;
+    }
+  }
+}
+
 html[dir='rtl'] {
   .searchfield-wrapper {
     > .icon {
@@ -177,10 +189,10 @@ html[dir='rtl'] {
 
     &.has-close-icon-button.has-text {
       .btn-icon.close {
-        top: 9px;
+        top: 7px;
 
         svg.close.icon {
-          top: 0;
+          top: 1px;
         }
       }
 
