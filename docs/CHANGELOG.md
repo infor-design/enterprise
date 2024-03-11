@@ -2,6 +2,10 @@
 
 ## v4.94.0
 
+## v4.94.0 Features
+
+- `[Homepage]` Added row height style classes for widgets. ([#8211](https://github.com/infor-design/enterprise/issues/8211))
+
 ## v4.94.0 Fixes
 
 - `[Calendar]` Fixed inconsistencies in border colors of events in calendar. ([#8452](https://github.com/infor-design/enterprise/issues/8452))
