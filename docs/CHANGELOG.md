@@ -2,6 +2,10 @@
 
 ## v4.94.0
 
+## v4.94.0 Features
+
+- `[Modal]` Added setting `draggable` to be able to drag modals. ([#7019](https://github.com/infor-design/enterprise/issues/7019))
+
 ## v4.94.0 Fixes
 
 - `[Calendar]` Fixed inconsistencies in border colors of events in calendar. ([#8452](https://github.com/infor-design/enterprise/issues/8452))

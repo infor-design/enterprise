@@ -185,6 +185,12 @@
     }
   }
 
+  &.is-draggable {
+    .modal-content .modal-header {
+      cursor: move;
+    }
+  }
+
   &.divider-top {
     .modal-content {
       .modal-header {
