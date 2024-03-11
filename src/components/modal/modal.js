@@ -312,7 +312,7 @@ Modal.prototype = {
     const container = this.element;
     const dropContainer = this.element.parent();    
     const modalContent = container.find('.modal-content');
-    const containerHeight = modalContent.height() + parseInt(modalContent.css('margin-top').slice(0, -2)) + parseInt(modalContent.css('margin-bottom').slice(0, -2));
+    const containerHeight = modalContent.height() + parseInt(modalContent.css('margin-top').slice(0, -2), 10) + parseInt(modalContent.css('margin-bottom').slice(0, -2), 10);
     const topPosition = (window.innerHeight / 2) - (containerHeight / 2);
 
     const rules = { position: 'fixed', top: `${topPosition}px`, height: `${containerHeight}px` };
