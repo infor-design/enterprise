@@ -417,6 +417,7 @@ html:not([dir='rtl'])[class*='theme-classic-'] .modal-content .toolbar .buttonse
 html[dir='rtl'] .modal-content .toolbar .buttonset .searchfield-wrapper .btn-icon.close {
   left: 7px;
   right: unset;
+  top: 50%;
 }
 
 html[class*='theme-classic-'] .modal-content .toolbar .buttonset .searchfield-wrapper .btn-icon.close {
@@ -432,6 +433,6 @@ html[dir='rtl'][class*='theme-classic-'] .modal-content .toolbar .buttonset .sea
     left: 2px;
     position: absolute;
     right: unset;
-    top: 4px;
+    top: 3px;
   }
 }

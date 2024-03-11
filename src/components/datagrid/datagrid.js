@@ -147,7 +147,7 @@ const COMPONENT_NAME = 'datagrid';
  * and if only parent has a match then make expand/collapse button to be collapsed, disabled
  * and do not add any children nodes
  * or if one or more child node got match then add parent node and only matching children nodes
- * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to trigger select row in datagrid.
  * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
  * @param {string} [settings.fallbackImage='insert-image'] Will set a fall back image if the image formatter cannot load an image.
@@ -10220,7 +10220,7 @@ Datagrid.prototype = {
           self.setNextActiveCell(e);
         } else {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
-          if (self.containsTextField(node) && self.containsTriggerField(node)) {
+          if (self.containsTextField(node) && self.containsTriggerField(node) && self.settings?.actionableMode) {
             self.quickEditMode = true;
           }
         }
@@ -10544,7 +10544,8 @@ Datagrid.prototype = {
       this.addToDirtyArray(idx, cell, data);
     }
 
-    if (typeof this.editor.focus === 'function' && this.editor.name !== 'date') {
+    // Focus
+    if (!col.inlineEditor) {
       this.editor.focus();
     }
 
@@ -10622,7 +10623,13 @@ Datagrid.prototype = {
     } else {
       if (typeof this.editor.val === 'function') {
         const editorValue = this.editor.val();
-        newValue = isNaN(Date.parse(editorValue)) && this.editor.name === 'date' ? '' : editorValue;
+        const format = this.columnSettings(this.editor.cell)?.dateFormat;
+
+        if (format === undefined) {
+          newValue = isNaN(Date.parse(editorValue)) && this.editor.name === 'date' ? '' : editorValue;
+        } else {
+          newValue = isNaN(Locale.parseDate(editorValue, { dateFormat: format })) && this.editor.name === 'date' ? '' : editorValue;
+        }
       }
       this.commitCellEditUtil(input, newValue, isEditor, isFileupload, isUseActiveRow, isCallback);
     }
@@ -11501,6 +11508,8 @@ Datagrid.prototype = {
       }
     }
 
+    coercedVal = xssUtils.unescapeHTML(coercedVal);
+
     if (col.field && coercedVal !== oldVal) {
       if (col.field.indexOf('.') > -1) {
         let rowDataObj = rowData;
@@ -11542,8 +11551,14 @@ Datagrid.prototype = {
       }
     }
 
-    if (!isInline) {
-      cellNode.find('.datagrid-cell-wrapper').html(formatted);
+    const wrapper = cellNode.find('.datagrid-cell-wrapper');
+    if (!isInline && wrapper[0]) {
+      wrapper[0].innerHTML = formatted;
+
+      const children = wrapper.children();
+      if (children.length === 0) {
+        wrapper.innerText = xssUtils.unescapeHTML(formatted);
+      }
     }
 
     if (!fromApiCall) {
@@ -11984,7 +11999,7 @@ Datagrid.prototype = {
 
     if (typeof row === 'number') {
       rowNum = row;
-      rowElem = this.tableBody.find('tr:visible').eq(row);
+      rowElem = this.settings.treeGrid ? this.actualRowNode(row) : this.tableBody.find('tr:visible').eq(row);
       rowIndex = this.actualRowIndex(rowElem);
       dataRowNum = this.dataRowIndex(rowElem);
     }
@@ -13079,6 +13094,7 @@ Datagrid.prototype = {
       const isHeaderFilter = DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
       const cell = elem.getAttribute('aria-colindex') - 1;
       const col = this.columnSettings(cell);
+      const gridTooltip = $('.grid-tooltip');
       let title;
 
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
@@ -13218,6 +13234,12 @@ Datagrid.prototype = {
 
         if (isTh) {
           tooltip.textwidth = stringUtils.textWidth(tooltip.content);
+        }
+
+        if (gridTooltip) {
+          const gridTooltipId = gridTooltip.attr('id');
+          gridTooltip.attr('data-automation-id', `${gridTooltipId}-grid-tooltip`);
+          $(this.tooltip).find('.tooltip-content').attr('data-automation-id', `${gridTooltipId}-content`);
         }
 
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;

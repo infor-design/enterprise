@@ -5,6 +5,7 @@
   > .tab-list-container {
     background-color: $vertical-tab-background-color;
     border-right: 1px solid $vertical-tab-border-color;
+    height: 100%;
 
     > .tab-list {
       > .tab {

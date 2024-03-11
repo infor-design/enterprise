@@ -128,14 +128,16 @@
 
     .btn-dismissible {
       height: 20px;
-      padding-left: 5px;
+      padding-left: 6px;
       vertical-align: top;
 
       .icon {
-        height: 10px;
+        height: 12px;
         margin: 0;
+        margin-inline-end: -2px;
         vertical-align: unset;
-        width: 10px;
+        top: 1px;
+        width: 12px;
       }
     }
   }
@@ -355,7 +357,7 @@
     .tag-list .tag.is-dismissible {
       .btn-dismissible {
         .icon {
-          top: -1px;
+          top: -1.5px;
           vertical-align: middle;
         }
       }
@@ -504,6 +506,34 @@ html.theme-new-contrast {
   }
 }
 
+html.is-mac {
+  &.is-chrome {
+    .tag {
+      &.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            margin-inline-end: -1px;
+          }
+        }
+      }
+    }
+  }
+
+  &.is-firefox {
+    .multiselect {
+      ~ .dropdown-wrapper .dropdown.has-tags {
+        .tag-list .tag.is-dismissible {
+          .btn-dismissible {
+            .icon {
+              top: -1px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 // Firefox behaves odd
 .is-firefox {
   .tag.is-linkable .btn-linkable .icon {
@@ -551,7 +581,7 @@ html[dir='rtl'] {
     &.is-dismissible {
       .btn-dismissible {
         .icon {
-          left: -6px;
+          left: -5px;
         }
       }
     }

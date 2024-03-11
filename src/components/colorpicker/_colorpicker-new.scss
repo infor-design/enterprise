@@ -16,7 +16,7 @@
 }
 
 .colorpicker-container .trigger {
-  margin-left: -9px;
+  margin-inline-start: 5px;
   margin-top: -2px;
 
   .icon {
@@ -36,9 +36,21 @@
 }
 
 html[dir='rtl'] {
+  .popupmenu.colorpicker {
+    padding: 10px 10px 10px 0;
+  }
+
   .colorpicker-container {
+    .swatch {
+      position: relative;
+      right: 83px;
+    }
+
     .colorpicker {
-      padding: 11px 10px 8px 0;
+      padding: 11px 0 8px 10px;
+      position: relative;
+      right: -35px;
+      text-align: left;
     }
 
     .trigger .icon {

@@ -51,10 +51,10 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {string} [settings.breakpoint='phone-to-tablet'] The breakpoint to use for a responsive change to "fullsize" mode. See `utils.breakpoints` to view the available sizes.
 * @param {string} [settings.overlayOpacity=0.7] Adds the ability to control the opacity of the background overlay.
 * @param {boolean} [settings.noRefocus=false] If true, causes the modal's trigger element not to become focused once the modal is closed.
-* @param {htmlObject|jqueryObject|srting} [settings.triggerButton=null] The modal's trigger element to keep refocused once the modal is closed. This can be html or jquery object or query selector as string
+* @param {htmlObject|jqueryObject|string} [settings.triggerButton=null] The modal's trigger element to keep refocused once the modal is closed. This can be html or jquery object or query selector as string
 * @param {boolean} [settings.hideUnderneath=false] if true, causes this modal instance to become hidden when another modal is displayed over top.
 * @param {boolean} [settings.suppressEnterKey=false] if true, causes the modal to not exit when the enter key is pressed.
-* @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+* @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 * @param {function} [settings.onFocusChange] an optional callback that runs whenever the Modal API attempts to change the focused element inside of its boundaries
 * @param {string} [settings.icon] Ability to add icon in the title.
 * @param {sring} [settings.iconClass] Ability to add class in the icon setting.
@@ -1461,8 +1461,23 @@ Modal.prototype = {
     $('body').off(`resize.${this.namespace} focusin.${self.namespace}`);
 
     this.element.off(`keypress.${this.namespace} keydown.${this.namespace}`);
-    this.visible = false;
-    this.active = false;
+
+    // Closing other sub components popover (timepicker, colorpicker, etc.)
+    if (this.openSubComponents.length > 0 && !force) {
+      const openComponent = this.openSubComponents[0];
+
+      if (openComponent.element.hasClass('colorpicker')) {
+        openComponent.close();
+      } else {
+        const popoverData = openComponent?.popup?.data('popover');
+        if (popoverData) {
+          popoverData.hide();
+        }
+      }
+    } else {
+      this.visible = false;
+      this.active = false;
+    }
 
     delete this.dontCheckFocus;
 

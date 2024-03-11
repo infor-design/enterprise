@@ -29,10 +29,16 @@
     min-width: 32px;
     padding-right: 8px;
     min-height: 32px;
-    color: $masthead-text-color;
+    color: $masthead-text-color !important;
 
     svg.icon {
       color: $masthead-button-color;
+      vertical-align: middle;
+      margin-inline-start: 1px;
+
+      &.icon-dropdown {
+        margin-top: -2px;
+      }
     }
 
     &:hover:not(:disabled),
@@ -168,8 +174,10 @@
         border-color: transparent;
       }
 
-      span {
+      span:not(.audible) {
         color: inherit;
+        position: relative;
+        top: -1px;
       }
 
       .icon {
@@ -183,11 +191,11 @@
       }
 
       &:hover:not([disabled]) {
-        color: $masthead-button-hover-color;
+        color: $masthead-button-hover-color !important;
 
         .icon,
         svg.icon {
-          color: $masthead-button-hover-color;
+          color: $masthead-button-hover-color !important;
         }
       }
 
@@ -204,16 +212,16 @@
         box-shadow: 0 0 0 2px transparent, 0 0 0 1px $masthead-button-focus-color, $header-focus-box-shadow;
 
         .icon {
-          color: $masthead-button-focus-color;
+          color: $masthead-button-color;
         }
       }
 
       &.is-selected {
         &:focus:not(.hide-focus) {
-          color: $masthead-button-focus-color;
+          color: $masthead-button-color;
 
           .icon {
-            color: $masthead-button-focus-color;
+            color: $masthead-button-color;
           }
         }
       }
@@ -284,6 +292,14 @@ html[dir='rtl'] {
           }
         }
       }
+    }
+
+    [class^='btn'] > * {
+      vertical-align: middle;
+    }
+
+    [class^='btn']:not(.btn-generative) span + .icon {
+      margin-right: 2px !important;
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "ids-enterprise",
-  "version": "4.92.0",
+  "version": "4.93.0",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "keywords": [
     "infor design system",
@@ -71,7 +71,7 @@
   ],
   "dependencies": {
     "d3": "^7.8.5",
-    "ids-identity": "^4.16.1",
+    "ids-identity": "^4.16.2",
     "jquery": "^3.7.1",
     "promise-polyfill": "^8.3.0"
   },

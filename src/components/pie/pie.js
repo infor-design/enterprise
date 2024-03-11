@@ -308,8 +308,6 @@ Pie.prototype = {
 
       s.svg = self.svg;
       charts.addLegend(series, 'pie', s, this.element);
-      const setClass = heightAdjusted > 0 ? 'addClass' : 'removeClass';
-      this.element.find('.chart-legend')[setClass]('adjusted-height');
     }
 
     this.setInitialSelected();
@@ -946,7 +944,7 @@ Pie.prototype = {
     charts.setSelectedElement({
       task: isSelected ? 'unselected' : 'selected',
       container: self.element,
-      selector: isSelected ? '.chart-container .is-selected' : selector,
+      selector,
       isTrigger: self.initialSelectCall ? false : !isSelected,
       d: d.data,
       i,

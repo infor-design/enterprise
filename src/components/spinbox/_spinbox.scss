@@ -248,6 +248,10 @@ input::-webkit-inner-spin-button {
 
 // RTL Styles
 html[dir='rtl'] {
+  input.spinbox {
+    text-align: center;
+  }
+
   .spinbox-control {
     &.up {
       border-bottom-left-radius: 2px;

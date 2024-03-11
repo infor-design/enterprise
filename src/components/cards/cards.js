@@ -22,9 +22,9 @@ const COMPONENT_NAME = 'cards';
  * @param {boolean} [settings.verticalButtonAction] Ability to rotate the button action vertically
  * @param {array} [settings.dataset=[]] An array of data objects that will be represented as cards.
  * @param {string} [settings.template] Html Template String.
- * @param {string} [seettings.detailRefId] The id of the detail element that will be used to display the detail content.
+ * @param {string} [settings.detailRefId] The id of the detail element that will be used to display the detail content.
  * @param {string} [settings.selectable=false] Ability to enable the selection state e.g. 'single', 'multiple' or false.
- * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 
 const CARDS_DEFAULTS = {
@@ -81,11 +81,14 @@ Cards.prototype = {
 
     this.cardHeader = this.element.children('.card-header, .widget-header');
     this.cardContentPane = this.element.children('.card-pane, .widget-pane');
+    this.cardFooter = this.element.children('.card-footer');
     this.buttonAction = this.cardHeader.children('.btn-actions');
 
     if (this.settings.selectable !== false) {
       this.cards = this.element;
     }
+
+    if (this.cardFooter.length === 1) this.element.addClass('has-footer');
 
     return this;
   },

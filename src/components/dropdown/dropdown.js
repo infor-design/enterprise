@@ -61,7 +61,7 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {string} [settings.selectedTextString]  Custom text string for `Selected` text header use in MultiSelect.
 * @param {boolean} [settings.selectAllFilterOnly = true] if true, when using the optional "Select All" checkbox, the Multiselect will only select items that are in the current filter.  If false, or if there is no filter present, all items will be selected.
 * @param {boolean} [settings.noResultsTextString = 'NoResultsFound'] Adds custom no results text to the dropdown
-* @param {string|array} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+* @param {array|object} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
@@ -791,7 +791,7 @@ Dropdown.prototype = {
       const i = opt.index();
       const iconRef = self.listIcon.items[i];
       const optionEl = opt[0];
-      
+
       const listIconEl = self.listIcon.items.filter(function (iconEl) {
         return iconEl?.value === optionEl?.value;
       });

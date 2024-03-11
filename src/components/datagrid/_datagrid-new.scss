@@ -289,7 +289,7 @@
 
           // Adjust Tags
           span {
-            line-height: 22px;
+            line-height: 25px;
           }
 
           // Adjust Row Buttons
@@ -522,7 +522,7 @@
   }
 
   .datagrid-cell-wrapper {
-    padding: 2px 8px 0;
+    padding: 4px 8px 0;
 
     .datagrid-checkbox-wrapper {
       margin-top: -14px;
@@ -798,7 +798,7 @@
   }
 
   tbody tr td.is-editing .datepicker {
-    height: 27px;
+    height: 26px;
   }
 
   div.dropdown + .icon,
@@ -935,7 +935,7 @@
     tbody tr {
       td.is-editing {
         .datepicker {
-          height: 2rem;
+          height: 26px;
         }
       }
     }
@@ -1087,6 +1087,41 @@
 }
 
 html[dir='rtl'] {
+  .datagrid-container.extra-small-rowheight .sort-indicator {
+    left: 8px;
+    position: relative;
+  }
+
+  .datagrid-container.extra-small-rowheight th .handle .icon {
+    top: 4px !important;
+  }
+
+  .datagrid {
+    &.extra-small-rowheight {
+      .datagrid-header .datagrid-column-wrapper.l-center-text .sort-indicator {
+        left: 12px;
+        top: 6px;
+        position: absolute;
+      }
+
+      th .datagrid-column-wrapper .datagrid-header-text {
+        padding: 0 5px;
+      }
+
+      .datagrid-header {
+        .datagrid-column-wrapper {
+          &.l-right-text {
+            .sort-indicator {
+              position: relative;
+              right: 8px;
+              top: 1px;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .datagrid {
     td.is-editing {
       input.lookup {

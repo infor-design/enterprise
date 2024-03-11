@@ -21,6 +21,12 @@
           top: 50%;
           transform: translateY(-50%);
         }
+
+        &.has-go-button {
+          .btn-icon.close {
+            right: 60px;
+          }
+        }
       }
     }
 

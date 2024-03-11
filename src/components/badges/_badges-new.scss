@@ -38,7 +38,7 @@
   }
 
   .tag.is-dismissible .btn-dismissible .icon {
-    top: -2px;
+    top: -1px;
     vertical-align: middle;
   }
 }
@@ -123,6 +123,20 @@
             .icon {
               top: 0;
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+html.is-mac {
+  &.is-chrome {
+    .multiselect ~ .dropdown-wrapper .dropdown.has-tags .tag-list .tag {
+      &.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            top: -1px;
           }
         }
       }

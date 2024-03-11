@@ -1,9 +1,11 @@
 <div class="row">
   <div class="twelve columns">
     <h2>Tree - Escaping</h2>
-    <p>&bull; Two tree nodes are created using addNode, both have a value of &lt;online1&gt;
+    <p>&bull; Three tree nodes are created using addNode, both have a value of &lt;online&gt;
       <br>
       &bull; The second node is then changed to &lt;online 2 after updateNode&gt; via updateNode
+      <br>
+      &bull; The third node is changed to updated third &#39;node&#39; (using escape characters) via updateNode
     </p>
   </div>
 </div>
@@ -19,6 +21,8 @@
 
   tree.addNode({text: '<online>', id: 'online1'});
   tree.addNode({text: '<online>', id: 'online2'});
+  tree.addNode({text: '<online>', id: 'online3'});
 
   tree.updateNode({node: $('#online2'), text: '<online 2 after updateNode>'});
+  tree.updateNode({node: $('#online3'), text: 'updated third &#39;node&#39;'});
 </script>

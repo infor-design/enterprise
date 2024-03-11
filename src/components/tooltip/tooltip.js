@@ -47,7 +47,7 @@ const TOOLTIP_TRIGGER_METHODS = ['hover', 'immediate', 'click', 'focus'];
  * @param {string} [settings.headerClass] If set this color will be used on the header (if a popover).
  * @param {string} [settings.delay] The delay before showing the tooltip
  * @param {string} [settings.attachToBody] The if true (default) the popup is added to the body. In some cases like popups with tab stops you may want to append the element next to the item.
- * @param {Array} [settings.attributes] allows user-defined attributes on generated Tooltip markup.
+ * @param {array|object} [settings.attributes=null] allows user-defined attributes on generated Tooltip markup.
  */
 const TOOLTIP_DEFAULTS = {
   content: null,
@@ -498,12 +498,17 @@ Tooltip.prototype = {
       // and store the reference only.
       // Adding a condition if it's really uses the ID attribute.
       if (content.indexOf('#') === 0 && content.indexOf('/') < 0) { // Needs to check / before puting it in a content check because it breaks the string and makes jQuery think that it is an expression
-        const contentCheck = $(`${content}`);
-        if (contentCheck.length) {
-          this.content = contentCheck;
-          doRender();
-          return true;
+        try {
+          const contentCheck = $(`${content}`);
+          if (contentCheck.length) {
+            this.content = contentCheck;
+            doRender();
+            return true;
+          }
+        } catch (err) {
+          this.content = xssUtils.sanitizeHTML(content);
         }
+
         this.content = content;
         doRender();
         return true;

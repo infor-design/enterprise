@@ -13,6 +13,93 @@
 ## v4.88.1 Features
 
 - `[Module Nav]` Fixed a bug where the settings was behind the main module nav element. ([#8063](https://github.com/infor-design/enterprise/issues/8063))
+## v4.94.0
+
+## v4.94.0 Fixes
+
+- `[Datagrid/Card]` When in a card/widget the size of the datagrid would be incorrect and the pager would be moved to the wrong place. Now on default widget size the widget will contain the pager correctly. You may need css for custom sized widgets or non default widget sizes ([#8496](https://github.com/infor-design/enterprise/issues/8372))
+
+## v4.93.0
+
+## v4.93.0 Features
+
+- `[Calendar]` Added event tree option for calendar. ([3870](https://github.com/infor-design/enterprise/issues/3870))
+- `[Contextual Action Panel]` Added content details and back button arrow. ([#8112](https://github.com/infor-design/enterprise/issues/8112))
+- `[Datagrid]` Added data automation id of the column's filter operator. ([#8372](https://github.com/infor-design/enterprise/issues/8372))
+- `[Datagrid]` Fix problems parsing dates in certain date formats. ([#8479](https://github.com/infor-design/enterprise/issues/8479))
+- `[Locale]` Added `dateTimestamp` date format. ([#8373](https://github.com/infor-design/enterprise/issues/8373))
+- `[Donut/Pie]` Added a legend title in donut and pie chart legends. ([#7933](https://github.com/infor-design/enterprise/issues/7933))
+- `[Locale]` Added `dateTimestamp` date format. ([#8373](https://github.com/infor-design/enterprise/issues/8373))
+
+## v4.93.0 Fixes
+
+- `[Checkboxes]` Fixed RTL alignment for dirty tracker and required label. ([#8308](https://github.com/infor-design/enterprise/issues/8308))
+- `[Colorpicker]` Fixed RTL alignment for color picker. ([#8306](https://github.com/infor-design/enterprise/issues/8306))
+- `[Datagrid]` Fixed a bug unable to use the left/right arrow keys on the text in an editable cell. ([#8457](https://github.com/infor-design/enterprise/issues/8457))
+- `[Datagrid]` Fixed series of misalignment in RTL for datagrid small row height. ([#8293](https://github.com/infor-design/enterprise/issues/8293))
+- `[Datagrid]` Fixed a bug in datagrid cell where readonly background color was not recognizable. ([#8459](https://github.com/infor-design/enterprise/issues/8459))
+- `[Datagrid]` Fixed a bug where the text moves upward when the cell is focused. ([#8472](https://github.com/infor-design/enterprise/issues/8472))
+- `[Datagrid]` Fixed cell editable not getting focused on click. ([#8408](https://github.com/infor-design/enterprise/issues/8408))
+- `[Datagrid]` Fixed wrong cell focus on blur in tree grid. ([NG#1616](https://github.com/infor-design/enterprise-ng/issues/1616))
+- `[Datagrid]` Fixed cell editable not getting focused on click. ([#8408](https://github.com/infor-design/enterprise/issues/8408))
+- `[Datagrid]` Fixed cell value replacing special characters on cell change. ([#8285](https://github.com/infor-design/enterprise/issues/8285))
+- `[Docs]` Changed `attributes` property type to array/object. ([#8228](https://github.com/infor-design/enterprise/issues/8228))
+- `[Lookup]` Fixed unexpected multiselect selecting lookup when entering manual input. ([NG#1635](https://github.com/infor-design/enterprise-ng/issues/1635))
+- `[Masthead]` Fixed incorrect color on hover. ([#8391](https://github.com/infor-design/enterprise/issues/8391))
+- `[Datepicker]` Fixed datepicker popover footer button position in RTL. ([#8400](https://github.com/infor-design/enterprise/issues/8400))
+- `[Datepicker]` Fixed increment/decrement and today key being activated in range mode. ([#8363](https://github.com/infor-design/enterprise/issues/8363))
+- `[Docs]` Changed `attributes` property type to array/object. ([#8228](https://github.com/infor-design/enterprise/issues/8228))
+- `[Header]` Fixed border line of search field in mobile view non collapsible. ([#7112](https://github.com/infor-design/enterprise/issues/7112))
+- `[Lookup]` Fixed unexpected multiselect selecting lookup when entering manual input. ([NG#1635](https://github.com/infor-design/enterprise-ng/issues/1635))
+- `[Masthead]` Fixed incorrect color on hover. ([#8391](https://github.com/infor-design/enterprise/issues/8391))
+- `[Multiselect]` Fixed misaligned `x` buttons. ([#8421](https://github.com/infor-design/enterprise/issues/8421))
+- `[Multiselect]` Fixed misaligned dropdown trigger in RTL. ([#8305](https://github.com/infor-design/enterprise/issues/8305))
+- `[Lookup]` Fixed close button icon in lookup modal RTL. ([#8303](https://github.com/infor-design/enterprise/issues/8303))
+- `[Masthead]` Fixed incorrect color on hover. ([8391](https://github.com/infor-design/enterprise/issues/8391))
+- `[Masthead]` Fixed incorrectly visible `audible` spans. ([#8422](https://github.com/infor-design/enterprise/issues/8422))
+- `[Modal]` Fixed a bug where hitting the escape button in a modal with subcomponents popover caused a crash. ([#8344](https://github.com/infor-design/enterprise/issues/8344))
+- `[Modal]` Fixed a bug where the colorpicker did not close when hitting the escape key in the modal datagrid. ([#8411](https://github.com/infor-design/enterprise/issues/8411))
+- `[Multiselect]` Fixed misaligned `x` buttons. ([8421](https://github.com/infor-design/enterprise/issues/8421))
+- `[Pie]` Fixed an error encountered when having many records inside the graph. ([#8422](https://github.com/infor-design/enterprise/issues/8422))
+- `[Popupmenu]` Fixed a bug where single select check items were getting deselected. ([8422](https://github.com/infor-design/enterprise/issues/8422))
+- `[Multiselect]` Fixed misaligned `x` buttons. ([#8421](https://github.com/infor-design/enterprise/issues/8421))
+- `[Popupmenu]` Fixed a bug where single select check items were getting deselected. ([#8422](https://github.com/infor-design/enterprise/issues/8422))
+- `[Searchfield]` Fixed alignment issues in go button.([#8334](https://github.com/infor-design/enterprise/issues/8334))
+- `[Slider]` Fixed visiblity of slider ticks inside of a modal.([#8397](https://github.com/infor-design/enterprise/issues/8397))
+- `[Spinbox]` Fixed the position of number value in RTL. ([#8307](https://github.com/infor-design/enterprise/issues/8307))
+- `[Tabs]` Fixed undefined errors when tabs vertical are set to no initial tabs. ([#8488](https://github.com/infor-design/enterprise/issues/8488))
+- `[Tabs]` Fixed add tab button focus. ([#8294](https://github.com/infor-design/enterprise/issues/8294))
+- `[TabsHeader]` Added fixes for the focus state and minor layout issue in left and right to left. ([#8405](https://github.com/infor-design/enterprise/issues/8405))
+- `[TabsHeader]` Added setting `maxWidth` for tabs for long titles. ([#8434](https://github.com/infor-design/enterprise/issues/8434))
+- `[TabsModule]` Added setting `maxWidth` for tabs for long titles. ([#8017](https://github.com/infor-design/enterprise/issues/8017))
+- `[TabsModule]` Fixed alabaster in tabs module. ([#8404](https://github.com/infor-design/enterprise/issues/8404))
+- `[Tree]` Added escape HTML in `updateNode`. ([#8427](https://github.com/infor-design/enterprise/issues/8427))
+- `[Tooltip]` Allowed tooltip to be shown by fixing expression error when having special characters. ([#8017](https://github.com/infor-design/enterprise/issues/8017))
+
+## v4.92.3
+
+## v4.92.3 Fixes
+
+- `[Datagrid]` Fixed cell editable not getting focused on click. ([8408](https://github.com/infor-design/enterprise/issues/8408))
+- `[Datagrid]` Fixed cell value replacing special characters on cell change. ([8285](https://github.com/infor-design/enterprise/issues/8285))
+- `[Popupmenu]` Fixed a bug where single select check items were getting deselected. ([8422](https://github.com/infor-design/enterprise/issues/8422))
+- `[TabsHeader]` Added setting `maxWidth` for tabs for long titles. ([#8434](https://github.com/infor-design/enterprise/issues/8434))
+
+## v4.92.2
+
+## v4.92.2 Fixes
+
+- `[Datagrid]` Fixed cell editable not getting focused on click. ([#8408](https://github.com/infor-design/enterprise/issues/8408))
+- `[Masthead]` Fixed incorrect color on hover. ([8391](https://github.com/infor-design/enterprise/issues/8391))
+- `[TabsHeader]` Added fixes for the focus state and minor layout issue in left and right to left. ([#8405](https://github.com/infor-design/enterprise/issues/8405))
+
+## v4.92.1
+
+## v4.92.1 Features
+
+- `[Icons]` Added new icon `widgets-smart-panel`. ([#8403](https://github.com/infor-design/enterprise/issues/8403))
+- `[Icons]` Fixed spaces in `icon-user-status-unknown` icon. ([#8403](https://github.com/infor-design/enterprise/issues/8403))
+
 ## v4.92.0
 
 ## v4.92.0 Features

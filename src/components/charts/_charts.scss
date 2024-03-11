@@ -67,8 +67,15 @@
       }
 
       .chart-legend-item.is-one-line {
-        margin: 15px auto !important;
+        margin: 22px auto !important;
       }
+    }
+
+    .chart-legend-title {
+      color: $chart-legend-title-color;
+      display: block;
+      font-weight: 600;
+      margin-bottom: 2px;
     }
   }
 
@@ -102,8 +109,8 @@
   text {
     @include antialiased();
 
-    color: $chart-font-color;
-    fill: $chart-font-color;
+    color: $chart-container-text-color;
+    fill: $chart-container-text-color;
     font-size: $ids-size-font-sm;
 
     &::selection {
@@ -141,7 +148,7 @@
   .list-button {
     float: right;
     margin-right: 17px;
-    margin-top: 1px;
+    margin-top: -4px;
     margin-bottom: 1px;
   }
 
@@ -164,21 +171,22 @@
       .is-two-column {
         display: inline-flex;
         float: none;
-        margin: 2px -5px;
+        margin: 1px -5px;
         min-width: 58%;
         padding: 4px 5px;
         width: auto;
       }
 
       .chart-legend-color {
-        height: 15px;
+        height: 14px;
         margin: 0;
-        min-width: 15px;
-        max-width: 15px;
+        min-width: 14px;
+        max-width: 14px;
       }
 
       .chart-legend-item-text {
-        line-height: 17px;
+        color: $chart-legend-item-text-color;
+        font-weight: 400;
         padding-left: 7px;
         position: relative;
         white-space: pre-line;
@@ -286,6 +294,7 @@
         align-items: center;
         display: flex !important;
         font-size: 0;
+        padding: 0 4px 2px;
 
         &.is-two-column {
           padding: 2px 5px 4px 2px;
@@ -313,7 +322,7 @@
     float: left;
     margin: 7px 10px 7px 0;
     outline: none;
-    padding: 0 7px 0 3px;
+    padding: 3px 4px 0 !important;
 
     &[tabindex='-1'] {
       cursor: inherit;
@@ -382,7 +391,7 @@
   .chart-popup-menu-color {
     height: 15px;
     width: 15px;
-    margin: 8% 5px;
+    margin: 12px 8px 0 0;
   }
 
   .chart-popup-menu-text {

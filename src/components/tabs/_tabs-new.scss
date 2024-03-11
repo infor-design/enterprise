@@ -147,7 +147,7 @@
 }
 
 .tab-container.horizontal .add-tab-button {
-  top: 10px;
+  top: 8px;
   padding: 0;
   width: 35px;
   height: 30px;
@@ -159,7 +159,7 @@
   }
 
   svg.icon-add {
-    top: 0;
+    top: 7px;
     height: 18px;
     width: 18px;
   }
@@ -179,6 +179,10 @@ html[dir='rtl'] {
         right: auto !important;
       }
     }
+  }
+
+  .tab-container.horizontal:not(.has-counts)>.tab-list-container .tab:not(.is-disabled).is-selected {
+    border-bottom: 6px solid $tab-selected-color;
   }
 }
 

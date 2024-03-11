@@ -334,7 +334,7 @@ $datagrid-small-row-height: 25px;
 
   // Heights for scrollbars
   &.paginated {
-    height: calc(100% - 40px);
+    height: calc(100% - 40px) !important;
   }
 
 
@@ -1645,7 +1645,7 @@ $datagrid-small-row-height: 25px;
             &.icon-calendar {
               height: 15px;
               left: 0;
-              top: -1px;
+              top: -3px;
             }
 
             &.icon-fileupload {
@@ -1678,7 +1678,6 @@ $datagrid-small-row-height: 25px;
 
           .dropdown-trigger {
             margin-left: 2px;
-            margin-top: 1px;
 
             + .icon {
               left: -3px;
@@ -2086,7 +2085,7 @@ $datagrid-small-row-height: 25px;
         }
 
         .datepicker {
-          height: $datagrid-extra-small-row-height + 1px;
+          height: $datagrid-extra-small-row-height;
           padding: 0 5px;
         }
 
@@ -2529,7 +2528,7 @@ $datagrid-small-row-height: 25px;
       display: block;
       min-height: $datagrid-row-height + 6;
       overflow: hidden;
-      padding: 4px 16px 0;
+      padding: 6px 16px 0;
 
       &.is-dropdown-wrapper {
         .dropdown-wrapper {
@@ -2701,7 +2700,6 @@ $datagrid-small-row-height: 25px;
       }
 
       .datepicker {
-        margin-top: unset !important;
         padding: unset !important;
 
         + .btn-icon.trigger {
@@ -2739,7 +2737,6 @@ $datagrid-small-row-height: 25px;
         span.trigger {
           overflow: hidden;
           text-overflow: ellipsis;
-          vertical-align: middle;
           white-space: nowrap;
         }
       }
@@ -4350,6 +4347,12 @@ td .btn-actions {
     cursor: pointer;
   }
 
+  &:focus {
+    .datagrid-cell-wrapper span {
+      vertical-align: middle;
+    }
+  }
+
   &.text-ellipsis {
     .datagrid-cell-wrapper {
       overflow: visible;
@@ -4404,7 +4407,7 @@ td .btn-actions {
 
     &.icon-search-list {
       left: -1px;
-      top: -1px;
+      top: -3px;
     }
 
     &.icon-clock {
@@ -4527,7 +4530,7 @@ td .btn-actions {
 // Change BG color of hovered Datagrid row cell icons
 .is-hover-row:not(.hide-selected-color):not(.is-rowactivated) {
   .datagrid-trigger-cell {
-    .icon:not(.icon-rowstatus) {
+    .icon:not(.icon-rowstatus):not(.icon-search-list):not(.icon-error) {
       @include trigger-icon-background($datagrid-row-hover-color);
     }
 
@@ -6107,8 +6110,8 @@ html[dir='rtl'] {
 
     .widget-content,
     .card-content {
-      height: 278px;
-      min-height: 278px;
+      height: 319px;
+      min-height: 319px;
     }
 
     .widget-footer {
@@ -6124,10 +6127,6 @@ html[dir='rtl'] {
     .pager-prev,
     .pager-next {
       position: static;
-    }
-
-    .pager-count {
-      vertical-align: middle;
     }
   }
 }

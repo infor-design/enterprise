@@ -57,6 +57,50 @@ This example shows how to invoke a dount bar chart with a dataset controlling th
   });
 ```
 
+## Legend Title Support for Donut/Pie Charts
+
+To add a legend title to your donut or pie chart, you just include a `legendTitle` property in your dataset. Here's an example:
+
+```javascript
+[
+  {
+    data: [
+      {
+        name: 'Wages',
+        shortName: 'Wages',
+        value: 646.6,
+      },
+      {
+        name: 'Pre-tax Deductions',
+        shortName: 'Pre-tax',
+        value: 48,
+      },
+      {
+        name: 'Company Taxes',
+        shortName: 'C Tax',
+        value: 122,
+      },
+      {
+        name: 'Taxes',
+        shortName: 'Taxes',
+        value: 61,
+      },
+      {
+        name: 'After-tax Deductions',
+        shortName: 'Af-tax',
+        value: 183,
+      },
+      {
+        name: 'Company Deductions',
+        shortName: 'C Dedc',
+        value: 158.6,
+      },
+    ],
+    legendTitle: 'Legend Title', // This needs to show a legend title
+  }
+];
+```
+
 ## Accessibility
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.

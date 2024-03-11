@@ -126,7 +126,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * For example if you have more non specific dates to disable then enable ect.
  * @param {boolean} [settings.showEventLegend=true] Restrict month selections on datepicker.
  * @param {array} [settings.dayLegend] Allows you to set legend for days. This is passed to the legend option in Monthview but only the colors and dates part are used since the calendar already has a legend.
- * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 function Calendar(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -231,17 +231,45 @@ Calendar.prototype = {
       return this;
     }
 
-    for (let i = 0; i < this.settings.eventTypes.length; i++) {
-      const eventType = this.settings.eventTypes[i];
-      const classColor = eventType.custom ? eventType.color : `${eventType.color}07`;
-      const eventTypeMarkup = `<input type="checkbox" class="checkbox ${classColor}" name="${eventType.id}" id="${eventType.id}" ${eventType.checked ? 'checked="true"' : ''} ${eventType.disabled ? 'disabled="true"' : ''} />
-          <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name, language: this.language }) : eventType.label}</label><br/>`;
-      this.eventTypeContainer.insertAdjacentHTML('beforeend', eventTypeMarkup);
+    if (this.settings.isEventTree) {
+      $(this.eventTypeContainer).addClass('event-tree');
+      const treeNodes = this.settings.eventTypes.map((eventType) => {
+        const eventNode = { ...eventType };
+        eventNode.text = eventNode.label;
+        eventNode.selected = eventNode.checked;
+        eventNode.icon = '';
+        delete eventNode.checked;
+        delete eventNode.label;
+        if (eventNode.children) {
+          const children = eventNode.children.map(({
+            label: text, checked: selected, ...rest
+          }) => ({ text, selected, icon: '', ...rest }));
+          eventNode.children = children;
+        }
+        return eventNode;
+      });
 
-      // Add attributes to the checkbox, copy the ID to its label's [for] attribute.
-      const checkboxEl = $(this.eventTypeContainer).find(`#${eventType.id}`);
-      utils.addAttributes($(this.eventTypeContainer).find(`#${eventType.id}`), this, this.settings.attributes, `legend-${eventType.id}`, true);
-      checkboxEl.next('label').attr('for', checkboxEl[0].id);
+      this.eventTree = $('<ul role="tree" class="tree"></ul>');
+      $(this.eventTypeContainer).append(this.eventTree);
+      this.eventTree.tree({
+        dataset: treeNodes,
+        selectable: 'multiple',
+        folderIconOpen: 'caret-down',
+        folderIconClosed: Locale.isRTL() ? 'caret-left' : 'caret-right'
+      });
+    } else {
+      for (let i = 0; i < this.settings.eventTypes.length; i++) {
+        const eventType = this.settings.eventTypes[i];
+        const classColor = eventType.custom ? eventType.color : `${eventType.color}07`;
+        const eventTypeMarkup = `<input type="checkbox" class="checkbox ${classColor}" name="${eventType.id}" id="${eventType.id}" ${eventType.checked ? 'checked="true"' : ''} ${eventType.disabled ? 'disabled="true"' : ''} />
+            <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name, language: this.language }) : eventType.label}</label><br/>`;
+        this.eventTypeContainer.insertAdjacentHTML('beforeend', eventTypeMarkup);
+
+        // Add attributes to the checkbox, copy the ID to its label's [for] attribute.
+        const checkboxEl = $(this.eventTypeContainer).find(`#${eventType.id}`);
+        utils.addAttributes($(this.eventTypeContainer).find(`#${eventType.id}`), this, this.settings.attributes, `legend-${eventType.id}`, true);
+        checkboxEl.next('label').attr('for', checkboxEl[0].id);
+      }
     }
     return this;
   },
@@ -623,10 +651,17 @@ Calendar.prototype = {
    * @private
    */
   filterEventTypes() {
-    const types = [];
+    let types = [];
     if (!this.eventTypeContainer) {
       return types;
     }
+
+    if (this.eventTree) {
+      const treeApi = this.eventTree.data('tree');
+      types = treeApi.getUnselectedNodes().map(({ data }) => data.id);
+      return types;
+    }
+
     const checkboxes = this.eventTypeContainer.querySelectorAll('.checkbox');
 
     for (let i = 0; i < checkboxes.length; i++) {
@@ -635,6 +670,7 @@ Calendar.prototype = {
         types.push(input.getAttribute('name'));
       }
     }
+
     return types;
   },
 
@@ -992,6 +1028,21 @@ Calendar.prototype = {
     $(this.monthViewContainer).off(`selected.${COMPONENT_NAME}`).on(`selected.${COMPONENT_NAME}`, () => {
       this.renderSelectedEventDetails();
     });
+
+    if (this.eventTree) {
+      this.eventTree.on('selected', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        this.renderAllEvents(true);
+      })
+        .on('unselected', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          this.renderAllEvents(true);
+        });
+    }
 
     this.element.off(`click.${COMPONENT_NAME}-upcoming`).on(`click.${COMPONENT_NAME}-upcoming`, '.calendar-upcoming-event', (e) => {
       const key = e.currentTarget.getAttribute('data-key');

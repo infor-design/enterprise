@@ -136,13 +136,13 @@
     //Define Columns for the Grid.
     // columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Soho.Formatters.Status, align: 'center'});
     columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Soho.Formatters.Readonly});
-    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
-    columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Soho.Editors.Input, validate: 'required'});  //maxLength: 2
-    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Soho.Editors.Input, mask: '###', isEditable: isDisabled});
-    columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox});
-    columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal, validate: 'required', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input});
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date, editorOptions: {
+    columns.push({ id: 'id', name: 'Row Id', field: 'id', minWidth: 75, formatter: Soho.Formatters.Readonly});
+    columns.push({ id: 'productName', name: 'Product Name', minWidth: 150, sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', minWidth: 75, required: true, editor: Soho.Editors.Input, validate: 'required'});  //maxLength: 2
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', minWidth: 90, align: 'right', editor: Soho.Editors.Input, mask: '###', isEditable: isDisabled});
+    columns.push({ id: 'portable', name: 'Portable', field: 'portable', minWidth: 75, align: 'center', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox});
+    columns.push({ id: 'price', name: 'Price', field: 'price', minWidth: 75, align: 'right', formatter: Soho.Formatters.Decimal, validate: 'required', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', minWidth: 75, formatter: Soho.Formatters.Date, editor: Soho.Editors.Date, editorOptions: {
       showLegend: true, legend:
       [{name: 'Weekend', color: '#579E95', dayOfWeek: [0,6]}],
       disable: { years: [], dates: [], minDate: '01-01-2014', maxDate: `${month}-${day}-${year}`,
@@ -156,7 +156,7 @@
       todayWithKeyboard: true},
       validate: 'availableDate required date', width: 120
     });
-    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, validate: 'required', isEditable: isDisabled,
+    columns.push({ id: 'action', name: 'Action', field: 'action', minWidth: 75, formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, validate: 'required', isEditable: isDisabled,
     options: [{id: '', label: '', value: -1}, {id: 'oh1', label: 'On Hold', value: 1}, {id: 'sh1', label: 'Shipped', value: 2} , {id: 'ac1', label: 'Action', value: 3}, {id: 'pen', label: 'Pending', value: 4}, {id: 'bk1', label: 'Backorder', value: 5}, {id: 'can', label: 'Cancelled', value: 6}, {id: 'pro', label: 'Processing', value: 7}]
     });
 

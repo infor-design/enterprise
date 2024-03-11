@@ -256,6 +256,16 @@ html[dir='rtl'] {
       left: 0;
     }
   }
+
+  .monthview-popup.popover .popup-footer {
+    button {
+      margin-left: 0;
+
+      &:first-child:hover {
+        border-left: none;
+      }
+    }
+  }
 }
 
 // TODO
