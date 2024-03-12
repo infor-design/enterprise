@@ -744,7 +744,6 @@ html[dir='rtl'] {
 
   .calendar-event {
     border-left: 0;
-    border-right: 5px solid $ids-color-brand-primary-alt;
 
     &.event-day-end {
       border-radius: 3px 0 0 3px;
@@ -760,6 +759,11 @@ html[dir='rtl'] {
       border-radius: 0 3px 3px 0;
       padding-left: 4px;
       padding-right: 0;
+      border-right: 5px solid $ids-color-brand-primary-alt;
+    }
+
+    &.calendar-event-start {
+      border-right: 5px solid $ids-color-brand-primary-alt;
     }
 
     &.ruby {

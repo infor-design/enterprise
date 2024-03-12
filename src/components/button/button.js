@@ -269,6 +269,12 @@ Button.prototype = {
       elemClasses.add(this.settings.type);
     }
 
+    if (this.element.parent().is('.buttonset')) {
+      if (!this.element.find('span').is('.audible')) {
+        this.element.addClass('has-text');
+      }
+    }
+
     // If this is a modal button, normalize CSS classes that are specific
     // to modal buttons.
     const buttonsetAPI = this.buttonsetAPI;
