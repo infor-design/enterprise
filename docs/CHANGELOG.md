@@ -8,6 +8,7 @@
 
 ## v4.94.0 Fixes
 
+- `[Bar]` Fixed axis label visibility by adding font-size in `axis-labels` container. ([#8431](https://github.com/infor-design/enterprise/issues/8431))
 - `[Datagrid/Card]` When in a card/widget the size of the datagrid would be incorrect and the pager would be moved to the wrong place. Now on default widget size the widget will contain the pager correctly. You may need css for custom sized widgets or non default widget sizes ([#8496](https://github.com/infor-design/enterprise/issues/8372))
 - `[Datagrid]` Removed escaping HTML for cell nodes. ([#8516](https://github.com/infor-design/enterprise/issues/8516))
 - `[Datagrid/Card]` When in a card/widget the size of the datagrid would be incorrect and the pager would be moved to the wrong place. Now on default widget size the widget will contain the pager correctly. You may need css for custom sized widgets or non default widget sizes. ([#8496](https://github.com/infor-design/enterprise/issues/8372))
