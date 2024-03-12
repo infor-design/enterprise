@@ -186,6 +186,26 @@
   }
 }
 
+.card.triple-height,
+.widget.triple-height {
+  height: 1136px;
+}
+
+.card.quad-height,
+.widget.quad-height {
+  height: 1520px;
+}
+
+.card.quintuple-height,
+.widget.quintuple-height {
+  height: 1904px;
+}
+
+.card.sextuple-height,
+.widget.sextuple-height {
+  height: 2288px;
+}
+
 .card.auto-height,
 .widget.auto-height {
   @include auto-height;
