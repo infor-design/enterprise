@@ -311,6 +311,7 @@ Modal.prototype = {
     const isTouch = env.features.touch;
     const container = this.element;
     const dropContainer = this.element.parent();    
+    const modalHeader = container.find('.modal-header');
     const modalContent = container.find('.modal-content');
     const containerHeight = modalContent.height() + parseInt(modalContent.css('margin-top').slice(0, -2), 10) + parseInt(modalContent.css('margin-bottom').slice(0, -2), 10);
     const topPosition = (window.innerHeight / 2) - (containerHeight / 2);
@@ -319,7 +320,7 @@ Modal.prototype = {
     container.css(rules);
     container.addClass('is-draggable');
 
-    modalContent
+    modalHeader
       .off('mousedown.modal touchstart.modal')
       .on('mousedown.modal touchstart.modal', (e) => {
         if (!isTouch) {
@@ -328,7 +329,7 @@ Modal.prototype = {
 
         // Initialize drag
         container
-          .drag({ containment: 'document' })
+          .drag({ containment: '' })
 
           // Start drag
           .off('dragstart.modal')
