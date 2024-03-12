@@ -2,6 +2,10 @@
 
 ## v4.94.0
 
+## v4.94.0 Features
+
+- `[Homepage]` Added row height style classes for widgets. ([#8211](https://github.com/infor-design/enterprise/issues/8211))
+
 ## v4.94.0 Fixes
 
 - `[Datagrid/Card]` When in a card/widget the size of the datagrid would be incorrect and the pager would be moved to the wrong place. Now on default widget size the widget will contain the pager correctly. You may need css for custom sized widgets or non default widget sizes ([#8496](https://github.com/infor-design/enterprise/issues/8372))
@@ -55,6 +59,7 @@
 - `[Multiselect]` Fixed misaligned `x` buttons. ([#8421](https://github.com/infor-design/enterprise/issues/8421))
 - `[Popupmenu]` Fixed a bug where single select check items were getting deselected. ([#8422](https://github.com/infor-design/enterprise/issues/8422))
 - `[Searchfield]` Fixed alignment issues in go button.([#8334](https://github.com/infor-design/enterprise/issues/8334))
+- `[Searchfield]` Fixed alignment issues in clear button.([#8399](https://github.com/infor-design/enterprise/issues/8399))
 - `[Slider]` Fixed visiblity of slider ticks inside of a modal.([#8397](https://github.com/infor-design/enterprise/issues/8397))
 - `[Spinbox]` Fixed the position of number value in RTL. ([#8307](https://github.com/infor-design/enterprise/issues/8307))
 - `[Tabs]` Fixed undefined errors when tabs vertical are set to no initial tabs. ([#8488](https://github.com/infor-design/enterprise/issues/8488))
