@@ -392,4 +392,8 @@ html[dir='rtl'] {
       text-align: right;
     }
   }
+
+  .week-view .week-view-all-day-wrapper .calendar-event.calendar-event-start {
+    border-radius: 3px;
+  }
 }
