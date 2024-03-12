@@ -668,7 +668,7 @@ Homepage.prototype = {
     }
 
     this.setBlocks(); // setup blocks
-    this.initRowsAndCols(); // setup colums
+    this.initRowsAndCols(); // setup colums=
 
     // Loop thru each block, make fit where available and
     // If block more wider than available size, make as available size
@@ -728,6 +728,35 @@ Homepage.prototype = {
       // Mark all spots as unavailable for this block, as we just used this one
       self.fitBlock(available.row, available.col, block);
     }
+
+    // set homepage height
+    const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card');
+    const card = $(cards[0]);
+
+    let rowsUsed = 0;
+    let abort = false;
+    let calcHeight = card.outerHeight();
+    calcHeight += parseInt(window.getComputedStyle(card[0]).getPropertyValue('margin-top'), 10);
+    calcHeight += parseInt(window.getComputedStyle(card[0]).getPropertyValue('margin-bottom'), 10);
+ 
+    for (let rows = 0; rows < this.rowsAndCols.length && !abort; rows++) {
+      rowsUsed++;
+      let row = this.rowsAndCols[rows];
+      for (let cols = 0; cols < row.length && !abort; cols++ ) {
+        let col = row[cols];
+        if (col) {
+          abort = true;
+
+          if (cols === 0) {
+            rowsUsed--;
+          }
+        }
+      }
+    }
+
+    const contentHeight = (calcHeight * rowsUsed);
+
+    this.element.css('height', `${contentHeight}px`);
 
     /**
     * Fires after the page is resized and layout is set.
