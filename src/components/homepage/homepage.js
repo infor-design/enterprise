@@ -435,8 +435,9 @@ Homepage.prototype = {
               }
             }
           }
+
           if ((block.h > 1) && (rows > (i + 1))) {
-            for (let n = 0; n < block.h; n++) {
+            for (let n = 0; n < block.h && (i + n) < this.rowsAndCols.length; n++) {
               if (!this.rowsAndCols[i + n][j]) {
                 innerCheck = false;
                 break;
@@ -533,7 +534,7 @@ Homepage.prototype = {
 
     for (let i = 0, l = cards.length; i < l; i++) {
       const card = $(cards[i]);
-      let h = card.hasClass('double-height') ? 2 : 1;
+      let h;
       let w;
 
       if (card.hasClass('auto-height')) {
@@ -541,6 +542,18 @@ Homepage.prototype = {
         if (card.height() > height * h) {
           h = Math.ceil(card.height() / height);
         }
+      } else if (card.hasClass('sextuple-height')) {
+        h = 6;
+      } else if (card.hasClass('quintuple-height')) {
+        h = 5;
+      } else if (card.hasClass('quad-height')) {
+        h = 4;
+      } else if (card.hasClass('triple-height')) {
+        h = 3;
+      } else if (card.hasClass('double-height')) {
+        h = 2;
+      } else {
+        h = 1;
       }
 
       if (card.hasClass('sextuple-width')) {
