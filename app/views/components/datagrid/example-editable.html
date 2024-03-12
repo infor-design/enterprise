@@ -176,7 +176,7 @@
       columnReorder: true,
       showDirty: true
     }).on('cellchange', function (e, args) {
-      console.log('cellchange', args);
+      console.log('cellchange', `value (${typeof args.value}): ${args.value}`, args);
     }).on('rowadd', function (e, args) {
       console.log(e, args);
     }).on('rowremove', function (e, args) {
