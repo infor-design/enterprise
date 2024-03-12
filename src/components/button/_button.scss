@@ -1172,7 +1172,6 @@ a.btn-close {
 
     &[class*='searchfield'] {
       height: $searchfield-button-size-compact-height;
-      min-height: $searchfield-button-size-compact-height;
     }
 
     > .icon:not(.icon-dropdown) {
@@ -1224,7 +1223,7 @@ html {
     .searchfield-wrapper.has-close-icon-button.has-text {
       .btn-icon.close {
         border-radius: 11px;
-        top: 5px;
+        top: 7px;
 
         svg.close {
           position: relative;
