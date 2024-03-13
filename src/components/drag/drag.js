@@ -141,8 +141,6 @@ Drag.prototype = {
         this.container = $(window);
       } else if (this.settings.containment === 'container') {
         this.container = this.element.closest('.page-container');
-      } else if (this.settings.containment === 'partial') {
-        this.container = $(document);
       } else {
         this.container = $(document);
       }
