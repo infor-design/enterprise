@@ -3887,9 +3887,10 @@ Datagrid.prototype = {
   * @private
   * @param {object} obj The object to use
   * @param {string} field The field as a string fx 'field' or 'obj.field.id'
+  * @param {boolean} escapeHtml Should the value have html characters escaped or not
   * @returns {any} The current value in the field.
   */
-  fieldValue(obj, field) {
+  fieldValue(obj, field, escapeHtml = true) {
     if (!field || !obj) {
       return '';
     }
@@ -3902,7 +3903,11 @@ Datagrid.prototype = {
     }
 
     let value = (rawValue || rawValue === 0 || rawValue === false ? rawValue : '');
-    value = xssUtils.escapeHTML(value);
+
+    if (escapeHtml) {
+      value = xssUtils.escapeHTML(value);
+    }
+
     return value;
   },
 
@@ -6723,7 +6728,7 @@ Datagrid.prototype = {
       this.resizeHandle[0].style.height = '62px';
     }
 
-    this.element.find('table').before(this.resizeHandle);
+    this.element.find('table.datagrid').before(this.resizeHandle);
 
     let column;
     let columnId;
@@ -11455,20 +11460,9 @@ Datagrid.prototype = {
       rowNodes = this.visualRowNode(row);
       cellNode = rowNodes.find('td').eq(cell);
     }
-    let oldVal = this.fieldValue(rowData, col.field);
+    const oldVal = this.fieldValue(rowData, col.field, false);
 
-    // Coerce/Serialize value if from cell edit
-    if (!fromApiCall && oldVal !== value) {
-      coercedVal = this.coerceValue(value, oldVal, col, row, cell);
-
-      // coerced value may be coerced to empty string, null, or 0
-      if (coercedVal === undefined) {
-        coercedVal = value;
-      }
-    } else {
-      coercedVal = value;
-    }
-
+    coercedVal = value;
     // Remove rowStatus icon
     if (rowNodes.length && rowData && !rowData.rowStatus) {
       const rowstatusIcon = rowNodes.find('svg.icon-rowstatus');
@@ -11613,10 +11607,6 @@ Datagrid.prototype = {
     if (this.settings.summaryRow && !this.settings.groupable) {
       this.updateSummaryRow(col, cell);
     }
-
-    // Sanitize console methods
-    oldVal = xssUtils.sanitizeConsoleMethods(oldVal);
-    coercedVal = xssUtils.sanitizeConsoleMethods(coercedVal);
 
     let isCellChange;
     if (typeof oldVal === 'string' && typeof coercedVal === 'string') {

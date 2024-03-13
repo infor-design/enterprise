@@ -91,6 +91,10 @@ $week-view-cell-height: 25px;
         left: -1px;
         width: calc(100% + 1px);
 
+        .calendar-event-icon {
+          display: none;
+        }
+
         .calendar-event-title {
           color: transparent;
         }
@@ -102,6 +106,10 @@ $week-view-cell-height: 25px;
         color: transparent;
         left: -1px;
         width: calc(100% + 1px);
+
+        .calendar-event-icon {
+          display: none;
+        }
 
         .calendar-event-title {
           color: transparent;
@@ -383,5 +391,9 @@ html[dir='rtl'] {
     .calendar-event .calendar-event-content {
       text-align: right;
     }
+  }
+
+  .week-view .week-view-all-day-wrapper .calendar-event.calendar-event-start {
+    border-radius: 3px;
   }
 }
