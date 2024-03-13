@@ -3938,10 +3938,10 @@ Tabs.prototype = {
     // Move the focus state from inside the tab list container, if applicable.
     // Put it back into the tab list container, if not.
     if (target.is('.add-tab-button, .tab-more')) {
-      if (!this.focusState.parent().is(this.element)) {
+      if (!this.focusState?.parent()?.is(this.element)) {
         this.focusState.prependTo(this.element);
       }
-    } else if (!this.focusState.parent().is(this.tablistContainer)) {
+    } else if (!this.focusState?.parent()?.is(this.tablistContainer)) {
       this.focusState.prependTo(this.tablistContainer);
     }
 
