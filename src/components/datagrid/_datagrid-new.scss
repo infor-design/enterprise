@@ -1310,6 +1310,11 @@
                   margin-top: 2px;
                   margin-left: 5px;
                 }
+
+                .timepicker + button.trigger {
+                  margin-left: 3px;
+                  margin-top: 2.5px;
+                }
               }
             }
           }
@@ -1330,6 +1335,23 @@
               svg.icon:not(.datagrid-alert-icon).icon-clock {
                 top: -2.5px;
                 left: -4px;
+              }
+            }
+
+            &.is-editing {
+              .datagrid-cell-wrapper {
+                span {
+                  vertical-align: middle;
+                }
+
+                .datepicker + button.trigger {
+                  margin-top: 1px;
+                  margin-left: 6.5px;
+                }
+    
+                .timepicker + button.trigger {
+                  top: -6.5px;
+                }
               }
             }
           }
@@ -1361,6 +1383,11 @@
               .datagrid-cell-wrapper {
                 span {
                   vertical-align: middle;
+                }
+
+                .datepicker + button.trigger {
+                  margin-top: 5.5px;
+                  margin-left: 12.5px;
                 }
     
                 .timepicker + button.trigger {
