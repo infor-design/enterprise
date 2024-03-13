@@ -1026,6 +1026,49 @@
 
 // START OF CSS DATAGRID ICON ALIGNMENTS
 .datagrid {
+  &.extra-small-rowheight {
+		tbody {
+			tr.datagrid-row {
+				td.datagrid-trigger-cell {
+					.datagrid-cell-wrapper {
+            span {
+              vertical-align: middle;
+            }
+
+            svg.icon:not(.datagrid-alert-icon).icon-clock {
+              top: -0.5px;
+              left: -5px;
+            }
+					}
+
+          &.is-editing {
+            .datagrid-cell-wrapper {
+              span {
+                vertical-align: middle;
+              }
+
+              input {
+                position: relative;
+              }
+
+              .datepicker + button.trigger {
+                margin-top: 1px;
+                margin-left: 5px;
+              }
+
+              .timepicker + button.trigger {
+                > svg.icon {
+                  top: -1px;
+                  left: -1px;
+                }
+              }
+            }
+          }
+				}
+			}
+		}
+	}
+
 	&.small-rowheight {
 		tbody {
 			tr.datagrid-row {
@@ -1039,6 +1082,12 @@
 
             svg.icon:not(.datagrid-alert-icon).icon-calendar {
               top: -2px;
+              left: -5px;
+            }
+
+            svg.icon:not(.datagrid-alert-icon).icon-clock {
+              top: -2.5px;
+              left: -5px;
             }
 					}
 
@@ -1116,7 +1165,7 @@
 
             
             svg.icon:not(.datagrid-alert-icon).icon-calendar {
-              top: 0;
+              top: 2px;
             }
             
             svg.icon:not(.datagrid-alert-icon).icon-clock {
@@ -1147,7 +1196,7 @@
 
               .timepicker + button.trigger {
                 top: 4px;
-                right: 5px;
+                right: 8.5px;
 
                 > svg.icon {
                   top: 0;
