@@ -1290,18 +1290,9 @@
                   vertical-align: middle;
                 }
     
-                .datepicker + button.trigger {
-    
-                  > svg.icon {
-                  }
-                }
-    
                 .timepicker + button.trigger {
                   top: 4px;
                   right: 9px;
-
-                  > svg.icon {
-                  }
                 }
               }
             }
@@ -1313,17 +1304,6 @@
     tbody {
       tr.datagrid-row {
         td.datagrid-trigger-cell {
-          .datagrid-cell-wrapper {  
-            span {
-            }
-
-            svg.icon:not(.datagrid-alert-icon).icon-calendar {
-            }
-
-            svg.icon:not(.datagrid-alert-icon).icon-clock {
-            }
-          }
-
           &.is-editing {
             .datagrid-cell-wrapper {
               span {
@@ -1333,17 +1313,11 @@
               .datepicker + button.trigger {
                 margin-top: 10px;
                 margin-left: 13.5px;
-
-                > svg.icon {
-                }
               }
   
               .timepicker + button.trigger {
                 margin-left: -1.5px;
                 margin-top: 10.5px;
-
-                > svg.icon {
-                }
               }
             }
           }
