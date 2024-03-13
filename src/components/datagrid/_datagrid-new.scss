@@ -1184,6 +1184,20 @@
 
   tbody {
     tr.datagrid-row {
+      &.is-selected.is-hover-row {
+        td .datagrid-cell-wrapper {
+          .btn-icon:hover {
+            background-color: $ids-datagrid-button-icon-hover-bg-color !important;
+
+            svg {
+              color: $ids-datagrid-button-icon-hover-color !important;
+              background-color: unset !important;
+              box-shadow: none !important;
+            }
+          }
+        }
+      }
+
       td.datagrid-trigger-cell {
         .datagrid-cell-wrapper {
           span {
