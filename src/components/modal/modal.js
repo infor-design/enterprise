@@ -329,7 +329,7 @@ Modal.prototype = {
 
         // Initialize drag
         container
-          .drag({ containment: '' })
+          .drag({ containment: 'partial', containmentOffset: { left: 200, top: 200 } })
 
           // Start drag
           .off('dragstart.modal')
