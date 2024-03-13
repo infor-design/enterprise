@@ -1026,6 +1026,64 @@
 
 // START OF CSS DATAGRID ICON ALIGNMENTS
 .datagrid {
+  tbody {
+    tr.datagrid-row {
+      &.is-selected.is-hover-row {
+        td .datagrid-cell-wrapper {
+          .btn-icon:hover {
+            background-color: $datagrid-button-icon-hover-bg-color !important;
+
+            svg {
+              color: $datagrid-button-icon-hover-color !important;
+              background-color: unset !important;
+              box-shadow: none !important;
+            }
+          }
+        }
+      }
+
+      td.datagrid-trigger-cell {
+        .datagrid-cell-wrapper {
+          span {
+            vertical-align: middle;
+            position: relative;
+            top: -1px;
+          }
+
+          svg.icon:not(.datagrid-alert-icon).icon-clock {
+            top: -1.5px;
+            left: -1px;
+          }
+        }
+
+        &.is-editing {
+          .datagrid-cell-wrapper {
+            span {
+              vertical-align: middle;
+            }
+
+            .datepicker + button.trigger {
+              margin-top: 9px;
+              margin-left: 13px;
+
+              > svg.icon {
+                top: -1px;
+                left: -2px;
+              }
+            }
+
+            .timepicker + button.trigger {
+
+              > svg.icon {
+                left: -2px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   &.extra-small-rowheight {
 		tbody {
 			tr.datagrid-row {
@@ -1208,68 +1266,34 @@
 			}
 		}
 	}
+}
 
-  tbody {
-    tr.datagrid-row {
-      &.is-selected.is-hover-row {
-        td .datagrid-cell-wrapper {
-          .btn-icon:hover {
-            background-color: $datagrid-button-icon-hover-bg-color !important;
-
-            svg {
-              color: $datagrid-button-icon-hover-color !important;
-              background-color: unset !important;
-              box-shadow: none !important;
-            }
-          }
-        }
-      }
-
-      td.datagrid-trigger-cell {
-        .datagrid-cell-wrapper {
-          span {
-            vertical-align: middle;
-            position: relative;
-            top: -1px;
-          }
-
-          svg.icon:not(.datagrid-alert-icon).icon-clock {
-            top: -1.5px;
-            left: -1px;
-          }
-        }
-
-        &.is-editing {
-          .datagrid-cell-wrapper {
-            span {
-              vertical-align: middle;
-            }
-
-            .datepicker + button.trigger {
-              margin-top: 9px;
-              margin-left: 13px;
-
-              > svg.icon {
-                top: -1px;
-                left: -2px;
+.is-mac {
+  .datagrid {
+    tbody {
+      tr.datagrid-row {
+        td.datagrid-trigger-cell {
+          &.is-editing {
+            .datagrid-cell-wrapper {
+              span {
+                vertical-align: middle;
               }
-            }
-
-            .timepicker + button.trigger {
-
-              > svg.icon {
-                left: -2px;
+  
+              .datepicker + button.trigger {
+                margin-top: 10px;
+                margin-left: 13.5px;
+              }
+  
+              .timepicker + button.trigger {
+                margin-left: -1.5px;
+                margin-top: 10.5px;
               }
             }
           }
         }
       }
     }
-  }
-}
 
-.is-mac {
-  .datagrid {
     &.extra-small-rowheight {
       tbody {
         tr.datagrid-row {
@@ -1343,30 +1367,6 @@
                   top: 4px;
                   right: 9px;
                 }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    tbody {
-      tr.datagrid-row {
-        td.datagrid-trigger-cell {
-          &.is-editing {
-            .datagrid-cell-wrapper {
-              span {
-                vertical-align: middle;
-              }
-  
-              .datepicker + button.trigger {
-                margin-top: 10px;
-                margin-left: 13.5px;
-              }
-  
-              .timepicker + button.trigger {
-                margin-left: -1.5px;
-                margin-top: 10.5px;
               }
             }
           }
