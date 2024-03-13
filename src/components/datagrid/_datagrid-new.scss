@@ -331,22 +331,6 @@
     }
   }
 
-  &.extra-small-rowheight {
-    .datagrid-cell-wrapper {
-      .icon-clock.icon {
-        top: -2px !important;
-      }
-    }
-  }
-
-  &.small-rowheight {
-    .datagrid-cell-wrapper {
-      .icon-clock.icon {
-        top: -2px !important;
-      }
-    }
-  }
-
   &.medium-rowheight {
     .datagrid-cell-wrapper {
       .icon-clock.icon {
@@ -854,11 +838,6 @@
       .timepicker {
         margin: 0 !important;
         padding: unset !important;
-
-        + .btn-icon.trigger {
-          margin-left: 4px !important;
-          margin-top: -1px !important;
-        }
       }
     }
 
@@ -1045,7 +1024,7 @@
   }
 }
 
-// CSS DATAGRID ICON ALIGNMENTS
+// START OF CSS DATAGRID ICON ALIGNMENTS
 .datagrid {
 	&.small-rowheight {
 		tbody {
@@ -1113,7 +1092,6 @@
   &.medium-rowheight {
 		tbody {
 			tr.datagrid-row {
-
         td:not(.datagrid-trigger-cell) {
           .datagrid-cell-wrapper {
             line-height: 2;
@@ -1187,10 +1165,10 @@
       &.is-selected.is-hover-row {
         td .datagrid-cell-wrapper {
           .btn-icon:hover {
-            background-color: $ids-datagrid-button-icon-hover-bg-color !important;
+            background-color: $datagrid-button-icon-hover-bg-color !important;
 
             svg {
-              color: $ids-datagrid-button-icon-hover-color !important;
+              color: $datagrid-button-icon-hover-color !important;
               background-color: unset !important;
               box-shadow: none !important;
             }
@@ -1240,6 +1218,141 @@
     }
   }
 }
+
+.is-mac {
+  .datagrid {
+    &.extra-small-rowheight {
+      tbody {
+        tr.datagrid-row {
+          td.datagrid-trigger-cell {
+            .datagrid-cell-wrapper {
+              svg.icon:not(.datagrid-alert-icon).icon-clock {
+                left: -5px;
+              }
+            }
+  
+            &.is-editing {
+              .datagrid-cell-wrapper {
+                .datepicker + button.trigger {
+                  margin-top: 2px;
+                  margin-left: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.small-rowheight {
+      tbody {
+        tr.datagrid-row {
+          td.datagrid-trigger-cell {
+            .datagrid-cell-wrapper {  
+              svg.icon:not(.datagrid-alert-icon).icon-calendar {
+                top: -3px;
+                left: -5px;
+              }
+
+              svg.icon:not(.datagrid-alert-icon).icon-clock {
+                top: -2.5px;
+                left: -4px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.medium-rowheight {
+      tbody {
+        tr.datagrid-row {
+          td.datagrid-trigger-cell {
+            .datagrid-cell-wrapper {  
+              span {
+                margin-top: 5px;
+              }
+
+              svg.icon:not(.datagrid-alert-icon).icon-calendar {
+                top: 1px;
+                left: 1px;
+              }
+
+              svg.icon:not(.datagrid-alert-icon).icon-clock {
+                top: 0.5px;
+                left: -1.5px;
+              }
+            }
+
+            &.is-editing {
+              .datagrid-cell-wrapper {
+                span {
+                  vertical-align: middle;
+                }
+    
+                .datepicker + button.trigger {
+    
+                  > svg.icon {
+                  }
+                }
+    
+                .timepicker + button.trigger {
+                  top: 4px;
+                  right: 9px;
+
+                  > svg.icon {
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr.datagrid-row {
+        td.datagrid-trigger-cell {
+          .datagrid-cell-wrapper {  
+            span {
+            }
+
+            svg.icon:not(.datagrid-alert-icon).icon-calendar {
+            }
+
+            svg.icon:not(.datagrid-alert-icon).icon-clock {
+            }
+          }
+
+          &.is-editing {
+            .datagrid-cell-wrapper {
+              span {
+                vertical-align: middle;
+              }
+  
+              .datepicker + button.trigger {
+                margin-top: 10px;
+                margin-left: 13.5px;
+
+                > svg.icon {
+                }
+              }
+  
+              .timepicker + button.trigger {
+                margin-left: -1.5px;
+                margin-top: 10.5px;
+
+                > svg.icon {
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+// END OF CSS DATAGRID ICON ALIGNMENTS
 
 html[dir='rtl'] {
   .datagrid-container.extra-small-rowheight .sort-indicator {
