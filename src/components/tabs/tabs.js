@@ -641,7 +641,7 @@ Tabs.prototype = {
     }
 
     this.focusState = this.element.find('.tab-focus-indicator');
-    if (!this.focusState.length) {
+    if (!this.focusState?.length) {
       this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
     }
 
@@ -3952,7 +3952,7 @@ Tabs.prototype = {
     const tabMoreWidth = !this.isVerticalTabs() ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
     const scrollingTablist = this.tablistContainer;
-    const accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
+    const accountForPadding = scrollingTablist && this.focusState?.parent()?.is(scrollingTablist);
     const widthPercentage = target[0].getBoundingClientRect().width / target[0].offsetWidth * 100;
     const isClassic = $('html[class*="classic-"]').length > 0;
     const isMac = $('html.is-mac').length > 0;
@@ -4400,7 +4400,7 @@ Tabs.prototype = {
       this.tablistContainer.off('mousewheel.tabs');
     }
 
-    this.focusState.removeData().remove();
+    this.focusState?.removeData()?.remove();
     this.focusState = undefined;
 
     $('.tab-panel input').off('error.tabs valid.tabs');
