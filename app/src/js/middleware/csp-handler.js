@@ -1,4 +1,4 @@
-import browser from 'browser-detect';
+// import browser from 'browser-detect';
 
 // Adds a stored "nonce" attribute to all script tags to conform with security policy.
 function addNonceToScript(html, nonce) {
@@ -35,21 +35,21 @@ export default function () {
       res.opts.nonce = Math.random().toString(12).replace(/[^a-z0-9]+/g, '').substr(0, 8);
     }
 
-    const bs = browser(req.headers['user-agent']);
-    let includeUnsafe = false;
+    // const bs = browser(req.headers['user-agent']);
+    // let includeUnsafe = false;
 
-    if (bs.name === 'safari' && bs.versionNumber <= 9) {
-      includeUnsafe = true;
-    }
+    // if (bs.name === 'safari' && bs.versionNumber <= 9) {
+    //   includeUnsafe = true;
+    // }
     const scriptSrc = ['self',
       `nonce-${res.opts.nonce}`,
       'http://squizlabs.github.io',
       'http://myserver.com'
     ];
 
-    if (includeUnsafe) {
-      scriptSrc.push('unsafe-inline');
-    }
+    // if (includeUnsafe) {
+    //   scriptSrc.push('unsafe-inline');
+    // }
 
     res.setPolicy({
       policy: {
