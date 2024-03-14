@@ -8,6 +8,7 @@
 
 ## v4.94.0 Fixes
 
+- `[Avatar]` Is no longer round by default. To use it in module nav add the new `square` class. ([#8539](https://github.com/infor-design/enterprise/issues/8539))
 - `[Calendar]` Fixed inconsistencies in border colors of events in calendar. ([#8452](https://github.com/infor-design/enterprise/issues/8452))
 - `[Datagrid]` Fixed datagrid unable to have resize handle when using different column structure such as single lines. ([#8417](https://github.com/infor-design/enterprise/issues/8417))
 - `[Datagrid]` Removed escaping HTML for cell nodes. ([#8516](https://github.com/infor-design/enterprise/issues/8516))
