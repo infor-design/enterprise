@@ -5,6 +5,7 @@
 ## v4.94.0 Features
 
 - `[Homepage]` Added row height style classes for widgets. ([#8211](https://github.com/infor-design/enterprise/issues/8211))
+- `[Datagrid]` Disabled filter dropdown if selection is only one. ([NG#1570](https://github.com/infor-design/enterprise-ng/issues/1570))
 
 ## v4.94.0 Fixes
 

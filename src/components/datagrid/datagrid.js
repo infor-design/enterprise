@@ -2270,7 +2270,8 @@ Datagrid.prototype = {
     const attrs = utils.stringAttributes(this, this.settings.attributes, `btn-filter-${col.id?.toLowerCase()}`);
 
     const renderButton = function (defaultValue, extraClass) {
-      return `<button type="button" ${attrs} class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} tabindex="0" type="button"><span class="audible">Filter</span>` +
+      const isSingle = col.filterConditions !== undefined && col.filterConditions.length === 1;
+      return `<button type="button" ${attrs} class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}${isSingle ? ' single' : ''}" data-init="false" ${isDisabled || isSingle ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} tabindex="0" type="button"><span class="audible">Filter</span>` +
       `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-filter-{{icon}}"></use></svg>${
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;

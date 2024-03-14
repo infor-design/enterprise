@@ -3989,7 +3989,10 @@ $datagrid-small-row-height: 25px;
       width: 36px;
 
       &:disabled {
-        opacity: $datagrid-filter-disabled-opacity;
+
+        &:not(.single) {
+          opacity: $datagrid-filter-disabled-opacity;
+        }
 
         .icon {
           color: $datagrid-filter-disabled-color;
@@ -4034,6 +4037,12 @@ $datagrid-small-row-height: 25px;
 
         .icon {
           color: $datagrid-filter-focus-color !important;
+        }
+      }
+
+      &.single {
+        .icon-dropdown + .icon-dropdown {
+          display: none;
         }
       }
     }
