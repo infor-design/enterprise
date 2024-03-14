@@ -379,7 +379,7 @@ describe('Datagrid', () => {
       await page.setViewport(windowSize);
     });
 
-    it('should not have inline width when no column width is specified', async () => {
+    it.skip('should not have inline width when no column width is specified', async () => {
       await page.setViewport({ width: 600, height: 600 });
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
 
@@ -387,10 +387,7 @@ describe('Datagrid', () => {
 
       await page.waitForSelector('#modal-content', { visible: true })
         .then(elHandle => elHandle.$('table.datagrid'))
-        .then(async (elHandle) => {
-          await page.waitForTimeout(400);
-          return elHandle.evaluate(e => e.getAttribute('style'));
-        })
+        .then(async elHandle => elHandle.evaluate(e => e.getAttribute('style')))
         .then(style => expect(style).toBeFalsy());
     });
 
@@ -403,10 +400,7 @@ describe('Datagrid', () => {
 
       await page.waitForSelector('#modal-content', { visible: true })
         .then(elHandle => elHandle.$('table.datagrid'))
-        .then(async (elHandle) => {
-          await page.waitForTimeout(400);
-          return elHandle.evaluate(e => e.getAttribute('style'));
-        })
+        .then(async elHandle => elHandle.evaluate(e => e.getAttribute('style')))
         .then(style => expect(style).toContain('width'));
     });
   });

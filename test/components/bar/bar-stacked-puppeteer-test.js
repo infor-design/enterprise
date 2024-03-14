@@ -27,7 +27,6 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
       const bar = await page.waitForSelector('.series-group:nth-child(-n+3) .bar.series-0', { visible: true });
       await bar.click();
 
-      // wait to show the element to have 'is-selected' class instead of using page.waitForTimeout
       const showSelectedBar = await page.waitForSelector('.series-group:nth-child(-n+3) .bar.series-0.is-selected', { visible: true });
 
       if (showSelectedBar) {

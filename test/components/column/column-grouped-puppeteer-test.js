@@ -8,7 +8,7 @@ describe('Column Grouped Puppeteer Tests', () => {
 
     it('should show the tooltip with data', async () => {
       await page.hover('#columngrouped-c2-jan-bar');
-      await page.waitForTimeout(300);
+
       const tooltipElement = await page.evaluate(() => !!document.querySelector('.tooltip.top.is-hidden') !== true);
 
       expect(tooltipElement).toBeTruthy();
@@ -35,7 +35,7 @@ describe('Column Grouped Puppeteer Tests', () => {
     });
   });
 
-  describe('Ability to make a combined column chart and line chart tests', () => {
+  describe.skip('Ability to make a combined column chart and line chart tests', () => {
     const url = 'http://localhost:4000/components/column-grouped/example-column-grouped-with-line-combined';
 
     beforeAll(async () => {

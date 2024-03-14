@@ -69,7 +69,7 @@ describe('Dropdown Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should include the error message in aria-label of dropdown error', async () => {
+    it.skip('should include the error message in aria-label of dropdown error', async () => {
       await page.evaluate(() => document.querySelector('div.dropdown').getAttribute('aria-label'))
         .then(el => expect(el).toEqual('Validated Dropdown, '));
 

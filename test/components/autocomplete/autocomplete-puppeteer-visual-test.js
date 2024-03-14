@@ -1,4 +1,3 @@
-const config = require('../../helpers/e2e-config.cjs');
 const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
 describe('Autocomplete Puppeteer Visual Tests', () => {
@@ -24,7 +23,6 @@ describe('Autocomplete Puppeteer Visual Tests', () => {
       autocompleteEl.type('a');
 
       await page.waitForSelector('#maincontent', { visible: true });
-      await page.waitForTimeout(config.sleep);
 
       const img = await page.screenshot();
       const sConfig = getConfig('autocomplete');

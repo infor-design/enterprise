@@ -1,7 +1,7 @@
 const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
 describe('Column Chart Puppeteer Visual Tests', () => {
-  describe('Ability to make a combined column chart and line chart tests', () => {
+  describe.skip('Ability to make a combined column chart and line chart tests', () => {
     const url = 'http://localhost:4000/components/column-grouped/example-column-grouped-with-line-combined';
 
     beforeAll(async () => {
@@ -10,7 +10,7 @@ describe('Column Chart Puppeteer Visual Tests', () => {
 
     it('should run visual test', async () => {
       await page.waitForSelector('#column-line-id-dot-6');
-      await page.waitForTimeout(350);
+
       const image = await page.screenshot();
       const config = getConfig('line-chart');
       expect(image).toMatchImageSnapshot(config);

@@ -38,17 +38,17 @@ describe('Bar Chart', () => {
       const checkCursor = async el => page.$eval(el, e => e.style.cursor);
       await page.waitForSelector('#bar-a-bar', { visible: true });
       await page.hover('#bar-a-bar');
-      await page.waitForTimeout(100);
+
       expect(await checkCursor('#bar-a-bar')).toContain('inherit');
 
       // bar b
       await page.hover('#bar-b-bar');
-      await page.waitForTimeout(100);
+
       expect(await checkCursor('#bar-b-bar')).toContain('inherit');
 
       // bar c
       await page.hover('#bar-c-bar');
-      await page.waitForTimeout(100);
+
       expect(await checkCursor('#bar-c-bar')).toContain('inherit');
     });
 
@@ -59,28 +59,25 @@ describe('Bar Chart', () => {
       const barC = '#bar-c-bar';
 
       await page.click('#bar-a-bar');
-      await page.waitForTimeout(100);
+
       isFailed.push(await checkClassNameValue(barA, 'bar series-0'));
       isFailed.push(await checkClassNameValue(barB, 'bar series-1'));
       isFailed.push(await checkClassNameValue(barC, 'bar series-2'));
       await page.click('#bar-a-bar');
-      await page.waitForTimeout(100);
 
       await page.click('#bar-b-bar');
-      await page.waitForTimeout(100);
+
       isFailed.push(await checkClassNameValue(barA, 'bar series-0'));
       isFailed.push(await checkClassNameValue(barB, 'bar series-1'));
       isFailed.push(await checkClassNameValue(barC, 'bar series-2'));
       await page.click('#bar-b-bar');
-      await page.waitForTimeout(100);
 
       await page.click('#bar-c-bar');
-      await page.waitForTimeout(100);
+
       isFailed.push(await checkClassNameValue(barA, 'bar series-0'));
       isFailed.push(await checkClassNameValue(barB, 'bar series-1'));
       isFailed.push(await checkClassNameValue(barC, 'bar series-2'));
       await page.click('#bar-c-bar');
-      await page.waitForTimeout(100);
 
       expect(isFailed).not.toContain(true);
     });
