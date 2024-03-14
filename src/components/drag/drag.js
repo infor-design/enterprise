@@ -142,7 +142,7 @@ Drag.prototype = {
       } else if (this.settings.containment === 'container') {
         this.container = this.element.closest('.page-container');
       } else if (this.settings.containment === 'partial') {
-        // Partial, lets the user drag the object outside
+        // Partial, lets the user drag the object outside but partially
         this.container = $(document);
 
         if (this.settings.containmentOffset.top === 0) {
