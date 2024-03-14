@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.92.5
+
+## v4.92.5 Fixes
+
+- `[Avatar]` Is no longer round by default. To use it in module nav add the new `square` class. ([#8539](https://github.com/infor-design/enterprise/issues/8539))
+
 ## v4.92.3
 
 ## v4.92.3 Fixes

@@ -61,6 +61,7 @@ $images-size: (
 
   img {
     border: 1px solid transparent; // to prevent jump on focus
+
     &:focus {
       @include focus-state();
     }
@@ -101,17 +102,21 @@ $images-size: (
 .avatar {
   background: $ids-color-palette-emerald-50;
   border: 1px solid transparent; // to prevent jump on focus
-  border-radius: 8px;
   color: $ids-color-palette-white;
+  border-radius: 50%;
   display: inline-block;
   font-size: 14px;
   font-weight: 600;
+  min-height: 32px;
   height: 32px;
+  max-height: 32px;
   line-height: 30px;
   text-align: center;
   text-transform: uppercase;
   vertical-align: middle;
+  min-width: 32px;
   width: 32px;
+  max-width: 32px;
   user-select: none;
 
   &.three-char {
@@ -119,14 +124,22 @@ $images-size: (
   }
 
   &.large {
+    min-height: 48px;
     height: 48px;
+    max-height: 48px;
     font-size: 20px;
     line-height: 48px;
+    min-width: 48px;
     width: 48px;
+    max-width: 48px;
   }
 
   &.round {
     border-radius: 50%;
+  }
+
+  &.square {
+    border-radius: 8px;
   }
 
   &:focus {
