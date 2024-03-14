@@ -58,6 +58,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {function} [settings.onFocusChange] an optional callback that runs whenever the Modal API attempts to change the focused element inside of its boundaries
 * @param {string} [settings.icon] Ability to add icon in the title.
 * @param {boolean} [settings.draggable=false] if true, allows user to drag/drop the modal container.
+* @param {object} [settings.draggableOffset={left: 0, top: 0}] Allowable offset outisde of the document.
 * @param {sring} [settings.iconClass] Ability to add class in the icon setting.
 */
 const MODAL_DEFAULTS = {
@@ -86,6 +87,7 @@ const MODAL_DEFAULTS = {
   hideUnderneath: false,
   suppressEnterKey: false,
   draggable: false,
+  draggableOffset: { left: 0, top: 0 },
   icon: null,
   iconClass: null,
 };
@@ -308,6 +310,9 @@ Modal.prototype = {
       return;
     }
 
+    debugger;
+
+    const self = this;
     const isTouch = env.features.touch;
     const container = this.element;
     const dropContainer = this.element.parent();    
@@ -329,7 +334,7 @@ Modal.prototype = {
 
         // Initialize drag
         container
-          .drag({ containment: 'partial', containmentOffset: { left: 200, top: 200 } })
+          .drag({ containment: 'partial', containmentOffset : self.settings.draggableOffset })
 
           // Start drag
           .off('dragstart.modal')
