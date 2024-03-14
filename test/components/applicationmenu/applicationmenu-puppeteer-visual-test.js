@@ -17,7 +17,6 @@ describe('Application Menu Puppeteer Visual Tests', () => {
       await button.click();
 
       const isOpen = await page.waitForSelector('.application-menu.is-open', { visible: true });
-      await page.waitForTimeout(800); // needed for the animation transition to finish before the screenshot
 
       if (isOpen) {
         const image = await page.screenshot();

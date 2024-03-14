@@ -5,8 +5,6 @@ describe('Notification example-index Puppeteer Tests', () => {
   });
 
   it('should be able to set ids/automation ids', async () => {
-    await page.waitForTimeout(200);
-
     const notif4 = await page.$eval('#notification-id-4', element => element.getAttribute('id'));
     const n4 = await page.$eval('#notification-id-4', element => element.getAttribute('data-automation-id'));
     expect(notif4).toMatch('notification-id-4');
