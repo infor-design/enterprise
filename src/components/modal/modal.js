@@ -310,8 +310,6 @@ Modal.prototype = {
       return;
     }
 
-    debugger;
-
     const self = this;
     const isTouch = env.features.touch;
     const container = this.element;
@@ -334,7 +332,7 @@ Modal.prototype = {
 
         // Initialize drag
         container
-          .drag({ containment: 'partial', containmentOffset : self.settings.draggableOffset })
+          .drag({ containment: 'partial', containmentOffset: self.settings.draggableOffset })
 
           // Start drag
           .off('dragstart.modal')
