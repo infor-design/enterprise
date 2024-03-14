@@ -466,7 +466,7 @@ Tabs.prototype = {
     if (!this.isModuleTabs() && this.isHeaderTabs()) {
       this.adjustTabs();
     }
-    
+
     this.setOverflow();
 
     this.positionFocusState(selectedAnchor);
@@ -3349,7 +3349,7 @@ Tabs.prototype = {
     sizeableTabs.removeAttr('style');
 
     this.setMaxWidth();
-    
+
     sizeableTabs.each(function () {
       const t = $(this);
       if (self.isHeaderTabOverflowed(t)) {
@@ -3394,7 +3394,7 @@ Tabs.prototype = {
     for (let i = 0; i < tabs.length; i++) {
       a = tabs.eq(i).children('a');
       a[0].style.width = '';
-      if (this.settings.moduleTabsTooltips === true || 
+      if (this.settings.moduleTabsTooltips === true ||
         this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
         cutoff = 'no';
 
@@ -3939,10 +3939,10 @@ Tabs.prototype = {
     // Put it back into the tab list container, if not.
     if (target.is('.add-tab-button, .tab-more')) {
       if (!this.focusState?.parent()?.is(this.element)) {
-        this.focusState.prependTo(this.element);
+        this.focusState?.prependTo(this.element);
       }
     } else if (!this.focusState?.parent()?.is(this.tablistContainer)) {
-      this.focusState.prependTo(this.tablistContainer);
+      this.focusState?.prependTo(this.tablistContainer);
     }
 
     const focusStateElem = this.focusState[0];
