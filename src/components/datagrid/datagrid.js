@@ -6728,7 +6728,7 @@ Datagrid.prototype = {
       this.resizeHandle[0].style.height = '62px';
     }
 
-    this.element.find('table').before(this.resizeHandle);
+    this.element.find('table.datagrid').before(this.resizeHandle);
 
     let column;
     let columnId;
