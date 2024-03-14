@@ -371,7 +371,6 @@ describe('Application Menu Puppeteer Tests', () => {
       await menuTrigger.click();
 
       // Add delay to fully show the app menu
-      await page.waitForTimeout(200);
 
       expect(await page.waitForSelector('#application-menu', { visible: true })).toBeTruthy();
     });

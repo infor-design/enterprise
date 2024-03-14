@@ -23,7 +23,6 @@ describe('Column Grouped Puppeteer Tests', () => {
 
     it('should not show pointer as a cursor', async () => {
       await page.hover('#columngrouped-c2-jan-bar');
-      await page.waitForTimeout(200);
 
       expect(await page.evaluate(() => document.querySelector('#columngrouped-c2-jan-bar').style.cursor)).toContain('inherit');
     });

@@ -74,7 +74,6 @@ describe('Dropdown Puppeteer Tests', () => {
         .then(el => expect(el).toEqual('Validated Dropdown, '));
 
       await page.click('div.dropdown');
-      await page.waitForTimeout(200);
       await page.click('#list-option-0');
       await page.keyboard.press('Tab');
 

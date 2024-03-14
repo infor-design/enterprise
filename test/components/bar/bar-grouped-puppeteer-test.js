@@ -63,12 +63,10 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       for await (const eL of elHandleArray) {
         await eL.hover();
         await page.click(`[index-id="chart-legend-${index}"]`);
-        await page.waitForTimeout(200);
         isFailed.push(await checkClassNameValue(seriesA, 'series-group'));
         isFailed.push(await checkClassNameValue(seriesB, 'series-group'));
         isFailed.push(await checkClassNameValue(seriesC, 'series-group'));
         await page.click(`[index-id="chart-legend-${index}"]`);
-        await page.waitForTimeout(200);
         index += 1;
       }
       expect(isFailed).not.toContain(true);

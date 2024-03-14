@@ -86,14 +86,10 @@ describe('Bar Chart', () => {
       await page.click('.bar.series-0');
       await page.waitForSelector('.bar.series-0');
 
-      await page.waitForTimeout(200);
-
       expect(await page.$eval('.bar.series-0', e => getComputedStyle(e).opacity)).toBe('1');
     });
 
     it('should be able to set id/automation id', async () => {
-      await page.waitForTimeout(200);
-
       expect(await page.$eval('#bar-a-bar', el => el.getAttribute('id'))).toBe('bar-a-bar');
       expect(await page.$eval('#bar-a-bar', el => el.getAttribute('data-automation-id'))).toBe('automation-id-bar-a-bar');
 
@@ -106,7 +102,6 @@ describe('Bar Chart', () => {
 
     it.skip('should not visually regress', async () => {
       // Add a bit of a delay
-      await page.waitForTimeout(200);
 
       // Screenshot of the page
       const image = await page.screenshot();
