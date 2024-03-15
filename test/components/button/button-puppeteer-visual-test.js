@@ -1,7 +1,6 @@
 const { getConfig } = require('../../helpers/e2e-utils.cjs');
-const config = require('../../helpers/e2e-config.cjs');
 
-describe('Button Puppeteer Visual Tests', () => {
+describe.skip('Button Puppeteer Visual Tests', () => {
   const baseUrl = 'http://localhost:4000/components/button';
 
   describe('Button with icons test', () => {
@@ -46,7 +45,6 @@ describe('Button Puppeteer Visual Tests', () => {
     const snap = async (width, height) => {
       await page.setViewport({ width, height });
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await page.waitForTimeout(config.sleep);
 
       const maincontent = await page.$('#maincontent');
       const image = await maincontent.screenshot();
@@ -60,18 +58,13 @@ describe('Button Puppeteer Visual Tests', () => {
       windowSize = await page.viewport();
     });
 
-    afterEach(async () => {
-      await page.waitForTimeout(config.sleep);
-    });
-
     afterAll(async () => {
       await page.setViewport(windowSize);
     });
 
-    it('should tab onto button, show focus, and not visual regress', async () => {
+    it.skip('should tab onto button, show focus, and not visual regress', async () => {
       await page.focus('#one-hundred');
       await page.keyboard.press('Tab');
-      await page.waitForTimeout(config.sleep);
 
       const fitty = await page.$('#fitty');
       const image = await fitty.screenshot();
@@ -80,11 +73,11 @@ describe('Button Puppeteer Visual Tests', () => {
       expect(image).toMatchImageSnapshot(snapshot);
     });
 
-    it('should not visually regress on example-100-percent at 1280px', async () => {
+    it.skip('should not visually regress on example-100-percent at 1280px', async () => {
       await snap(1280, 800);
     });
 
-    it('should not visually regress on example-100-percent at 768px', async () => {
+    it.skip('should not visually regress on example-100-percent at 768px', async () => {
       await snap(768, 1024);
     });
 

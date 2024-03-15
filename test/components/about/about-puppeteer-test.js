@@ -93,8 +93,6 @@ describe.skip('About Puppeteer Tests', () => {
     it.skip('should fire the close event', async () => {
       await page.click('#about-trigger');
       await page.waitForSelector('.modal-body', { visible: true });
-      await page.waitForTimeout(300); // approx. time for a Modal to show
-
       await page.click('.btn-close');
 
       const element = await page.waitForSelector('#toast-container .toast-title', { visible: true });
@@ -117,19 +115,16 @@ describe.skip('About Puppeteer Tests', () => {
       // Open Nested Modal
       await page.click('#modal-trigger');
       await page.waitForSelector('#nested-modal .modal-body', { visible: true });
-      await page.waitForTimeout(200); // approx. time for a Modal to show
       expect(await page.evaluate('document.querySelector("#nested-modal .modal-body")')).not.toEqual(null);
 
       // Close Nested Modal
       await page.click('#nested-modal-btn-close');
       await page.waitForSelector('#nested-modal .modal-body', { visible: true });
-      await page.waitForTimeout(200); // approx. time for a Modal to show
       expect(await page.evaluate('document.querySelector("#nested-modal .modal-body")')).toEqual(null);
 
       // Close About
       await page.click('#about-modal-btn-close');
       await page.waitForSelector('#about-modal .modal-body', { visible: true });
-      await page.waitForTimeout(200); // approx. time for a Modal to show
       expect(await page.evaluate('document.querySelector("#about-modal .modal-body")')).toEqual(null);
     });
   });

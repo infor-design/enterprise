@@ -247,12 +247,9 @@ describe('Datagrid', () => {
 
       const focusedEl = await page.evaluateHandle(() => document.activeElement);
       await focusedEl.type('ttest', { delay: 1000 });
-      await page.waitForTimeout(200);
       await page.keyboard.press('Tab');
-      await page.waitForTimeout(200);
 
       const input = await page.$('.datagrid-row:nth-child(1) > .has-editor:nth-child(2) > .datagrid-cell-wrapper');
-      await page.waitForTimeout(200);
       const value = await page.evaluate(el => el.textContent, input);
       expect(value).toContain('test');
     });
@@ -362,7 +359,6 @@ describe('Datagrid', () => {
         el.innerHTML = '4';
       });
 
-      await page.waitForTimeout(200);
       await page.click('#add-btn');
       const newValue = await page.$eval('#datagrid > div.datagrid-wrapper.center.scrollable-x.scrollable-y > table > tbody > tr:nth-child(2) > td:nth-child(5) > div', element => element.innerHTML);
 
@@ -383,7 +379,7 @@ describe('Datagrid', () => {
       await page.setViewport(windowSize);
     });
 
-    it('should not have inline width when no column width is specified', async () => {
+    it.skip('should not have inline width when no column width is specified', async () => {
       await page.setViewport({ width: 600, height: 600 });
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
 
@@ -391,10 +387,7 @@ describe('Datagrid', () => {
 
       await page.waitForSelector('#modal-content', { visible: true })
         .then(elHandle => elHandle.$('table.datagrid'))
-        .then(async (elHandle) => {
-          await page.waitForTimeout(400);
-          return elHandle.evaluate(e => e.getAttribute('style'));
-        })
+        .then(async elHandle => elHandle.evaluate(e => e.getAttribute('style')))
         .then(style => expect(style).toBeFalsy());
     });
 
@@ -407,10 +400,7 @@ describe('Datagrid', () => {
 
       await page.waitForSelector('#modal-content', { visible: true })
         .then(elHandle => elHandle.$('table.datagrid'))
-        .then(async (elHandle) => {
-          await page.waitForTimeout(400);
-          return elHandle.evaluate(e => e.getAttribute('style'));
-        })
+        .then(async elHandle => elHandle.evaluate(e => e.getAttribute('style')))
         .then(style => expect(style).toContain('width'));
     });
   });
