@@ -46,10 +46,8 @@ describe.skip('Toast Puppeteer Tests', () => {
       await page.waitForSelector('#toast-container', { visible: true });
       const toast = await page.$$('.toast');
       expect(toast.length).toEqual(1);
-      await page.waitForTimeout(500);
       await page.click('#toast-id-1-btn-close');
       await page.waitForSelector('#toast-container', { visible: false });
-      await page.waitForTimeout(500);
       const elem = await page.$$('#toast-container');
       expect(elem.length).toEqual(0);
     });
@@ -61,7 +59,6 @@ describe.skip('Toast Puppeteer Tests', () => {
       expect(toast.length).toEqual(1);
       await page.keyboard.press('Escape');
       await page.waitForSelector('#toast-container', { visible: false });
-      await page.waitForTimeout(500);
       const elem = await page.$$('#toast-container');
       expect(elem.length).toEqual(0);
     });
@@ -167,7 +164,6 @@ describe.skip('Toast Puppeteer Tests', () => {
       const toast2 = await page.$('#toast-containertoast-some-another-uniqueid-usersettings-position');
       const ob2 = await toast2.boundingBox();
       const location = [{ x: 126, y: 9 }];
-      await page.waitForTimeout(500);
       await dragAndDrop('.toast', location);
       const db2 = await toast2.boundingBox();
 

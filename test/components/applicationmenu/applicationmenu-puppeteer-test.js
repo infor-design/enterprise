@@ -334,16 +334,11 @@ describe('Application Menu Puppeteer Tests', () => {
     it.skip('should dismiss the application menu when clicking on one of the menus toolbar buttons', async () => {
       await page.setViewport({ width: 375, height: 812 });
 
-      // need a delay for the page to fully visible before clicking the button.
-      // lower than 250 milliseconds will cause issue.
-      await page.waitForTimeout(250);
-
       const hamburger = await page.waitForSelector('#header-hamburger', { visible: true });
       await hamburger.click();
 
       // need another delay to fully show the app menu
       // lower than 150 milliseconds will cause issue.
-      await page.waitForTimeout(150);
       await page.evaluate(() => document.getElementById('application-menu').getAttribute('class'))
         .then(el => expect(el).toContain('is-open'));
 
@@ -351,7 +346,6 @@ describe('Application Menu Puppeteer Tests', () => {
 
       // need another delay to fully show the element
       // lower than 100 milliseconds will cause issue.
-      await page.waitForTimeout(100);
       await btnToolbar.click();
 
       await page.evaluate(() => document.getElementById('application-menu').getAttribute('class'))
@@ -371,7 +365,6 @@ describe('Application Menu Puppeteer Tests', () => {
       await menuTrigger.click();
 
       // Add delay to fully show the app menu
-      await page.waitForTimeout(200);
 
       expect(await page.waitForSelector('#application-menu', { visible: true })).toBeTruthy();
     });

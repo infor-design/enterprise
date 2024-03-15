@@ -1,5 +1,3 @@
-const config = require('../../helpers/e2e-config.cjs');
-
 describe('Autocomplete Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/autocomplete';
   const defaultId = 'autocomplete-default';
@@ -54,8 +52,6 @@ describe('Autocomplete Puppeteer Tests', () => {
     });
 
     it('should be able to set id/automation id', async () => {
-      await page.waitForTimeout(config.sleep);
-
       const checkAttr = (selector, val1, val2) => page.$eval(selector, element => [element.id, element.getAttribute('data-automation-id')])
         .then((attr) => {
           expect(attr[0]).toEqual(val1);
@@ -99,8 +95,6 @@ describe('Autocomplete Puppeteer Tests', () => {
       const autocompleteEl = await clickOnAutocomplete();
       autocompleteEl.type('utah');
       autocompleteEl.press('Tab');
-
-      await page.waitForTimeout(config.sleepLonger);
 
       const autocompleteListEl = await page.$$('#autocomplete-list');
       expect(autocompleteListEl.length).toBe(0);
