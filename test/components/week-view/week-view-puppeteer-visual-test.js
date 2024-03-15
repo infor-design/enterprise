@@ -16,7 +16,6 @@ describe('Week View Puppeteer Visual Tests', () => {
       expect(await page.waitForSelector('.week-view')).toBeTruthy();
 
       // Need a bit of delay to show the modal perfectly
-      await page.waitForTimeout(200);
 
       // Screenshot of the page
       const image = await page.screenshot();
@@ -40,7 +39,6 @@ describe('Week View Puppeteer Visual Tests', () => {
       expect(await page.waitForSelector('.week-view')).toBeTruthy();
 
       // Need a bit of delay to show the modal perfectly
-      await page.waitForTimeout(200);
 
       // Screenshot of the page
       const image = await page.screenshot();
@@ -64,7 +62,6 @@ describe('Week View Puppeteer Visual Tests', () => {
       expect(await page.waitForSelector('.week-view')).toBeTruthy();
 
       // Need a bit of delay to show the modal perfectly
-      await page.waitForTimeout(200);
 
       // Screenshot of the page
       const image = await page.screenshot();
@@ -88,7 +85,6 @@ describe('Week View Puppeteer Visual Tests', () => {
       expect(await page.waitForSelector('.week-view')).toBeTruthy();
 
       // Need a bit of delay to show the modal perfectly
-      await page.waitForTimeout(200);
 
       // Screenshot of the page
       const image = await page.screenshot();
@@ -112,7 +108,6 @@ describe('Week View Puppeteer Visual Tests', () => {
       expect(await page.waitForSelector('.week-view')).toBeTruthy();
 
       // Need a bit of delay to show the modal perfectly
-      await page.waitForTimeout(200);
 
       // Screenshot of the page
       const image = await page.screenshot();
@@ -136,7 +131,6 @@ describe('Week View Puppeteer Visual Tests', () => {
       expect(await page.waitForSelector('.week-view')).toBeTruthy();
 
       // Need a bit of delay to show the modal perfectly
-      await page.waitForTimeout(200);
 
       // Screenshot of the page
       const image = await page.screenshot();
