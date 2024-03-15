@@ -20,17 +20,16 @@ describe('Bar Chart', () => {
       const checkCursor = async el => page.$eval(el, e => e.style.cursor);
       await page.waitForSelector('#bar-a-bar', { visible: true });
       await page.hover('#bar-a-bar');
-      await page.waitForTimeout(100);
       expect(await checkCursor('#bar-a-bar')).toContain('inherit');
 
       // bar b
       await page.hover('#bar-b-bar');
-      await page.waitForTimeout(100);
+
       expect(await checkCursor('#bar-b-bar')).toContain('inherit');
 
       // bar c
       await page.hover('#bar-c-bar');
-      await page.waitForTimeout(100);
+
       expect(await checkCursor('#bar-c-bar')).toContain('inherit');
     });
 
@@ -42,28 +41,24 @@ describe('Bar Chart', () => {
       const barC = '#bar-c-bar';
 
       await page.click('#bar-a-bar');
-      await page.waitForTimeout(100);
+
       isFailed.push(await checkClassNameValue(barA, 'bar series-0'));
       isFailed.push(await checkClassNameValue(barB, 'bar series-1'));
       isFailed.push(await checkClassNameValue(barC, 'bar series-2'));
       await page.click('#bar-a-bar');
-      await page.waitForTimeout(100);
-
       await page.click('#bar-b-bar');
-      await page.waitForTimeout(100);
+
       isFailed.push(await checkClassNameValue(barA, 'bar series-0'));
       isFailed.push(await checkClassNameValue(barB, 'bar series-1'));
       isFailed.push(await checkClassNameValue(barC, 'bar series-2'));
       await page.click('#bar-b-bar');
-      await page.waitForTimeout(100);
 
       await page.click('#bar-c-bar');
-      await page.waitForTimeout(100);
+
       isFailed.push(await checkClassNameValue(barA, 'bar series-0'));
       isFailed.push(await checkClassNameValue(barB, 'bar series-1'));
       isFailed.push(await checkClassNameValue(barC, 'bar series-2'));
       await page.click('#bar-c-bar');
-      await page.waitForTimeout(100);
 
       expect(isFailed).not.toContain(true);
     });
@@ -86,14 +81,10 @@ describe('Bar Chart', () => {
       await page.click('.bar.series-0');
       await page.waitForSelector('.bar.series-0');
 
-      await page.waitForTimeout(200);
-
       expect(await page.$eval('.bar.series-0', e => getComputedStyle(e).opacity)).toBe('1');
     });
 
     it('should be able to set id/automation id', async () => {
-      await page.waitForTimeout(200);
-
       expect(await page.$eval('#bar-a-bar', el => el.getAttribute('id'))).toBe('bar-a-bar');
       expect(await page.$eval('#bar-a-bar', el => el.getAttribute('data-automation-id'))).toBe('automation-id-bar-a-bar');
 
@@ -106,7 +97,6 @@ describe('Bar Chart', () => {
 
     it.skip('should not visually regress', async () => {
       // Add a bit of a delay
-      await page.waitForTimeout(200);
 
       // Screenshot of the page
       const image = await page.screenshot();
