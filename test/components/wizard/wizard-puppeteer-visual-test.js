@@ -12,7 +12,6 @@ describe('Wizard Puppeteer Visual Tests', () => {
 
     it.skip('should not visually regress', async () => {
       const wizard = await page.$('.wizard');
-      await page.waitForTimeout(200);
       const image = await wizard.screenshot();
       const config = getConfig('wizard');
 

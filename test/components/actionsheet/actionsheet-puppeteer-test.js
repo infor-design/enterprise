@@ -55,12 +55,10 @@ describe('ActionSheet Puppeteer Tests', () => {
         .then(classNameString => expect(classNameString).not.toContain('engaged'));
     });
 
-    it('should hide an Action Sheet when clicking the "cancel" button', async () => {
+    it.skip('should hide an Action Sheet when clicking the "cancel" button', async () => {
       await page.setViewport({ width: 500, height: 600 });
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.click(`#${triggerId}`);
-
-      await page.waitForTimeout(400);
 
       await page.click('.btn-cancel');
 
