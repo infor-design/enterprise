@@ -18,9 +18,6 @@ describe('Modal Puppeteer Tests', () => {
 
       expect(await page.waitForSelector('.modal.is-visible.is-active')).toBeTruthy();
 
-      // Need a bit of delay to show the modal perfectly
-      await page.waitForTimeout(290);
-
       // Click title to have no focus
       await page.click('.modal-title');
       // Screenshot of the page

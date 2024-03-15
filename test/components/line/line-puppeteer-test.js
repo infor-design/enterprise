@@ -39,52 +39,40 @@ describe('Line Puppeteer Tests', () => {
             console.warn('line-group element not found');
         }
         await page.click(`#line-${comp}-jan-dot`);
-        await page.waitForTimeout(200);
         isFailed.push(await checkClassNameValue(lineA, 'line-group'));
         isFailed.push(await checkClassNameValue(lineB, 'line-group'));
         isFailed.push(await checkClassNameValue(lineC, 'line-group'));
         await page.click(`#line-${comp}-jan-dot`);
-        await page.waitForTimeout(200);
 
         await page.click(`#line-${comp}-feb-dot`);
-        await page.waitForTimeout(200);
         isFailed.push(await checkClassNameValue(lineA, 'line-group'));
         isFailed.push(await checkClassNameValue(lineB, 'line-group'));
         isFailed.push(await checkClassNameValue(lineC, 'line-group'));
         await page.click(`#line-${comp}-feb-dot`);
-        await page.waitForTimeout(200);
 
         await page.click(`#line-${comp}-mar-dot`);
-        await page.waitForTimeout(200);
         isFailed.push(await checkClassNameValue(lineA, 'line-group'));
         isFailed.push(await checkClassNameValue(lineB, 'line-group'));
         isFailed.push(await checkClassNameValue(lineC, 'line-group'));
         await page.click(`#line-${comp}-mar-dot`);
-        await page.waitForTimeout(200);
 
         await page.click(`#line-${comp}-apr-dot`);
-        await page.waitForTimeout(200);
         isFailed.push(await checkClassNameValue(lineA, 'line-group'));
         isFailed.push(await checkClassNameValue(lineB, 'line-group'));
         isFailed.push(await checkClassNameValue(lineC, 'line-group'));
         await page.click(`#line-${comp}-apr-dot`);
-        await page.waitForTimeout(200);
 
         await page.click(`#line-${comp}-may-dot`);
-        await page.waitForTimeout(200);
         isFailed.push(await checkClassNameValue(lineA, 'line-group'));
         isFailed.push(await checkClassNameValue(lineB, 'line-group'));
         isFailed.push(await checkClassNameValue(lineC, 'line-group'));
         await page.click(`#line-${comp}-may-dot`);
-        await page.waitForTimeout(200);
 
         await page.click(`#line-${comp}-jun-dot`);
-        await page.waitForTimeout(200);
         isFailed.push(await checkClassNameValue(lineA, 'line-group'));
         isFailed.push(await checkClassNameValue(lineB, 'line-group'));
         isFailed.push(await checkClassNameValue(lineC, 'line-group'));
         await page.click(`#line-${comp}-jun-dot`);
-        await page.waitForTimeout(200);
         index += 1;
       }
       expect(isFailed).not.toContain(true);
@@ -115,12 +103,10 @@ describe('Line Puppeteer Tests', () => {
             console.warn('line-group element not found');
         }
         await page.click(`#line-comp-${comp}-legend-${index}`);
-        await page.waitForTimeout(200);
         isFailed.push(await checkClassNameValue(lineA, 'line-group'));
         isFailed.push(await checkClassNameValue(lineB, 'line-group'));
         isFailed.push(await checkClassNameValue(lineC, 'line-group'));
         await page.click(`#line-comp-${comp}-legend-${index}`);
-        await page.waitForTimeout(200);
         index += 1;
       }
       expect(isFailed).not.toContain(true);

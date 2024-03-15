@@ -12,7 +12,6 @@ describe('ProcessIndicator Puppeteer Tests', () => {
 
     it('should not visually regress', async () => {
       // Need a bit of delay to make sure everything is showing
-      await page.waitForTimeout(200);
 
       // Screenshot of the page
       const image = await page.screenshot();
@@ -31,9 +30,6 @@ describe('ProcessIndicator Puppeteer Tests', () => {
     });
 
     it('should not visually regress', async () => {
-      // Need a bit of delay to make sure everything is showing
-      await page.waitForTimeout(290);
-
       // Screenshot of the page
       const image = await page.screenshot();
 

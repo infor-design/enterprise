@@ -76,7 +76,6 @@ describe('Accordion Puppeteer Tests', () => {
 
     it.skip('should close all children components', async () => {
       await page.click('#start-test');
-      await page.waitForTimeout(2600);
 
       expect((await page.$$('#dropdown-list')).length).toBe(0);
       expect((await page.$$('#monthview-popup')).length).toBe(0);

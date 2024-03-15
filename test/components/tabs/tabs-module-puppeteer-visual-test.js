@@ -12,7 +12,6 @@ describe('Tabs module Puppeteer Visual tests', () => {
 
     it('should not visually regress', async () => {
       // Add an opening delay just in case
-      await page.waitForTimeout(200);
 
       // Wait for the element to be visible
       page.waitForSelector('.searchfield', { visible: true });
@@ -21,13 +20,11 @@ describe('Tabs module Puppeteer Visual tests', () => {
       await page.click('.searchfield');
 
       // Add a delay before pressing a key
-      await page.waitForTimeout(200);
 
       // Press a key to enter into the input
       page.keyboard.press('a');
 
       // Add another delay before taking the screenshot
-      await page.waitForTimeout(200);
 
       // Screenshot of the page
       const image = await page.screenshot();

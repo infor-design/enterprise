@@ -93,7 +93,7 @@ describe.skip('Index Tests', () => {
   it('should be able to set id/automation/id on buttons', async () => {
     const buttonEl = await page.$('#show-application-alert');
     await buttonEl.click();
-    await page.waitForTimeout(100);
+
     const modalAcknowledge = await page.evaluate(() => !!document.querySelector('#message-acknowledge-cancel-1'));
     const modalCancel = await page.evaluate(() => !!document.querySelector('[data-automation-id="message-alert-cancel-1"]'));
     expect(modalAcknowledge).toBe(true);
@@ -308,10 +308,10 @@ describe.skip('Message overlay opacity tests', () => {
   it('should be able to set overlay opacity to 10%', async () => {
     const btnEl = await page.$('#opacity-10');
     await btnEl.click();
-    await page.waitForTimeout(100);
+
     const divOverlay = await page.evaluate(() => !!document.querySelector('.overlay'));
     expect(divOverlay).toBe(true);
-    await page.waitForTimeout(100);
+
     const everlayEl = await page.evaluate(() => document.querySelector('.overlay').style.background);
     expect(everlayEl).toContain('rgba(0, 0, 0, 0.1)');
     await page.click('.btn-modal');

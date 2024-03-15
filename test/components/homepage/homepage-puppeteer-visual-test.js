@@ -13,7 +13,6 @@ describe.skip('Homepage Puppeteer Visual Tests', () => {
 
     it('should not visually regress', async () => {
       // Need a bit of delay to show the modal perfectly
-      await page.waitForTimeout(200);
 
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
 
@@ -39,7 +38,6 @@ describe.skip('Homepage Puppeteer Visual Tests', () => {
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
 
       // Need a bit of delay to show the modal perfectly
-      await page.waitForTimeout(200);
 
       // Screenshot of the page
       const image = await page.screenshot();
@@ -63,7 +61,6 @@ describe.skip('Homepage Puppeteer Visual Tests', () => {
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
 
       // Need a bit of delay to show the modal perfectly
-      await page.waitForTimeout(200);
 
       // Screenshot of the page
       const image = await page.screenshot();

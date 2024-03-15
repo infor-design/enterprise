@@ -16,7 +16,6 @@ describe('Pie Chart tests', () => {
     expect(await page.waitForSelector('.container')).toBeTruthy();
 
     // Add a bit of a delay
-    await page.waitForTimeout(200);
 
     // Screenshot of the page
     const image = await page.screenshot();
