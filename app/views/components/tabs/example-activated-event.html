@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="six columns">
+  <div class="twelve columns">
 
-    <h2>Tabs Example:  "activated" Event</h2>
+    <h2 class="fieldset-title">Tabs Example: "beforeactivated, activated and afteractivated" Event</h2>
 
-    <p>Provides a visual example of the Tabs "activated" event and its firing timing.</p>
+    <p>Provides a visual example of the Tabs "beforeactivated, activated and afteractivated" event and its firing timing.</p>
 
-    <p></p>
+    <p><strong>Vetoed Tabs: Opportunities and Notes</strong></p>
 
   </div>
 </div>
@@ -22,18 +22,23 @@
         <li class="tab"><a href="#tabs-normal-notes">Notes</a></li>
       </ul>
       <div id="tabs-normal-contracts" class="tab-panel">
+        <p>Contracts</p>
         <p>Facilitate cultivate monetize, seize e-services peer-to-peer content integrateAJAX-enabled user-centric strategize. Mindshare; repurpose integrate global addelivery leading-edge frictionless, harness real-time plug-and-play standards-compliant 24/7 enterprise strategize robust infomediaries: functionalities back-end. Killer disintermediate web-enabled ubiquitous empower relationships, solutions, metrics architectures.</p>
       </div>
       <div id="tabs-normal-opportunities" class="tab-panel">
+        <p>Opportunities</p>
         <p>Bricks-and-clicks? Evolve ubiquitous matrix B2B 24/365 vertical 24/365 platforms standards-compliant global leverage dynamic 24/365 intuitive ROI seamless rss-capable. Cutting-edge grow morph web services leverage; ROI, unleash reinvent innovative podcasts citizen-media networking. Frictionless webservices, killer open-source innovate, best-of-breed.</p>
       </div>
       <div id="tabs-normal-attachments" class="tab-panel">
+        <p>Attachments</p>
         <p>Frictionless webservices, killer open-source innovate, best-of-breed, whiteboard interactive back-end optimize capture dynamic front-end. Initiatives ubiquitous 24/7 enhance channels B2B drive frictionless web-readiness generate recontextualize widgets applications. Sexy sticky matrix, user-centred, rich user-centric: peer-to-peer podcasting networking addelivery optimize streamline integrated proactive: granular morph.</p>
       </div>
       <div id="tabs-normal-contacts" class="tab-panel">
+        <p>Contacts</p>
         <p>Exploit niches; enable A-list web-enabled holistic end-to-end. Exploit experiences value-added tagclouds, open-source cross-platform e-tailers, user-contributed, implement! Convergence, solutions front-end, "synergize markets initiatives integrateAJAX-enabled platforms; wireless, supply-chains reinvent, mindshare, synergies implement, drive evolve!" Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!</p>
       </div>
       <div id="tabs-normal-notes" class="tab-panel">
+        <p>Notes</p>
         <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!</p>
       </div>
     </div>
@@ -63,10 +68,30 @@
     });
   }
 
+  function onBeforeActivationEvent(e, anchor) {
+    var type = e.type;
+    var color = '#aa1111';
+    var anchorName = anchorName = anchor.text().trim();
+    var anchorId = anchorId = anchor.attr('href');
+
+    if (anchorName === 'Opportunities' || anchorName === 'Notes') {
+      $('body').toast({
+        title: 'tab <span style="color: '+ color +'; font-weight: bold;">' + anchorId + '</span> ['+ type +'] blocked!',
+        message: 'The "<b>'+ anchorName +'</b>" tab was blocked!'
+      });
+      return false;
+    }
+
+    $('body').toast({
+      title: 'tab <span style="color: '+ color +'; font-weight: bold;">' + anchorId + '</span> ['+ type +'] triggered!',
+      message: 'The "<b>'+ anchorName +'</b>" tab was clicked or triggered!'
+    });
+  }
+
   $('body').on('initialized', function() {
     $('#tabs')
       .on('activated.test', onActivationEvent)
-      .on('beforeactivated.test', onActivationEvent)
+      .on('beforeactivated.test', onBeforeActivationEvent)
       .on('afteractivated.test', onActivationEvent);
   });
 </script>
