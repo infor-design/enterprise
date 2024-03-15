@@ -2,8 +2,12 @@
 //================================================== */
 
 .toolbar-searchfield-wrapper {
+  @include transition(width 300ms $cubic-ease,
+  right 300ms $cubic-ease,
+  box-shadow 300ms $cubic-ease);
+
   &.has-categories {
-    &:not(.is-open) {
+    &:not(.is-open):not(.alternate) {
       width: 35px;
     }
   }
