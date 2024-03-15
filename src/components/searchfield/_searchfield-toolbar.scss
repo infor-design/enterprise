@@ -328,6 +328,10 @@ $toolbarsearchfield-category-empty-width: 51px;
         border-right: 0;
       }
     }
+
+    &:not(.active) .btn.searchfield-category-button {
+      border-radius: 8px;
+    }
   }
 
   &.is-open {
