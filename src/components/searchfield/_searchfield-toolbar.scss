@@ -287,6 +287,8 @@ $toolbarsearchfield-category-empty-width: 51px;
     .searchfield-category-button {
       border: none;
       height: 38px;
+      padding-right: 5px;
+      background-color: transparent;
     }
 
     &.active.is-hovered {
@@ -325,6 +327,10 @@ $toolbarsearchfield-category-empty-width: 51px;
       .searchfield-category-button {
         border-right: 0;
       }
+    }
+
+    &:not(.active) .btn.searchfield-category-button {
+      border-radius: 8px;
     }
   }
 
@@ -542,7 +548,7 @@ $toolbarsearchfield-category-empty-width: 51px;
   &.has-categories {
     width: $toolbarsearchfield-category-empty-width;
 
-    &:not(.is-open) {
+    &:not(.is-open):not(.alternate) {
       .searchfield-category-button {
         border-color: transparent;
       }

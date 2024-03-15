@@ -979,13 +979,16 @@ Toolbar.prototype = {
             buttonsetWidth + searchfield.goButton.width() : buttonsetWidth;
         }
 
+        if (searchfield.settings.categories) {
+          buttonsetWidth += 15;
+        }
+
         const diff = searchfield.wrapper.width() - buttonsetWidth;
 
         if (diff > 0) {
           buttonsetWidth += diff;
         }
       }
-
       return buttonsetWidth;
     }
 
