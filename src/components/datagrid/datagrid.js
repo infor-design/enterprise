@@ -8052,6 +8052,10 @@ Datagrid.prototype = {
     if (this.settings.initializeToolbar && !toolbar.data('toolbar') && !toolbar.hasClass('flex-toolbar')) {
       const opts = $.fn.parseOptions(toolbar);
 
+      if (this.settings.toolbar.placeholder) {
+        opts.placeholder = this.settings.toolbar.placeholder;
+      }
+
       if (this.settings.toolbar.fullWidth) {
         opts.rightAligned = true;
       }

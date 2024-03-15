@@ -198,6 +198,12 @@ Toolbar.prototype = {
     // Invoke searchfields
     if (!this.settings.noSearchfieldReinvoke) {
       const searchfields = this.items.filter('.searchfield, .toolbar-searchfield-wrapper, .searchfield-wrapper');
+      const settings = {};
+
+      if (this.settings.placeholder) {
+        settings.placeholder = this.settings.placeholder;
+      }
+
       searchfields.each((i, item) => {
         let sf = $(item);
         if (sf.is('.toolbar-searchfield-wrapper, .searchfield-wrapper')) {
@@ -205,7 +211,7 @@ Toolbar.prototype = {
         }
 
         if (!sf.data('searchfield')) {
-          const searchfieldOpts = $.extend({}, utils.parseSettings(sf[0]));
+          const searchfieldOpts = $.extend(settings, utils.parseSettings(sf[0]));
           sf.searchfield(searchfieldOpts);
         }
 
