@@ -3989,7 +3989,6 @@ $datagrid-small-row-height: 25px;
       width: 36px;
 
       &:disabled {
-
         &:not(.single) {
           opacity: $datagrid-filter-disabled-opacity;
         }
