@@ -741,9 +741,9 @@ Homepage.prototype = {
  
     for (let rows = 0; rows < this.rowsAndCols.length && !abort; rows++) {
       rowsUsed++;
-      let row = this.rowsAndCols[rows];
-      for (let cols = 0; cols < row.length && !abort; cols++ ) {
-        let col = row[cols];
+      const row = this.rowsAndCols[rows];
+      for (let cols = 0; cols < row.length && !abort; cols++) {
+        const col = row[cols];
         if (col) {
           abort = true;
 
