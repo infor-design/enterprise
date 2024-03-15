@@ -27,7 +27,6 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
       const bar = await page.waitForSelector('.series-group:nth-child(-n+3) .bar.series-0', { visible: true });
       await bar.click();
 
-      // wait to show the element to have 'is-selected' class instead of using page.waitForTimeout
       const showSelectedBar = await page.waitForSelector('.series-group:nth-child(-n+3) .bar.series-0.is-selected', { visible: true });
 
       if (showSelectedBar) {
@@ -148,32 +147,26 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
           case 0:
             year = '2008';
             await page.click(`#barstacked-s1-${year}-bar`);
-            await page.waitForTimeout(200);
             isFailed.push(await checkClassNameValue('#barstacked-s1-2008-bar', 'bar series-0'));
             isFailed.push(await checkClassNameValue('#barstacked-s1-2009-bar', 'bar series-1'));
             isFailed.push(await checkClassNameValue('#barstacked-s1-2010-bar', 'bar series-2'));
             await page.click(`#barstacked-s1-${year}-bar`);
-            await page.waitForTimeout(200);
             break;
           case 1:
             year = '2009';
             await page.click(`#barstacked-s1-${year}-bar`);
-            await page.waitForTimeout(200);
             isFailed.push(await checkClassNameValue('#barstacked-s1-2008-bar', 'bar series-0'));
             isFailed.push(await checkClassNameValue('#barstacked-s1-2009-bar', 'bar series-1'));
             isFailed.push(await checkClassNameValue('#barstacked-s1-2010-bar', 'bar series-2'));
             await page.click(`#barstacked-s1-${year}-bar`);
-            await page.waitForTimeout(200);
             break;
           case 2:
             year = '2010';
             await page.click(`#barstacked-s1-${year}-bar`);
-            await page.waitForTimeout(200);
             isFailed.push(await checkClassNameValue('#barstacked-s1-2008-bar', 'bar series-0'));
             isFailed.push(await checkClassNameValue('#barstacked-s1-2009-bar', 'bar series-1'));
             isFailed.push(await checkClassNameValue('#barstacked-s1-2010-bar', 'bar series-2'));
             await page.click(`#barstacked-s1-${year}-bar`);
-            await page.waitForTimeout(200);
             break;
 
           default:
@@ -195,32 +188,26 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
           case 0:
             year2 = '2008';
             await page.click(`#barstacked-s2-${year2}-bar`);
-            await page.waitForTimeout(200);
             isFailed.push(await checkClassNameValue('#barstacked-s2-2008-bar', 'bar series-0'));
             isFailed.push(await checkClassNameValue('#barstacked-s2-2009-bar', 'bar series-1'));
             isFailed.push(await checkClassNameValue('#barstacked-s2-2010-bar', 'bar series-2'));
             await page.click(`#barstacked-s2-${year2}-bar`);
-            await page.waitForTimeout(200);
             break;
           case 1:
             year2 = '2009';
             await page.click(`#barstacked-s2-${year2}-bar`);
-            await page.waitForTimeout(200);
             isFailed.push(await checkClassNameValue('#barstacked-s2-2008-bar', 'bar series-0'));
             isFailed.push(await checkClassNameValue('#barstacked-s2-2009-bar', 'bar series-1'));
             isFailed.push(await checkClassNameValue('#barstacked-s2-2010-bar', 'bar series-2'));
             await page.click(`#barstacked-s2-${year2}-bar`);
-            await page.waitForTimeout(200);
             break;
           case 2:
             year2 = '2010';
             await page.click(`#barstacked-s2-${year2}-bar`);
-            await page.waitForTimeout(200);
             isFailed.push(await checkClassNameValue('#barstacked-s2-2008-bar', 'bar series-0'));
             isFailed.push(await checkClassNameValue('#barstacked-s2-2009-bar', 'bar series-1'));
             isFailed.push(await checkClassNameValue('#barstacked-s2-2010-bar', 'bar series-2'));
             await page.click(`#barstacked-s2-${year2}-bar`);
-            await page.waitForTimeout(200);
             break;
 
           default:
@@ -242,21 +229,17 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
         switch (index) {
           case 0:
             await page.click(`[index-id="chart-legend-${index}"]`);
-            await page.waitForTimeout(200);
             isFailed.push(await checkClassNameValue('#barstacked-s1-2008-bar', 'bar series-0'));
             isFailed.push(await checkClassNameValue('#barstacked-s1-2009-bar', 'bar series-1'));
             isFailed.push(await checkClassNameValue('#barstacked-s1-2010-bar', 'bar series-2'));
             await page.click(`[index-id="chart-legend-${index}"]`);
-            await page.waitForTimeout(200);
             break;
           case 1:
             await page.click(`[index-id="chart-legend-${index}"]`);
-            await page.waitForTimeout(200);
             isFailed.push(await checkClassNameValue('#barstacked-s2-2008-bar', 'bar series-0'));
             isFailed.push(await checkClassNameValue('#barstacked-s2-2009-bar', 'bar series-1'));
             isFailed.push(await checkClassNameValue('#barstacked-s2-2010-bar', 'bar series-2'));
             await page.click(`[index-id="chart-legend-${index}"]`);
-            await page.waitForTimeout(200);
             break;
           default:
             console.warn('chart-legend-item element not found');

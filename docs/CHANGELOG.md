@@ -8,6 +8,7 @@
 
 ## v4.94.0 Fixes
 
+- `[Avatar]` Is no longer round by default. To use it in module nav add the new `square` class. ([#8539](https://github.com/infor-design/enterprise/issues/8539))
 - `[Calendar]` Fixed inconsistencies in border colors of events in calendar. ([#8452](https://github.com/infor-design/enterprise/issues/8452))
 - `[Datagrid]` Fixed datagrid unable to have resize handle when using different column structure such as single lines. ([#8417](https://github.com/infor-design/enterprise/issues/8417))
 - `[Datagrid]` Removed escaping HTML for cell nodes. ([#8516](https://github.com/infor-design/enterprise/issues/8516))
@@ -16,6 +17,7 @@
 - `[Calendar]` Fixed height calculation of homepage. ([NG#1478](https://github.com/infor-design/enterprise-ng/issues/1478))
 - `[Calendar]` Fixed event icon not properly rendered across week view mode. ([#8456](https://github.com/infor-design/enterprise/issues/8456))
 - `[Radio]` Fixed alignment in short form of radio button. ([#8193](https://github.com/infor-design/enterprise/issues/8193))
+- `[Tabs]` Added guards on possible undefined objects. ([#8419](https://github.com/infor-design/enterprise/issues/8419))
 - `[Textarea]` Fixed the character count message in textarea.([#8449](https://github.com/infor-design/enterprise/issues/8449))
 - `[Toolbar]` Fixed button shapes in toolbar. ([#8523](https://github.com/infor-design/enterprise/issues/8523))
 

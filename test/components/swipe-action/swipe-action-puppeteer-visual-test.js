@@ -13,8 +13,6 @@ describe('Swipe Action Puppeteer Visual Tests', () => {
     it.skip('should not visually regress', async () => {
       await page.waitForSelector('#maincontent', { visible: true });
 
-      await page.waitForTimeout(300);
-
       const mainContent = await page.$('#maincontent');
       const image = await mainContent.screenshot();
       const config = getConfig('swipe-action');

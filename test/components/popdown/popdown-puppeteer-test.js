@@ -92,7 +92,6 @@ describe('Popdown Puppeteer Tests', () => {
       // Last input should be focused in popdown.
       expect(await checkIfElementHasFocused('#last-name')).toBe(true);
 
-      await page.waitForTimeout(400);
       // Tab on last input in popdown
       await page.keyboard.press('Tab');
 
