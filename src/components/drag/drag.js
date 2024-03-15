@@ -141,6 +141,17 @@ Drag.prototype = {
         this.container = $(window);
       } else if (this.settings.containment === 'container') {
         this.container = this.element.closest('.page-container');
+      } else if (this.settings.containment === 'partial') {
+        // Partial, lets the user drag the object outside but partially
+        this.container = $(document);
+
+        if (this.settings.containmentOffset.top === 0) {
+          this.settings.containmentOffset.top = this.element.outerHeight() / 2;
+        }
+        
+        if (this.settings.containmentOffset.left === 0) {
+          this.settings.containmentOffset.left = this.element.outerWidth() / 2;
+        }
       } else {
         this.container = $(document);
       }
@@ -165,8 +176,12 @@ Drag.prototype = {
         css.top = 0;
       }
 
-      if (css.left < 0) {
+      if (this.settings.containment !== 'partial' && css.left < 0) {
         css.left = 0;
+      }
+
+      if (this.settings.containment === 'partial' && css.left < -(this.settings.containmentOffset.left)) {
+        css.left = -(this.settings.containmentOffset.left);
       }
 
       if (this.settings.containment === 'container' && css.left <= 1) {

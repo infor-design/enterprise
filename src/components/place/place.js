@@ -375,10 +375,18 @@ Place.prototype = {
         }
       }
 
+      if (incomingPlacementObj.parent.is('.datagrid-cell-wrapper')) {
+        cY -= 1;
+      }
+
       return [cX, cY];
     }
 
     if (placementObj.parent.is('.colorpicker') && Locale.isRTL()) {
+      placementObj.x += 30;
+    }
+
+    if ($(placementObj.parent).parent().is('.datagrid-cell-wrapper') && !Locale.isRTL()) {
       placementObj.x += 30;
     }
 
