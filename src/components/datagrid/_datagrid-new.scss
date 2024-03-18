@@ -479,10 +479,6 @@
 
   .datagrid-cell-wrapper {
     padding: 4px 8px 0;
-
-    .datagrid-checkbox-wrapper {
-      margin-top: -14px;
-    }
   }
 
   tbody tr td.is-editing {
@@ -1220,11 +1216,11 @@
               vertical-align: middle;
             }
 
-            
+
             svg.icon:not(.datagrid-alert-icon).icon-calendar {
               top: 2px;
             }
-            
+
             svg.icon:not(.datagrid-alert-icon).icon-clock {
               top: 2px;
             }
@@ -1277,12 +1273,12 @@
               span {
                 vertical-align: middle;
               }
-  
+
               .datepicker + button.trigger {
                 margin-top: 10px;
                 margin-left: 13.5px;
               }
-  
+
               .timepicker + button.trigger {
                 margin-left: -1.5px;
                 margin-top: 10.5px;
@@ -1302,7 +1298,7 @@
                 left: -5px;
               }
             }
-  
+
             &.is-editing {
               .datagrid-cell-wrapper {
                 .datepicker + button.trigger {
@@ -1325,7 +1321,7 @@
       tbody {
         tr.datagrid-row {
           td.datagrid-trigger-cell {
-            .datagrid-cell-wrapper {  
+            .datagrid-cell-wrapper {
               svg.icon:not(.datagrid-alert-icon).icon-calendar {
                 top: -3px;
                 left: -5px;
@@ -1347,7 +1343,7 @@
                   margin-top: 1px;
                   margin-left: 6.5px;
                 }
-    
+
                 .timepicker + button.trigger {
                   top: -6.5px;
                 }
@@ -1362,7 +1358,7 @@
       tbody {
         tr.datagrid-row {
           td.datagrid-trigger-cell {
-            .datagrid-cell-wrapper {  
+            .datagrid-cell-wrapper {
               span {
                 margin-top: 5px;
               }
@@ -1388,7 +1384,7 @@
                   margin-top: 5.5px;
                   margin-left: 12.5px;
                 }
-    
+
                 .timepicker + button.trigger {
                   top: 4px;
                   right: 9px;
