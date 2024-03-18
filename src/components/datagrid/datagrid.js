@@ -150,6 +150,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to trigger select row in datagrid.
  * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
+ * @param {boolean} [settings.showEditorIcons=false] If true will always show hoverable icons.
  * @param {string} [settings.fallbackImage='insert-image'] Will set a fall back image if the image formatter cannot load an image.
 */
 const DATAGRID_DEFAULTS = {
@@ -248,6 +249,7 @@ const DATAGRID_DEFAULTS = {
   dblClickApply: false,
   attributes: null,
   allowPasteFromExcel: false,
+  showEditorIcons: false,
   fallbackImage: 'insert-image',
   fallbackSize: { height: 40, width: 40 },
   fallbackTooltip: {
@@ -497,6 +499,10 @@ Datagrid.prototype = {
     if (this.settings.emptyMessage) {
       self.setEmptyMessage(this.settings.emptyMessage);
       self.checkEmptyMessage();
+    }
+
+    if (this.settings.showEditorIcons) {
+      self.element.addClass('show-editor-icons');
     }
 
     self.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
@@ -2270,7 +2276,8 @@ Datagrid.prototype = {
     const attrs = utils.stringAttributes(this, this.settings.attributes, `btn-filter-${col.id?.toLowerCase()}`);
 
     const renderButton = function (defaultValue, extraClass) {
-      return `<button type="button" ${attrs} class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} tabindex="0" type="button"><span class="audible">Filter</span>` +
+      const isSingle = col.filterConditions !== undefined && col.filterConditions.length === 1;
+      return `<button type="button" ${attrs} class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}${isSingle ? ' single' : ''}" data-init="false" ${isDisabled || isSingle ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} tabindex="0" type="button"><span class="audible">Filter</span>` +
       `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-filter-{{icon}}"></use></svg>${
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
