@@ -729,34 +729,36 @@ Homepage.prototype = {
       self.fitBlock(available.row, available.col, block);
     }
 
-    // set homepage height
-    const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card');
-    const card = $(cards[0]);
+    if (desktop) {
+      // set homepage height
+      const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card');
+      const card = $(cards[0]);
 
-    let rowsUsed = 0;
-    let abort = false;
-    let calcHeight = card.outerHeight();
-    calcHeight += parseInt(window.getComputedStyle(card[0]).getPropertyValue('margin-top'), 10);
-    calcHeight += parseInt(window.getComputedStyle(card[0]).getPropertyValue('margin-bottom'), 10);
- 
-    for (let rows = 0; rows < this.rowsAndCols.length && !abort; rows++) {
-      rowsUsed++;
-      const row = this.rowsAndCols[rows];
-      for (let cols = 0; cols < row.length && !abort; cols++) {
-        const col = row[cols];
-        if (col) {
-          abort = true;
+      let rowsUsed = 0;
+      let abort = false;
+      let calcHeight = card.outerHeight();
+      calcHeight += parseInt(window.getComputedStyle(card[0]).getPropertyValue('margin-top'), 10);
+      calcHeight += parseInt(window.getComputedStyle(card[0]).getPropertyValue('margin-bottom'), 10);
 
-          if (cols === 0) {
-            rowsUsed--;
+      for (let rows = 0; rows < this.rowsAndCols.length && !abort; rows++) {
+        rowsUsed++;
+        const row = this.rowsAndCols[rows];
+        for (let cols = 0; cols < row.length && !abort; cols++) {
+          const col = row[cols];
+          if (col) {
+            abort = true;
+
+            if (cols === 0) {
+              rowsUsed--;
+            }
           }
         }
       }
+
+      const contentHeight = (calcHeight * rowsUsed);
+      this.element.css('height', `${contentHeight}px`);
     }
-
-    const contentHeight = (calcHeight * rowsUsed);
-
-    this.element.css('height', `${contentHeight}px`);
+    
 
     /**
     * Fires after the page is resized and layout is set.
