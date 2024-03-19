@@ -660,7 +660,6 @@ charts.handleElementClick = function (idx, line, series, settings, container) {
     const chartLegendItem = container.find('.chart-legend-item');
 
     chartLegendItem.empty();
-    // may kulang dito somehow
     chartLegendItem.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
     chartLegendItem.attr('index-id', `chart-legend-${idx}`);
     container.find('.list-button').data('popupmenu').menu.children().removeClass('is-hidden');
