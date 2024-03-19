@@ -758,7 +758,6 @@ Homepage.prototype = {
       const contentHeight = (calcHeight * rowsUsed);
       this.element.css('height', `${contentHeight}px`);
     }
-    
 
     /**
     * Fires after the page is resized and layout is set.
