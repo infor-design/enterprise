@@ -57,6 +57,8 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 * @param {function} [settings.onFocusChange] an optional callback that runs whenever the Modal API attempts to change the focused element inside of its boundaries
 * @param {string} [settings.icon] Ability to add icon in the title.
+* @param {boolean} [settings.draggable=false] if true, allows user to drag/drop the modal container.
+* @param {object} [settings.draggableOffset={left: 0, top: 0}] Allowable offset outisde of the document.
 * @param {sring} [settings.iconClass] Ability to add class in the icon setting.
 */
 const MODAL_DEFAULTS = {
@@ -84,6 +86,8 @@ const MODAL_DEFAULTS = {
   triggerButton: null,
   hideUnderneath: false,
   suppressEnterKey: false,
+  draggable: false,
+  draggableOffset: { left: 0, top: 0 },
   icon: null,
   iconClass: null,
 };
@@ -299,6 +303,56 @@ Modal.prototype = {
 
     this.element.appendTo('body');
     this.element[0].style.display = 'none';
+  },
+
+  createDraggable() {
+    if (!this.settings.draggable) {
+      return;
+    }
+
+    const self = this;
+    const isTouch = env.features.touch;
+    const container = this.element;
+    const dropContainer = this.element.parent();    
+    const modalHeader = container.find('.modal-header');
+    const modalContent = container.find('.modal-content');
+    const containerHeight = modalContent.height() + parseInt(modalContent.css('margin-top').slice(0, -2), 10) + parseInt(modalContent.css('margin-bottom').slice(0, -2), 10);
+    const topPosition = (window.innerHeight / 2) - (containerHeight / 2);
+
+    const rules = { position: 'fixed', top: `${topPosition}px`, height: `${containerHeight}px` };
+    container.css(rules);
+    container.addClass('is-draggable');
+
+    modalHeader
+      .off('mousedown.modal touchstart.modal')
+      .on('mousedown.modal touchstart.modal', (e) => {
+        if (!isTouch) {
+          e.preventDefault();
+        }
+
+        // Initialize drag
+        container
+          .drag({ containment: 'partial', containmentOffset: self.settings.draggableOffset })
+
+          // Start drag
+          .off('dragstart.modal')
+          .on('dragstart.modal', () => {
+            e.stopImmediatePropagation();
+            container.attr('aria-grabbed', 'true');
+            dropContainer.attr('aria-dropeffect', 'move');
+          })
+
+          // End drag
+          .off('dragend.modal')
+          .on('dragend.modal', () => {
+            container.removeAttr('aria-grabbed');
+            dropContainer.removeAttr('aria-dropeffect');
+            const dragApi = container.data('drag');
+            if (dragApi && typeof dragApi.destroy === 'function') {
+              dragApi.destroy();
+            }
+          });
+      });
   },
 
   appendContent() {
@@ -1259,6 +1313,8 @@ Modal.prototype = {
     if (toolbars.length) {
       toolbars.triggerHandler('recalculate-buttons');
     }
+
+    this.createDraggable();
   },
 
   /**

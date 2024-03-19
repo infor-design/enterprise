@@ -2204,15 +2204,15 @@ Tabs.prototype = {
     // NOTE: Breaking Change as of 4.3.3 - `beforeactivate` to `beforeactivated`
     // See SOHO-5994 for more details
     /**
-     * Fires when an attempt at activating a tab is started
+     * Fires when an attempt at activating a tab is started. Returning false from the request function will cancel tab activation.
      *
      * @event beforeactivated
      * @memberof Tabs
      * @param {jQuery.Event} e event object
      * @param {jQuery} a the tab anchor attempting to activate
      */
-    const isCancelled = self.element.trigger('beforeactivated', [a]);
-    if (!isCancelled) {
+    const canActivate = self.element.triggerHandler('beforeactivated', [a]);
+    if (canActivate === false) {
       return false;
     }
 
