@@ -1626,8 +1626,6 @@ Datagrid.prototype = {
     if (self.headerRow === undefined) {
       if (self.hasLeftPane) {
         self.headerRowLeft = $(`<thead class="datagrid-header left" role="rowgroup">${headerRows.left}</thead>`);
-        // ELEPHANT
-        // there's no colgroup to insert
         self.tableLeft.find('colgroup').after(self.headerRowLeft);
       }
 
