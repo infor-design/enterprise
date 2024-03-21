@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="row generative-section">
+      <div class="four column">
+        <h2 class="fieldset-title">Generative AI</h2>
+      </div>
+    </div>
+
+    <div class="four columns generative-section">
+      <span class="label">Primary</span>
+      <button class="btn-primary btn-generative" type="button" id="btn-generate-ai-1">
+        <span>Generate</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use href="#icon-insights-smart-panel"></use>
+        </svg>
+      </button><br><br>
+    </div>
+
+    <div class="twelve columns">
+      <button class="btn-primary" type="button" id="btn-start">Start</button>
+      <button class="btn-secondary" type="button" id="btn-stop">Stop</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var btnApi;
+  $('#btn-generate-ai-1').on('click keypress', function (e) {
+    e.preventDefault();
+    var $btn = $(this);
+    btnApi = $btn.data('button');
+    btnApi.performGenerativeAction(10000);
+  });
+  
+  $('#btn-start').on('click keypress', function (e) {
+    e.preventDefault();
+    var $btn = $('#btn-generate-ai-1');
+    btnApi = $btn.data('button');
+    btnApi.startGenerativeActionAnimation();
+  });
+
+  $('#btn-stop').on('click keypress', function (e) {
+    e.preventDefault();
+    btnApi.stopGenerativeActionAnimation();
+  });
+</script>
