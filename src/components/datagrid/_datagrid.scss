@@ -4261,8 +4261,8 @@ td .btn-actions {
   &.is-checked::after {
     @include radio-checked-after-style;
 
-    top: 5px;
-    left: 4px;
+    top: 1px;
+    left: 25px;
   }
 }
 
