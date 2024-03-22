@@ -729,7 +729,7 @@ Homepage.prototype = {
       self.fitBlock(available.row, available.col, block);
     }
 
-    if (desktop) {
+    if (xl3 || xl2 || xl || desktop) {
       // set homepage height
       const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card');
       const card = $(cards[0]);
