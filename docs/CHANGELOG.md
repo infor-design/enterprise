@@ -7,6 +7,7 @@
 - `[Datagrid]` Added setting `showEditorIcons` to always display icon without hover. ([#8439](https://github.com/infor-design/enterprise/issues/8439))
 - `[Datagrid]` Disabled filter dropdown if selection is only one. ([NG#1570](https://github.com/infor-design/enterprise-ng/issues/1570))
 - `[Homepage]` Added row height style classes for widgets. ([#8211](https://github.com/infor-design/enterprise/issues/8211))
+- `[Lookup]` Added placeholder setting in toolbar. ([#8416](https://github.com/infor-design/enterprise/issues/8416))
 - `[Modal]` Added setting `draggable` to be able to drag modals. ([#7019](https://github.com/infor-design/enterprise/issues/7019))
 
 ## v4.94.0 Fixes
@@ -22,6 +23,7 @@
 - `[Calendar]` Fixed inconsistencies in border colors of events in calendar. ([#8452](https://github.com/infor-design/enterprise/issues/8452))
 - `[Calendar]` Fixed event icon not properly rendered across week view mode. ([#8456](https://github.com/infor-design/enterprise/issues/8456))
 - `[Radio]` Fixed alignment in short form of radio button. ([#8193](https://github.com/infor-design/enterprise/issues/8193))
+- `[Radio]` Fixed alignment in datagrid radio button. ([#8349](https://github.com/infor-design/enterprise/issues/8349))
 - `[Searchfield]` Fixed cut-off searchfield button. ([#8333](https://github.com/infor-design/enterprise/issues/8333))
 - `[Tabs]` Added guards on possible undefined objects. ([#8419](https://github.com/infor-design/enterprise/issues/8419))
 - `[Tabs]` Fixed `beforeactivated` event not cancelling activation of tabs properly. ([NG#1578](https://github.com/infor-design/enterprise-ng/issues/1578))
