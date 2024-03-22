@@ -22,6 +22,7 @@
 - `[Datepicker]` Added action in args passed on selected event. ([#8433](https://github.com/infor-design/enterprise/issues/8433))
 - `[Calendar]` Fixed inconsistencies in border colors of events in calendar. ([#8452](https://github.com/infor-design/enterprise/issues/8452))
 - `[Calendar]` Fixed event icon not properly rendered across week view mode. ([#8456](https://github.com/infor-design/enterprise/issues/8456))
+- `[Count]` Fixed misalignment in card header icon. ([#8448](https://github.com/infor-design/enterprise/issues/8448))
 - `[Radio]` Fixed alignment in short form of radio button. ([#8193](https://github.com/infor-design/enterprise/issues/8193))
 - `[Radio]` Fixed alignment in datagrid radio button. ([#8349](https://github.com/infor-design/enterprise/issues/8349))
 - `[Searchfield]` Fixed cut-off searchfield button. ([#8333](https://github.com/infor-design/enterprise/issues/8333))
