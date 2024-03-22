@@ -124,7 +124,20 @@
     }
   }
 
+  .card .timeline,
+  .widget .timeline {
+    &::before {
+      bottom: 60px;
+      left: 1.125em;
+      height: 85%;
+    }
+  }
+
   .timeline-block {
+    &:nth-last-child(2)::before {
+      visibility: hidden;
+    }
+
     .date,
     .indicator-container,
     .content {
@@ -139,11 +152,18 @@
     }
 
     .indicator-container {
-      margin-left: 11.5em;
+      margin-left: 0;
     }
 
-    .content {
-      margin-left: 3em;
+    .content,
+    .date {
+      margin-left: 5em;
+      float: none;
+    }
+
+    .date {
+      width: auto;
+      top: 85%;
     }
   }
 }
