@@ -954,6 +954,32 @@ charts.setSelectedElement = function (o) {
         .classed('is-not-selected', false)
         .attr('transform', 'scale(1.025, 1.025)');
       triggerData.push({ elem: selector.nodes(), data: thisArcData, index: o.i });
+
+      const isTwoColumn = o.series[0].display && o.series[0].display === 'twocolumn';
+      if (isTwoColumn && this.hasLegendPopup) {
+        const elem = o.series[o.i];
+        const chartType = o.settings.type === 'donut' ? 'pie' : o.settings.type;
+        const hexColor = charts.chartColor(o.i, chartType || (o.series.length === 1 ? 'bar-single' : 'bar'), o.series[o.i]);
+        const colorName = charts.chartColorName(o.i, chartType || (o.series.length === 1 ? 'bar-single' : 'bar'), o.series[o.i]);
+        let color = '';
+        if (colorName.substr(0, 1) === '#') {
+          color = $('<span class="chart-legend-color"></span>');
+          if (!elem.pattern) {
+            color.css('background-color', hexColor);
+          }
+        } else {
+          color = $(`<span class="chart-legend-color ${elem.pattern ? '' : colorName}"></span>`);
+        }
+
+        const textBlock = $(`<span class="chart-legend-item-text">${xssUtils.stripTags(elem.name)}</span>`);
+        const chartLegendItem = o.container.find('.chart-legend-item');
+
+        chartLegendItem.empty();
+        chartLegendItem.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
+        chartLegendItem.attr('index-id', `chart-legend-${o.i}`);
+        o.container.find('.list-button').data('popupmenu').menu.children().removeClass('is-hidden');
+        $(o.container.find('.list-button').data('popupmenu').menu.children().get(o.i)).addClass('is-hidden');
+      }
     }
   } else {
     // Task make unselected
