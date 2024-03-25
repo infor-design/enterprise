@@ -4,6 +4,7 @@ import { Locale } from '../locale/locale';
 import { stringUtils as str } from '../../utils/string';
 import { Tmpl } from '../tmpl/tmpl';
 import '../../utils/selectable.jquery';
+import { breakpoints } from '../../utils/breakpoints';
 
 // Settings and Options
 const COMPONENT_NAME = 'cards';
@@ -264,7 +265,7 @@ Cards.prototype = {
       return;
     }
 
-    const isMobileViewport = this.element.width() <= 360;
+    const isMobileViewport = breakpoints.isBelow('slim');
     const infoIcon = this.cardHeader.find('> .icon');
 
     infoIcon.css('display', `${isMobileViewport ? 'none' : ''}`);
