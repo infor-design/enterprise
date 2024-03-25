@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { Environment as env } from '../../utils/environment';
 
 // Default Settings
 const COMPONENT_NAME = 'homepage';
@@ -589,6 +590,15 @@ Homepage.prototype = {
     }
   },
 
+    /**
+   * Returns true if the object is a mobile element.
+   * @private
+   * @returns {boolean} code - True if this is a mobile device
+   */
+  isMobile() {
+    return ['ios', 'android'].indexOf(env.os.name) > -1;
+  },
+
   /**
    * Move an array element position
    * @private
@@ -729,7 +739,8 @@ Homepage.prototype = {
       self.fitBlock(available.row, available.col, block);
     }
 
-    if (xl3 || xl2 || xl || desktop) {
+    this.element.css('height', '');
+    if (!this.isMobile()) {
       // set homepage height
       const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card');
       const card = $(cards[0]);
