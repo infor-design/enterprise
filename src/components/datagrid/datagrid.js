@@ -296,7 +296,6 @@ Datagrid.prototype = {
   */
   init() {
     const html = $('html');
-
     this.isTouch = env.features.touch;
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
@@ -1630,7 +1629,7 @@ Datagrid.prototype = {
         self.tableLeft.find('colgroup').after(self.headerRowLeft);
       }
 
-      self.headerRow = $(`<thead class="datagrid-header center"> role="rowgroup"${headerRows.center}</thead>`);
+      self.headerRow = $(`<thead class="datagrid-header center"> role="rowgroup">${headerRows.center}</thead>`);
       self.table.find('colgroup').after(self.headerRow);
 
       if (self.hasRightPane) {
@@ -4318,34 +4317,35 @@ Datagrid.prototype = {
       if (this.settings.spacerColumn) {
         self.bodyColGroupHtml += '<col style="width: 100%">';
       }
-      self.bodyColGroupHtmlLeft += '</colgroup>';
-      self.bodyColGroupHtml += '</colgroup>';
-      self.bodyColGroupHtmlRight += '</colgroup>';
+    }
 
-      if (self.bodyColGroupLeft) {
-        self.bodyColGroupLeft.remove();
-      }
+    self.bodyColGroupHtmlLeft += '</colgroup>';
+    self.bodyColGroupHtml += '</colgroup>';
+    self.bodyColGroupHtmlRight += '</colgroup>';
 
-      if (self.bodyColGroup) {
-        self.bodyColGroup.remove();
-      }
+    if (self.bodyColGroupLeft) {
+      self.bodyColGroupLeft.remove();
+    }
 
-      if (self.bodyColGroupRight) {
-        self.bodyColGroupRight.remove();
-      }
+    if (self.bodyColGroup) {
+      self.bodyColGroup.remove();
+    }
 
-      if (self.hasLeftPane) {
-        self.bodyColGroupLeft = $(self.bodyColGroupHtmlLeft);
-        (self.tableBodyLeft || self.headerRowLeft).before(self.bodyColGroupLeft);
-      }
+    if (self.bodyColGroupRight) {
+      self.bodyColGroupRight.remove();
+    }
 
-      self.bodyColGroup = $(self.bodyColGroupHtml);
-      (self.headerRow || self.tableBody).before(self.bodyColGroup);
+    if (self.hasLeftPane) {
+      self.bodyColGroupLeft = $(self.bodyColGroupHtmlLeft);
+      (self.tableBodyLeft || self.headerRowLeft).before(self.bodyColGroupLeft);
+    }
 
-      if (self.hasRightPane) {
-        self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
-        (self.tableBodyRight || self.headerRowRight).before(self.bodyColGroupRight);
-      }
+    self.bodyColGroup = $(self.bodyColGroupHtml);
+    (self.headerRow || self.tableBody).before(self.bodyColGroup);
+
+    if (self.hasRightPane) {
+      self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
+      (self.tableBodyRight || self.headerRowRight).before(self.bodyColGroupRight);
     }
 
     if (self.hasLeftPane) {
