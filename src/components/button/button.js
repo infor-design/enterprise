@@ -19,7 +19,8 @@ const buttonStyles = [
   'btn-primary',
   'btn-secondary',
   'btn-tertiary',
-  'btn-destructive'
+  'btn-destructive',
+  'btn-generative'
 ];
 
 // Types of Buttons
