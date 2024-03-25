@@ -590,15 +590,6 @@ Homepage.prototype = {
     }
   },
 
-    /**
-   * Returns true if the object is a mobile element.
-   * @private
-   * @returns {boolean} code - True if this is a mobile device
-   */
-  isMobile() {
-    return ['ios', 'android'].indexOf(env.os.name) > -1;
-  },
-
   /**
    * Move an array element position
    * @private
@@ -739,8 +730,9 @@ Homepage.prototype = {
       self.fitBlock(available.row, available.col, block);
     }
 
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     this.element.css('height', '');
-    if (!this.isMobile()) {
+    if (!isMobile) {
       // set homepage height
       const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card');
       const card = $(cards[0]);
