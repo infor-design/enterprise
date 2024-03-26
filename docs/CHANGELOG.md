@@ -30,6 +30,7 @@
 - `[Tabs]` Fixed `beforeactivated` event not cancelling activation of tabs properly. ([NG#1578](https://github.com/infor-design/enterprise-ng/issues/1578))
 - `[Textarea]` Fixed the character count message in textarea.([#8449](https://github.com/infor-design/enterprise/issues/8449))
 - `[Toolbar]` Fixed button shapes in toolbar. ([#8523](https://github.com/infor-design/enterprise/issues/8523))
+- `[ToolbarFlex]` Fixed more button throwing error when click two times. ([#8430](https://github.com/infor-design/enterprise/issues/8430))
 
 ## v4.93.0
 
