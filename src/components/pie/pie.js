@@ -306,6 +306,8 @@ Pie.prototype = {
         return { name, display: 'twocolumn', placement: s.legendPlacement, color: d.color, data: d };
       });
 
+      this.series = series;
+
       s.svg = self.svg;
       charts.addLegend(series, 'pie', s, this.element);
     }
@@ -948,6 +950,8 @@ Pie.prototype = {
       isTrigger: self.initialSelectCall ? false : !isSelected,
       d: d.data,
       i,
+      settings: self.settings,
+      series: self.series,
       type: self.settings.type,
       dataset: self.settings.dataset,
       svg: self.svg
