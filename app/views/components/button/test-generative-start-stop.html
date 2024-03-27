@@ -26,22 +26,15 @@
 
 <script>
   var btnApi;
-  $('#btn-generate-ai-1').on('click keypress', function (e) {
-    e.preventDefault();
-    var $btn = $(this);
-    btnApi = $btn.data('button');
-    btnApi.performGenerativeAction(10000);
-  });
-  
   $('#btn-start').on('click keypress', function (e) {
     e.preventDefault();
     var $btn = $('#btn-generate-ai-1');
     btnApi = $btn.data('button');
-    btnApi.startGenerativeActionAnimation();
+    btnApi.startAnimation();
   });
 
   $('#btn-stop').on('click keypress', function (e) {
     e.preventDefault();
-    btnApi.stopGenerativeActionAnimation();
+    btnApi.stopAnimation();
   });
 </script>

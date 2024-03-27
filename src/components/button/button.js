@@ -609,7 +609,7 @@ Button.prototype = {
    * @param {number} delay - The delay (in milliseconds) before replacing the loading indicator.
    * @returns {void}
    */
-  performGenerativeAction(delay = 5000) {
+  performAnimation(delay = 5000) {
     this.renderGenerativeStyles();
     this.generativeAnimation = setTimeout(() => {
       this.removeGenerativeStyles();      
@@ -621,8 +621,8 @@ Button.prototype = {
    * 
    * @returns {void}
    */
-  startGenerativeActionAnimation() {
-    this.performGenerativeAction();
+  startAnimation() {
+    this.performAnimation();
   },
 
   /**
@@ -630,7 +630,7 @@ Button.prototype = {
    * 
    * @returns {void}
    */
-  stopGenerativeActionAnimation() {
+  stopAnimation() {
     if (isNaN(this.generativeAnimation)) {
       return;
     }
