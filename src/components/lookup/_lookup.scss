@@ -314,6 +314,11 @@ html.is-safari {
     }
   }
 
+  .datagrid-header .datagrid-filter-wrapper .lookup-wrapper .trigger {
+    margin-left: -17px;
+    top: -1px;
+  }
+
   .field-short {
     .lookup-wrapper {
       .trigger {
