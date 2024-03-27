@@ -1,0 +1,68 @@
+
+  <div id="maincontent" class="page-container scrollable"  role="main">
+    <div class="row">
+      <div class="twelve columns">
+        <button class="btn-secondary" type="button" id="btn-add">Add Widget</button>
+        <button class="btn-secondary" type="button" id="btn-remove">Remove Widget</button>
+      </div>
+    </div>
+    <div class="homepage" data-columns="3" data-use-small="true">
+      <div class="content">
+  
+        <div class="small-widget">
+          <div class="widget-header">
+            <h2 class="widget-title">Widget 1x1</h2>
+          </div>
+        </div>
+  
+        <div class="small-widget">
+          <div class="widget-header">
+            <h2 class="widget-title">Widget 1x1</h2>
+          </div>
+        </div>
+  
+        <div class="small-widget">
+          <div class="widget-header">
+            <h2 class="widget-title">Widget 1x1</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pager-container"></div>
+  </div>
+
+<script>
+  $('body').on('initialized', function() {
+    var homepageApi = $('.homepage').data('homepage');
+    var container = $('.homepage > .content');
+    var template = ''+
+      '<div class="small-widget">'+
+        '<div class="widget-header">'+
+          '<h2 class="widget-title">Widget 1x1</h2>'+
+        '</div>'+
+      '</div>';
+
+    $('#btn-add').on('click', function () {
+      if (homepageApi) {
+        container.prepend(template);
+        homepageApi.refresh();
+      }
+    });
+
+    $('#btn-remove').on('click', function () {
+      if (homepageApi) {
+        $('.homepage .small-widget:first').remove();
+        homepageApi.refresh();
+      }
+    });
+
+    $('.homepage').on('resize', function (e, rows, metadata) {
+      console.log(this, this.offsetHeight, metadata);
+    });
+
+    var api = $('.pager-container').pager({
+      type: 'standalone',
+      pagesize: 10
+      }).data('pager');
+  });
+</script>
