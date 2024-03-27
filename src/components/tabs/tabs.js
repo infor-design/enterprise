@@ -3410,7 +3410,7 @@ Tabs.prototype = {
         prevWidth = parseInt(window.getComputedStyle(tabs[i]).width, 10);
 
         if (this.settings.maxWidth !== null && a[0].scrollWidth > a.innerWidth()) {
-          cutoff = 'yes'
+          cutoff = 'yes';
         } 
         
         if (this.settings.maxWidth === null && prevWidth > (visibleTabSize - anchorPadding)) {
