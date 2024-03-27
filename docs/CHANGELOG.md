@@ -16,6 +16,7 @@
 - `[Bar]` Fixed axis label visibility by adding font-size in `axis-labels` container. ([#8431](https://github.com/infor-design/enterprise/issues/8431))
 - `[Calendar]` Fixed event icon not properly rendered across week view mode. ([#8456](https://github.com/infor-design/enterprise/issues/8456))
 - `[Calendar]` Fixed inconsistencies in border colors of events in calendar. ([#8452](https://github.com/infor-design/enterprise/issues/8452))
+- `[Homepage]` Fixed the resize issues of bar, column, donut and line when using in homepage. ([#8410](https://github.com/infor-design/enterprise/issues/8410))
 - `[Datagrid]` Fixed datagrid unable to have resize handle when using different column structure such as single lines. ([#8417](https://github.com/infor-design/enterprise/issues/8417))
 - `[Datagrid]` Removed escaping HTML for cell nodes. ([#8516](https://github.com/infor-design/enterprise/issues/8516))
 - `[Datagrid]` Fixed missing headers in frozen columns. ([NG#1590](https://github.com/infor-design/enterprise-ng/issues/1590))
