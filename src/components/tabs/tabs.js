@@ -321,7 +321,7 @@ Tabs.prototype = {
 
       // Make it possible for Module Tabs to display a tooltip containing their contents
       // if the contents are cut off by ellipsis.
-      if (self.settings.moduleTabsTooltips || self.settings.multiTabsTooltips) {
+      if (self.settings.moduleTabsTooltips || self.settings.multiTabsTooltips || self.settings.headerTabsTooltips) {
         a.on('beforeshow.toolbar', () => a.data('cutoffTitle') === 'yes').tooltip({
           content: `${a.text().trim()}`
         });
@@ -2687,7 +2687,7 @@ Tabs.prototype = {
 
     // Make it possible for Module Tabs to display a tooltip containing their contents
     // if the contents are cut off by ellipsis.
-    if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips) {
+    if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
       anchorMarkup.on('beforeshow.toolbar', () => anchorMarkup.data('cutoffTitle') === 'yes').tooltip({
         content: `${anchorMarkup.text().trim()}`
       });
@@ -3394,29 +3394,31 @@ Tabs.prototype = {
     for (let i = 0; i < tabs.length; i++) {
       a = tabs.eq(i).children('a');
       a[0].style.width = '';
-      if (this.settings.moduleTabsTooltips === true ||
-        this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
+
+      if (!this.settings.headerTabsTooltips || this.settings.maxWidth === null) {
+        let diff = 0;
+        if (env.os.name === 'ios' && env.devicespecs.isMobile && isSideBySide) {
+          diff = 25;
+        }
+        tabs[i].style.width = `${visibleTabSize - diff}px`;
+        a[0].style.width = `${visibleTabSize - diff}px`;
+      }
+
+      if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
         cutoff = 'no';
 
         prevWidth = parseInt(window.getComputedStyle(tabs[i]).width, 10);
 
-        if (prevWidth > (visibleTabSize - this.settings.headerTabsTooltips ? 0 : anchorPadding)) {
-          cutoff = 'yes';
-        }
-
-        if (this.settings.maxWidth !== null && a[0].offsetWidth < a[0].scrollWidth) {
+        if (this.settings.maxWidth !== null && a[0].scrollWidth > a.innerWidth()) {
+          cutoff = 'yes'
+        } 
+        
+        if (this.settings.maxWidth === null && prevWidth > (visibleTabSize - anchorPadding)) {
           cutoff = 'yes';
         }
 
         a.data('cutoffTitle', cutoff);
       }
-
-      let diff = 0;
-      if (env.os.name === 'ios' && env.devicespecs.isMobile && isSideBySide) {
-        diff = 25;
-      }
-      tabs[i].style.width = `${visibleTabSize - diff}px`;
-      a[0].style.width = `${visibleTabSize - diff}px`;
     }
   },
 

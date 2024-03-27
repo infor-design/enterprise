@@ -29,6 +29,7 @@
 - `[Searchfield]` Fixed cut-off searchfield button. ([#8333](https://github.com/infor-design/enterprise/issues/8333))
 - `[Tabs]` Added guards on possible undefined objects. ([#8419](https://github.com/infor-design/enterprise/issues/8419))
 - `[Tabs]` Fixed `beforeactivated` event not cancelling activation of tabs properly. ([NG#1578](https://github.com/infor-design/enterprise-ng/issues/1578))
+- `[TabsHeader]` Fixed tooltip not showing properly when there is an ellipsis in tabs. ([#8446](https://github.com/infor-design/enterprise/issues/8446))
 - `[Textarea]` Fixed the character count message in textarea.([#8449](https://github.com/infor-design/enterprise/issues/8449))
 - `[Toolbar]` Fixed button shapes in toolbar. ([#8523](https://github.com/infor-design/enterprise/issues/8523))
 
