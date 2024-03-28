@@ -3919,7 +3919,7 @@ $datagrid-small-row-height: 25px;
 
     .lookup-wrapper {
       background-color: transparent;
-      display: initial;
+      display: inline;
       left: 0;
       vertical-align: top;
       width: calc(100% - 44px);
@@ -5792,6 +5792,12 @@ html[dir='rtl'] {
   &.is-mac.is-firefox {
     .datagrid .datagrid-header .datagrid-filter-wrapper .lookup-wrapper .trigger {
       margin-top: 3px;
+    }
+  }
+
+  &.is-safari {
+    .datagrid .datagrid-header .datagrid-filter-wrapper .lookup-wrapper {
+      padding-left: 8px;
     }
   }
 }
