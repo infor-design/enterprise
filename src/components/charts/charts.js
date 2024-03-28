@@ -940,47 +940,57 @@ charts.setSelectedElement = function (o) {
       });
       triggerData = selectedBars;
     } else if (isTypePie) { // Pie
-      if (o.i) {
-        // Unselect selected ones
-        svg.selectAll('.slice')
-          .classed('is-selected', false)
-          .classed('is-not-selected', true)
-          .attr('transform', '');
+      // Unselect selected ones
+      svg.selectAll('.slice')
+        .classed('is-selected', false)
+        .classed('is-not-selected', true)
+        .attr('transform', '');
 
-        let thisArcData = dataset && dataset[0] && dataset[0].data ?  //eslint-disable-line
-          dataset[0].data[o.i] : (o.d ? o.d.data : o.d);  //eslint-disable-line
-        thisArcData = thisArcData || {};
-        thisArcData.selected = true;
-        selector.classed('is-selected', true)
-          .classed('is-not-selected', false)
-          .attr('transform', 'scale(1.025, 1.025)');
-        triggerData.push({ elem: selector.nodes(), data: thisArcData, index: o.i });
+      let thisArcData = dataset && dataset[0] && dataset[0].data ?  //eslint-disable-line
+        dataset[0].data[o.i] : (o.d ? o.d.data : o.d);  //eslint-disable-line
+      thisArcData = thisArcData || {};
+      thisArcData.selected = true;
+      selector.classed('is-selected', true)
+        .classed('is-not-selected', false)
+        .attr('transform', 'scale(1.025, 1.025)');
+      triggerData.push({ elem: selector.nodes(), data: thisArcData, index: o.i });
 
-        const isTwoColumn = o.series[0].display && o.series[0].display === 'twocolumn';
-        if (isTwoColumn && this.hasLegendPopup) {
-          const elem = o.series[o.i];
-          const chartType = o.settings.type === 'donut' ? 'pie' : o.settings.type;
-          const hexColor = charts.chartColor(o.i, chartType || (o.series.length === 1 ? 'bar-single' : 'bar'), o.series[o.i]);
-          const colorName = charts.chartColorName(o.i, chartType || (o.series.length === 1 ? 'bar-single' : 'bar'), o.series[o.i]);
-          let color = '';
-          if (colorName.substr(0, 1) === '#') {
-            color = $('<span class="chart-legend-color"></span>');
-            if (!elem.pattern) {
-              color.css('background-color', hexColor);
-            }
-          } else {
-            color = $(`<span class="chart-legend-color ${elem.pattern ? '' : colorName}"></span>`);
+      if (o.i === undefined) {
+        const nodeList = svg.selectAll('.slice')._groups[0];
+        o.i = 0;
+
+        for (let i = 0; i < nodeList.length; i++) {
+          if ($(nodeList[i]).attr('class').includes('is-selected')) {
+            o.i = i;
+            break;
           }
-
-          const textBlock = $(`<span class="chart-legend-item-text">${xssUtils.stripTags(elem.name)}</span>`);
-          const chartLegendItem = o.container.find('.chart-legend-item');
-
-          chartLegendItem.empty();
-          chartLegendItem.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
-          chartLegendItem.attr('index-id', `chart-legend-${o.i}`);
-          o.container.find('.list-button').data('popupmenu').menu.children().removeClass('is-hidden');
-          $(o.container.find('.list-button').data('popupmenu').menu.children().get(o.i)).addClass('is-hidden');
         }
+      }
+
+      const isTwoColumn = o.series[0].display && o.series[0].display === 'twocolumn';
+      if (isTwoColumn && this.hasLegendPopup) {
+        const elem = o.series[o.i];
+        const chartType = o.settings.type === 'donut' ? 'pie' : o.settings.type;
+        const hexColor = charts.chartColor(o.i, chartType || (o.series.length === 1 ? 'bar-single' : 'bar'), o.series[o.i]);
+        const colorName = charts.chartColorName(o.i, chartType || (o.series.length === 1 ? 'bar-single' : 'bar'), o.series[o.i]);
+        let color = '';
+        if (colorName.substr(0, 1) === '#') {
+          color = $('<span class="chart-legend-color"></span>');
+          if (!elem.pattern) {
+            color.css('background-color', hexColor);
+          }
+        } else {
+          color = $(`<span class="chart-legend-color ${elem.pattern ? '' : colorName}"></span>`);
+        }
+
+        const textBlock = $(`<span class="chart-legend-item-text">${xssUtils.stripTags(elem.name)}</span>`);
+        const chartLegendItem = o.container.find('.chart-legend-item');
+
+        chartLegendItem.empty();
+        chartLegendItem.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
+        chartLegendItem.attr('index-id', `chart-legend-${o.i}`);
+        o.container.find('.list-button').data('popupmenu').menu.children().removeClass('is-hidden');
+        $(o.container.find('.list-button').data('popupmenu').menu.children().get(o.i)).addClass('is-hidden');
       }
     }
   } else {
