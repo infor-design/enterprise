@@ -8,6 +8,11 @@
   .chart-legend.is-bottom {
     padding-bottom: 0;
     padding-top: 5px;
+
+    .chart-legend-item-text {
+      color: $chart-legend-item-text-color;
+      font-weight: 400;
+    }
   }
 
   &.has-bottom-legend.auto-height {
