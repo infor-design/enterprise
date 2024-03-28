@@ -3919,7 +3919,7 @@ $datagrid-small-row-height: 25px;
 
     .lookup-wrapper {
       background-color: transparent;
-      display: inline;
+      display: initial;
       left: 0;
       vertical-align: top;
       width: calc(100% - 44px);
@@ -4707,6 +4707,10 @@ td .btn-actions {
   }
 
   .datagrid {
+    .datagrid-header .datagrid-filter-wrapper .lookup-wrapper .trigger:not(:focus) {
+      margin-top: -3px;
+    }
+
     &.medium-rowheight {
       .datagrid-trigger-cell .icon.icon-clock {
         top: 0;
@@ -5484,7 +5488,7 @@ html[dir='rtl'] {
   // Filter Row
   .datagrid-filter-wrapper {
     .btn-filter {
-      left: -8px;
+      left: -4px;
 
       .icon-dropdown {
         margin-left: -3px;
@@ -5783,6 +5787,12 @@ html[dir='rtl'] {
 
   .dropdown-list.datagrid-filter-dropdown > .trigger .icon {
     margin-right: -14px;
+  }
+
+  &.is-mac.is-firefox {
+    .datagrid .datagrid-header .datagrid-filter-wrapper .lookup-wrapper .trigger {
+      margin-top: 3px;
+    }
   }
 }
 
