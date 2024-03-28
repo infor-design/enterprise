@@ -478,6 +478,12 @@
   }
 }
 
+@media only screen and (max-height: 1250px) {
+  .homepage {
+    height: calc(100% - 75px);
+  }
+}
+
 @media only screen and (max-width: 1500px) {
   .hero-widget {
     .hero-content {
