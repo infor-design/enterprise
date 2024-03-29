@@ -12,6 +12,8 @@
     .chart-legend-item-text {
       color: $chart-legend-item-text-color;
       font-weight: 400;
+      top: 1px;
+      position: relative;
     }
   }
 
