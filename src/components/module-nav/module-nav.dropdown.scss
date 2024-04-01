@@ -37,6 +37,12 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
       top: 4px;
     }
 
+    &.is-disabled {
+      + .icon {
+        display: none;
+      }
+    }
+
     // Overrides a dropdown default
     &:focus {
       box-shadow: none;
