@@ -42,7 +42,7 @@ const COMPONENT_NAME = 'datagrid';
  *
  * @param {jQuery[]|HTMLElement} element The component element.
  * @param {object}   [settings] The component settings.
- * @param {boolean}  [settings.actionableMode=false] If actionableMode is "true, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
+ * @param {boolean}  [settings.actionableMode=false] If actionableMode is "true", tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
  * @param {boolean}  [settings.cellNavigation=true] If cellNavigation is "false, will show border around whole row on focus
  * @param {boolean}  [settings.rowNavigation=true] If rowNavigation is "false, will NOT show border around the row
  * @param {boolean}  [settings.showHoverState=true] If false there will be no hover effect.
@@ -434,6 +434,7 @@ Datagrid.prototype = {
   firstRender() {
     const self = this;
     const hasColWidth = self.settings.columns.some(col => col.width !== undefined);
+    const isContextualPanel = this.element.parents('.contextual-action-panel').length > 0;
     this.hasLeftPane = this.settings.frozenColumns.left.length > 0;
     this.hasRightPane = this.settings.frozenColumns.right.length > 0;
 
@@ -447,7 +448,7 @@ Datagrid.prototype = {
     self.table = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.bodyWrapperCenter);
     self.element.append(self.bodyWrapperCenter);
 
-    if (hasColWidth) {
+    if (hasColWidth && isContextualPanel) {
       self.table.css('width', 'inherit');
     }
 
