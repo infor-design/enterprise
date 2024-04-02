@@ -37,6 +37,7 @@
 - `[Textarea]` Fixed the character count message in textarea.([#8449](https://github.com/infor-design/enterprise/issues/8449))
 - `[Timeline]` Fixed alignment in widget.([#8524](https://github.com/infor-design/enterprise/issues/8524))
 - `[Toolbar]` Fixed button shapes in toolbar. ([#8523](https://github.com/infor-design/enterprise/issues/8523))
+- `[ToolbarFlex]` Fixed more button throwing error when click two times. ([#8430](https://github.com/infor-design/enterprise/issues/8430))
 
 ## v4.93.0
 
