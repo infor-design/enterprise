@@ -24,7 +24,7 @@ Soho.Locale.addCulture('en-ZA', {
       timestampMillis: 'HH:mm:ss.SSS',
       hour: 'HH:mm',
       datetime: 'yyyy/MM/dd HH:mm',
-      dateTimestamp: 'yyyy-MM-dd HH:mm:ss',
+      dateTimestamp: 'yyyy/MM/dd HH:mm:ss',
       datetimeMillis: 'yyyy/MM/dd HH:mm:ss.SSS',
       timezone: 'yyyy/MM/dd HH:mm zz',
       timezoneLong: 'yyyy/MM/dd HH:mm zzzz'
