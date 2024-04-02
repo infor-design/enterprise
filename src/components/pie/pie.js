@@ -167,7 +167,7 @@ Pie.prototype = {
 
     const hasParentBordered = this.element.parents('.widget').hasClass('bordered');
     const w = parseInt(this.element.width(), 10);
-    let h = parseInt(this.element.height(), 10);
+    let h = this.element.height() < 320 ? 320 : parseInt(this.element.height(), 10);
 
     const dims = {
       height: h,
