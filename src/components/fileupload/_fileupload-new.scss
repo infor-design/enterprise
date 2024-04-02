@@ -57,6 +57,12 @@
 }
 
 .field-fileupload {
+  .fileupload:not([disabled]) + .trigger {
+    &:hover {
+      background-color: $button-color-tertiary-hover-background-new;
+    }
+  }
+
   .trigger,
   .trigger-close {
     &.trigger-close {
@@ -66,6 +72,18 @@
 
     &.trigger {
       top: -2px;
+    }
+  }
+}
+
+.form-layout-compact {
+  .field-fileupload {
+    .trigger {
+      top: -1px;
+
+      .icon {
+        top: 4px;
+      }
     }
   }
 }

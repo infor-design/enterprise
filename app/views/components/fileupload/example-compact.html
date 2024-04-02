@@ -1,0 +1,68 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="form-layout-compact">
+      <div class="field">
+        <label for="fileupload">File Upload</label>
+        <input type="file" class="fileupload" id="fileupload" name="fileupload" data-init="false"/>
+      </div>
+    </div>
+
+    <div class="form-layout-compact">
+      <div class="field">
+        <label for="fileupload-readonly">File Upload (Readonly)</label>
+        <input type="file" class="fileupload" id="fileupload-readonly" readonly="true" name="fileupload" value="Readme.txt" data-init="false"/>
+      </div>
+    </div>
+
+    <div class="form-layout-compact">
+      <div class="field">
+        <label for="fileupload-disabled">File Upload (Disabled)</label>
+        <input type="file" class="fileupload" id="fileupload-disabled" disabled="true" name="fileupload" value="Readme.txt"/>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('#fileupload').fileupload({
+    attributes: [
+      {
+        name: 'id',
+        value: 'fileupload'
+      },
+      {
+        name: 'data-automation-id',
+        value: 'fileupload-automation-id'
+      }
+    ]
+  });
+
+  $('#fileupload-readonly').fileupload({
+    attributes: [
+      {
+        name: 'id',
+        value: 'fileupload-readonly'
+      },
+      {
+        name: 'data-automation-id',
+        value: 'fileupload-readonly-automation-id'
+      }
+    ]
+  });
+
+  $('#fileupload-disabled').fileupload({
+    attributes: [
+      {
+        name: 'id',
+        value: 'fileupload-disabled'
+      },
+      {
+        name: 'data-automation-id',
+        value: 'fileupload-disabled-automation-id'
+      }
+    ]
+  });
+</script>
