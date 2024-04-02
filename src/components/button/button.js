@@ -19,7 +19,8 @@ const buttonStyles = [
   'btn-primary',
   'btn-secondary',
   'btn-tertiary',
-  'btn-destructive'
+  'btn-destructive',
+  'btn-generative'
 ];
 
 // Types of Buttons
@@ -608,7 +609,43 @@ Button.prototype = {
    * @param {number} delay - The delay (in milliseconds) before replacing the loading indicator.
    * @returns {void}
    */
-  performGenerativeAction(delay) {
+  performAnimation(delay = 5000) {
+    this.renderGenerativeStyles();
+    this.generativeAnimation = setTimeout(() => {
+      this.removeGenerativeStyles();      
+    }, delay);
+  },
+
+  /**
+   * Starts a generative action.
+   * 
+   * @returns {void}
+   */
+  startAnimation() {
+    this.performAnimation();
+  },
+
+  /**
+   * Stops a generative action.
+   * 
+   * @returns {void}
+   */
+  stopAnimation() {
+    if (isNaN(this.generativeAnimation)) {
+      return;
+    }
+
+    clearTimeout(this.generativeAnimation);
+    this.generativeAnimation = undefined;
+    this.removeGenerativeStyles();
+  },
+
+  /**
+   * Renders a generative action by replacing the content of a button with a loading indicator.
+   * 
+   * @returns {void}
+   */
+  renderGenerativeStyles() {
     /**
      * The element representing the button.
      * @type {jQuery}
@@ -630,13 +667,6 @@ Button.prototype = {
       </div>
     `;
 
-    // Define HTML markup for the generated AI content
-    const generativeIcon = `
-      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-        <use href="#icon-insights-smart-panel"></use>
-      </svg>
-    `;
-
     // Replace the content of the button with the loading indicator
     $svg.replaceWith(loader);
 
@@ -644,20 +674,38 @@ Button.prototype = {
 
     // Disable user interactions with the button during the loading process
     $elem.css('pointer-events', 'none');
+  },
 
-    setTimeout(() => {
-      // Replace the loading indicator with the generated AI content
-      if ($elem.hasClass('btn-tertiary') && $elem.hasClass('btn-generative')) {
-        $elem.find('.dot-flashing-container').replaceWith(this.tertiaryGenerativeIcon);
-      } else {
-        $elem.find('.dot-flashing-container').replaceWith(generativeIcon);
-      }
+  /**
+   * Removes a generative action by replacing it with generated AI content.
+   * 
+   * @returns {void}
+   */
+  removeGenerativeStyles() {
+    /**
+     * The element representing the button.
+     * @type {jQuery}
+     */
+    const $elem = this.element;
 
-      $elem.removeClass('loading');
+    // Define HTML markup for the generated AI content
+    const generativeIcon = `
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use href="#icon-insights-smart-panel"></use>
+      </svg>
+    `;
 
-      // Enable user interactions with the button after the loading process is complete
-      $elem.css('pointer-events', '');
-    }, delay);
+    // Replace the loading indicator with the generated AI content
+    if ($elem.hasClass('btn-tertiary') && $elem.hasClass('btn-generative')) {
+      $elem.find('.dot-flashing-container').replaceWith(this.tertiaryGenerativeIcon);
+    } else {
+      $elem.find('.dot-flashing-container').replaceWith(generativeIcon);
+    }
+
+    $elem.removeClass('loading');
+
+    // Enable user interactions with the button after the loading process is complete
+    $elem.css('pointer-events', '');
   },
 
   /**

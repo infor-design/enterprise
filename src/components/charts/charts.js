@@ -343,6 +343,7 @@ charts.addLegend = function (series, chartType, settings, container) {
   if (series.length === 0) {
     return;
   }
+
   // Legend width
   let width = 0;
   let currentWidth;
@@ -528,16 +529,21 @@ charts.addLegend = function (series, chartType, settings, container) {
 
         const hexColor = charts.chartColor(j, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[j]);
         const colorName = charts.chartColorName(j, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[j]);
-
+        let seriesColor;
         let color = '';
         if (colorName.substr(0, 1) === '#') {
           color = $('<span class="chart-popup-menu-color"></span>');
+          seriesColor = series[i].pattern;
           if (!series[i].pattern) {
             color.css('background-color', hexColor);
+            seriesColor = hexColor;
           }
         } else {
           color = $(`<span class="chart-popup-menu-color ${series[i].pattern ? '' : colorName}"></span>`);
+          seriesColor = colorName;
         }
+
+        series[j].color = seriesColor;
 
         listItem.find('div').append(color, textBlock);
         popupList.append(listItem);
@@ -638,8 +644,8 @@ charts.handleElementClick = function (idx, line, series, settings, container) {
 
   if (isTwoColumn && this.hasLegendPopup) {
     const chartType = settings.type === 'donut' ? 'pie' : settings.type;
-    const hexColor = charts.chartColor(idx, chartType || (series.length === 1 ? 'bar-single' : 'bar'), elem);
-    const colorName = charts.chartColorName(idx, chartType || (series.length === 1 ? 'bar-single' : 'bar'), elem);
+    const hexColor = charts.chartColor(idx, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[idx]);
+    const colorName = charts.chartColorName(idx, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[idx]);
     let color = '';
     if (colorName.substr(0, 1) === '#') {
       color = $('<span class="chart-legend-color"></span>');
@@ -948,6 +954,44 @@ charts.setSelectedElement = function (o) {
         .classed('is-not-selected', false)
         .attr('transform', 'scale(1.025, 1.025)');
       triggerData.push({ elem: selector.nodes(), data: thisArcData, index: o.i });
+
+      if (o.i === undefined) {
+        const nodeList = svg.selectAll('.slice')._groups[0];
+        o.i = 0;
+
+        for (let i = 0; i < nodeList.length; i++) {
+          if ($(nodeList[i]).attr('class').includes('is-selected')) {
+            o.i = i;
+            break;
+          }
+        }
+      }
+
+      const isTwoColumn = o.series[0].display && o.series[0].display === 'twocolumn';
+      if (isTwoColumn && this.hasLegendPopup) {
+        const elem = o.series[o.i];
+        const chartType = o.settings.type === 'donut' ? 'pie' : o.settings.type;
+        const hexColor = charts.chartColor(o.i, chartType || (o.series.length === 1 ? 'bar-single' : 'bar'), o.series[o.i]);
+        const colorName = charts.chartColorName(o.i, chartType || (o.series.length === 1 ? 'bar-single' : 'bar'), o.series[o.i]);
+        let color = '';
+        if (colorName.substr(0, 1) === '#') {
+          color = $('<span class="chart-legend-color"></span>');
+          if (!elem.pattern) {
+            color.css('background-color', hexColor);
+          }
+        } else {
+          color = $(`<span class="chart-legend-color ${elem.pattern ? '' : colorName}"></span>`);
+        }
+
+        const textBlock = $(`<span class="chart-legend-item-text">${xssUtils.stripTags(elem.name)}</span>`);
+        const chartLegendItem = o.container.find('.chart-legend-item');
+
+        chartLegendItem.empty();
+        chartLegendItem.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
+        chartLegendItem.attr('index-id', `chart-legend-${o.i}`);
+        o.container.find('.list-button').data('popupmenu').menu.children().removeClass('is-hidden');
+        $(o.container.find('.list-button').data('popupmenu').menu.children().get(o.i)).addClass('is-hidden');
+      }
     }
   } else {
     // Task make unselected
