@@ -24,8 +24,8 @@ Soho.Locale.addCulture('lt-LT', {
       timestampMillis: 'HH:mm:ss.SSS',
       hour: 'HH:mm',
       datetime: 'yyyy-MM-dd HH:mm',
-      dateTimestamp: 'yyyy-MM-dd HH:mm:ss',
       datetimeMillis: 'yyyy-MM-dd HH:mm:ss.SSS',
+      dateTimestamp: 'yyyy-MM-dd HH:mm:ss',
       timezone: 'yyyy-MM-dd HH:mm zz',
       timezoneLong: 'yyyy-MM-dd HH:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
