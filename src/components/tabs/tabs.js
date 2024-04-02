@@ -3368,6 +3368,7 @@ Tabs.prototype = {
     }
 
     visibleTabSize = ((tabContainerW) / sizeableTabs.length);
+    this.visibleTabSize = visibleTabSize;
 
     if (visibleTabSize < defaultTabSize) {
       visibleTabSize = defaultTabSize;
@@ -3616,6 +3617,7 @@ Tabs.prototype = {
       $(this).off('close.tabs selected.tabs');
       self.moreButton.removeClass('popup-is-open');
       self.positionFocusState(undefined);
+      self.adjustModuleTabs();
     }
 
     function selectMenuOption(e, anchor) {
@@ -3945,6 +3947,10 @@ Tabs.prototype = {
       }
     } else if (!this.focusState?.parent()?.is(this.tablistContainer)) {
       this.focusState?.prependTo(this.tablistContainer);
+    }
+
+    if (target.is('.tab') && self.settings.headerTabsTooltips) {
+      self.checkCutOffTitle(target, this.visibleTabSize);
     }
 
     const focusStateElem = this.focusState[0];
