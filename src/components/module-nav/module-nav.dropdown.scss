@@ -38,6 +38,13 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     }
 
     &.is-disabled {
+      background-color: transparent;
+      border: none;
+
+      span {
+        font-size: 2rem;
+      }
+
       + .icon {
         display: none;
       }
