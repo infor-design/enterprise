@@ -55,7 +55,7 @@
       width: 3px;
       bottom: -18px;
       height: 100%;
-      right: 1em;
+      left: 1.22em;
 
       @media (min-width: $breakpoint-phone-to-tablet) {
         left: 15.27rem;
@@ -225,6 +225,12 @@ html[dir='rtl'] {
   }
 
   .timeline-block {
+    &:nth-last-child(2) {
+      &::before {
+        right: 1em;
+      }
+    }
+
     .date {
       margin-left: inherit;
       margin-right: 3em;
