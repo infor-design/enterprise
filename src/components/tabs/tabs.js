@@ -3547,6 +3547,7 @@ Tabs.prototype = {
       }
 
       popupLi[0].removeAttribute('style');
+      popupA[0].removeAttribute('style');
 
       popupLi.children('.icon').off().appendTo(popupA);
       popupLi.appendTo(menuHtml);
