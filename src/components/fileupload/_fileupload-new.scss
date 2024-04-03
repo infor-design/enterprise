@@ -68,6 +68,10 @@
     &.trigger-close {
       left: 7px;
       top: -4px;
+
+      &:hover {
+        background-color: $button-color-tertiary-hover-background-new;
+      }
     }
 
     &.trigger {
@@ -84,6 +88,11 @@
       .icon {
         top: 4px;
       }
+    }
+
+    .trigger-close {
+      margin-left: -47px;
+      top: -1px;
     }
   }
 }
@@ -163,6 +172,14 @@ html[dir='rtl'] {
             }
           }
         }
+      }
+    }
+  }
+
+  .form-layout-compact {
+    .field-fileupload {
+      .trigger-close {
+        margin-right: -7px;
       }
     }
   }

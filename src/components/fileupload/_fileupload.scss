@@ -28,10 +28,6 @@
       &.is-visible {
         display: inline-block;
       }
-
-      &:hover {
-        background-color: $button-color-tertiary-hover-background-new;
-      }
     }
 
     &.trigger {
@@ -446,9 +442,16 @@
       width: 14px;
     }
 
-    .trigger-close .icon {
-      height: 14px;
-      top: 2px;
+    .trigger-close {
+      height: 20px;
+      margin-left: -45px;
+      top: 0;
+      width: 20px;
+
+      .icon {
+        height: 14px;
+        top: 3px;
+      }
     }
 
     .trigger {
@@ -561,7 +564,8 @@ html[dir='rtl'] {
   &.is-firefox {
     .form-layout-compact {
       .field-fileupload {
-        .trigger {
+        .trigger,
+        .trigger-close {
           top: -1px;
         }
       }
