@@ -25,6 +25,7 @@ Soho.Locale.addCulture('sk-SK', {
       hour: 'H:mm',
       datetime: 'd. M. yyyy H:mm',
       datetimeMillis: 'd. M. yyyy H:mm:ss.SSS',
+      dateTimestamp: 'd. M. yyyy H:mm:ss',
       timezone: 'd. M. yyyy H:mm zz',
       timezoneLong: 'd. M. yyyy H:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
