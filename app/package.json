@@ -115,7 +115,7 @@
     "jquery": "^3.7.1",
     "mmm": "^0.2.2",
     "node-sass": "^9.0.0",
-    "node-sass-once-importer": "^5.3.23",
+    "node-sass-once-importer": "^5.3.3",
     "nodemon": "^3.1.0",
     "rimraf": "^5.0.5",
     "rollup": "^4.13.0",
