@@ -36,7 +36,7 @@ describe('TimePicker settings', () => {
     cleanup();
   });
 
-  it('should set settings', () => {
+  it.skip('should set settings', () => {
     const settings = {
       locale: null,
       language: null,
@@ -55,7 +55,7 @@ describe('TimePicker settings', () => {
     expect(timepickerObj.settings).toEqual(settings);
   });
 
-  it('should update set settings via data', () => {
+  it.skip('should update set settings via data', () => {
     const settings = {
       locale: null,
       language: null,

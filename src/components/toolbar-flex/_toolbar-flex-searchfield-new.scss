@@ -116,14 +116,20 @@
 }
 
 html[dir='rtl'] {
-  .toolbar-section.search {
-    .toolbar-searchfield-wrapper {
-      .btn-icon.close {
-        right: calc(100% - 70px);
-        top: 50%;
+  .flex-toolbar {
+    .toolbar-section.search {
+      .toolbar-searchfield-wrapper {
+        .btn-icon.close {
+          right: calc(100% - 70px);
+          top: 50%;
 
-        @media (min-width: $breakpoint-phone-to-tablet) {
-          right: calc(100% - 30px);
+          @media (min-width: $breakpoint-phone-to-tablet) {
+            right: calc(100% - 30px);
+          }
+        }
+
+        &.has-close-icon-button.is-open > svg.close  {
+          right: auto;
         }
       }
     }

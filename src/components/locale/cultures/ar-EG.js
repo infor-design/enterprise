@@ -27,7 +27,7 @@ Soho.Locale.addCulture('ar-EG', {
         timestampMillis: 'h:mm:ss.SSS a',
         hour: 'h:mm a',
         datetime: 'yyyy/MM/dd h:mm a',
-        dateTimestamp: 'yyyy-MM-dd HH:mm:ss',
+        dateTimestamp: 'yyyy/MM/dd h:mm:ss a',
         datetimeMillis: 'yyyy/MM/dd h:mm:ss.SSS a',
         timezone: 'yyyy/MM/dd h:mm a zz',
         timezoneLong: 'yyyy-MM-dd h:mm a zzzz'
