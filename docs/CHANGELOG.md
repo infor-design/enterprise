@@ -1,11 +1,5 @@
 # What's New with Enterprise
 
-## v4.95.0
-
-## v4.95.0 Fixes
-
-- `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
-
 ## v4.94.0
 
 ## v4.94.0 Features
@@ -32,6 +26,7 @@
 - `[Datagrid]` Fixed searchfield icon alignment in filter. ([#8504](https://github.com/infor-design/enterprise/issues/8504))
 - `[Datagrid/Card]` When in a card/widget the size of the datagrid would be incorrect and the pager would be moved to the wrong place. Now on default widget size the widget will contain the pager correctly. You may need css for custom sized widgets or non default widget sizes. ([#8496](https://github.com/infor-design/enterprise/issues/8372))
 - `[Datepicker]` Added action in args passed on selected event. ([#8433](https://github.com/infor-design/enterprise/issues/8433))
+- `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
 - `[Homepage]` Fixed the resize issues of bar, column, donut and line when using in homepage. ([#8410](https://github.com/infor-design/enterprise/issues/8410))
 - `[ModuleNav]` Fixed 6th level header accordion alignment. ([#8460](https://github.com/infor-design/enterprise/issues/8460))
 - `[Radio]` Fixed alignment in short form of radio button. ([#8193](https://github.com/infor-design/enterprise/issues/8193))
