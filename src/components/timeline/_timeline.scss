@@ -15,7 +15,7 @@
     position: absolute;
     top: 0;
     width: 3px;
-    height: 70%;
+    height: 80%;
   }
 
   .indicator {
@@ -124,7 +124,20 @@
     }
   }
 
+  .card .timeline,
+  .widget .timeline {
+    &::before {
+      bottom: 60px;
+      left: 1.125em;
+      height: 87%;
+    }
+  }
+
   .timeline-block {
+    &:nth-last-child(2)::before {
+      visibility: hidden;
+    }
+
     .date,
     .indicator-container,
     .content {
@@ -139,11 +152,18 @@
     }
 
     .indicator-container {
-      margin-left: 11.5em;
+      margin-left: 0;
     }
 
-    .content {
-      margin-left: 3em;
+    .content,
+    .date {
+      margin-left: 5em;
+      float: none;
+    }
+
+    .date {
+      width: auto;
+      top: 85%;
     }
   }
 }
@@ -205,6 +225,12 @@ html[dir='rtl'] {
   }
 
   .timeline-block {
+    &:nth-last-child(2) {
+      &::before {
+        right: 1em;
+      }
+    }
+
     .date {
       margin-left: inherit;
       margin-right: 3em;
@@ -234,31 +260,22 @@ html[dir='rtl'] {
     .timeline {
       &::before {
         left: auto;
-        right: 12.65em;
       }
     }
 
     .timeline-block {
-      .date,
-      .indicator-container,
-      .content {
-        float: right;
-      }
-
       .date {
         margin-left: inherit;
-        margin-right: 0;
+        margin-right: 2.5em;
         text-align: left;
       }
 
       .indicator-container {
         margin-left: inherit;
-        margin-right: 11.5em;
       }
 
       .content {
         margin-left: inherit;
-        margin-right: 3em;
       }
     }
   }

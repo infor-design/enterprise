@@ -1792,9 +1792,9 @@ const Locale = {  // eslint-disable-line
           year: 'MMMM yyyy',
           timestamp: 'h:mm:ss a',
           datetime: 'M/d/yyyy h:mm a',
-          dateTimestamp: 'yyyy-MM-dd HH:mm:ss'
+          dateTimestamp: 'M/d/yyyy h:mm:ss a'
         },
-        timeFormat: 'HH:mm:ss',
+        timeFormat: 'h:mm:ss a',
         dayPeriods: ['AM', 'PM']
       };
     }
