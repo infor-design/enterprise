@@ -322,7 +322,13 @@ Tabs.prototype = {
       // Make it possible for Module Tabs to display a tooltip containing their contents
       // if the contents are cut off by ellipsis.
       if (self.settings.moduleTabsTooltips || self.settings.multiTabsTooltips || self.settings.headerTabsTooltips) {
-        a.on('beforeshow.toolbar', () => a.data('cutoffTitle') === 'yes').tooltip({
+        a.parent().on('mouseover.tabs', () => {
+          if (a.data('cutoffTitle') === undefined) {
+            self.checkCutOffTitle($(this), self.visibleTabSize);
+          }
+        });
+
+        a.on('beforeshow.toolbar', () => a.data('cutoffTitle') === 'yes' && a.parent().not('.is-disabled').length > 0).tooltip({
           content: `${a.text().trim()}`
         });
       }
@@ -2688,6 +2694,12 @@ Tabs.prototype = {
     // Make it possible for Module Tabs to display a tooltip containing their contents
     // if the contents are cut off by ellipsis.
     if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
+      anchorMarkup.parent().on('mouseover.tabs', () => {
+        if (anchorMarkup.data('cutoffTitle') === undefined) {
+          self.checkCutOffTitle($(this), self.visibleTabSize);
+        }
+      });
+
       anchorMarkup.on('beforeshow.toolbar', () => anchorMarkup.data('cutoffTitle') === 'yes').tooltip({
         content: `${anchorMarkup.text().trim()}`
       });
@@ -3384,16 +3396,22 @@ Tabs.prototype = {
    * @returns {void}
    */
   checkCutOffTitle(tabs, visibleTabSize) {
+    if (tabs.is('a')) {
+      tabs = tabs.parent();
+    }
+
     const anchorStyle = window.getComputedStyle(tabs.eq(0).children()[0]);
     const anchorPadding = parseInt(anchorStyle.paddingLeft, 10) +
       parseInt(anchorStyle.paddingRight, 10);
+    let tab;
     let a;
     let prevWidth;
     let cutoff = 'no';
     const isSideBySide = this.element.closest('.side-by-side').length === 1;
 
     for (let i = 0; i < tabs.length; i++) {
-      a = tabs.eq(i).children('a');
+      tab = tabs.eq(i);
+      a = tab.children('a');
       a[0].style.width = '';
 
       if (!this.settings.headerTabsTooltips || this.settings.maxWidth === null) {
