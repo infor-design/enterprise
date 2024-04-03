@@ -25,6 +25,7 @@ Soho.Locale.addCulture('ko-KR', {
       hour: 'a h:mm',
       datetime: 'yyyy-MM-dd a h:mm',
       datetimeMills: 'yyyy-MM-dd a h:mm.SSS',
+      dateTimestamp: 'yyyy-MM-dd a h:mm',
       timezone: 'yyyy-MM-dd a h:mm zz',
       timezoneLong: 'yyyy-MM-dd a h:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
