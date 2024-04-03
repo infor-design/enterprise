@@ -2,7 +2,7 @@
 
 ## v4.95.0
 
-## v4.95.0 Fixes
+## v4.95.0 Features
 
 - `[Module Nav]` Added setting `disableSwitcher` to disable nav switcher. ([#8381](https://github.com/infor-design/enterprise/issues/8381))
 
