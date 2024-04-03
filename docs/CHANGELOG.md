@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.95.0
+
+## v4.95.0 Fixes
+
+- `[Module Nav]` Added setting `disableSwitcher` to disable nav switcher. ([#8381](https://github.com/infor-design/enterprise/issues/8381))
+
 ## v4.94.0
 
 ## v4.94.0 Features
@@ -9,7 +15,6 @@
 - `[Homepage]` Added row height style classes for widgets. ([#8211](https://github.com/infor-design/enterprise/issues/8211))
 - `[Lookup]` Added placeholder setting in toolbar. ([#8416](https://github.com/infor-design/enterprise/issues/8416))
 - `[Modal]` Added setting `draggable` to be able to drag modals. ([#7019](https://github.com/infor-design/enterprise/issues/7019))
-- `[Module Nav]` Added setting `disableSwitcher` to disable nav switcher. ([#8381](https://github.com/infor-design/enterprise/issues/8381))
 
 ## v4.94.0 Fixes
 
