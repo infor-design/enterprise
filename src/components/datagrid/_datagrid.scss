@@ -791,7 +791,7 @@ $datagrid-small-row-height: 25px;
 
           .lookup-wrapper .trigger {
             margin-left: -22px;
-            margin-top: 1px;
+            margin-top: 3px;
           }
 
           .has-close-icon-button .icon {
@@ -2535,7 +2535,7 @@ $datagrid-small-row-height: 25px;
       display: block;
       min-height: $datagrid-row-height + 6;
       overflow: hidden;
-      padding: 3px 16px 0;
+      padding: 2px 16px 0;
 
       &.is-dropdown-wrapper {
         .dropdown-wrapper {
@@ -3958,12 +3958,12 @@ $datagrid-small-row-height: 25px;
       }
 
       .trigger {
-        height: 20px;
+        height: 18px;
         margin-left: -13px;
         margin-top: 3px;
-        min-height: 20px;
-        min-width: 20px;
-        width: 20px;
+        min-height: 18px;
+        min-width: 18px;
+        width: 18px;
 
         &:hover {
           background-color: transparent !important;
@@ -5484,7 +5484,7 @@ html[dir='rtl'] {
   // Filter Row
   .datagrid-filter-wrapper {
     .btn-filter {
-      left: -8px;
+      left: -4px;
 
       .icon-dropdown {
         margin-left: -3px;
@@ -5783,6 +5783,18 @@ html[dir='rtl'] {
 
   .dropdown-list.datagrid-filter-dropdown > .trigger .icon {
     margin-right: -14px;
+  }
+
+  &.is-mac.is-firefox {
+    .datagrid .datagrid-header .datagrid-filter-wrapper .lookup-wrapper .trigger {
+      margin-top: 3px;
+    }
+  }
+
+  &.is-safari {
+    .datagrid .datagrid-header .datagrid-filter-wrapper .lookup-wrapper {
+      padding-left: 8px;
+    }
   }
 }
 

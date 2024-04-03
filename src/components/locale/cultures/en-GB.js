@@ -21,11 +21,11 @@ Soho.Locale.addCulture('en-GB', {
       year: 'MMMM yyyy',
       dayOfWeek: 'EEE d',
       timestamp: 'HH:mm:ss',
-      dateTimestamp: 'yyyy-MM-dd HH:mm:ss',
       timestampMillis: 'HH:mm:ss.SSS',
       hour: 'HH:mm',
       datetime: 'dd/MM/yyyy HH:mm',
       datetimeMillis: 'dd/MM/yyyy HH:mm:ss.SSS',
+      dateTimestamp: 'dd/MM/yyyy HH:mm:ss',
       timezone: 'dd/MM/yyyy HH:mm zz',
       timezoneLong: 'dd/MM/yyyy HH:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats

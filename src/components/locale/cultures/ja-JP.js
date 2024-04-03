@@ -25,6 +25,7 @@ Soho.Locale.addCulture('ja-JP', {
       hour: 'H:mm',
       datetime: 'yyyy/MM/dd H:mm',
       datetimeMillis: 'yyyy/MM/dd H:mm:ss.SSS',
+      dateTimestamp: 'yyyy/MM/dd H:mm:ss',
       timezone: 'yyyy/MM/dd H:mm zz',
       timezoneLong: 'yyyy/MM/dd H:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats

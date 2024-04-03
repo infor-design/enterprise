@@ -25,6 +25,7 @@ Soho.Locale.addCulture('lv-LV', {
       hour: 'HH:mm',
       datetime: 'dd.MM.yyyy HH:mm',
       datetimeMillis: 'dd.MM.yyyy HH:mm:ss.SSS',
+      dateTimestamp: 'dd.MM.yyyy HH:mm:ss',
       timezone: 'dd.MM.yyyy HH:mm zz',
       timezoneLong: 'dd.MM.yyyy HH:mm zzzz'
     }, // Infered short + short gregorian/dateTimeFormats
