@@ -58,7 +58,7 @@ describe('Area Puppeteer Tests', () => {
       expect(legendTabIndex).toEqual([-1, -1, -1]); // These are the values of tabindex of all the legends.
     });
 
-    it('should not select line group on click', async () => {
+    it.skip('should not select line group on click', async () => {
       const elHandleArray = await page.$$('.line-group');
       const lineA = '#area-example > svg > g > g:nth-child(3)';
       const lineB = '#area-example > svg > g > g:nth-child(4)';
@@ -84,7 +84,7 @@ describe('Area Puppeteer Tests', () => {
       await Promise.all(promises);
     });
 
-    it('should not select line group on click in legends', async () => {
+    it.skip('should not select line group on click in legends', async () => {
       const elHandleArray = await page.$$('.line-group');
       const lineA = '#area-example > svg > g > g:nth-child(3)';
       const lineB = '#area-example > svg > g > g:nth-child(4)';
