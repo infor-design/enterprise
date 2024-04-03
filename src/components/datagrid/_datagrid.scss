@@ -4707,10 +4707,6 @@ td .btn-actions {
   }
 
   .datagrid {
-    .datagrid-header .datagrid-filter-wrapper .lookup-wrapper .trigger:not(:focus) {
-      margin-top: -3px;
-    }
-
     &.medium-rowheight {
       .datagrid-trigger-cell .icon.icon-clock {
         top: 0;
