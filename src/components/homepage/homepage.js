@@ -730,8 +730,10 @@ Homepage.prototype = {
     }
 
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isPageContainer = this.element.is('.page-container');
+
     this.element.css('height', '');
-    if (!isMobile) {
+    if (!isMobile && !isPageContainer) {
       // set homepage height
       const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card');
       const card = $(cards[0]);
