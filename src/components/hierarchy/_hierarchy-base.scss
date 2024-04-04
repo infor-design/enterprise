@@ -37,7 +37,7 @@
     display: table;
     margin: 0 auto;
 
-    @media (max-width: $breakpoint-slim - 1px) {
+    @media (max-width: ($breakpoint-slim - 1px)) {
       width: 100%;
     }
 
@@ -193,7 +193,6 @@
     img,
     .image-placeholder {
       border-radius: 50%;
-      display: inline-block;
       float: left;
       height: 55px;
       margin-left: 14px;
@@ -202,9 +201,9 @@
     }
 
     .image-initials {
-      display: inline-block;
       float: left;
       height: 55px;
+      min-height: 55px;
       line-height: 5.5rem;
       margin-left: 14px;
       margin-top: 10px;
