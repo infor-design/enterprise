@@ -7421,6 +7421,11 @@ Datagrid.prototype = {
         colorPicker = null;
         return; // color picker closes on cell re-click;
       }
+      
+      if (!self.settings.actionableMode && self.settings.editable) {
+        self.quickEditMode = true;
+      }
+
       const isEditable = self.makeCellEditable(self.activeCell.rowIndex, self.activeCell.cell, e);
 
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a, a.search-mode i, img') || target.parent().is('button:not(.trigger)')) {
