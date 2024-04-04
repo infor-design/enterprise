@@ -40,6 +40,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     &.is-disabled {
       background-color: transparent;
       border: none;
+      margin-inline-start: -6px;
 
       span {
         font-size: 2rem;
