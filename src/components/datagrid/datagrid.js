@@ -7145,8 +7145,8 @@ Datagrid.prototype = {
 
     // Set Focus on rows
     self.element
-      .on('focus.datagrid', 'tbody > tr', function () {
-        if (!self.settings.cellNavigation && self.settings.rowNavigation) {
+      .on('focus.datagrid', 'tbody > tr', function (e) {
+        if (!self.settings.cellNavigation && self.settings.rowNavigation && !e.target.matches('a, a *')) {
           const rowNodes = self.rowNodes($(this));
 
           if (!rowNodes.hasClass('is-active-row')) {
@@ -7159,8 +7159,8 @@ Datagrid.prototype = {
           }
         }
       })
-      .on('blur.datagrid', 'tbody > tr', function () {
-        if (!self.settings.cellNavigation && self.settings.rowNavigation) {
+      .on('blur.datagrid', 'tbody > tr', function (e) {
+        if (!self.settings.cellNavigation && self.settings.rowNavigation && !e.target.matches('a, a *')) {
           const rowNodes = self.rowNodes($(this));
 
           if (rowNodes.hasClass('is-active-row')) {
@@ -7357,7 +7357,9 @@ Datagrid.prototype = {
         self.triggerRowEvent(e.type, e, true);
       }
 
-      self.setActiveCell(td);
+      if (!target.is('a, a *')) {
+        self.setActiveCell(td);
+      }
 
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn')) {
@@ -7403,7 +7405,7 @@ Datagrid.prototype = {
         if (e.type !== 'dblclick') {
           self.element.triggerHandler('ischanged');
         }
-      } else if (canSelect) {
+      } else if (canSelect && !target.is('a, a *')) {
         self.toggleRowSelection(target.closest('tr'));
       }
 
