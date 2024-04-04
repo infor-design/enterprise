@@ -211,10 +211,10 @@ html[dir='rtl'] {
     }
 
     .flex-toolbar .searchfield-wrapper > .icon.close {
-      right: 13%;
+      right: 15%;
 
       @media (max-width: $breakpoint-slim) {
-        right: 23%;
+        right: 16%;
       }
     }
 
