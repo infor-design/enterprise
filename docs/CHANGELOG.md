@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.95.0
+
+## v4.95.0 Fixes
+
+- `[Datagrid]` Fixed search icon misalignment in dropwdown cells. ([#8515](https://github.com/infor-design/enterprise/issues/8515))
+
 ## v4.94.0
 
 ## v4.94.0 Features
