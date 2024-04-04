@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.95.0
+
+## v4.95.0 Features
+
+- `[About]` Added copy to clipboard button. ([#8438](https://github.com/infor-design/enterprise/issues/8438))
+
 ## v4.94.0
 
 ## v4.94.0 Features
