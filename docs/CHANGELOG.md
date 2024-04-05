@@ -8,6 +8,7 @@
 
 ## v4.95.0 Fixes
 
+- `[Datagrid]` Fixed an error editing on non first page in server side paging datagrid. ([#8537](https://github.com/infor-design/enterprise-ng/issues/1672))
 - `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
 
 ## v4.94.0
