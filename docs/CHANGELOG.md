@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.95.0
+
+## v4.95.0 Fixes
+
+- `[Contextual Action Panel]` Fixed added padding on cap. ([#8553](https://github.com/infor-design/enterprise/issues/8553))
+
 ## v4.94.0
 
 ## v4.94.0 Features
