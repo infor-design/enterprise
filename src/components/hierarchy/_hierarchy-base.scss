@@ -132,6 +132,10 @@
     &.azure08 {
       border-left-color: $ids-color-palette-azure-80;
 
+      .image-initials {
+        background-color: $ids-color-palette-azure-80;
+      }
+
       .image-placeholder {
         border: 2px solid $ids-color-palette-azure-80;
       }
@@ -139,6 +143,10 @@
 
     &.turquoise02 {
       border-left-color: $ids-color-palette-turquoise-20;
+
+      .image-initials {
+        background-color: $ids-color-palette-turquoise-20;
+      }
 
       .image-placeholder {
         border: 2px solid $ids-color-palette-turquoise-20;
@@ -148,6 +156,10 @@
     &.amethyst06 {
       border-left-color: $ids-color-palette-amethyst-60;
 
+      .image-initials {
+        background-color: $ids-color-palette-amethyst-60;
+      }
+
       .image-placeholder {
         border: 2px solid $ids-color-palette-amethyst-60;
       }
@@ -155,6 +167,10 @@
 
     &.slate06 {
       border-left-color: $ids-color-palette-slate-60;
+
+      .image-initials {
+        background-color: $ids-color-palette-slate-60;
+      }
 
       .image-placeholder {
         border: 2px solid $ids-color-palette-slate-60;
@@ -164,6 +180,10 @@
     &.amber06 {
       border-left-color: $ids-color-palette-amber-60;
 
+      .image-initials {
+        background-color: $ids-color-palette-amber-60;
+      }
+
       .image-placeholder {
         border: 2px solid $ids-color-palette-amber-60;
       }
@@ -172,6 +192,10 @@
     &.emerald07 {
       border-left-color: $ids-color-palette-emerald-70;
 
+      .image-initials {
+        background-color: $ids-color-palette-emerald-70;
+      }
+
       .image-placeholder {
         border: 2px solid $ids-color-palette-emerald-70;
       }
@@ -179,6 +203,10 @@
 
     &.ruby06 {
       border-left-color: $ids-color-palette-ruby-60;
+
+      .image-initials {
+        background-color: $ids-color-palette-ruby-60;
+      }
 
       .image-placeholder {
         border: 2px solid $ids-color-palette-ruby-60;
