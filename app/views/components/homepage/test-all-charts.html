@@ -1,0 +1,126 @@
+<div class="homepage page-container scrollable" data-init="false" id="maincontent" data-columns="3" role="main">
+  <div class="content">
+    <div class="widget double-width">
+      <div class="widget-header">
+        <h2 class="widget-title">Chart Example</h2>
+      </div>
+      <div class="widget-content">
+        <div id="chart-example-bar" class="chart-container">
+        </div>
+      </div>
+    </div>
+
+    <div class="widget double-width">
+      <div class="widget-header">
+        <h2 class="widget-title">Chart Example</h2>
+      </div>
+      <div class="widget-content">
+        <div id="chart-example-column" class="chart-container">
+        </div>
+      </div>
+    </div>
+
+    <div class="widget double-width">
+      <div class="widget-header">
+        <h2 class="widget-title">Chart Example</h2>
+      </div>
+      <div class="widget-content">
+        <div id="chart-example-donut" class="chart-container">
+        </div>
+      </div>
+    </div>
+
+    <div class="widget double-width">
+      <div class="widget-header">
+        <h2 class="widget-title">Chart Example</h2>
+      </div>
+      <div class="widget-content">
+        <div id="chart-example-line" class="chart-container">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    $('.homepage').on('resize', function (e, rows, metadata) {
+      console.log(this, this.offsetHeight, metadata);
+    });
+
+    $('.homepage').homepage();
+  
+    var dataset = [{
+      data: [{
+          name: 'Automotive',
+          shortName: 'Auto',
+          abbrName: 'A',
+          value: 7,
+          tooltip: 'Custom Tooltip - {{value}}',
+          attributes: [
+            { name: 'id', value: 'auto' },
+            { name: 'data-automation-id', value: 'automation-id-auto' }
+          ]
+      }, {
+          name: 'Distribution',
+          shortName: 'Dist',
+          abbrName: 'D',
+          value: 10,
+          attributes: [
+            { name: 'id', value: 'dist' },
+            { name: 'data-automation-id', value: 'automation-id-dist' }
+          ]
+      }, {
+          name: 'Equipment',
+          shortName: 'Equip',
+          abbrName: 'E',
+          value: 14,
+          attributes: [
+            { name: 'id', value: 'equip' },
+            { name: 'data-automation-id', value: 'automation-id-equip' }
+          ]
+      }, {
+          name: 'Fashion',
+          shortName: 'Fash',
+          abbrName: 'F',
+          value: 10,
+          attributes: [
+            { name: 'id', value: 'fash' },
+            { name: 'data-automation-id', value: 'automation-id-fash' }
+          ]
+      }, {
+          name: 'Food',
+          shortName: 'Food',
+          abbrName: 'F',
+          value: 14,
+          attributes: [
+            { name: 'id', value: 'food' },
+            { name: 'data-automation-id', value: 'automation-id-food' }
+          ]
+      }, {
+          name: 'Healthcare',
+          shortName: 'Health',
+          abbrName: 'H',
+          value: 8,
+          attributes: [
+            { name: 'id', value: 'health' },
+            { name: 'data-automation-id', value: 'automation-id-health' }
+          ]
+      }, {
+          name: 'Other',
+          shortName: 'Other',
+          abbrName: 'O',
+          value: 7,
+          attributes: [
+            { name: 'id', value: 'other' },
+            { name: 'data-automation-id', value: 'automation-id-other' }
+          ]
+      }]
+    }];
+  
+    $('#chart-example-bar').chart({type: 'bar', dataset: dataset});
+    $('#chart-example-column').chart({type: 'column', dataset: dataset});
+    $('#chart-example-donut').chart({type: 'donut', dataset: dataset});
+    $('#chart-example-line').chart({type: 'line', dataset: dataset});
+  });
+  </script>

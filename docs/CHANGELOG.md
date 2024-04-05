@@ -2,9 +2,14 @@
 
 ## v4.95.0
 
+## v4.95.0 Features
+
+- `[Module Nav]` Added setting `disableSwitcher` to disable nav switcher. ([#8381](https://github.com/infor-design/enterprise/issues/8381))
+
 ## v4.95.0 Fixes
 
 - `[Contextual Action Panel]` Fixed added padding on contextual action panel. ([#8553](https://github.com/infor-design/enterprise/issues/8553))
+- `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
 
 ## v4.94.0
 
@@ -24,15 +29,16 @@
 - `[Calendar]` Fixed event icon not properly rendered across week view mode. ([#8456](https://github.com/infor-design/enterprise/issues/8456))
 - `[Calendar]` Fixed inconsistencies in border colors of events in calendar. ([#8452](https://github.com/infor-design/enterprise/issues/8452))
 - `[Calendar]` Fixed height calculation of homepage. ([NG#1478](https://github.com/infor-design/enterprise-ng/issues/1478))
+- `[Count]` Fixed misalignment in card header icon. ([#8448](https://github.com/infor-design/enterprise/issues/8448))
 - `[Datagrid]` Fixed datagrid unable to have resize handle when using different column structure such as single lines. ([#8417](https://github.com/infor-design/enterprise/issues/8417))
 - `[Datagrid]` Removed escaping HTML for cell nodes. ([#8516](https://github.com/infor-design/enterprise/issues/8516))
 - `[Datagrid]` Fixed missing headers in frozen columns. ([NG#1590](https://github.com/infor-design/enterprise-ng/issues/1590))
+- `[Datagrid]` Select event is not triggered when clicking a hyperlink. ([#8498](https://github.com/infor-design/enterprise/issues/8498))
+- `[Datagrid]` Fixed searchfield icon alignment in filter. ([#8504](https://github.com/infor-design/enterprise/issues/8504))
 - `[Datagrid/Card]` When in a card/widget the size of the datagrid would be incorrect and the pager would be moved to the wrong place. Now on default widget size the widget will contain the pager correctly. You may need css for custom sized widgets or non default widget sizes. ([#8496](https://github.com/infor-design/enterprise/issues/8372))
 - `[Datepicker]` Added action in args passed on selected event. ([#8433](https://github.com/infor-design/enterprise/issues/8433))
-- `[Calendar]` Fixed inconsistencies in border colors of events in calendar. ([#8452](https://github.com/infor-design/enterprise/issues/8452))
-- `[Calendar]` Fixed height calculation of homepage. ([NG#1478](https://github.com/infor-design/enterprise-ng/issues/1478))
-- `[Calendar]` Fixed event icon not properly rendered across week view mode. ([#8456](https://github.com/infor-design/enterprise/issues/8456))
-- `[Count]` Fixed misalignment in card header icon. ([#8448](https://github.com/infor-design/enterprise/issues/8448))
+- `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
+- `[Homepage]` Fixed the resize issues of bar, column, donut and line when using in homepage. ([#8410](https://github.com/infor-design/enterprise/issues/8410))
 - `[ModuleNav]` Fixed 6th level header accordion alignment. ([#8460](https://github.com/infor-design/enterprise/issues/8460))
 - `[Radio]` Fixed alignment in short form of radio button. ([#8193](https://github.com/infor-design/enterprise/issues/8193))
 - `[Radio]` Fixed alignment in datagrid radio button. ([#8349](https://github.com/infor-design/enterprise/issues/8349))
@@ -40,6 +46,7 @@
 - `[Searchfield]` Fixed clear button misalignment in RTL. ([#8342](https://github.com/infor-design/enterprise/issues/8342))
 - `[Tabs]` Added guards on possible undefined objects. ([#8419](https://github.com/infor-design/enterprise/issues/8419))
 - `[Tabs]` Fixed `beforeactivated` event not cancelling activation of tabs properly. ([NG#1578](https://github.com/infor-design/enterprise-ng/issues/1578))
+- `[TabsHeader]` Fixed tooltip not showing properly when there is an ellipsis in tabs. ([#8446](https://github.com/infor-design/enterprise/issues/8446))
 - `[Textarea]` Fixed the character count message in textarea.([#8449](https://github.com/infor-design/enterprise/issues/8449))
 - `[Timeline]` Fixed alignment in widget.([#8524](https://github.com/infor-design/enterprise/issues/8524))
 - `[Toolbar]` Fixed button shapes in toolbar. ([#8523](https://github.com/infor-design/enterprise/issues/8523))

@@ -180,13 +180,22 @@ ModuleNavSwitcher.prototype = {
   },
 
   renderRoleDropdown() {
+    const roleDropdown = $(this.roleDropdownEl);
+
     if (this.settings.generate && (!this.roleDropdownContainerEl || !this.roleDropdownEl)) {
       this.element[0].insertAdjacentHTML('beforeend', dropdownTemplate(this.settings.roleDropdownLabel));
     }
-    if (!$(this.roleDropdownEl).find('option').length) {
+    if (!roleDropdown.find('option').length) {
       this.renderDropdownOptions();
     }
-    $(this.roleDropdownEl).dropdown({
+
+    if (this.settings.disabled) {
+      roleDropdown.attr('disabled', true);
+    } else {
+      roleDropdown.removeAttr('disabled');
+    }
+
+    roleDropdown.dropdown({
       cssClass: 'role-dropdown',
       dropdownIcon: 'expand-all',
       extraListWrapper: true,

@@ -28,10 +28,6 @@
       &.is-visible {
         display: inline-block;
       }
-
-      &:hover {
-        background-color: $button-color-tertiary-hover-background-new;
-      }
     }
 
     &.trigger {
@@ -60,12 +56,6 @@
 
     &:active .icon {
       color: $trigger-active-color;
-    }
-  }
-
-  .fileupload:not([disabled]) + .trigger {
-    &:hover {
-      background-color: $button-color-tertiary-hover-background-new;
     }
   }
 
@@ -447,12 +437,27 @@
 .form-layout-compact {
   .field-fileupload {
     .trigger .icon {
-      top: 4px;
+      height: 14px;
+      top: 3px;
+      width: 14px;
     }
 
-    .trigger-close .icon {
-      height: 14px;
-      top: 2px;
+    .trigger-close {
+      height: 20px;
+      margin-left: -45px;
+      top: 0;
+      width: 20px;
+
+      .icon {
+        height: 14px;
+        top: 3px;
+      }
+    }
+
+    .trigger {
+      height: 20px;
+      margin-left: -27px;
+      width: 20px;
     }
   }
 }
@@ -490,7 +495,7 @@ html[dir='rtl'] {
     }
 
     .trigger {
-      margin-right: -33px;
+      margin-right: -27px;
     }
 
     .trigger-close {
@@ -551,6 +556,17 @@ html[dir='rtl'] {
 
         &.file-row .l-pull-right .action {
           float: left;
+        }
+      }
+    }
+  }
+
+  &.is-firefox {
+    .form-layout-compact {
+      .field-fileupload {
+        .trigger,
+        .trigger-close {
+          top: -1px;
         }
       }
     }
