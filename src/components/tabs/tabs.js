@@ -64,6 +64,7 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * flexible object can be passed into the source method, and augmented with
  * parameters specific to the implementation.
  * @param {boolean} [settings.tabCounts=false] If true, Displays a modifiable count above each tab.
+ * @param {boolean} [settings.equalTabWidth=true] If false, behaves like a tabs or tabs header with no equal tab width.
  * @param {boolean} [settings.verticalResponsive=false] If Vertical Tabs & true, will automatically
  * switch to Horizontal Tabs on smaller breakpoints.
  * @param {Array} [settings.attributes=null] If set, adds additional attributes to some tabs and elements.
@@ -83,6 +84,7 @@ const TABS_DEFAULTS = {
   changeTabOnHashChange: false,
   hashChangeCallback: null,
   lazyLoad: true,
+  equalTabWidth: true,
   headerTabsTooltips: false,
   moduleTabsTooltips: false,
   multiTabsTooltips: false,
@@ -641,11 +643,7 @@ Tabs.prototype = {
    * @returns {this} component instance
    */
   renderHelperMarkup() {
-    let auxilaryButtonLocation = this.tablistContainer || this.tablist;
-    if (this.isModuleTabs()) {
-      auxilaryButtonLocation = this.tablist;
-    }
-
+    const auxilaryButtonLocation = this.tablistContainer || this.tablist;
     this.focusState = this.element.find('.tab-focus-indicator');
     if (!this.focusState?.length) {
       this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
@@ -1963,7 +1961,7 @@ Tabs.prototype = {
    * @returns {boolean} whether or not horizontal scrolling is possible.
    */
   isScrollableTabs() {
-    return !this.isModuleTabs() && !this.isVerticalTabs();
+    return !this.isVerticalTabs();
   },
 
   /**
@@ -3246,14 +3244,18 @@ Tabs.prototype = {
     const hasMoreIndex = this.hasMoreButton();
     const isScrollableTabs = this.isScrollableTabs();
 
-    function checkModuleTabs() {
+    function checkTabs() {
       if (self.isModuleTabs()) {
         self.adjustModuleTabs();
+      }
+
+      if (self.isHeaderTabs() && !self.isVerticalTabs()) {
+        self.adjustTabs();
       }
     }
 
     // Recalc tab width before detection of overflow
-    checkModuleTabs();
+    checkTabs();
 
     let tablistStyle;
     let tablistHeight;
@@ -3261,7 +3263,11 @@ Tabs.prototype = {
     let tablistContainerWidth;
     let overflowCondition;
 
-    if (isScrollableTabs) {
+    if (isScrollableTabs && this.isModuleTabs()) {
+      tablistContainerWidth = this.tablistContainer[0].offsetWidth;
+      tablistContainerScrollWidth = this.tablist[0].scrollWidth;
+      overflowCondition = tablistContainerScrollWidth > tablistContainerWidth;
+    } else if (isScrollableTabs) {
       tablistContainerScrollWidth = this.tablistContainer[0].scrollWidth;
       tablistContainerWidth = this.tablistContainer[0].offsetWidth;
       overflowCondition = tablistContainerScrollWidth > tablistContainerWidth;
@@ -3276,21 +3282,57 @@ Tabs.prototype = {
     if (overflowCondition) {
       if (!hasMoreIndex) {
         elem.classList.add(HAS_MORE);
-        checkModuleTabs();
+        checkTabs();
       }
     } else if (hasMoreIndex) {
       elem.classList.remove(HAS_MORE);
-      checkModuleTabs();
+      checkTabs();
     }
 
     this.adjustSpilloverNumber();
   },
 
   /**
+   * Reset the tab styles.
+   * @private
+   * @returns {void}
+   */
+  resetTabStyles() {
+    const self = this;
+    let sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(:hidden)');
+
+    sizeableTabs.children('a').removeAttr('style');
+    sizeableTabs.removeAttr('style');
+  },
+
+  /**
+   * Gets the viewable tabs for checking cut off titles.
+   * @private
+   * @returns {void}
+   */
+  getViewableTabs() {
+    const self = this;
+    let sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(:hidden)');
+
+    sizeableTabs.each(function () {
+      const t = $(this);
+      if (self.isTabOverflowed(t)) {
+        sizeableTabs = sizeableTabs.not(t);
+      }
+    });
+
+    this.checkCutOffTitle(sizeableTabs, this.visibleTabSize);
+  },
+  
+  /**
    * @private
    * @returns {void}
    */
   adjustModuleTabs() {
+    if ((this.settings.maxWidth === null || this.settings.maxWidth === undefined) && !this.settings.equalTabWidth) {
+      return;
+    }
+
     const self = this;
     let sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(:hidden)');
     const appTrigger = this.tablist.find('.application-menu-trigger');
@@ -3337,6 +3379,8 @@ Tabs.prototype = {
       visibleTabSize = defaultTabSize;
     }
 
+    this.visibleTabSize = visibleTabSize;
+
     this.checkCutOffTitle(sizeableTabs, visibleTabSize);
     this.adjustSpilloverNumber();
   },
@@ -3380,11 +3424,12 @@ Tabs.prototype = {
     }
 
     visibleTabSize = ((tabContainerW) / sizeableTabs.length);
-    this.visibleTabSize = visibleTabSize;
 
     if (visibleTabSize < defaultTabSize) {
       visibleTabSize = defaultTabSize;
     }
+
+    this.visibleTabSize = visibleTabSize;
 
     this.checkCutOffTitle(sizeableTabs, visibleTabSize);
     this.adjustSpilloverNumber();
@@ -3412,9 +3457,8 @@ Tabs.prototype = {
     for (let i = 0; i < tabs.length; i++) {
       tab = tabs.eq(i);
       a = tab.children('a');
-      a[0].style.width = '';
 
-      if (!this.settings.headerTabsTooltips || this.settings.maxWidth === null) {
+      if (this.settings.maxWidth === null) {
         let diff = 0;
         if (env.os.name === 'ios' && env.devicespecs.isMobile && isSideBySide) {
           diff = 25;
@@ -3636,7 +3680,7 @@ Tabs.prototype = {
       $(this).off('close.tabs selected.tabs');
       self.moreButton.removeClass('popup-is-open');
       self.positionFocusState(undefined);
-      self.adjustModuleTabs();
+      self.getViewableTabs();
     }
 
     function selectMenuOption(e, anchor) {
