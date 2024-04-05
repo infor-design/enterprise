@@ -9,6 +9,8 @@
 ## v4.95.0 Fixes
 
 - `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
+- `[Tabs]` Fixed error in tab popup. ([#8596](https://github.com/infor-design/enterprise/issues/8596))
+
 
 ## v4.94.0
 
