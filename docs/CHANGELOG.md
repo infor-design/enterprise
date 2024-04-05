@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.95.0
+
+## v4.95.0 Features
+
+- `[TabsModule]` Added setting called `equalTabWidth` to make tabs equal of width. ([#6990](https://github.com/infor-design/enterprise/issues/6990))
+
 ## v4.94.0
 
 ## v4.94.0 Features
