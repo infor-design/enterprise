@@ -4,6 +4,7 @@
 
 ## v4.95.0 Features
 
+- `[About]` Added copy to clipboard button. ([#8438](https://github.com/infor-design/enterprise/issues/8438))
 - `[Module Nav]` Added setting `disableSwitcher` to disable nav switcher. ([#8381](https://github.com/infor-design/enterprise/issues/8381))
 
 ## v4.95.0 Fixes
