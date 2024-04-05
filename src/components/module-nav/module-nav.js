@@ -40,7 +40,8 @@ const MODULE_NAV_DEFAULTS = {
   showGuestSection: false,
   showSearchBar: true,
   enableOutsideClick: false,
-  autoCollapseOnMobile: true
+  autoCollapseOnMobile: true,
+  disableSwitcher: false
 };
 
 const toggleScrollbar = (el, doToggle) => {
@@ -189,7 +190,12 @@ ModuleNav.prototype = {
 
     // Auto-init child components, if applicable
     if (this.settings.initChildren) {
-      if (!this.switcherAPI) $(this.switcherEl).modulenavswitcher({ displayMode: this.settings.displayMode });
+      if (!this.switcherAPI) {
+        $(this.switcherEl).modulenavswitcher({
+          displayMode: this.settings.displayMode,
+          disabled: this.settings.disableSwitcher
+        });
+      }
       if (!this.settingsAPI) $(this.settingsEl).modulenavsettings({ displayMode: this.settings.displayMode });
       if (!this.accordionAPI) {
         $(this.accordionEl).accordion(this.settings.accordionSettings);
