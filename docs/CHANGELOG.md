@@ -1,5 +1,16 @@
 # What's New with Enterprise
 
+## v4.95.0
+
+## v4.95.0 Features
+
+- `[Module Nav]` Added setting `disableSwitcher` to disable nav switcher. ([#8381](https://github.com/infor-design/enterprise/issues/8381))
+
+## v4.95.0 Fixes
+
+- `[Datagrid]` Fixed an error editing on non first page in server side paging datagrid. ([#8537](https://github.com/infor-design/enterprise-ng/issues/1672))
+- `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
+
 ## v4.94.0
 
 ## v4.94.0 Features
