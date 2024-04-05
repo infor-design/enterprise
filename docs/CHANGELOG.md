@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.95.0
+
+## v4.95.0 Fixes
+
+- `[Datagrid]` Fixed unable to use the left/right arrow keys on the text in an editable cell. ([#8457](https://github.com/infor-design/enterprise/issues/8457))
+
 ## v4.94.0
 
 ## v4.94.0 Features
