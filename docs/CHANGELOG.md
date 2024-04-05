@@ -1,5 +1,15 @@
 # What's New with Enterprise
 
+## v4.95.0
+
+## v4.95.0 Features
+
+- `[Module Nav]` Added setting `disableSwitcher` to disable nav switcher. ([#8381](https://github.com/infor-design/enterprise/issues/8381))
+
+## v4.95.0 Fixes
+
+- `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
+
 ## v4.94.0
 
 ## v4.94.0 Features
