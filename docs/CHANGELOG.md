@@ -4,7 +4,12 @@
 
 ## v4.95.0 Features
 
+- `[Module Nav]` Added setting `disableSwitcher` to disable nav switcher. ([#8381](https://github.com/infor-design/enterprise/issues/8381))
 - `[TabsModule]` Added setting called `equalTabWidth` to make tabs equal of width. ([#6990](https://github.com/infor-design/enterprise/issues/6990))
+
+## v4.95.0 Fixes
+
+- `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
 
 ## v4.94.0
 
