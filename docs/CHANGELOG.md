@@ -4,6 +4,7 @@
 
 ## v4.94.0 Features
 
+- `[About]` Added copy to clipboard button. ([#8438](https://github.com/infor-design/enterprise/issues/8438))
 - `[Datagrid]` Added setting `showEditorIcons` to always display icon without hover. ([#8439](https://github.com/infor-design/enterprise/issues/8439))
 - `[Datagrid]` Disabled filter dropdown if selection is only one. ([NG#1570](https://github.com/infor-design/enterprise-ng/issues/1570))
 - `[Homepage]` Added row height style classes for widgets. ([#8211](https://github.com/infor-design/enterprise/issues/8211))
