@@ -147,6 +147,7 @@ Soho.Locale.addCulture('en-US', {
     Contrast: { id: 'Contrast', value: 'Contrast', comment: 'Name of the high contrast theme' },
     CookiesEnabled: { id: 'CookiesEnabled', value: 'Cookies enabled', comment: 'Returns if browser cookies are enabled or not.' },
     Copy: { id: 'Copy', value: 'Copy', comment: 'Copy tooltip' },
+    CopyToClipboard: { id: 'CopyToClipboard', value: 'Copy to clipboard', comment: 'Copy to clipboard' },
     Croatian: { id: 'Croatian', value: 'Croatian', comment: 'Croatian (Croatia) language' },
     CssClass: { id: 'CssClass', value: 'Css class', comment: 'Label for entering a Css Class name' },
     Cut: { id: 'Cut', value: 'Cut', comment: 'Cut tooltip' },
