@@ -31,11 +31,11 @@ spec:
                   name: docs-api-key
                   key: token
             - name: DOCS_API_URL
-              value: "https://old.design.infor.com"
+              value: "https://legacy.design.infor.com"
             - name: SITE
               value: "prod"
             - name: BUILD_FROM
-              value: "4.91.0"
+              value: "4.93.0"
             - name: APP_REPO
               value: "infor-design/enterprise"
           command: ["/bin/bash"]

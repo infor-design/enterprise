@@ -1,7 +1,7 @@
 CURRENT_DIR=$(shell pwd)
 ORGANIZATION = hookandloop
 IMAGE = enterprise-publish-docs
-IMAGE_TAG = 0.0.2
+IMAGE_TAG = 1.0.0
 
 
 ifneq (,$(wildcard ./.env))
