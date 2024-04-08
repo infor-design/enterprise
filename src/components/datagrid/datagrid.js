@@ -10055,7 +10055,6 @@ Datagrid.prototype = {
           cell = ((key === 37 && !isRTL) || (key === 39 && isRTL)) ? 0 : lastCell;
           self.setActiveCell(row, cell);
         } else if ((!self.quickEditMode || (key === 9))) {
-
           if (col.editor !== undefined && node.is('.is-editing')) {
             return;
           }
