@@ -1,15 +1,5 @@
 # What's New with Enterprise
 
-## v4.95.0
-
-## v4.95.0 Features
-
-- `[Module Nav]` Added setting `disableSwitcher` to disable nav switcher. ([#8381](https://github.com/infor-design/enterprise/issues/8381))
-
-## v4.95.0 Fixes
-
-- `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
-
 ## v4.94.0
 
 ## v4.94.0 Features
@@ -29,6 +19,7 @@
 - `[Calendar]` Fixed event icon not properly rendered across week view mode. ([#8456](https://github.com/infor-design/enterprise/issues/8456))
 - `[Calendar]` Fixed inconsistencies in border colors of events in calendar. ([#8452](https://github.com/infor-design/enterprise/issues/8452))
 - `[Calendar]` Fixed height calculation of homepage. ([NG#1478](https://github.com/infor-design/enterprise-ng/issues/1478))
+- `[Cards]` Fixed title and button regression and position. ([#8602](https://github.com/infor-design/enterprise/issues/8602))
 - `[Count]` Fixed misalignment in card header icon. ([#8448](https://github.com/infor-design/enterprise/issues/8448))
 - `[Datagrid]` Fixed an error editing on non first page in server side paging datagrid. ([#8537](https://github.com/infor-design/enterprise-ng/issues/1672))
 - `[Datagrid]` Fixed datagrid unable to have resize handle when using different column structure such as single lines. ([#8417](https://github.com/infor-design/enterprise/issues/8417))
