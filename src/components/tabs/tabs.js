@@ -3298,8 +3298,7 @@ Tabs.prototype = {
    * @returns {void}
    */
   resetTabStyles() {
-    const self = this;
-    let sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(:hidden)');
+    const sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(:hidden)');
 
     sizeableTabs.children('a').removeAttr('style');
     sizeableTabs.removeAttr('style');
