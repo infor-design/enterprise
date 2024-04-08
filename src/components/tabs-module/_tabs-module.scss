@@ -236,6 +236,10 @@
       background-color: $module-tabs-active-bg-color;
       color: $module-tabs-active-text-color;
 
+      > a {
+        color: $module-tabs-active-text-color;
+      }
+
       &.arrange-dragging.is-touch {
         background-color: $module-tabs-active-bg-color;
       }
@@ -270,7 +274,7 @@
 
         height: 14px;
         position: absolute;
-        right: 10px;
+        right: 5px;
         top: 50%;
       }
 
@@ -809,6 +813,37 @@ html[dir='rtl'] {
       }
     }
 
+    &.scrolled-left {
+      &::after {
+        right: 0;
+      }
+    }
+
+    &.scrolled-right {
+      &::before {
+        left: 40px;
+      }
+    }
+
+    .tab {
+      &.dismissible {
+        padding-left: 35px;
+      }
+    }
+
+    &.has-more-button {
+      .tab-list {
+        .tab {
+          &.dismissible {
+            a {
+              padding: 10px 10px 10px 35px;
+            }
+              
+          }
+        }
+      }
+    }
+
    .searchfield-wrapper.has-close-icon-button.has-text .btn-icon.close {
     right: calc(300px - 25%);
    }
@@ -863,7 +898,7 @@ html[dir='rtl'] {
       }
 
       .icon {
-        left: 8px;
+        left: 5px;
         right: auto;
       }
     }
