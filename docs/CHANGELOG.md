@@ -2,9 +2,6 @@
 
 ## v4.95.0
 
-## v4.95.0 Fixes
-
-- `[Datagrid]` Fixed unable to use the left/right arrow keys on the text in an editable cell. ([#8457](https://github.com/infor-design/enterprise/issues/8457))
 ## v4.95.0 Features
 
 - `[About]` Added copy to clipboard button. ([#8438](https://github.com/infor-design/enterprise/issues/8438))
@@ -13,6 +10,7 @@
 ## v4.95.0 Fixes
 
 - `[Contextual Action Panel]` Fixed added padding on contextual action panel. ([#8553](https://github.com/infor-design/enterprise/issues/8553))
+- `[Datagrid]` Fixed unable to use the left/right arrow keys on the text in an editable cell. ([#8457](https://github.com/infor-design/enterprise/issues/8457))
 - `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
 
 ## v4.94.0
