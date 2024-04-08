@@ -44,9 +44,12 @@ Arrange.prototype = {
 
   // example from: https://github.com/farhadi/html5arrangeable
   init() {
-    this.isTouch = env.features.touch;
     this.isIe = env.browser.name === 'ie';
     this.handleEvents();
+  },
+
+  get isTouch() {
+    return env.features.touch || env.devicespecs.isMobile;
   },
 
   /**
@@ -328,7 +331,7 @@ Arrange.prototype = {
           }
           let overItem = this;
           let overIndex;
-          e.preventDefault();
+          e.stopPropagation();
 
           if (self.isTouch && !self.placeholderTouch) {
             self.placeholderTouch = self.dragging

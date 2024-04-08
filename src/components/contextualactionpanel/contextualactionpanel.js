@@ -255,7 +255,7 @@ ContextualActionPanel.prototype = {
       }
 
       if (!isIframe) {
-        children.wrapAll('<div class="modal-content"></div>').wrapAll(`<div class="modal-body ${this.settings.detailRefId !== null ? 'padding-x-16 has-back-button' : ''}"></div>`);
+        children.wrapAll('<div class="modal-content"></div>').wrapAll(`<div class="modal-body ${this.settings.detailRefId !== undefined ? 'padding-x-16 has-back-button' : ''}"></div>`);
         this.panel.addClass('modal');
       }
     }
