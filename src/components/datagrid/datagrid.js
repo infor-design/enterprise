@@ -7421,10 +7421,6 @@ Datagrid.prototype = {
         colorPicker = null;
         return; // color picker closes on cell re-click;
       }
-      
-      if (!self.settings.actionableMode && self.settings.editable) {
-        self.quickEditMode = true;
-      }
 
       const isEditable = self.makeCellEditable(self.activeCell.rowIndex, self.activeCell.cell, e);
 
@@ -10058,7 +10054,12 @@ Datagrid.prototype = {
           // [Alt + Left/Right arrow] to move to the first or last cell on the current row.
           cell = ((key === 37 && !isRTL) || (key === 39 && isRTL)) ? 0 : lastCell;
           self.setActiveCell(row, cell);
-        } else if (!self.quickEditMode || (key === 9)) {
+        } else if ((!self.quickEditMode || (key === 9))) {
+
+          if (col.editor !== undefined && node.is('.is-editing')) {
+            return;
+          }
+
           // Handle `shift + tab` for code block formatter, it use sometime `.code-block-actions`
           if (key === 9 && e.shiftKey && target.is('.code-block-actions')) {
             self.focusNextPrev('prev', node);
