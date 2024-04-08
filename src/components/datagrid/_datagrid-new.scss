@@ -803,7 +803,11 @@
 
 .datagrid-dropdown-list.extra-small-rowheight .trigger .icon {
   left: 4px !important;
-  top: 6px;
+  top: 8px;
+
+  &.search {
+    top: 3px;
+  }
 }
 
 .datagrid-dropdown-list.small-rowheight .trigger .icon {
