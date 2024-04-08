@@ -9,6 +9,7 @@
 
 ## v4.95.0 Fixes
 
+- `[Contextual Action Panel]` Fixed added padding on contextual action panel. ([#8553](https://github.com/infor-design/enterprise/issues/8553))
 - `[Datagrid]` Fixed search icon misalignment in dropwdown cells. ([#8515](https://github.com/infor-design/enterprise/issues/8515))
 - `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
 
@@ -25,6 +26,7 @@
 ## v4.94.0 Fixes
 
 - `[Avatar]` Is no longer round by default. To use it in module nav add the new `square` class. ([#8539](https://github.com/infor-design/enterprise/issues/8539))
+- `[Hierarchy]` Fix broken size on avatars on hierarchy. ([#8584](https://github.com/infor-design/enterprise/issues/8584))
 - `[Bar]` Fixed axis label visibility by adding font-size in `axis-labels` container. ([#8431](https://github.com/infor-design/enterprise/issues/8431))
 - `[Button]` Added start and stop methods for generative timeout. ([#8541](https://github.com/infor-design/enterprise/issues/8541))
 - `[Calendar]` Fixed event icon not properly rendered across week view mode. ([#8456](https://github.com/infor-design/enterprise/issues/8456))
