@@ -3393,6 +3393,8 @@ Tabs.prototype = {
   /**
    * Checks cut off title for tabs.
    * @private
+   * @param {object} tabs object with tabs
+   * @param {number} visibleTabSize size to use
    * @returns {void}
    */
   checkCutOffTitle(tabs, visibleTabSize) {
@@ -3412,7 +3414,7 @@ Tabs.prototype = {
     for (let i = 0; i < tabs.length; i++) {
       tab = tabs.eq(i);
       a = tab.children('a');
-      a[0].style.width = '';
+      if (a[0]) a[0].style.width = '';
 
       if (!this.settings.headerTabsTooltips || this.settings.maxWidth === null) {
         let diff = 0;
@@ -3420,7 +3422,7 @@ Tabs.prototype = {
           diff = 25;
         }
         tabs[i].style.width = `${visibleTabSize - diff}px`;
-        a[0].style.width = `${visibleTabSize - diff}px`;
+        if (a[0]) a[0].style.width = `${visibleTabSize - diff}px`;
       }
 
       if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
@@ -3430,13 +3432,13 @@ Tabs.prototype = {
 
         if (this.settings.maxWidth !== null && a[0].scrollWidth > a.innerWidth()) {
           cutoff = 'yes';
-        } 
-        
+        }
+
         if (this.settings.maxWidth === null && prevWidth > (visibleTabSize - anchorPadding)) {
           cutoff = 'yes';
         }
 
-        a.data('cutoffTitle', cutoff);
+        a?.data('cutoffTitle', cutoff);
       }
     }
   },
@@ -3564,21 +3566,21 @@ Tabs.prototype = {
         }
       }
 
-      popupLi[0].removeAttribute('style');
-      popupA[0].removeAttribute('style');
+      popupLi[0]?.removeAttribute('style');
+      popupA[0]?.removeAttribute('style');
 
       popupLi.children('.icon').off().appendTo(popupA);
       popupLi.appendTo(menuHtml);
 
       // Link tab to its corresponding "More Tabs" menu option
       $item.data('moremenu-link', popupA);
-      popupA.find('.icon-more').removeData().remove();
+      popupA?.find('.icon-more').removeData().remove();
 
       // Link "More Tabs" menu option to its corresponding Tab.
       // Remove onclick methods from the popup <li> because they are called
       // on the "select" event in context of the original button
-      popupA.data('original-tab', $itemA);
-      popupA.onclick = undefined;
+      popupA?.data('original-tab', $itemA);
+      if (popupA) popupA.onclick = undefined;
 
       if (!$item.is('.has-popupmenu')) {
         return;
