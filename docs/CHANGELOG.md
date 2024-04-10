@@ -1,8 +1,8 @@
 # What's New with Enterprise
 
-## v4.95.0
+## v4.96.0
 
-## v4.95.0 Fixes
+## v4.96.0 Fixes
 
 - `[Homepage]` Fixed bug that caused errors on resize when no widgets. ([#8611](https://github.com/infor-design/enterprise/issues/8611))
 
