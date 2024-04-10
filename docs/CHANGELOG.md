@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.94.1
+
+## v4.94.1 Fixes
+
+- `[Homepage]` Fixed bug that caused errors on resize when no widgets. ([#8611](https://github.com/infor-design/enterprise/issues/8611))
+- `[Timeline]` Added fix to timeline layout. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
+
 ## v4.94.0
 
 ## v4.94.0 Features

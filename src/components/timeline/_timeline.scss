@@ -15,7 +15,7 @@
     position: absolute;
     top: 0;
     width: 3px;
-    height: 80%;
+    height: calc(80% + 5px);
   }
 
   .indicator {
