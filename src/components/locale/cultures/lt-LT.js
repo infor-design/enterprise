@@ -113,7 +113,7 @@ Soho.Locale.addCulture('lt-LT', {
     ChangeSelection: { id: 'ChangeSelection', value: 'Norėdami pakeisti pasirinktą elementą, naudokite rodyklių klavišus.', comment: 'Audible text for drop down list help' },
     ChangeView: { id: 'ChangeView', value: 'Keisti rodinį', comment: 'Change the current page from a list of options' },
     CharactersLeft: { id: 'CharactersLeft', value: 'Liko simbolių {0}', comment: 'indicator showing how many more characters you can type.' },
-    CharactersMax: { id: 'CharactersMax', value: 'Didžiausias simbolių skaičius ', comment: 'indicator showing how many max characters you can type.' },
+    CharactersMax: { id: 'CharactersMax', value: 'Didžiausias ženklų skaičius {0}', comment: 'indicator showing how many max characters you can type.' },
     Checkbox: { id: 'Checkbox', value: 'Žymimasis langelis', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'Pažymėta', comment: 'Checked tooltip' },
     Chinese: { id: 'Chinese', value: 'Kinų', comment: 'Chinese language in general form' },

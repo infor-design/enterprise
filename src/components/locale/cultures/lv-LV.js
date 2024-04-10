@@ -113,7 +113,7 @@ Soho.Locale.addCulture('lv-LV', {
     ChangeSelection: { id: 'ChangeSelection', value: 'Izmantojiet bulttaustiņus, lai mainītu atlasīto vienumu.', comment: 'Audible text for drop down list help' },
     ChangeView: { id: 'ChangeView', value: 'Mainīt skatu', comment: 'Change the current page from a list of options' },
     CharactersLeft: { id: 'CharactersLeft', value: 'Atlikušas rakstzīmes {0}', comment: 'indicator showing how many more characters you can type.' },
-    CharactersMax: { id: 'CharactersMax', value: 'Maksimālais rakstzīmju skaits no ', comment: 'indicator showing how many max characters you can type.' },
+    CharactersMax: { id: 'CharactersMax', value: 'Maksimālais rakstzīmju skaits {0}', comment: 'indicator showing how many max characters you can type.' },
     Checkbox: { id: 'Checkbox', value: 'Izvēles rūtiņa', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'Atzīmēta', comment: 'Checked tooltip' },
     Chinese: { id: 'Chinese', value: 'Ķīniešu', comment: 'Chinese language in general form' },
