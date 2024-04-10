@@ -20,6 +20,7 @@ const COMPONENT_NAME = 'about';
  * @param {string} [settings.version] Semantic Version Number for example (4.0.0).
  * @param {array|object} [settings.showCopyButton=true] Show copy to clipboard button
  * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.showCopyButton=true] Show copy to clipboard button
 */
 const ABOUT_DEFAULTS = {
   appName: 'Infor Application Name',
@@ -145,6 +146,7 @@ About.prototype = {
     $('.modal-body', this.modal)[0].tabIndex = 0;
 
     this.modal.appendTo('body');
+
     this.modal.modal({
       trigger: this.isBody ? 'immediate' : 'click',
       attributes: this.settings.attributes

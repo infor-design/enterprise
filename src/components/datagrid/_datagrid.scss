@@ -4970,7 +4970,7 @@ td .btn-actions {
       &.search {
         height: 13px;
         left: 4px !important;
-        top: 0;
+        top: 1px;
       }
     }
   }
@@ -4989,17 +4989,18 @@ td .btn-actions {
     }
 
     &.dropdown-list .trigger .icon {
-      margin-top: 3.5px;
+      margin-top: 2px;
     }
   }
 
+  > .trigger .icon,
   .icon {
     color: $ids-color-font-base;
     left: 0 !important;
-    margin-top: 7px;
+    margin-top: 6px;
 
     &.search {
-      margin-top: 7px !important;
+      margin-top: 7px;
     }
   }
 }
