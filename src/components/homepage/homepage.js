@@ -741,9 +741,10 @@ Homepage.prototype = {
       let rowsUsed = 0;
       let abort = false;
       let calcHeight = card.outerHeight();
-      if (!card[0]) return;
-      calcHeight += parseInt(window.getComputedStyle(card[0]).getPropertyValue('margin-top'), 10);
-      calcHeight += parseInt(window.getComputedStyle(card[0]).getPropertyValue('margin-bottom'), 10);
+      if (card[0]) {
+        calcHeight += parseInt(window.getComputedStyle(card[0]).getPropertyValue('margin-top'), 10);
+        calcHeight += parseInt(window.getComputedStyle(card[0]).getPropertyValue('margin-bottom'), 10);
+      }
 
       for (let rows = 0; rows < this.rowsAndCols.length && !abort; rows++) {
         rowsUsed++;
