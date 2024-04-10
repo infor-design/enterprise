@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.93.2
+
+## v4.93.2 Fixes
+
+- `[Timeline]` Fixed alignment in widget.([#8524](https://github.com/infor-design/enterprise/issues/8524))
+- `[Timeline]` Added fix to timeline layout. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
+
 ## v4.93.1
 
 ## v4.93.1 Fixes

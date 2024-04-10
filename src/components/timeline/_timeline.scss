@@ -15,7 +15,7 @@
     position: absolute;
     top: 0;
     width: 3px;
-    height: 70%;
+    height: calc(80% + 5px);
   }
 
   .indicator {
@@ -66,17 +66,17 @@
   .date {
     margin-left: 5em;
 
-    > * {
+    >* {
       vertical-align: middle;
     }
 
-    > span {
+    >span {
       @include font-size(12);
 
       line-height: 1.5rem;
     }
 
-    > .icon {
+    >.icon {
       height: 18px;
       margin-right: 2px;
       width: 18px;
@@ -89,7 +89,7 @@
     text-align: center;
     width: 2.5em;
 
-    > * {
+    >* {
       vertical-align: middle;
     }
 
@@ -124,7 +124,20 @@
     }
   }
 
+  .card .timeline,
+  .widget .timeline {
+    &::before {
+      bottom: 60px;
+      left: 1.125em;
+      height: 87%;
+    }
+  }
+
   .timeline-block {
+    &:nth-last-child(2)::before {
+      visibility: hidden;
+    }
+
     .date,
     .indicator-container,
     .content {
@@ -139,11 +152,18 @@
     }
 
     .indicator-container {
-      margin-left: 11.5em;
+      margin-left: 0;
     }
 
-    .content {
-      margin-left: 3em;
+    .content,
+    .date {
+      margin-left: 5em;
+      float: none;
+    }
+
+    .date {
+      width: auto;
+      top: 85%;
     }
   }
 }
@@ -160,6 +180,7 @@
 
 .column {
   &.one-third {
+
     .card .timeline,
     .widget .timeline {
       &::before {
@@ -195,6 +216,7 @@
 // RTL Styles
 html[dir='rtl'] {
   .timeline {
+
     // vertical line
     &::before {
       border-left: 0;
@@ -205,11 +227,17 @@ html[dir='rtl'] {
   }
 
   .timeline-block {
+    &:nth-last-child(2) {
+      &::before {
+        right: 1em;
+      }
+    }
+
     .date {
       margin-left: inherit;
       margin-right: 3em;
 
-      > .icon {
+      >.icon {
         margin-left: 2px;
         margin-right: inherit;
       }
@@ -234,31 +262,22 @@ html[dir='rtl'] {
     .timeline {
       &::before {
         left: auto;
-        right: 12.65em;
       }
     }
 
     .timeline-block {
-      .date,
-      .indicator-container,
-      .content {
-        float: right;
-      }
-
       .date {
         margin-left: inherit;
-        margin-right: 0;
+        margin-right: 2.5em;
         text-align: left;
       }
 
       .indicator-container {
         margin-left: inherit;
-        margin-right: 11.5em;
       }
 
       .content {
         margin-left: inherit;
-        margin-right: 3em;
       }
     }
   }

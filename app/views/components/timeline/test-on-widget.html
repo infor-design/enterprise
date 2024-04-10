@@ -1,0 +1,150 @@
+<div class="homepage page-container scrollable" data-init="false" id="maincontent" data-columns="3" role="main">
+  <div class="content">
+    <div class="widget bordered">
+      <div class="widget-header">
+        <h2 class="widget-title">Warehouse Demand Fulfillment</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+      <div class="widget-content">
+        <div id="wdf-content" class="row" style="display: block;">
+          <div class="twelve columns">
+            <div id="wdf-timeline" class="timeline">
+              <div id="warehouse-demand-created" class="timeline-block">
+                <div class="indicator-container">
+                  <div id="warehouse-demand-created-indicator" class="indicator complete"></div>
+                </div>
+                <div class="content">
+                  <div class="heading">Warehouse Demand Created</div>
+                  <div id="created-document" class="sub-heading"> Document: 4214 </div>
+                </div>
+                <div class="date">
+                  <svg focusable="false" aria-hidden="true" role="presentation" class="icon">
+                    <use href="#icon-calendar" />
+                  </svg>
+                  <span id="created-document-date">March 17, 2023</span>
+                </div>
+              </div>
+
+              <div id="demand-quantity-allocated" class="timeline-block">
+                <div class="indicator-container">
+                  <div soho-tooltip="" id="demand-quantity-allocated-indicator" class="indicator has-tooltip complete">
+                  </div>
+                </div>
+                <div class="content">
+                  <div class="heading">Demand Quantity Allocated</div>
+                </div>
+                <div class="date">
+                  <svg focusable="false" aria-hidden="true" role="presentation" class="icon">
+                    <use href="#icon-calendar" />
+                  </svg>
+                  <span id="quantity-allocated-date">March 16, 2023</span>
+                </div>
+              </div>
+
+              <div id="ready-for-picking" class="timeline-block">
+                <div class="indicator-container">
+                  <div id="ready-for-picking-indicator" class="indicator complete"></div>
+                </div>
+                <div class="content">
+                  <div class="heading">Ready For Picking At Warehouse</div>
+                  <div id="picking-location-and-document" class="sub-heading"> Warehouse Location: LOC3 <br> Shipment
+                    Document: 4214 </div>
+                </div>
+              </div>
+
+              <div id="picking-finished" class="timeline-block">
+                <div class="indicator-container">
+                  <div soho-tooltip="" id="picking-finished-indicator" class="indicator has-tooltip complete"></div>
+                </div>
+                <div class="content">
+                  <div class="heading">Picking Finished</div>
+                </div>
+                <div class="date">
+                  <svg focusable="false" aria-hidden="true" role="presentation" class="icon">
+                    <use href="#icon-calendar" />
+                  </svg>
+                  <span id="picking-date">March 16, 2023</span>
+                </div>
+              </div>
+
+              <div id="ready-for-packing" class="timeline-block">
+                <div class="indicator-container">
+                  <div id="ready-for-packing-indicator" class="indicator complete"></div>
+                </div>
+                <div class="content">
+                  <div class="heading">Ready For Packing At Warehouse</div>
+                  <div id="packing-location-and-document" class="sub-heading"> Warehouse Location: LOC3 <br> Shipment
+                    Document: 4214 </div>
+                </div>
+              </div>
+
+              <div id="packing-finished" class="timeline-block">
+                <div class="indicator-container">
+                  <div soho-tooltip="" id="packing-finished-indicator" class="indicator has-tooltip complete"></div>
+                </div>
+                <div class="content">
+                  <div class="heading">Packing Finished</div>
+                </div>
+                <div class="date">
+                  <svg focusable="false" aria-hidden="true" role="presentation" class="icon">
+                    <use href="#icon-calendar" />
+                  </svg>
+                  <span id="packing-date">March 16, 2023</span>
+                </div>
+              </div>
+
+              <div id="ready-for-shipment" class="timeline-block">
+                <div class="indicator-container">
+                  <div id="ready-for-shipment-indicator" class="indicator complete"></div>
+                </div>
+                <div class="content">
+                  <div class="heading">Ready For Shipment</div>
+                </div>
+              </div>
+
+              <div id="shipment-releasing" class="timeline-block">
+                <div class="indicator-container">
+                  <div id="shipment-releasing-indicator" class="indicator complete"></div>
+                </div>
+                <div class="content">
+                  <div class="heading">Shipment Releasing</div>
+                </div>
+              </div>
+
+              <div id="shipped-from-warehouse" class="timeline-block last populated">
+                <div class="indicator-container">
+                  <div soho-tooltip="" id="shipped-from-warehouse-indicator" class="indicator complete has-tooltip">
+                  </div>
+                </div>
+                <div class="content">
+                  <div class="heading">Shipped From Warehouse</div>
+                  <div id="ship-location-and-document" class="sub-heading ng-star-inserted"> Ship To Location: RLOC1
+                    <br> Shipment Document: 4214 </div>
+                </div>
+                <div class="date">
+                  <svg focusable="false" aria-hidden="true" role="presentation" class="icon">
+                    <use href="#icon-calendar" />
+                  </svg>
+                  <span id="shipped-date">March 16, 2023</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.homepage').homepage();
+</script>
