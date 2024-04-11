@@ -113,7 +113,7 @@ Soho.Locale.addCulture('he-IL', {
     ChangeSelection: { id: 'ChangeSelection', value: 'לשינוי הפריט שנבחר, השתמש במקשי החצים.', comment: 'Audible text for drop down list help' },
     ChangeView: { id: 'ChangeView', value: 'שנה תצוגה', comment: 'Change the current page from a list of options' },
     CharactersLeft: { id: 'CharactersLeft', value: 'תווים שנותרו {0}', comment: 'indicator showing how many more characters you can type.' },
-    CharactersMax: { id: 'CharactersMax', value: 'ספירת תווים מרבית של ', comment: 'indicator showing how many max characters you can type.' },
+    CharactersMax: { id: 'CharactersMax', value: 'ספירת תווים מרבית של {0}', comment: 'indicator showing how many max characters you can type.' },
     Checkbox: { id: 'Checkbox', value: 'תיבת סימון', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'מסומן', comment: 'Checked tooltip' },
     Chinese: { id: 'Chinese', value: 'סינית', comment: 'Chinese language in general form' },

@@ -1007,7 +1007,7 @@ describe('Locale API', () => {
     Locale.set('de-DE');
 
     expect(Locale.translate('Required')).toEqual('Erforderlich');
-    expect(Locale.translate('Loading')).toEqual('Laden...');
+    expect(Locale.translate('Loading')).toEqual('Laden');
     expect(Locale.translate('Filter')).toEqual('Filtern');
 
     // Error
@@ -2024,7 +2024,7 @@ describe('Locale API', () => {
       expect(Locale.translate('Required')).toEqual('Required');
       expect(Locale.translate('Loading')).toEqual('Loading');
       expect(Locale.translate('Required', { language: 'de' })).toEqual('Erforderlich');
-      expect(Locale.translate('Loading', { language: 'de' })).toEqual('Laden...');
+      expect(Locale.translate('Loading', { language: 'de' })).toEqual('Laden');
       done();
     });
   });
