@@ -167,7 +167,7 @@ Pie.prototype = {
 
     const hasParentBordered = this.element.parents('.widget').hasClass('bordered');
     const w = parseInt(this.element.width(), 10);
-    let h = parseInt(this.element.height(), 10);
+    let h = this.element.height() < 320 ? 320 : parseInt(this.element.height(), 10);
 
     const dims = {
       height: h,
@@ -305,6 +305,8 @@ Pie.prototype = {
         }
         return { name, display: 'twocolumn', placement: s.legendPlacement, color: d.color, data: d };
       });
+
+      this.series = series;
 
       s.svg = self.svg;
       charts.addLegend(series, 'pie', s, this.element);
@@ -842,17 +844,22 @@ Pie.prototype = {
    * @returns {void}
    */
   handleResize() {
-    if (this.width === this.element.width()) {
-      return;
+    const resize = () => {
+      if (this.width === this.element.width()) {
+        return;
+      }
+      this.width = this.element.width();
+      if (!this.element.is(':visible')) {
+        return;
+      }
+      this.updated();
+    };
+    // Waiting to complete the animatin on widget
+    if (this.element.closest('.homepage').length) {
+      setTimeout(() => resize(), 300);
+    } else {
+      resize();
     }
-
-    this.width = this.element.width();
-
-    if (!this.element.is(':visible')) {
-      return;
-    }
-
-    this.updated();
   },
 
   /**
@@ -948,6 +955,8 @@ Pie.prototype = {
       isTrigger: self.initialSelectCall ? false : !isSelected,
       d: d.data,
       i,
+      settings: self.settings,
+      series: self.series,
       type: self.settings.type,
       dataset: self.settings.dataset,
       svg: self.svg

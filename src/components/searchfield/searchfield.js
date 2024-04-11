@@ -259,6 +259,10 @@ SearchField.prototype = {
       }
     }
 
+    if (this.settings.placeholder) {
+      this.element.attr('placeholder', this.settings.placeholder);
+    }
+
     // Prevent browser typahead
     const autocompleteSetting = this.settings.autocompleteAttribute;
     if (typeof autocompleteSetting === 'string' && autocompleteSetting.length) {

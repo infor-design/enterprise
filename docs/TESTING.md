@@ -143,7 +143,6 @@ it('should not visually regress', async () => {
   expect(await page.waitForSelector('.modal.is-visible.is-active')).toBeTruthy();
 
   // Need a bit of delay to show the modal perfectly
-  await page.waitForTimeout(200);
 
   // Screenshot of the page
   const image = await page.screenshot();

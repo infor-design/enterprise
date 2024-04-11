@@ -62,7 +62,7 @@
   <aside id="nav" class="module-nav" data-options="{ 'filterable': true }">
     <div class="module-nav-bar">
       <!-- Module Nav's top-level navigation items are inside the accordion -->
-      <div class="module-nav-accordion accordion panel" data-options="{'allowOnePane': false}">
+      <div class="module-nav-accordion accordion panel" data-options="{'allowOnePane': false }">
         <!-- Module switcher -->
         <div class="module-nav-header accordion-section">
           <div class="module-nav-switcher">
@@ -355,6 +355,10 @@
           <input type="checkbox" class="checkbox" name="hide-completely" id="hide-completely" />
           <label for="hide-completely" class="checkbox-label">Hide completely</label>
         </div>
+        <div class="field">
+          <input type="checkbox" class="checkbox" name="disable-switcher" id="disable-switcher" />
+          <label for="disable-switcher" class="checkbox-label">Disable switcher</label>
+        </div>
       </div>
     </div>
     <div class="row test-spacer">&nbsp;</div>
@@ -379,6 +383,7 @@
     const hideCompletelyEl = $('#hide-completely');
     const hamburgerBtnEl = $('#header-hamburger');
     const pinSectionsCheckEl = $('#pin-sections');
+    const disableSwitcher = $('#disable-switcher');
 
     displayCheckEl.on('change.test', (e) => {
       navAPI.updated({ showDetailView: displayCheckEl[0].checked });
@@ -387,6 +392,10 @@
     pinSectionsCheckEl.on('change.test', (e) => {
       navAPI.updated({ pinSections: pinSectionsCheckEl[0].checked });
     });
+
+    disableSwitcher.on('change.test', (e, mode) => {
+      navAPI.updated({ disableSwitcher: disableSwitcher[0].checked });
+    })
 
     if (hamburgerBtnEl.length) {
       hamburgerBtnEl.on('click.test', (e) => {

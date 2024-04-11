@@ -1,0 +1,43 @@
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" id="show">Show Modal</button>
+
+    <div id="modal" class="modal">
+       <div class="modal-content">
+
+          <div class="modal-header">
+            <h1 class="modal-title" >Add Comment</h1>
+          </div>
+
+          <div class="modal-body-wrapper">
+            <div class="modal-body">
+              <div class="form-layout-compact">
+                <div class="field">
+                  <label for="fileupload">Upload a File</label>
+                  <input type="file" class="fileupload" id="fileupload" name="fileupload" />
+                </div>
+              </div>
+
+              <div class="modal-buttonset">
+                <button type="button" class="btn-modal">Cancel</button>
+                <button type="button" id="submit" class="btn-modal-primary">Submit</button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('#show').on('click', function () {
+
+    $('body').modal({
+      content: $('#modal')
+    });
+
+  });
+</script>

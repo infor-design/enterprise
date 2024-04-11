@@ -28,14 +28,6 @@
   top: -0.12em;
 }
 
-@media (min-width: 767px) {
-  .timeline {
-    &::before {
-      left: 12.7em;
-    }
-  }
-}
-
 html[dir='rtl'] {
   .indicator-container {
     right: -2px;

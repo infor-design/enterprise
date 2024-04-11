@@ -3,7 +3,7 @@
   padding: 20px;
 
   .branch-collapsed {
-    > ul * {
+    >ul * {
       display: none;
     }
   }
@@ -37,7 +37,7 @@
     display: table;
     margin: 0 auto;
 
-    @media (max-width: $breakpoint-slim - 1px) {
+    @media (max-width: ($breakpoint-slim - 1px)) {
       width: 100%;
     }
 
@@ -48,9 +48,9 @@
     .chart {
       position: relative;
 
-      &.has-single-child .sub-level > li:last-child::before,
-      &.has-single-child .sub-level > li:first-child::before,
-      &.has-single-child .sub-level > li::before {
+      &.has-single-child .sub-level>li:last-child::before,
+      &.has-single-child .sub-level>li:first-child::before,
+      &.has-single-child .sub-level>li::before {
         display: none;
       }
 
@@ -58,12 +58,12 @@
       &.has-single-child .root {
         margin: 0;
 
-        + .sub-level::before {
+        +.sub-level::before {
           height: 66px;
           left: 20px;
         }
 
-        + .sub-level > li .leaf::before {
+        +.sub-level>li .leaf::before {
           border-bottom: $hierarchy-line-width solid $hierarchy-line-color;
           border-left: $hierarchy-line-width solid $hierarchy-line-color;
           content: '';
@@ -78,7 +78,7 @@
       }
     }
 
-    .sub-level > li > ul .leaf::before {
+    .sub-level>li>ul .leaf::before {
       border-bottom: $hierarchy-line-width solid $hierarchy-line-color;
       border-left: $hierarchy-line-width solid $hierarchy-line-color;
       content: '';
@@ -91,11 +91,11 @@
       z-index: -1;
     }
 
-    .sub-level > li ul:not(.popupmenu) {
+    .sub-level>li ul:not(.popupmenu) {
       position: relative;
     }
 
-    .sub-level > li.branch-expanded > ul > li.branch-expanded:not(:last-child)::after {
+    .sub-level>li.branch-expanded>ul>li.branch-expanded:not(:last-child)::after {
       border-left: $hierarchy-line-width solid $hierarchy-line-color;
       content: '';
       height: 100%;
@@ -105,7 +105,7 @@
     }
 
     // Remove the last node if its expandable
-    .chart:not(.has-single-child) > .sub-level > li.branch-expanded:last-child::after {
+    .chart:not(.has-single-child)>.sub-level>li.branch-expanded:last-child::after {
       background-color: $body-color-primary-background;
       content: '';
       height: 100%;
@@ -132,6 +132,10 @@
     &.azure08 {
       border-left-color: $ids-color-palette-azure-80;
 
+      .image-initials {
+        background-color: $ids-color-palette-azure-80;
+      }
+
       .image-placeholder {
         border: 2px solid $ids-color-palette-azure-80;
       }
@@ -139,6 +143,10 @@
 
     &.turquoise02 {
       border-left-color: $ids-color-palette-turquoise-20;
+
+      .image-initials {
+        background-color: $ids-color-palette-turquoise-20;
+      }
 
       .image-placeholder {
         border: 2px solid $ids-color-palette-turquoise-20;
@@ -148,6 +156,10 @@
     &.amethyst06 {
       border-left-color: $ids-color-palette-amethyst-60;
 
+      .image-initials {
+        background-color: $ids-color-palette-amethyst-60;
+      }
+
       .image-placeholder {
         border: 2px solid $ids-color-palette-amethyst-60;
       }
@@ -155,6 +167,10 @@
 
     &.slate06 {
       border-left-color: $ids-color-palette-slate-60;
+
+      .image-initials {
+        background-color: $ids-color-palette-slate-60;
+      }
 
       .image-placeholder {
         border: 2px solid $ids-color-palette-slate-60;
@@ -164,6 +180,10 @@
     &.amber06 {
       border-left-color: $ids-color-palette-amber-60;
 
+      .image-initials {
+        background-color: $ids-color-palette-amber-60;
+      }
+
       .image-placeholder {
         border: 2px solid $ids-color-palette-amber-60;
       }
@@ -172,6 +192,10 @@
     &.emerald07 {
       border-left-color: $ids-color-palette-emerald-70;
 
+      .image-initials {
+        background-color: $ids-color-palette-emerald-70;
+      }
+
       .image-placeholder {
         border: 2px solid $ids-color-palette-emerald-70;
       }
@@ -179,6 +203,10 @@
 
     &.ruby06 {
       border-left-color: $ids-color-palette-ruby-60;
+
+      .image-initials {
+        background-color: $ids-color-palette-ruby-60;
+      }
 
       .image-placeholder {
         border: 2px solid $ids-color-palette-ruby-60;
@@ -193,7 +221,6 @@
     img,
     .image-placeholder {
       border-radius: 50%;
-      display: inline-block;
       float: left;
       height: 55px;
       margin-left: 14px;
@@ -202,9 +229,9 @@
     }
 
     .image-initials {
-      display: inline-block;
       float: left;
       height: 55px;
+      min-height: 55px;
       line-height: 5.5rem;
       margin-left: 14px;
       margin-top: 10px;
@@ -264,7 +291,7 @@
   }
 
   //Adjust size for buttons
-  ul > li > .leaf {
+  ul>li>.leaf {
     width: 260px;
 
     @media only screen and (min-width: $breakpoint-slim) and (max-width: $breakpoint-phablet) {
@@ -289,7 +316,7 @@
   }
 
   li[data-disabled='true'],
-  li[data-disabled='true'] > a {
+  li[data-disabled='true']>a {
     cursor: default;
     opacity: 0.5;
   }
@@ -308,7 +335,7 @@
       left: 50%;
     }
 
-    + .sub-level {
+    +.sub-level {
       padding-bottom: 5px;
       padding-left: 35px;
       padding-top: 25px;
@@ -362,7 +389,7 @@
     white-space: nowrap;
 
     // Top Level Nodes still follow left to right
-    > li {
+    >li {
       display: inline-block;
       padding: 5px 10px;
       vertical-align: top;
@@ -433,11 +460,11 @@
     padding-top: 0;
   }
 
-  .popupmenu.has-detail-fields + .arrow {
+  .popupmenu.has-detail-fields+.arrow {
     border-bottom-color: $popupmenu-border-color;
   }
 
-  .popupmenu.has-detail-fields + .arrow::after {
+  .popupmenu.has-detail-fields+.arrow::after {
     border-bottom-color: $ids-color-palette-white;
   }
 

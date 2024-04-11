@@ -335,7 +335,7 @@ ModalManager.prototype = {
 
     // Setup a global keydown event that can handle the closing of modals in the proper order.
     $(document).on(`keydown.${EVENT_NAMESPACE}`, (e) => {
-      const modalTargetElem = $(e.target).parents('.modal');
+      const modalTargetElem = $(e.target).parents('.modal.is-active');
       const keyCode = e.which || e.keyCode;
 
       switch (keyCode) {

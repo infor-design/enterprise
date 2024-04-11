@@ -1700,7 +1700,7 @@ MonthView.prototype = {
           this.setToday();
           return;
         }
-        this.selectDay(args.selectedDate, false, true);
+        this.selectDay(args.selectedDate, false, true, 'datepicker');
       });
     }
 
@@ -1716,7 +1716,7 @@ MonthView.prototype = {
           if (e.currentTarget.classList.contains('is-disabled')) {
             return;
           }
-          this.selectDay(key, false, true);
+          this.selectDay(key, false, true, 'cell');
         });
     }
 
@@ -2147,7 +2147,7 @@ MonthView.prototype = {
    * @param {boolean} closePopup Send a flag to close the popup
    * @param {boolean} insertDate Send a flag to insert the date in the field
   */
-  selectDay(date, closePopup, insertDate) {
+  selectDay(date, closePopup, insertDate, action = null) {
     if (this.isIslamic && typeof date !== 'string') {
       this.currentDateIslamic = Locale.gregorianToUmalqura(date);
       date = stringUtils.padDate(
@@ -2202,6 +2202,10 @@ MonthView.prototype = {
       year,
       close: closePopup
     };
+
+    if (action !== null) {
+      args.action = action;
+    }
 
     delete this.isKeyClick;
     this.element.find('td.is-selected').removeClass('is-selected');
@@ -2314,7 +2318,7 @@ MonthView.prototype = {
    * Select todays date visually.
    */
   setToday() {
-    this.selectDay(new Date(), false, true);
+    this.selectDay(new Date(), false, true, 'today');
   },
 
   /**

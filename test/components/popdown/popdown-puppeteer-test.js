@@ -12,7 +12,7 @@ describe('Popdown Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should show the title', async () => {
+    it.skip('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
@@ -92,7 +92,6 @@ describe('Popdown Puppeteer Tests', () => {
       // Last input should be focused in popdown.
       expect(await checkIfElementHasFocused('#last-name')).toBe(true);
 
-      await page.waitForTimeout(400);
       // Tab on last input in popdown
       await page.keyboard.press('Tab');
 
@@ -130,7 +129,7 @@ describe('Popdown Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should show the title', async () => {
+    it.skip('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 

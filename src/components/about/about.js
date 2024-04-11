@@ -18,7 +18,9 @@ const COMPONENT_NAME = 'about';
  * @param {string} [settings.productName] Additional product name information to display.
  * @param {boolean} [settings.useDefaultCopyright=true] Add the Legal Approved Infor Copyright Text.
  * @param {string} [settings.version] Semantic Version Number for example (4.0.0).
+ * @param {array|object} [settings.showCopyButton=true] Show copy to clipboard button
  * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {array|object} [settings.showCopyButton=true] Show copy to clipboard button
 */
 const ABOUT_DEFAULTS = {
   appName: 'Infor Application Name',
@@ -28,6 +30,7 @@ const ABOUT_DEFAULTS = {
   productName: undefined,
   useDefaultCopyright: true,
   version: undefined,
+  showCopyButton: true
 };
 
 function About(element, settings) {
@@ -143,16 +146,46 @@ About.prototype = {
     $('.modal-body', this.modal)[0].tabIndex = 0;
 
     this.modal.appendTo('body');
+
     this.modal.modal({
       trigger: this.isBody ? 'immediate' : 'click',
       attributes: this.settings.attributes
     });
+
+    if (this.settings.showCopyButton) {
+      $(`<button type="button" class="btn-icon" id="copy-to-clipboard" title="${Locale.translate('CopyToClipboard')}">
+          <span>${Locale.translate('CopyToClipboard')}</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use href="#icon-copy"></use>
+          </svg>
+        </button>`).prependTo(this.modal.find('.modal-body-wrapper')).on('click', () => {
+        this.copyToClipBoard();
+      }).tooltip();
+    }
 
     // Link the About API to the Modal API
     const modalAPI = this.modal.data('modal');
     modalAPI.aboutAPI = this;
 
     return this;
+  },
+
+  /**
+   * Copy inner text to clipboard
+   */
+  copyToClipBoard() {
+    const container = document.createElement('div');
+    container.innerHTML = this.modal.find('.modal-body').html();
+    container.style.position = 'fixed';
+    container.style.pointerEvents = 'none';
+    container.style.opacity = 0;
+    document.body.appendChild(container);
+    window.getSelection().removeAllRanges();
+    const range = document.createRange();
+    range.selectNode(container);
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    document.body.removeChild(container);
   },
 
   /**

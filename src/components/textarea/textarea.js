@@ -13,7 +13,7 @@ const TEXTAREA_DEFAULTS = {
   maxLength: null,
   printable: true,
   charRemainingText: null,
-  charMaxText: null,
+  charMaxText: 'Character count of {0} exceeded',
   attributes: null
 };
 

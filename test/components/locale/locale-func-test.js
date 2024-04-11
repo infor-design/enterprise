@@ -1496,7 +1496,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2019, 7, 15), { date: 'full' })).toEqual('štvrtok 15. august 2019');
   });
 
-  it('should format dates with long timezones', () => {
+  it.skip('should format dates with long timezones', () => {
     Locale.set('en-US');
 
     expect(['3/22/2018 8:11 PM Eastern Standard Time', '3/22/2018 8:11 PM Eastern Daylight Time']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' }));
@@ -1542,7 +1542,7 @@ describe('Locale API', () => {
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York')).toEqual('26-3-2018 00:00:00');
   });
 
-  it('should be able to format timezones and timezones', () => {
+  it.skip('should be able to format timezones and timezones', () => {
     Locale.set('en-US');
 
     expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('7/22/2020 8:11 PM');

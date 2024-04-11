@@ -321,8 +321,14 @@ Tabs.prototype = {
 
       // Make it possible for Module Tabs to display a tooltip containing their contents
       // if the contents are cut off by ellipsis.
-      if (self.settings.moduleTabsTooltips || self.settings.multiTabsTooltips) {
-        a.on('beforeshow.toolbar', () => a.data('cutoffTitle') === 'yes').tooltip({
+      if (self.settings.moduleTabsTooltips || self.settings.multiTabsTooltips || self.settings.headerTabsTooltips) {
+        a.parent().on('mouseover.tabs', () => {
+          if (a.data('cutoffTitle') === undefined) {
+            self.checkCutOffTitle($(this), self.visibleTabSize);
+          }
+        });
+
+        a.on('beforeshow.toolbar', () => a.data('cutoffTitle') === 'yes' && a.parent().not('.is-disabled').length > 0).tooltip({
           content: `${a.text().trim()}`
         });
       }
@@ -466,7 +472,7 @@ Tabs.prototype = {
     if (!this.isModuleTabs() && this.isHeaderTabs()) {
       this.adjustTabs();
     }
-    
+
     this.setOverflow();
 
     this.positionFocusState(selectedAnchor);
@@ -641,7 +647,7 @@ Tabs.prototype = {
     }
 
     this.focusState = this.element.find('.tab-focus-indicator');
-    if (!this.focusState.length) {
+    if (!this.focusState?.length) {
       this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
     }
 
@@ -2204,15 +2210,15 @@ Tabs.prototype = {
     // NOTE: Breaking Change as of 4.3.3 - `beforeactivate` to `beforeactivated`
     // See SOHO-5994 for more details
     /**
-     * Fires when an attempt at activating a tab is started
+     * Fires when an attempt at activating a tab is started. Returning false from the request function will cancel tab activation.
      *
      * @event beforeactivated
      * @memberof Tabs
      * @param {jQuery.Event} e event object
      * @param {jQuery} a the tab anchor attempting to activate
      */
-    const isCancelled = self.element.trigger('beforeactivated', [a]);
-    if (!isCancelled) {
+    const canActivate = self.element.triggerHandler('beforeactivated', [a]);
+    if (canActivate === false) {
       return false;
     }
 
@@ -2687,7 +2693,13 @@ Tabs.prototype = {
 
     // Make it possible for Module Tabs to display a tooltip containing their contents
     // if the contents are cut off by ellipsis.
-    if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips) {
+    if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
+      anchorMarkup.parent().on('mouseover.tabs', () => {
+        if (anchorMarkup.data('cutoffTitle') === undefined) {
+          self.checkCutOffTitle($(this), self.visibleTabSize);
+        }
+      });
+
       anchorMarkup.on('beforeshow.toolbar', () => anchorMarkup.data('cutoffTitle') === 'yes').tooltip({
         content: `${anchorMarkup.text().trim()}`
       });
@@ -3349,7 +3361,7 @@ Tabs.prototype = {
     sizeableTabs.removeAttr('style');
 
     this.setMaxWidth();
-    
+
     sizeableTabs.each(function () {
       const t = $(this);
       if (self.isHeaderTabOverflowed(t)) {
@@ -3368,6 +3380,7 @@ Tabs.prototype = {
     }
 
     visibleTabSize = ((tabContainerW) / sizeableTabs.length);
+    this.visibleTabSize = visibleTabSize;
 
     if (visibleTabSize < defaultTabSize) {
       visibleTabSize = defaultTabSize;
@@ -3380,43 +3393,53 @@ Tabs.prototype = {
   /**
    * Checks cut off title for tabs.
    * @private
+   * @param {object} tabs object with tabs
+   * @param {number} visibleTabSize size to use
    * @returns {void}
    */
   checkCutOffTitle(tabs, visibleTabSize) {
+    if (tabs.is('a')) {
+      tabs = tabs.parent();
+    }
+
     const anchorStyle = window.getComputedStyle(tabs.eq(0).children()[0]);
     const anchorPadding = parseInt(anchorStyle.paddingLeft, 10) +
       parseInt(anchorStyle.paddingRight, 10);
+    let tab;
     let a;
     let prevWidth;
     let cutoff = 'no';
     const isSideBySide = this.element.closest('.side-by-side').length === 1;
 
     for (let i = 0; i < tabs.length; i++) {
-      a = tabs.eq(i).children('a');
-      a[0].style.width = '';
-      if (this.settings.moduleTabsTooltips === true || 
-        this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
+      tab = tabs.eq(i);
+      a = tab.children('a');
+      if (a[0]) a[0].style.width = '';
+
+      if (!this.settings.headerTabsTooltips || this.settings.maxWidth === null) {
+        let diff = 0;
+        if (env.os.name === 'ios' && env.devicespecs.isMobile && isSideBySide) {
+          diff = 25;
+        }
+        tabs[i].style.width = `${visibleTabSize - diff}px`;
+        if (a[0]) a[0].style.width = `${visibleTabSize - diff}px`;
+      }
+
+      if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
         cutoff = 'no';
 
         prevWidth = parseInt(window.getComputedStyle(tabs[i]).width, 10);
 
-        if (prevWidth > (visibleTabSize - this.settings.headerTabsTooltips ? 0 : anchorPadding)) {
+        if (this.settings.maxWidth !== null && a[0].scrollWidth > a.innerWidth()) {
           cutoff = 'yes';
         }
 
-        if (this.settings.maxWidth !== null && a[0].offsetWidth < a[0].scrollWidth) {
+        if (this.settings.maxWidth === null && prevWidth > (visibleTabSize - anchorPadding)) {
           cutoff = 'yes';
         }
 
-        a.data('cutoffTitle', cutoff);
+        a?.data('cutoffTitle', cutoff);
       }
-
-      let diff = 0;
-      if (env.os.name === 'ios' && env.devicespecs.isMobile && isSideBySide) {
-        diff = 25;
-      }
-      tabs[i].style.width = `${visibleTabSize - diff}px`;
-      a[0].style.width = `${visibleTabSize - diff}px`;
     }
   },
 
@@ -3543,20 +3566,21 @@ Tabs.prototype = {
         }
       }
 
-      popupLi[0].removeAttribute('style');
+      popupLi[0]?.removeAttribute('style');
+      popupA[0]?.removeAttribute('style');
 
       popupLi.children('.icon').off().appendTo(popupA);
       popupLi.appendTo(menuHtml);
 
       // Link tab to its corresponding "More Tabs" menu option
       $item.data('moremenu-link', popupA);
-      popupA.find('.icon-more').removeData().remove();
+      popupA?.find('.icon-more').removeData().remove();
 
       // Link "More Tabs" menu option to its corresponding Tab.
       // Remove onclick methods from the popup <li> because they are called
       // on the "select" event in context of the original button
-      popupA.data('original-tab', $itemA);
-      popupA.onclick = undefined;
+      popupA?.data('original-tab', $itemA);
+      if (popupA) popupA.onclick = undefined;
 
       if (!$item.is('.has-popupmenu')) {
         return;
@@ -3614,6 +3638,7 @@ Tabs.prototype = {
       $(this).off('close.tabs selected.tabs');
       self.moreButton.removeClass('popup-is-open');
       self.positionFocusState(undefined);
+      self.adjustModuleTabs();
     }
 
     function selectMenuOption(e, anchor) {
@@ -3938,11 +3963,15 @@ Tabs.prototype = {
     // Move the focus state from inside the tab list container, if applicable.
     // Put it back into the tab list container, if not.
     if (target.is('.add-tab-button, .tab-more')) {
-      if (!this.focusState.parent().is(this.element)) {
-        this.focusState.prependTo(this.element);
+      if (!this.focusState?.parent()?.is(this.element)) {
+        this.focusState?.prependTo(this.element);
       }
-    } else if (!this.focusState.parent().is(this.tablistContainer)) {
-      this.focusState.prependTo(this.tablistContainer);
+    } else if (!this.focusState?.parent()?.is(this.tablistContainer)) {
+      this.focusState?.prependTo(this.tablistContainer);
+    }
+
+    if (target.is('.tab') && self.settings.headerTabsTooltips) {
+      self.checkCutOffTitle(target, this.visibleTabSize);
     }
 
     const focusStateElem = this.focusState[0];
@@ -3952,7 +3981,7 @@ Tabs.prototype = {
     const tabMoreWidth = !this.isVerticalTabs() ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
     const scrollingTablist = this.tablistContainer;
-    const accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
+    const accountForPadding = scrollingTablist && this.focusState?.parent()?.is(scrollingTablist);
     const widthPercentage = target[0].getBoundingClientRect().width / target[0].offsetWidth * 100;
     const isClassic = $('html[class*="classic-"]').length > 0;
     const isMac = $('html.is-mac').length > 0;
@@ -4400,7 +4429,7 @@ Tabs.prototype = {
       this.tablistContainer.off('mousewheel.tabs');
     }
 
-    this.focusState.removeData().remove();
+    this.focusState?.removeData()?.remove();
     this.focusState = undefined;
 
     $('.tab-panel input').off('error.tabs valid.tabs');

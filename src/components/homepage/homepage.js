@@ -435,8 +435,9 @@ Homepage.prototype = {
               }
             }
           }
+
           if ((block.h > 1) && (rows > (i + 1))) {
-            for (let n = 0; n < block.h; n++) {
+            for (let n = 0; n < block.h && (i + n) < this.rowsAndCols.length; n++) {
               if (!this.rowsAndCols[i + n][j]) {
                 innerCheck = false;
                 break;
@@ -533,7 +534,7 @@ Homepage.prototype = {
 
     for (let i = 0, l = cards.length; i < l; i++) {
       const card = $(cards[i]);
-      let h = card.hasClass('double-height') ? 2 : 1;
+      let h;
       let w;
 
       if (card.hasClass('auto-height')) {
@@ -541,6 +542,18 @@ Homepage.prototype = {
         if (card.height() > height * h) {
           h = Math.ceil(card.height() / height);
         }
+      } else if (card.hasClass('sextuple-height')) {
+        h = 6;
+      } else if (card.hasClass('quintuple-height')) {
+        h = 5;
+      } else if (card.hasClass('quad-height')) {
+        h = 4;
+      } else if (card.hasClass('triple-height')) {
+        h = 3;
+      } else if (card.hasClass('double-height')) {
+        h = 2;
+      } else {
+        h = 1;
       }
 
       if (card.hasClass('sextuple-width')) {
@@ -655,7 +668,7 @@ Homepage.prototype = {
     }
 
     this.setBlocks(); // setup blocks
-    this.initRowsAndCols(); // setup colums
+    this.initRowsAndCols(); // setup colums=
 
     // Loop thru each block, make fit where available and
     // If block more wider than available size, make as available size
@@ -714,6 +727,42 @@ Homepage.prototype = {
 
       // Mark all spots as unavailable for this block, as we just used this one
       self.fitBlock(available.row, available.col, block);
+    }
+
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isPageContainer = this.element.is('.page-container');
+
+    this.element.css('height', '');
+    if (!isMobile && !isPageContainer) {
+      // set homepage height
+      const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card');
+      const card = $(cards[0]);
+
+      let rowsUsed = 0;
+      let abort = false;
+      let calcHeight = card.outerHeight();
+      if (card[0]) {
+        calcHeight += parseInt(window.getComputedStyle(card[0]).getPropertyValue('margin-top'), 10);
+        calcHeight += parseInt(window.getComputedStyle(card[0]).getPropertyValue('margin-bottom'), 10);
+      }
+
+      for (let rows = 0; rows < this.rowsAndCols.length && !abort; rows++) {
+        rowsUsed++;
+        const row = this.rowsAndCols[rows];
+        for (let cols = 0; cols < row.length && !abort; cols++) {
+          const col = row[cols];
+          if (col) {
+            abort = true;
+
+            if (cols === 0) {
+              rowsUsed--;
+            }
+          }
+        }
+      }
+
+      const contentHeight = (calcHeight * rowsUsed);
+      this.element.css('height', `${contentHeight}px`);
     }
 
     /**

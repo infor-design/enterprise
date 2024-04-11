@@ -42,7 +42,7 @@ const COMPONENT_NAME = 'datagrid';
  *
  * @param {jQuery[]|HTMLElement} element The component element.
  * @param {object}   [settings] The component settings.
- * @param {boolean}  [settings.actionableMode=false] If actionableMode is "true, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
+ * @param {boolean}  [settings.actionableMode=false] If actionableMode is "true", tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
  * @param {boolean}  [settings.cellNavigation=true] If cellNavigation is "false, will show border around whole row on focus
  * @param {boolean}  [settings.rowNavigation=true] If rowNavigation is "false, will NOT show border around the row
  * @param {boolean}  [settings.showHoverState=true] If false there will be no hover effect.
@@ -150,6 +150,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to trigger select row in datagrid.
  * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
+ * @param {boolean} [settings.showEditorIcons=false] If true will always show hoverable icons.
  * @param {string} [settings.fallbackImage='insert-image'] Will set a fall back image if the image formatter cannot load an image.
 */
 const DATAGRID_DEFAULTS = {
@@ -248,6 +249,7 @@ const DATAGRID_DEFAULTS = {
   dblClickApply: false,
   attributes: null,
   allowPasteFromExcel: false,
+  showEditorIcons: false,
   fallbackImage: 'insert-image',
   fallbackSize: { height: 40, width: 40 },
   fallbackTooltip: {
@@ -294,7 +296,6 @@ Datagrid.prototype = {
   */
   init() {
     const html = $('html');
-
     this.isTouch = env.features.touch;
     this.isSafari = html.is('.is-safari');
     this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
@@ -433,6 +434,7 @@ Datagrid.prototype = {
   firstRender() {
     const self = this;
     const hasColWidth = self.settings.columns.some(col => col.width !== undefined);
+    const isContextualPanel = this.element.parents('.contextual-action-panel').length > 0;
     this.hasLeftPane = this.settings.frozenColumns.left.length > 0;
     this.hasRightPane = this.settings.frozenColumns.right.length > 0;
 
@@ -446,7 +448,7 @@ Datagrid.prototype = {
     self.table = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.bodyWrapperCenter);
     self.element.append(self.bodyWrapperCenter);
 
-    if (hasColWidth) {
+    if (hasColWidth && isContextualPanel) {
       self.table.css('width', 'inherit');
     }
 
@@ -497,6 +499,10 @@ Datagrid.prototype = {
     if (this.settings.emptyMessage) {
       self.setEmptyMessage(this.settings.emptyMessage);
       self.checkEmptyMessage();
+    }
+
+    if (this.settings.showEditorIcons) {
+      self.element.addClass('show-editor-icons');
     }
 
     self.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
@@ -1624,7 +1630,7 @@ Datagrid.prototype = {
         self.tableLeft.find('colgroup').after(self.headerRowLeft);
       }
 
-      self.headerRow = $(`<thead class="datagrid-header center"> role="rowgroup"${headerRows.center}</thead>`);
+      self.headerRow = $(`<thead class="datagrid-header center"> role="rowgroup">${headerRows.center}</thead>`);
       self.table.find('colgroup').after(self.headerRow);
 
       if (self.hasRightPane) {
@@ -2270,7 +2276,8 @@ Datagrid.prototype = {
     const attrs = utils.stringAttributes(this, this.settings.attributes, `btn-filter-${col.id?.toLowerCase()}`);
 
     const renderButton = function (defaultValue, extraClass) {
-      return `<button type="button" ${attrs} class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} tabindex="0" type="button"><span class="audible">Filter</span>` +
+      const isSingle = col.filterConditions !== undefined && col.filterConditions.length === 1;
+      return `<button type="button" ${attrs} class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}${isSingle ? ' single' : ''}" data-init="false" ${isDisabled || isSingle ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} tabindex="0" type="button"><span class="audible">Filter</span>` +
       `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-filter-{{icon}}"></use></svg>${
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
@@ -3887,9 +3894,10 @@ Datagrid.prototype = {
   * @private
   * @param {object} obj The object to use
   * @param {string} field The field as a string fx 'field' or 'obj.field.id'
+  * @param {boolean} escapeHtml Should the value have html characters escaped or not
   * @returns {any} The current value in the field.
   */
-  fieldValue(obj, field) {
+  fieldValue(obj, field, escapeHtml = true) {
     if (!field || !obj) {
       return '';
     }
@@ -3902,7 +3910,11 @@ Datagrid.prototype = {
     }
 
     let value = (rawValue || rawValue === 0 || rawValue === false ? rawValue : '');
-    value = xssUtils.escapeHTML(value);
+
+    if (escapeHtml) {
+      value = xssUtils.escapeHTML(value);
+    }
+
     return value;
   },
 
@@ -4306,34 +4318,35 @@ Datagrid.prototype = {
       if (this.settings.spacerColumn) {
         self.bodyColGroupHtml += '<col style="width: 100%">';
       }
-      self.bodyColGroupHtmlLeft += '</colgroup>';
-      self.bodyColGroupHtml += '</colgroup>';
-      self.bodyColGroupHtmlRight += '</colgroup>';
+    }
 
-      if (self.bodyColGroupLeft) {
-        self.bodyColGroupLeft.remove();
-      }
+    self.bodyColGroupHtmlLeft += '</colgroup>';
+    self.bodyColGroupHtml += '</colgroup>';
+    self.bodyColGroupHtmlRight += '</colgroup>';
 
-      if (self.bodyColGroup) {
-        self.bodyColGroup.remove();
-      }
+    if (self.bodyColGroupLeft) {
+      self.bodyColGroupLeft.remove();
+    }
 
-      if (self.bodyColGroupRight) {
-        self.bodyColGroupRight.remove();
-      }
+    if (self.bodyColGroup) {
+      self.bodyColGroup.remove();
+    }
 
-      if (self.hasLeftPane) {
-        self.bodyColGroupLeft = $(self.bodyColGroupHtmlLeft);
-        (self.tableBodyLeft || self.headerRowLeft).before(self.bodyColGroupLeft);
-      }
+    if (self.bodyColGroupRight) {
+      self.bodyColGroupRight.remove();
+    }
 
-      self.bodyColGroup = $(self.bodyColGroupHtml);
-      (self.headerRow || self.tableBody).before(self.bodyColGroup);
+    if (self.hasLeftPane) {
+      self.bodyColGroupLeft = $(self.bodyColGroupHtmlLeft);
+      (self.tableBodyLeft || self.headerRowLeft).before(self.bodyColGroupLeft);
+    }
 
-      if (self.hasRightPane) {
-        self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
-        (self.tableBodyRight || self.headerRowRight).before(self.bodyColGroupRight);
-      }
+    self.bodyColGroup = $(self.bodyColGroupHtml);
+    (self.headerRow || self.tableBody).before(self.bodyColGroup);
+
+    if (self.hasRightPane) {
+      self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
+      (self.tableBodyRight || self.headerRowRight).before(self.bodyColGroupRight);
     }
 
     if (self.hasLeftPane) {
@@ -6723,7 +6736,7 @@ Datagrid.prototype = {
       this.resizeHandle[0].style.height = '62px';
     }
 
-    this.element.find('table').before(this.resizeHandle);
+    this.element.find('table.datagrid').before(this.resizeHandle);
 
     let column;
     let columnId;
@@ -7132,8 +7145,8 @@ Datagrid.prototype = {
 
     // Set Focus on rows
     self.element
-      .on('focus.datagrid', 'tbody > tr', function () {
-        if (!self.settings.cellNavigation && self.settings.rowNavigation) {
+      .on('focus.datagrid', 'tbody > tr', function (e) {
+        if (!self.settings.cellNavigation && self.settings.rowNavigation && !e.target.matches('a, a *')) {
           const rowNodes = self.rowNodes($(this));
 
           if (!rowNodes.hasClass('is-active-row')) {
@@ -7146,8 +7159,8 @@ Datagrid.prototype = {
           }
         }
       })
-      .on('blur.datagrid', 'tbody > tr', function () {
-        if (!self.settings.cellNavigation && self.settings.rowNavigation) {
+      .on('blur.datagrid', 'tbody > tr', function (e) {
+        if (!self.settings.cellNavigation && self.settings.rowNavigation && !e.target.matches('a, a *')) {
           const rowNodes = self.rowNodes($(this));
 
           if (rowNodes.hasClass('is-active-row')) {
@@ -7344,7 +7357,9 @@ Datagrid.prototype = {
         self.triggerRowEvent(e.type, e, true);
       }
 
-      self.setActiveCell(td);
+      if (!target.is('a, a *')) {
+        self.setActiveCell(td);
+      }
 
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn')) {
@@ -7390,7 +7405,7 @@ Datagrid.prototype = {
         if (e.type !== 'dblclick') {
           self.element.triggerHandler('ischanged');
         }
-      } else if (canSelect) {
+      } else if (canSelect && !target.is('a, a *')) {
         self.toggleRowSelection(target.closest('tr'));
       }
 
@@ -8005,7 +8020,13 @@ Datagrid.prototype = {
     }
 
     const selectHandler = (e, args, args2) => {
-      const action = args?.attr ? args?.attr('data-option') : args2?.attr('data-option');
+      let action;
+      if (args?.attr) {
+        action = args?.attr('data-option');
+      } else if (args2?.attr) {
+        action = args2?.attr('data-option');
+      }
+
       if (!action) {
         return;
       }
@@ -8046,6 +8067,10 @@ Datagrid.prototype = {
 
     if (this.settings.initializeToolbar && !toolbar.data('toolbar') && !toolbar.hasClass('flex-toolbar')) {
       const opts = $.fn.parseOptions(toolbar);
+
+      if (this.settings.toolbar.placeholder) {
+        opts.placeholder = this.settings.toolbar.placeholder;
+      }
 
       if (this.settings.toolbar.fullWidth) {
         opts.rightAligned = true;
@@ -11443,7 +11468,7 @@ Datagrid.prototype = {
       dataRowIndex = row;
     }
 
-    if (!isTreeGrid && this.settings.paging && this.pagerAPI.activePage > 1) {
+    if (!isTreeGrid && this.settings.paging && this.pagerAPI.activePage > 1 && !this.settings.source) {
       if (dataRowIndex < (this.pagerAPI.activePage - 1) * this.settings.pagesize) {
         dataRowIndex += (this.pagerAPI.activePage - 1) * this.settings.pagesize;
       }
@@ -11455,20 +11480,9 @@ Datagrid.prototype = {
       rowNodes = this.visualRowNode(row);
       cellNode = rowNodes.find('td').eq(cell);
     }
-    let oldVal = this.fieldValue(rowData, col.field);
+    const oldVal = this.fieldValue(rowData, col.field, false);
 
-    // Coerce/Serialize value if from cell edit
-    if (!fromApiCall && oldVal !== value) {
-      coercedVal = this.coerceValue(value, oldVal, col, row, cell);
-
-      // coerced value may be coerced to empty string, null, or 0
-      if (coercedVal === undefined) {
-        coercedVal = value;
-      }
-    } else {
-      coercedVal = value;
-    }
-
+    coercedVal = value;
     // Remove rowStatus icon
     if (rowNodes.length && rowData && !rowData.rowStatus) {
       const rowstatusIcon = rowNodes.find('svg.icon-rowstatus');
@@ -11613,10 +11627,6 @@ Datagrid.prototype = {
     if (this.settings.summaryRow && !this.settings.groupable) {
       this.updateSummaryRow(col, cell);
     }
-
-    // Sanitize console methods
-    oldVal = xssUtils.sanitizeConsoleMethods(oldVal);
-    coercedVal = xssUtils.sanitizeConsoleMethods(coercedVal);
 
     let isCellChange;
     if (typeof oldVal === 'string' && typeof coercedVal === 'string') {

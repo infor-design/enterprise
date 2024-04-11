@@ -68,7 +68,12 @@
       }
     }
 
-    .searchfield-wrapper.toolbar-searchfield-wrapper.has-categories:not(.is-open) {
+    .more:not(:disabled):hover {
+      background-color: $toolbar-btn-actions-hover-bg-color;
+      border-radius: 8px;
+    }
+
+    .searchfield-wrapper.toolbar-searchfield-wrapper.has-categories:not(.is-open):not(.alternate) {
       .searchfield-category-button {
         width: 34px;
         height: 34px;

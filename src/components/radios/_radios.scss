@@ -469,6 +469,15 @@ html[dir='rtl'] {
   }
 }
 
+.field-short {
+  .radio + label {
+    &::before,
+    &::after {
+      margin-top: 4px;
+    }
+  }
+}
+
 // Error States
 .inline .radio.error ~ .label-text,
 .radio.error + label {

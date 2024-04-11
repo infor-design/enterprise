@@ -471,7 +471,6 @@ $card-header-section: '.card-header-section', '.widget-header-section';
       cursor: pointer;
       margin-left: 5px;
       position: relative;
-      top: -7px;
     }
   }
 
@@ -517,6 +516,7 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   > h1,
   > button {
     float: left;
+    margin-bottom: 1px;
   }
 
   .btn-actions,
