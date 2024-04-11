@@ -63,8 +63,11 @@ div.multiselect {
 .dropdown-list {
   &.small-rowheight {
     &.datagrid-dropdown-list .trigger .icon {
-    top: 7px;
-    margin-left: 2px;
+      margin-left: 2px;
+
+      &.search {
+        top: 1px;
+      }
     }
   }
 
@@ -420,6 +423,10 @@ html.is-firefox:not([dir='rtl']) {
       &.datagrid-dropdown-list .trigger .icon {
         top: 7.5px;
         margin-left: 0.5px;
+
+        &.search {
+          top: 1px;
+        }
       }
     }
 
@@ -427,6 +434,10 @@ html.is-firefox:not([dir='rtl']) {
       &.datagrid-dropdown-list .trigger .icon {
         top: 7px;
         margin-left: 0;
+
+        &.search {
+          top: 2px;
+        }
       }
     }
 
