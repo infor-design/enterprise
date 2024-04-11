@@ -77,6 +77,7 @@ function addSuffixToAttributes(parentAttrs = [], childAttrs = [], suffix) {
  * @param {boolean} [settings.clearable=false] Add an ability to clear the lookup field. If "true", it will affix an "x" button to the right section of the field.
  * @param {boolean} [settings.tabbable=true] If true, causes the Lookup's trigger icon to be focusable with the keyboard.
  * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to select the lookup item.
+ * @param {boolean} [settings.noMarginWrapper = false] If true, the lookup wrapper will add `no-margin` class.
  * @param {boolean} [settings.allowDuplicates=false] If true, will show all duplicate selected values in input element.
  */
 const LOOKUP_DEFAULTS = {
@@ -166,6 +167,10 @@ Lookup.prototype = {
 
     if (this.element.is('.has-actions')) {
       cssClass += ' has-actions-wrapper';
+    }
+
+    if (this.settings.noMarginWrapper) {
+      cssClass += ' no-margin';
     }
 
     if (this.isInlineLabel) {
@@ -948,7 +953,7 @@ Lookup.prototype = {
         if (isRemoved) {
           continue;
         }
-        
+
         isFound = this.selectRowByValue(this.settings.field, selectedIds[i]);
 
         if (this.grid && this.settings.options.source && !isFound) {
