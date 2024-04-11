@@ -113,7 +113,7 @@ Soho.Locale.addCulture('ko-KR', {
     ChangeSelection: { id: 'ChangeSelection', value: '선택한 항목을 변경하려면 화살표를 이용하십시오.', comment: 'Audible text for drop down list help' },
     ChangeView: { id: 'ChangeView', value: '변경 보기', comment: 'Change the current page from a list of options' },
     CharactersLeft: { id: 'CharactersLeft', value: '남은 글자 수 {0}', comment: 'indicator showing how many more characters you can type.' },
-    CharactersMax: { id: 'CharactersMax', value: '최대 글자 수 ', comment: 'indicator showing how many max characters you can type.' },
+    CharactersMax: { id: 'CharactersMax', value: '최대 글자 수는 {0}', comment: 'indicator showing how many max characters you can type.' },
     Checkbox: { id: 'Checkbox', value: '확인란', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: '확인됨', comment: 'Checked tooltip' },
     Chinese: { id: 'Chinese', value: '중국어', comment: 'Chinese language in general form' },
