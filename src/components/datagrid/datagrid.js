@@ -11473,7 +11473,7 @@ Datagrid.prototype = {
       dataRowIndex = row;
     }
 
-    if (!isTreeGrid && this.settings.paging && this.pagerAPI.activePage > 1) {
+    if (!isTreeGrid && this.settings.paging && this.pagerAPI.activePage > 1 && !this.settings.source) {
       if (dataRowIndex < (this.pagerAPI.activePage - 1) * this.settings.pagesize) {
         dataRowIndex += (this.pagerAPI.activePage - 1) * this.settings.pagesize;
       }
