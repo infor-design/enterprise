@@ -550,7 +550,7 @@ Soho.Locale.addCulture('es-ES', {
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Cerrar este mensaje', comment: 'text for remove button for advanced fileupload' },
     TextColor: { id: 'TextColor', value: 'Color del texto', comment: 'add or edit text color in the editor' },
     TextDropArea: { id: 'DropArea', value: 'Arrastrar y colocar archivos para cargar', comment: 'Text for drop area for advanced fileupload' },
-    TextDropAreaWithBrowse: { id: 'TextDropAreaWithBrowse', value: 'Arrastre y coloque aquí o haga clic en <span class="hyperlink">cargar archivos</span>"', comment: 'Updated recently' },
+    TextDropAreaWithBrowse: { id: 'TextDropAreaWithBrowse', value: 'Arrastre y coloque aquí o haga clic en <span class="hyperlink">cargar archivos</span>', comment: 'Updated recently' },
     TextDropAreaWithBrowseLink: { id: 'TextDropAreaWithBrowse', value: 'Arrastre y coloque aquí o {browseLink}', comment: 'Updated recently' },
     Thai: { id: 'Thai', value: 'Tailandés', comment: 'Language name for Thai' },
     Theme: { id: 'Theme', value: 'Tema', comment: 'Refers to an application theme' },
