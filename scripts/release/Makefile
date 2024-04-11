@@ -1,19 +1,37 @@
+CURRENT_DIR=$(shell pwd)
+
 ORGANIZATION = hookandloop
-WORKER_CONTAINER_NAME = enterprise-release
-WORKER_CONTAINER_VERSION = 1.0.0
+IMAGE = enterprise-release
+IMAGE_TAG = 1.0.1
+
 
 ifneq (,$(wildcard ./.env))
 	include .env
 	export
 endif
 
-.PHONY: build-worker-image
-build-worker-image :
-	docker build -t $(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION) .
 
-.PHONY: run-worker
-run-worker :
-	docker run --rm --name $(WORKER_CONTAINER_NAME) \
+.PHONY: all
+all: build tag push
+
+.PHONY: build
+build:
+	DOCKER_BUILDKIT=1 docker build \
+		--platform=linux/amd64 \
+		-t $(IMAGE):$(IMAGE_TAG) \
+		-f $(CURRENT_DIR)/Dockerfile .
+
+.PHONY: tag
+tag:
+	docker tag $(IMAGE):$(IMAGE_TAG) $(ORGANIZATION)/$(IMAGE):$(IMAGE_TAG)
+
+.PHONY: push
+push:
+	docker push $(ORGANIZATION)/$(IMAGE):$(IMAGE_TAG)
+
+.PHONY: run
+run :
+	docker run --rm --name $(IMAGE) \
 		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
 		--env DOCS_API_KEY=${DOCS_API_KEY} \
 		--env DOCS_API_URL=${DOCS_API_URL} \
@@ -27,11 +45,12 @@ run-worker :
 		-v ${PWD}/build:/root/enterprise \
 		-v ${PWD}/.gitconfig:/root/.gitconfig \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
-		$(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION)
+		$(ORGANIZATION)/$(IMAGE):$(IMAGE_TAG)
 
-.PHONY: shell-worker
-shell-worker :
-	docker run -it --rm --name $(WORKER_CONTAINER_NAME) \
+.PHONY: shell
+shell :
+	docker run -it --rm --name $(IMAGE) \
+		--platform=linux/amd64 \
 		--entrypoint /bin/bash \
 		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
 		--env DOCS_API_KEY=${DOCS_API_KEY} \
@@ -46,4 +65,4 @@ shell-worker :
 		-v ${PWD}/build:/root/enterprise \
 		-v ${PWD}/.gitconfig:/root/.gitconfig \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
-		$(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION)
+		$(ORGANIZATION)/$(IMAGE):$(IMAGE_TAG)
