@@ -10046,16 +10046,12 @@ Datagrid.prototype = {
 
       // Tab, Left and Right arrow keys.
       if ([9, 37, 39].indexOf(key) !== -1) {
-        if (key === 9 && !self.settings.actionableMode || !self.settings.cellNavigation) {
-          return;
-        }
-
         if (key !== 9 && e.altKey) {
           // [Alt + Left/Right arrow] to move to the first or last cell on the current row.
           cell = ((key === 37 && !isRTL) || (key === 39 && isRTL)) ? 0 : lastCell;
           self.setActiveCell(row, cell);
         } else if ((!self.quickEditMode || (key === 9))) {
-          if ((key === 9 && !self.settings.actionableMode) && (col.editor !== undefined && node.is('.is-editing'))) {
+          if (key !== 9 && col.editor !== undefined && node.is('.is-editing')) {
             return;
           }
 
