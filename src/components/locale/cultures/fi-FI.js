@@ -113,7 +113,7 @@ Soho.Locale.addCulture('fi-FI', {
     ChangeSelection: { id: 'ChangeSelection', value: 'Vaihda valittua kohdetta nuolinäppäimillä.', comment: 'Audible text for drop down list help' },
     ChangeView: { id: 'ChangeView', value: 'Vaihda näkymä', comment: 'Change the current page from a list of options' },
     CharactersLeft: { id: 'CharactersLeft', value: 'Merkkejä jäljellä {0}', comment: 'indicator showing how many more characters you can type.' },
-    CharactersMax: { id: 'CharactersMax', value: 'Merkkimäärä enintään ', comment: 'indicator showing how many max characters you can type.' },
+    CharactersMax: { id: 'CharactersMax', value: 'Merkkimäärä enintään {0}', comment: 'indicator showing how many max characters you can type.' },
     Checkbox: { id: 'Checkbox', value: 'Valintaruutu', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'Valittu', comment: 'Checked tooltip' },
     Chinese: { id: 'Chinese', value: 'Kiina', comment: 'Chinese language in general form' },
