@@ -6,6 +6,7 @@
 
 - `[About]` Added copy to clipboard button. ([#8438](https://github.com/infor-design/enterprise/issues/8438))
 - `[Module Nav]` Added setting `disableSwitcher` to disable nav switcher. ([#8381](https://github.com/infor-design/enterprise/issues/8381))
+- `[Timeline]` Added fix to timeline layout. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
 
 ## v4.95.0 Fixes
 
