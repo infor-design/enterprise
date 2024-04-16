@@ -605,7 +605,6 @@ Button.prototype = {
   /**
    * Performs a generative action by replacing the content of a button with a loading indicator,
    * then replacing it with generated AI content after a specified delay.
-   *
    * @param {number} delay - The delay (in milliseconds) before replacing the loading indicator.
    * @returns {void}
    */
@@ -621,7 +620,6 @@ Button.prototype = {
 
   /**
    * Starts a generative action.
-   *
    * @returns {void}
    */
   startAnimation() {
@@ -630,14 +628,9 @@ Button.prototype = {
 
   /**
    * Stops a generative action.
-   *
    * @returns {void}
    */
   stopAnimation() {
-    if (isNaN(this.generativeAnimation)) {
-      return;
-    }
-
     clearTimeout(this.generativeAnimation);
     this.generativeAnimation = undefined;
     this.removeGenerativeStyles();
