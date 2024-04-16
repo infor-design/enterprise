@@ -1124,6 +1124,10 @@ $datagrid-small-row-height: 25px;
   overflow: hidden;
 
   &.center {
+    width: 100%;
+  }
+
+  &.left + .datagrid-wrapper.center {
     width: inherit;
   }
 
@@ -1333,12 +1337,12 @@ $datagrid-small-row-height: 25px;
 
             .spinbox-control {
               border: 0;
-              border-right: 1px solid  $input-color-focus-border;
+              border-right: 1px solid $input-color-focus-border;
               padding: 11px 10px;
               width: 35px;
 
               &.up {
-                border-left: 1px solid  $input-color-focus-border;
+                border-left: 1px solid $input-color-focus-border;
               }
             }
           }
@@ -1795,12 +1799,12 @@ $datagrid-small-row-height: 25px;
 
             .spinbox-control {
               border: 0;
-              border-right: 1px solid  $input-color-focus-border;
+              border-right: 1px solid $input-color-focus-border;
               padding: 3px 15px;
               width: 30px;
 
               &.up {
-                border-left: 1px solid  $input-color-focus-border;
+                border-left: 1px solid $input-color-focus-border;
                 padding: 2px 10px;
               }
             }
@@ -2296,7 +2300,7 @@ $datagrid-small-row-height: 25px;
 
       .btn.row-btn {
         background-color: $button-color-primary-initial-background;
-        border: 1px solid  $button-color-primary-initial-background;
+        border: 1px solid $button-color-primary-initial-background;
         color: $button-color-primary-initial-font;
 
         &:hover {
@@ -3324,12 +3328,12 @@ $datagrid-small-row-height: 25px;
 
         .spinbox-control {
           border: 0;
-          border-right: 1px solid  $input-color-focus-border;
+          border-right: 1px solid $input-color-focus-border;
           padding: 18px 10px 31px;
           width: 36px;
 
           &.up {
-            border-left: 1px solid  $input-color-focus-border;
+            border-left: 1px solid $input-color-focus-border;
           }
         }
       }
@@ -4575,7 +4579,7 @@ td .btn-actions {
     .datagrid-trigger-cell {
       .icon:not(.icon-rowstatus):not(.icon-search-list):not(.icon-error) {
         background-color: transparent;
-        box-shadow: unset;;
+        box-shadow: unset;
       }
     }
   }

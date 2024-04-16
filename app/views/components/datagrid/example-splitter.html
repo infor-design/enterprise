@@ -1,0 +1,51 @@
+<div class="page-container two-column fixed">
+  <section class="sidebar" role="main">
+    <div class="content">
+      <div class="splitter splitter-right"></div>
+    </div>
+  </section>
+
+  <nav class="main">
+    <div id="datagrid" class="datagrid">
+    </div>
+  </nav>
+</div>
+
+<script>
+  $('#splitter').splitter({
+    save: false,
+    collapseButton: true,
+    side: 'right'
+  });
+
+  const columns = [
+    {
+      name: "Name",
+      field: "name",
+    },
+    {
+      name: "Description",
+      field: "description",
+    }
+  ];
+
+  const dataset = [
+      {
+        name: "Name 1",
+        description: "Description 1",
+      },
+      {
+        name: "Name 2",
+        description: "Description 2",
+      },
+      {
+        name: "Name 3",
+        description: "Description 3",
+      },
+    ];
+
+  $('#datagrid').datagrid({
+    columns: columns,
+    dataset: dataset
+  });
+</script>
