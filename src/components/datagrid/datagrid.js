@@ -7869,6 +7869,7 @@ Datagrid.prototype = {
     let toolbar = null;
     let title = '';
     let more = null;
+    let personalize = null;
     const useFlexToolbar = this.settings.useFlexToolbar;
     const self = this;
 
@@ -7930,7 +7931,40 @@ Datagrid.prototype = {
       const menu = $('<ul class="popupmenu"></ul>');
 
       if (this.settings.toolbar.personalize) {
-        menu.append(`<li><a href="#" data-option="personalize-columns">${Locale.translate('PersonalizeColumns')}</a></li>`);
+        // ELEPHANT
+        // insert the gear icon hear
+        const pButton = $(`<button class="btn-icon actions" title="Personalize Columns" type="button">${$.createIcon({ icon: 'settings' })}<span class="audible">${Locale.translate('PersonalizeColumns')}</span></button>`);
+        personalize = $(`<div class="${useFlexToolbar ? 'toolbar-section ' : ''}more"></div>`);
+        personalize.append(pButton);
+        // make listview
+        const pList = $('<div class="listview personalize"><ul></ul></div>');
+        pList.listview({
+          source: self.settings.columns,
+          template: `
+            <ul class="arrange">
+            {{#dataset}}
+              {{#name}}
+              <li class="{{^hideable}}is-disabled{{/hideable}}">
+                <div class="switch field">
+                  ${$.createIcon({ icon: 'drag' })}
+                  <span class="label-text">{{name}}</span>
+                  <input class="switch" type="checkbox" id="cpf-switch-setting" {{^hideable}}disabled{{/hideable}} {{^hidden}}checked{{/hidden}} data-column-id="{{id}}"/>
+                  <label for="cpf-switch-setting"></label>
+                </div>
+              </li>
+              {{/name}}
+            {{/dataset}}
+            </ul>`,
+          selectOnFocus: false
+        });
+        // use popover
+        pButton.popover({
+          title: 'Column Properties',
+          trigger: 'click',
+          popover: true,
+          placement: 'bottom',
+          content: pList
+        });
       }
 
       if (this.settings.toolbar.resetLayout) {
@@ -8000,6 +8034,7 @@ Datagrid.prototype = {
 
       toolbar.append(buttonSet);
       toolbar.append(more);
+      toolbar.append(personalize);
 
       if (this.element.prev().is('.contextual-toolbar')) {
         this.element.prev().before(toolbar);
