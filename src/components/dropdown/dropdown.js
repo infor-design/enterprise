@@ -60,6 +60,7 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {string} [settings.allTextString]  Custom text string for `All` text header use in MultiSelect.
 * @param {string} [settings.selectedTextString]  Custom text string for `Selected` text header use in MultiSelect.
 * @param {boolean} [settings.selectAllFilterOnly = true] if true, when using the optional "Select All" checkbox, the Multiselect will only select items that are in the current filter.  If false, or if there is no filter present, all items will be selected.
+* @param {boolean} [settings.noMarginWrapper = false] If true, the dropdown wrapper will add `no-margin` class.
 * @param {boolean} [settings.noResultsTextString = 'NoResultsFound'] Adds custom no results text to the dropdown
 * @param {array|object} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
@@ -96,7 +97,8 @@ const DROPDOWN_DEFAULTS = {
   attributes: null,
   width: undefined,
   widthTarget: undefined,
-  noResultsTextString: 'NoResultsFound'
+  noResultsTextString: 'NoResultsFound',
+  noMarginWrapper: false
 };
 
 function Dropdown(element, settings) {
@@ -251,7 +253,8 @@ Dropdown.prototype = {
     this.isWrapped = this.wrapper.length > 0;
 
     if (!this.isWrapped) {
-      this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(this.element);
+      // debugger;
+      this.wrapper = $(`<div class="dropdown-wrapper ${this.settings.noMarginWrapper ? 'no-margin' : ''}"></div>`).insertAfter(this.element);
     }
 
     if (this.isWrapped) {

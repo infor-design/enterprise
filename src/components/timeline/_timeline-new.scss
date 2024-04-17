@@ -8,16 +8,6 @@
   }
 }
 
-.timeline-block {
-  &:nth-last-child(2)::before {
-    bottom: -20px;
-
-    @media (min-width: $breakpoint-phone-to-tablet) {
-      left: 20.3rem;
-    }
-  }
-}
-
 // Brings the dotted line into alignment with the text
 .indicator-container {
   top: 1px;
@@ -26,14 +16,6 @@
 // Brings the indicator icon into alignment with the dotted line
 .indicator {
   top: -0.12em;
-}
-
-@media (min-width: 767px) {
-  .timeline {
-    &::before {
-      left: 12.7em;
-    }
-  }
 }
 
 html[dir='rtl'] {
