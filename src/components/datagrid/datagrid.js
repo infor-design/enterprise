@@ -3598,6 +3598,7 @@ Datagrid.prototype = {
   createDraggableRowsGroupable() {
     const self = this;
     const s = this.settings;
+    let showTarget;
     if (!s.rowReorder || !s.groupable) {
       return;
     }
@@ -3607,6 +3608,13 @@ Datagrid.prototype = {
       s.columns[0].resizable = false;
       this.tableBody.find('> [role="row"] td:first-child')
         .removeClass('l-center-text').addClass('reorder-group-child-col');
+    }
+
+    if (self.settings.groupable.expanded) {
+      // Create a drag target arrows
+      self.element.prepend(`<span class="drag-target-arrows" style="height: ${self.getTargetHeight()}px;"></span>`);
+      self.element.addClass('draggable-group-row');
+      showTarget = $('.drag-target-arrows', self.element);
     }
 
     const rowSelector = '> tr:not(.is-dragging-clone)';
@@ -3709,17 +3717,25 @@ Datagrid.prototype = {
               if (!clone || !isReady) {
                 return;
               }
+
               isReady = false;
               let allowed = false;
               const overRow = getTarget(pos);
+              const targetNode = $(overRow?.row);
+
               if (overRow !== null) {
                 if (startRow.role === 'rowgroup') {
                   allowed = startRow.group !== overRow.group;
-                }
-                if (startRow.role === 'row') {
+                } else if (startRow.role === 'row') {
                   allowed = startRow.role === overRow.role && startRow.group === overRow.group;
                 }
               }
+
+              // Adjust the position of the showTarget
+              showTarget.css('top', Math.round(targetNode.position().top + 132));
+              // Toggle the `is-over` class based on allowed status
+              self.element.find('.drag-target-arrows').toggleClass('is-over', allowed);
+
               const cursorVal = allowed ? '' : 'not-allowed';
               clone.add(clone.find('.datagrid-reorder-icon')).css('cursor', cursorVal);
               isReady = true;
@@ -3762,6 +3778,8 @@ Datagrid.prototype = {
                   self.resetGroupArray();
                   self.resequenceGroupRows();
                   self.syncSelectedRowsIdx();
+
+                  self.element.find('.drag-target-arrows').removeClass('is-over');
 
                   const args = {
                     start: {
