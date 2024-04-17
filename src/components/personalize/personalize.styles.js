@@ -29,6 +29,31 @@ function personalizeStyles(colors) {
   color: ${colors.darkest} !important;
 }
 
+.header.is-personalizable {
+  --ids-color-background-default: ${colors.tabHeaderColor};
+  --ids-breadcrumb-color-text-default: ${colors.contrast};
+  --ids-breadcrumb-color-text-disabled: ${colors.btnDisabledColor};
+
+  --ids-button-tertiary-color-text-default: ${colors.btnTertiaryHoverColorHeader};
+  --ids-button-tertiary-color-text-hover: ${colors.btnTertiaryHoverColorHeader};
+  --ids-button-tertiary-color-background-hover: ${colors.btnTertiaryBgHoverColorHeader};
+  --ids-button-tertiary-color-border-hover: ${colors.btnTertiaryBgHoverColorHeader};
+  --ids-button-menu-background-color-active: ${colors.btnTertiaryBgHoverColorHeader};
+  --ids-button-menu-color-text-active: ${colors.btnTertiaryHoverColorHeader};
+  --ids-button-tertiary-color-border-hover: transparent;
+  --ids-button-tertiary-color-background-pressed: ${colors.btnTertiaryBgHoverColorHeader};
+  --ids-button-tertiary-color-border-pressed: transparent;
+  --ids-button-tertiary-color-text-pressed: ${colors.btnTertiaryHoverColorHeader};
+  --ids-button-tertiary-shadow-focus: ${colors.btnBoxShadow};
+  --ids-button-tertiary-color-border-focus: ${colors.contrast};
+  --ids-hyperlink-color-text-default: ${colors.btnTertiaryHoverColorHeader};
+  --ids-shadow-focus: ${colors.btnBoxShadow};
+}
+
+.header.is-personalizable ids-hyperlink {
+  color: ${colors.contrast};
+}
+
 html.theme-classic-dark .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
   color: #888B94 !important;
 }
