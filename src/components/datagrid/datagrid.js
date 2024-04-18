@@ -3732,7 +3732,7 @@ Datagrid.prototype = {
               }
 
               // Adjust the position of the showTarget
-              showTarget.css('top', Math.round(targetNode.position().top + 132));
+              showTarget.css('top', Math.round(targetNode.offset().top) + 5);
               // Toggle the `is-over` class based on allowed status
               self.element.find('.drag-target-arrows').toggleClass('is-over', allowed);
 
