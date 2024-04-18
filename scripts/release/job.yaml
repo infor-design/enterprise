@@ -39,7 +39,7 @@ spec:
                   name: docs-api-key
                   key: token
             - name: DOCS_API_URL
-              value: "https://old.design.infor.com"
+              value: "https://legacy.design.infor.com"
             - name: NPM_TOKEN
               valueFrom:
                 secretKeyRef:

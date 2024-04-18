@@ -1,0 +1,221 @@
+<style>
+  .container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-block: 16px;
+    padding-inline: 16px;
+  }
+
+  .position-relative-fix {
+    position: relative;
+  }
+
+  @media (max-width: 992px) {
+    .container {
+      align-items: flex-start;
+      flex-direction: column;
+
+    }
+  }
+</style>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="container">
+      <div class="position-relative-fix">
+        <label for="custom-dropdown-id-1" class="label">State</label>
+        <select id="custom-dropdown-id-1" name="custom-dropdown-id-1" class="dropdown" data-automation-id="custom-automation-dropdown-id" >
+          <option value="AL">Alabama</option>
+          <option value="AK">Alaska</option>
+          <option value="AZ">Arizona</option>
+          <option value="AR">Arkansas</option>
+          <option value="CA">California</option>
+          <option value="CO">Colorado</option>
+          <option value="CT">Connecticut</option>
+          <option value="DE">Delaware</option>
+          <option value="DC">District Of Columbia</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="IL">Illinois</option>
+          <option value="IN">Indiana</option>
+          <option value="IA">Iowa</option>
+          <option value="KS">Kansas</option>
+          <option value="KY">Kentucky</option>
+          <option value="LA">Louisiana</option>
+          <option value="ME">Maine</option>
+          <option value="MD">Maryland</option>
+          <option value="MA">Massachusetts</option>
+          <option value="MI">Michigan</option>
+          <option value="MN">Minnesota</option>
+          <option value="MS">Mississippi</option>
+          <option value="MO">Missouri</option>
+          <option value="MT">Montana</option>
+          <option value="NE">Nebraska</option>
+          <option value="NV">Nevada</option>
+          <option value="NH">New Hampshire</option>
+          <option value="NJ" selected>New Jersey</option>
+          <option value="NM">New Mexico</option>
+          <option value="NY">New York</option>
+          <option value="NC">North Carolina</option>
+          <option value="ND">North Dakota</option>
+          <option value="OH">Ohio</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          <option value="SD">South Dakota</option>
+          <option value="TN">Tennessee</option>
+          <option value="TX">Texas</option>
+          <option value="UT">Utah</option>
+          <option value="VT">Vermont</option>
+          <option value="VA">Virginia</option>
+          <option value="WA">Washington</option>
+          <option value="WV">West Virginia</option>
+          <option value="WI">Wisconsin</option>
+          <option value="WY">Wyoming</option>
+        </select>
+      </div>
+
+    <div class="position-relative-fix">
+      <label for="timepicker-id-1" class="label">Timepicker</label>
+      <input id="timepicker-id-1" class="timepicker" type="text" data-init="false"/>
+    </div>
+
+    <div class="position-relative-fix">
+      <label for="date-field-normal" class="label">Datepicker</label>
+      <input id="date-field-normal" data-automation-id="custom-automation-id" class="datepicker" name="date-field" type="text" data-init="false"/>
+    </div>
+
+    <div class="position-relative-fix">
+      <label for="product-lookup" class="label required">Products</label>
+      <input id="product-lookup" data-init="false" data-validate="required" class="lookup" name="product-lookup" type="text"/>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.dropdown').dropdown({
+    noMarginWrapper: true,
+    attributes: [
+      {
+        name: 'id',
+        value: 'custom-dropdown-id-1'
+      },
+      {
+        name: 'data-automation-id',
+        value: 'custom-automation-dropdown-id'
+      }
+    ]
+  });
+
+  $('body').on('initialized', function () {
+    $('select.dropdown').on('change.test', function (e) {
+      var newVal = $(e.target).find(':checked').val();
+      $('body').toast({
+        title: "Value changed!",
+        message: 'New value: "'+ newVal +'"'
+      });
+    });
+  });
+
+  $('body').one('initialized', function () {
+    $('#timepicker-id-1').timepicker({
+      attributes: [
+        { name: 'id', value: 'timepicker-id-1' },
+        { name: 'data-automation-id', value: 'timepicker-automation-id-1' }
+      ]
+    });
+
+    $('#date-field-normal')
+      .datepicker({
+        attributes: [
+          { name: 'id', value: 'custom-id' },
+          { name: 'data-automation-id', value: 'custom-automation-id' }
+      ]})
+      .on('change', function () {
+        console.log('Change Event Fired')
+      });
+  });
+</script>
+
+<script>
+  var grid,
+    columns = [],
+    data = [];
+
+  // Some Sample Data
+  data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+  data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+  data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+  data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+  data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+  data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+  data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+  data.push({ id: 7, productId: 2642207, productName: "Someone's Compressor", activity:  "Inspect's and Repair's", quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+
+  //Define Columns for the Grid.
+  columns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
+  columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink});
+  columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
+  columns.push({ id: 'quantity', filterType: 'text', name: 'Quantity', field: 'quantity'});
+  columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
+
+  $('body').on('initialized', function () {
+    //Init and get the api for the grid
+    $('#product-lookup').lookup({
+      field: 'productId',
+      noMarginWrapper: true,
+      autoApply: true,
+      autoFocus: false,
+      modalSettings: {
+        fullsize: 'responsive',
+        breakpoint: 'phone-to-tablet'
+      },
+      options: {
+        columns: columns,
+        dataset: data,
+        selectable: 'single',
+        rowNavigation: true,
+        toolbar: {
+          results: true,
+          keywordFilter: true,
+          advancedFilter: false,
+          actions: false,
+          selectable: 'single',
+          filterable: true,
+          views: true,
+          rowHeight: false,
+          collapsibleFilter: false,
+          fullWidth: true
+        }
+      },
+      attributes: [
+        {
+          name: 'data-automation-id',
+          value: 'my-lookup'
+        }
+      ]
+    });
+
+    $('#product-mask').mask({
+      patternOptions: {
+        allowDecimal: false,
+        allowNegative: false,
+        allowThousandsSeparator: false,
+        decimalLimit: 0,
+        integerLimit: 7,
+        symbols: {
+          decimal: '.',
+          negative: '-',
+          thousands: ','
+        }
+      },
+      process: "number"
+    });
+  });
+</script>
+

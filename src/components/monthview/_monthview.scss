@@ -211,6 +211,11 @@
         &.up .icon {
           top: 3px;
         }
+
+        &.up,
+        &.down {
+          cursor: pointer;
+        }
       }
     }
   }
