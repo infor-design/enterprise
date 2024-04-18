@@ -605,20 +605,21 @@ Button.prototype = {
   /**
    * Performs a generative action by replacing the content of a button with a loading indicator,
    * then replacing it with generated AI content after a specified delay.
-   *
    * @param {number} delay - The delay (in milliseconds) before replacing the loading indicator.
    * @returns {void}
    */
-  performAnimation(delay = 5000) {
+  performAnimation(delay = 0) {
     this.renderGenerativeStyles();
-    this.generativeAnimation = setTimeout(() => {
-      this.removeGenerativeStyles();      
-    }, delay);
+
+    if (delay) {
+      this.generativeAnimation = setTimeout(() => {
+        this.removeGenerativeStyles();
+      }, delay);
+    }
   },
 
   /**
    * Starts a generative action.
-   * 
    * @returns {void}
    */
   startAnimation() {
@@ -627,14 +628,9 @@ Button.prototype = {
 
   /**
    * Stops a generative action.
-   * 
    * @returns {void}
    */
   stopAnimation() {
-    if (isNaN(this.generativeAnimation)) {
-      return;
-    }
-
     clearTimeout(this.generativeAnimation);
     this.generativeAnimation = undefined;
     this.removeGenerativeStyles();
@@ -642,7 +638,7 @@ Button.prototype = {
 
   /**
    * Renders a generative action by replacing the content of a button with a loading indicator.
-   * 
+   *
    * @returns {void}
    */
   renderGenerativeStyles() {
@@ -678,7 +674,7 @@ Button.prototype = {
 
   /**
    * Removes a generative action by replacing it with generated AI content.
-   * 
+   *
    * @returns {void}
    */
   removeGenerativeStyles() {
