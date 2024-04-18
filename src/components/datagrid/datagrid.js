@@ -3647,7 +3647,7 @@ Datagrid.prototype = {
     const getTarget = (pos) => {
       for (let i = 0, l = targets.length; i < l; i++) {
         const rect = targets[i].rect;
-        if (pos.top >= rect.top && pos.top < rect.bottom) {
+        if (pos?.top >= rect?.top && pos?.top < rect?.bottom) {
           return { ...targets[i] };
         }
       }
@@ -3687,10 +3687,10 @@ Datagrid.prototype = {
             .on('dragstart.datagrid', function (evt, pos, thisClone) {
               clone = thisClone;
 
-              clone.removeAttr('id').addClass('is-dragging-clone groupable');
-              clone.css({ top: `${pos.top}px` });
-              const cloneColumns = clone.find('> td');
-              $(this).find('> td').each((i, el) => cloneColumns.eq(i).width($(el).width()));
+              clone?.removeAttr('id').addClass('is-dragging-clone groupable');
+              clone?.css({ top: `${pos?.top}px` });
+              const cloneColumns = clone?.find('> td');
+              $(this).find('> td').each((i, el) => cloneColumns?.eq(i).width($(el).width()));
 
               setTargets();
               startRow = {
@@ -3744,7 +3744,7 @@ Datagrid.prototype = {
             // Drag end =========================================
             .off('dragend.datagrid')
             .on('dragend.datagrid', (evt, pos) => {
-              const moveDown = pos.top > startRow.rect.top;
+              const moveDown = pos?.top > startRow?.rect?.top;
               const endRow = getTarget(pos);
               let isMoved = false;
               if (endRow !== null) {
