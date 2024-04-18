@@ -33,7 +33,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: enterprise-1021
+        key: enterprise-1022
 
     - name: Setup timezone
       uses: szenius/set-timezone@v1.0
