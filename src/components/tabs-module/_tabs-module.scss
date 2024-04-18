@@ -567,6 +567,8 @@
         &.dismissible {
           a {
             padding: 10px 35px 10px 10px;
+            text-overflow: ellipsis;
+            width: inherit;
           }
         }
       }
@@ -836,9 +838,9 @@ html[dir='rtl'] {
         .tab {
           &.dismissible {
             a {
-              padding: 10px 10px 10px 35px;
+              padding: 10px 50px 10px 10px;
             }
-              
+
           }
         }
       }
@@ -936,7 +938,7 @@ html[dir='rtl'] {
     .tab-list .tab:hover.dismissible svg.icon.close {
       right: 12px;
     }
-    
+
   }
 
   .tab-container.module-tabs {
