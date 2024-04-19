@@ -194,6 +194,16 @@
             },'html');
           }
         }
+
+        setTimeout(() => {
+          const wcTheme = $('#ids-stylesheet');
+          if (wcTheme && wcTheme.length) {
+            const attr = wcTheme.attr('href');
+            if (parts[1] === 'new') {
+              wcTheme.attr('href', attr.replace('-light', `-${parts[2]}`).replace('-dark', `-${parts[2]}`).replace('-contrast', `-${parts[2]}`))
+            }
+          }
+        }, 100);
       });
   </script>
 
