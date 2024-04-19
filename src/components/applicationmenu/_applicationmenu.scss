@@ -425,7 +425,7 @@ body.is-open-touch {
 
       &:not(:disabled):hover .icon,
       &:not(:disabled):hover span {
-        color: $accordion-inverse-text-hover-color;
+        color: $accordion-inverse-text-hover-color !important;
       }
     }
   }
@@ -477,6 +477,7 @@ body.is-open-touch {
   .application-menu-toolbar {
     margin-left: -10px;
     margin-top: -5px;
+    margin-bottom: -3px;
   }
 
   .application-menu-switcher-panel {

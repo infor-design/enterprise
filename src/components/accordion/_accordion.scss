@@ -338,7 +338,7 @@
         color: $accordion-inverse-text-color;
 
         .icon {
-          color: $accordion-inverse-text-color;
+          color: $accordion-inverse-text-color !important;
 
           &.plus-minus {
             &::before,

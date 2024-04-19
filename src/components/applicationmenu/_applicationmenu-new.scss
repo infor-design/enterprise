@@ -4,6 +4,8 @@
 @import '../accordion/accordion-mixins';
 
 .application-menu {
+  @include antialiased();
+
   background-color: $new-appmenu-main-bg-color;
 
   .searchfield-wrapper {
@@ -94,6 +96,14 @@
 
   .application-menu-header {
     .icon.avatar {
+      background: none;
+      border: none;
+      height: 40px;
+      width: 40px;
+      min-width: 40px;
+      max-width: 40px;
+      min-height: 40px;
+      max-height: 40px;
       left: 29px;
       top: 0;
     }
