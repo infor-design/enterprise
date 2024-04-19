@@ -7421,6 +7421,7 @@ Datagrid.prototype = {
         colorPicker = null;
         return; // color picker closes on cell re-click;
       }
+
       const isEditable = self.makeCellEditable(self.activeCell.rowIndex, self.activeCell.cell, e);
 
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a, a.search-mode i, img') || target.parent().is('button:not(.trigger)')) {
@@ -10045,15 +10046,15 @@ Datagrid.prototype = {
 
       // Tab, Left and Right arrow keys.
       if ([9, 37, 39].indexOf(key) !== -1) {
-        if (key === 9 && !self.settings.actionableMode || !self.settings.cellNavigation) {
-          return;
-        }
-
         if (key !== 9 && e.altKey) {
           // [Alt + Left/Right arrow] to move to the first or last cell on the current row.
           cell = ((key === 37 && !isRTL) || (key === 39 && isRTL)) ? 0 : lastCell;
           self.setActiveCell(row, cell);
-        } else if (!self.quickEditMode || (key === 9)) {
+        } else if ((!self.quickEditMode || (key === 9))) {
+          if (key !== 9 && col.editor !== undefined && node.is('.is-editing')) {
+            return;
+          }
+
           // Handle `shift + tab` for code block formatter, it use sometime `.code-block-actions`
           if (key === 9 && e.shiftKey && target.is('.code-block-actions')) {
             self.focusNextPrev('prev', node);
