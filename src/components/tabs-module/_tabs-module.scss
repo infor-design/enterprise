@@ -553,6 +553,10 @@
       &::after {
         right: 40px;
         width: 40px;
+
+        @media (max-width: $breakpoint-phablet) {
+          right: 71px;
+        }
       }
     }
 
@@ -579,7 +583,7 @@
       top: 0;
 
       .more-text {
-        @media (min-width: $breakpoint-big-phone) {
+        @media (min-width: $breakpoint-phone) {
           display: none;
         }
       }
@@ -817,7 +821,13 @@ html[dir='rtl'] {
 
     &.scrolled-left {
       &::after {
-        right: 0;
+        width: 0;
+      }
+
+      &::before {
+        width: 40px;
+        left: 41px;
+        top: 2px;
       }
     }
 
