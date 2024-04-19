@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.92.7
+
+## v4.92.7 Fixes
+
+- `[Datagrid]` Fixed an error parsing some dates. ([#8627](https://github.com/infor-design/enterprise/issues/8627))
+
 ## v4.92.3
 
 ## v4.92.3 Fixes
