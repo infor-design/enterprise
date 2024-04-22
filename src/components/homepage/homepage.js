@@ -95,6 +95,16 @@ Homepage.prototype = {
     this.handleEvents();
     this.initEdit();
 
+    if (this.settings.background) {
+      if (this.settings.background.image) {
+        this.element.attr('style', `background-image: url(${this.settings.background.image})`);
+      }
+
+      if (this.settings.background.color) {
+        this.element.attr('style', `background-color: ${this.settings.background.color}`);
+      }
+    }
+
     // Initial Sizing
     setTimeout(() => { // Timeout to let rtl load first before the render of the resize
       this.resize(this, false);
@@ -163,8 +173,20 @@ Homepage.prototype = {
    */
   initHeroWidget() {
     let heroWidget = this.element.parent().find('.hero-widget');
+    const heroWidgetBackground = this.settings.heroWidgetBackground;
+
     if (heroWidget.length > 1) {
       heroWidget = heroWidget.not(':first').remove();
+    }
+
+    if (heroWidgetBackground) {
+      if (heroWidgetBackground.image) {
+        heroWidget.attr('style', `background-image: url(${this.settings.heroWidgetBackground.image})`);
+      }
+
+      if (heroWidgetBackground.color) {
+        heroWidget.attr('style', `background-color: ${heroWidgetBackground.color}`);
+      }
     }
     this.heroWidget = heroWidget;
   },
