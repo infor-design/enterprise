@@ -3612,9 +3612,10 @@ Datagrid.prototype = {
 
     if (self.settings.groupable.expanded) {
       // Create a drag target arrows
-      self.element.prepend(`<span class="drag-target-arrows" style="height: ${self.getTargetHeight()}px;"></span>`);
+      const rightStyle = Locale.isRTL() ? 'right: 13px' : '';
+      self.element.prepend(`<span class="drag-target-arrows" style="height: ${self.getTargetHeight()}px;${rightStyle}"></span>`);
       self.element.addClass('draggable-group-row');
-      showTarget = $('.drag-target-arrows', self.element);
+      showTarget = $(self.element).find('.drag-target-arrows');
     }
 
     const rowSelector = '> tr:not(.is-dragging-clone)';
@@ -3828,6 +3829,14 @@ Datagrid.prototype = {
       return $(this).find('.datagrid-reorder-icon').length < 1;
     }).attr('data-arrange-exclude', true);
 
+    const rightStyle = Locale.isRTL() ? 'right: 13px' : '';
+    let dragTargetArrows;
+
+    if (self.element.find('.drag-target-arrows').length !== 1) {
+      self.element.prepend(`<span class="drag-target-arrows" style="${rightStyle}"></span>`);
+      self.element.addClass('draggable-group-row');
+    }
+
     // Attach the Drag API
     this.tableBody.arrange({
       placeholder: `<tr class="datagrid-reorder-placeholder"><td colspan="${this.visibleColumns().length}"></td></tr>`,
@@ -3839,11 +3848,24 @@ Datagrid.prototype = {
           status.start.css({ display: 'inline-block' });
         }
       })
+      .off('draggingarrange.datagrid')
+      .on('draggingarrange.datagrid', (e, status) => {
+        // Add visual indicator
+        const allowed = status.overIndex !== status.startIndex;
+        const arrangePlaceholder = self.element.find('.arrange-placeholder');
+        dragTargetArrows = self.element.find('.drag-target-arrows');
+
+        dragTargetArrows.toggleClass('is-over', allowed);
+        dragTargetArrows.css('top', arrangePlaceholder.offset().top + 5);
+      })
       .off('arrangeupdate.datagrid')
       .on('arrangeupdate.datagrid', (e, status) => {
         if (self.isSafari) {
           status.end.css({ display: '' });
         }
+
+        dragTargetArrows = self.element.find('.drag-target-arrows');
+        dragTargetArrows.removeClass('is-over');
 
         self.reorderRow(status.startIndex, status.endIndex, status);
       });
