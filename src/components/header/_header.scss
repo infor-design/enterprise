@@ -8,10 +8,17 @@ $subheader-height: 60px;
 // Top Header
 .header {
   background-color: $header-bg-color;
-  display: block;
+  border-bottom: 1px solid $header-bottom-border-color;
+  display: inline-flex;
   height: $header-height;
-  overflow: hidden;
   width: 100%;
+
+  /* stylelint-disable-next-line selector-type-no-unknown */
+  ids-breadcrumb {
+    align-self: center;
+    margin: 0 8px;
+    width: calc(100% - 16px);
+  }
 
   &.scrollable {
     overflow: auto;
@@ -148,6 +155,7 @@ $subheader-height: 60px;
   .toolbar {
     height: $header-height;
     padding: 0 1rem;
+    width: 100%;
 
     &.searchfield-active {
       .toolbar-searchfield-wrapper.active {
@@ -347,6 +355,7 @@ $subheader-height: 60px;
     height: inherit;
     max-height: $header-height;
     padding: 0 1.3rem;
+    width: 100%;
 
     &.has-title-button + .breadcrumb {
       padding-left: 56px;

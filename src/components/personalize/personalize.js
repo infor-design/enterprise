@@ -278,7 +278,7 @@ Personalize.prototype = {
     colors.btnBgHoverColor = 'rgba(0, 0, 0, 0.3) !important';
     colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.subtext}, 0 0 2px 1px ${colors.subtext}`;
     colors.btnFocusBorderColor = colors.contrast;
-    colors.btnDisabledColor = 'rgba(255, 255, 255, 0.3) !important';
+    colors.btnDisabledColor = 'rgba(255, 255, 255, 0.5) !important';
     colors.btnOpacity = 0.8;
     colors.btnPrimaryColor = colors.base;
     colors.btnPrimaryColorHover = colors.darker;
@@ -406,7 +406,7 @@ Personalize.prototype = {
 
       colors.tabCloseInactiveColor = 'rgb(111, 111, 118)';
       colors.tabCloseHoverColor = colors.contrast;
-      
+
       if (!newTheme) {
         colors.btnTertiaryBgHoverColor = themeColors.palette.slate[30].value;
       }
