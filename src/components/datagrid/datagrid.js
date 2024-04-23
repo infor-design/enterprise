@@ -3852,7 +3852,7 @@ Datagrid.prototype = {
       .on('draggingarrange.datagrid', (e, status) => {
         // Add visual indicator
         const allowed = status.overIndex !== status.startIndex;
-        const arrangePlaceholder = self.element.find('.arrange-placeholder');
+        const arrangePlaceholder = self.element.find('.datagrid-reorder-placeholder');
         dragTargetArrows = self.element.find('.drag-target-arrows');
 
         dragTargetArrows.toggleClass('is-over', allowed);
