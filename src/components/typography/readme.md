@@ -9,19 +9,55 @@ demo:
 
 ## Font family
 
-We have two different versions of IDS designs for the components Soho/Subtle/Classic and Uplift/Vibrant/New.
+For the latest theme with previous names (Uplift/Vibrant/New) use a custom font called [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+3). We include a [variable font](https://fonts.google.com/knowledge/introducing_type/introducing_variable_fonts) but generally use two font-weights 400, 600 in designs, although all 100-900 font weights appear. We do not use italics anywhere in the designs as it is difficult to read.
 
-For: Uplift/Vibrant/New we now use a custom font[Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro) `font-family: 'source sans pro', Helvetica, Arial`. We include two font-weights 400, 600 served from google fonts because our design is limited in terms of weights (just normal and bold), for example we dont use italics anywhere in the designs as it is difficult to read. Source Sans Pro supports a lot of languages but not some of these so these are the [fall backs](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography.scss#L8)
+Source Sans Pro supports a lot of languages but some languages require [fallbacks](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography-new.scss#L6) as noted. The correct font will be used if the matching locale is used.
 
-To use the custom font enable this font in the components first you need to add this link to the head of your pages.
+The simplest way to test these fonts is to use google apis to serve the font(s).
 
 ```html
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet"/>
 ```
 
-If your application needs to run without an internet connection its also possible to download the font locally and server it from your server see [google-webfonts](https://google-webfonts-helper.herokuapp.com/fonts/source-sans-pro?subsets=greek,latin,vietnamese) for details.
+However this is not the recommended way to use the fonts. The problems can be:
 
-## Typography Related Classes
+a) Google fonts violates [GDPR](https://www.cookieyes.com/documentation/google-fonts-and-gdpr/)
+b) If the application needs to run without an internet connection
+c) In some countries google links may be banned
+
+For this reason we suggest you serve the files with the application all the needed fonts can be found in the [design system repo](https://github.com/infor-design/design-system/tree/main/fonts) or [the new design system repo](https://github.com/infor-design/ids-foundation/fonts)
+
+Also if using npm these will be found in `node_modules/ids-identity/dist/fonts`. Generally you will need to copy the files into the correct location for your app and serve them.
+
+By default we expect the fonts to be in the folder `/fonts/` (root / fonts) but in case you would like to rename them or change the location we provided a bunch of settings.
+
+The following settings can be used and should be set first thing your application loads.
+
+- `window.SohoConfig.fontPath` - general path where all fonts can be found `/fonts` as a default
+- `window.SohoConfig.noFontFace` - if set to true no fonts will be used (defaults back to system fonts) or this could be used if you want to use the google api link anyways
+
+Less used Settings:
+
+- `window.SohoConfig.fontName` - name of the font ('Source Sans Pro' is the default)
+- `window.SohoConfig.fontFileName` - file name of the font ('SourceSans3-VariableFont_wght.ttf' is the default)
+- `window.SohoConfig.arabicFontName` - name of the font for Arabic ('Mada' is the default)
+- `window.SohoConfig.arabicFontFileName` - file name of the font for Arabic ('Mada-VariableFont_wght.ttf' is the default)
+- `window.SohoConfig.hebrewFontName` - name of the font for Hebrew ('Assistant' is the default)
+- `window.SohoConfig.hebrewFontFileName` -  file name of the font for Hebrew ('Assistant-VariableFont_wght.ttf' is the default)
+- `window.SohoConfig.hinduFontName` - name of the font for Hindu ('Noto Sans' is the default)
+- `window.SohoConfig.hinduFontFileName` -  file name of the font for Hindu ('NotoSans-VariableFont_wdth,wght.ttf' is the default)
+- `window.SohoConfig.japaneseFontName` - name of the font for Japanese ( 'Noto Sans JP' is the default)
+- `window.SohoConfig.japaneseFontFileName` -  file name of the font for Japanese ('NotoSansJP-VariableFont_wght.ttf' is the default)
+- `window.SohoConfig.koreanFontName` - name of the font for Korean ( 'Noto Sans KR' is the default)
+- `window.SohoConfig.koreanFontFileName` -  file name of the font for Korean ('NotoSansKR-VariableFont_wght.ttf' is the default)
+- `window.SohoConfig.thaiFontName` - name of the font for Thai ( 'Noto Sans Thai' is the default)
+- `window.SohoConfig.thaiFontFileName` -  file name of the font for Thai ('NotoSansThai-VariableFont_wdth,wght.ttf' is the default)
+- `window.SohoConfig.chineseFontName` - name of the font for Chinese ( 'Noto Sans SC' is the default)
+- `window.SohoConfig.chineseFontFileName` -  file name of the font for Chinese ('NotoSansSC-VariableFont_wght.ttf' is the default)
+- `window.SohoConfig.taiwanFontName` - name of the font for Taiwanese ( 'Noto Sans TC' is the default)
+- `window.SohoConfig.taiwanFontFileName` -  file name of the font for Taiwanese ('NotoSansTC-VariableFont_wght.ttf' is the default)
+
+## Typography Related Css Classes
 
 The following classes can be used for text emphasis:
 
