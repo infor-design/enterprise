@@ -13,13 +13,7 @@ For the latest theme with previous names (Uplift/Vibrant/New) use a custom font 
 
 Source Sans Pro supports a lot of languages but some languages require [fallbacks](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography-new.scss#L6) as noted. The correct font will be used if the matching locale is used.
 
-The simplest way to test these fonts is to use google apis to serve the font(s).
-
-```html
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet"/>
-```
-
-However this is not the recommended way to use the fonts. The problems can be:
+However this is not the recommended to use `fonts.googleapis` to use the fonts. The problems can be:
 
 a) Google fonts violates [GDPR](https://www.cookieyes.com/documentation/google-fonts-and-gdpr/)
 b) If the application needs to run without an internet connection

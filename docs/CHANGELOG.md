@@ -5,7 +5,7 @@
 ## v4.95.0 Important Changes
 
 - `[General]` The font is updated to Source Sans 3 this is a variable font with optical sizing. [Because of this](https://developer.mozilla.org/en-US/docs/Web/CSS/font-optical-sizing) some text sizes may appear slightly shifted for optimal viewing. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
-- `[General]` Using a URL for googleapis for the font is now discouraged because of GDPR. It is now recommended to serve the font with your application. You may get a 404 error if not properly served. See [typography docs](https://github.com/infor-design/enterprise/blob/main/src/components/typography/readme.md#font-family) for details and config. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
+- `[General]` Using a URL for googleapis for the font should no longer be used because of GDPR. It is now recommended to serve the font with your application. You may get a 404 error if not properly served. See [typography docs](https://github.com/infor-design/enterprise/blob/main/src/components/typography/readme.md#font-family) for details and config. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
 
 ## v4.95.0 Features
 
