@@ -233,10 +233,9 @@
   // Header
   thead {
     th {
-      @include rem(font-size, 1.4rem);
-
       color: $datepicker-day-color;
       margin: 20px;
+      line-height: 1.4rem;
       text-transform: uppercase;
       width: 35px;
     }
@@ -267,7 +266,6 @@
     }
 
     .day-text {
-      @include rem(font-size, 1.4rem);
       @include no-select();
 
       border-radius: 50%;
@@ -275,6 +273,7 @@
       cursor: pointer;
       display: block;
       height: 36px;
+      line-height: 1.4rem;
       line-height: 36px;
       margin: 2px;
       transition: 0.2s background-color ease;
