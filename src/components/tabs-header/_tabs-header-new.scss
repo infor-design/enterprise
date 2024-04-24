@@ -295,6 +295,17 @@
   }
 }
 
+.page-container.tab-panel-container {
+  padding-top: 0;
+  position: relative;
+  height: calc(100% - 43px);
+  margin-bottom: 0 !important;
+
+  .datagrid-container.has-toolbar.paginated {
+    height: calc(100% - 68px) !important;
+  }
+}
+
 .tab-container.vertical + .tab-panel-container {
   .tab-panel {
     overflow-y: hidden;
