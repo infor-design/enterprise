@@ -1113,6 +1113,13 @@ $datagrid-small-row-height: 25px;
     }
   }
 
+  .datagrid-reorder-placeholder,
+  .datagrid-rowgroup-header.is-over {
+    td {
+      border-bottom: 3px solid $datagrid-reorder-placeholder-border-color;
+    }
+  }
+  
   &.draggable-group-row  {
     .drag-target-arrows {
       display: none;

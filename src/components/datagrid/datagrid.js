@@ -3598,7 +3598,7 @@ Datagrid.prototype = {
   createDraggableRowsGroupable() {
     const self = this;
     const s = this.settings;
-    let showTarget;
+
     if (!s.rowReorder || !s.groupable) {
       return;
     }
@@ -3608,14 +3608,6 @@ Datagrid.prototype = {
       s.columns[0].resizable = false;
       this.tableBody.find('> [role="row"] td:first-child')
         .removeClass('l-center-text').addClass('reorder-group-child-col');
-    }
-
-    if (self.settings.groupable.expanded) {
-      // Create a drag target arrows
-      const rightStyle = Locale.isRTL() ? 'right: 13px' : '';
-      self.element.prepend(`<span class="drag-target-arrows" style="height: ${self.getTargetHeight()}px;${rightStyle}"></span>`);
-      self.element.addClass('draggable-group-row');
-      showTarget = $(self.element).find('.drag-target-arrows');
     }
 
     const rowSelector = '> tr:not(.is-dragging-clone)';
@@ -3722,20 +3714,18 @@ Datagrid.prototype = {
               isReady = false;
               let allowed = false;
               const overRow = getTarget(pos);
-              const targetNode = $(overRow?.row);
 
               if (overRow !== null) {
                 if (startRow.role === 'rowgroup') {
                   allowed = startRow.group !== overRow.group;
-                } else if (startRow.role === 'row') {
+                }
+                if (startRow.role === 'row') {
                   allowed = startRow.role === overRow.role && startRow.group === overRow.group;
                 }
               }
 
-              // Adjust the position of the showTarget
-              showTarget.css('top', Math.round(targetNode?.offset()?.top) + 5);
-              // Toggle the `is-over` class based on allowed status
-              self.element.find('.drag-target-arrows').toggleClass('is-over', allowed);
+              const addBorder = allowed && $('.is-clone').offset().top > $(overRow.row).offset().top;
+              $(overRow?.row).toggleClass('is-over', addBorder);
 
               const cursorVal = allowed ? '' : 'not-allowed';
               clone.add(clone.find('.datagrid-reorder-icon')).css('cursor', cursorVal);
@@ -3750,6 +3740,7 @@ Datagrid.prototype = {
               let isMoved = false;
               if (endRow !== null) {
                 let targetNode;
+
                 if (startRow.role === 'rowgroup' && startRow.group !== endRow.group) {
                   // Role: rowgroup
                   const groupSel = '.datagrid-rowgroup-header';
@@ -3762,6 +3753,7 @@ Datagrid.prototype = {
                     } else {
                       targetNode = $(endRow.row).prevUntil(groupSel).last().prev(groupSel);
                     }
+                    $(targetNode).removeClass('is-over');
                     nodesToMove.insertBefore(targetNode);
                   }
                   self.arrayIndexMove(s.dataset, startRow.group, endRow.group);
@@ -3779,8 +3771,6 @@ Datagrid.prototype = {
                   self.resetGroupArray();
                   self.resequenceGroupRows();
                   self.syncSelectedRowsIdx();
-
-                  self.element.find('.drag-target-arrows').removeClass('is-over');
 
                   const args = {
                     start: {
@@ -3801,6 +3791,11 @@ Datagrid.prototype = {
               }
               nodesToMove.css('opacity', '');
               isReady = false;
+
+              // Remove the is-over class
+              self.tableBody.find('.is-over').each(function () {
+                $(this).removeClass('is-over');
+              });
 
               // Destroy drag
               const dragApi = handle.closest('tr').data('drag');
@@ -3829,14 +3824,6 @@ Datagrid.prototype = {
       return $(this).find('.datagrid-reorder-icon').length < 1;
     }).attr('data-arrange-exclude', true);
 
-    const rightStyle = Locale.isRTL() ? 'right: 13px' : '';
-    let dragTargetArrows;
-
-    if (self.element.find('.drag-target-arrows').length !== 1) {
-      self.element.prepend(`<span class="drag-target-arrows" style="${rightStyle}"></span>`);
-      self.element.addClass('draggable-group-row');
-    }
-
     // Attach the Drag API
     this.tableBody.arrange({
       placeholder: `<tr class="datagrid-reorder-placeholder"><td colspan="${this.visibleColumns().length}"></td></tr>`,
@@ -3848,24 +3835,11 @@ Datagrid.prototype = {
           status.start.css({ display: 'inline-block' });
         }
       })
-      .off('draggingarrange.datagrid')
-      .on('draggingarrange.datagrid', (e, status) => {
-        // Add visual indicator
-        const allowed = status.overIndex !== status.startIndex;
-        const arrangePlaceholder = self.element.find('.datagrid-reorder-placeholder');
-        dragTargetArrows = self.element.find('.drag-target-arrows');
-
-        dragTargetArrows.toggleClass('is-over', allowed);
-        dragTargetArrows.css('top', arrangePlaceholder.offset().top + 5);
-      })
       .off('arrangeupdate.datagrid')
       .on('arrangeupdate.datagrid', (e, status) => {
         if (self.isSafari) {
           status.end.css({ display: '' });
         }
-
-        dragTargetArrows = self.element.find('.drag-target-arrows');
-        dragTargetArrows.removeClass('is-over');
 
         self.reorderRow(status.startIndex, status.endIndex, status);
       });
@@ -7896,9 +7870,6 @@ Datagrid.prototype = {
       normal.parent().addClass('is-checked');
       large.parent().addClass('is-checked');
     }
-
-    // Set draggable targets arrow height
-    $('.drag-target-arrows', this.element).css('height', `${this.getTargetHeight()}px`);
   },
 
   /**
