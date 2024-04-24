@@ -219,7 +219,7 @@
         &:hover {
           &:not(.is-disabled) {
             color: $header-tab-alt-hover-color;
-            border-bottom: 4px solid $header-tab-alt-hover-color;
+            border-bottom: 6px solid $header-tab-alt-hover-color;
             background-color: transparent;
           }
         }
@@ -227,13 +227,13 @@
         &.is-selected {
           &:not(.is-disabled) {
             color: $header-tab-alt-selected-color;
-            border-bottom: 4px solid $header-tab-alt-selected-color;
+            border-bottom: 6px solid $header-tab-alt-selected-color;
           }
         }
 
         a {
           height: 37px;
-          padding: 12px 11px 5px;
+          padding: 10px 11px 5px;
         }
 
         &.is-disabled {

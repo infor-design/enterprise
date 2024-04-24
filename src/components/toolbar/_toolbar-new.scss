@@ -68,7 +68,7 @@
       }
     }
 
-    .more:not(:disabled):hover {
+    .more:not(:disabled) button:hover {
       background-color: $toolbar-btn-actions-hover-bg-color;
       border-radius: 8px;
     }

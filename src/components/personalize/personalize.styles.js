@@ -445,6 +445,12 @@ a.is-personalizable svg.ripple-effect {
   border-bottom: 1px solid ${colors.headerTabBorder};
 }
 
+.is-personalizable .personalize-header,
+.is-personalizable.tab-container {
+  background-color: ${colors.tabHeaderColor};
+  border-bottom: 1px solid ${colors.headerTabBorder};
+}
+
 .scrollable-flex-header .breadcrumb {
   background-color: ${colors.base};
 }
@@ -736,22 +742,8 @@ html[class*="-dark"] .header .toolbar-searchfield-wrapper.active.has-focus .sear
   color: ${colors.contrast};
 }
 
-html[class*='classic-'] .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab.is-selected:not(.is-disabled) {
-  border-color: ${colors.contrast};
-}
-
 html[class*='classic-contrast'] .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab.is-selected:not(.is-disabled) {
   border-color: ${colors.light};
-}
-
-.tab-container.header-tabs.alternate > .tab-list-container .tab.is-disabled {
-  color: ${colors.contrast};
-  opacity: 0.6;
-}
-
-.is-personalizable .tab-container.header-tabs > .tab-list-container .tab.is-disabled {
-  color: ${colors.contrast};
-  opacity: 0.6;
 }
 
 .is-personalizable .label + .personalize-text.data {
