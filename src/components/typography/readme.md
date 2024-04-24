@@ -33,23 +33,7 @@ The following settings can be used and should be set first thing your applicatio
 Less used Settings:
 
 - `window.SohoConfig.fontName` - name of the font ('Source Sans Pro' is the default)
-- `window.SohoConfig.fontFileName` - file name of the font ('SourceSans3-VariableFont_wght.ttf' is the default)
-- `window.SohoConfig.arabicFontName` - name of the font for Arabic ('Mada' is the default)
-- `window.SohoConfig.arabicFontFileName` - file name of the font for Arabic ('Mada-VariableFont_wght.ttf' is the default)
-- `window.SohoConfig.hebrewFontName` - name of the font for Hebrew ('Assistant' is the default)
-- `window.SohoConfig.hebrewFontFileName` -  file name of the font for Hebrew ('Assistant-VariableFont_wght.ttf' is the default)
-- `window.SohoConfig.hinduFontName` - name of the font for Hindu ('Noto Sans' is the default)
-- `window.SohoConfig.hinduFontFileName` -  file name of the font for Hindu ('NotoSans-VariableFont_wdth,wght.ttf' is the default)
-- `window.SohoConfig.japaneseFontName` - name of the font for Japanese ( 'Noto Sans JP' is the default)
-- `window.SohoConfig.japaneseFontFileName` -  file name of the font for Japanese ('NotoSansJP-VariableFont_wght.ttf' is the default)
-- `window.SohoConfig.koreanFontName` - name of the font for Korean ( 'Noto Sans KR' is the default)
-- `window.SohoConfig.koreanFontFileName` -  file name of the font for Korean ('NotoSansKR-VariableFont_wght.ttf' is the default)
-- `window.SohoConfig.thaiFontName` - name of the font for Thai ( 'Noto Sans Thai' is the default)
-- `window.SohoConfig.thaiFontFileName` -  file name of the font for Thai ('NotoSansThai-VariableFont_wdth,wght.ttf' is the default)
-- `window.SohoConfig.chineseFontName` - name of the font for Chinese ( 'Noto Sans SC' is the default)
-- `window.SohoConfig.chineseFontFileName` -  file name of the font for Chinese ('NotoSansSC-VariableFont_wght.ttf' is the default)
-- `window.SohoConfig.taiwanFontName` - name of the font for Taiwanese ( 'Noto Sans TC' is the default)
-- `window.SohoConfig.taiwanFontFileName` -  file name of the font for Taiwanese ('NotoSansTC-VariableFont_wght.ttf' is the default)
+- `window.SohoConfig.noFontFace` - Can be set to true to opt out of using font-face to fetch fonts locally.
 
 ## Typography Related Css Classes
 

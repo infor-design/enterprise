@@ -7,133 +7,197 @@ if (!fontFaceTag) {
   if (!window.SohoConfig.fontPath) {
     window.SohoConfig.fontPath = '/fonts';
   }
-  if (!window.SohoConfig.fontName) {
-    window.SohoConfig.fontName = 'Source Sans Pro';
-  }
-  if (!window.SohoConfig.fontFileName) {
-    window.SohoConfig.fontFileName = 'SourceSans3-VariableFont_wght.ttf';
-  }
-  if (!window.SohoConfig.arabicFontName) {
-    window.SohoConfig.arabicFontName = 'Mada';
-  }
-  if (!window.SohoConfig.arabicFontFileName) {
-    window.SohoConfig.arabicFontFileName = 'Mada-VariableFont_wght.ttf';
-  }
-  if (!window.SohoConfig.hebrewFontName) {
-    window.SohoConfig.hebrewFontName = 'Assistant';
-  }
-  if (!window.SohoConfig.hebrewFontFileName) {
-    window.SohoConfig.hebrewFontFileName = 'Assistant-VariableFont_wght.ttf';
-  }
-  if (!window.SohoConfig.hinduFontName) {
-    window.SohoConfig.hinduFontName = 'Noto Sans';
-  }
-  if (!window.SohoConfig.hinduFontFileName) {
-    window.SohoConfig.hinduFontFileName = 'NotoSans-VariableFont_wdth,wght.ttf';
-  }
-  if (!window.SohoConfig.japaneseFontName) {
-    window.SohoConfig.japaneseFontName = 'Noto Sans JP';
-  }
-  if (!window.SohoConfig.japaneseFontFileName) {
-    window.SohoConfig.japaneseFontFileName = 'NotoSansJP-VariableFont_wght.ttf';
-  }
-  if (!window.SohoConfig.koreanFontName) {
-    window.SohoConfig.koreanFontName = 'Noto Sans KR';
-  }
-  if (!window.SohoConfig.koreanFontFileName) {
-    window.SohoConfig.koreanFontFileName = 'NotoSansKR-VariableFont_wght.ttf';
-  }
-  if (!window.SohoConfig.thaiFontName) {
-    window.SohoConfig.thaiFontName = 'Noto Sans Thai';
-  }
-  if (!window.SohoConfig.thaiFontFileName) {
-    window.SohoConfig.thaiFontFileName = 'NotoSansThai-VariableFont_wdth,wght.ttf';
-  }
-  if (!window.SohoConfig.chineseFontName) {
-    window.SohoConfig.chineseFontName = 'Noto Sans SC';
-  }
-  if (!window.SohoConfig.chineseFontFileName) {
-    window.SohoConfig.chineseFontFileName = 'NotoSansSC-VariableFont_wght.ttf';
-  }
-  if (!window.SohoConfig.taiwanFontName) {
-    window.SohoConfig.taiwanFontName = 'Noto Sans TC';
-  }
-  if (!window.SohoConfig.taiwanFontFileName) {
-    window.SohoConfig.taiwanFontFileName = 'NotoSansTC-VariableFont_wght.ttf';
-  }
 
   if (!window.SohoConfig.noFontFace) {
     const style = `<style>
+      /* cyrillic-ext */
       @font-face {
-        font-family: '${window.SohoConfig.fontName}';
-        font-optical-sizing: auto;
-        font-weight: 100 900;
-        src:
-          url('${window.SohoConfig.fontPath}/${window.SohoConfig.fontFileName}') format('truetype');
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-cyrillic-ext-300-v22.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
       }
-
+      /* cyrillic */
       @font-face {
-        font-family: '${window.SohoConfig.arabicFontName}';
-        font-optical-sizing: auto;
-        font-weight: 100 900;
-        src:
-          url('${window.SohoConfig.fontPath}/${window.SohoConfig.arabicFontFileName}') format('truetype');
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-cyrillic-300-v22.woff2) format('woff2');
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
       }
-
+      /* greek-ext */
       @font-face {
-        font-family: '${window.SohoConfig.hebrewFontName}';
-        font-optical-sizing: auto;
-        font-weight: 100 900;
-        src:
-          url('${window.SohoConfig.fontPath}/${window.SohoConfig.hebrewFontFileName}') format('truetype');
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-greek-ext-300-v22.woff2) format('woff2');
+        unicode-range: U+1F00-1FFF;
       }
-
+      /* greek */
       @font-face {
-        font-family: '${window.SohoConfig.hinduFontName}';
-        font-optical-sizing: auto;
-        font-weight: 100 900;
-        src:
-          url('${window.SohoConfig.fontPath}/${window.SohoConfig.hinduFontFileName}') format('truetype');
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-greek-300-v22.woff2) format('woff2');
+        unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
       }
-
+      /* vietnamese */
       @font-face {
-        font-family: '${window.SohoConfig.japaneseFontName}';
-        font-optical-sizing: auto;
-        font-weight: 100 900;
-        src:
-          url('${window.SohoConfig.fontPath}/${window.SohoConfig.japaneseFontFileName}') format('truetype');
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-vietnamese-300-v22.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
       }
-
+      /* latin-ext */
       @font-face {
-        font-family: '${window.SohoConfig.koreanFontName}';
-        font-optical-sizing: auto;
-        font-weight: 100 900;
-        src:
-          url('${window.SohoConfig.fontPath}/${window.SohoConfig.koreanFontFileName}') format('truetype');
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-latin-ext-300-v22.woff2) format('woff2');
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
       }
-
+      /* latin */
       @font-face {
-        font-family: '${window.SohoConfig.thaiFontName}';
-        font-optical-sizing: auto;
-        font-weight: 100 900;
-        src:
-          url('${window.SohoConfig.fontPath}/${window.SohoConfig.thaiFontFileName}') format('truetype');
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-latin-300-v22.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
       }
-
+      /* cyrillic-ext */
       @font-face {
-        font-family: '${window.SohoConfig.chineseFontName}';
-        font-optical-sizing: auto;
-        font-weight: 100 900;
-        src:
-          url('${window.SohoConfig.fontPath}/${window.SohoConfig.chineseFontFileName}') format('truetype');
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-cyrillic-ext-400-v22.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
       }
-
+      /* cyrillic */
       @font-face {
-        font-family: '${window.SohoConfig.taiwanFontName}';
-        font-optical-sizing: auto;
-        font-weight: 100 900;
-        src:
-          url('${window.SohoConfig.fontPath}/${window.SohoConfig.taiwanFontFileName}') format('truetype');
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-cyrillic-400-v22.woff2) format('woff2');
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      /* greek-ext */
+      @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-greek-ext-400-v22.woff2) format('woff2');
+        unicode-range: U+1F00-1FFF;
+      }
+      /* greek */
+      @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-greek-400-v22.woff2) format('woff2');
+        unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+      }
+      /* vietnamese */
+      @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-vietnamese-400-v22.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-latin-ext-400-v22.woff2) format('woff2');
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-latin-400-v22.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* cyrillic-ext */
+      @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-cyrillic-ext-600-v22.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+      }
+      /* cyrillic */
+      @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-cyrillic-600-v22.woff2) format('woff2');
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      /* greek-ext */
+      @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-greek-ext-600-v22.woff2) format('woff2');
+        unicode-range: U+1F00-1FFF;
+      }
+      /* greek */
+      @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-greek-600-v22.woff2) format('woff2');
+        unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+      }
+      /* vietnamese */
+      @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-vietnamese-600-v22.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-latin-ext-600-v22.woff2) format('woff2');
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(${window.SohoConfig.fontPath}/source-sans-pro-latin-600-v22.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
       }
     </style>`;
     document.querySelector('head').insertAdjacentHTML('beforeend', style);
