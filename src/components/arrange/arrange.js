@@ -364,10 +364,8 @@ Arrange.prototype = {
           }
 
           if (self.isTouch) {
-            if (e.originalEvent.touches && e.originalEvent.touches.length > 0) {
-              const touch = e.originalEvent.touches[0];
-              overItem = self.getElementByTouchInList(items, touch.pageX, touch.pageY) || overItem;
-            }
+            const touch = e.originalEvent.touches[0];
+            overItem = self.getElementByTouchInList(items, touch.pageX, touch.pageY) || overItem;
           }
           overItem = $(overItem);
 

@@ -3832,7 +3832,14 @@ Datagrid.prototype = {
     })
       .off('beforearrange.datagrid').on('beforearrange.datagrid', (e, status) => {
         if (self.isSafari) {
-          status.start.css({ display: 'inline-block' });
+          // Check if status.overIndex is equal to status.startIndex or undefined
+          if (status.overIndex !== status.startIndex && status.overIndex !== undefined) {
+            // If false, set display to 'inline-block'
+            status.start.css('display', 'inline-block');
+          } else {
+            // If true, set display to its default value
+            status.start.css('display', '');
+          }
         }
       })
       .off('arrangeupdate.datagrid')
