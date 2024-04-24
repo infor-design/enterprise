@@ -166,6 +166,12 @@
           color: $module-tabs-normal-text-color;
         }
       }
+
+      &.is-open {
+        svg.icon {
+          color: $module-tabs-normal-text-color;
+        }
+      }
     }
   }
 
