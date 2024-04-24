@@ -49,7 +49,11 @@ Arrange.prototype = {
   },
 
   get isTouch() {
-    return env.features.touch || env.devicespecs.isMobile;
+    return env.features.touch;
+  },
+
+  get isMobile() {
+    return env.devicespecs.isMobile;
   },
 
   /**
@@ -240,7 +244,7 @@ Arrange.prototype = {
 
           /**
           * Fires before moving an element allowing you to access the ui to
-           customize the draggable item.
+          * customize the draggable item.
           *
           * @event beforearrange
           * @memberof Arrange
@@ -331,7 +335,12 @@ Arrange.prototype = {
           }
           let overItem = this;
           let overIndex;
-          e.stopPropagation();
+
+          if (self.isMobile) {
+            e.stopPropagation();
+          } else {
+            e.preventDefault();
+          }
 
           if (self.isTouch && !self.placeholderTouch) {
             self.placeholderTouch = self.dragging
