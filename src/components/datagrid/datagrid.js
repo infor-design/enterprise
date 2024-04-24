@@ -7877,6 +7877,9 @@ Datagrid.prototype = {
       normal.parent().addClass('is-checked');
       large.parent().addClass('is-checked');
     }
+
+    // Set draggable target arrows height
+    $('.drag-taget-arrows', this.element).css('height', `${this.getTargetHeight()}px`);
   },
 
   /**
