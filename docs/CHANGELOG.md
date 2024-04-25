@@ -27,6 +27,7 @@
 - `[Header]` Fixed default color, and changed to flex layout by default. This is to allow for ids-breadcrumb to work. ([#2178](https://github.com/infor-design/enterprise-wc/issues/2178))
 - `[Homepage]` Fixed bug that caused errors on resize when no widgets. ([#8611](https://github.com/infor-design/enterprise/issues/8611))
 - `[Month Picker]` Fixed cursor for down button. ([#7315](https://github.com/infor-design/enterprise/issues/7315))
+- `[Personalization]` Fixed bug with wrong colors in landmark form examples. ([#8625](https://github.com/infor-design/enterprise/issues/8625))
 - `[Searchfield]` Fixed misalignment in clear icon on mobile. ([#8332](https://github.com/infor-design/enterprise/issues/8332))
 - `[Tabs]` Fixed error in tab popup. ([#8596](https://github.com/infor-design/enterprise/issues/8596))
 - `[Translations]` Added new translations fixing links in upload files. ([#8489](https://github.com/infor-design/enterprise/issues/8489))
