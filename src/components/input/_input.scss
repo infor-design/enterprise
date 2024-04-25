@@ -263,11 +263,10 @@ textarea[rows] {
 
 // Text Area
 textarea {
-  @include rem(line-height, 2rem);
-
   min-height: $textarea-size-regular-height;
   overflow: auto;
   padding: 10px;
+  line-height: 2rem;
   width: $textarea-size;
 
   &.resizable {
@@ -295,9 +294,8 @@ textarea {
 }
 
 .textarea-wordcount {
-  @include rem(line-height, 2rem);
-
   display: block;
+  line-height: 2rem;
   font-size: $ids-size-font-sm;
   min-height: auto;
   width: $textarea-size;
