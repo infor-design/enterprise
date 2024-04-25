@@ -20,15 +20,12 @@
 // Header Colors
 $header-default-bg-color: $ids-color-palette-white;
 $header-default-bg-border-color: $ids-color-palette-slate-30;
-$header-default-bg-hover-color: $ids-color-palette-azure-80;
-
 $header-border-color: $ids-color-palette-azure-80;
 $header-text-default-color: $ids-color-palette-slate-100;
 $header-text-actionable-color: $ids-color-palette-azure-80;
 $header-button-normal-color: $ids-color-palette-slate-100;
 $header-button-icon-color: $ids-color-palette-slate-100;
-$header-button-hover-color: $ids-color-palette-azure-80;
-$header-button-focus-color: $ids-color-palette-slate-100;
+$header-button-focus-color: $ids-color-palette-azure-80;
 $header-button-focus-border-color: $ids-color-palette-azure-80;
 
 $counts-personalize-text-color: $header-text-default-color;
@@ -45,8 +42,8 @@ $header-bg-color: $ids-color-palette-white;
 $header-bottom-border-color: $ids-color-palette-slate-40;
 $header-default-bg-color: $ids-color-palette-white;
 $header-default-bg-border-color: $ids-color-palette-slate-30;
-$header-default-bg-hover-color: rgba(0, 0, 0, .3);
-$subhead-bg-color: $ids-color-palette-azure-90;
+$header-default-bg-hover-color: $ids-color-palette-azure-10;
+$subhead-bg-color: $ids-color-palette-white;
 $header-button-disabled-color: rgba(0, 0, 0, 0.3);
 $header-primary-btn-background-color: $ids-color-brand-primary-base;
 $header-primary-btn-background-hover-color: $ids-color-palette-azure-50;
@@ -54,8 +51,9 @@ $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
 
 $header-button-hover-color-new: $ids-color-palette-azure-80;
+$header-button-hover-color: $ids-color-palette-azure-80;
 $header-tab-selected-color-new: $ids-color-palette-azure-80;
-$body-color-primary-background: $ids-color-palette-slate-10;
+$body-color-primary-background: $ids-color-palette-white;
 
 // Homepages
 $homepage-background-color: $body-color-primary-background;
@@ -220,7 +218,7 @@ $button-color-secondary-disabled-font-new: $ids-color-palette-slate-50;
 $button-color-secondary-initial-background: transparent;
 $button-disabled-background-color: transparent;
 
-$button-color-tertiary-hover-background-new: $ids-color-palette-azure-20;
+$button-color-tertiary-hover-background-new: $ids-color-palette-azure-10;
 $button-color-tertiary-hover-font-new: $ids-color-palette-azure-80;
 
 $hero-button-color-tertiary-hover-background-new: $ids-color-palette-azure-70;

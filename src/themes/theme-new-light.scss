@@ -16,7 +16,7 @@
 @import '../core/config';
 
 // New Theme Light Overrides
-$subhead-bg-color: $ids-color-palette-azure-70;
+$subhead-bg-color: $ids-color-palette-white;
 $disabled-color: $ids-color-palette-slate-30;
 $label-disabled-color: $input-color-disabled-border;
 $label-text-color: $ids-color-palette-slate-60;
@@ -235,6 +235,10 @@ $button-disabled-background-color: transparent;
 $button-color-tertiary-hover-font-new: $ids-color-palette-azure-60;
 $button-color-tertiary-hover-font: $ids-color-palette-azure-60;
 $button-color-secondary-initial-background: transparent;
+$header-button-hover-color: $ids-color-palette-azure-60;
+$header-button-focus-color: $ids-color-palette-azure-60;
+$header-default-bg-hover-color: $ids-color-palette-azure-10;
+$header-button-hover-color-new: $ids-color-palette-azure-60;
 
 // Badges
 $badge-neutral-color: $ids-color-palette-slate-100;

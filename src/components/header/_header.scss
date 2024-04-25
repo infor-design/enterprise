@@ -953,7 +953,8 @@ $subheader-height: 60px;
 
 .subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button),
 .personalize-subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button) {
-  box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
+  border-color: $header-button-focus-color;
+  box-shadow: 0 0 0 2px transparent, 0 0 0 0 $header-button-focus-color, 0 0 4px 3px rgba(255, 255, 255, 0.3);
 }
 
 .subheader,
