@@ -151,14 +151,13 @@
 }
 
 .editor {
-  @include rem(line-height, 2.2rem);
-
   background-color: $editor-bg-color;
   border: 1px solid;
   border-color: $editor-border-color;
   border-radius: 0 0 2px 2px;
   color: $editor-color;
   display: block;
+  line-height: 2.2rem;
   font-size: $input-size-regular-font-size;
   -webkit-font-smoothing: antialiased;
   font-weight: $ids-number-font-weight-base;
@@ -246,10 +245,9 @@
 .editor,
 .fontpicker-menu {
   p {
-    @include rem(line-height, 2.2rem);
-
     color: $editor-color;
     font-size: $input-size-regular-font-size;
+    line-height: 2.2rem;
 
     a {
       color: $hyperlink-color;
