@@ -86,7 +86,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
       // smaller size for sitting in-between 'minor' indicators
       &.minor {
-        width: ($indicator-size / 2);
+        width: calc($indicator-size / 2);
       }
     }
 
@@ -279,7 +279,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 .indicator {
   background-color: $body-color-primary-background;
   border: 2px solid $indicator-blank;
-  border-radius: ($indicator-size / 2);
+  border-radius: calc($indicator-size / 2);
   display: inline-block;
   height: $indicator-size;
   position: relative;
@@ -312,12 +312,12 @@ $indicator-current-size: ($indicator-size * 1.6);
   // Processing
   &.processing {
     border: 2px solid $indicator-lightest;
-    border-radius: ($indicator-size / 2);
+    border-radius: calc($indicator-size / 2);
   }
 
   // Current is larger than the rest
   &.current {
-    border-radius: ($indicator-current-size / 2);
+    border-radius: calc($indicator-current-size / 2);
     height: $indicator-current-size;
     width: $indicator-current-size;
     min-height: $indicator-current-size;
@@ -326,7 +326,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
     // circle
     &::before {
-      border-radius: ($indicator-current-size / 2);
+      border-radius: calc($indicator-current-size / 2);
     }
   }
 
@@ -423,7 +423,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
   // Really small indicator for long processes
   &.minor {
-    border-radius: ($indicator-size / 4);
+    border-radius: calc($indicator-size / 4);
     height: 0.6em;
     width: 0.6em;
     min-height: 0.6em;
