@@ -13,13 +13,9 @@
 - `[Button]` Fixed unneeded timeout in performAnimation. ([#8541](https://github.com/infor-design/enterprise/issues/8541))
 - `[Cards]` Fixed title and button regression and position. ([#8602](https://github.com/infor-design/enterprise/issues/8602))
 - `[Contextual Action Panel]` Fixed added padding on contextual action panel. ([#8553](https://github.com/infor-design/enterprise/issues/8553))
-- `[Dropdown/Lookup]` Add option to remove margin in dropdown and lookup wrapper.
+- `[Dropdown/Lookup]` Add option to remove margin in dropdown and lookup wrapper.([#8492](https://github.com/infor-design/enterprise/issues/8492))
 - `[Datagrid]` Fixed an error parsing some dates. ([#8627](https://github.com/infor-design/enterprise/issues/8627))
-- `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
-- `[Contextual Action Panel]` Fixed added padding on contextual action panel. ([#8553](https://github.com/infor-design/enterprise/issues/8553))
 - `[Datagrid]` Fixed unable to use the left/right arrow keys on the text in an editable cell. ([#8457](https://github.com/infor-design/enterprise/issues/8457))
-- `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
-- `[Datagrid]` Fixed search icon misalignment in dropwdown cells. ([#8515](https://github.com/infor-design/enterprise/issues/8515))
 - `[Datagrid]` Fixed search icon misalignment in dropdown cells. ([#8515](https://github.com/infor-design/enterprise/issues/8515))
 - `[Datagrid]` Fixed an error editing on non first page in server side paging datagrid. ([#8537](https://github.com/infor-design/enterprise-ng/issues/1672))
 - `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
@@ -30,6 +26,7 @@
 - `[Searchfield]` Fixed misalignment in clear icon on mobile. ([#8332](https://github.com/infor-design/enterprise/issues/8332))
 - `[Tabs]` Fixed error in tab popup. ([#8596](https://github.com/infor-design/enterprise/issues/8596))
 - `[Translations]` Added new translations fixing links in upload files. ([#8489](https://github.com/infor-design/enterprise/issues/8489))
+- `[WeekView]` Fixed render of events on day view for non all-day events. ([#8530](https://github.com/infor-design/enterprise/issues/8530))
 
 ## v4.94.0
 

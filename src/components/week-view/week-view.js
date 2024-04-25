@@ -280,6 +280,8 @@ WeekView.prototype = {
       if (this.isStackedView()) {
         this.appendToDayContainer(event);
       } else {
+        event.startsHour = event.startsHour < this.settings.startHour ? this.settings.startHour : event.startsHour;
+        event.startsHour = days[0].key === event.startKey ? 0 : event.startsHour;
         this.appendEventToHours(days[0].elem, event);
       }
     }
