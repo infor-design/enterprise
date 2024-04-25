@@ -3302,6 +3302,7 @@ Datagrid.prototype = {
                   const isFrozenColumn = frozenColDtls.filter(col => col.name === columnName).length > 0;
 
                   if (!isFrozenColumn) {
+                    debugger;
                     target.el.addClass('is-over');
                     showTarget.addClass('is-over');
                   }
@@ -3724,10 +3725,14 @@ Datagrid.prototype = {
                 }
               }
 
-              const addBorder = allowed && $('.is-clone').offset().top > $(overRow.row).offset().top;
-              $(overRow?.row).toggleClass('is-over', addBorder);
+              $(overRow?.row).addClass('is-over').siblings().removeClass('is-over');
 
               const cursorVal = allowed ? '' : 'not-allowed';
+
+              if (cursorVal === 'not-allowed') {
+                $(overRow?.row).removeClass('is-over');
+              }
+
               clone.add(clone.find('.datagrid-reorder-icon')).css('cursor', cursorVal);
               isReady = true;
             })

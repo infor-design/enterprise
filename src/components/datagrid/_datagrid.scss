@@ -1113,13 +1113,19 @@ $datagrid-small-row-height: 25px;
     }
   }
 
-  .datagrid-reorder-placeholder,
-  .datagrid-rowgroup-header.is-over {
-    td {
-      border-bottom: 3px solid $datagrid-reorder-placeholder-border-color;
+  .datagrid-rowgroup-header,
+  .datagrid-row {
+    &.is-over {
+      td {
+        border-bottom: 3px solid $datagrid-reorder-placeholder-border-color;
+      }
     }
   }
-  
+
+  .datagrid-reorder-placeholder td {
+    border-bottom: 3px solid $datagrid-reorder-placeholder-border-color;
+  }
+
   &.draggable-group-row  {
     .drag-target-arrows {
       display: none;
@@ -2217,8 +2223,8 @@ $datagrid-small-row-height: 25px;
       z-index: 3;
 
       &.groupable {
-        -webkit-box-shadow: 0 0 10px 0 $datagrid-cell-border-color;
-        box-shadow: 0 0 10px 0 $datagrid-cell-border-color;
+        -webkit-box-shadow: none;
+        box-shadow: none;
         display: flex;
 
         > td {
