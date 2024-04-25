@@ -11,6 +11,7 @@
 
 ## v4.95.0 Fixes
 
+- `[Avatar/AppMenu]` Fixed size of the avatar on app menu. ([#8631](https://github.com/infor-design/enterprise/issues/8631))
 - `[Button]` Fixed unneeded timeout in performAnimation. ([#8541](https://github.com/infor-design/enterprise/issues/8541))
 - `[Cards]` Fixed title and button regression and position. ([#8602](https://github.com/infor-design/enterprise/issues/8602))
 - `[Contextual Action Panel]` Fixed added padding on contextual action panel. ([#8553](https://github.com/infor-design/enterprise/issues/8553))
