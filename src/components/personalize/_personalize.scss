@@ -14,6 +14,7 @@
 .is-personalizable .personalize-header,
 .is-personalizable.tab-container {
   background-color: $header-default-bg-color;
+  border-bottom: 1px solid transparent;
 
   ::selection {
     background: $ids-color-palette-azure-90;
