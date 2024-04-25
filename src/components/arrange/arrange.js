@@ -229,6 +229,7 @@ Arrange.prototype = {
             }
             return false;// eslint-disable-line
           }
+          console.log('dragstart')
           isHandle = false;
           self.dragging = $(this);
 

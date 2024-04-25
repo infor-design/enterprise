@@ -6524,8 +6524,7 @@ Datagrid.prototype = {
   */
   personalizeColumns() {
     const self = this;
-    let markup = `<div class="listview-search alternate-bg"><label class="audible" for="gridfilter">Search</label><input class="searchfield" placeholder="${Locale.translate('SearchColumnName')}" name="searchfield" id="gridfilter"></div>`;
-    markup += '<div class="listview alternate-bg" id="search-listview"><ul></ul></div>';
+    const markup = '<div class="listview alternate-bg" id="search-listview"><ul></ul></div>';
 
     $('body').modal({
       title: Locale.translate('PersonalizeColumns'),
@@ -6545,33 +6544,30 @@ Datagrid.prototype = {
         }
 
         self.isColumnsChanged = false;
-        modal.element.find('.searchfield').searchfield({ clearable: true, tabbable: false });
-        modal.element.find('.listview')
-          .listview({
-            source: self.settings.columns,
-            template: `
-            <ul>
+        const listviewApi = modal.element.find('.listview').listview({
+          source: self.settings.columns,
+          template: `
+            <ul class="arrange list" data-arrange-handle=".handle">
             {{#dataset}}
               {{#name}}
-              <li>
-                <a href="#" target="_self" tabindex="-1">
-                  <label class="inline">
-                    <input tabindex="-1" type="checkbox" class="checkbox" {{^hideable}}disabled{{/hideable}} {{^hidden}}checked{{/hidden}} data-column-id="{{id}}"/>
-                    <span class="label-text">{{name}}</span>
-                  </label>
-                </a>
+              <li draggable class="{{^hideable}}is-disabled{{/hideable}}" {{^hideable}}data-arrange-exclude="true"{{/hideable}} data-column-id="{{id}}">
+                <div class="switch field">
+                  <span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
+                  <span class="label-text">{{name}}</span>
+                </div>
               </li>
               {{/name}}
             {{/dataset}}
             </ul>`,
-            searchable: true,
-            selectOnFocus: false,
-            listFilterSettings: {
-              filterMode: 'contains',
-              searchableTextCallback: item => item.name || item.id
-            }
-          })
-          .off('selected.datagrid')
+          selectOnFocus: false
+        }).data('listview');
+
+        listviewApi.element.find('ul').arrange({
+          handle: '.icon-handle',
+          isVisualItems: true
+        });
+
+        listviewApi.element.off('selected.datagrid')
           .on('selected.datagrid', function (selectedEvent, args) {
             const chk = args.elem.find('.checkbox');
             const id = chk.attr('data-column-id');
@@ -7870,7 +7866,7 @@ Datagrid.prototype = {
     let toolbar = null;
     let title = '';
     let more = null;
-    let personalize = null;
+    const personalize = null;
     const useFlexToolbar = this.settings.useFlexToolbar;
     const self = this;
 
@@ -7932,40 +7928,7 @@ Datagrid.prototype = {
       const menu = $('<ul class="popupmenu"></ul>');
 
       if (this.settings.toolbar.personalize) {
-        // ELEPHANT
-        // insert the gear icon hear
-        const pButton = $(`<button class="btn-icon actions" title="Personalize Columns" type="button">${$.createIcon({ icon: 'settings' })}<span class="audible">${Locale.translate('PersonalizeColumns')}</span></button>`);
-        personalize = $(`<div class="${useFlexToolbar ? 'toolbar-section ' : ''}more"></div>`);
-        personalize.append(pButton);
-        // make listview
-        const pList = $('<div class="listview personalize"><ul></ul></div>');
-        pList.listview({
-          source: self.settings.columns,
-          template: `
-            <ul class="arrange">
-            {{#dataset}}
-              {{#name}}
-              <li class="{{^hideable}}is-disabled{{/hideable}}">
-                <div class="switch field">
-                  ${$.createIcon({ icon: 'drag' })}
-                  <span class="label-text">{{name}}</span>
-                  <input class="switch" type="checkbox" id="cpf-switch-setting" {{^hideable}}disabled{{/hideable}} {{^hidden}}checked{{/hidden}} data-column-id="{{id}}"/>
-                  <label for="cpf-switch-setting"></label>
-                </div>
-              </li>
-              {{/name}}
-            {{/dataset}}
-            </ul>`,
-          selectOnFocus: false
-        });
-        // use popover
-        pButton.popover({
-          title: 'Column Properties',
-          trigger: 'click',
-          popover: true,
-          placement: 'bottom',
-          content: pList
-        });
+        menu.append(`<li><a href="#" data-option="personalize-columns">${Locale.translate('PersonalizeColumns')}</a></li>`);
       }
 
       if (this.settings.toolbar.resetLayout) {
