@@ -3302,7 +3302,6 @@ Datagrid.prototype = {
                   const isFrozenColumn = frozenColDtls.filter(col => col.name === columnName).length > 0;
 
                   if (!isFrozenColumn) {
-                    debugger;
                     target.el.addClass('is-over');
                     showTarget.addClass('is-over');
                   }
