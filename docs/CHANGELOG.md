@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.90.4
+
+## v4.90.4 Fixes
+
+- `[Locale]` Fixed incorrect `nn-NO` and `no-NO` locales. ([#8647](https://github.com/infor-design/enterprise/issues/8647))
+
 ## v4.90.2
 
 ## v4.90.2 Fixes
