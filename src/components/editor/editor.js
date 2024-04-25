@@ -2132,22 +2132,6 @@ Editor.prototype = {
     const currentElement = this.getCurrentElement();
     const self = this;
 
-    this.element
-      // Work around for Chrome's bug wrapping contents in <span>
-      // http://www.neotericdesign.com/blog/2013/3/working-around-chrome-s-contenteditable-span-bug
-      .on('DOMNodeInserted', (e) => {
-        const target = $(e.target);
-        const helper = $('<b>helper</b>');
-
-        if (e.target.tagName === 'IMG') {
-          target.removeAttr('id style srcset');
-        } else if (e.target.tagName === 'SPAN') {
-          target.before(helper);
-          helper.after(target.contents());
-          helper.add(target).remove();
-        }
-      });
-
     // Handle visual styles at the container level on blur/focus
     function containerFocusHandler() {
       const elem = $(this);

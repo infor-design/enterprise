@@ -302,7 +302,7 @@
 
     &:not(.favor) {
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: hidden;
     }
 
     &.static {
