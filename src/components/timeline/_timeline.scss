@@ -15,7 +15,7 @@
     position: absolute;
     top: 0;
     width: 3px;
-    height: 80%;
+    height: calc(80% + 12px);
   }
 
   .indicator {
@@ -53,7 +53,6 @@
       content: '';
       position: absolute;
       width: 3px;
-      bottom: -18px;
       height: 100%;
       left: 1.22em;
 
@@ -117,13 +116,6 @@
 }
 
 @mixin mobile-timeline() {
-  .timeline {
-    &::before {
-      bottom: 44px;
-      left: 12.65em;
-    }
-  }
-
   .card .timeline,
   .widget .timeline {
     &::before {

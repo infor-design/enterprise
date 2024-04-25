@@ -1,0 +1,24 @@
+
+<link id="ids-stylesheet" rel="stylesheet" href="https://unpkg.com/ids-enterprise-wc@1.0.0/themes/ids-theme-default-light.css" type="text/css">
+<script defer type="module" src="https://unpkg.com/ids-enterprise-wc@1.0.0/components/ids-breadcrumb/ids-breadcrumb.js"></script>
+
+<div class="header is-personalizable">
+  <ids-breadcrumb truncate="true">
+    <ids-hyperlink font-size="14" text-decoration="hover" href="#">First Item</ids-hyperlink>
+    <ids-hyperlink font-size="14" text-decoration="hover" href="#">Second Item</ids-hyperlink>
+    <ids-hyperlink font-size="14" text-decoration="hover" href="#">Third Item</ids-hyperlink>
+    <ids-hyperlink font-size="14" text-decoration="hover" href="#">Fourth Item</ids-hyperlink>
+    <ids-hyperlink font-size="14" text-decoration="hover" href="#">Fifth Item</ids-hyperlink>
+    <ids-hyperlink font-size="14" text-decoration="hover" href="#">Sixth Item</ids-hyperlink>
+    <ids-hyperlink font-size="14" text-decoration="hover" href="#">Seventh Item</ids-hyperlink>
+    <ids-hyperlink font-size="14" text-decoration="hover" disabled>Disabled Item</ids-hyperlink>
+    <ids-hyperlink font-size="14">Current Item</ids-hyperlink>
+  </ids-breadcrumb>
+</div>
+
+<script>
+  $('body').on('initialized', () => {
+    $('[data-theme-name="theme-classic"]').parent().addClass('is-disabled');
+  });
+</script>
+

@@ -202,6 +202,7 @@
     e.preventDefault();
     var $btn = $(this);
     var btnApi = $btn.data('button');
-    btnApi.performAnimation(10000);
+    btnApi.startAnimation();
+    // btnApi.stopAnimation(); // later
   });
 </script>
