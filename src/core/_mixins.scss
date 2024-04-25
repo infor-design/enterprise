@@ -7,7 +7,7 @@
 // rem font sizin
 @mixin font-size($size-value) {
   font-size: ($size-value) + px;
-  font-size: ($size-value / 10) + rem;
+  font-size: calc($size-value / 10) + rem;
 }
 
 // Prefixes that we use throughout
@@ -129,11 +129,6 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   opacity: $opacity;
 }
 
-// Util For Rem Mixin
-@function strip-unit($num) {
-  @return $num / ($num * 0 + 1);
-}
-
 // Util To Disable Select
 @mixin no-select {
   @include css3(user-select, none);
@@ -146,34 +141,6 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   @include css3(user-select, auto);
 
   -webkit-touch-callout: default;
-}
-
-// Handle Rems with pixel fallback
-@mixin rem($property, $values...) {
-  $max: length($values);
-  $px-values: '';
-  $rem-values: '';
-
-  @for $i from 1 through $max {
-    $value: strip-unit(nth($values, $i));
-    $px-values: #{$px-values + $value * 16}px;
-
-    @if $i < $max {
-      $px-values: #{$px-values + ' '};
-    }
-  }
-
-  @for $i from 1 through $max {
-    $value: strip-unit(nth($values, $i));
-    $rem-values: #{$rem-values + $value}rem;
-
-    @if $i < $max {
-      $rem-values: #{$rem-values + ' '};
-    }
-  }
-
-  #{$property}: $px-values;
-  #{$property}: $rem-values;
 }
 
 // Respond-To different device sizes (Responsive Breakpoints)
@@ -375,8 +342,4 @@ $box-shadow-off-color: rgba(0, 0, 0, 0);
 
 @mixin drawer-box-shadow() {
   @include css3(box-shadow, 0 0 20px 1px $box-shadow-on-color);
-}
-
-@function strip-units($number) {
-  @return $number / ($number * 0 + 1);
 }
