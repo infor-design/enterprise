@@ -20,7 +20,7 @@ $images-size: (
   width: $this-width;
 
   .icon {
-    margin-top: ($this-height - $this-icon-height) / 2;
+    margin-top: calc(($this-height - $this-icon-height) / 2);
   }
 }
 

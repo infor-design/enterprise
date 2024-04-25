@@ -2,8 +2,7 @@
 // Requirements
 // -------------------------------------
 import * as path from 'path';
-import sass from 'node-sass';
-import onceImporter from 'node-sass-once-importer';
+import * as sass from 'sass';
 
 import logger from '../logger.js';
 import createDirs from './create-dirs.js';
@@ -29,7 +28,6 @@ function compileSass(options = {}) {
   // set default options
   /* eslint-disable-next-line */
   options = Object.assign({
-    importer: onceImporter(),
     style: 'expanded'
   }, options);
 
