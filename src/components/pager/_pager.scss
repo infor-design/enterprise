@@ -341,6 +341,13 @@ html[dir='rtl'] {
     }
   }
 
+  .pager-prev,
+  .pager-next {
+    [class^='btn']:not(.btn-generative) span + .icon {
+      margin-right: 0;
+    }
+  }
+
   .pager-pagesize {
     float: left;
   }
