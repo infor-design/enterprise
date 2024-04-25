@@ -1,81 +1,147 @@
-<div id="maincontent" class="page-container scrollable" role="main">
-  <div class="hero-widget">
+<div class="homepage page-container scrollable" data-init="false" id="maincontent" data-columns="3" role="main">
+  <div class="content has-banner-icon">
 
-    <div class="hero-top">
-
-      <div class="hero-header" style="height: 45px;">
-        <div id="hero-header-toolbar" class="toolbar" role="toolbar">
-          <div class="title">Oakham Branch Sales Report</div>
-          <div class="buttonset">
-            <button id="hero-header-toolbar-btn-view" class="btn-tertiary btn-menu" type="button">
-              <span>View: Last 6 Months</span>
-            </button>
-            <ul class="popupmenu is-selectable">
-              <li class="is-checked"><a href="#">Month to Date</a></li>
-              <li><a href="#">previous Month</a></li>
-              <li><a href="#">Last 15 days</a></li>
-            </ul>
-          </div>
+    <div class="widget triple-width show-buttons">
+      <div class="widget-header">
+        <div class="widget-header-section title">
+          <h2>Widget/Card Header</h2>
         </div>
-      </div>
+        <div class="widget-header-section custom-action">
+          <button class="btn-icon">
+            <span>Search</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-search"></use>
+            </svg>
+            <span class="audible">Search</span>
+          </button>
 
-      <div class="hero-content">
-        <div class="circlepager">
-          <div class="slides">
-
-            <div class="slide">
-              <div style="height: 325px; width: 400px; margin: 0 auto;">
-                <div id="donut-alert1" class="chart-container"></div>
-              </div>
-            </div>
-            <div class="slide">
-              <div style="height: 325px; width: 400px; margin: 0 auto;">
-                <div id="bar-grouped-example" class="chart-container"></div>
-              </div>
-            </div>
-            <div class="slide">
-              <div style="height: 300px; width: 400px; margin: -15px auto;">
-                <div id="area-example" class="chart-container"></div>
-              </div>
-            </div>
-
-          </div>
+          <button type="button" class="btn-tertiary" id="tertiary-filter-one">
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-export"></use>
+            </svg>
+            <span>Export</span>
+          </button>
+        </div>
+        <div class="widget-header-section more">
+          <button class="btn-actions">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-vertical-ellipsis"></use>
+            </svg>
+            <span class="audible">More Actions</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">More One</a></li>
+            <li><a href="#">More Two</a></li>
+            <li class="submenu">
+              <a href="#">More Three</a>
+              <ul class="popupmenu">
+                <li><a href="#">Sub-Item One</a></li>
+                <li><a href="#">Sub-Item Two</a></li>
+              </ul>
+            </li>
+            <li><a href="#">More Three</a></li>
+          </ul>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="homepage" data-columns="4" data-init="false">
-    <div class="content">
-
-
-      <div class="widget">
-        <div class="widget-header">
-          <h2 class="widget-title">Widget 4x1 (Dom Order 1) - A</h2>
-        </div>
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Alerts</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-vertical-ellipsis"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
       </div>
 
-      <div class="widget">
-        <div class="widget-header">
-          <h2 class="widget-title">Widget 1x1 (Dom Order 2) - B</h2>
-        </div>
+      <div class="widget-content">
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Tasks</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-vertical-ellipsis"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
       </div>
 
-      <div class="widget">
-        <div class="widget-header">
-          <h2 class="widget-title">Widget 1x1 (Dom Order 3) - C</h2>
-        </div>
+      <div class="widget-content">
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Business Insight</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-vertical-ellipsis"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
       </div>
 
-      <div class="widget">
-        <div class="widget-header">
-          <h2 class="widget-title">Widget 1x1 (Dom Order 4) - D</h2>
-        </div>
+      <div class="widget-content">
       </div>
+    </div>
 
-      <div class="widget triple-width">
-        <div class="widget-header">
-          <h2 class="widget-title">Widget 3x1 (Dom Order 5) - E</h2>
+    <div class="widget triple-width show-buttons">
+      <div class="widget-header">
+        <div class="widget-header-section title">
+          <h2>Widget/Card Header</h2>
+        </div>
+        <div class="widget-header-section custom-action">
+          <button class="btn-icon">
+            <span>Search</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-search"></use>
+            </svg>
+            <span class="audible">Search</span>
+          </button>
+
+          <button type="button" class="btn-tertiary" id="tertiary-filter-one">
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-export"></use>
+            </svg>
+            <span>Export</span>
+          </button>
+        </div>
+        <div class="widget-header-section more">
+          <button class="btn-actions">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-vertical-ellipsis"></use>
+            </svg>
+            <span class="audible">More Actions</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">More One</a></li>
+            <li><a href="#">More Two</a></li>
+            <li class="submenu">
+              <a href="#">More Three</a>
+              <ul class="popupmenu">
+                <li><a href="#">Sub-Item One</a></li>
+                <li><a href="#">Sub-Item Two</a></li>
+              </ul>
+            </li>
+            <li><a href="#">More Three</a></li>
+          </ul>
         </div>
       </div>
     </div>
@@ -83,224 +149,9 @@
 </div>
 
 <script>
-  var palette = Soho.theme.themeColors().palette;
-  var colors = {
-    // default amber amethyst azure emerald graphite ruby slate turquoise
-    '#some-color': 'default',
-    '#db7726': 'amber',
-    '#9279a6': 'amethyst',
-    '#2578a9': 'azure',
-    '#56932e': 'emerald',
-    '#5c5c5c': 'graphite',
-    '#941e1e': 'ruby',
-    '#50535a': 'slate',
-    '#206b62': 'turquoise'
-  };
-  var donutColors = {
-    amber: {
-      neutral: palette.graphite['10'].value
-    },
-    amethyst: {
-      neutral: palette.graphite['10'].value
-    },
-    emerald: {
-      positive: palette.emerald['90'].value,
-      neutral: palette.graphite['10'].value
-    },
-    ruby: {
-      neutral: palette.graphite['10'].value
-    }
-  };
-  var barColors = {
-    amber: {
-      apr: palette.azure['50'].value,
-      may: palette.amber['100'].value
-    },
-    emerald: {
-      feb: palette.emerald['90'].value,
-      apr: palette.amethyst['70'].value
-    },
-    ruby: {
-      mar: palette.ruby['10'].value
-    }
-  };
-  var areaColors = {
-    amber: {
-      metals: palette.amethyst['90'].value,
-      stone: palette.azure['70'].value,
-    },
-    amethyst: {
-      metals: palette.amethyst['90'].value
-    },
-    ruby: {
-      metals: 'good',
-      wood: palette.amethyst['100'].value
-    }
-  };
-
-  var donutData = [{
-    data: [
-      { name: 'Positive', value: 20, color: 'good' },
-      { name: 'Negative', value: 25, color: 'error' },
-      { name: 'Neutral', value: 10, color: 'neutral' }
-    ],
-    centerLabel: 'Reviews'
-  }];
-
-  var barData = [{
-    data: [
-      { name: 'Jan', value: 12, color: 'alertYellow' },
-      { name: 'Feb', value: 11, color: 'good' },
-      { name: 'Mar', value: -5, color: 'error' },
-      { name: 'Apr', value: 10, color: '#7cc0b5' },
-      { name: 'May', value: 14, color: '#ff9426' }
-    ],
-    name: 'Team A'
-  }, {
-    data: [
-      { name: 'Jan', value: 22, color: 'alertYellow' },
-      { name: 'Feb', value: 24, color: 'good' },
-      { name: 'Mar', value: 12, color: 'error' },
-      { name: 'Apr', value: 20, color: '#7cc0b5' },
-      { name: 'May', value: 21, color: '#ff9426' }
-    ],
-    name: 'Team B'
-  }, {
-    data: [
-      { name: 'Jan', value: 32, color: 'alertYellow' },
-      { name: 'Feb', value: 31, color: 'good' },
-      { name: 'Mar', value: 34, color: 'error' },
-      { name: 'Apr', value: 30, color: '#7cc0b5' },
-      { name: 'May', value: 33, color: '#ff9426' }
-    ],
-    name: 'Team C'
-  }];
-
-  var areaData = [{
-    data: [
-      { name: 'Jan', value: 12 }, { name: 'Feb', value: 11 }, { name: 'Mar', value: 14 },
-      { name: 'Apr', value: 10 }, { name: 'May', value: 14 }, { name: 'Jun', value: 8 }],
-    name: 'Metals', color: '#ede3fc'
-  }, {
-    data: [
-      { name: 'Jan', value: 22 }, { name: 'Feb', value: 21 }, { name: 'Mar', value: 24 },
-      { name: 'Apr', value: 20 }, { name: 'May', value: 24 }, { name: 'Jun', value: 28 }],
-    name: 'Stone', color: 'alertYellow'
-  }, {
-    data: [
-      { name: 'Jan', value: 32 }, { name: 'Feb', value: 31 }, { name: 'Mar', value: 34 },
-      { name: 'Apr', value: 30 }, { name: 'May', value: 34 }, { name: 'Jun', value: 38 }],
-    name: 'Wood', color: 'error'
-  }];
-
-  var getDonutData = function (color) {
-    var d = JSON.parse(JSON.stringify(donutData));
-    if (color && donutColors[color]) {
-      for (var i = 0, l = d[0].data.length; i < l; i++) {
-        var item = d[0].data[i];
-        var thisColor = donutColors[color][item.name.toLowerCase()];
-        item.color = thisColor || item.color;
-      }
-    }
-    return d;
-  };
-
-  var getBarData = function (color) {
-    var d = JSON.parse(JSON.stringify(barData));
-    if (color && barColors[color]) {
-      for (var i = 0, l = d.length; i < l; i++) {
-        for (var i2 = 0, l2 = d[i].data.length; i2 < l2; i2++) {
-          var item = d[i].data[i2];
-          var thisColor = barColors[color][item.name.toLowerCase()];
-          item.color = thisColor || item.color;
-        }
-      }
-    }
-    return d;
-  };
-
-  var getAreaData = function (color) {
-    var d = JSON.parse(JSON.stringify(areaData));
-    if (color && areaColors[color]) {
-      for (var i = 0, l = d.length; i < l; i++) {
-        var item = d[i];
-        var thisColor = areaColors[color][item.name.toLowerCase()];
-        item.color = thisColor || item.color;
-      }
-    }
-    return d;
-  };
-
-  const donut = $('#donut-alert1');
-  const bar = $('#bar-grouped-example');
-  const area = $('#area-example');
-
-  $(window).resize(() => {
-    location.reload();
-  });
-
-  // Wait for initialize
-  $('body').on('initialized', function () {
-    const homepageSettings =  {
+  $('.homepage').homepage({
       background: {
-        image: 'https://cdn.pixabay.com/photo/2016/06/02/02/33/triangles-1430105_1280.png'
+        image: '{{basepath}}/images/background-image.svg'
       },
-      heroWidgetBackground: {
-        image: 'https://png.pngtree.com/background/20210714/original/pngtree-multicolor-background-with-sparkling-lights-picture-image_1207979.jpg'
-      }
-    };
-
-    const homepageApi = $('.homepage').homepage(homepageSettings).data('homepage');
-    const circlepagerApi = $('.circlepager').data('circlepager');
-
-    // Set view type
-    const setView = function () {
-      if (Soho.breakpoints.isAbove('tablet-to-desktop')) {
-        circlepagerApi.showExpandedView();
-      } else {
-        circlepagerApi.showCollapsedView();
-      }
-    };
-
-    // Bind resize
-    homepageApi.element.on('resize', function (e, metaData) {
-      console.log(this, 'metaData:', metaData);
-      setView();
     });
-
-    // Init
-    setView();
-
-    if (Soho.breakpoints.isBelow('phablet')) {
-      const width = Soho.breakpoints.isBelow('slim') ? 250 : 375;
-
-      donut.width(width);
-      donut.parent().css({
-        height: '225px',
-        width: `${width}px`
-      });
-      bar.width(width);
-      bar.parent().width(width);
-      area.width(width);
-      area.parent().width(width);
-    }
-
-    donut.chart({ type: 'donut', dataset: getDonutData() });
-    bar.chart({ type: 'bar-grouped', dataset: getBarData(), showLegend: false });
-    area.chart({ type: 'area', dataset: getAreaData() });
-
-    var donutApi = donut.data('pie');
-    var barApi = bar.data('bar');
-    var areaApi = area.data('line');
-
-    $('html')
-      .on('colorschanged themechanged', function (e, a) {
-        if (typeof a.colors !== 'undefined') {
-          var color = colors[a.colors];
-          donutApi.updated({ dataset: getDonutData(color) });
-          barApi.updated({ dataset: getBarData(color) });
-          areaApi.updated({ dataset: getAreaData(color) });
-        }
-      });
-  });
 </script>

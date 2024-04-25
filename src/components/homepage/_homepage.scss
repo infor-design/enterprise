@@ -12,7 +12,7 @@
   background-color: $homepage-background-color;
   height: inherit;
   margin: 0 auto;
-  padding: 16px 0;
+  padding: 0;
   position: relative;
 
   .card,
@@ -59,7 +59,13 @@
   > .content {
     left: 50%;
     margin-left: -500px;
+    margin-top: 16px;
     position: absolute;
+    z-index: 1;
+
+    &.has-banner-icon {
+      margin-top: 100px;
+    }
   }
 
   .drop-indicator {
@@ -140,6 +146,16 @@
     cursor: ns-resize;
     height: 14px;
     width: 100%;
+  }
+
+  .background-image {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 272px;
+    float: left;
+    position: sticky;
+    top: 0;
   }
 }
 

@@ -97,11 +97,8 @@ Homepage.prototype = {
 
     if (this.settings.background) {
       if (this.settings.background.image) {
-        this.element.attr('style', `background-image: url(${this.settings.background.image})`);
-      }
-
-      if (this.settings.background.color) {
-        this.element.attr('style', `background-color: ${this.settings.background.color}`);
+        const banner = $(`<div class="background-image" style="background-image: url(${this.settings.background.image})"></div>`);
+        this.element.append(banner);
       }
     }
 
