@@ -156,12 +156,16 @@
   }
 
   .banner-icon {
-    margin: 16px 10%;
+    margin: 16px 19%;
     float: left;
     height: 60px;
     width: 100%;
     background-repeat: no-repeat;
     background-size: contain;
+
+    @media (max-width: $breakpoint-desktop-to-extralarge) {
+      margin-left: 14%;
+    }
 
     @media (max-width: $breakpoint-tablet-to-desktop) {
       margin-left: 6%;
