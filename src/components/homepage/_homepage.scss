@@ -153,9 +153,23 @@
     background-size: cover;
     width: 100%;
     height: 272px;
+  }
+
+  .banner-icon {
+    margin: 16px 10%;
     float: left;
-    position: sticky;
-    top: 0;
+    height: 60px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    @media (max-width: $breakpoint-tablet-to-desktop) {
+      margin-left: 6%;
+    }
+
+    @media (max-width: $breakpoint-wide-tablet) {
+      margin-left: 11%;
+    }
   }
 }
 

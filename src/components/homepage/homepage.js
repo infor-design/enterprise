@@ -96,10 +96,25 @@ Homepage.prototype = {
     this.initEdit();
 
     if (this.settings.background) {
+      const banner = $('<div></div>');
+      this.background = {};
+
       if (this.settings.background.image) {
-        const banner = $(`<div class="background-image" style="background-image: url(${this.settings.background.image})"></div>`);
-        this.element.append(banner);
+        banner.attr('style', `background-image: url(${this.settings.background.image})`);
+        banner.addClass('background-image');
+        this.background.imageElement = banner;
       }
+
+      if (this.settings.background.icon) {
+        const content = this.element.find('> .content');
+        const icon = $(`<div style="background-image: url(${this.settings.background.icon})"></div>`);
+        icon.addClass('banner-icon');
+        this.background.iconElement = icon;
+        this.element.prepend(icon);
+        content.addClass('has-banner-icon');
+      }
+
+      this.element.append(banner);
     }
 
     // Initial Sizing
