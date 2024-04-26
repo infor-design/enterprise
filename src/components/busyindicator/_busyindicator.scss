@@ -224,14 +224,18 @@ input + .busy-indicator-container,
   .busy-indicator {
     .bar {
       -ms-transform: scaleY(0.6);
+      transform: scaleY(0.6);
       -ms-transform-origin: 50% 50%;
+      transform-origin: 50% 50%;
 
       &.half {
         -ms-transform: scaleY(0.8);
+        transform: scaleY(0.8);
       }
 
       &.full {
         -ms-transform: scaleY(1);
+        transform: scaleY(1);
       }
     }
   }
