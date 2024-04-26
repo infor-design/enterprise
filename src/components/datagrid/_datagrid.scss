@@ -1,20 +1,20 @@
 // Datagrid
 //================================================== //
 
-// NOTE: see `src/core/_required.scss` for other datagrid dependencies
-@import '../badges/badges';
-@import '../button/button';
-@import '../drag/drag';
-@import '../dropdown/dropdown';
-@import '../hyperlinks/hyperlinks';
-@import '../input/input';
-@import '../listview/listview';
-@import '../modal/modal';
-@import '../popupmenu/popupmenu';
-@import '../searchfield/searchfield';
-@import '../tag/tag';
-@import '../toolbar/toolbar';
-@import '../tooltip/tooltip';
+// NOTE: see `src/core/_controls-new.scss` at the top for other datagrid dependencies
+// @import '../badges/badges';
+// @import '../button/button';
+// @import '../drag/drag';
+// @import '../dropdown/dropdown';
+// @import '../hyperlinks/hyperlinks';
+// @import '../input/input';
+// @import '../listview/listview';
+// @import '../modal/modal';
+// @import '../popupmenu/popupmenu';
+// @import '../searchfield/searchfield';
+// @import '../tag/tag';
+// @import '../toolbar/toolbar';
+// @import '../tooltip/tooltip';
 
 @mixin rowstatus($color) {
   td {
