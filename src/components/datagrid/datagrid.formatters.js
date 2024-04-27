@@ -231,7 +231,7 @@ const formatters = {
     }
 
     if (col.editorOptions && typeof col.editorOptions.field === 'function') {
-      formatted = col.editorOptions.field(item, null, null);
+      formatted = xssUtils.escapeHTML(col.editorOptions.field(item, null, null));
       isPlaceholder = false;
     }
 
