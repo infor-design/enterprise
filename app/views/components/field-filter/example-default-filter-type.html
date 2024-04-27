@@ -1,0 +1,150 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <h2>FieldFilter &mdash; Filter Type</h2>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="btn-get">Get</button>
+    <span>Current filter: <strong class="output"></strong></span>
+    <br><br>
+<!--    <button class="btn-secondary" type="button" id="btn-reset-default">Reset Default</button>-->
+<!--    <br><br>-->
+    <button id="btn-set-by-index" class="btn-secondary btn-menu">
+      <span>Set (by Index)</span>
+    </button>
+    <ul id="popupmenu-by-index" class="popupmenu has-icons"></ul>
+    <button id="btn-set-by-value" class="btn-secondary btn-menu">
+      <span>Set (by Value)</span>
+    </button>
+    <ul id="popupmenu-by-value" class="popupmenu has-icons"></ul>
+    <br><br>
+    <button class="btn-secondary" type="button" id="btn-reset-default">Reset Default</button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="filterable" class="label">Filterable</label>
+      <input id="filterable" name="filterable" type="text">
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+  $('body').one('initialized', function () {
+
+    // Some Sample Data for Field Filter
+    var fieldfilterData = [
+      { value: 'equals', text: 'Equals', icon: 'filter-equals' },
+      { value: 'in-range', text: 'In Range', icon: 'filter-in-range' },
+      { value: 'does-not-equal', text: 'Does Not Equal', icon: 'filter-does-not-equal' },
+      { value: 'before', text: 'Before', icon: 'filter-less-than' },
+      { value: 'on-or-before', text: 'On Or Before', icon: 'filter-less-equals' },
+      { value: 'after', text: 'After', icon: 'filter-greater-than' },
+      { value: 'on-or-after', text: 'On Or After', icon: 'filter-greater-equals' },
+    ];
+
+    var defaultFilterType = 'in-range';
+
+    // Cache variable
+    var output = $('.output');
+    var elem = $('#filterable');
+    var btnGetFilter = $('#btn-get');
+    var btnSetFilterByIndex = $('#btn-set-by-index');
+    var btnSetFilterByValue = $('#btn-set-by-value');
+    var btnResetDefault = $('#btn-reset-default');
+
+    // Build html for popupmenu
+    var popupmenuHtml = { byIndex: '', byValue: '' };
+    var buildPopupmenuHtml = function () {
+      var getIcon = function (icon) {
+        iconHtml = '<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-'+ icon +'"></use></svg>';
+        return iconHtml;
+      }
+      for (var i = 0, l = fieldfilterData.length; i < l; i++) {
+        var opt = fieldfilterData[i];
+        popupmenuHtml.byIndex += '<li><a href="#" data-idx="'+ i +'">'+ getIcon(opt.icon) +'<span>'+ i +'</span></a></li>';
+        popupmenuHtml.byValue += '<li><a href="#" data-value="'+ opt.value +'">'+ getIcon(opt.icon) +'<span>'+ opt.text +'</span></a></li>';
+      }
+    };
+    buildPopupmenuHtml();
+
+    // Invoke popupmenu for buttons
+    btnSetFilterByIndex.popupmenu({
+      menu: 'popupmenu-by-index',
+      beforeOpen: function (response, options) {
+        response(popupmenuHtml.byIndex);
+      }
+    });
+    btnSetFilterByValue.popupmenu({
+      menu: 'popupmenu-by-value',
+      beforeOpen: function (response, options) {
+        response(popupmenuHtml.byValue);
+      }
+    });
+
+
+    // Invoke fieldfilter
+    elem.fieldfilter({ dataset: fieldfilterData });
+    var fieldfilterApi = elem.data('fieldfilter');
+
+    // Set the filter type to the default
+    fieldfilterApi.setFilterType(defaultFilterType);
+
+    // Restore to default
+    btnResetDefault.on('click', function () {
+      if (fieldfilterApi) {
+        fieldfilterApi.element.val('');
+        fieldfilterApi.setFilterType(defaultFilterType);
+      }
+    });
+
+    // Get filter type
+    btnGetFilter.on('click', function () {
+      if (fieldfilterApi) {
+        var filterType = fieldfilterApi.getFilterType();
+
+        var data = filterType.data;
+        if (data) {
+          output.html(data.text);
+          console.log('Current filter:', data.text);
+        }
+      }
+    });
+
+    // Set initialized filtertype output value
+    btnGetFilter.trigger('click');
+
+    // Set filter type (by Index)
+    btnSetFilterByIndex.on('selected', function(e, anchor) {
+      if (fieldfilterApi) {
+        var idx = parseInt(anchor.attr('data-idx'), 10);
+        fieldfilterApi.setFilterType(idx);
+      }
+    });
+
+    // Set filter type (by Value)
+    btnSetFilterByValue.on('selected', function(e, anchor) {
+      if (fieldfilterApi) {
+        var value = anchor.attr('data-value');
+        fieldfilterApi.setFilterType(value);
+      }
+    });
+
+    // Bind filtered
+    elem.on('filtered', function (e, args) {
+      var data = args.data;
+      if (data) {
+        output.html(data.text);
+        console.log('Filtered:', data.text);
+      }
+    });
+
+  });
+</script>
