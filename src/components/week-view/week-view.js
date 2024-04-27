@@ -289,7 +289,6 @@ WeekView.prototype = {
             event.endsHour = this.settings.endHour + 1;
           } else if (days[0].key !== event.startKey) {
             event.startsHour = this.settings.startHour;
-            event.endsHour++;
           }
         }
         this.appendEventToHours(days[0].elem, event);
@@ -456,7 +455,7 @@ WeekView.prototype = {
         }
 
         // Add one per half hour + 1 px for each border crossed
-        node.style.height = `${25 * (duration * 2) + (1.5 * duration)}px`;
+        node.style.height = `${25 * (Math.round(duration) * 2) + (1.5 * Math.round(duration))}px`;
 
         node.innerHTML = `<div class="calendar-event-content">
           ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
