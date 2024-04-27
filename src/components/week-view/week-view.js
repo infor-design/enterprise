@@ -280,8 +280,18 @@ WeekView.prototype = {
       if (this.isStackedView()) {
         this.appendToDayContainer(event);
       } else {
-        event.startsHour = event.startsHour < this.settings.startHour ? this.settings.startHour : event.startsHour;
-        event.startsHour = days[0].key === event.startKey ? 0 : event.startsHour;
+        if (this.element.hasClass('is-day-view')) {
+          if (event.startsHour < this.settings.startHour) {
+            event.startsHour = this.settings.startHour;
+          }
+
+          if (days[0].key === event.startKey && event.endsHour < this.settings.endHour) {
+            event.endsHour = this.settings.endHour + 1;
+          } else if (days[0].key !== event.startKey) {
+            event.startsHour = this.settings.startHour;
+            event.endsHour++;
+          }
+        }
         this.appendEventToHours(days[0].elem, event);
       }
     }
