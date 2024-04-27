@@ -31,6 +31,7 @@
 - `[Tabs]` Fixed error in tab popup. ([#8596](https://github.com/infor-design/enterprise/issues/8596))
 - `[Translations]` Added new translations fixing links in upload files. ([#8489](https://github.com/infor-design/enterprise/issues/8489))
 - `[WeekView]` Fixed render of events on day view for non all-day events. ([#8530](https://github.com/infor-design/enterprise/issues/8530))
+- `[WeekView]` Added start end hour example page. ([#8490](https://github.com/infor-design/enterprise/issues/8490))
 
 ## v4.94.0
 
