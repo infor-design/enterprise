@@ -3654,6 +3654,7 @@ Tabs.prototype = {
       }
 
       self.activate(href);
+      self.changeHash(href);
 
       // Fire an onclick event associated with the original tab from the spillover menu
       if (tab.length && a.length && typeof a[0].onclick === 'function') {
