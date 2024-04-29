@@ -901,6 +901,11 @@ html[dir='rtl'] {
   .tab-focus-indicator {
     right: auto;
   }
+
+  .popupmenu.tab-list-spillover li.dismissible > a > .icon.close {
+    left: 15px;
+    margin-right: auto;
+  }
 }
 
 //Firefox and with RTL fixes
