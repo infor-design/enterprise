@@ -30,6 +30,7 @@
 - `[Personalization]` Fixed bug with wrong colors in landmark form examples. ([#8625](https://github.com/infor-design/enterprise/issues/8625))
 - `[Searchfield]` Fixed misalignment in clear icon on mobile. ([#8332](https://github.com/infor-design/enterprise/issues/8332))
 - `[Tabs]` Fixed error in tab popup. ([#8596](https://github.com/infor-design/enterprise/issues/8596))
+- `[Tabs]` Fixed change hash not working in more button. ([#8536](https://github.com/infor-design/enterprise/issues/8536))
 - `[Translations]` Added new translations fixing links in upload files. ([#8489](https://github.com/infor-design/enterprise/issues/8489))
 
 ## v4.94.0
