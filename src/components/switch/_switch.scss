@@ -173,8 +173,13 @@
       left: 155px;
     }
 
-    input ~ .label-text::after,
-    input ~ label::after {
+    input:empty ~ .label-text::after,
+    input:empty ~ label::after {
+      left: 150px;
+    }
+
+    input:checked ~ .label-text::after,
+    input:checked ~ label::after {
       left: 170px;
     }
   }
