@@ -6553,7 +6553,8 @@ Datagrid.prototype = {
               <li draggable class="{{^hideable}}is-disabled{{/hideable}}" {{^hideable}}data-arrange-exclude="true"{{/hideable}} data-column-id="{{id}}">
                 <div class="switch field">
                   <span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
-                  <span class="label-text">{{name}}</span>
+                  <input id="{{id}}-switch" type="checkbox" checked="true" {{^hideable}}disabled{{/hideable}} class="switch" />
+                  <span for="{{id}}-switch" class="label-text">{{name}}</span>
                 </div>
               </li>
               {{/name}}

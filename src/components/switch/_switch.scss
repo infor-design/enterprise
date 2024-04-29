@@ -166,6 +166,20 @@
   }
 }
 
+.listview {
+  .switch {
+    input ~ .label-text::before,
+    input ~ label::before {
+      left: 155px;
+    }
+
+    input ~ .label-text::after,
+    input ~ label::after {
+      left: 170px;
+    }
+  }
+}
+
 // Rule to remove bottom padding on modal if its the last element.
 .modal-body-wrapper .switch:last-child {
   margin-bottom: 0;
