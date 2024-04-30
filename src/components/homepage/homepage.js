@@ -565,7 +565,7 @@ Homepage.prototype = {
    * @returns {void}
    */
   setBlocks() {
-    const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card');
+    const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card, .banner .widget');
     this.blocks = [];
 
     for (let i = 0, l = cards.length; i < l; i++) {
@@ -704,6 +704,12 @@ Homepage.prototype = {
 
       if (self.background.iconElement) {
         self.background.iconElement[0].style.marginLeft = `-${(bp / 2)}px`;
+      }
+
+      const bannerWidgetPager = content.find('.banner .circlepager');
+
+      if (bannerWidgetPager) {
+        bannerWidgetPager.data('circlepager').responsiveSlidesToShow(self.columns);
       }
     }
 

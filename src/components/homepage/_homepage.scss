@@ -38,6 +38,33 @@
       top: 368px;
       width: 10px;
     }
+
+    &.banner {
+      height: 380px;
+      background: none;
+      border: none;
+      box-shadow: none;
+
+      .widget-content {
+        height: 380px;
+        overflow-y: hidden;
+      }
+
+      .circlepager {
+        height: 374px;
+
+        .slide {
+          height: 360px;
+
+          .card,
+          .small-widget,
+          .widget {
+            height: 318px;
+            min-height: 318px;
+          }
+        }
+      }
+    }
   }
 
   .small-widget {

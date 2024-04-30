@@ -337,7 +337,7 @@ CirclePager.prototype = {
    * @returns {void}
    */
   responsiveSlidesToShow(numOfSlides) {
-    if (!this.isActive) {
+    if (!this.isActive || !numOfSlides) {
       return;
     }
 
@@ -350,7 +350,7 @@ CirclePager.prototype = {
 
     // Need to unset the card-content overflow to eliminate the scrollbar
     // It only need this upon building the correct size of slides
-    this.element.parents('.card-content').addClass('unset-overflow');
+    this.element.parents('.card-content, .widget-content').addClass('unset-overflow');
 
     this.unbind().slidesJQ.css('width', '');
     if (this.slides.length) {
@@ -476,6 +476,7 @@ CirclePager.prototype = {
     this.container[0].style.width = `${(100 * this.slides.length)}%`;
     if (this.settings.slidesToShow > 1 &&
        (this.slidesJQ.eq(0).width() * this.slidesToShow > this.element.width())) {
+        console.log(0)
       this.responsiveSlidesToShow(this.slidesToShow - 1);
       return;
     }
