@@ -73,19 +73,10 @@ svg.icon-dirty,
   .icon-alert,
   .icon-info,
   .icon-pending {
-    margin-left: -28px;
-    margin-top: 9px;
+    margin-top: -1px;
     position: absolute;
     top: inherit;
-  }
-
-  .icon-error,
-  .icon-success {
-    height: 14px;
-    position: relative;
-    right: 0;
-    top: -8px;
-    width: 18px;
+    margin-left: -1px;
   }
 
   .icon-error.lower-opacity {

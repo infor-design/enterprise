@@ -1,10 +1,11 @@
 // Expandable Area
 //================================================== //
 
-@import '../button/button-chevron';
+// Depends on
+// button-chevron
 
 .expandable-area {
-  //Header Area
+  // Header Area
   .expandable-header {
     border-top: 1px solid $expandable-area-border-color;
     position: relative;

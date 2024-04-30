@@ -2,7 +2,9 @@
 //========================================================
 
 @import 'accordion-mixins';
-@import '../button/button-chevron';
+
+// Dependencies
+// '../button/button-chevron';
 
 /* stylelint-disable max-nesting-depth,selector-max-compound-selectors */
 
@@ -338,7 +340,7 @@
         color: $accordion-inverse-text-color;
 
         .icon {
-          color: $accordion-inverse-text-color;
+          color: $accordion-inverse-text-color !important;
 
           &.plus-minus {
             &::before,
@@ -492,6 +494,7 @@
   position: relative;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
+  user-select: none;
 
   > * {
     vertical-align: middle;
@@ -926,6 +929,7 @@ html[dir='rtl'] {
     // Level 1
     .accordion-header {
       -webkit-font-feature-settings: 'ccmp' 0;
+      font-feature-settings: 'ccmp' 0;
 
       > a {
         padding-left: 0;

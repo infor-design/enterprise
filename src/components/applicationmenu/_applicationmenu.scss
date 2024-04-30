@@ -1,7 +1,8 @@
 // Application Menu
 //================================================== //
 
-@import '../accordion/accordion';
+// Dependencies
+// accordion
 
 body.is-open-touch {
   overflow: hidden;
@@ -347,6 +348,10 @@ body.is-open-touch {
 
   .icon.avatar {
     border-radius: 20px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
     height: 40px;
     top: 3px;
     vertical-align: top;
@@ -425,7 +430,7 @@ body.is-open-touch {
 
       &:not(:disabled):hover .icon,
       &:not(:disabled):hover span {
-        color: $accordion-inverse-text-hover-color;
+        color: $accordion-inverse-text-hover-color !important;
       }
     }
   }
@@ -477,6 +482,7 @@ body.is-open-touch {
   .application-menu-toolbar {
     margin-left: -10px;
     margin-top: -5px;
+    margin-bottom: -3px;
   }
 
   .application-menu-switcher-panel {
@@ -699,4 +705,22 @@ html[dir='rtl'] {
       right: auto;
     }
   }
+}
+
+html[dir='rtl'] .application-menu .searchfield-wrapper.has-close-icon-button.has-text .btn-icon.close {
+  right: calc(300px - 34px);
+  top: 6px !important;
+}
+
+.application-menu .btn-icon:hover:not([disabled]):not(.btn-primary):not(.trigger) svg.icon {
+  color: #fff;
+}
+
+html[dir='rtl'] .application-menu .hyperlink {
+  margin-right: 10px;
+}
+
+.application-menu .application-menu-toolbar .toolbar-section {
+  display: flex;
+  justify-content: center;
 }
