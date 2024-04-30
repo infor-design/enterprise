@@ -1,9 +1,8 @@
 // Dependencies
-@import '../button/button';
-@import '../emptymessage/emptymessage';
-@import '../pager/pager';
-@import '../popupmenu/popupmenu';
-@import '../searchfield/searchfield';
+// emptymessage/emptymessage';
+// pager/pager';
+// popupmenu/popupmenu';
+// searchfield/searchfield';
 
 //================================================== //
 // Listview Component
@@ -54,7 +53,6 @@
     display: block;
     font-size: $ids-size-font-lg;
     margin: 8px 0 5px;
-    vertical-align: top;
 
     .icon-favorite {
       display: inline;
@@ -326,7 +324,6 @@
   .listview-thumbnail {
     border-radius: 50%;
     display: inline-block;
-    float: left;
     height: 50px;
     margin-right: 20px;
     margin-top: -7px;
@@ -727,7 +724,6 @@
 
   .btn-expand {
     display: inline-block;
-    float: left;
     left: -7px;
 
     .icon.plus-minus::before,

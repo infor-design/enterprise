@@ -1,4 +1,4 @@
-// Depends on:
+// Depenencies:
 // - 12 Column Grid
 // - Summary Form
 // Overrides some things in:
@@ -471,7 +471,7 @@ html[dir='rtl'] {
   }
 }
 
-@media (max-width: $breakpoint-phone-to-tablet + 1) {
+@media (max-width: ($breakpoint-phone-to-tablet + 1)) {
   // Responsive View of Summary Area
   .form-compact-container {
     .banner {

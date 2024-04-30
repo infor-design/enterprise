@@ -380,7 +380,7 @@ body.no-scroll {
 }
 
 // on iOS landscape mode, fix the height of the listview to actually show the pager.
-@media (max-width: $breakpoint-phone-to-tablet - 1px) and (orientation: landscape) {
+@media (max-width: ($breakpoint-phone-to-tablet - 1px)) and (orientation: landscape) {
   .ios {
     .two-column {
       > .sidebar {
@@ -396,13 +396,12 @@ body.no-scroll {
   }
 }
 
-@media (max-width: $breakpoint-phone-to-tablet - 1) {
+@media (max-width: ($breakpoint-phone-to-tablet - 1)) {
   .three-column,
-  .three-column.fixed {
+    .three-column.fixed {
     .main,
     .sidebar {
       display: block;
-      vertical-align: baseline;
       width: 100%;
 
       &.scrollable,
@@ -833,7 +832,6 @@ body.no-scroll {
   display: block;
   height: auto;
   max-width: 100%;
-  vertical-align: middle;
   width: 100%;
 }
 
