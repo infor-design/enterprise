@@ -3712,21 +3712,43 @@ Datagrid.prototype = {
               }
 
               isReady = false;
-              let allowed = false;
+              let allowed = true;
               const overRow = getTarget(pos);
+              const hasOpacity = startRow.row.style.opacity !== '';
+              let targetRow = overRow?.row?.nextElementSibling;
 
-              if (overRow !== null) {
-                if (startRow.role === 'rowgroup') {
-                  allowed = startRow.group !== overRow.group;
-                }
-                if (startRow.role === 'row') {
-                  allowed = startRow.role === overRow.role && startRow.group === overRow.group;
-                }
+              while (targetRow && targetRow.classList.contains('is-hidden')) {
+                targetRow = targetRow.nextElementSibling;
               }
 
-              $(overRow?.row).addClass('is-over').siblings().removeClass('is-over');
+              if (overRow !== null) {
+                if (startRow.role === 'row') {
+                  if (startRow.role !== targetRow.getAttribute('role') || startRow.group !== overRow.group) {
+                    allowed = false;
+                  }
+                }
 
-              const cursorVal = allowed ? '' : 'not-allowed';
+                if (hasOpacity && startRow.row === targetRow) {
+                  allowed = false;
+                }
+
+                if (hasOpacity && startRow.role === 'rowgroup') {
+                  allowed = false;
+                }
+
+                if (startRow.role === 'rowgroup' && targetRow.getAttribute('role') === 'rowgroup') {
+                  allowed = true;
+
+                  if (hasOpacity && startRow.row === targetRow) {
+                    allowed = false;
+                  }
+                }
+
+                allowed = allowed && hasOpacity;
+                $(targetRow).toggleClass('is-over', allowed).siblings().removeClass('is-over');
+              }
+
+              const cursorVal = allowed && overRow ? '' : 'not-allowed';
 
               if (cursorVal === 'not-allowed') {
                 $(overRow?.row).removeClass('is-over');
