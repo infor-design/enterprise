@@ -724,7 +724,7 @@ Calendar.prototype = {
    */
   renderMonthEvents(event) {
     const monthKey = event.startKey.substring(0, 6);
-    const monthEvents = this.settings.events.filter(event => event.startKey.indexOf(monthKey) > -1 )
+    const monthEvents = this.settings.events.filter(checkEvent => checkEvent.startKey.indexOf(monthKey) > -1);
 
     // Cleanup from previous renders
     this.removeAllEvents();
@@ -739,12 +739,12 @@ Calendar.prototype = {
     eventsSorted.sort((a, b) => (a.starts < b.starts ? -1 : (a.starts > b.starts ? 1 : 0)));
 
     for (let i = 0; i < eventsSorted.length; i++) {
-      const event = eventsSorted[i];
-      if (filters.indexOf(event.type) > -1) {
+      const eventObj = eventsSorted[i];
+      if (filters.indexOf(eventObj.type) > -1) {
         continue;
       }
 
-      self.renderEvent(event);
+      self.renderEvent(eventObj);
     }
 
     this.renderSelectedEventDetails();
