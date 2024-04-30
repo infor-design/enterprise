@@ -96,18 +96,20 @@ Homepage.prototype = {
     this.initEdit();
 
     if (this.settings.background) {
+      const s = this.settings.background.banner;
       const banner = $('<div></div>');
       this.background = {};
 
-      if (this.settings.background.image) {
-        banner.attr('style', `background-image: url(${this.settings.background.image})`);
+      if (s.image) {
+        banner.attr('style', `background-image: url(${s.image})`);
         banner.addClass('background-image');
         this.background.imageElement = banner;
       }
 
-      if (this.settings.background.icon) {
+      if (s.icon) {
         const content = this.element.find('> .content');
-        const icon = $(`<div style="background-image: url(${this.settings.background.icon})"></div>`);
+        const style = `background-image: url(${s.icon.image});${s.icon.height ? `height: ${s.icon.height}px;` : ''}${s.icon.width ? `width: ${s.icon.width}px;` : ''}`;
+        const icon = $(`<div style="${style}"></div>`);
         icon.addClass('banner-icon');
         this.background.iconElement = icon;
         this.element.prepend(icon);
@@ -699,6 +701,10 @@ Homepage.prototype = {
 
     if (content.length) {
       content[0].style.marginLeft = `-${(bp / 2)}px`;
+
+      if (self.background.iconElement) {
+        self.background.iconElement[0].style.marginLeft = `-${(bp / 2)}px`;
+      }
     }
 
     this.setBlocks(); // setup blocks

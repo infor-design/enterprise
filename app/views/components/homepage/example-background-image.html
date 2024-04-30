@@ -1,7 +1,7 @@
-<div class="homepage page-container scrollable" data-init="false" id="maincontent" data-columns="3" role="main">
+<div class="homepage page-container scrollable" data-init="false" id="maincontent" data-columns="4" role="main">
   <div class="content">
 
-    <div class="widget triple-width show-buttons">
+    <div class="widget quad-width show-buttons">
       <div class="widget-header">
         <div class="widget-header-section title">
           <h2>Widget/Card Header</h2>
@@ -102,7 +102,26 @@
       </div>
     </div>
 
-    <div class="widget triple-width show-buttons">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Business Insight</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-vertical-ellipsis"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="widget-content">
+      </div>
+    </div>
+
+    <div class="widget quad-width show-buttons">
       <div class="widget-header">
         <div class="widget-header-section title">
           <h2>Widget/Card Header</h2>
@@ -151,8 +170,13 @@
 <script>
   $('.homepage').homepage({
       background: {
-        image: '{{basepath}}/images/background-image.svg',
-        icon: '{{basepath}}/images/banner-icon.png'
+        banner: {
+          image: '{{basepath}}/images/background-image.svg',
+          icon: {
+            image: '{{basepath}}/images/banner-icon.png',
+            width: 200
+          }
+        }
       },
     });
 </script>
