@@ -6,6 +6,7 @@
   background-color: $button-color-primary-initial-background;
   border: 2px solid $button-color-primary-initial-background;
   color: $button-color-primary-initial-font;
+  padding: 0 12px;
 
   &:hover {
     background-color: $button-color-primary-hover-background;
@@ -40,8 +41,10 @@
     border: 2px solid $button-color-primary-destructive-initial-background-new;
     color: $ids-color-palette-white;
 
-    &:focus:not(:disabled) {
+    &:focus:not(.hide-focus) {
       border-color: $button-color-destructive-focus-border-new;
+      box-shadow: 0 0 0 2px $body-color-primary-background,
+        0 0 0 3px $button-color-destructive-focus-border-new;
     }
 
     &:hover:not(:disabled) {
@@ -52,21 +55,22 @@
 }
 
 .btn-primary[disabled]:not(.destructive):not(.btn-generative) {
-  background-color: $button-color-primary-disabled-background-new;
-  border: 2px solid $button-color-primary-disabled-background-new;
-  color: $button-color-primary-disabled-font-new;
+  background-color: $button-color-primary-initial-background;
+  border: 2px solid $button-color-primary-initial-background;
+  color: $button-color-primary-initial-font;
+  opacity: 0.4;
 
   svg.icon {
-    color: $button-color-primary-disabled-font-new;
+    color: $button-color-primary-initial-font;
   }
 
   &:hover {
-    background-color: $button-color-primary-disabled-background-new;
-    border-color: $button-color-primary-disabled-background-new;
-    color: $button-color-primary-disabled-font-new;
+    background-color: $button-color-primary-initial-background;
+    border-color: $button-color-primary-initial-background;
+    color: $button-color-primary-initial-font;
 
     svg.icon {
-      color: $button-color-primary-disabled-font-new;
+      color: $button-color-primary-initial-font;
     }
   }
 }
@@ -75,7 +79,8 @@
   background-color: transparent;
   border-radius: 8px;
   color: $button-color-secondary-initial-font-new;
-  border: 2px solid $button-color-secondary-initial-border-new;
+  border: 1px solid $button-color-secondary-initial-border-new;
+  padding: 0 12px;
 
   &.btn-menu {
     color: $button-color-secondary-initial-font-new;
@@ -105,44 +110,59 @@
 
   &:hover {
     background-color: $button-color-secondary-hover-background-new;
-    border: 2px solid $button-color-secondary-hover-border-new;
+    border: 1px solid $button-color-secondary-hover-border-new;
     color: $button-color-secondary-initial-font-new;
   }
 
   &:active {
     background-color: $button-color-secondary-hover-background-new;
-    border: 2px solid $button-color-secondary-hover-border-new;
+    border: 1px solid $button-color-secondary-hover-border-new;
     color: $button-color-secondary-initial-font-new;
   }
 
   &:focus {
-    border: 2px solid $button-color-secondary-hover-border-new;
+    border: 1px solid $button-color-secondary-hover-border-new;
 
     &:active {
       background-color: $button-color-secondary-hover-background-new;
-      border: 2px solid $button-color-secondary-hover-border-new;
+      border: 1px solid $button-color-secondary-hover-border-new;
       color: $button-color-secondary-initial-font-new;
+    }
+  }
+
+  &[disabled] {
+    background-color: $button-color-secondary-initial-background;
+    color: $button-color-secondary-initial-font-new !important;
+    border: 1px solid $button-color-secondary-initial-border-new;
+    opacity: 0.4;
+
+    svg.icon,
+    .icon {
+      color: $button-color-secondary-initial-font-new !important;
+
+      &:hover {
+        color: $button-color-secondary-initial-font-new;
+      }
+    }
+
+    &:hover {
+      background-color: $button-color-secondary-initial-background;
+      color: $button-color-secondary-initial-font-new;
+      border: 1px solid $button-color-secondary-initial-border-new;
     }
   }
 }
 
-.btn-secondary[disabled] {
-  background-color: $button-color-secondary-disabled-background-new;
-  color: $button-color-secondary-disabled-font-new !important;
-  border: 2px solid $button-color-secondary-disabled-border-new;
+// Menu Buttons have a special state that shows up when their menus are visible.
+.btn-menu,
+.btn-actions {
+  &.is-open {
+    background-color: $button-color-tertiary-hover-background-new !important;
+    color: $button-color-tertiary-hover-text-new !important;
 
-  svg.icon {
-    color: $button-color-secondary-disabled-font-new !important;
-
-    &:hover {
-      color: $button-color-secondary-disabled-font-new;
+    .icon {
+      color: $button-color-tertiary-hover-text-new !important;
     }
-  }
-
-  &:hover {
-    background-color: $button-color-secondary-disabled-background-new;
-    color: $button-color-secondary-disabled-font-new;
-    border: 2px solid $button-color-secondary-disabled-border-new;
   }
 }
 
@@ -152,10 +172,14 @@
 .btn {
   border-radius: 8px;
 
+  &.btn-icon {
+    padding: 0;
+  }
+
   &:hover:not([disabled]):not(.btn-primary):not(.trigger) {
     &:not(:disabled) {
       background-color: $button-color-tertiary-hover-background-new;
-      color: $button-color-tertiary-hover-font-new;
+      color: $button-color-tertiary-hover-text-new;
     }
 
     &.close,
@@ -166,7 +190,7 @@
     }
 
     svg.icon {
-      color: $button-color-tertiary-hover-font-new;
+      color: $button-color-tertiary-hover-text-new;
     }
   }
 
@@ -177,7 +201,7 @@
       color: $button-color-tertiary-destructive-initial-background-new;
     }
 
-    &:focus:not(:disabled) {
+    &:focus:not(.hide-focus) {
       border-color: $button-color-destructive-focus-border-new;
     }
 
@@ -187,6 +211,15 @@
 
       svg.icon {
         color: $button-color-tertiary-destructive-hover-font-new;
+      }
+    }
+
+    &:disabled {
+      color: $button-color-tertiary-destructive-initial-background-new;
+      opacity: 0.4;
+
+      svg.icon {
+        color: $button-color-tertiary-destructive-initial-background-new;
       }
     }
   }
@@ -214,14 +247,20 @@
 }
 
 .btn-link {
+  color: $button-color-tertiary-initial-font;
   border-radius: 8px;
+
+  svg.icon,
+  .icon {
+    color: $button-color-tertiary-initial-font;
+  }
 
   &:not([disabled]):not(:disabled):hover {
     background-color: $button-color-tertiary-hover-background-new;
-    color: $button-hyperlink-color;
+    color: $button-color-tertiary-initial-font;
 
     svg.icon {
-      color: $button-hyperlink-color;
+      color: $button-color-tertiary-initial-font;
     }
   }
 }

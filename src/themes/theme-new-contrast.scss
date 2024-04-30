@@ -35,14 +35,12 @@ $hyperlinks-personalize-text-color: $header-text-default-color;
 $header-button-color: $header-button-normal-color;
 $header-text-color: $header-text-default-color;
 $header-toolbar-searchfield-icon-color: $header-button-icon-color;
-$header-toolbar-button-hover-color: $ids-color-palette-azure-10;
 
 // Form Background Color
 $header-bg-color: $ids-color-palette-white;
 $header-bottom-border-color: $ids-color-palette-slate-40;
 $header-default-bg-color: $ids-color-palette-white;
 $header-default-bg-border-color: $ids-color-palette-slate-30;
-$header-default-bg-hover-color: $ids-color-palette-azure-10;
 $subhead-bg-color: $ids-color-palette-white;
 $header-button-disabled-color: rgba(0, 0, 0, 0.3);
 $header-primary-btn-background-color: $ids-color-brand-primary-base;
@@ -50,8 +48,6 @@ $header-primary-btn-background-hover-color: $ids-color-palette-azure-50;
 $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
 
-$header-button-hover-color-new: $ids-color-palette-azure-80;
-$header-button-hover-color: $ids-color-palette-azure-80;
 $header-tab-selected-color-new: $ids-color-palette-azure-80;
 $body-color-primary-background: $ids-color-palette-white;
 
@@ -211,23 +207,22 @@ $popupmenu-checked-color-inverse: $ids-color-brand-primary-base;
 $button-color-secondary-initial-font-new: $ids-color-palette-azure-80;
 $button-color-secondary-initial-border-new: $ids-color-palette-azure-80;
 $button-color-secondary-hover-border-new: $ids-color-palette-azure-90;
-$button-color-secondary-hover-background-new: $ids-color-palette-azure-20;
-$button-color-secondary-disabled-background-new: $ids-color-palette-slate-10;
-$button-color-secondary-disabled-border-new: $ids-color-palette-slate-50;
-$button-color-secondary-disabled-font-new: $ids-color-palette-slate-50;
+$button-color-secondary-hover-background-new: $ids-color-palette-azure-10;
 $button-color-secondary-initial-background: transparent;
 $button-disabled-background-color: transparent;
-
-$button-color-tertiary-hover-background-new: $ids-color-palette-azure-10;
-$button-color-tertiary-hover-font-new: $ids-color-palette-azure-80;
-
+$button-color-tertiary-hover-background-new: $ids-color-palette-slate-20;
+$button-color-tertiary-hover-text-new: $ids-color-palette-black;
 $hero-button-color-tertiary-hover-background-new: $ids-color-palette-azure-70;
 
 // Tertiary Buttons
-$button-color-tertiary-initial-font: $ids-color-palette-slate-80;
-$button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-font-new;
+$button-color-tertiary-initial-font: rgba(0, 0, 0, 0.9);
+$button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-text-new;
 $tertiary-btn-ripple-color: $ids-color-brand-primary-alt;
 $button-editor-color-hover-background-new: rgba(0, 0, 0, .7);
+$button-color-secondary-focus-shadow: 0 0 0 1px $ids-color-palette-azure-70, 0 0 0 1px $ids-color-palette-azure-70;
+$button-color-tertiary-focus-shadow: 0 0 0 .1px $ids-color-palette-azure-70, 0 0 0 .5px $ids-color-palette-azure-70;
+$button-color-destructive-tertiary-focus-shadow: 0 0 0 1px $ids-color-palette-ruby-80, 0 0 0 .5px $ids-color-palette-ruby-80;
+$button-tertiary-gen-ai-focus: 0 0 0 0.5px #0B9789, 0 0 0 0.5px #0B9789;
 
 // Secondary with Border
 $secondary-border-btn-color: $ids-color-palette-slate-90;
@@ -607,7 +602,7 @@ $contextual-panel-border-color: $ids-color-palette-slate-50;
 $contextual-panel-color: $ids-color-palette-white;
 $contextual-panel-button-color: $ids-color-palette-slate-90;
 $contextual-panel-icon-color: $ids-color-palette-slate-90;
-$contextual-panel-hover-icon-color: $button-color-tertiary-hover-font;
+$contextual-panel-hover-icon-color: $button-color-tertiary-hover-text;
 
 // BreadCrumb
 $breadcrumb-color: $ids-color-palette-slate-80;

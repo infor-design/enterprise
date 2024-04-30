@@ -275,7 +275,7 @@ Personalize.prototype = {
     colors.darker = colors.inactive;
     colors.darkest = colors.horizontalBorder;
     colors.btnHoverColor = colors.contrast;
-    colors.btnBgHoverColor = 'rgba(0, 0, 0, 0.3) !important';
+    colors.btnBgHoverColor = 'rgba(0, 0, 0, 0.15) !important';
     colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.subtext}, 0 0 2px 1px ${colors.subtext}`;
     colors.btnFocusBorderColor = colors.contrast;
     colors.btnDisabledColor = 'rgba(255, 255, 255, 0.5) !important';
@@ -329,8 +329,8 @@ Personalize.prototype = {
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
     const isClassicDark = this.currentTheme.indexOf('classic-dark') >= 0;
     const isNewContrast = this.currentTheme.indexOf('new-contrast') >= 0;
-    colors.btnTertiaryBgHoverColor = isAlabaster ? '#E6F1FD' : colors.lightest;
-    colors.btnTertiaryBgHoverColorHeader = 'rgba(0, 0, 0, 0.3)';
+    colors.btnTertiaryBgHoverColor = isAlabaster ? '#F5F5F5' : colors.lightest;
+    colors.btnTertiaryBgHoverColorHeader = 'rgba(0, 0, 0, 0.15)';
     colors.btnTertiaryHoverColorHeader = themeColors.palette.white.value;
     colors.borderActiveSearchHeader = colors.darkest;
     colors.shadowActiveSearchHeader = 'none';
@@ -355,22 +355,22 @@ Personalize.prototype = {
       colors.darkest = themeColors.palette.slate[100].value;
       colors.contrast = themeColors.palette.slate[100].value;
       colors.btnHoverColor = themeColors.palette.azure[60].value;
-      colors.btnBgHoverColor = themeColors.palette.azure[10].value;
+      colors.btnBgHoverColor = themeColors.palette.slate[10].value;
       colors.btnOpacity = 1;
       colors.borderActiveSearchHeader = themeColors.palette.azure[60].value;
       colors.shadowActiveSearchHeader = '0 0 4px 3px rgba(54, 138, 192, 0.1)';
       colors.focusBoxShadow = '0 0 4px 3px rgba(54, 138, 192, 0.1)';
       colors.btnFocusBorderColor = themeColors.palette.azure[60].value;
       colors.borderActiveSearchMobile = themeColors.palette.azure[60].value;
-      colors.btnDisabledColor = 'rgba(0, 0, 0, 0.3) !important';
+      colors.btnDisabledColor = 'rgba(0, 0, 0, 0.15) !important';
       colors.btnPrimaryColor = themeColors.palette.azure[60].value;
       colors.btnPrimaryColorHover = '#0066D4';
       colors.btnSecondaryColor = themeColors.palette.azure[60].value;
       colors.btnSecondaryBorderColor = themeColors.palette.azure[60].value;
       colors.btnTertiaryBgHoverColor = themeColors.palette.azure[20].value;
       colors.btnTertiaryHoverColor = themeColors.palette.azure[60].value;
-      colors.btnTertiaryBgHoverColorHeader = '#E6F1FD';
-      colors.btnTertiaryHoverColorHeader = themeColors.palette.azure[60].value;
+      colors.btnTertiaryBgHoverColorHeader = themeColors.palette.slate[10].value;
+      colors.btnTertiaryHoverColorHeader = '#000000';
       colors.btnLinkColor = themeColors.palette.azure[60].value;
       colors.tabBottomBorderColor = themeColors.palette.slate[30].value;
       colors.btnActionsHoverColor = themeColors.palette.slate[100].value;
@@ -521,9 +521,9 @@ Personalize.prototype = {
     colors.lightestPalette = lightestColorMap[colors.base] || colors.subheader;
 
     if (isAlabaster) {
-      colors.lightestPalette = themeColors.palette.azure[10].value;
+      colors.lightestPalette = themeColors.palette.slate[10].value;
       if (contrast) {
-        colors.lightestPalette = themeColors.palette.azure[20].value;
+        colors.lightestPalette = themeColors.palette.slate[20].value;
       }
     }
 

@@ -419,7 +419,7 @@ $toolbar-buttonset-height: 40px;
   .toolbar {
     .btn,
     .btn-tertiary {
-      padding: 0 5px;
+      padding: 0 6px;
     }
   }
 }
@@ -430,11 +430,12 @@ $toolbar-buttonset-height: 40px;
     // Text will still become invisible on small breakpoint (but still visible to screen readers).
     // See respond-to(tabletdown) below.
     [class^='btn'] {
+      min-width: 34px;
       width: auto;
 
       > .icon + span {
-        display: inline-block;
-        visibility: hidden;
+        display: none;
+        padding: 0 !important;
         width: 0;
 
         &:not(.audible) {

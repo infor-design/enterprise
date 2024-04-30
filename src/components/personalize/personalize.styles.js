@@ -1037,7 +1037,7 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
 
 .is-personalizable .personalize-subheader {
   background-color: ${colors.lighter} !important;
-  border-color: ${colors.light} !important;
+  border-bottom: 1px solid ${colors.headerTabBorder};
 }
 
 .header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb {

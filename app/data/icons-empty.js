@@ -16,7 +16,9 @@ const __dirname = path.dirname(__filename);
  */
 export default function iconData(req, res) {
   const emptyMessagePath = path.resolve(__dirname, '..', '..', 'src', 'components', 'emptymessage');
-  const svgHtmlPartial = fs.readFileSync(`${emptyMessagePath}/theme-${res.opts.theme.name}-svg-empty.html`).toString();
+  let themeName = res.opts.theme.name;
+  themeName = themeName.replace('new-default', 'new');
+  const svgHtmlPartial = fs.readFileSync(`${emptyMessagePath}/theme-${themeName}-svg-empty.html`).toString();
 
   res.setHeader('Content-Type', 'text/plain');
   res.end(svgHtmlPartial);
