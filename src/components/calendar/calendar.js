@@ -723,8 +723,12 @@ Calendar.prototype = {
    * @returns {object} The Calendar prototype, useful for chaining.
    */
   renderMonthEvents(event) {
-    const monthKey = event.startKey.substring(0, 6);
-    const monthEvents = this.settings.events.filter(checkEvent => checkEvent.startKey.indexOf(monthKey) > -1);
+    if (event === undefined) {
+      return;
+    }
+
+    const monthKey = event.starts.substring(0, 6);
+    const monthEvents = this.settings.events.filter(checkEvent => checkEvent.starts.indexOf(monthKey) > -1);
 
     // Cleanup from previous renders
     this.removeAllEvents();
