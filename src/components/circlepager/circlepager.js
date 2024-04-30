@@ -476,7 +476,6 @@ CirclePager.prototype = {
     this.container[0].style.width = `${(100 * this.slides.length)}%`;
     if (this.settings.slidesToShow > 1 &&
        (this.slidesJQ.eq(0).width() * this.slidesToShow > this.element.width())) {
-        console.log(0)
       this.responsiveSlidesToShow(this.slidesToShow - 1);
       return;
     }
