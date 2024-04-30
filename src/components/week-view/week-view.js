@@ -335,7 +335,23 @@ WeekView.prototype = {
   createEventElement(event, cssClass) {
     const node = document.createElement('a');
 
-    DOM.addClass(node, 'calendar-event', event.color, cssClass);
+    DOM.addClass(node, 'calendar-event');
+
+    if (event.color?.substr(0, 1) === '#' || event.borderColor !== undefined) {
+      node.style.backgroundColor = event.color;
+      node.classList.remove(event.color);
+    } else {
+      DOM.addClass(event.color);
+    }
+
+    if (event.borderColor?.substr(0, 1) === '#' || event.borderColor !== undefined) {
+      node.style.borderLeftColor = event.borderColor;
+    }
+
+    if (cssClass !== undefined) {
+      DOM.addClass(cssClass);
+    }
+
     node.setAttribute('data-id', event.id);
     node.setAttribute('data-key', event.startKey);
     node.setAttribute('href', '#');
@@ -351,6 +367,7 @@ WeekView.prototype = {
    * @param {string} cssClass An extra css class
    */
   appendEventToAllDay(container, event, cssClass) {
+    debugger;
     const allDayContainer = container.querySelector('.week-view-all-day-wrapper');
     if (!allDayContainer) {
       return;

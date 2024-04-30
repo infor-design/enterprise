@@ -240,14 +240,14 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
     }
   }
 
+  if (event.color?.substr(0, 1) === '#' || event.color !== undefined) {
+    return event.color;
+  }
+
   if (event.color !== undefined && eventInfo.length === 1) {
     if (eventInfo[0].color !== event.color) {
       return eventInfo[0].color;
     }
-  }
-
-  if (event.color?.substr(0, 1) === '#' || event.color) {
-    return event.color;
   }
 
   if (eventInfo.length === 1) {
@@ -265,17 +265,17 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
  * @returns {object} The Calendar prototype, useful for chaining.
  */
 calendarShared.getEventTypeBorderColor = function getEventTypeBorderColor(event, eventTypes) {
-  let borderColor = '';
+  let borderColor = ''
 
   // Revalidates if the event type and current event has the same border color.
   const eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
   if (event.borderColor !== undefined && eventInfo.length === 1) {
     if (eventInfo[0].borderColor !== event.borderColor) {
-      return eventInfo[0].borderColor;
+      borderColor = eventInfo[0].borderColor;
     }
   }
 
-  if (event.borderColor?.substr(0, 1) === '#' || event.borderColor) {
+  if (event.borderColor?.substr(0, 1) === '#' || event.borderColor !== undefined) {
     return event.borderColor;
   }
 

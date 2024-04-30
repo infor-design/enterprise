@@ -15,6 +15,7 @@
 - `[Avatar/AppMenu]` Fixed size of the avatar on app menu. ([#8631](https://github.com/infor-design/enterprise/issues/8631))
 - `[Button]` Fixed unneeded timeout in performAnimation. ([#8541](https://github.com/infor-design/enterprise/issues/8541))
 - `[Cards]` Fixed title and button regression and position. ([#8602](https://github.com/infor-design/enterprise/issues/8602))
+- `[Calendar]` Fixed custom colors render of events. ([#7826](https://github.com/infor-design/enterprise/issues/7826))
 - `[Contextual Action Panel]` Fixed added padding on contextual action panel. ([#8553](https://github.com/infor-design/enterprise/issues/8553))
 - `[Dropdown/Lookup]` Add option to remove margin in dropdown and lookup wrapper.([#8492](https://github.com/infor-design/enterprise/issues/8492))
 - `[Datagrid]` Fixed xss handling in lookup. ([#8561](https://github.com/infor-design/enterprise/issues/8561))

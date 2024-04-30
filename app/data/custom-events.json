@@ -2,18 +2,18 @@
   {
     "id": "78",
     "subject": "Today is the Day!",
-    "starts": "2020-07-27T00:00:00.000",
-    "ends": "2020-07-27T23:59:59.999",
+    "starts": "2024-05-27T00:00:00.000",
+    "ends": "2024-05-27T23:59:59.999",
     "icon": "icon-success",
     "type": "dto",
-    "color": "powderblue",
-    "borderColor": "royalblue"
+    "color": "#FABFFF",
+    "borderColor": "#F25DFF"
   },
   {
     "id": "79",
     "subject": "Dog Event!",
-    "starts": "2020-07-28T00:00:00.000",
-    "ends": "2020-07-28T23:59:59.999",
+    "starts": "2024-05-28T00:00:00.000",
+    "ends": "2024-05-28T23:59:59.999",
     "icon": "icon-success",
     "type": "dto",
     "color": "powderblue",
@@ -22,8 +22,8 @@
   {
     "id": "80",
     "subject": "Not Feeling Well",
-    "starts": "2020-07-29T00:00:00.000",
-    "ends": "2020-07-29T23:59:59.999",
+    "starts": "2024-05-29T00:00:00.000",
+    "ends": "2024-05-29T23:59:59.999",
     "icon": "icon-success",
     "type": "sick",
     "color": "lightsalmon",
