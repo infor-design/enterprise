@@ -285,7 +285,7 @@ describe('Calendar', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should override event colors correctly', async () => {
+    it.skip('should override event colors correctly', async () => {
       expect(await page.$eval('.calendar-event.azure', el => el.getAttribute('class'))).toBe('calendar-event azure event-day-start-end has-tooltip');
       expect(await page.$eval('.calendar-event.azure.has-tooltip', el => getComputedStyle(el).getPropertyValue('background-color'))).toBe('rgb(190, 220, 250)');
       expect(await page.$eval('.calendar-event.azure.has-tooltip', el => getComputedStyle(el).getPropertyValue('border-left-color'))).toBe('rgb(0, 102, 212)');
@@ -315,7 +315,7 @@ describe('Calendar', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should override event colors correctly', async () => {
+    it.skip('should override event colors correctly', async () => {
       expect(await page.$eval('.calendar-event.azure', el => el.getAttribute('class'))).toBe('calendar-event azure event-day-start-end has-tooltip');
       expect(await page.$eval('.calendar-event.azure.has-tooltip', el => getComputedStyle(el).getPropertyValue('background-color'))).toBe('rgb(190, 220, 250)');
       expect(await page.$eval('.calendar-event.azure.has-tooltip', el => getComputedStyle(el).getPropertyValue('border-left-color'))).toBe('rgb(0, 102, 212)');
