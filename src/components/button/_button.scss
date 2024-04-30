@@ -609,15 +609,6 @@ button {
   &[disabled]:hover {
     cursor: default;
 
-    &.destructive {
-      color: $button-color-tertiary-destructive-initial-background-new;
-      opacity: 0.4;
-
-      svg {
-          color: $button-color-tertiary-destructive-initial-background-new;
-      }
-    }
-
     .disabled-tooltip {
       bottom: 0;
       left: 0;
@@ -901,7 +892,8 @@ a.btn-close {
   color: $button-color-tertiary-initial-font;
   overflow: hidden;
 
-  &:hover {
+  &:hover:not([disabled]) {
+    background-color: $button-color-tertiary-hover-background-new !important;
     color: $button-color-tertiary-hover-text;
 
     .icon {

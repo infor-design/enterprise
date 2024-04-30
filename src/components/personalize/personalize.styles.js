@@ -246,13 +246,13 @@ a.btn-close.is-personalizable:focus:not(.hide-focus) {
 .is-personalizable:not(.hero-widget) .btn-menu:not(.btn-primary):not(.btn-secondary).is-open,
 .btn-menu:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open,
 .btn-actions:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open {
-  color: ${colors.btnMenu};
+  color: ${colors.btnMenuColor};
 }
 
 .is-personalizable:not(.hero-widget) .btn-menu:not(.btn-primary):not(.btn-secondary).is-open .icon,
 .btn-menu:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open .icon,
 .btn-actions:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open .icon {
-  color: ${colors.btnMenu};
+  color: ${colors.btnMenuColor};
 }
 
 .is-personalizable:not(.application-menu) .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon {
@@ -730,6 +730,13 @@ html[class*="-dark"] .header .toolbar-searchfield-wrapper.active.has-focus .sear
   color: ${colors.contrast};
 }
 
+.header.is-personalizable .btn-menu.is-open,
+.header.is-personalizable .btn-actions.is-open {
+  opacity: 1;
+  background-color: ${colors.btnTertiaryBgHoverColorHeader} !important;
+  color: ${colors.btnTertiaryHoverColorHeader} !important;
+}
+
 .header.is-personalizable .wizard-header .tick:focus .label {
   border-color: ${colors.lighter};
 }
@@ -918,7 +925,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 }
 
 .header .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button) {
-  border-color: ${colors.contrast};
+  border-color: ${colors.btnMenuColor};
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
@@ -1027,12 +1034,12 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 
 .is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled,
 .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled {
-  opacity: .4;
+  opacity: .7;
 }
 
 html[class*="theme-classic-"] .is-personalizable .tab-container .tab-list-container .tab-list .tab.is-disabled,
 html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-container .tab-list .tab.is-disabled {
-  opacity: .4 !important;
+  opacity: .7 !important;
 }
 
 .is-personalizable .personalize-subheader {

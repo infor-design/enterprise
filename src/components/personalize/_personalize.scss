@@ -62,10 +62,6 @@
   background-color: $button-color-tertiary-hover-background-new;
 }
 
-.is-personalizable .btn-icon:hover:not([disabled]):not(.btn-primary) svg.icon {
-  color: $hyperlinks-personalize-text-color;
-}
-
 .is-personalizable.subheader .full-searchfield-container .searchfield-wrapper .btn-icon:hover:not([disabled]):not(.btn-primary) svg.icon {
   color: $header-flex-toolbar-close-icon-color-hover;
 }

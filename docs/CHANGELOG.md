@@ -5,6 +5,7 @@
 ## v4.95.0 Features
 
 - `[About]` Added copy to clipboard button. ([#8438](https://github.com/infor-design/enterprise/issues/8438))
+- `[Buttons]` Added new button styles for a sleeker look. With no ripple effect and reduced padding and some color and focus changes. ([#8557](https://github.com/infor-design/enterprise/issues/8557))
 - `[Locale]` Fixed incorrect `nn-NO` and `no-NO` locales. ([#8647](https://github.com/infor-design/enterprise/issues/8647))
 - `[Module Nav]` Added setting `disableSwitcher` to disable nav switcher. ([#8381](https://github.com/infor-design/enterprise/issues/8381))
 - `[TabsModule]` Added setting called `equalTabWidth` to make tabs equal of width. ([#6990](https://github.com/infor-design/enterprise/issues/6990))
@@ -30,7 +31,7 @@
 - `[Month Picker]` Fixed cursor for down button. ([#7315](https://github.com/infor-design/enterprise/issues/7315))\
 - `[Pager]` Fixed misaligned hover state in RTL. ([#8508](https://github.com/infor-design/enterprise/issues/8508))
 - `[Personalization]` Fixed bug with wrong colors in landmark form examples. ([#8625](https://github.com/infor-design/enterprise/issues/8625))
-- `[Personalization]` Fixed bug with wrong colors on buttons in a subheader. ([#8610](https://github.com/infor-design/enterprise/issues/8610))
+- `[Personalization]` Fixed bug with wrong colors on buttons in the sub header. ([#8610](https://github.com/infor-design/enterprise/issues/8610))
 - `[Searchfield]` Fixed misalignment in clear icon on mobile. ([#8332](https://github.com/infor-design/enterprise/issues/8332))
 - `[Tabs]` Fixed error in tab popup. ([#8596](https://github.com/infor-design/enterprise/issues/8596))
 - `[Tabs]` Fixed change hash not working in more button. ([#8536](https://github.com/infor-design/enterprise/issues/8536))

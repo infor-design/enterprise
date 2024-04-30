@@ -914,7 +914,7 @@ $subheader-searchfield-category-button-font-color: $subheader-input-text-color-f
 $header-text-default-color: $ids-color-palette-white;
 $header-text-color: $ids-color-palette-white;
 $header-toolbar-searchfield-icon-color: rgba($ids-color-palette-white, 1);
-$header-button-focus-color: rgba($ids-color-palette-white, 1);
+$header-button-focus-color: $ids-color-palette-white;
 $header-button-color: $ids-color-palette-white;
 $header-bg-color: $ids-color-palette-slate-90;
 $header-bottom-border-color: $ids-color-palette-slate-70;
@@ -932,7 +932,7 @@ $header-button-disabled-color: rgba(255, 255, 255, 0.4);
 $header-tabcontainer-border-color: $ids-color-palette-slate-90;
 $header-tab-separator: rgba(255, 255, 255, 0.4);
 $header-tab-selected-color: $inverse-color;
-$header-tab-alt-bg-color: $ids-color-palette-slate-60;
+$header-tab-alt-bg-color: $ids-color-palette-slate-80;
 $header-tab-alt-separator: $ids-color-palette-white;
 $header-tab-alt-normal-color: $ids-color-palette-slate-10;
 $header-tab-alt-hover-color: $inverse-color;

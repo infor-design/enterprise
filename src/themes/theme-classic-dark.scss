@@ -107,12 +107,12 @@ $button-color-tertiary-hover-text-new: $ids-color-palette-white;
 $button-hyperlink-color: $ids-color-palette-slate-30;
 $button-hyperlink-hover-color: $ids-color-palette-slate-40;
 $button-color-tertiary-hover-background: $ids-color-palette-slate-50;
-$button-color-tertiary-hover-background-new: $ids-color-palette-slate-90;
+$button-color-tertiary-hover-background-new: rgba(0, 0, 0, 0.25);
 $button-icon-disabled-color: $ids-color-palette-slate-60;
 $button-color-secondary-initial-font: $ids-color-palette-slate-10;
 $button-color-secondary-hover-background: $ids-color-palette-slate-50;
 $button-color-secondary-initial-background: $ids-color-palette-slate-40;
-$hero-button-color-tertiary-hover-background-new: $button-color-tertiary-hover-background-new;
+$hero-button-color-tertiary-hover-background-new: rgba(0, 0, 0, 0.25);
 $button-color-tertiary-hover-text: $ids-color-palette-slate-10;
 $button-hyperlink-hover-color: $ids-color-palette-slate-10;
 
