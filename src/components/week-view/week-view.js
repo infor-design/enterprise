@@ -287,7 +287,10 @@ WeekView.prototype = {
 
           if (days[0].key === event.startKey && event.endsHour < this.settings.endHour) {
             event.endsHour = this.settings.endHour + 1;
-          } else if (days[0].key !== event.startKey) {
+          } else if (days[0].key !== event.startKey && days[0].key !== event.endKey) {
+            event.startsHour = this.settings.startHour;
+            event.endsHour = this.settings.endHour + 1;
+          } else if (days[0].key === event.endKey) {
             event.startsHour = this.settings.startHour;
           }
         }

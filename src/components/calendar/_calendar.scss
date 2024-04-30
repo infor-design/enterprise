@@ -997,3 +997,27 @@ html[dir='rtl'] {
   display: block;
   height: 18px;
 }
+
+.popover.calendar-popup {
+  max-width: 320px;
+
+  .datepicker + .btn-icon {
+    margin-top: 6px;
+  }
+
+  .timepicker {
+    padding: 0 15px;
+
+    + .btn-icon {
+      margin-top: 5px;
+      margin-left: -32px;
+    }
+  }
+
+  .modal-buttonset {
+    position: relative;
+    top: 20px;
+    width: 317px;
+    right: 21px;
+  }
+}

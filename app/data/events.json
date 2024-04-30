@@ -808,5 +808,16 @@
     "ends": "2024-05-06T05:00:00.000",
     "type": "admin",
     "isAllDay": "false"
+  },
+  {
+    "id": "82",
+    "subject": "Cancun on Three",
+    "comments": "Trip to Cancun",
+    "status": "Pending",
+    "icon": "icon-clock",
+    "starts": "2024-05-14T08:00:00.000",
+    "ends": "2024-05-16T07:00:00.00",
+    "type": "team",
+    "isAllDay": "false"
   }
 ]
