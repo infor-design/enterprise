@@ -265,7 +265,7 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
  * @returns {object} The Calendar prototype, useful for chaining.
  */
 calendarShared.getEventTypeBorderColor = function getEventTypeBorderColor(event, eventTypes) {
-  let borderColor = ''
+  let borderColor = '';
 
   // Revalidates if the event type and current event has the same border color.
   const eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
