@@ -44,9 +44,9 @@ $('body').one('initialized', function () {
     $.getJSON('{{basepath}}api/events', function(res) {
       events = res;
       $('.calendar').calendar({
-        month: 3,
+        month: 4,
         year: 2024,
-        day: 3,
+        day: 4,
         eventTypes: eventTypes,
         events: events,
         upcomingEventDays: 0,
