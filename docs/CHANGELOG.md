@@ -20,6 +20,7 @@
 - `[Datagrid]` Fixed xss handling in lookup. ([#8561](https://github.com/infor-design/enterprise/issues/8561))
 - `[Datagrid]` Fixed an error parsing some dates. ([#8627](https://github.com/infor-design/enterprise/issues/8627))
 - `[Datagrid]` Fixed unable to use the left/right arrow keys on the text in an editable cell. ([#8457](https://github.com/infor-design/enterprise/issues/8457))
+- `[Datagrid]` Fixed and documented `serialize` callback on columns. ([#8663](https://github.com/infor-design/enterprise/issues/8663))
 - `[Datagrid]` Fixed search icon misalignment in dropdown cells. ([#8515](https://github.com/infor-design/enterprise/issues/8515))
 - `[Datagrid]` Fixed an error editing on non first page in server side paging datagrid. ([#8537](https://github.com/infor-design/enterprise-ng/issues/1672))
 - `[FieldFilter]` Added Default Field Filter Reset example page. ([NG#1641](https://github.com/infor-design/enterprise-ng/issues/1641))
