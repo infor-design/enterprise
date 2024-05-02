@@ -467,8 +467,18 @@ WeekView.prototype = {
         </div>`;
 
         const containerWrapper = tdEl.querySelector('.week-view-cell-wrapper');
-        const containerEvents = tdEl.querySelectorAll('.calendar-event');
-        const eventCount = containerEvents.length;
+        let containerEvents = tdEl.querySelectorAll('.calendar-event');
+        let eventCount = containerEvents.length;
+
+        // Check the startHour if there is an overlaying event
+        if (eventCount === 0) {
+          const monthDay = tdEl.getAttribute('data-key');
+          const calendarBody = tdEl.parentNode.parentNode;
+          const startTdEl = calendarBody.children[0].querySelectorAll('td[data-key="' + monthDay +'"]')[0];
+          
+          containerEvents = startTdEl.querySelectorAll('.calendar-event');
+          eventCount = containerEvents.length;
+        }
 
         if (eventCount > 0) {
           const width = (100 / (eventCount + 1));
