@@ -472,9 +472,9 @@ WeekView.prototype = {
 
         // Check the startHour if there is an overlaying event
         if (eventCount === 0) {
-          const monthDay = tdEl.getAttribute('data-key');
+          const monthKey = tdEl.getAttribute('data-key');
           const calendarBody = tdEl.parentNode.parentNode;
-          const startTdEl = calendarBody.children[0].querySelectorAll('td[data-key="' + monthDay +'"]')[0];
+          const startTdEl = calendarBody.children[0].querySelectorAll(`td[data-key="${monthKey}"]`)[0];
           
           containerEvents = startTdEl.querySelectorAll('.calendar-event');
           eventCount = containerEvents.length;
