@@ -247,7 +247,13 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
 
   const colorCheck = event.color.split('-');
   if (event.color !== undefined && colorList.filter(colorObj => colorObj === colorCheck[0]).length > 0) {
-    return 'ruby01';
+    let colorGrade = colorCheck[1] * 0.1;
+
+    if (colorCheck[1] * 0.1 !== 10) {
+      colorGrade = `0${colorGrade}`
+    }
+
+    return colorCheck[0] + colorGrade;
   }
   
   if (event.color.indexOf('-') === -1 && colorList.filter(colorObj => event.color.indexOf(colorObj) > -1).length > 0) {
