@@ -1020,3 +1020,18 @@ html[dir='rtl'] {
     right: 1px;
   }
 }
+
+#calendar-popup {
+  .page-container .form-responsive .field-checkbox,
+  .container .form-responsive .field-checkbox {
+    margin-top: 0;
+  }
+
+  .btn-icon:hover:not([disabled]):not(.btn-primary):not(.trigger):not(:disabled) {
+    background-color: rgba(0, 0, 0, 0.25);
+
+    svg {
+      color: #fff;
+    }
+  }
+}
