@@ -28,5 +28,25 @@
     "type": "sick",
     "color": "lightsalmon",
     "borderColor": "orangered"
+  },
+  {
+    "id": "81",
+    "subject": "Fever",
+    "starts": "2024-05-30T00:00:00.000",
+    "ends": "2024-05-30T23:59:59.999",
+    "icon": "icon-success",
+    "type": "sick",
+    "color": "ruby-10",
+    "borderColor": "yellow"
+  },
+  {
+    "id": "82",
+    "subject": "Light Fever",
+    "starts": "2024-05-31T00:00:00.000",
+    "ends": "2024-05-31T23:59:59.999",
+    "icon": "icon-success",
+    "type": "sick",
+    "color": "turquoise-40",
+    "borderColor": "green"
   }
 ]

@@ -4,6 +4,7 @@ import { dateUtils } from '../../utils/date';
 import { utils } from '../../utils/utils';
 
 const calendarShared = {};
+const eventColors = ['amber', 'amethyst', 'azure', 'emerald', 'graphite', 'ruby', 'slate', 'turquoise'];
 
 /**
 * Add calculated fields to an event object.
@@ -219,6 +220,7 @@ calendarShared.formateTimeString = function formateTimeString(event, locale, lan
  * @returns {object} The Calendar prototype, useful for chaining.
  */
 calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes) {
+  const colorList = ['amber', 'amethyst', 'azure', 'emerald', 'graphite', 'ruby', 'slate', 'turquoise'];
   let color = 'azure';
   if (!event.type && !event.color) {
     return color;
@@ -240,7 +242,16 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
     }
   }
 
-  if (event.color?.substr(0, 1) === '#' || event.color !== undefined) {
+  if (event.color?.substr(0, 1) === '#' && event.color !== undefined) {
+    return event.color;
+  }
+
+  const colorCheck = event.color.split('-');
+  if (event.color !== undefined && colorList.filter(color => color === colorCheck[0]).length > 0) {
+    const colorGrade = colorCheck[1] * .1 === 10 ? colorCheck[1] * .1 : '0' + (colorCheck[1] * .1);
+    const colorBuild = colorCheck[0] + colorGrade;
+    return colorBuild;
+  } else if (event.color.indexOf('-') === -1 && colorList.filter(color => event.color.indexOf(color) > -1).length > 0) {
     return event.color;
   }
 
@@ -275,7 +286,7 @@ calendarShared.getEventTypeBorderColor = function getEventTypeBorderColor(event,
     }
   }
 
-  if (event.borderColor?.substr(0, 1) === '#' || event.borderColor !== undefined) {
+  if (event.borderColor?.substr(0, 1) === '#' && event.borderColor !== undefined) {
     return event.borderColor;
   }
 

@@ -830,9 +830,9 @@ Calendar.prototype = {
    * @returns {object} The Calendar prototype, useful for chaining.
    */
   appendEvent(container, event, type, idx) {
-    let node;
     const eventCnt = container.querySelectorAll('.calendar-event').length;
     const colorList = ['ruby', 'amber', 'emerald', 'azure', 'turqoise', 'amethyst', 'graphite', 'slate'];
+    let node;
 
     if (idx > -1) {
       if (!this.monthView.dayMap[idx].events) {
@@ -873,7 +873,9 @@ Calendar.prototype = {
     node.setAttribute('data-key', event.startKey);
 
     // Let the border color / color be overriden
-    if ((event.color?.substr(0, 1) === '#' || event.color) && colorList.indexOf(event.color) < 0) {
+    if (event.color !== undefined && colorList.filter(color => event.color?.indexOf(color) > -1) && event.color.indexOf('1') > -1) {
+      DOM.addClass(node, event.color);
+    } else if ((event.color?.substr(0, 1) === '#' || event.color) && colorList.indexOf(event.color) < 0) {
       node.style.backgroundColor = event.color;
       node.classList.remove(event.color);
     }

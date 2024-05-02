@@ -333,11 +333,14 @@ WeekView.prototype = {
    * @returns {HTMLElement} calendar elem
    */
   createEventElement(event, cssClass) {
+    const colorList = ['ruby', 'amber', 'emerald', 'azure', 'turqoise', 'amethyst', 'graphite', 'slate'];
     const node = document.createElement('a');
 
     DOM.addClass(node, 'calendar-event');
 
-    if (event.color?.substr(0, 1) === '#' || event.borderColor !== undefined) {
+    if (event.color !== undefined && colorList.filter(color => event.color?.indexOf(color) > -1) && event.color.indexOf('1') > -1) {
+      DOM.addClass(node, event.color);
+    } else if (event.color?.substr(0, 1) === '#' && event.color !== undefined) {
       node.style.backgroundColor = event.color;
       node.classList.remove(event.color);
     } else {
