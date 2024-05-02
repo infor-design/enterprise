@@ -1,9 +1,11 @@
-// Uplift Application Menu
+// New Application Menu
 //================================================== //
 
 @import '../accordion/accordion-mixins';
 
 .application-menu {
+  @include antialiased();
+
   background-color: $new-appmenu-main-bg-color;
 
   .searchfield-wrapper {
@@ -94,6 +96,14 @@
 
   .application-menu-header {
     .icon.avatar {
+      background: none;
+      border: none;
+      height: 40px;
+      width: 40px;
+      min-width: 40px;
+      max-width: 40px;
+      min-height: 40px;
+      max-height: 40px;
       left: 29px;
       top: 0;
     }
@@ -818,4 +828,14 @@ html[dir='rtl'] {
       }
     }
   }
+}
+
+html[dir='rtl'] .application-menu .searchfield-wrapper.has-close-icon-button.has-text .btn-icon.close {
+  right: calc(300px - 34px);
+  top: 6px !important;
+}
+
+html[dir='rtl'] .application-menu .searchfield-wrapper.has-close-icon-button.has-text .btn-icon.close {
+  right: calc(300px - 52px);
+  top: 10px !important;
 }
