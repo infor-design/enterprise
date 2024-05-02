@@ -55,13 +55,13 @@
 
         .slide {
           height: 360px;
+          margin: 0 0.5px;
 
           .card,
           .small-widget,
           .widget {
             height: 318px;
             min-height: 318px;
-            margin-left: 4px;
           }
         }
       }

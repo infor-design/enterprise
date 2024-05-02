@@ -709,7 +709,18 @@ Homepage.prototype = {
       const bannerWidgetPager = content.find('.banner .circlepager');
 
       if (bannerWidgetPager && bannerWidgetPager.data('circlepager').slidesToShow !== self.columns) {
-        bannerWidgetPager.data('circlepager').responsiveSlidesToShow(self.columns);
+        const bannerWidgetPagerApi = bannerWidgetPager.data('circlepager');
+        bannerWidgetPagerApi.responsiveSlidesToShow(self.columns);
+
+        if (bannerWidgetPagerApi.slidesToShow === 1) {
+          bannerWidgetPagerApi.slidesJQ.each((i, e) => {
+            e.style.margin = 0;
+          });
+        } else {
+          bannerWidgetPagerApi.slidesJQ.each((i, e) => {
+            e.style.margin = null;
+          });
+        }
       }
     }
 
