@@ -45,3 +45,27 @@
     }
   }
 }
+
+.popover.calendar-popup {
+  max-width: 320px;
+
+  .datepicker + .btn-icon {
+    margin-top: 8px;
+  }
+
+  .timepicker {
+    padding: 0 15px;
+
+    + .btn-icon {
+      margin-top: 6px;
+      margin-left: -32px;
+    }
+  }
+
+  .modal-buttonset {
+    position: relative;
+    top: 0;
+    width: 317px;
+    right: 1px;
+  }
+}

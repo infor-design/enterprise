@@ -15,6 +15,7 @@
 - `[Avatar/AppMenu]` Fixed size of the avatar on app menu. ([#8631](https://github.com/infor-design/enterprise/issues/8631))
 - `[Button]` Fixed unneeded timeout in performAnimation. ([#8541](https://github.com/infor-design/enterprise/issues/8541))
 - `[Cards]` Fixed title and button regression and position. ([#8602](https://github.com/infor-design/enterprise/issues/8602))
+- `[Calendar]` Fixed modal button and input positions. ([#8657](https://github.com/infor-design/enterprise/issues/8657))
 - `[Contextual Action Panel]` Fixed added padding on contextual action panel. ([#8553](https://github.com/infor-design/enterprise/issues/8553))
 - `[Dropdown/Lookup]` Add option to remove margin in dropdown and lookup wrapper.([#8492](https://github.com/infor-design/enterprise/issues/8492))
 - `[Datagrid]` Fixed xss handling in lookup. ([#8561](https://github.com/infor-design/enterprise/issues/8561))
@@ -35,6 +36,8 @@
 - `[Tabs]` Fixed error in tab popup. ([#8596](https://github.com/infor-design/enterprise/issues/8596))
 - `[Tabs]` Fixed change hash not working in more button. ([#8536](https://github.com/infor-design/enterprise/issues/8536))
 - `[Translations]` Added new translations fixing links in upload files. ([#8489](https://github.com/infor-design/enterprise/issues/8489))
+- `[WeekView]` Fixed render of events on day view for non all-day events. ([#8530](https://github.com/infor-design/enterprise/issues/8530))
+- `[WeekView]` Added start end hour example page. ([#8490](https://github.com/infor-design/enterprise/issues/8490))
 
 ## v4.94.0
 

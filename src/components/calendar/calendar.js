@@ -717,8 +717,44 @@ Calendar.prototype = {
   },
 
   /**
+   * Render/ReRender the events attached for the month.
+   * @private
+   * @param {object} event Will be the basis for the month
+   * @returns {object} The Calendar prototype, useful for chaining.
+   */
+  renderMonthEvents(event) {
+    const monthKey = event.starts.substring(0, 6);
+    const monthEvents = this.settings.events.filter(checkEvent => checkEvent.starts.indexOf(monthKey) > -1);
+
+    // Cleanup from previous renders
+    this.removeAllEvents();
+    this.clearUpcomingEvents();
+    this.clearEventDetails();
+
+    const self = this;
+    const filters = this.filterEventTypes();
+
+    // Clone and sort the array.
+    const eventsSorted = monthEvents.slice(0);
+    eventsSorted.sort((a, b) => (a.starts < b.starts ? -1 : (a.starts > b.starts ? 1 : 0)));
+
+    for (let i = 0; i < eventsSorted.length; i++) {
+      const eventObj = eventsSorted[i];
+      if (filters.indexOf(eventObj.type) > -1) {
+        continue;
+      }
+
+      self.renderEvent(eventObj);
+    }
+
+    this.renderSelectedEventDetails();
+
+    return this;
+  },
+
+  /**
    * Render a single event on the ui, use in the loop and other functions.
-   * @param  {object} event The event object.
+   * @param {object} event The event object.
    */
   renderEvent(event) {
     const self = this;
@@ -1367,7 +1403,7 @@ Calendar.prototype = {
       this.settings.eventTypes
     );
     this.settings.events.push(event);
-    this.renderEvent(event);
+    this.renderMonthEvents(event);
     this.renderSelectedEventDetails();
 
     if (this.weekView) {
@@ -1544,7 +1580,9 @@ Calendar.prototype = {
           } else {
             elem.find('#durationHours').prop('disabled', false);
             elem.find('#endsHourLocale').prop('disabled', false);
+            elem.find('#endsHourLocale + .btn-icon').prop('disabled', false);
             elem.find('#startsHourLocale').prop('disabled', false);
+            elem.find('#startsHourLocale + .btn-icon').prop('disabled', false);
           }
         });
 
