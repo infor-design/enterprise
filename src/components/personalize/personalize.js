@@ -556,7 +556,7 @@ Personalize.prototype = {
         lum = 0.3;
       }
     } else {
-      // Uplift adjustments go here
+      // New adjustments go here
       lum = useAlternates ? 0.6 : 0.8;
       sat = useAlternates ? 0.6 : 0.8;
       if (dark) {

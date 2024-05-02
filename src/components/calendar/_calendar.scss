@@ -55,7 +55,7 @@
     &.monthview {
       &.hidden {
         ~ .calendar-event-details {
-          @media (max-width: $breakpoint-wide-tablet - 1) {
+          @media (max-width: ($breakpoint-wide-tablet - 1)) {
             display: none;
           }
         }
@@ -557,7 +557,6 @@
 
       .listview-micro {
         display: inline-block;
-        float: right;
         margin-top: 2px;
         text-align: right;
         width: 20%;

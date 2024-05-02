@@ -1,5 +1,14 @@
 // Required ====/
-@import './required';
+@import '../components/breakpoints/breakpoints';
+@import '../components/checkboxes/checkboxes';
+@import '../components/grid/grid';
+@import '../components/icons/icons';
+@import '../components/images/images';
+@import '../components/page-layouts/layouts';
+@import '../components/personalize/personalize';
+@import '../components/radios/radios';
+@import '../components/typography/typography';
+@import '../components/visibility/visibility';
 @import '../components/images/images-new';
 @import '../components/typography/typography-new';
 @import '../components/icons/icons-new';
@@ -34,6 +43,7 @@
 
 // Mid-level ====/
 @import '../components/about/about';
+@import '../components/button/button-chevron';
 @import '../components/accordion/accordion';
 @import '../components/accordion/accordion-new';
 @import '../components/actionsheet/actionsheet';
@@ -45,7 +55,6 @@
 @import '../components/busyindicator/busyindicator';
 @import '../components/cards/cards';
 @import '../components/cards/cards-new';
-@import '../components/checkboxes/checkboxes';
 @import '../components/checkboxes/checkboxes-new';
 @import '../components/circlepager/circlepager';
 @import '../components/colorpicker/colorpicker';

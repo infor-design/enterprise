@@ -26,6 +26,7 @@ input.spinbox {
 
 input[type='number'] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 input::-webkit-outer-spin-button,
@@ -67,6 +68,7 @@ input::-webkit-inner-spin-button {
   text-align: center;
   -moz-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
   -webkit-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
+  transform: translate3d(0, 0, 0);
   width: 33px;
 
   &.up {
