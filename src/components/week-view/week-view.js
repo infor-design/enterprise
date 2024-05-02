@@ -338,13 +338,13 @@ WeekView.prototype = {
 
     DOM.addClass(node, 'calendar-event');
 
-    if (event.color !== undefined && colorList.filter(color => event.color?.indexOf(color) > -1) && event.color.indexOf('1') > -1) {
+    if (event.color !== undefined && colorList.filter(color => event.color?.indexOf(color) > -1).length > 0 && event.color.indexOf('0') > -1) {
       DOM.addClass(node, event.color);
     } else if (event.color?.substr(0, 1) === '#' && event.color !== undefined) {
       node.style.backgroundColor = event.color;
       node.classList.remove(event.color);
     } else {
-      DOM.addClass(event.color);
+      node.style.backgroundColor = event.color;
     }
 
     if (event.borderColor?.substr(0, 1) === '#' || event.borderColor !== undefined) {
@@ -352,7 +352,7 @@ WeekView.prototype = {
     }
 
     if (cssClass !== undefined) {
-      DOM.addClass(cssClass);
+      DOM.addClass(node, cssClass);
     }
 
     node.setAttribute('data-id', event.id);

@@ -831,7 +831,7 @@ Calendar.prototype = {
    */
   appendEvent(container, event, type, idx) {
     const eventCnt = container.querySelectorAll('.calendar-event').length;
-    const colorList = ['ruby', 'amber', 'emerald', 'azure', 'turqoise', 'amethyst', 'graphite', 'slate'];
+    const colorList = ['amber', 'amethyst', 'azure', 'emerald', 'graphite', 'ruby', 'slate', 'turquoise'];
     let node;
 
     if (idx > -1) {
@@ -873,7 +873,7 @@ Calendar.prototype = {
     node.setAttribute('data-key', event.startKey);
 
     // Let the border color / color be overriden
-    if (event.color !== undefined && colorList.filter(color => event.color?.indexOf(color) > -1) && event.color.indexOf('1') > -1) {
+    if (event.color !== undefined && colorList.filter(color => event.color?.indexOf(color) > -1).length > 0 && event.color.indexOf('0') > -1) {
       DOM.addClass(node, event.color);
     } else if ((event.color?.substr(0, 1) === '#' || event.color) && colorList.indexOf(event.color) < 0) {
       node.style.backgroundColor = event.color;

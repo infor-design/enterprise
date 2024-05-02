@@ -250,7 +250,9 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
     const colorGrade = colorCheck[1] * 0.1 === 10 ? colorCheck[1] * 0.1 : `0${(colorCheck[1] * 0.1)}`;
     const colorBuild = colorCheck[0] + colorGrade;
     return colorBuild;
-  } else if (event.color.indexOf('-') === -1 && colorList.filter(colorObj => event.color.indexOf(colorObj) > -1).length > 0) {
+  } 
+  
+  if (event.color.indexOf('-') === -1 && colorList.filter(colorObj => event.color.indexOf(colorObj) > -1).length > 0) {
     return event.color;
   }
 
