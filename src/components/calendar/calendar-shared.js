@@ -250,7 +250,7 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
     let colorGrade = colorCheck[1] * 0.1;
 
     if (colorCheck[1] * 0.1 !== 10) {
-      colorGrade = `0${colorGrade}`
+      colorGrade = `0${colorGrade}`;
     }
 
     return colorCheck[0] + colorGrade;
