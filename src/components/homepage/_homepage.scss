@@ -61,6 +61,7 @@
           .widget {
             height: 318px;
             min-height: 318px;
+            margin-left: 4px;
           }
         }
       }
@@ -197,7 +198,7 @@
 
 .header + .homepage,
 .header + nav + .homepage {
-  height: calc(100% - 46px);
+  height: calc(100% - 50px);
   margin-top: 0 !important;
   overflow: scroll;
 }

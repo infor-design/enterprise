@@ -206,19 +206,17 @@
 </div>
 
 <script>
-  $('body').on('initialized', function() {
-    $('.homepage').homepage({
-      background: {
-        banner: {
-          image: '{{basepath}}/images/background-image.svg',
-          icon: {
-            image: '{{basepath}}/images/banner-icon.png',
-            width: 200
-          }
+  $('.homepage').homepage({
+    background: {
+      banner: {
+        image: '{{basepath}}/images/background-image.svg',
+        icon: {
+          image: '{{basepath}}/images/banner-icon.png',
+          width: 200
         }
-      },
-    });
-
-    $('.circlepager').circlepager({slidesToShow: 4});
+      }
+    },
   });
+
+  $('.circlepager').circlepager({slidesToShow: 4});
 </script>

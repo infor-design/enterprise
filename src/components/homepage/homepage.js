@@ -708,7 +708,7 @@ Homepage.prototype = {
 
       const bannerWidgetPager = content.find('.banner .circlepager');
 
-      if (bannerWidgetPager) {
+      if (bannerWidgetPager && bannerWidgetPager.data('circlepager').slidesToShow !== self.columns) {
         bannerWidgetPager.data('circlepager').responsiveSlidesToShow(self.columns);
       }
     }
