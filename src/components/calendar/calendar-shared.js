@@ -4,7 +4,6 @@ import { dateUtils } from '../../utils/date';
 import { utils } from '../../utils/utils';
 
 const calendarShared = {};
-const eventColors = ['amber', 'amethyst', 'azure', 'emerald', 'graphite', 'ruby', 'slate', 'turquoise'];
 
 /**
 * Add calculated fields to an event object.
@@ -247,11 +246,11 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
   }
 
   const colorCheck = event.color.split('-');
-  if (event.color !== undefined && colorList.filter(color => color === colorCheck[0]).length > 0) {
-    const colorGrade = colorCheck[1] * .1 === 10 ? colorCheck[1] * .1 : '0' + (colorCheck[1] * .1);
+  if (event.color !== undefined && colorList.filter(colorObj => colorObj === colorCheck[0]).length > 0) {
+    const colorGrade = colorCheck[1] * 0.1 === 10 ? colorCheck[1] * 0.1 : `0${(colorCheck[1] * 0.1)}`;
     const colorBuild = colorCheck[0] + colorGrade;
     return colorBuild;
-  } else if (event.color.indexOf('-') === -1 && colorList.filter(color => event.color.indexOf(color) > -1).length > 0) {
+  } else if (event.color.indexOf('-') === -1 && colorList.filter(colorObj => event.color.indexOf(colorObj) > -1).length > 0) {
     return event.color;
   }
 
