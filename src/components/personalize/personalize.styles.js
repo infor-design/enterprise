@@ -691,8 +691,13 @@ html.theme-classic-dark .is-personalizable .count-container .instance-count .cou
   color: ${colors.contrast};
 }
 
-.header .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button) {
-  background-color: ${colors.base};
+.header .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button),
+.header .btn-icon:hover:not([disabled]) {
+  background-color: ${colors.btnBgHoverColor};
+}
+
+.header .btn-actions:hover:not([disabled]) {
+  background-color: ${colors.btnBgHoverColor};
 }
 
 .header.alabaster .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button) {
