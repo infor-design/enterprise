@@ -708,7 +708,10 @@ Modal.prototype = {
 
       // In standard Modal mode, size the buttons to fit after rendering.
       btn.element[0].style.width = `${btnPercentWidth}%`;
-      btn.element[0].querySelector('span').style.width = self.settings.buttonsetWidth ? `${self.settings.buttonsetWidth}px` : '';
+
+      if (self.settings.buttonsetWidth) {
+        btn.element[0].querySelector('span').style.width = `${self.settings.buttonsetWidth}px`;
+      }
 
       $buttons.add(btn);
     });
