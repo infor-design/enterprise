@@ -25,6 +25,7 @@
 - `[Datagrid]` Fixed an error editing on non first page in server side paging datagrid. ([#8537](https://github.com/infor-design/enterprise-ng/issues/1672))
 - `[FieldFilter]` Added Default Field Filter Reset example page. ([NG#1641](https://github.com/infor-design/enterprise-ng/issues/1641))
 - `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
+- `[General]` Removed dups in sass packages thus reducing css file size. ([#8653](https://github.com/infor-design/enterprise/issues/8653))
 - `[Header]` Fixed default color, and changed to flex layout by default. This is to allow for ids-breadcrumb to work. ([#2178](https://github.com/infor-design/enterprise-wc/issues/2178))
 - `[Homepage]` Fixed bug that caused errors on resize when no widgets. ([#8611](https://github.com/infor-design/enterprise/issues/8611))
 - `[Month Picker]` Fixed cursor for down button. ([#7315](https://github.com/infor-design/enterprise/issues/7315))\

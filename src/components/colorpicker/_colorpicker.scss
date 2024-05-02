@@ -3,9 +3,10 @@
 
 $trigger-size: 30px;
 
-@import '../icons/icons';
-@import '../input/input';
-@import '../popupmenu/popupmenu';
+// Dependencies
+// '../icons/icons';
+// '../input/input';
+// '../popupmenu/popupmenu';
 
 @mixin swatch-is-empty($offset: -5px, $border-color: $input-color-initial-border) {
   background-color: $colorpicker-is-empty-bg-color;
