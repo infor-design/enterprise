@@ -338,7 +338,7 @@ WeekView.prototype = {
 
     DOM.addClass(node, 'calendar-event');
 
-    if (event.color !== undefined && colorList.filter(color => event.color?.indexOf(color) > -1).length > 0 && event.color.indexOf('0') > -1) {
+    if (event.color !== undefined && colorList.filter(color => event.color?.indexOf(color) > -1).length > 0 && event.color?.indexOf('0') > -1) {
       DOM.addClass(node, event.color);
     } else if (event.color?.substr(0, 1) === '#' && event.color !== undefined) {
       node.style.backgroundColor = event.color;
