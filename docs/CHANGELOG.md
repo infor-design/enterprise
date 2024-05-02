@@ -16,11 +16,13 @@
 - `[Avatar/AppMenu]` Fixed size of the avatar on app menu. ([#8631](https://github.com/infor-design/enterprise/issues/8631))
 - `[Button]` Fixed unneeded timeout in performAnimation. ([#8541](https://github.com/infor-design/enterprise/issues/8541))
 - `[Cards]` Fixed title and button regression and position. ([#8602](https://github.com/infor-design/enterprise/issues/8602))
+- `[Calendar]` Fixed modal button and input positions. ([#8657](https://github.com/infor-design/enterprise/issues/8657))
 - `[Contextual Action Panel]` Fixed added padding on contextual action panel. ([#8553](https://github.com/infor-design/enterprise/issues/8553))
 - `[Dropdown/Lookup]` Add option to remove margin in dropdown and lookup wrapper.([#8492](https://github.com/infor-design/enterprise/issues/8492))
 - `[Datagrid]` Fixed xss handling in lookup. ([#8561](https://github.com/infor-design/enterprise/issues/8561))
 - `[Datagrid]` Fixed an error parsing some dates. ([#8627](https://github.com/infor-design/enterprise/issues/8627))
 - `[Datagrid]` Fixed unable to use the left/right arrow keys on the text in an editable cell. ([#8457](https://github.com/infor-design/enterprise/issues/8457))
+- `[Datagrid]` Fixed and documented `serialize` callback on columns. ([#8663](https://github.com/infor-design/enterprise/issues/8663))
 - `[Datagrid]` Fixed search icon misalignment in dropdown cells. ([#8515](https://github.com/infor-design/enterprise/issues/8515))
 - `[Datagrid]` Fixed an error editing on non first page in server side paging datagrid. ([#8537](https://github.com/infor-design/enterprise-ng/issues/1672))
 - `[FieldFilter]` Added Default Field Filter Reset example page. ([NG#1641](https://github.com/infor-design/enterprise-ng/issues/1641))
@@ -36,6 +38,8 @@
 - `[Tabs]` Fixed error in tab popup. ([#8596](https://github.com/infor-design/enterprise/issues/8596))
 - `[Tabs]` Fixed change hash not working in more button. ([#8536](https://github.com/infor-design/enterprise/issues/8536))
 - `[Translations]` Added new translations fixing links in upload files. ([#8489](https://github.com/infor-design/enterprise/issues/8489))
+- `[WeekView]` Fixed render of events on day view for non all-day events. ([#8530](https://github.com/infor-design/enterprise/issues/8530))
+- `[WeekView]` Added start end hour example page. ([#8490](https://github.com/infor-design/enterprise/issues/8490))
 
 ## v4.94.0
 
