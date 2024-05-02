@@ -47,6 +47,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {string} [settings.closeBtnOptions.closeBtnTooltip='Close'] Adds the ability to change the tooltip for Close button. Default is Close.
 * @param {number} [settings.maxWidth=null] Optional max width to add in pixels.
 * @param {number} [settings.buttonsetWidth=null] Optional width to set the buttonset.
+* @param {number} [settings.buttonsetMinWidth=null] Optional min-width to set the buttonset.
 * @param {boolean} [settings.fullsize=false] If true, ignore any sizing algorithms and
 * return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response.
 * @param {string} [settings.breakpoint='phone-to-tablet'] The breakpoint to use for a responsive change to "fullsize" mode. See `utils.breakpoints` to view the available sizes.
@@ -91,7 +92,8 @@ const MODAL_DEFAULTS = {
   draggableOffset: { left: 0, top: 0 },
   icon: null,
   iconClass: null,
-  buttonsetWidth: null
+  buttonsetWidth: null,
+  buttonsetMinWidth: null
 };
 
 // Resets some string-based Modal settings to their defaults
@@ -705,7 +707,8 @@ Modal.prototype = {
       }
 
       // In standard Modal mode, size the buttons to fit after rendering.
-      btn.element[0].style.width = !self.settings.buttonsetWidth ? `${btnPercentWidth}%` : `${self.settings.buttonsetWidth}px`;
+      btn.element[0].style.width = `${btnPercentWidth}%`;
+      btn.element[0].querySelector('span').style.width = self.settings.buttonsetWidth ? `${self.settings.buttonsetWidth}px` : '';
 
       $buttons.add(btn);
     });
@@ -1327,17 +1330,6 @@ Modal.prototype = {
         this.element.removeClass('has-close-btn');
       } else if ($(window).width() >= 400 && !this.element.hasClass('has-close-btn')) {
         this.element.addClass('has-close-btn');
-      }
-    }
-
-    if (this.settings.buttons && this.settings.buttonsetWidth) {
-      const buttonsetWidth = this.settings.buttonsetWidth;
-      const buttons = this.element.find('.modal-buttonset button');
-
-      if ($(window).width() < 693) {
-        buttons.css('width', '50%');
-      } else {
-        buttons.css('width', buttonsetWidth);
       }
     }
 
