@@ -449,7 +449,8 @@ CirclePager.prototype = {
   */
   next() {// eslint-disable-line
     let next;
-    const totalSlides = Math.floor(this.slides.length / this.slidesToShow) + (this.slides.length % this.slidesToShow);
+    const excess = (this.slides.length % this.slidesToShow >= 1 ? 1 : 0);
+    const totalSlides = Math.floor(this.slides.length / this.slidesToShow) + excess;
 
     if (this.activeIndex >= totalSlides - 1) {
       next = this.settings.loop ? 0 : this.activeIndex;
