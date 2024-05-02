@@ -21,6 +21,7 @@
 - `[Cards]` Fixed title and button regression and position. ([#8602](https://github.com/infor-design/enterprise/issues/8602))
 - `[Contextual Action Panel]` Fixed added padding on contextual action panel. ([#8553](https://github.com/infor-design/enterprise/issues/8553))
 - `[Dropdown/Lookup]` Add option to remove margin in dropdown and lookup wrapper.([#8492](https://github.com/infor-design/enterprise/issues/8492))
+- `[Datagrid]` Fixed bug with invisible columns when frozen. ([#8617](https://github.com/infor-design/enterprise/issues/8617))
 - `[Datagrid]` Fixed xss handling in lookup. ([#8561](https://github.com/infor-design/enterprise/issues/8561))
 - `[Datagrid]` Fixed an error parsing some dates. ([#8627](https://github.com/infor-design/enterprise/issues/8627))
 - `[Datagrid]` Fixed unable to use the left/right arrow keys on the text in an editable cell. ([#8457](https://github.com/infor-design/enterprise/issues/8457))
