@@ -50,13 +50,14 @@ var modals = {
       'id': 'my-id',
       'content': $('#modal-add-context')
     }
-  },
+  };
+
+  var buttonText = 'Click here to explore our comprehensive collection of innovative solutions for optimizing your workflow and boosting productivity.';
 
   setModal = function (opt) {
     opt = $.extend({
       buttons: [{
-        text: 'Click here to explore our comprehensive collection of innovative solutions for optimizing your workflow and boosting productivity.',
-      //  id: 'modal-button-1',
+        text: buttonText,
         click: function(e, modal) {
           modal.close();
         }
@@ -68,7 +69,8 @@ var modals = {
         },
         validate: false,
         isDefault: true
-      }]
+      }],
+      buttonsetWidth: 300,
     }, opt);
 
     $('body').modal(opt);
