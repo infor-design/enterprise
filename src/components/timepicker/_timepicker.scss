@@ -105,7 +105,7 @@
 
         @media only screen
           and (minwidth: $breakpoint-phone)
-          and (max-device-width: $breakpoint-big-phone + 88)
+          and (max-device-width: ($breakpoint-big-phone + 88))
           and (-webkit-min-device-pixel-ratio: 2)
           and (orientation: portrait) {
           min-width: 5px;
@@ -123,7 +123,7 @@
 
       @media only screen
         and (minwidth: $breakpoint-phone)
-        and (max-device-width: $breakpoint-big-phone + 88)
+        and (max-device-width: ($breakpoint-big-phone + 88))
         and (-webkit-min-device-pixel-ratio: 2)
         and (orientation: portrait) {
         width: 65px;
@@ -140,7 +140,7 @@
 
     @media only screen
       and (minwidth: $breakpoint-phone)
-      and (max-device-width: $breakpoint-big-phone + 88)
+      and (max-device-width: ($breakpoint-big-phone + 88))
       and (-webkit-min-device-pixel-ratio: 2)
       and (orientation: portrait) {
       width: 60px !important;
@@ -152,7 +152,7 @@
 
         @media only screen
           and (minwidth: $breakpoint-phone)
-          and (max-device-width: $breakpoint-big-phone + 88)
+          and (max-device-width: ($breakpoint-big-phone + 88))
           and (-webkit-min-device-pixel-ratio: 2)
           and (orientation: portrait) {
           width: 65px !important;

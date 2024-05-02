@@ -3,7 +3,8 @@
 // Calendar Toolbar
 //================================================== //
 
-@import '../datepicker/datepicker';
+// Dependencies
+// datepicker
 
 .calendar-toolbar {
   .datepicker {
@@ -205,7 +206,7 @@
 
     @media only screen
       and (minwidth: $breakpoint-phone)
-      and (ax-device-width: (m$breakpoint-big-phone + 88))
+      and (max-device-width: ($breakpoint-big-phone + 88))
       and (-webkit-min-device-pixel-ratio: 2)
       and (orientation: portrait) {
       padding: 0 5px;
