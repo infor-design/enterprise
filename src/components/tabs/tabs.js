@@ -2179,6 +2179,11 @@ Tabs.prototype = {
    * @returns {void}
    */
   activate(href, anchor) {
+    // NG#1615 User Environment Scenario from Web Service Call
+    if (href.indexOf('undefined') > -1) {
+      return true;
+    }
+
     const self = this;
 
     if (self.isURL(href)) {
