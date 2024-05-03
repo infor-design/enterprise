@@ -764,7 +764,7 @@ Homepage.prototype = {
       const box = self.settings.widgetWidth + self.settings.gutterSize;
       const totalWidth = box * self.columns;
       const left = Locale.isRTL() ? totalWidth - ((box * block.w) + (box * available.col)) : box * available.col;// eslint-disable-line
-      const top = (self.settings.widgetHeight + self.settings.gutterSize) * available.row;
+      const top = ((self.settings.widgetHeight + self.settings.gutterSize) * available.row) - 12;
       const pos = { left, top };
 
       if (animate && !this.editing) {
