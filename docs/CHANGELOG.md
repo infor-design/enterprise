@@ -29,6 +29,7 @@
 - `[General]` Removed dups in sass packages thus reducing css file size. ([#8653](https://github.com/infor-design/enterprise/issues/8653))
 - `[Header]` Fixed default color, and changed to flex layout by default. This is to allow for ids-breadcrumb to work. ([#2178](https://github.com/infor-design/enterprise-wc/issues/2178))
 - `[Homepage]` Fixed bug that caused errors on resize when no widgets. ([#8611](https://github.com/infor-design/enterprise/issues/8611))
+- `[Homepage]` Fixed a bug where the homepage height was incorrect. ([#8640](https://github.com/infor-design/enterprise/issues/8640))
 - `[Month Picker]` Fixed cursor for down button. ([#7315](https://github.com/infor-design/enterprise/issues/7315))\
 - `[Pager]` Fixed misaligned hover state in RTL. ([#8508](https://github.com/infor-design/enterprise/issues/8508))
 - `[Personalization]` Fixed bug with wrong colors in landmark form examples. ([#8625](https://github.com/infor-design/enterprise/issues/8625))
