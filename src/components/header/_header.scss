@@ -500,6 +500,7 @@ $subheader-height: 60px;
 
       .has-collapse-button {
         .collapse-button {
+            border-radius: 8px;
             position: absolute;
             right: 0;
           }
@@ -557,7 +558,7 @@ $subheader-height: 60px;
 
   .toolbar [class^='btn'] {
     &:hover {
-      background-color: $header-default-bg-hover-color !important;
+      background-color: $button-color-tertiary-hover-background-new !important;
 
       .icon {
         color: $ids-color-palette-white;
@@ -649,11 +650,6 @@ $subheader-height: 60px;
         color: $header-button-color;
       }
 
-      &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable),
-      &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable) svg.icon {
-        color: $header-button-hover-color;
-      }
-
       &.application-menu-trigger {
         top: 0;
 
@@ -664,7 +660,7 @@ $subheader-height: 60px;
 
       &.is-open .icon,
       &.btn-menu.is-open .icon {
-        color: $header-button-hover-color;
+        color: $button-color-tertiary-hover-background-new;
       }
 
       .audible {
@@ -673,7 +669,7 @@ $subheader-height: 60px;
 
       &:active:not([disabled]),
       &[aria-expanded='true'] {
-        color: $header-button-hover-color;
+        color: $button-color-tertiary-hover-background-new;
 
         .icon {
           color: $header-button-focus-color;
@@ -697,11 +693,7 @@ $subheader-height: 60px;
 
         &:not(.collapse-button) {
           border-color: $header-button-focus-border-color;
-          box-shadow: 0 0 0 2px transparent, 0 0 0 0 $header-button-focus-color, $header-focus-box-shadow;
-        }
-
-        .icon {
-          color: $header-button-focus-color;
+          box-shadow: $button-color-tertiary-focus-shadow;
         }
       }
 
@@ -847,7 +839,7 @@ $subheader-height: 60px;
     &:hover {
       .icon.app-header {
         > span {
-          background-color: $header-button-hover-color;
+          background-color: $button-color-tertiary-hover-background-new;
         }
       }
     }
@@ -951,11 +943,6 @@ $subheader-height: 60px;
   }
 }
 
-.subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button),
-.personalize-subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button) {
-  box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
-}
-
 .subheader,
 .personalize-subheader {
   h1,
@@ -994,7 +981,7 @@ $subheader-height: 60px;
         .app-header {
           &.icon {
             > span {
-              background-color: $header-button-hover-color;
+              background-color: $button-color-tertiary-hover-background-new;
             }
           }
         }
@@ -1062,6 +1049,7 @@ html[dir='rtl'] {
 
         .collapse-button {
           height: 38px;
+          border-radius: 8px;
 
           @media (min-width: $breakpoint-phone-to-tablet) {
             height: 34px;

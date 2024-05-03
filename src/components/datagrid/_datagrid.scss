@@ -2216,7 +2216,7 @@ $datagrid-small-row-height: 25px;
         vertical-align: middle;
 
         &:hover {
-          color: $button-color-tertiary-hover-font;
+          color: $button-color-tertiary-hover-text;
         }
 
         &:active {
@@ -4600,7 +4600,7 @@ td .btn-actions {
   &[disabled] {
     .icon.plus-minus::before,
     .icon.plus-minus::after {
-      background-color: $button-color-tertiary-disabled-font;
+      background-color: $button-color-tertiary-initial-font;
     }
   }
 
@@ -4628,7 +4628,7 @@ td .btn-actions {
 
     .icon.plus-minus::before,
     .icon.plus-minus::after {
-      background-color: $button-color-tertiary-hover-font;
+      background-color: $button-color-tertiary-hover-text;
     }
 
     span {
