@@ -183,6 +183,23 @@
       left: 170px;
     }
   }
+
+  li.child .switch {
+    input ~ .label-text::before,
+    input ~ label::before {
+      left: 135px;
+    }
+
+    input:empty ~ .label-text::after,
+    input:empty ~ label::after {
+      left: 130px;
+    }
+
+    input:checked ~ .label-text::after,
+    input:checked ~ label::after {
+      left: 150px;
+    }
+  }
 }
 
 // Rule to remove bottom padding on modal if its the last element.

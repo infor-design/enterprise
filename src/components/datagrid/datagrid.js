@@ -6543,30 +6543,74 @@ Datagrid.prototype = {
           return;
         }
 
-        self.isColumnsChanged = false;
-        const listviewApi = modal.element.find('.listview').listview({
-          source: self.settings.columns,
-          template: `
+        let pSource = self.settings.columns;
+        let pTemplate = `
+          <ul class="arrange list" data-arrange-handle=".handle">
+          {{#dataset}}
+            {{#name}}
+            <li draggable class="{{^hideable}}is-disabled{{/hideable}}" {{^hideable}}data-arrange-exclude="true"{{/hideable}} data-column-id="{{id}}">
+              <div class="switch field">
+                <span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
+                <input id="{{id}}-switch" class="switch" type="checkbox" {{^hidden}}checked{{/hidden}} {{^hideable}}disabled{{/hideable}} />
+                <span for="{{id}}-switch" class="label-text">{{name}}</span>
+              </div>
+            </li>
+            {{/name}}
+          {{/dataset}}
+          </ul>`;
+
+        if (self.settings.columnGroups) {
+          const colGroups = utils.deepCopy(self.settings.columnGroups);
+          let colIndex = 0;
+          colGroups.forEach((group) => {
+            group.columns = self.settings.columns.slice(colIndex, colIndex + group.colspan);
+            group.groupId = group.id;
+            group.groupName = group.name;
+            delete group.id;
+            delete group.name;
+            colIndex += group.colspan;
+          });
+
+          pSource = colGroups;
+          pTemplate = `
             <ul class="arrange list" data-arrange-handle=".handle">
             {{#dataset}}
-              {{#name}}
-              <li draggable class="{{^hideable}}is-disabled{{/hideable}}" {{^hideable}}data-arrange-exclude="true"{{/hideable}} data-column-id="{{id}}">
+              <li data-group-id="{{groupId}}">
                 <div class="switch field">
                   <span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
-                  <input id="{{id}}-switch" class="switch" type="checkbox" {{^hidden}}checked{{/hidden}} {{^hideable}}disabled{{/hideable}} />
-                  <span for="{{id}}-switch" class="label-text">{{name}}</span>
+                  <input id="{{groupId}}-grp-switch" class="switch" type="checkbox"/>
+                  <span for="{{groupId}}-grp-switch" class="label-text">{{groupName}}</span>
                 </div>
               </li>
-              {{/name}}
+              {{#columns}}
+                {{#name}}
+                <li class="child" data-group-id="{{groupId}}">
+                  <div class="switch field">
+                    <span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
+                    <input id="{{id}}-switch" class="switch" type="checkbox"/>
+                    <span for="{{id}}-switch" class="label-text">{{name}}</span>
+                  </div>
+                </li>
+                {{/name}}
+              {{/columns}}
             {{/dataset}}
-            </ul>`,
+            </ul>`;
+        }
+
+        console.log(pSource);
+        self.isColumnsChanged = false;
+        const listviewApi = modal.element.find('.listview').listview({
+          source: pSource,
+          template: pTemplate,
           selectOnFocus: false
         }).data('listview');
 
-        listviewApi.element.find('ul').arrange({
-          handle: '.icon-handle',
-          isVisualItems: true
-        });
+        if (self.settings.columnReorder) {
+          listviewApi.element.find('ul').arrange({
+            handle: '.icon-handle',
+            isVisualItems: true
+          });
+        }
 
         listviewApi.element.off('selected.datagrid')
           .on('selected.datagrid', function (selectedEvent, args) {

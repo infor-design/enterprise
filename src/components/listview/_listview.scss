@@ -249,6 +249,10 @@
         color: $hyperlink-color;
       }
     }
+
+    &.child {
+      padding-left: 35px;
+    }
   }
 
   &.disable-hover {
