@@ -9,11 +9,11 @@ demo:
 
 ## Font family
 
-For the latest theme with previous names (Uplift/Vibrant/New) use a custom font called [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+3). We include a [variable font](https://fonts.google.com/knowledge/introducing_type/introducing_variable_fonts) but generally use two font-weights 400, 600 in designs, although all 100-900 font weights appear. We do not use italics anywhere in the designs as it is difficult to read.
+For the latest theme with previous names (Uplift/Vibrant/New) use a custom font called [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+3). We use 300,400,600 font-weights, although all 100-900 font weights may appear. We do not use italics anywhere in the designs as it is difficult to read.
 
 Source Sans Pro supports a lot of languages but some languages require [fallbacks](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography-new.scss#L6) as noted. The correct font will be used if the matching locale is used.
 
-However this is not the recommended to use `fonts.googleapis` to use the fonts. The problems can be:
+NOTE: It is no longer recommended to use `fonts.googleapis` to use the fonts. The problems can be:
 
 a) Google fonts violates [GDPR](https://www.cookieyes.com/documentation/google-fonts-and-gdpr/)
 b) If the application needs to run without an internet connection
@@ -23,17 +23,7 @@ For this reason we suggest you serve the files with the application all the need
 
 Also if using npm these will be found in `node_modules/ids-identity/dist/fonts`. Generally you will need to copy the files into the correct location for your app and serve them.
 
-By default we expect the fonts to be in the folder `/fonts/` (root / fonts) but in case you would like to rename them or change the location we provided a bunch of settings.
-
-The following settings can be used and should be set first thing your application loads.
-
-- `window.SohoConfig.fontPath` - general path where all fonts can be found `/fonts` as a default
-- `window.SohoConfig.noFontFace` - if set to true no fonts will be used (defaults back to system fonts) or this could be used if you want to use the google api link anyways
-
-Less used Settings:
-
-- `window.SohoConfig.fontName` - name of the font ('Source Sans Pro' is the default)
-- `window.SohoConfig.noFontFace` - Can be set to true to opt out of using font-face to fetch fonts locally.
+Then add a style sheet to your application that points to the fonts you can get this from [this file](https://github.com/infor-design/enterprise/tree/main/app/www/css).
 
 ## Typography Related Css Classes
 

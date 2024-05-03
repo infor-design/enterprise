@@ -1,5 +1,4 @@
 /* eslint-disable import/first */
-import './utils/font-face';
 import * as debug from './utils/debug';
 import './polyfills/polyfills';
 
