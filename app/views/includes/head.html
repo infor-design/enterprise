@@ -15,17 +15,12 @@
   <meta name="version" content="{{version}}"/>
   <meta name="commit" content="{{commit}}"/>
 
-  <!-- Supplying the font parameters in the head is supported
-  <script>
-    window.SohoConfig = {};
-    window.SohoConfig.fontPath = '/test/fonts';
-  </script>
-  -->
-
   <script src="{{basepath}}js/jquery-3.7.1.js"></script>
   {{^noD3}}
   <script src="{{basepath}}js/d3.v7.js"></script>
   {{/noD3}}
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600&amp;display=swap" rel="stylesheet" />
 
   {{#SohoConfig}}
   <script>
