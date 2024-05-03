@@ -17,7 +17,7 @@ spec:
             defaultMode: 0600
       containers:
         - name: enterprise-release
-          image: hookandloop/enterprise-release:1.0.0
+          image: hookandloop/enterprise-release:1.0.1
           imagePullPolicy: Always
           volumeMounts:
             - name: gitconfig

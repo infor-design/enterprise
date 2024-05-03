@@ -9,8 +9,9 @@
   $('body').one('initialized', function () {
 
     // Serializer
-    var serializer = function(value, oldVal, col, row, cell, rowData) {
-      return (rowData !== undefined ) ? rowData.desc.toUpperCase() : '';
+    var serializer = function (value, oldVal, col, row, cell, rowData) {
+      console.log('serializer changes value', value, rowData);
+      return value.toUpperCase() || '';
     }
 
     // Define Columns for the Grid.

@@ -118,6 +118,7 @@ $('#datagrid').datagrid({
 |`uppercase` | If true the text will be transformed to upper case in readonly view. Also in edit mode uppercase will be enforced.|
 |`expandOnActivate` | If true the cell can be expanded on focus to show additional / all content.|
 |`doNotEmptyCellWhenEditing`| If true the cell will not clear while editing.
+|`serialize` | Takes a callback function that fires when editing that allows you to correct values before committing to the data set when editing |
 
 ## Column Settings (Formatter Specific)
 

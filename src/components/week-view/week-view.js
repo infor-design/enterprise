@@ -280,6 +280,20 @@ WeekView.prototype = {
       if (this.isStackedView()) {
         this.appendToDayContainer(event);
       } else {
+        if (this.element.hasClass('is-day-view')) {
+          if (event.startsHour < this.settings.startHour) {
+            event.startsHour = this.settings.startHour;
+          }
+
+          if (days[0].key === event.startKey && event.endsHour < this.settings.endHour) {
+            event.endsHour = this.settings.endHour + 1;
+          } else if (days[0].key !== event.startKey && days[0].key !== event.endKey) {
+            event.startsHour = this.settings.startHour;
+            event.endsHour = this.settings.endHour + 1;
+          } else if (days[0].key === event.endKey) {
+            event.startsHour = this.settings.startHour;
+          }
+        }
         this.appendEventToHours(days[0].elem, event);
       }
     }
@@ -463,7 +477,7 @@ WeekView.prototype = {
         }
 
         // Add one per half hour + 1 px for each border crossed
-        node.style.height = `${25 * (duration * 2) + (1.5 * duration)}px`;
+        node.style.height = `${25 * (Math.round(duration) * 2) + (1.5 * Math.round(duration))}px`;
 
         node.innerHTML = `<div class="calendar-event-content">
           ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
@@ -472,8 +486,18 @@ WeekView.prototype = {
         </div>`;
 
         const containerWrapper = tdEl.querySelector('.week-view-cell-wrapper');
-        const containerEvents = tdEl.querySelectorAll('.calendar-event');
-        const eventCount = containerEvents.length;
+        let containerEvents = tdEl.querySelectorAll('.calendar-event');
+        let eventCount = containerEvents.length;
+
+        // Check the startHour if there is an overlaying event
+        if (eventCount === 0) {
+          const monthKey = tdEl.getAttribute('data-key');
+          const calendarBody = tdEl.parentNode.parentNode;
+          const startTdEl = calendarBody.children[0].querySelectorAll(`td[data-key="${monthKey}"]`)[0];
+          
+          containerEvents = startTdEl.querySelectorAll('.calendar-event');
+          eventCount = containerEvents.length;
+        }
 
         if (eventCount > 0) {
           const width = (100 / (eventCount + 1));
