@@ -10711,6 +10711,7 @@ Datagrid.prototype = {
     const col = this.columnSettings(cell);
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
       this.getActiveDataset()[dataRowIndex];
+
     let oldValue = this.fieldValue(rowData, col.field);
     if (col.beforeCommitCellEdit && (isFileupload || !isCallback)) {
       const vetoCommit = col.beforeCommitCellEdit({
@@ -10733,6 +10734,10 @@ Datagrid.prototype = {
     // Sanitize console methods
     oldValue = xssUtils.sanitizeConsoleMethods(oldValue);
     newValue = xssUtils.sanitizeConsoleMethods(newValue);
+
+    if (col.serialize) {
+      newValue = col.serialize(newValue, oldValue, col, dataRowIndex, cell, rowData);
+    }
 
     // Format Cell again
     const isInline = cellNode.hasClass('is-editing-inline');
