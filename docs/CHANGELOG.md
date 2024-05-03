@@ -2,6 +2,10 @@
 
 ## v4.95.0
 
+## v4.95.0 Important Changes
+
+- `[General]` Using a URL for googleapis for the font should no longer be used because of GDPR. It is now recommended to serve the font with your application. You may get a 404 error if not properly served. See [typography docs](https://github.com/infor-design/enterprise/blob/main/src/components/typography/readme.md#font-family) for details and config. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
+
 ## v4.95.0 Features
 
 - `[About]` Added copy to clipboard button. ([#8438](https://github.com/infor-design/enterprise/issues/8438))
@@ -18,11 +22,13 @@
 - `[Calendar]` Fixed modal button and input positions. ([#8657](https://github.com/infor-design/enterprise/issues/8657))
 - `[Contextual Action Panel]` Fixed added padding on contextual action panel. ([#8553](https://github.com/infor-design/enterprise/issues/8553))
 - `[Dropdown/Lookup]` Add option to remove margin in dropdown and lookup wrapper.([#8492](https://github.com/infor-design/enterprise/issues/8492))
+- `[Datagrid]` Fixed bug with invisible columns when frozen. ([#8617](https://github.com/infor-design/enterprise/issues/8617))
 - `[Datagrid]` Fixed selected row color in dark theme. ([#8467](https://github.com/infor-design/enterprise/issues/8467))
 - `[Datagrid]` Fixed xss handling in lookup. ([#8561](https://github.com/infor-design/enterprise/issues/8561))
 - `[Datagrid]` Fixed an error parsing some dates. ([#8627](https://github.com/infor-design/enterprise/issues/8627))
 - `[Datagrid]` Fixed unable to use the left/right arrow keys on the text in an editable cell. ([#8457](https://github.com/infor-design/enterprise/issues/8457))
 - `[Datagrid]` Fixed and documented `serialize` callback on columns. ([#8663](https://github.com/infor-design/enterprise/issues/8663))
+- `[Datagrid]` Fixed search icon misalignment in dropdown cells. ([#8515](https://github.com/infor-design/enterprise/issues/8515))
 - `[Datagrid]` Fixed search icon misalignment in dropdown cells. ([#8515](https://github.com/infor-design/enterprise/issues/8515))
 - `[Datagrid]` Fixed an error editing on non first page in server side paging datagrid. ([#8537](https://github.com/infor-design/enterprise-ng/issues/1672))
 - `[FieldFilter]` Added Default Field Filter Reset example page. ([NG#1641](https://github.com/infor-design/enterprise-ng/issues/1641))

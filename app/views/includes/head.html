@@ -15,6 +15,13 @@
   <meta name="version" content="{{version}}"/>
   <meta name="commit" content="{{commit}}"/>
 
+  <!-- Supplying the font parameters in the head is supported
+  <script>
+    window.SohoConfig = {};
+    window.SohoConfig.fontPath = '/test/fonts';
+  </script>
+  -->
+
   <script src="{{basepath}}js/jquery-3.7.1.js"></script>
   {{^noD3}}
   <script src="{{basepath}}js/d3.v7.js"></script>
@@ -50,7 +57,6 @@
   <script src="{{basepath}}js/sohoxi.js?v=MTIuMC4wLjAuMQ"></script>
   <script src="../../js/cultures/{{locale}}.js"></script>-->
 
-  <link href="https://fonts.googleapis.com/css?{{fontString}}" rel="stylesheet"/>
   <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/theme-{{theme.name}}-{{theme.mode}}.css" type="text/css"/>
   <script>
     var colors;
