@@ -44,6 +44,22 @@ See also the [Cards](../cards/readme.md) documentation for widget structure.
 </div>
 ```
 
+Use the background settings to add a background image and icon.
+
+```javascript
+$('.homepage').homepage({
+    background: {
+      banner: {
+        image: '{{basepath}}/images/background-image.svg',
+        icon: {
+          image: '{{basepath}}/images/banner-icon.png',
+          width: 200
+      }
+    }
+  },
+});
+```
+
 ## Accessibility
 
 - The component respects element tab order which is important between the main containers
