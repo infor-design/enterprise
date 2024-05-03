@@ -702,24 +702,27 @@ Homepage.prototype = {
     if (content.length) {
       content[0].style.marginLeft = `-${(bp / 2)}px`;
 
-      if (self.background.iconElement) {
+      if (self.background?.iconElement) {
         self.background.iconElement[0].style.marginLeft = `-${(bp / 2)}px`;
       }
 
       const bannerWidgetPager = content.find('.banner .circlepager');
 
-      if (bannerWidgetPager && bannerWidgetPager.data('circlepager').slidesToShow !== self.columns) {
+      if (bannerWidgetPager) {
         const bannerWidgetPagerApi = bannerWidgetPager.data('circlepager');
-        bannerWidgetPagerApi.responsiveSlidesToShow(self.columns);
 
-        if (bannerWidgetPagerApi.slidesToShow === 1) {
-          bannerWidgetPagerApi.slidesJQ.each((i, e) => {
-            e.style.margin = 0;
-          });
-        } else {
-          bannerWidgetPagerApi.slidesJQ.each((i, e) => {
-            e.style.margin = null;
-          });
+        if (bannerWidgetPagerApi && bannerWidgetPagerApi.slidesToShow !== self.columns) {
+          bannerWidgetPagerApi.responsiveSlidesToShow(self.columns);
+
+          if (bannerWidgetPagerApi.slidesToShow === 1) {
+            bannerWidgetPagerApi.slidesJQ.each((i, e) => {
+              e.style.margin = 0;
+            });
+          } else {
+            bannerWidgetPagerApi.slidesJQ.each((i, e) => {
+              e.style.margin = null;
+            });
+          }
         }
       }
     }
