@@ -57,6 +57,10 @@
           height: 360px;
           margin: 0 0.5px;
 
+          &.is-visible.transition {
+            transition: opacity 0.1s ease 0s;
+          }
+
           .card,
           .small-widget,
           .widget {
