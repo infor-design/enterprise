@@ -11,7 +11,7 @@ demo:
 
 For the latest theme with previous names (Uplift/Vibrant/New) use a custom font called [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+3). We use 300,400,600 font-weights, although all 100-900 font weights may appear. We do not use italics anywhere in the designs as it is difficult to read.
 
-Source Sans Pro supports a lot of languages but some languages require [fallbacks](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography-new.scss#L6) as noted. The correct font will be used if the matching locale is used.
+Source Sans Pro supports a lot of languages but some languages require [alternate fonts](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography-new.scss#L6). Each of this fonts will be used based on the macthing locale.
 
 NOTE: It is no longer recommended to use `fonts.googleapis` to use the fonts. The problems can be:
 
