@@ -2,6 +2,10 @@
 
 ## v4.95.0
 
+## v4.95.0 Important Changes
+
+- `[General]` Using googleapis CDN for the design system fonts should no longer be used due to complications with GDPR compliance. It is now recommended to serve the font with your application. See [typography docs](https://github.com/infor-design/enterprise/blob/main/src/components/typography/readme.md#font-family) for details and config. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
+
 ## v4.95.0 Features
 
 - `[About]` Added copy to clipboard button. ([#8438](https://github.com/infor-design/enterprise/issues/8438))

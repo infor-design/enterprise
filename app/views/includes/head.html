@@ -20,8 +20,6 @@
   <script src="{{basepath}}js/d3.v7.js"></script>
   {{/noD3}}
 
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600&amp;display=swap" rel="stylesheet" />
-
   {{#SohoConfig}}
   <script>
     window.SohoConfig = JSON.parse('{{{SohoConfig}}}');
@@ -52,10 +50,13 @@
   <script src="{{basepath}}js/sohoxi.js?v=MTIuMC4wLjAuMQ"></script>
   <script src="../../js/cultures/{{locale}}.js"></script>-->
 
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600&amp;display=swap" rel="stylesheet"/>
+  <!-- Do not use this going forward due to GDPR Issues. This will be deprecated soon. -->
+  <!--
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600&amp;display=swap" rel="stylesheet"/>
+  -->
 
-  <!--<link rel="stylesheet" id="font-faces" href="{{basepath}}css/font-face.css"
-  type="text/css" />-->
+  <!-- Test and use this new style sheet in your demo app before we deprecate google apis -->
+  <link rel="stylesheet" id="font-faces" href="{{basepath}}css/font-face.css" type="text/css" />
 
   <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/theme-{{theme.name}}-{{theme.mode}}.css" type="text/css"/>
   <script>

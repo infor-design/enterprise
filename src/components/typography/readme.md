@@ -9,21 +9,19 @@ demo:
 
 ## Font family
 
-For the latest theme with previous names (Uplift/Vibrant/New) use a custom font called [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+3). We use 300,400,600 font-weights, although all 100-900 font weights may appear. We do not use italics anywhere in the designs as it is difficult to read.
+When using the newest designs (Not Classic Mode) you should use a custom font called [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+3). We use 300,400,600 font-weights, although all 100-900 font weights may appear, the font will scale up and down as needed down. We do not use italics anywhere in the designs as it is difficult to read.
 
-Source Sans Pro supports a lot of languages but some languages require [alternate fonts](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography-new.scss#L6). Each of this fonts will be used based on the macthing locale.
+Source Sans Pro supports many of our languages but some languages require [alternate fonts](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography-new.scss#L6). Each of this fonts will be used based on the matching locale.
 
-NOTE: It is no longer recommended to use `fonts.googleapis` to use the fonts. The problems can be:
+NOTE: It is no longer recommended to use `fonts.googleapis` to use the fonts because it can cause some issues:
 
-a) Google fonts violates [GDPR](https://www.cookieyes.com/documentation/google-fonts-and-gdpr/)
-b) If the application needs to run without an internet connection
-c) In some countries google links may be banned
+a) because Google fonts violates [GDPR](https://www.cookieyes.com/documentation/google-fonts-and-gdpr/)
+b) if application needs to run without an internet connection
+c) because some countries google links may be banned
 
-For this reason we suggest you serve the files with the application all the needed fonts can be found in the [design system repo](https://github.com/infor-design/design-system/tree/main/fonts) or [the new design system repo](https://github.com/infor-design/ids-foundation/fonts)
+For this reason we recommend you serve the files with your application. All the needed fonts can be found in the [design system repo](https://github.com/infor-design/design-system/tree/main/fonts). You will need to copy the files into the correct location for your app and serve them and then include the font.css file in your page. Updating any locations as needed.
 
-Also if using npm these will be found in `node_modules/ids-identity/dist/fonts`. Generally you will need to copy the files into the correct location for your app and serve them.
-
-Then add a style sheet to your application that points to the fonts you can get this from [this file](https://github.com/infor-design/enterprise/tree/main/app/www/css).
+For example see the demo app in this [this file](https://github.com/infor-design/enterprise/blob/main/app/views/includes/head.html#L53-L59).
 
 ## Typography Related Css Classes
 
