@@ -46,7 +46,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {array} [settings.closeBtnOptions.attributes] Adds attributes on the close button.
 * @param {string} [settings.closeBtnOptions.closeBtnTooltip='Close'] Adds the ability to change the tooltip for Close button. Default is Close.
 * @param {number} [settings.maxWidth=null] Optional max width to add in pixels.
-* @param {number} [settings.buttonsetWidth=null] Optional width to set the buttonset.
+* @param {number|string} [settings.buttonsetWidth=null] Optional width to set the buttonset.
 * @param {boolean} [settings.fullsize=false] If true, ignore any sizing algorithms and
 * return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response.
 * @param {string} [settings.breakpoint='phone-to-tablet'] The breakpoint to use for a responsive change to "fullsize" mode. See `utils.breakpoints` to view the available sizes.
@@ -460,22 +460,26 @@ Modal.prototype = {
     this.registerModal();
 
     if (this.settings.buttons) {
-      // Iterate over each button in the modal buttonset
-      $('.modal-buttonset button').each((_, button) => {
-        const $button = $(button);
-        const buttonWidth = $button.width();
-        const textWidth = $button.find('span')[0].scrollWidth;
+      // Get all the buttons in the modal buttonset
+      const buttons = document.querySelectorAll('.modal-buttonset button');
+      // Iterate through each button
+      for (let i = 0; i < buttons.length; i++) {
+        const button = buttons[i];
+        // Get the width of the button
+        const buttonWidth = button.offsetWidth;
+        // Get the width of the button's text
+        const textWidth = button.querySelector('span').scrollWidth;
 
-        // Check if the button width is less than the width of the text
+        // Check if the button's width is less than the text's width
         if (buttonWidth < textWidth) {
-          // Add a tooltip with the full text content if the text is truncated
-          $button.attr('title', $button.text()).tooltip({
-            content: $button.text(),
+          // Add a tooltip to the button
+          $(button).tooltip({
+            content: button.querySelector('span').textContent,
             placement: 'top',
             trigger: 'hover'
           });
         }
-      });
+      }
     }
 
     if (this.settings.icon) {
@@ -707,8 +711,13 @@ Modal.prototype = {
       // In standard Modal mode, size the buttons to fit after rendering.
       btn.element[0].style.width = `${btnPercentWidth}%`;
 
+      // Check if buttonsetWidth is defined in the settings
       if (self.settings.buttonsetWidth) {
-        btn.element[0].querySelector('span').style.width = `${self.settings.buttonsetWidth}px`;
+        // Get the span element inside the button
+        const buttonSpan = btn.element[0].querySelector('span');
+        // Set the width of the button based on buttonsetWidth value
+        const buttonWidth = typeof self.settings.buttonsetWidth === 'string' ? self.settings.buttonsetWidth : `${self.settings.buttonsetWidth}px`;
+        buttonSpan.style.width = buttonWidth;
       }
 
       $buttons.add(btn);

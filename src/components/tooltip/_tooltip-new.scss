@@ -2,7 +2,11 @@
 //================================================== /
 
 .tooltip-content {
-  padding: 6px 10px 3px;
+  padding: 6px 10px 6px;
+
+  p {
+    margin-bottom: 2px;
+  }
 }
 
 // Reduce the font size from being too large (calendar/example-index)
