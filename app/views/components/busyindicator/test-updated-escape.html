@@ -36,17 +36,3 @@ $(function () {
 var initialLocale = 'fr-FR';
 Soho.Locale.set(initialLocale);
 </script>
-
-<script>
-// Initialize the demo info popup
-$('#info-btn:not(.invisible)').popover({
-  closebutton: true,
-  content: $('#info-popup'),
-  extraClass: 'alternate',
-  placement: 'bottom',
-  popover: true,
-  tooltipElement: '#info-popup-tooltip',
-  title: 'Example Information',
-  trigger: 'click'
-});
-</script>
