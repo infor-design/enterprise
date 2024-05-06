@@ -20,7 +20,6 @@
 
 $module-default-bg-color: $ids-color-palette-slate-60;
 $header-default-bg-color: $ids-color-palette-slate-70;
-$header-default-bg-hover-color: $ids-color-palette-slate-80;
 
 // Form Background Color
 $header-bg-color: $ids-color-palette-slate-60;
@@ -30,12 +29,10 @@ $header-text-color: $ids-color-palette-white;
 $header-border-color: $ids-color-palette-slate-100;
 $header-button-color: $ids-color-palette-white;
 $header-button-focus-color: rgba($ids-color-palette-white, 1);
-$header-button-hover-color: rgba($ids-color-palette-white, 1);
 $header-button-disabled-color: rgba($ids-color-palette-white, 0.3);
 $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
 $header-toolbar-searchfield-icon-color: $ids-color-palette-white;
-$header-toolbar-button-hover-color: #313236;
 
 // Homepages
 $header-hero-text-color: $ids-color-palette-white;
@@ -101,22 +98,23 @@ $hr-top-color: $ids-color-palette-slate-90;
 $hr-bottom-color: transparent;
 
 // Buttons
-$button-color-primary-initial-background: $ids-color-palette-slate-60;
+$button-color-primary-initial-background: $ids-color-palette-slate-50;
 $button-color-primary-disabled-background: $ids-color-palette-slate-70;
 $button-color-primary-disabled-border: $ids-color-palette-slate-70;
 $button-color-primary-hover-background: $ids-color-palette-slate-70;
 $button-color-primary-active-background: $ids-color-palette-slate-60;
-$button-color-tertiary-hover-font-new: $ids-color-palette-white;
+$button-color-tertiary-hover-text-new: $ids-color-palette-white;
 $button-hyperlink-color: $ids-color-palette-slate-30;
 $button-hyperlink-hover-color: $ids-color-palette-slate-40;
 $button-color-tertiary-hover-background: $ids-color-palette-slate-50;
-$button-color-tertiary-hover-background-new: $ids-color-palette-slate-90;
+$button-color-tertiary-hover-background-new: rgba(0, 0, 0, 0.25);
 $button-icon-disabled-color: $ids-color-palette-slate-60;
 $button-color-secondary-initial-font: $ids-color-palette-slate-10;
 $button-color-secondary-hover-background: $ids-color-palette-slate-50;
 $button-color-secondary-initial-background: $ids-color-palette-slate-40;
-
-$hero-button-color-tertiary-hover-background-new: $button-color-tertiary-hover-background-new;
+$hero-button-color-tertiary-hover-background-new: rgba(0, 0, 0, 0.25);
+$button-color-tertiary-hover-text: $ids-color-palette-slate-10;
+$button-hyperlink-hover-color: $ids-color-palette-slate-10;
 
 // Button Ripple
 $secondary-btn-ripple-color: $ids-color-palette-slate-60;

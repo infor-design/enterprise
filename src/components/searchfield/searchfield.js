@@ -412,7 +412,7 @@ SearchField.prototype = {
     if (this.isContainedByFlexToolbar) {
       if (!this.collapseButton || !this.collapseButton.length) {
         this.collapseButton = $(`
-          <button class="btn-secondary collapse-button" type="button">
+          <button class="btn-icon collapse-button" type="button">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-exit-fullview"></use>
             </svg>

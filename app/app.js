@@ -12,13 +12,11 @@ import requestLoggers from './src/js/middleware/request-logger.js';
 import cmdParamsHandlers from './src/js/middleware/cmd-params-handler.js';
 import optionHandlers from './src/js/middleware/option-handler.js';
 import optionHandlerThemes from './src/js/middleware/option-handler-themes.js';
-import optionHandlerFonts from './src/js/middleware/option-handler-fonts.js';
 import basePathHandler from './src/js/middleware/basepath-handler.js';
 import globalDataHandler from './src/js/middleware/global-data-handler.js';
 import responseThrottler from './src/js/middleware/response-throttler.js';
 import removeHeaders from './src/js/middleware/remove-headers.js';
 // import cspHandler from './src/js/middleware/csp-handler.js';
-import infoHandler from './src/js/middleware/info-handler.js';
 
 import utils from './src/js/utils.js';
 import getJSONFile from './src/js/get-json-file.js';
@@ -104,14 +102,12 @@ app.use(requestLoggers(app));
 app.use(cmdParamsHandlers(app, DEFAULT_RESPONSE_OPTS));
 app.use(optionHandlers(app));
 app.use(optionHandlerThemes(app));
-app.use(optionHandlerFonts());
 app.use(basePathHandler(app));
 app.use(globalDataHandler(app));
 app.use(responseThrottler(app));
 app.use(removeHeaders(app));
 // TODO
 // app.use(cspHandler(app));
-app.use(infoHandler(app));
 
 app.use(router);
 
