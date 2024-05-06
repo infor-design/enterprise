@@ -279,8 +279,8 @@ $listview-subhead-color: $ids-color-palette-slate-60;
 
 $listview-toolbar-button-text-color: $button-color-tertiary-initial-font;
 $listview-toolbar-button-icon-color: $button-color-tertiary-initial-font;
-$listview-toolbar-button-text-hover-color: $ids-color-brand-primary-base;
-$listview-toolbar-button-icon-hover-color: $ids-color-brand-primary-base;
+$listview-toolbar-button-text-hover-color: $ids-color-palette-slate-100;
+$listview-toolbar-button-icon-hover-color: $ids-color-palette-slate-100;
 $listview-toolbar-button-text-selected-color: $ids-color-brand-primary-base;
 $listview-toolbar-button-icon-selected-color: $ids-color-brand-primary-base;
 
@@ -434,6 +434,7 @@ $cardlist-border-color: $ids-color-palette-slate-60;
 $cardlist-header-color: $ids-color-palette-black;
 $cardlist-actions-color: $ids-color-palette-slate-90;
 $cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
+$card-actions-toolbar-button-hover-color: $ids-color-palette-slate-100;
 
 // Switch
 $radio-checked-color: $ids-color-palette-azure-100;
