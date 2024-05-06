@@ -15,7 +15,6 @@
 // Local vars
 @import '../core/config';
 
-$header-toolbar-button-hover-color: transparent;
 $header-default-bg-color: $ids-color-palette-white;
 $module-default-bg-color: $ids-color-brand-primary-alt;
 $toolbar-btn-actions-hover-bg-color: transparent;
@@ -28,6 +27,9 @@ $accordion-selected-text-color: $ids-color-palette-white;
 $button-disabled-background-color: transparent;
 $button-icon-disabled-color: $ids-color-palette-slate-30;
 $button-color-secondary-initial-background: $ids-color-palette-graphite-30;
+$button-color-secondary-initial-font-new: $ids-color-palette-azure-60;
+$button-color-secondary-initial-border-new: $ids-color-palette-azure-60;
+$button-color-secondary-hover-background-new: $ids-color-palette-azure-60;
 
 // Datagrid
 $datagrid-sort-icon-sorted-color: $ids-color-palette-slate-40;

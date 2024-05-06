@@ -33,7 +33,7 @@
       $.get('{{basepath}}api/compressors?pageNum=1&sort=productId&pageSize=10', function(data) {
         grid = grid.data('datagrid');
         if (data.data && data.data.length > 1) {
-          var clone = JSON.parse(JSON.stringify(data.data));;
+          var clone = JSON.parse(JSON.stringify(data.data));
           clone[0].quantity = 145000;
           clone[1].quantity = 283423;
           clone[0].quantityStr = '100' + Soho.Locale.currentLocale.data.numbers.decimal + '00';

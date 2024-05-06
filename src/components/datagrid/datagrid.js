@@ -493,7 +493,7 @@ Datagrid.prototype = {
 
     if (this.stretchColumnDiff < 0) {
       const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
-      currentCol.style.width = `${this.stretchColumnWidth}px`;
+      if (currentCol) currentCol.style.width = `${this.stretchColumnWidth}px`;
     }
 
     if (this.settings.emptyMessage) {
@@ -4460,7 +4460,7 @@ Datagrid.prototype = {
 
     if (this.stretchColumnDiff < 0) {
       const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
-      currentCol.style.width = `${this.stretchColumnWidth}px`;
+      if (currentCol) currentCol.style.width = `${this.stretchColumnWidth}px`;
     }
 
     this.element.find('.datagrid-img').off('error.datagrid').on('error.datagrid', (e) => {
@@ -6709,7 +6709,7 @@ Datagrid.prototype = {
 
     if (set) {
       const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
-      currentCol.style.width = `${width}px`;
+      if (currentCol) currentCol.style.width = `${width}px`;
     }
 
     this.element.trigger('columnchange', [{ type: 'resizecolumn', index: idx, columns: this.settings.columns }]);
@@ -7565,7 +7565,7 @@ Datagrid.prototype = {
 
         if (self.stretchColumnDiff > 0 || self.stretchColumnWidth > 0) {
           const currentCol = self.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
-          currentCol.style.width = `${self.stretchColumnDiff > 0 ? `${self.stretchColumnDiff}px` : `${self.stretchColumnWidth}px`}`;
+          if (currentCol) currentCol.style.width = `${self.stretchColumnDiff > 0 ? `${self.stretchColumnDiff}px` : `${self.stretchColumnWidth}px`}`;
         }
       });
     }
@@ -10752,6 +10752,7 @@ Datagrid.prototype = {
     const col = this.columnSettings(cell);
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
       this.getActiveDataset()[dataRowIndex];
+
     let oldValue = this.fieldValue(rowData, col.field);
     if (col.beforeCommitCellEdit && (isFileupload || !isCallback)) {
       const vetoCommit = col.beforeCommitCellEdit({
@@ -10774,6 +10775,10 @@ Datagrid.prototype = {
     // Sanitize console methods
     oldValue = xssUtils.sanitizeConsoleMethods(oldValue);
     newValue = xssUtils.sanitizeConsoleMethods(newValue);
+
+    if (col.serialize) {
+      newValue = col.serialize(newValue, oldValue, col, dataRowIndex, cell, rowData);
+    }
 
     // Format Cell again
     const isInline = cellNode.hasClass('is-editing-inline');

@@ -275,8 +275,8 @@ Personalize.prototype = {
     colors.darker = colors.inactive;
     colors.darkest = colors.horizontalBorder;
     colors.btnHoverColor = colors.contrast;
-    colors.btnBgHoverColor = 'rgba(0, 0, 0, 0.3) !important';
-    colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.subtext}, 0 0 2px 1px ${colors.subtext}`;
+    colors.btnBgHoverColor = 'rgba(0, 0, 0, 0.25) !important';
+    colors.focusBoxShadow = `0 0 0 0.5px ${colors.subtext}, 0 0 0 0.5px ${colors.subtext}`;
     colors.btnFocusBorderColor = colors.contrast;
     colors.btnDisabledColor = 'rgba(255, 255, 255, 0.5) !important';
     colors.btnOpacity = 0.8;
@@ -321,16 +321,15 @@ Personalize.prototype = {
 
     colors.tabCloseInactiveColor = 'rgba(255, 255, 255, 0.85)';
     colors.tabCloseHoverColor = themeColors.palette.white.value;
-    colors.btnMenu = colors.base;
-
-    colors.btnBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.base}, 0 0 4px 3px rgba(54, 138, 192, 0.1)`;
+    colors.btnMenuColor = colors.base;
+    colors.btnBoxShadow = `0 0 0 0.5px ${colors.btnMenuColor}, 0 0 0 0.5px ${colors.btnMenuColor}`;
 
     const isAlabaster = colors.header === '#ffffff';
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
     const isClassicDark = this.currentTheme.indexOf('classic-dark') >= 0;
     const isNewContrast = this.currentTheme.indexOf('new-contrast') >= 0;
-    colors.btnTertiaryBgHoverColor = isAlabaster ? '#E6F1FD' : colors.lightest;
-    colors.btnTertiaryBgHoverColorHeader = 'rgba(0, 0, 0, 0.3)';
+    colors.btnTertiaryBgHoverColor = isAlabaster ? '#F5F5F5' : colors.lightest;
+    colors.btnTertiaryBgHoverColorHeader = 'rgba(0, 0, 0, 0.25)';
     colors.btnTertiaryHoverColorHeader = themeColors.palette.white.value;
     colors.borderActiveSearchHeader = colors.darkest;
     colors.shadowActiveSearchHeader = 'none';
@@ -355,22 +354,22 @@ Personalize.prototype = {
       colors.darkest = themeColors.palette.slate[100].value;
       colors.contrast = themeColors.palette.slate[100].value;
       colors.btnHoverColor = themeColors.palette.azure[60].value;
-      colors.btnBgHoverColor = themeColors.palette.azure[10].value;
+      colors.btnBgHoverColor = themeColors.palette.slate[10].value;
       colors.btnOpacity = 1;
       colors.borderActiveSearchHeader = themeColors.palette.azure[60].value;
       colors.shadowActiveSearchHeader = '0 0 4px 3px rgba(54, 138, 192, 0.1)';
-      colors.focusBoxShadow = '0 0 4px 3px rgba(54, 138, 192, 0.1)';
+      colors.focusBoxShadow = `0 0 0 0.5px ${themeColors.palette.azure[60].value}, 0 0 0 0.5px ${themeColors.palette.azure[60].value}`;
       colors.btnFocusBorderColor = themeColors.palette.azure[60].value;
       colors.borderActiveSearchMobile = themeColors.palette.azure[60].value;
-      colors.btnDisabledColor = 'rgba(0, 0, 0, 0.3) !important';
+      colors.btnDisabledColor = 'rgba(0, 0, 0, 0.15) !important';
       colors.btnPrimaryColor = themeColors.palette.azure[60].value;
       colors.btnPrimaryColorHover = '#0066D4';
       colors.btnSecondaryColor = themeColors.palette.azure[60].value;
       colors.btnSecondaryBorderColor = themeColors.palette.azure[60].value;
-      colors.btnTertiaryBgHoverColor = themeColors.palette.azure[20].value;
+      colors.btnTertiaryBgHoverColor = themeColors.palette.slate[10].value;
       colors.btnTertiaryHoverColor = themeColors.palette.azure[60].value;
-      colors.btnTertiaryBgHoverColorHeader = '#E6F1FD';
-      colors.btnTertiaryHoverColorHeader = themeColors.palette.azure[60].value;
+      colors.btnTertiaryBgHoverColorHeader = themeColors.palette.slate[10].value;
+      colors.btnTertiaryHoverColorHeader = '#000000';
       colors.btnLinkColor = themeColors.palette.azure[60].value;
       colors.tabBottomBorderColor = themeColors.palette.slate[30].value;
       colors.btnActionsHoverColor = themeColors.palette.slate[100].value;
@@ -378,13 +377,13 @@ Personalize.prototype = {
       colors.headerTabsSelectedTextColor = themeColors.palette.azure[60].value;
       colors.headerTextColor = themeColors.palette.slate[100].value;
       colors.headerIconColor = themeColors.palette.slate[100].value;
-      colors.btnMenu = themeColors.palette.azure[60].value;
-      colors.btnBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.btnMenu}, 0 0 4px 3px rgba(54, 138, 192, 0.1)`;
+      colors.btnMenuColor = themeColors.palette.azure[60].value;
+      colors.btnBoxShadow = `0 0 0 0.5px ${colors.btnMenuColor}, 0 0 0 0.5px ${colors.btnMenuColor}`;
 
       colors.tabFocusIndicator = themeColors.palette.azure[60].value;
       colors.tabFocusIndicatorVert = themeColors.palette.azure[60].value;
-      colors.tabFocusBoxShadow = '0 0 4px 3px rgba(54, 138, 192, 0.2)';
-      colors.tabFocusBoxShadowVert = '0 0 4px 3px rgba(54, 138, 192, 0.2)';
+      colors.tabbtnMenuColor = '0 0 4px 3px rgba(54, 138, 192, 0.2)';
+      colors.tabbtnMenuColorVert = '0 0 4px 3px rgba(54, 138, 192, 0.2)';
 
       colors.tabTextWeight = '400';
       colors.tabTextSelectedWeight = '700';
@@ -419,17 +418,17 @@ Personalize.prototype = {
         colors.btnPrimaryColor = colors.base;
         colors.dark = colors.base;
         colors.contrast = themeColors.palette.white.value;
-        colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 1px 1px ${colors.contrast}`;
+        colors.focusBoxShadow = `0 0 0 0.5px ${colors.contrast}, 0 0 0 0.5px ${colors.contrast}`;
         colors.darker = themeColors.palette.slate[80].value;
         colors.headerIconColor = themeColors.palette.slate[10].value;
         colors.btnHoverColor = themeColors.palette.white.value;
         colors.hyperlinkText = themeColors.palette.white.value;
-        colors.lighter = themeColors.palette.slate[50].value;
+        colors.lighter = themeColors.palette.slate[70].value;
         colors.btnDisabledColor = 'rgba(255, 255, 255, 0.4) !important';
         colors.btnPrimaryColorHover = colors.darker;
         colors.btnSecondaryColor = colors.darkest;
         colors.btnSecondaryBorderColor = colors.base;
-        colors.btnTertiaryBgHoverColor = themeColors.palette.slate[70].value;
+        colors.btnTertiaryBgHoverColor = 'rgba(255, 255, 255, 0.2)';
         colors.btnTertiaryHoverColor = colors.lightest;
         colors.btnTertiaryBgHoverColorHeader = themeColors.palette.slate[70].value;
         colors.btnTertiaryHoverColorHeader = themeColors.palette.white.value;
@@ -461,7 +460,7 @@ Personalize.prototype = {
         colors.headerTabsSelectedTextColor = themeColors.palette.slate[10].value;
 
         colors.tabFocusIndicatorVert = themeColors.palette.white.value;
-        colors.tabFocusBoxShadowVert = 'none';
+        colors.tabbtnMenuColorVert = 'none';
       }
 
       if (isClassicDark) {
@@ -469,7 +468,7 @@ Personalize.prototype = {
         colors.btnPrimaryColor = colors.base;
         colors.dark = colors.base;
         colors.contrast = themeColors.palette.white.value;
-        colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 1px 1px ${colors.contrast}`;
+        colors.focusBoxShadow = `0 0 0 0.5px ${colors.contrast}, 0 0 0 0.5px ${colors.contrast}`;
         colors.darker = '#313236';
         colors.btnPrimaryColorHover = colors.darker;
         colors.btnHoverColor = themeColors.palette.white.value;
@@ -521,9 +520,9 @@ Personalize.prototype = {
     colors.lightestPalette = lightestColorMap[colors.base] || colors.subheader;
 
     if (isAlabaster) {
-      colors.lightestPalette = themeColors.palette.azure[10].value;
+      colors.lightestPalette = themeColors.palette.slate[10].value;
       if (contrast) {
-        colors.lightestPalette = themeColors.palette.azure[20].value;
+        colors.lightestPalette = themeColors.palette.slate[20].value;
       }
     }
 
@@ -566,6 +565,12 @@ Personalize.prototype = {
         lum = 0.8;
         sat = 0.4;
       }
+    }
+
+    if (isClassicDark) {
+      colors.btnTertiaryBgHoverColorHeader = 'rgba(0, 0, 0, 0.3)';
+      colors.btnBgHoverColor = 'rgba(0, 0, 0, 0.3)';
+      colors.btnTertiaryBgHoverColor = 'rgba(0, 0, 0, 0.3)';
     }
 
     let disabledBGColor = colorUtils.getLuminousColorShade(baseColor, lum);

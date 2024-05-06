@@ -9,19 +9,23 @@ demo:
 
 ## Font family
 
-We have two different versions of IDS designs for the components Soho/Subtle/Classic and Uplift/Vibrant/New.
+For the latest theme with previous names (Uplift/Vibrant/New) use a custom font called [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+3). We use 300,400,600 font-weights, although all 100-900 font weights may appear. We do not use italics anywhere in the designs as it is difficult to read.
 
-For: Uplift/Vibrant/New we now use a custom font[Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro) `font-family: 'source sans pro', Helvetica, Arial`. We include two font-weights 400, 600 served from google fonts because our design is limited in terms of weights (just normal and bold), for example we dont use italics anywhere in the designs as it is difficult to read. Source Sans Pro supports a lot of languages but not some of these so these are the [fall backs](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography.scss#L8)
+Source Sans Pro supports a lot of languages but some languages require [alternate fonts](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography-new.scss#L6). Each of this fonts will be used based on the macthing locale.
 
-To use the custom font enable this font in the components first you need to add this link to the head of your pages.
+NOTE: It is no longer recommended to use `fonts.googleapis` to use the fonts. The problems can be:
 
-```html
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet"/>
-```
+a) Google fonts violates [GDPR](https://www.cookieyes.com/documentation/google-fonts-and-gdpr/)
+b) If the application needs to run without an internet connection
+c) In some countries google links may be banned
 
-If your application needs to run without an internet connection its also possible to download the font locally and server it from your server see [google-webfonts](https://google-webfonts-helper.herokuapp.com/fonts/source-sans-pro?subsets=greek,latin,vietnamese) for details.
+For this reason we suggest you serve the files with the application all the needed fonts can be found in the [design system repo](https://github.com/infor-design/design-system/tree/main/fonts) or [the new design system repo](https://github.com/infor-design/ids-foundation/fonts)
 
-## Typography Related Classes
+Also if using npm these will be found in `node_modules/ids-identity/dist/fonts`. Generally you will need to copy the files into the correct location for your app and serve them.
+
+Then add a style sheet to your application that points to the fonts you can get this from [this file](https://github.com/infor-design/enterprise/tree/main/app/www/css).
+
+## Typography Related Css Classes
 
 The following classes can be used for text emphasis:
 
