@@ -245,7 +245,6 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
     return event.color;
   }
 
-
   if (event.color !== undefined && event.color.indexOf('-') > -1) {
     const colorCheck = event.color?.split('-');
     if (colorList.filter(colorObj => colorObj === colorCheck[0]).length > 0) {
