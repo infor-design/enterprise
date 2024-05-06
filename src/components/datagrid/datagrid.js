@@ -6563,7 +6563,10 @@ Datagrid.prototype = {
           const colGroups = utils.deepCopy(self.settings.columnGroups);
           let colIndex = 0;
           colGroups.forEach((group) => {
-            group.columns = self.settings.columns.slice(colIndex, colIndex + group.colspan);
+            const col = self.settings.columns.slice(colIndex, colIndex + group.colspan);
+            group.hidden = col.some(c => c.hidden === true);
+            group.hideable = col.some(c => c.hideable === true);
+            group.columns = col;
             group.groupId = group.id;
             group.groupName = group.name;
             delete group.id;
@@ -6575,19 +6578,19 @@ Datagrid.prototype = {
           pTemplate = `
             <ul class="arrange list" data-arrange-handle=".handle">
             {{#dataset}}
-              <li data-group-id="{{groupId}}">
+              <li data-group-id="{{groupId}}" class="{{^hideable}}is-disabled{{/hideable}}" {{^hideable}}data-arrange-exclude="true"{{/hideable}}>
                 <div class="switch field">
                   <span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
-                  <input id="{{groupId}}-grp-switch" class="switch" type="checkbox"/>
+                  <input id="{{groupId}}-grp-switch" class="switch" type="checkbox" {{^hidden}}checked{{/hidden}} {{^hideable}}disabled{{/hideable}}/>
                   <span for="{{groupId}}-grp-switch" class="label-text">{{groupName}}</span>
                 </div>
               </li>
               {{#columns}}
                 {{#name}}
-                <li class="child" data-group-id="{{groupId}}">
+                <li class="child" data-group-id="{{groupId}}" class="{{^hideable}}is-disabled{{/hideable}}" {{^hideable}}data-arrange-exclude="true"{{/hideable}}>
                   <div class="switch field">
                     <span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
-                    <input id="{{id}}-switch" class="switch" type="checkbox"/>
+                    <input id="{{id}}-switch" class="switch" type="checkbox" {{^hidden}}checked{{/hidden}} {{^hideable}}disabled{{/hideable}}/>
                     <span for="{{id}}-switch" class="label-text">{{name}}</span>
                   </div>
                 </li>
@@ -6597,7 +6600,6 @@ Datagrid.prototype = {
             </ul>`;
         }
 
-        console.log(pSource);
         self.isColumnsChanged = false;
         const listviewApi = modal.element.find('.listview').listview({
           source: pSource,
