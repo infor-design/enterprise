@@ -55,7 +55,11 @@
 
         .slide {
           height: 360px;
-          margin: 0 0.5px;
+          margin: 0 2px;
+
+          &:first-child {
+            margin-left: 0;
+          }
 
           &.is-visible.transition {
             transition: opacity 0.1s ease 0s;
@@ -190,7 +194,7 @@
   .banner-icon {
     left: 50%;
     margin-left: -500px;
-    margin-top: 32px;
+    margin-top: 24px;
     position: absolute;
     float: left;
     height: 32px;
