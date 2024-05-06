@@ -145,9 +145,9 @@
 
 .header + .homepage,
 .header + nav + .homepage {
-  height: calc(100% - 46px);
+  height: calc(100% - 60px);
   margin-top: 0 !important;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .header + .page-container > .homepage {

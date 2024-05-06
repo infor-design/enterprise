@@ -99,7 +99,6 @@ Homepage.prototype = {
     setTimeout(() => { // Timeout to let rtl load first before the render of the resize
       this.resize(this, false);
     }, 100);
-    this.setHomepageHeight(100);
     this.element.parent().addClass('homepage-background');
   },
 
@@ -140,18 +139,6 @@ Homepage.prototype = {
         s.widgetHeight = small.widgetHeight;
       }
     }
-  },
-
-  /**
-   * Set height to the homepage container.
-   * @private
-   * @param {number} [timeout=0] Delay in milliseconds before setting height.
-   */
-  setHomepageHeight(timeout = 0) {
-    setTimeout(() => {
-      const homepageHeight = this.element.get(0).scrollHeight + 16; // 16px is based on the padding
-      this.element.css('height', `${homepageHeight}px`);
-    }, timeout);
   },
 
   /**
@@ -856,12 +843,10 @@ Homepage.prototype = {
   handleEvents() {
     $('body').on('resize.homepage', () => {
       this.resize(this, this.settings.animate);
-      this.setHomepageHeight(500);
     });
 
     $('.application-menu').on('applicationmenuopen.homepage applicationmenuclose.homepage', () => {
       this.resize(this, this.settings.animate);
-      this.setHomepageHeight(400);
     });
   }
 
