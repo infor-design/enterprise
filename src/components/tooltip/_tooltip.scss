@@ -331,8 +331,11 @@ html[class*='theme-classic-'] .tooltip.is-pie {
     margin-top: -10px;
   }
 
-  &.filled {
+  &.default {
     background-color: $ids-color-palette-azure-70;
+  }
+
+  &.filled {    
     color: $ids-color-palette-white;
     font-size: $ids-size-font-lg;
     -webkit-font-smoothing: antialiased;

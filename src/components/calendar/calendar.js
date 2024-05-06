@@ -1388,6 +1388,16 @@ Calendar.prototype = {
     }
     container.innerHTML = renderedTmpl;
     container.classList.add('has-only-one');
+
+    const colorList = ['amber', 'amethyst', 'azure', 'emerald', 'graphite', 'ruby', 'slate', 'turquoise'];
+    if (container?.children[0]?.classList.contains('accordion-header')) {
+      const eventTypeColor = this.settings.eventTypes.filter(eventObj => eventObj.id === event.type)[0].color;
+      const isColorList = colorList.filter(colorObj => colorObj === eventTypeColor).length > 0;
+
+      if (eventTypeColor !== event.color || !isColorList) {
+        container.children[0].style.backgroundColor = event.color;
+      }
+    }
   },
 
   /**
@@ -1571,6 +1581,15 @@ Calendar.prototype = {
       .popover(modalOptions)
       .off('show.calendar')
       .on('show.calendar', (evt, elem) => {
+        const colorList = ['amber', 'amethyst', 'azure', 'emerald', 'graphite', 'ruby', 'slate', 'turquoise'];
+        const eventTypeColor = this.settings.eventTypes.filter(eventObj => eventObj.id === event.type)[0].color;
+        const isColorList = colorList.filter(colorObj => colorObj === eventTypeColor).length > 0;
+
+        if (eventTypeColor !== event.color || !isColorList) {
+          elem.find('.tooltip-title').css('backgroundColor', event.color);
+          elem.find('.tooltip-title').remove('default');
+        }
+
         this.element.trigger('showmodal', { elem: this.modalContents, event });
         // Wire the click on isAllDay to disable spinbox.
         elem.find('#isAllDay').off().on('click.calendar', (e) => {
@@ -1646,6 +1665,10 @@ Calendar.prototype = {
       for (let i = 0; i < inputs.length; i++) {
         event[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
       }
+
+      // Reset Colors for New Events from Default Event Type (Will be populated later)
+      event.color = undefined;
+      event.borderColor = undefined;
 
       if (isAdd) {
         this.addEvent(event);

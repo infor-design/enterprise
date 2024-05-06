@@ -6,8 +6,8 @@
     "ends": "2024-05-27T23:59:59.999",
     "icon": "icon-success",
     "type": "dto",
-    "color": "#FABFFF",
-    "borderColor": "#F25DFF"
+    "color": "#df78db",
+    "borderColor": "#8e2e8a"
   },
   {
     "id": "79",
@@ -16,7 +16,7 @@
     "ends": "2024-05-28T23:59:59.999",
     "icon": "icon-success",
     "type": "dto",
-    "color": "powderblue",
+    "color": "lightsteelblue",
     "borderColor": "royalblue"
   },
   {
@@ -36,8 +36,8 @@
     "ends": "2024-05-30T23:59:59.999",
     "icon": "icon-success",
     "type": "sick",
-    "color": "ruby-10",
-    "borderColor": "pink"
+    "color": "ruby-40",
+    "borderColor": "red"
   },
   {
     "id": "82",

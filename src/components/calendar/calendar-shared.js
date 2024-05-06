@@ -245,15 +245,18 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
     return event.color;
   }
 
-  const colorCheck = event.color?.split('-');
-  if (event.color !== undefined && colorList.filter(colorObj => colorObj === colorCheck[0]).length > 0) {
-    let colorGrade = colorCheck[1] * 0.1;
 
-    if (colorCheck[1] * 0.1 !== 10) {
-      colorGrade = `0${colorGrade}`;
+  if (event.color !== undefined && event.color.indexOf('-') > -1) {
+    const colorCheck = event.color?.split('-');
+    if (colorList.filter(colorObj => colorObj === colorCheck[0]).length > 0) {
+      let colorGrade = colorCheck[1] * 0.1;
+  
+      if (colorCheck[1] * 0.1 !== 10) {
+        colorGrade = `0${colorGrade}`;
+      }
+  
+      return colorCheck[0] + colorGrade;
     }
-
-    return colorCheck[0] + colorGrade;
   }
   
   if (event.color?.indexOf('-') === -1 && colorList.filter(colorObj => event.color?.indexOf(colorObj) > -1).length > 0) {
@@ -262,7 +265,7 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
 
   if (event.color !== undefined && eventInfo.length === 1) {
     if (eventInfo[0].color !== event.color) {
-      return eventInfo[0].color;
+      return event.color;
     }
   }
 
