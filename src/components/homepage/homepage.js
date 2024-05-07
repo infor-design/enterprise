@@ -735,7 +735,21 @@ Homepage.prototype = {
             });
           } else {
             bannerWidgetPagerApi.slidesJQ.each((i, e) => {
-              e.style.margin = null;
+              if (i !== 0 && i % self.columns === 0) {
+                let marginLeft = '-10px';
+
+                if (self.columns >= 4) {
+                  marginLeft = '-15px';
+                }
+
+                if (self.columns <= 2) {
+                  marginLeft = '-5px';
+                }
+
+                e.style.marginLeft = marginLeft;
+              } else {
+                e.style.margin = null;
+              }
             });
           }
         }
