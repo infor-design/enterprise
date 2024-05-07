@@ -1,15 +1,10 @@
 # What's New with Enterprise
 
-## v4.96.0
-
-## v4.96.0 Features
-
-## v4.96.0 Fixes
-
-- `[Datepicker]` Fixed focus date not properly assigned when calendar is used as datepicker. ([#8585](https://github.com/infor-design/enterprise/issues/8585))
-- `[Lookup]` Fixed bug on lookup not using minWidth settings. ([#8626](https://github.com/infor-design/enterprise/issues/8626))
-
 ## v4.95.0
+
+## v4.95.0 Important Changes
+
+- `[General]` Using googleapis CDN for the design system fonts is no longer recommended due to global cross border data protection requirements. It is now recommended to download, embed, and serve the font locally with your application. Target completion for fix: with next major product release (Oct. 2024 / Apr. 2025). See [typography docs](https://github.com/infor-design/enterprise/blob/main/src/components/typography/readme.md#font-family) for details and config. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
 
 ## v4.95.0 Features
 
@@ -39,12 +34,15 @@
 - `[Datagrid]` Fixed search icon misalignment in dropdown cells. ([#8515](https://github.com/infor-design/enterprise/issues/8515))
 - `[Datagrid]` Fixed search icon misalignment in dropdown cells. ([#8515](https://github.com/infor-design/enterprise/issues/8515))
 - `[Datagrid]` Fixed an error editing on non first page in server side paging datagrid. ([#8537](https://github.com/infor-design/enterprise-ng/issues/1672))
+- `[Datepicker]` Fixed focus date not properly assigned when calendar is used as datepicker. ([#8585](https://github.com/infor-design/enterprise/issues/8585))
+
 - `[FieldFilter]` Added Default Field Filter Reset example page. ([NG#1641](https://github.com/infor-design/enterprise-ng/issues/1641))
 - `[Forms]` Fixed fileupload layout in compact form. ([#8537](https://github.com/infor-design/enterprise/issues/8537))
 - `[General]` Removed dups in sass packages thus reducing css file size. ([#8653](https://github.com/infor-design/enterprise/issues/8653))
 - `[Header]` Fixed default color, and changed to flex layout by default. This is to allow for ids-breadcrumb to work. ([#2178](https://github.com/infor-design/enterprise-wc/issues/2178))
 - `[Homepage]` Fixed bug that caused errors on resize when no widgets. ([#8611](https://github.com/infor-design/enterprise/issues/8611))
 - `[Homepage]` Fixed a bug where the homepage height was incorrect. ([#8640](https://github.com/infor-design/enterprise/issues/8640))
+- `[Lookup]` Fixed bug on lookup not using minWidth settings. ([#8626](https://github.com/infor-design/enterprise/issues/8626))
 - `[Month Picker]` Fixed cursor for down button. ([#7315](https://github.com/infor-design/enterprise/issues/7315))\
 - `[Pager]` Fixed misaligned hover state in RTL. ([#8508](https://github.com/infor-design/enterprise/issues/8508))
 - `[Personalization]` Fixed bug with wrong colors in landmark form examples. ([#8625](https://github.com/infor-design/enterprise/issues/8625))

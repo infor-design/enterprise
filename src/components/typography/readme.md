@@ -9,21 +9,21 @@ demo:
 
 ## Font family
 
-For the latest theme with previous names (Uplift/Vibrant/New) use a custom font called [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+3). We use 300,400,600 font-weights, although all 100-900 font weights may appear. We do not use italics anywhere in the designs as it is difficult to read.
+When using the newest designs (Not Classic Mode) you should use a custom font called [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+3). We use 300,400,600 font-weights, although all 100-900 font weights may appear, the font will scale up and down as needed down. We do not use italics anywhere in the designs as it is difficult to read.
 
-Source Sans Pro supports a lot of languages but some languages require [alternate fonts](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography-new.scss#L6). Each of this fonts will be used based on the macthing locale.
+Source Sans Pro supports many of our languages but some languages require [alternate fonts](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography-new.scss#L6). Each of this fonts will be used based on the matching locale.
 
-NOTE: It is no longer recommended to use `fonts.googleapis` to use the fonts. The problems can be:
+NOTE: It is no longer recommended to use fonts.googleapis to use the fonts.
 
-a) Google fonts violates [GDPR](https://www.cookieyes.com/documentation/google-fonts-and-gdpr/)
-b) If the application needs to run without an internet connection
-c) In some countries google links may be banned
+SSUE: The problems can be:
 
-For this reason we suggest you serve the files with the application all the needed fonts can be found in the [design system repo](https://github.com/infor-design/design-system/tree/main/fonts) or [the new design system repo](https://github.com/infor-design/ids-foundation/fonts)
+(a) use of Google Fonts API may violate cross border data transfer restrictions under local privacy laws (e.g. EU’s [GDPR](https://www.cookieyes.com/documentation/google-fonts-and-gdpr/) or China’s PDPL)
+(b) if the application needs to run without an internet connection, or
+(c) in some countries Google links may be banned or limited (e.g. China).
 
-Also if using npm these will be found in `node_modules/ids-identity/dist/fonts`. Generally you will need to copy the files into the correct location for your app and serve them.
+RECOMMENDED FIX: Given Infor’s global customer base we recommend a unified approach that is compliant in all jurisdictions. For this reason we suggest you serve the files with the application (e.g. download and embed the font library locally). All the needed fonts can be found in the [design system repo](https://github.com/infor-design/design-system/tree/main/fonts). You will need to copy the files into the correct location for your app and serve them and then include the [font-face.css](https://github.com/infor-design/design-system/blob/main/fonts/font-face.css) your app. Update any `url` locations as needed in the font-face.css file.
 
-Then add a style sheet to your application that points to the fonts you can get this from [this file](https://github.com/infor-design/enterprise/tree/main/app/www/css).
+As an example see our demo app in this [this file](https://github.com/infor-design/enterprise/blob/main/app/views/includes/head.html#L53-L59).
 
 ## Typography Related Css Classes
 
