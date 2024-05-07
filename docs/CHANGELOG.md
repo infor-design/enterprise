@@ -1,5 +1,14 @@
 # What's New with Enterprise
 
+## v4.96.0
+
+## v4.96.0 Features
+
+## v4.96.0 Fixes
+
+- `[Datepicker]` Fixed focus date not properly assigned when calendar is used as datepicker. ([#8585](https://github.com/infor-design/enterprise/issues/8585))
+- `[Lookup]` Fixed bug on lookup not using minWidth settings. ([#8626](https://github.com/infor-design/enterprise/issues/8626))
+
 ## v4.95.0
 
 ## v4.95.0 Important Changes
@@ -9,8 +18,10 @@
 ## v4.95.0 Features
 
 - `[About]` Added copy to clipboard button. ([#8438](https://github.com/infor-design/enterprise/issues/8438))
+- `[Homepage]` Added setting for background images. ([#8600](https://github.com/infor-design/enterprise/issues/8600))
 - `[Buttons]` Added new button styles for a sleeker look. With no ripple effect and reduced padding and some color and focus changes. ([#8557](https://github.com/infor-design/enterprise/issues/8557))
 - `[Locale]` Fixed incorrect `nn-NO` and `no-NO` locales. ([#8647](https://github.com/infor-design/enterprise/issues/8647))
+- `[Modal]` Added a new setting `buttonsetTextWidth` to specify the width of the buttons in the modal. Tooltips are now automatically added when text within the buttons is truncated. ([#8639](https://github.com/infor-design/enterprise/issues/8639))
 - `[Module Nav]` Added setting `disableSwitcher` to disable nav switcher. ([#8381](https://github.com/infor-design/enterprise/issues/8381))
 - `[TabsModule]` Added setting called `equalTabWidth` to make tabs equal of width. ([#6990](https://github.com/infor-design/enterprise/issues/6990))
 - `[Timeline]` Added fix to timeline layout. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
