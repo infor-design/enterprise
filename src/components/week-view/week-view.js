@@ -426,11 +426,11 @@ WeekView.prototype = {
 
     if (eventHead[0]) {
       const children = eventHead[0].parentNode.children;
-      let iterator = container.querySelector('.week-view-all-day-wrapper').children.length || 0;
+      const iterator = container.querySelector('.week-view-all-day-wrapper').children.length || 0;
       for (let i = iterator; i < children.length; i++) {
         const dataid = children[i].getAttribute('data-id');
         if (getString(dataid) === getString(event.id)) {
-          node.style.top = i === 0? '1px' : `${21 * i}px`;
+          node.style.top = i === 0 ? '1px' : `${21 * i}px`;
           break;
         }
       }
