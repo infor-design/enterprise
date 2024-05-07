@@ -636,6 +636,13 @@ body.modal-engaged {
     .ripple-effect {
       background-color: $button-color-primary-initial-background;
     }
+
+    span {
+      @include ellipsis();
+
+      display: block;
+      margin: 0 15px;
+    }
   }
 
   .btn-modal-primary {

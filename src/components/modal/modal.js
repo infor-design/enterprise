@@ -46,6 +46,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {array} [settings.closeBtnOptions.attributes] Adds attributes on the close button.
 * @param {string} [settings.closeBtnOptions.closeBtnTooltip='Close'] Adds the ability to change the tooltip for Close button. Default is Close.
 * @param {number} [settings.maxWidth=null] Optional max width to add in pixels.
+* @param {number|string} [settings.buttonsetTextWidth=null] Optional width to set the text of the buttonset.
 * @param {boolean} [settings.fullsize=false] If true, ignore any sizing algorithms and
 * return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response.
 * @param {string} [settings.breakpoint='phone-to-tablet'] The breakpoint to use for a responsive change to "fullsize" mode. See `utils.breakpoints` to view the available sizes.
@@ -90,6 +91,7 @@ const MODAL_DEFAULTS = {
   draggableOffset: { left: 0, top: 0 },
   icon: null,
   iconClass: null,
+  buttonsetTextWidth: null
 };
 
 // Resets some string-based Modal settings to their defaults
@@ -457,6 +459,29 @@ Modal.prototype = {
 
     this.registerModal();
 
+    if (this.settings.buttons) {
+      // Get all the buttons in the modal buttonset
+      const buttons = document.querySelectorAll('.modal-buttonset button');
+      // Iterate through each button
+      for (let i = 0; i < buttons.length; i++) {
+        const button = buttons[i];
+        // Get the width of the button
+        const buttonWidth = button.offsetWidth;
+        // Get the width of the button's text
+        const textWidth = button.querySelector('span').scrollWidth;
+
+        // Check if the button's width is less than the text's width
+        if (buttonWidth < textWidth) {
+          // Add a tooltip to the button
+          $(button).tooltip({
+            content: button.querySelector('span').textContent,
+            placement: 'top',
+            trigger: 'hover'
+          });
+        }
+      }
+    }
+
     if (this.settings.icon) {
       const hasIconClass = this.settings.iconClass ? ` icon-${this.settings.iconClass}` : '';
       const svgIcon = $(`<svg class="icon${hasIconClass}"
@@ -685,6 +710,15 @@ Modal.prototype = {
 
       // In standard Modal mode, size the buttons to fit after rendering.
       btn.element[0].style.width = `${btnPercentWidth}%`;
+
+      // Check if buttonsetTextWidth is defined in the settings
+      if (self.settings.buttonsetTextWidth) {
+        // Get the span element inside the button
+        const buttonSpan = btn.element[0].querySelector('span');
+        // Set the width of the button based on buttonsetTextWidth value
+        const buttonWidth = typeof self.settings.buttonsetTextWidth === 'string' ? self.settings.buttonsetTextWidth : `${self.settings.buttonsetTextWidth}px`;
+        buttonSpan.style.width = buttonWidth;
+      }
 
       $buttons.add(btn);
     });
