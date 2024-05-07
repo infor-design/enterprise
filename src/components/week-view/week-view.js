@@ -414,8 +414,6 @@ WeekView.prototype = {
     }
     allDayContainer.appendChild(node);
 
-
-
     utils.addAttributes($(node), this, this.settings.attributes, `week-view-event-${event.id}`);
     this.attachTooltip(node, event);
   },
