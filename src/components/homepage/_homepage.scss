@@ -29,7 +29,7 @@
       overflow: initial;
     }
 
-    &:last-child::after {
+    &::after {
       content: '';
       display: inline-block;
       height: 16px;
@@ -90,13 +90,13 @@
 
   > .content {
     left: 50%;
-    top: -1%;
+    top: 16px;
     margin-left: -500px;
     margin-top: 16px;
     position: absolute;
 
     &.has-banner-icon {
-      margin-top: 100px;
+      margin-top: 76px;
     }
   }
 

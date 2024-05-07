@@ -221,7 +221,8 @@ $button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-text
 $tertiary-btn-ripple-color: $ids-color-brand-primary-alt;
 $button-editor-color-hover-background-new: rgba(0, 0, 0, .7);
 $button-color-secondary-focus-shadow: 0 0 0 1px $ids-color-palette-azure-70, 0 0 0 1px $ids-color-palette-azure-70;
-$button-color-tertiary-focus-shadow: 0 0 0 .1px $ids-color-palette-azure-70, 0 0 0 .5px $ids-color-palette-azure-70;
+$button-color-tertiary-focus-shadow: 0 0 0 .5px $ids-color-palette-azure-70, 0 0 0 .5px $ids-color-palette-azure-70;
+$button-color-tertiary-focus-border: $ids-color-palette-azure-70;
 $button-color-destructive-tertiary-focus-shadow: 0 0 0 1px $ids-color-palette-ruby-80, 0 0 0 .5px $ids-color-palette-ruby-80;
 $button-tertiary-gen-ai-focus: 0 0 0 0.5px #0B9789, 0 0 0 0.5px #0B9789;
 

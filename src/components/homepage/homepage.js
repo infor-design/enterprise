@@ -166,20 +166,6 @@ Homepage.prototype = {
   },
 
   /**
-   * Set height to the homepage container.
-   * @private
-   * @param {number} [timeout=0] Delay in milliseconds before setting height.
-   */
-  setHomepageHeight(timeout = 0) {
-    if (!this.settings.background?.banner) {
-      setTimeout(() => {
-        const homepageHeight = this.element.get(0).scrollHeight + 16; // 16px is based on the padding
-        this.element.css('height', `${homepageHeight}px`);
-      }, timeout);
-    }
-  },
-
-  /**
    * Initialize columns.
    * @private
    * @param {number} row to be initialize.
