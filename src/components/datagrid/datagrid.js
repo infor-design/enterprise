@@ -6628,12 +6628,24 @@ Datagrid.prototype = {
 
             self.isColumnsChanged = true;
             if (li.hasClass('child')) {
+              const groupId = li.attr('data-group-id');
+              const groupLi = li.siblings(`:not(.child)[data-group-id="${groupId}"]`);
+              let colsFalse = 0;
+
               if (!isChecked) {
                 self.showColumn(id);
                 chk.prop('checked', true);
               } else {
                 self.hideColumn(id);
                 chk.prop('checked', false);
+                colsFalse++;
+              }
+
+              colsFalse += li.siblings(`.child[data-group-id="${groupId}"]`).find('.switch input:not(:checked)').length;
+              if (colsFalse > 0) {
+                $(groupLi).find('input.switch').prop('checked', false);
+              } else {
+                $(groupLi).find('input.switch').prop('checked', true);
               }
             } else {
               const groupId = li.attr('data-group-id');
