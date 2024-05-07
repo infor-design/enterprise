@@ -13,6 +13,7 @@
 ## v4.95.0 Features
 
 - `[About]` Added copy to clipboard button. ([#8438](https://github.com/infor-design/enterprise/issues/8438))
+- `[Homepage]` Added setting for background images. ([#8600](https://github.com/infor-design/enterprise/issues/8600))
 - `[Buttons]` Added new button styles for a sleeker look. With no ripple effect and reduced padding and some color and focus changes. ([#8557](https://github.com/infor-design/enterprise/issues/8557))
 - `[Locale]` Fixed incorrect `nn-NO` and `no-NO` locales. ([#8647](https://github.com/infor-design/enterprise/issues/8647))
 - `[Modal]` Added a new setting `buttonsetTextWidth` to specify the width of the buttons in the modal. Tooltips are now automatically added when text within the buttons is truncated. ([#8639](https://github.com/infor-design/enterprise/issues/8639))
