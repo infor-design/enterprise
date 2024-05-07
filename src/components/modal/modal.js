@@ -468,13 +468,13 @@ Modal.prototype = {
         // Get the width of the button
         const buttonWidth = button.offsetWidth;
         // Get the width of the button's text
-        const textWidth = button.querySelector('span').scrollWidth;
+        const textWidth = button.querySelector('span')?.scrollWidth;
 
         // Check if the button's width is less than the text's width
         if (buttonWidth < textWidth) {
           // Add a tooltip to the button
           $(button).tooltip({
-            content: button.querySelector('span').textContent,
+            content: button.querySelector('span')?.textContent,
             placement: 'top',
             trigger: 'hover'
           });
