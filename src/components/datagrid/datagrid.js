@@ -6525,6 +6525,21 @@ Datagrid.prototype = {
   personalizeColumns() {
     const self = this;
     const markup = '<div class="listview alternate-bg" id="search-listview"><ul></ul></div>';
+    let pSource = self.settings.columns;
+    let pTemplate = `
+    <ul class="arrange list" data-arrange-handle=".handle">
+      {{#dataset}}
+        {{#name}}
+          <li draggable class="{{^hideable}}is-disabled{{/hideable}}" {{^hideable}}data-arrange-exclude="true"{{/hideable}} data-column-id="{{id}}">
+            <div class="switch field">
+              <span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
+              <input id="{{id}}-switch" class="switch" type="checkbox" {{^hidden}}checked{{/hidden}} {{^hideable}}disabled{{/hideable}} />
+              <span for="{{id}}-switch" class="label-text">{{name}}</span>
+            </div>
+          </li>
+        {{/name}}
+      {{/dataset}}
+    </ul>`;
 
     $('body').modal({
       title: Locale.translate('PersonalizeColumns'),
@@ -6542,22 +6557,6 @@ Datagrid.prototype = {
         if (!modal) {
           return;
         }
-
-        let pSource = self.settings.columns;
-        let pTemplate = `
-          <ul class="arrange list" data-arrange-handle=".handle">
-          {{#dataset}}
-            {{#name}}
-            <li draggable class="{{^hideable}}is-disabled{{/hideable}}" {{^hideable}}data-arrange-exclude="true"{{/hideable}} data-column-id="{{id}}">
-              <div class="switch field">
-                <span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
-                <input id="{{id}}-switch" class="switch" type="checkbox" {{^hidden}}checked{{/hidden}} {{^hideable}}disabled{{/hideable}} />
-                <span for="{{id}}-switch" class="label-text">{{name}}</span>
-              </div>
-            </li>
-            {{/name}}
-          {{/dataset}}
-          </ul>`;
 
         if (self.settings.columnGroups) {
           const colGroups = utils.deepCopy(self.settings.columnGroups);
@@ -6590,7 +6589,7 @@ Datagrid.prototype = {
                 <li class="child" data-group-id="{{groupId}}" class="{{^hideable}}is-disabled{{/hideable}}" {{^hideable}}data-arrange-exclude="true"{{/hideable}}>
                   <div class="switch field">
                     <span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
-                    <input id="{{id}}-switch" class="switch" type="checkbox" {{^hidden}}checked{{/hidden}} {{^hideable}}disabled{{/hideable}}/>
+                    <input id="{{id}}-switch" class="switch" type="checkbox" data-column-id="{{id}}" {{^hidden}}checked{{/hidden}} {{^hideable}}disabled{{/hideable}}/>
                     <span for="{{id}}-switch" class="label-text">{{name}}</span>
                   </div>
                 </li>
@@ -6607,43 +6606,65 @@ Datagrid.prototype = {
           selectOnFocus: false
         }).data('listview');
 
-        if (self.settings.columnReorder) {
-          listviewApi.element.find('ul').arrange({
-            handle: '.icon-handle',
-            isVisualItems: true
-          });
-        }
+        // if (self.settings.columnReorder) {
+        //   listviewApi.element.find('ul').arrange({
+        //     handle: '.icon-handle',
+        //     isVisualItems: true
+        //   });
+        // }
 
         listviewApi.element.off('selected.datagrid')
-          .on('selected.datagrid', function (selectedEvent, args) {
-            const chk = args.elem.find('.checkbox');
+          .on('selected.datagrid', (selectedEvent, args) => {
+            const li = args.elem;
+            const chk = li.find('input.switch');
             const id = chk.attr('data-column-id');
             const isChecked = chk.prop('checked');
 
-            args.elem.removeClass('is-selected hide-selected-color');
+            li.removeClass('is-selected hide-selected-color');
 
             if (chk.is(':disabled')) {
               return;
             }
-            self.isColumnsChanged = true;
 
-            // Set listview dataset node state, to be in sync after filtering
-            const lv = { node: {}, api: $(this).data('listview') };
-            if (lv.api) {
-              const idx = self.columnIdxById(id);
-              if (idx !== -1 && lv.api.settings.dataset[idx]) {
-                lv.node = lv.api.settings.dataset[idx];
+            self.isColumnsChanged = true;
+            if (li.hasClass('child')) {
+              if (!isChecked) {
+                self.showColumn(id);
+                chk.prop('checked', true);
+              } else {
+                self.hideColumn(id);
+                chk.prop('checked', false);
+              }
+            } else {
+              const groupId = li.attr('data-group-id');
+              const cols = li.siblings(`.child[data-group-id="${groupId}"]`);
+              const toggle = (col, changeValue) => {
+                const colChk = col.find('input.switch');
+                const colId = colChk.attr('data-column-id');
+
+                if (!colChk.is(':disabled')) {
+                  const colChkChecked = colChk.prop('checked');
+
+                  if (colChkChecked !== changeValue) {
+                    self.showColumn(colId);
+                    colChk.prop('checked', changeValue);
+                  }
+                }
+              };
+
+              if (!isChecked) {
+                cols.each((i, ce) => {
+                  toggle($(ce), true);
+                });
+                chk.prop('checked', true);
+              } else {
+                cols.each((i, ce) => {
+                  toggle($(ce), false);
+                });
+                chk.prop('checked', false);
               }
             }
-            if (!isChecked) {
-              self.showColumn(id);
-              chk.prop('checked', true);
-              lv.node.hidden = false;
-            } else {
-              self.hideColumn(id);
-              chk.prop('checked', false);
-              lv.node.hidden = true;
-            }
+
             if (self.settings.groupable) {
               self.rerender();
             }
