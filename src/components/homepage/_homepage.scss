@@ -12,7 +12,7 @@
   background-color: $homepage-background-color;
   height: inherit;
   margin: 0 auto;
-  padding: 16px 0;
+  padding: 0;
   position: relative;
 
   .card,
@@ -37,6 +37,39 @@
       top: 368px;
       width: 10px;
     }
+
+    &.banner {
+      height: 380px;
+      background: none;
+      border: none;
+      box-shadow: none;
+
+      .widget-content {
+        height: 380px;
+        overflow-y: hidden;
+      }
+
+      .circlepager {
+        height: 374px;
+
+        .slide {
+          height: 360px;
+          margin: 0 2px;
+
+          &.is-visible.transition {
+            transition: opacity 0.1s ease 0s;
+          }
+
+          .card,
+          .small-widget,
+          .widget {
+            height: 318px;
+            min-height: 318px;
+            width: 358px;
+          }
+        }
+      }
+    }
   }
 
   .small-widget {
@@ -57,8 +90,14 @@
 
   > .content {
     left: 50%;
+    top: -1%;
     margin-left: -500px;
+    margin-top: 16px;
     position: absolute;
+
+    &.has-banner-icon {
+      margin-top: 100px;
+    }
   }
 
   .drop-indicator {
@@ -139,6 +178,25 @@
     cursor: ns-resize;
     height: 14px;
     width: 100%;
+  }
+
+  .background-image {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 272px;
+  }
+
+  .banner-icon {
+    left: 50%;
+    margin-left: -500px;
+    margin-top: 24px;
+    position: absolute;
+    float: left;
+    height: 32px;
+    min-width: 32px;
+    background-repeat: no-repeat;
+    background-size: contain;
   }
 }
 
