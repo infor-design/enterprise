@@ -26,13 +26,11 @@ $header-border-color: $ids-color-palette-slate-100;
 $header-text-color: $ids-color-palette-slate-100;
 $header-button-color: $ids-color-palette-slate-100;
 $header-button-focus-color: $ids-color-palette-slate-100;
-$header-button-hover-color: rgba($ids-color-palette-white, 0.7);
 $header-button-disabled-color: rgba($ids-color-palette-white, 0.3);
 $header-primary-btn-background-color: $ids-color-brand-primary-base;
 $header-primary-btn-background-hover-color: $ids-color-palette-azure-50;
 $header-disabled-color: $ids-color-palette-graphite-50;
 $header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
-$header-toolbar-button-hover-color: transparent;
 $header-default-bg-color: $ids-color-palette-white;
 $module-default-bg-color: $ids-color-palette-white;
 $header-toolbar-searchfield-icon-color: $ids-color-palette-slate-100;
@@ -748,14 +746,12 @@ $about-text-hover-border-color: $ids-color-palette-black;
 $header-default-bg-color: $ids-color-palette-white;
 $module-default-bg-color: $ids-color-palette-white;
 $header-default-bg-border-color: $ids-color-palette-slate-30;
-$header-default-bg-hover-color: $ids-color-palette-azure-80;
 
 $header-border-color: $ids-color-palette-azure-80;
 $header-text-default-color: $ids-color-palette-slate-100;
 $header-text-actionable-color: $ids-color-palette-azure-80;
 $header-button-normal-color: $ids-color-palette-slate-100;
 $header-button-icon-color: $ids-color-palette-slate-100;
-$header-button-hover-color: $ids-color-palette-azure-80;
 $header-button-focus-color: $ids-color-palette-slate-100;
 $header-button-focus-border-color: $ids-color-palette-azure-80;
 
@@ -766,7 +762,6 @@ $hyperlinks-personalize-text-color: $header-text-default-color;
 $header-button-color: $header-button-normal-color;
 $header-text-color: $header-text-default-color;
 $header-toolbar-searchfield-icon-color: $header-button-icon-color;
-$header-toolbar-button-hover-color: $ids-color-palette-azure-10;
 
 // Header
 $header-searchfield-btn-font-color: $ids-color-palette-slate-100;

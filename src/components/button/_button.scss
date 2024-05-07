@@ -125,6 +125,7 @@ button {
   position: relative;
   flex-direction: row;
   gap: 2px;
+  margin-inline-end: 5px;
 
   .dot {
     display: inline-flex;
@@ -180,6 +181,10 @@ button {
   justify-content: center;
   align-items: center;
 
+  &:focus {
+    box-shadow: $button-gen-ai-focus !important;
+  }
+
   &:hover {
     background: $button-gen-ai-hover-bg-color;
 
@@ -196,6 +201,7 @@ button {
     background: $button-primary-disabled-color-gen-ai;
     background-color: $ids-color-palette-white !important;
     color: $button-color-gen-ai !important;
+    opacity: 0.4;
 
     &:hover {
       background: $button-primary-disabled-hover-color-gen-ai;
@@ -235,11 +241,16 @@ button {
     background: $button-primary-disabled-color-gen-ai;
     background-color: $ids-color-palette-white !important;
     color: $button-color-gen-ai !important;
+    opacity: 0.4;
 
     &:hover {
       background: $button-primary-disabled-hover-color-gen-ai;
       background-color: $ids-color-palette-white !important;
     }
+  }
+
+  &:focus {
+    box-shadow: $button-gen-ai-focus;
   }
 
   .icon {
@@ -308,6 +319,10 @@ button {
     }
   }
 
+  &:focus {
+    box-shadow: $button-tertiary-gen-ai-focus !important;
+  }
+
   &[disabled] {
     background: $button-tertiary-disabled-color-gen-ai;
     background-clip: text;
@@ -365,20 +380,22 @@ button {
     display: flex;
   }
 
-  .dot-flashing-container .dot {
-    &:nth-child(1) {
-      animation: dot-flashing-colors 1s infinite alternate;
-      animation-delay: 0s;
-    }
+  .dot-flashing-container {
+    .dot {
+      &:nth-child(1) {
+        animation: dot-flashing-colors 1s infinite alternate;
+        animation-delay: 0s;
+      }
 
-    &:nth-child(2) {
-      animation: dot-flashing-colors 1s infinite linear alternate;
-      animation-delay: 0.5s;
-    }
+      &:nth-child(2) {
+        animation: dot-flashing-colors 1s infinite linear alternate;
+        animation-delay: 0.5s;
+      }
 
-    &:nth-child(3) {
-      animation: dot-flashing-colors 1s infinite alternate;
-      animation-delay: 1s;
+      &:nth-child(3) {
+        animation: dot-flashing-colors 1s infinite alternate;
+        animation-delay: 1s;
+      }
     }
   }
 }
@@ -717,7 +734,7 @@ button {
   &.destructive {
     background-color: $button-color-primary-destructive-initial-background-new;
     border: 2px solid $button-color-primary-destructive-initial-background-new;
-    color: $ids-color-palette-white;
+    color: $button-color-primary-initial-font;
 
     &:focus:not(:disabled) {
       border-color: $button-color-destructive-focus-border-new;
@@ -729,9 +746,10 @@ button {
     }
 
     &[disabled] {
-      background-color: $button-color-primary-disabled-background-new;
-      border-color: $button-color-primary-disabled-background-new;
-      color: $button-color-primary-disabled-font-new;
+      background-color: $button-color-primary-destructive-initial-background-new;
+      border: 1px solid $button-color-primary-destructive-initial-background-new;
+      color: $button-color-primary-initial-font;
+      opacity: 0.4;
     }
   }
 }
@@ -815,10 +833,8 @@ a.btn-close {
   }
 
   &:focus {
-    border: 1px solid transparent;
-
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-color-primary-background, 0 0 0 3px $button-color-secondary-focus-border, $focus-box-shadow;
+      box-shadow: $button-color-secondary-focus-shadow;
     }
 
     &:active {
@@ -876,11 +892,12 @@ a.btn-close {
   color: $button-color-tertiary-initial-font;
   overflow: hidden;
 
-  &:hover {
-    color: $button-color-tertiary-hover-font;
+  &:hover:not([disabled]) {
+    background-color: $button-color-tertiary-hover-background-new !important;
+    color: $button-color-tertiary-hover-text;
 
     .icon {
-      color: $button-color-tertiary-hover-font;
+      color: $button-color-tertiary-hover-text;
     }
   }
 
@@ -889,7 +906,8 @@ a.btn-close {
   }
 
   &:focus:not(.hide-focus) {
-    box-shadow: 0 0 0 2px transparent, 0 0 0 0.12rem $button-color-secondary-focus-background, $focus-box-shadow;
+    border-color: $button-color-tertiary-focus-border;
+    box-shadow: $button-color-tertiary-focus-shadow;
     z-index: 3;
 
     &:active {
@@ -897,13 +915,14 @@ a.btn-close {
     }
   }
 
-  &[disabled]:not(.btn-icon),
-  &[disabled]:not(.btn-icon):hover {
-    color: $button-color-tertiary-disabled-font;
+  &[disabled]:not(.btn-icon):not(.destructive),
+  &[disabled]:not(.btn-icon):not(.destructive):hover {
+    color: $button-color-tertiary-initial-font;
     cursor: default;
+    opacity: 0.4;
 
     .icon {
-      color: $button-color-tertiary-disabled-font;
+      color: $button-color-tertiary-initial-font;
     }
   }
 
@@ -928,16 +947,19 @@ a.btn-close {
   }
 }
 
-.header .btn-tertiary:hover:not(:disabled):not(.close):not(.personalize-actionable) svg.icon {
-  color: #fff;
-}
-
 .btn-icon {
   &[disabled] {
     background-color: transparent;
 
     .icon {
       color: $button-icon-disabled-color;
+    }
+
+    &.btn-generative {
+      .icon {
+        color: $button-gen-ai-icon-disabled-color;
+        opacity: 1;
+      }
     }
   }
 }
@@ -1008,8 +1030,9 @@ a.btn-close {
       color: $button-color-tertiary-destructive-initial-background-new;
     }
 
-    &:focus:not(:disabled) {
+    &:focus:not(.hide-focus) {
       border-color: $button-color-destructive-focus-border-new;
+      box-shadow: $button-color-destructive-tertiary-focus-shadow;
     }
 
     &:hover:not(:disabled) {
@@ -1149,7 +1172,7 @@ a.btn-close {
   .toolbar {
     .btn,
     .btn-teritary {
-      padding: 0 10px;
+      margin: 0 2px;
 
       .icon {
         // If an icon is present, the span should not be visible at this breakpoint

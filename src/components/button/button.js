@@ -1,4 +1,3 @@
-import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
@@ -56,7 +55,7 @@ const BUTTON_DEFAULTS = {
   toggleOffIcon: null,
   hideMenuArrow: null,
   replaceText: false,
-  ripple: true,
+  ripple: false,
   hitbox: false,
   validate: false,
   notificationBadge: false,
@@ -70,9 +69,8 @@ const BUTTON_DEFAULTS = {
 function Button(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(element, settings, BUTTON_DEFAULTS);
-  debug.logTimeStart(COMPONENT_NAME);
+
   this.init();
-  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 // Plugin Methods
