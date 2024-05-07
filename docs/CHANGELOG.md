@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.96.0
+
+## v4.96.0 Features
+
+## v4.96.0 Fixes
+
+- `[About]` Fixed focus date not properly assigned when calendar is used as datepicker. ([#8585](https://github.com/infor-design/enterprise/issues/8585))
+
 ## v4.95.0
 
 ## v4.95.0 Features

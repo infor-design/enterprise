@@ -878,6 +878,10 @@ MonthView.prototype = {
       } else {
         this.currentDate = new Date(this.currentYear, this.currentMonth, this.currentDay);
         this.focusDate = new Date(this.currentYear, this.currentMonth, this.currentDay);
+
+        if (this.settings.activeDate !== null && this.settings.activeDate instanceof Date) {
+          this.focusDate = this.settings.activeDate;
+        }
       }
     }
 
@@ -2262,7 +2266,6 @@ MonthView.prototype = {
     // if (node === null || node === undefined) {
     //   el = this.element.find(`td[tabindex=0]`);
     // }
-    // console.log(el);
     // el.attr('tabindex', '-1');
 
     // switch (mode) {
