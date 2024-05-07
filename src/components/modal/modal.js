@@ -700,7 +700,9 @@ Modal.prototype = {
       $buttons.add(btn);
     });
 
-    this.addTooltipToButtons();
+    setTimeout(() => {
+      this.addTooltipToButtons();
+    }, 100);
   },
 
   /**
