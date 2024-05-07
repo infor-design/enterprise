@@ -459,29 +459,6 @@ Modal.prototype = {
 
     this.registerModal();
 
-    if (this.settings.buttons) {
-      // Get all the buttons in the modal buttonset
-      const buttons = document.querySelectorAll('.modal-buttonset button');
-      // Iterate through each button
-      for (let i = 0; i < buttons.length; i++) {
-        const button = buttons[i];
-        // Get the width of the button
-        const buttonWidth = button.offsetWidth;
-        // Get the width of the button's text
-        const textWidth = button.querySelector('span').scrollWidth;
-
-        // Check if the button's width is less than the text's width
-        if (buttonWidth < textWidth) {
-          // Add a tooltip to the button
-          $(button).tooltip({
-            content: button.querySelector('span').textContent,
-            placement: 'top',
-            trigger: 'hover'
-          });
-        }
-      }
-    }
-
     if (this.settings.icon) {
       const hasIconClass = this.settings.iconClass ? ` icon-${this.settings.iconClass}` : '';
       const svgIcon = $(`<svg class="icon${hasIconClass}"
@@ -722,6 +699,44 @@ Modal.prototype = {
 
       $buttons.add(btn);
     });
+
+    setTimeout(() => {
+      this.addTooltipToButtons();
+    }, 100);
+  },
+
+  /**
+   * Add tooltips to buttons whose text overflows their width.
+   * @private
+   */
+  addTooltipToButtons() {
+    // Check if buttons and buttonsetAPI exist
+    if (this.settings.buttons && this.buttonsetAPI) {
+      // Get all the buttons in the modal buttonset
+      const buttons = this.settings.buttons;
+      // Iterate through each button
+      for (let i = 0; i < buttons.length; i++) {
+        const button = buttons[i].buttonsetAPI.buttons;
+
+        for (let j = 0; j < button.length; j++) {
+          const btn = button[j];
+
+          // Get the width of the button
+          const buttonWidth = btn.element[0]?.offsetWidth;
+          // Get the width of the button's text
+          const textWidth = btn.element[0].querySelector('span')?.scrollWidth;
+
+          // Check if the button's width is less than the text's width
+          if (buttonWidth < textWidth) {
+            $(btn.element).tooltip({
+              content: btn.element[0].querySelector('span').textContent,
+              placement: 'top',
+              trigger: 'hover'
+            });
+          }
+        }
+      }
+    }
   },
 
   /**
