@@ -1,6 +1,5 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { colorUtils } from '../../utils/color';
 import { Locale } from '../locale/locale';
 import { debounce } from '../../utils/debounced-resize';
 
@@ -151,7 +150,7 @@ CirclePager.prototype = {
       }
 
       href = href.toLowerCase().replace(/[\s,--]+/g, '-');
-      html.bullets += `<a href="${href}" class="control-button hyperlink hide-focus is-ripple"${isDisabled}><span class="audible">${text}</span></a>`;
+      html.bullets += `<a href="${href}" class="control-button hyperlink hide-focus"${isDisabled}><span class="audible">${text}</span></a>`;
       dsSlides.push({ href, text, isDisabled });
     }
 
@@ -583,48 +582,6 @@ CirclePager.prototype = {
   },
 
   /**
-   * set ripple effect on given element
-   * https://codepen.io/jakob-e/pen/XZoZWQ
-   * @private
-   * @param {object} el The element.
-   * @param {object|null} evt The optional jquery event.
-   * @returns {void}
-   */
-  setRipple(el, evt) {
-    if (!el || !el.classList?.contains('is-ripple')) {
-      return;
-    }
-    const e = evt && evt.touches ? evt.touches[0] : (evt || {});
-    const r = el.getBoundingClientRect();
-    // eslint-disable-next-line prefer-exponentiation-operator
-    const d = Math.sqrt(Math.pow(r.width, 2) + Math.pow(r.height, 2)) * 2;
-    const x = e.clientX ? (e.clientX - r.left) : (el.offsetWidth / 2);
-    const y = e.clientY ? (e.clientY - r.top) : (el.offsetHeight / 2);
-    const orig = el.style.cssText;
-
-    // custom colors
-    const hex = el.getAttribute('data-hex');
-    const contrast = colorUtils.getContrastColor(hex);
-    const bg = {
-      ripple: colorUtils.getLuminousColorShade(hex, contrast === 'white' ? '0.3' : '-0.3'),
-      elem: colorUtils.hexToRgba(hex, 0.7)
-    };
-    const customColor = hex !== null ? `--ripple-background: ${bg.ripple}; background-color: ${bg.elem}; ` : '';
-
-    el.style.cssText = `${customColor}--s: 0; --o: 1`;
-    el.offsetTop; // eslint-disable-line
-    el.style.cssText = `${customColor}--t: 1; --o: 0; --d: ${d}; --x:${x}; --y:${y};`;
-
-    // reset
-    $(el).off('transitionend.monthview-ripple').on('transitionend.monthview-ripple', (event) => {
-      const prop = event.propertyName || event.originalEvent?.propertyName;
-      if (prop === 'transform') {
-        el.style.cssText = orig;
-      }
-    });
-  },
-
-  /**
    * Removes event bindings from the instance.
    * @private
    * @returns {object} The api
@@ -725,7 +682,6 @@ CirclePager.prototype = {
         if (this.slides[i].isDisabled) {
           return;
         }
-        this.setRipple(btn[0], e);
         this.show(i);
       });
     }
@@ -812,7 +768,6 @@ CirclePager.prototype = {
       if (handled) {
         e.preventDefault();
         e.stopPropagation();
-        this.setRipple(e.currentTarget, e);
         return false;
       }
     });

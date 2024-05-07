@@ -22,7 +22,6 @@
     left: 0;
     position: absolute;
     top: 0;
-    overflow: hidden;
     width: 360px;
 
     // Edit mode is on
@@ -30,7 +29,7 @@
       overflow: initial;
     }
 
-    &:last-child::after {
+    &::after {
       content: '';
       display: inline-block;
       height: 16px;
@@ -46,24 +45,22 @@
       box-shadow: none;
 
       .widget-content {
-        height: 380px;
+        height: 420px;
         overflow-y: hidden;
       }
 
       .circlepager {
-        height: 374px;
+        height: 417px;
 
         .slide {
-          height: 360px;
+          height: 368px;
           margin: 0 2px;
 
           &.is-visible.transition {
             transition: opacity 0.1s ease 0s;
           }
 
-          .card,
-          .small-widget,
-          .widget {
+          .small-widget {
             height: 318px;
             min-height: 318px;
             width: 358px;
@@ -91,13 +88,13 @@
 
   > .content {
     left: 50%;
-    top: -1%;
+    top: 16px;
     margin-left: -500px;
     margin-top: 16px;
     position: absolute;
 
     &.has-banner-icon {
-      margin-top: 100px;
+      margin-top: 76px;
     }
   }
 
@@ -203,8 +200,9 @@
 
 .header + .homepage,
 .header + nav + .homepage {
+  height: calc(100% - 60px);
   margin-top: 0 !important;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .header + .page-container > .homepage {

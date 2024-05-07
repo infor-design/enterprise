@@ -123,7 +123,6 @@ Homepage.prototype = {
     setTimeout(() => { // Timeout to let rtl load first before the render of the resize
       this.resize(this, false);
     }, 100);
-    this.setHomepageHeight(100);
     this.element.parent().addClass('homepage-background');
   },
 
@@ -163,20 +162,6 @@ Homepage.prototype = {
       if (s.widgetHeight === d.widgetHeight) {
         s.widgetHeight = small.widgetHeight;
       }
-    }
-  },
-
-  /**
-   * Set height to the homepage container.
-   * @private
-   * @param {number} [timeout=0] Delay in milliseconds before setting height.
-   */
-  setHomepageHeight(timeout = 0) {
-    if (!this.settings.background?.banner) {
-      setTimeout(() => {
-        const homepageHeight = this.element.get(0).scrollHeight + 16; // 16px is based on the padding
-        this.element.css('height', `${homepageHeight}px`);
-      }, timeout);
     }
   },
 
@@ -788,6 +773,7 @@ Homepage.prototype = {
 
       // Get Availability
       const available = self.getAvailability(block);
+      const isBannerWidget = self.element.find('.banner.widget').length > 0;
 
       // Set positions
       const box = self.settings.widgetWidth + self.settings.gutterSize;
@@ -803,7 +789,7 @@ Homepage.prototype = {
         if (easing === 'blockslide') {
           self.applyCubicBezier(block.elem, blockslide);
           block.elem[0].style.left = `${pos.left}px`;
-          block.elem[0].style.top = `${pos.top}px`;
+          block.elem[0].style.top = `${pos.top + (isBannerWidget && !block.elem.hasClass('banner') ? 40 : 0)}px`;
         } else {
           // Other easing effects ie (linear, swing)
           block.elem.animate(pos, self.settings.timeout, easing);
@@ -811,7 +797,7 @@ Homepage.prototype = {
       } else {
         self.applyCubicBezier(block.elem, null);
         block.elem[0].style.left = `${pos.left}px`;
-        block.elem[0].style.top = `${pos.top}px`;
+        block.elem[0].style.top = `${pos.top + (isBannerWidget && !block.elem.hasClass('banner') ? 40 : 0)}px`;
       }
 
       // Mark all spots as unavailable for this block, as we just used this one
@@ -932,12 +918,10 @@ Homepage.prototype = {
   handleEvents() {
     $('body').on('resize.homepage', () => {
       this.resize(this, this.settings.animate);
-      this.setHomepageHeight(500);
     });
 
     $('.application-menu').on('applicationmenuopen.homepage applicationmenuclose.homepage', () => {
       this.resize(this, this.settings.animate);
-      this.setHomepageHeight(400);
     });
   }
 
