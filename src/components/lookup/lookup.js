@@ -220,7 +220,7 @@ Lookup.prototype = {
       this.applyAutoWidth();
     }
 
-    if (!this.minWidth) {
+    if (!this.settings.minWidth) {
       this.settings.minWidth = this.settings.options && this.settings.options.paging ? 482 : 400;
     }
 

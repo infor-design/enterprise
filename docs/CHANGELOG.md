@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.96.0
+
+## v4.96.0 Features
+
+## v4.96.0 Fixes
+
+- `[Lookup]` Fixed bug on lookup not using minWidth settings. ([#8626](https://github.com/infor-design/enterprise/issues/8626))
+
 ## v4.95.0
 
 ## v4.95.0 Features
