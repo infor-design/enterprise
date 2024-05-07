@@ -13,15 +13,17 @@ When using the newest designs (Not Classic Mode) you should use a custom font ca
 
 Source Sans Pro supports many of our languages but some languages require [alternate fonts](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography-new.scss#L6). Each of this fonts will be used based on the matching locale.
 
-NOTE: It is no longer recommended to use `fonts.googleapis` to use the fonts because it can cause some issues:
+NOTE: It is no longer recommended to use fonts.googleapis to use the fonts.
 
-a) because Google fonts violates [GDPR](https://www.cookieyes.com/documentation/google-fonts-and-gdpr/)
-b) if application needs to run without an internet connection
-c) because some countries google links may be banned
+SSUE: The problems can be:
 
-For this reason we recommend you serve the files with your application. All the needed fonts can be found in the [design system repo](https://github.com/infor-design/design-system/tree/main/fonts). You will need to copy the files into the correct location for your app and serve them and then include the font.css file in your page. Updating any locations as needed.
+(a) use of Google Fonts API may violate cross border data transfer restrictions under local privacy laws (e.g. EU’s [GDPR](https://www.cookieyes.com/documentation/google-fonts-and-gdpr/) or China’s PDPL)
+(b) if the application needs to run without an internet connection, or
+(c) in some countries Google links may be banned or limited (e.g. China).
 
-For example see the demo app in this [this file](https://github.com/infor-design/enterprise/blob/main/app/views/includes/head.html#L53-L59).
+RECOMMENDED FIX: Given Infor’s global customer base we recommend a unified approach that is compliant in all jurisdictions. For this reason we suggest you serve the files with the application (e.g. download and embed the font library locally). All the needed fonts can be found in the [design system repo](https://github.com/infor-design/design-system/tree/main/fonts). You will need to copy the files into the correct location for your app and serve them and then include the [font-face.css](https://github.com/infor-design/design-system/blob/main/fonts/font-face.css) your app. Update any `url` locations as needed in the font-face.css file.
+
+As an example see our demo app in this [this file](https://github.com/infor-design/enterprise/blob/main/app/views/includes/head.html#L53-L59).
 
 ## Typography Related Css Classes
 
