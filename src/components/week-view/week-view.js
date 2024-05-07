@@ -280,11 +280,10 @@ WeekView.prototype = {
       if (this.isStackedView()) {
         this.appendToDayContainer(event);
       } else {
+        if (event.startsHour < this.settings.startHour) {
+          event.startsHour = this.settings.startHour;
+        }
         if (this.element.hasClass('is-day-view')) {
-          if (event.startsHour < this.settings.startHour) {
-            event.startsHour = this.settings.startHour;
-          }
-
           if (days[0].key === event.startKey && event.endsHour < this.settings.endHour) {
             event.endsHour = this.settings.endHour + 1;
           } else if (days[0].key !== event.startKey && days[0].key !== event.endKey) {
@@ -352,13 +351,14 @@ WeekView.prototype = {
 
     DOM.addClass(node, 'calendar-event');
 
-    if (event.color !== undefined && colorList.filter(color => event.color?.indexOf(color) > -1).length > 0 && event.color?.indexOf('0') > -1) {
+    if (event.color !== undefined && colorList.filter(color => event.color.indexOf(color) > -1).length > 0 && !event.color?.indexOf('0') > -1) {
       DOM.addClass(node, event.color);
     } else if (event.color?.substr(0, 1) === '#' && event.color !== undefined) {
       node.style.backgroundColor = event.color;
       node.classList.remove(event.color);
     } else {
-      node.style.backgroundColor = event.color;
+      node.style.backgroundColor = 'slate';
+      $(node).css('backgroundColor', event.color);
     }
 
     if (event.borderColor?.substr(0, 1) === '#' || event.borderColor !== undefined) {
@@ -413,6 +413,8 @@ WeekView.prototype = {
       }
     }
     allDayContainer.appendChild(node);
+
+
 
     utils.addAttributes($(node), this, this.settings.attributes, `week-view-event-${event.id}`);
     this.attachTooltip(node, event);
