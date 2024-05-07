@@ -773,6 +773,7 @@ Homepage.prototype = {
 
       // Get Availability
       const available = self.getAvailability(block);
+      const isBannerWidget = self.element.find('.banner.widget').length > 0;
 
       // Set positions
       const box = self.settings.widgetWidth + self.settings.gutterSize;
@@ -788,7 +789,7 @@ Homepage.prototype = {
         if (easing === 'blockslide') {
           self.applyCubicBezier(block.elem, blockslide);
           block.elem[0].style.left = `${pos.left}px`;
-          block.elem[0].style.top = `${pos.top}px`;
+          block.elem[0].style.top = `${pos.top + (isBannerWidget && !block.elem.hasClass('banner') ? 25 : 0)}px`;
         } else {
           // Other easing effects ie (linear, swing)
           block.elem.animate(pos, self.settings.timeout, easing);
@@ -796,7 +797,7 @@ Homepage.prototype = {
       } else {
         self.applyCubicBezier(block.elem, null);
         block.elem[0].style.left = `${pos.left}px`;
-        block.elem[0].style.top = `${pos.top}px`;
+        block.elem[0].style.top = `${pos.top + (isBannerWidget && !block.elem.hasClass('banner') ? 25 : 0)}px`;
       }
 
       // Mark all spots as unavailable for this block, as we just used this one

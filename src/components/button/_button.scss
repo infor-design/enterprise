@@ -684,7 +684,7 @@ button {
   }
 
   &:focus {
-    border: 1px solid transparent;
+    border: 1px solid $button-color-tertiary-focus-border;
 
     &:not(.hide-focus) {
       box-shadow: 0 0 0 2px $body-color-primary-background, 0 0 0 3px $button-color-primary-initial-background, $focus-box-shadow;

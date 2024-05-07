@@ -45,24 +45,22 @@
       box-shadow: none;
 
       .widget-content {
-        height: 380px;
+        height: 410px;
         overflow-y: hidden;
       }
 
       .circlepager {
-        height: 374px;
+        height: 410px;
 
         .slide {
-          height: 360px;
+          height: 368px;
           margin: 0 2px;
 
           &.is-visible.transition {
             transition: opacity 0.1s ease 0s;
           }
 
-          .card,
-          .small-widget,
-          .widget {
+          .small-widget {
             height: 318px;
             min-height: 318px;
             width: 358px;
