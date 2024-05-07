@@ -404,7 +404,7 @@ WeekView.prototype = {
     const eventCount = containerEvents.length;
 
     if (eventCount >= 1) {
-      node.style.top = `${22 * eventCount}px`;
+      node.style.top = `${21 * eventCount}px`;
     }
     if (eventCount > 2) {
       const nodes = this.element[0].querySelectorAll('.week-view-all-day-wrapper');
@@ -412,6 +412,30 @@ WeekView.prototype = {
         nodes[i].style.height = `${44 + ((eventCount - 1) * 23)}px`;
       }
     }
+
+    // Get string value of item
+    function getString(item) {
+      if (typeof item === 'string') {
+        return item;
+      }
+      return item ? item.toString() : null;
+    }
+
+    // Make sure we are on the same "level", when events overlap
+    const eventHead = container.parentNode.querySelectorAll(`.calendar-event.calendar-event-start[data-id="${event.id}"]`);
+
+    if (eventHead[0]) {
+      const children = eventHead[0].parentNode.children;
+      let iterator = container.querySelector('.week-view-all-day-wrapper').children.length || 0;
+      for (let i = iterator; i < children.length; i++) {
+        const dataid = children[i].getAttribute('data-id');
+        if (getString(dataid) === getString(event.id)) {
+          node.style.top = i === 0? '1px' : `${21 * i}px`;
+          break;
+        }
+      }
+    }
+
     allDayContainer.appendChild(node);
 
     utils.addAttributes($(node), this, this.settings.attributes, `week-view-event-${event.id}`);
