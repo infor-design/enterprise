@@ -439,7 +439,7 @@ describe('Calendar', () => {
     });
 
     it('should not display the event accordingly when legend is unchecked', async () => {
-      await page.waitForSelector('input.checkbox.powderblue', { visible: true });
+      await page.waitForSelector('input.checkbox.cornflowerblue', { visible: true });
       await page.click('label.checkbox-label[for=dto]');
 
       expect(await page.evaluate(() => {
