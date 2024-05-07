@@ -6646,7 +6646,11 @@ Datagrid.prototype = {
                   const colChkChecked = colChk.prop('checked');
 
                   if (colChkChecked !== changeValue) {
-                    self.showColumn(colId);
+                    if (changeValue) {
+                      self.showColumn(colId);
+                    } else {
+                      self.hideColumn(colId);
+                    }
                     colChk.prop('checked', changeValue);
                   }
                 }
