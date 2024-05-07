@@ -2262,44 +2262,6 @@ MonthView.prototype = {
       this.focusDate = new Date(year, month, day);
     }
 
-    // let el = $(node);
-    // if (node === null || node === undefined) {
-    //   el = this.element.find(`td[tabindex=0]`);
-    // }
-    // el.attr('tabindex', '-1');
-
-    // switch (mode) {
-    //   case 'next':
-    //     el.next().attr('tabindex', '0').focus();
-    //     break;
-    //   case 'prev':
-    //     el.prev().attr('tabindex', '0').focus();
-    //     break;
-    //   case 'up':
-    //     if (el.parent().prev().find(`td:nth-child(${el.index() + 1})`).length > 0) {
-    //       el.parent().prev().find(`td:nth-child(${el.index() + 1})`).attr('tabindex', '0').focus();
-    //     } else {
-    //       this.showMonth(month, year);
-    //       const dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
-    //       const node = dayObj[0].elem[0];
-    //       $(node).attr('tabindex', '0').focus();
-    //     }
-    //     break;
-    //   case 'down':
-    //     if (el.parent().next().find(`td:nth-child(${el.index() + 1})`).length > 0) {
-    //       el.parent().next().find(`td:nth-child(${el.index() + 1})`).attr('tabindex', '0').focus();
-    //     } else {
-    //       this.showMonth(month, year);
-    //       const dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
-    //       const node = dayObj[0].elem[0];
-    //       $(node).attr('tabindex', '0').focus();
-    //     }
-    //     break;
-    //   default:
-    //     el.attr('tabindex', '0').focus();
-    //     break;
-    // }
-
     if (dayObj.length === 0 || dayObj[0].elem.hasClass('alternate')) {
       // Show month
       this.showMonth(month, year);
