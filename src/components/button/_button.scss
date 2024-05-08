@@ -185,6 +185,10 @@ button {
     box-shadow: $button-gen-ai-focus !important;
   }
 
+  .dot-flashing-container {
+    margin-inline-end: 0;
+  }
+
   &:hover {
     background: $button-gen-ai-hover-bg-color;
 
