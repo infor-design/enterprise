@@ -338,6 +338,7 @@
     $('#todays-date').text(Soho.Locale.formatDate(new Date(), { date: 'full'}));
 
     var listviewEl = $('#search-listview');
+    listviewEl.cards();
     listviewEl.listview({
       template: 'search-tmpl',
       source: '/api/tasks',
