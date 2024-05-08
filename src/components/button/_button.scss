@@ -941,15 +941,12 @@ a.btn-close {
   .icon {
     color: $button-color-tertiary-initial-font;
   }
-
-  .ripple-effect {
-    background-color: $tertiary-btn-ripple-color;
-  }
 }
 
 .btn-icon {
   &[disabled] {
     background-color: transparent;
+    opacity: 0.4;
 
     .icon {
       color: $button-icon-disabled-color;
