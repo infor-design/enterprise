@@ -170,34 +170,34 @@
   .switch {
     input ~ .label-text::before,
     input ~ label::before {
-      left: 155px;
+      left: 170px;
     }
 
     input:empty ~ .label-text::after,
     input:empty ~ label::after {
-      left: 150px;
+      left: 165px;
     }
 
     input:checked ~ .label-text::after,
     input:checked ~ label::after {
-      left: 170px;
+      left: 185px;
     }
   }
 
   li.child .switch {
     input ~ .label-text::before,
     input ~ label::before {
-      left: 135px;
+      left: 150px;
     }
 
     input:empty ~ .label-text::after,
     input:empty ~ label::after {
-      left: 130px;
+      left: 145px;
     }
 
     input:checked ~ .label-text::after,
     input:checked ~ label::after {
-      left: 150px;
+      left: 165px;
     }
   }
 }

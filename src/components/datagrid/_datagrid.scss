@@ -6178,8 +6178,12 @@ html[dir='rtl'] {
       background-color: $listview-bg-color;
     }
 
-    .listview.alternate-bg {
-      background-color: $listview-bg-color;
+    .listview {
+      overflow: inherit;
+
+      &.alternate-bg {
+        background-color: $listview-bg-color;
+      }
     }
 
     .listview-search {
