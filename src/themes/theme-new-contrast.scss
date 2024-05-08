@@ -213,6 +213,7 @@ $button-color-secondary-initial-background: transparent;
 $button-disabled-background-color: transparent;
 $button-color-tertiary-hover-background-new: $ids-color-palette-slate-20;
 $button-color-tertiary-hover-text-new: $ids-color-palette-black;
+$button-color-tertiary-hover-text: $ids-color-palette-black;
 $hero-button-color-tertiary-hover-background-new: $ids-color-palette-azure-70;
 
 // Tertiary Buttons
@@ -607,6 +608,7 @@ $contextual-panel-color: $ids-color-palette-white;
 $contextual-panel-button-color: $ids-color-palette-slate-90;
 $contextual-panel-icon-color: $ids-color-palette-slate-90;
 $contextual-panel-hover-icon-color: $button-color-tertiary-hover-text;
+$contextual-panel-button-hover-bg-color: $ids-color-palette-slate-20;
 
 // BreadCrumb
 $breadcrumb-color: $ids-color-palette-slate-80;
