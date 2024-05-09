@@ -4,7 +4,7 @@
 
 ## v4.95.0 Important Changes
 
-- `[General]` Using googleapis CDN for the design system fonts is no longer recommended due to global cross border data protection requirements. It is now recommended to download, embed, and serve the font locally with your application. Target completion for fix: with next major product release (Oct. 2024 / Apr. 2025). See [typography docs](https://github.com/infor-design/enterprise/blob/main/src/components/typography/readme.md#font-family) for details and config. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
+- `[General]` Using googleapis CDN for the design system fonts is no longer recommended due to global cross border data protection requirements. It is now recommended to download, embed, and serve the font locally with your application. Target completion for fix: with next major product release (Oct. 2024). See [typography docs](https://github.com/infor-design/enterprise/blob/main/src/components/typography/readme.md#font-family) for details and config. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
 
 ## v4.95.0 Features
 
