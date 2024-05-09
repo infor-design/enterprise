@@ -12043,8 +12043,8 @@ Datagrid.prototype = {
 
       // eslint-disable-next-line consistent-return
       return ((rect.x + rect.width) < 0 || 
-      (rect.y + rect.height) < 0 || 
-      (rect.x > window.innerWidth || 
+        (rect.y + rect.height) < 0 || 
+        (rect.x > window.innerWidth || 
         rect.y > window.innerHeight));
     }
 
