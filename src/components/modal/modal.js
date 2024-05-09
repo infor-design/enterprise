@@ -377,7 +377,7 @@ Modal.prototype = {
         <div class="modal-content"${maxWidth}>
           <div class="modal-header ${isSplitter ? 'splitter-header' : ''}"><h1 class="modal-title"></h1></div>
           <div class="modal-body-wrapper ${isSplitter ? 'splitter-wrapper' : ''}">
-            <div class="modal-body${this.settings.forceOverflow ? ' overflow' : ''} ${this.settings.propagateStyle? ' propagate-style' : ''} ${this.settings.compactPanel? ' compact' : ''}"></div>
+            <div class="modal-body${this.settings.forceOverflow ? ' overflow' : ''} ${this.settings.propagateStyle ? ' propagate-style' : ''} ${this.settings.compactPanel ? ' compact' : ''}"></div>
           </div>
         </div>
       </div>
