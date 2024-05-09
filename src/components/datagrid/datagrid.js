@@ -12049,9 +12049,9 @@ Datagrid.prototype = {
     }
 
     if ((!$('input:not(.colorpicker), select, button:not(.btn-secondary, .row-btn, .datagrid-expand-btn, .datagrid-drilldown, .btn-icon)', self.activeCell.node).length) || (self.activeCell.node.is('.has-btn-actions') && self.activeCell.node.find('.btn-actions').length)) {
-        if (!isOffScreen(self.activeCell.node) || nodeFocus) {
-          self.activeCell.node.focus();
-        }
+      if (!isOffScreen(self.activeCell.node) || nodeFocus) {
+        self.activeCell.node.focus();
+      }
       if (isGroupRow) {
         self.activeCell.groupNode = self.activeCell.node;
       }
