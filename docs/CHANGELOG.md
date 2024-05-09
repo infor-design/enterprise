@@ -1,5 +1,15 @@
 # What's New with Enterprise
 
+## v4.96.0
+
+## v4.96.0 Features
+
+## v4.96.0 Fixes
+
+- `[Bar-Stacked/Column-Stacked]` Fixed an error encountered when having many records inside the graph. ([NG#1675](https://github.com/infor-design/enterprise-ng/issues/1675))
+- `[Lookup]` Fixed bug on lookup not using minWidth settings. ([#8626](https://github.com/infor-design/enterprise/issues/8626))
+- `[Monthview]` Fixed monthview not updating after changing activeDate. ([NG#1659](https://github.com/infor-design/enterprise-ng/issues/1659))
+
 ## v4.95.0
 
 ## v4.95.0 Important Changes

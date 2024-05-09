@@ -236,21 +236,32 @@ charts.chartColor = function chartColor(i, chartType, data) {
     }
   }
 
+  function getColorIndex() {
+    let tempSelector = i;
+
+    if (i >= themeColors.length) { // Checks for more than the array length of the color sets
+      tempSelector = i - themeColors.length;
+    }
+
+    return tempSelector;
+  }
+
   // Some configuration by specific chart types
   if (/^(pie|donut)$/.test(chartType)) {
-    return themeColors[i];
+    return themeColors[getColorIndex()];
   }
   if (/^(bar-single|column-single)$/.test(chartType)) {
     return themeColors[0];
   }
   if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|scatterplot|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
-    return themeColors[i];
+    return themeColors[getColorIndex()];
   }
 
   return '';
 };
 
 charts.chartColorName = function chartColor(i, chartType, data) {
+  const self = this;
   const specifiedColor = (data && data.color ? data.color : null);
 
   // Handle passed in colors.
@@ -276,19 +287,25 @@ charts.chartColorName = function chartColor(i, chartType, data) {
     return data.color;
   }
 
+  function getColorIndex() {
+    let tempSelector = i;
+
+    if (i >= self.colorNameRange().length) { // Checks for more than the array length of the color sets
+      tempSelector = i - self.colorNameRange().length;
+    }
+
+    return tempSelector;
+  }
+  
   // Some configuration by specific chart types
   if (/^(pie|donut)$/.test(chartType)) {
-    let tempSelector = i;
-    if ((i + 1) >= this.colorNameRange().length) { // Checks for more than the array length of the color sets
-      tempSelector = i - i;
-    }
-    return this.colorNameRange()[tempSelector];
+    return this.colorNameRange()[getColorIndex()];
   }
   if (/^(bar-single|column-single)$/.test(chartType)) {
     return this.colorNameRange()[0];
   }
   if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|scatterplot|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
-    return this.colorNameRange()[i];
+    return this.colorNameRange()[getColorIndex()];
   }
 
   return '';
