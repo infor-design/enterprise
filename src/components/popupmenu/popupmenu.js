@@ -2234,6 +2234,11 @@ PopupMenu.prototype = {
     li.parent().children('li').removeClass('is-focused');
     li.addClass('is-focused');
 
+    if (this.element.is('.autocomplete')) {
+      li.parent().children('li').removeClass('is-selected');
+      li.addClass('is-selected');
+    }
+
     // Prevent chrome from scrolling - toolbar
     if (anchor) {
       anchor.focus();
