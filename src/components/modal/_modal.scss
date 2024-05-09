@@ -576,6 +576,16 @@ body.modal-engaged {
   p:last-child {
     padding-bottom: 0;
   }
+
+  &.propagate-style {
+    max-height: inherit; 
+    max-width: inherit; 
+    overflow: inherit;
+  }
+
+  &.compact {
+    padding: 0;
+  }
 }
 
 //Toolbar Buttons

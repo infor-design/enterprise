@@ -1,5 +1,16 @@
 # What's New with Enterprise
 
+## v4.96.0
+
+## v4.96.0 Features
+
+- `[ContextualActionPanel/Modal]` Added new settings `propagateStyle` and `compactPanel`. ([NG#1594](https://github.com/infor-design/enterprise-ng/issues/1594))
+
+## v4.96.0 Fixes
+
+- `[Datepicker]` Fixed focus date not properly assigned when calendar is used as datepicker. ([#8585](https://github.com/infor-design/enterprise/issues/8585))
+- `[Lookup]` Fixed bug on lookup not using minWidth settings. ([#8626](https://github.com/infor-design/enterprise/issues/8626))
+
 ## v4.95.0
 
 ## v4.95.0 Important Changes

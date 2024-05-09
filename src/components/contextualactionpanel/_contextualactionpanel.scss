@@ -245,6 +245,16 @@
   .modal-body {
     padding: 3rem 0;
 
+    &.propagate-style {
+      max-height: inherit; 
+      max-width: inherit; 
+      overflow: inherit;
+    }
+  
+    &.compact {
+      padding: 0;
+    }
+
     .field:last-child input,
     .field:last-child textarea {
       margin-bottom: 10px;

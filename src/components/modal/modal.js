@@ -89,6 +89,8 @@ const MODAL_DEFAULTS = {
   suppressEnterKey: false,
   draggable: false,
   draggableOffset: { left: 0, top: 0 },
+  propagateStyle: false,
+  compactPanel: false,
   icon: null,
   iconClass: null,
   buttonsetTextWidth: null
@@ -301,6 +303,14 @@ Modal.prototype = {
     // beneath another modal in the stack
     this.element[0].classList[this.settings.hideUnderneath ? 'add' : 'remove']('hide-underneath');
 
+    if (this.settings.propagateStyle) {
+      this.element.find('.modal-body').addClass('propagate-style');
+    }
+
+    if (this.settings.compactPanel) {
+      this.element.find('.modal-body').addClass('compact');
+    }
+
     this.registerModal();
 
     this.element.appendTo('body');
@@ -367,7 +377,7 @@ Modal.prototype = {
         <div class="modal-content"${maxWidth}>
           <div class="modal-header ${isSplitter ? 'splitter-header' : ''}"><h1 class="modal-title"></h1></div>
           <div class="modal-body-wrapper ${isSplitter ? 'splitter-wrapper' : ''}">
-            <div class="modal-body${this.settings.forceOverflow ? ' overflow' : ''}"></div>
+            <div class="modal-body${this.settings.forceOverflow ? ' overflow' : ''} ${this.settings.propagateStyle? ' propagate-style' : ''} ${this.settings.compactPanel? ' compact' : ''}"></div>
           </div>
         </div>
       </div>
