@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="twelve columns">
+    <p id="selected-date"></p><br>
+    <button class="btn-primary" type="button" id="btn-add">Add Day</button>
+  </div>
+</div>
+<div class="row top-padding">
+  <div class="twelve columns top-padding">
+    <div class="monthview" data-init="false"x>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('body').on('initialized', function() {
+    var monthViewApi = null;
+    var selectedDate = new Date();
+    var monthViewOptions = {
+      inPage: true,
+      inPageExpanded: false,
+      showMonthYearPicker: false,
+      showLegend: true,
+      disable: {
+      isEnable: false, // inverses the disable options
+      attributes: [
+        { name: 'id', value: 'monthview-id' },
+        { name: 'data-automation-id', value: 'monthview-automation-id' }
+      ]
+    },
+    }
+    $('.monthview').monthview({
+      ...monthViewOptions,
+      day: selectedDate.getDate(),
+      month: selectedDate.getMonth(),
+      year: selectedDate.getFullYear(),
+      activeDate: selectedDate
+    });
+
+    monthViewApi = $('.monthview').data('monthview');
+
+    $('#selected-date').text(selectedDate);
+
+    $('#btn-add').on('click', () => {
+      selectedDate.setDate(selectedDate.getDate() + 1);
+      var settings = {
+        ...monthViewOptions,
+        day: selectedDate.getDate(),
+        month: selectedDate.getMonth(),
+        year: selectedDate.getFullYear(),
+        activeDate: selectedDate,
+      };
+      console.log(selectedDate.toDateString());
+
+      $('#selected-date').text(selectedDate);
+      monthViewApi.updated(settings);
+    })
+  });
+</script>
