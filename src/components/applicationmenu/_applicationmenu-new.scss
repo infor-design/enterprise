@@ -184,6 +184,10 @@
         color: inherit;
         top: auto;
 
+        &:hover {
+          background-color: unset !important;
+        }
+
         &:focus:not(.hide-focus) {
           border-color: $new-appmenu-selected-border-color;
           box-shadow: none;
