@@ -229,20 +229,20 @@
   border-radius: 8px;
 
   &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable):not(.destructive) {
-    background-color: $button-editor-color-hover-background-new;
-    color: $button-editor-color-tertiary-hover-font-new;
+    background-color: $button-editor-color-hover-background-new !important;
+    color: $button-editor-color-tertiary-hover-font-new !important;
 
     svg.icon {
-      color: $button-editor-color-tertiary-hover-font-new;
+      color: $button-editor-color-tertiary-hover-font-new !important;
     }
 
     &.is-active svg.icon {
-      color: $editor-btn-active-color;
+      color: $editor-btn-active-color !important;
     }
   }
 }
 
-.btn-icon.trigger:hover:not(:disabled){
+.btn-icon.trigger:hover:not(:disabled) {
   background-color: $button-color-tertiary-hover-background-new;
 }
 

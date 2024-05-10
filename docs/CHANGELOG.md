@@ -8,6 +8,10 @@
 
 ## v4.96.0 Fixes
 
+## v4.96.0 Fixes
+
+- `[Autocomplete]` Fixed autocomplete not properly highlighted on key down. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
+- `[Datagrid]` Fixed add row not triggering after cell commit. ([#8624](https://github.com/infor-design/enterprise/issues/8624))
 - `[Datepicker]` Fixed focus date not properly assigned when calendar is used as datepicker. ([#8585](https://github.com/infor-design/enterprise/issues/8585))
 - `[Lookup]` Fixed bug on lookup not using minWidth settings. ([#8626](https://github.com/infor-design/enterprise/issues/8626))
 
@@ -15,7 +19,7 @@
 
 ## v4.95.0 Important Changes
 
-- `[General]` Using googleapis CDN for the design system fonts is no longer recommended due to global cross border data protection requirements. It is now recommended to download, embed, and serve the font locally with your application. Target completion for fix: with next major product release (Oct. 2024 / Apr. 2025). See [typography docs](https://github.com/infor-design/enterprise/blob/main/src/components/typography/readme.md#font-family) for details and config. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
+- `[General]` Using googleapis CDN for the design system fonts is no longer recommended due to global cross border data protection requirements. It is now recommended to download, embed, and serve the font locally with your application. Target completion for fix: with next major product release (Oct. 2024). See [typography docs](https://github.com/infor-design/enterprise/blob/main/src/components/typography/readme.md#font-family) for details and config. ([#8635](https://github.com/infor-design/enterprise/issues/8635))
 
 ## v4.95.0 Features
 

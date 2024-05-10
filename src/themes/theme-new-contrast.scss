@@ -213,6 +213,7 @@ $button-color-secondary-initial-background: transparent;
 $button-disabled-background-color: transparent;
 $button-color-tertiary-hover-background-new: $ids-color-palette-slate-20;
 $button-color-tertiary-hover-text-new: $ids-color-palette-black;
+$button-color-tertiary-hover-text: $ids-color-palette-black;
 $hero-button-color-tertiary-hover-background-new: $ids-color-palette-azure-70;
 
 // Tertiary Buttons
@@ -225,6 +226,7 @@ $button-color-tertiary-focus-shadow: 0 0 0 .5px $ids-color-palette-azure-70, 0 0
 $button-color-tertiary-focus-border: $ids-color-palette-azure-70;
 $button-color-destructive-tertiary-focus-shadow: 0 0 0 1px $ids-color-palette-ruby-80, 0 0 0 .5px $ids-color-palette-ruby-80;
 $button-tertiary-gen-ai-focus: 0 0 0 0.5px #0B9789, 0 0 0 0.5px #0B9789;
+$button-icon-disabled-color: rgba(0, 0, 0, 0.9);
 
 // Secondary with Border
 $secondary-border-btn-color: $ids-color-palette-slate-90;
@@ -606,6 +608,7 @@ $contextual-panel-color: $ids-color-palette-white;
 $contextual-panel-button-color: $ids-color-palette-slate-90;
 $contextual-panel-icon-color: $ids-color-palette-slate-90;
 $contextual-panel-hover-icon-color: $button-color-tertiary-hover-text;
+$contextual-panel-button-hover-bg-color: $ids-color-palette-slate-20;
 
 // BreadCrumb
 $breadcrumb-color: $ids-color-palette-slate-80;
