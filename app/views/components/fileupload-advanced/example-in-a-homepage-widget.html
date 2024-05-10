@@ -1,0 +1,174 @@
+<style>
+  .custom-container .dropdown {
+      width: 1070px;
+  }
+</style>
+
+<div class="homepage page-container scrollable" data-init="false" id="maincontent" data-columns="3" role="main">
+  <div class="content">
+
+    <div class="widget triple-width show-buttons">
+      <div class="widget-header">
+        <div class="widget-header-section title">
+          <h2>Fileupload Advanced</h2>
+        </div>
+        <div class="widget-header-section custom-action">
+          <button class="btn-icon">
+            <span>Search</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-search"></use>
+            </svg>
+            <span class="audible">Search</span>
+          </button>
+  
+          <button type="button" class="btn-tertiary" id="tertiary-filter-one">
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-export"></use>
+            </svg>
+            <span>Export</span>
+          </button>
+        </div>
+        <div class="widget-header-section more">
+          <button class="btn-actions">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-vertical-ellipsis"></use>
+            </svg>
+            <span class="audible">More Actions</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">More One</a></li>
+            <li><a href="#">More Two</a></li>
+            <li class="submenu">
+              <a href="#">More Three</a>
+              <ul class="popupmenu">
+                <li><a href="#">Sub-Item One</a></li>
+                <li><a href="#">Sub-Item Two</a></li>
+              </ul>
+            </li>
+            <li><a href="#">More Three</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="widget-content">
+        <div class="row">
+          <div class="twelve columns">
+            <div class="field custom-container">
+              <label for="state-dropdown" class="label">State</label>
+              <select id="state-dropdown" name="custom-dropdown-id-1" class="dropdown" data-automation-id="custom-automation-dropdown-id" data-options="{ source: '{{basepath}}api/states' }">
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="fileupload-advanced" data-init="false"></div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Alerts</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-vertical-ellipsis"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="widget-content">
+        <div class="fileupload-advanced" data-init="false"></div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Tasks</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-vertical-ellipsis"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="widget-content">
+        <div class="fileupload-advanced" data-init="false"></div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Business Insight</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-vertical-ellipsis"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="widget-content">
+        <div class="fileupload-advanced" data-init="false"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    $('.fileupload-advanced').fileuploadadvanced({
+      attributes: [
+        {
+          name: 'id',
+          value: 'fileupload-advanced'
+        },
+        {
+          name: 'data-automation-id',
+          value: 'fileupload-advanced-automation-id'
+        }
+      ]
+    })
+  });
+
+  $('.dropdown').dropdown({
+    attributes: [
+      {
+        name: 'id',
+        value: 'custom-dropdown-id-1'
+      },
+      {
+        name: 'data-automation-id',
+        value: 'custom-automation-dropdown-id'
+      }
+    ]
+  });
+
+  $('body').on('initialized', function () {
+    $('select.dropdown').on('change.test', function (e) {
+      var newVal = $(e.target).find(':checked').val();
+      $('body').toast({
+        title: "Value changed!",
+        message: 'New value: "'+ newVal +'"'
+      });
+    });
+  });
+
+  $('.homepage').on('resize', function (e, rows, metadata) {
+    console.log(this, this.offsetHeight, metadata);
+  });
+
+  $('.homepage').homepage();
+</script>

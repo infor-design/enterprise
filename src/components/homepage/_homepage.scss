@@ -417,6 +417,14 @@
   overflow: hidden;
 }
 
+// Fileupload Advanced styles
+.widget-content,
+.card-content {
+  .fileupload-wrapper .container .file-row .status-icon > .icon {
+    top: 2px;
+  }
+}
+
 // Hero widget
 .hero-widget {
   background-color: $header-hero-widget-bg-color;
