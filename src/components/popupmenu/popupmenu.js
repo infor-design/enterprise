@@ -110,7 +110,8 @@ PopupMenu.prototype = {
   addDefaultOffset(element, settings) {
     if (settings === undefined || Object.keys(settings).length === 0) {
       if (element.classList.contains('btn-menu') || element.classList.contains('btn-actions')) {
-        this.settings.offset = { x: 0, y: 8 };
+        const isInMasthead = element.closest('.masthead') !== null;
+        this.settings.offset = { x: 0, y: isInMasthead ? 0 : 8 };
       }
     }
   },

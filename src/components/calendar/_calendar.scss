@@ -1028,10 +1028,10 @@ html[dir='rtl'] {
   }
 
   .btn-icon:hover:not([disabled]):not(.btn-primary):not(.trigger):not(:disabled) {
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.25) !important;
 
     svg {
-      color: #fff;
+      color: #fff !important;
     }
   }
 }

@@ -91,6 +91,7 @@ $contextual-panel-bg: $ids-color-palette-slate-10;
 $contextual-panel-color: $ids-color-palette-slate-60;
 $contextual-panel-border-color: $ids-color-palette-slate-30;
 $contextual-panel-searchfield-border-color: $ids-color-palette-slate-30;
+$contextual-panel-button-hover-bg-color: $ids-color-palette-slate-20;
 
 // Modal
 $modal-border-color: $ids-color-palette-slate-30;
@@ -233,7 +234,7 @@ $header-button-disabled-color: rgba(0, 0, 0, 0.3);
 $button-color-tertiary-initial-font: rgba(0, 0, 0, 0.9);
 $button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-text-new;
 $button-disabled-background-color: transparent;
-$button-color-tertiary-hover-text: $ids-color-palette-azure-60;
+$button-color-tertiary-hover-text: $ids-color-palette-slate-100;
 $button-color-secondary-initial-background: transparent;
 $button-color-secondary-initial-font-new: $ids-color-palette-azure-60;
 $header-button-focus-color: $ids-color-palette-slate-100;
