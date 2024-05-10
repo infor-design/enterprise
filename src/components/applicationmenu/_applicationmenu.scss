@@ -724,3 +724,13 @@ html[dir='rtl'] .application-menu .hyperlink {
   display: flex;
   justify-content: center;
 }
+
+.application-menu .accordion.panel.inverse .accordion-header .btn:hover,
+.application-menu .accordion.panel.inverse .accordion-header .btn-expander:hover {
+  background-color: transparent !important;
+  color: #fff !important;
+}
+
+.accordion.panel.inverse .accordion-header:hover .icon {
+  color: #fff !important;
+}
