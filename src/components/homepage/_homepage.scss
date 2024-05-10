@@ -603,4 +603,11 @@ html[dir='rtl'] {
       }
     }
   }
+
+  .widget-content,
+  .card-content {
+    .fileupload-wrapper .container .file-row .status-icon > .icon {
+      top: 2px;
+    }
+  }
 }
