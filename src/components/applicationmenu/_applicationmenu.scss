@@ -734,3 +734,7 @@ html[dir='rtl'] .application-menu .hyperlink {
 .accordion.panel.inverse .accordion-header:hover .icon {
   color: #fff !important;
 }
+
+ .btn-icon.close:hover:not([disabled]) {
+  background-color: transparent !important;
+ }
