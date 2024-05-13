@@ -1386,7 +1386,7 @@ Datagrid.prototype = {
     if (!colGroups) {
       return;
     }
-
+    console.log('updateGroupHeadersAfterColumnReorder', indexFrom, indexTo, colGroups)
     if (!this.originalColGroups) {
       this.originalColGroups = utils.deepCopy(colGroups);
     }
@@ -6532,7 +6532,7 @@ Datagrid.prototype = {
         {{#name}}
           <li {{^hideable}}data-arrange-exclude="true"{{/hideable}}>
             <div class="switch field">
-              <span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
+              <span class="handle"><svg class="icon icon-handle child" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
               <input id="{{id}}-switch" class="switch" type="checkbox" data-column-id="{{id}}" {{^hidden}}checked{{/hidden}} {{^hideable}}disabled{{/hideable}} />
               <span for="{{id}}-switch" class="label-text">{{name}}</span>
             </div>
@@ -6614,12 +6614,58 @@ Datagrid.prototype = {
 
           arrangeApi.element
             .on('arrangeupdate', (event, status) => {
-              let indexFrom;
+              const chk = status.start.find('input.switch');
+              const indexFrom = this.columnIdxById(chk.attr('data-column-id'));
+              let next = status.start.next();
               let indexTo;
-              console.log('arrangeupdate', status);
-              // check over element
-              // update group-id to reflect over element
-              //
+
+              if (next.length === 0) {
+                next = status.start.prev();
+
+                if (self.settings.columnGroups) {
+                  status.start.attr('data-group-id', next.attr('data-group-id'));
+                  if (!next.hasClass('child')) {
+                    next = next.prev();
+                  }
+                }
+
+                const nextChk = next.find('input.switch');
+                indexTo = this.columnIdxById(nextChk.attr('data-column-id'));
+              } else {
+                if (self.settings.columnGroups) {
+                  if (next.hasClass('child')) {
+                    status.start.attr('data-group-id', next.attr('data-group-id'));
+                  } else {
+                    status.start.attr('data-group-id', status.start.prev().attr('data-group-id'));
+                    next = next.next();
+                  }
+                }
+
+                const nextChk = next.find('input.switch');
+                indexTo = this.columnIdxById(nextChk.attr('data-column-id'));
+
+                if (indexFrom < indexTo) {
+                  indexTo--;
+                }
+              }
+
+              self.updateGroupHeadersAfterColumnReorder(indexFrom, indexTo);
+              self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
+              self.updateColumns(self.settings.columns);
+
+              /**
+                * Fires after a column is moved to target.
+                * @event columnreorder
+                * @memberof Datagrid
+                * @property {object} event The jquery event object
+                * @property {number} indexTo The ending column index
+                * @property {number} indexFrom The starting column index
+                */
+              self.element.trigger('columnreorder', [{
+                indexFrom,
+                indexTo,
+                columns: self.settings.columns,
+              }]);
             });
         }
 
@@ -12141,9 +12187,9 @@ Datagrid.prototype = {
       const rect = el[0].getBoundingClientRect();
 
       // eslint-disable-next-line consistent-return
-      return ((rect.x + rect.width) < 0 || 
-        (rect.y + rect.height) < 0 || 
-        (rect.x > window.innerWidth || 
+      return ((rect.x + rect.width) < 0 ||
+        (rect.y + rect.height) < 0 ||
+        (rect.x > window.innerWidth ||
         rect.y > window.innerHeight));
     }
 
