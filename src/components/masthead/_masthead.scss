@@ -191,6 +191,7 @@
       }
 
       &:hover:not([disabled]) {
+        background-color: transparent !important;
         color: $masthead-button-hover-color !important;
 
         .icon,
@@ -201,10 +202,11 @@
 
       &.is-open,
       &.is-open:hover {
-        color: $masthead-button-hover-color;
+        background-color: transparent;
+        color: $masthead-button-hover-color !important;
 
         .icon {
-          color: $masthead-button-hover-color;
+          color: $masthead-button-hover-color !important;
         }
       }
 

@@ -69,12 +69,20 @@ html[class*='theme-new-'] .masthead .flex-toolbar:not(.editor-toolbar):not(.form
   border-radius: 2px;
 
   &:not(:disabled):hover {
-    background-color: transparent;
+    background-color: transparent !important;
+  }
+
+  &.is-open {
+    background-color: transparent !important;
   }
 }
 
 .masthead .toolbar:not(.standalone) .searchfield-wrapper.toolbar-searchfield-wrapper:not(.has-categories):not(.is-open) {
   &:hover {
-    background-color: transparent;
+    background-color: transparent !important;
+  }
+
+  &.is-open {
+    background-color: transparent !important;
   }
 }
