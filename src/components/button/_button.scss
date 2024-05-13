@@ -185,6 +185,10 @@ button {
     box-shadow: $button-gen-ai-focus !important;
   }
 
+  .dot-flashing-container {
+    margin-inline-end: 0;
+  }
+
   &:hover {
     background: $button-gen-ai-hover-bg-color;
 
@@ -941,15 +945,12 @@ a.btn-close {
   .icon {
     color: $button-color-tertiary-initial-font;
   }
-
-  .ripple-effect {
-    background-color: $tertiary-btn-ripple-color;
-  }
 }
 
 .btn-icon {
   &[disabled] {
     background-color: transparent;
+    opacity: 0.4;
 
     .icon {
       color: $button-icon-disabled-color;

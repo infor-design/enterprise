@@ -110,7 +110,8 @@ PopupMenu.prototype = {
   addDefaultOffset(element, settings) {
     if (settings === undefined || Object.keys(settings).length === 0) {
       if (element.classList.contains('btn-menu') || element.classList.contains('btn-actions')) {
-        this.settings.offset = { x: 0, y: 8 };
+        const isInMasthead = element.closest('.masthead') !== null;
+        this.settings.offset = { x: 0, y: isInMasthead ? 0 : 8 };
       }
     }
   },
@@ -2233,6 +2234,11 @@ PopupMenu.prototype = {
 
     li.parent().children('li').removeClass('is-focused');
     li.addClass('is-focused');
+
+    if (this.element.is('.autocomplete')) {
+      li.parent().children('li').removeClass('is-selected');
+      li.addClass('is-selected');
+    }
 
     // Prevent chrome from scrolling - toolbar
     if (anchor) {

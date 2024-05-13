@@ -71,6 +71,15 @@
     + .trigger {
       color: $timepicker-readonly-icon-color;
       cursor: default;
+
+      &.btn-icon:hover:not([disabled]) {
+        background-color: transparent !important;
+        color: $timepicker-readonly-icon-color;
+
+        .icon {
+          color: $timepicker-readonly-icon-color;
+        }
+      }
     }
   }
 }
