@@ -1386,7 +1386,7 @@ Datagrid.prototype = {
     if (!colGroups) {
       return;
     }
-    console.log('updateGroupHeadersAfterColumnReorder', indexFrom, indexTo, colGroups)
+
     if (!this.originalColGroups) {
       this.originalColGroups = utils.deepCopy(colGroups);
     }
@@ -3412,7 +3412,7 @@ Datagrid.prototype = {
                     });
                   }
                 }
-                console.log(indexFrom, indexTo);
+
                 self.updateGroupHeadersAfterColumnReorder(indexFrom, indexTo);
                 self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
                 self.updateColumns(self.settings.columns);
