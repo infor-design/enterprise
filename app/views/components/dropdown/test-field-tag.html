@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Dropdown Test: Field with Tag</h2>
+
+    <p>Check that the height is the same.
+    </p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div style="display: inline-flex;">
+      <div class="field" style="margin-right: 5px">
+        <label for="a">No Tag</label>
+        <select id="a" name="a" class="dropdown" data-init="false"></select>
+      </div>
+
+      <div class="field">
+        <label for="b">With Tag</label>
+        <select id="b" name="b" class="dropdown" data-init="false"></select>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    const s = (response, term) => {
+        $.getJSON('{{basepath}}api/states', function(data, term) {
+          response(data.map(item => ['AK', 'AR', 'WY'].includes(item.value) ? {
+            ...item,
+            disabled: true
+          } : item));
+        });
+      };
+    $('#a').dropdown({
+      source: s
+    });
+
+    $('#b').dropdown({
+      source: s,
+      showTags: true
+    });
+
+  });
+</script>
