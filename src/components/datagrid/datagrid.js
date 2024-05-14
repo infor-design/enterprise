@@ -6671,7 +6671,6 @@ Datagrid.prototype = {
 
         listviewApi.element.off('selected.datagrid')
           .on('selected.datagrid', (selectedEvent, args) => {
-            console.log(selectedEvent, args)
             const li = args.elem;
             const chk = li.find('input.switch');
             const id = chk.attr('data-column-id');
