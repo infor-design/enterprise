@@ -175,4 +175,12 @@
   });
 
   $('.homepage').homepage();
+
+  setTimeout(function () {
+    var fileuploadAdvancedText = $('label#fileupload-advanced-label > span').slice(1);
+    fileuploadAdvancedText.each((i, el) => {
+      el.textContent = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at tellus ultricies, viverra lorem eu, tincidunt lectus. Nulla facilisi. Integer id arcu in ante lacinia congue. Ut at elit aliquet, mollis nulla non, vulputate leo. Suspendisse potenti. Morbi at dolor a leo sollicitudin aliquam. Nullam tincidunt odio non quam blandit, eget feugiat elit semper. Mauris dapibus sem sit amet enim venenatis, eget malesuada elit luctus. Donec pretium magna id nibh posuere, ac vestibulum risus tincidunt. Nam id ipsum in libero posuere laoreet. Curabitur vitae neque justo. Sed scelerisque magna nec dolor finibus, vel gravida odio mattis. In hac habitasse platea dictumst. Vivamus et eros vehicula, rhoncus odio sit amet, sollicitudin elit.';
+      
+    });
+  }, 100);
 </script>

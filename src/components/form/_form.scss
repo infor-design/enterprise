@@ -73,7 +73,7 @@
     }
 
     .label,
-    label {
+    label:not(.fileupload-adv-browse-lbl) {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -155,6 +155,16 @@
 
   .form-responsive .checkbox-group-label + .compound-field .field .checkbox-label {
     margin-bottom: 0;
+  }
+}
+
+.form-responsive {
+  .fileupload-wrapper.standalone {
+    padding: 25px 0;
+  }
+
+  .fileupload-wrapper {
+    min-width: unset;
   }
 }
 
