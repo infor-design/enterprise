@@ -1,3 +1,6 @@
+// Cards/Widgets
+//=======================================================
+
 .card,
 .small-widget,
 .widget {
@@ -5,7 +8,6 @@
   box-shadow: 0 0 4px $cardlist-box-shadow-color-hover;
   height: 368px;
   min-height: 368px;
-  overflow: hidden;
 
   &.bordered {
     border: none;
@@ -42,7 +44,7 @@
         background-color: $button-color-tertiary-hover-background-new;
 
         .icon {
-          color: $button-color-tertiary-hover-font-new;
+          color: $button-color-tertiary-hover-text-new;
         }
       }
     }

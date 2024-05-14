@@ -14,6 +14,7 @@
 .is-personalizable .personalize-header,
 .is-personalizable.tab-container {
   background-color: $header-default-bg-color;
+  border-bottom: 1px solid transparent;
 
   ::selection {
     background: $ids-color-palette-azure-90;
@@ -58,11 +59,7 @@
 }
 
 .is-personalizable .btn-icon.personalize-actionable:hover:not([disabled]) {
-  background-color: $header-default-bg-hover-color;
-}
-
-.is-personalizable .btn-icon:hover:not([disabled]):not(.btn-primary) svg.icon {
-  color: $hyperlinks-personalize-text-color;
+  background-color: $button-color-tertiary-hover-background-new;
 }
 
 .is-personalizable.subheader .full-searchfield-container .searchfield-wrapper .btn-icon:hover:not([disabled]):not(.btn-primary) svg.icon {

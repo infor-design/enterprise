@@ -1,4 +1,3 @@
-import * as debug from '../../utils/debug';
 import { warnAboutDeprecation } from '../../utils/deprecated';
 import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
@@ -77,10 +76,9 @@ const POPUPMENU_DEFAULTS = {
 
 function PopupMenu(element, settings) {
   this.settings = utils.mergeSettings(element, settings, POPUPMENU_DEFAULTS);
+  this.addDefaultOffset(element, settings);
   this.element = $(element);
-  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 PopupMenu.prototype = {
@@ -105,6 +103,16 @@ PopupMenu.prototype = {
     // Use some css rules on submenu parents
     if (this.menu.find('.submenu').length) {
       this.menu.addClass('has-submenu');
+    }
+  },
+
+  // Add default offset if not set
+  addDefaultOffset(element, settings) {
+    if (settings === undefined || Object.keys(settings).length === 0) {
+      if (element.classList.contains('btn-menu') || element.classList.contains('btn-actions')) {
+        const isInMasthead = element.closest('.masthead') !== null;
+        this.settings.offset = { x: 0, y: isInMasthead ? 0 : 8 };
+      }
     }
   },
 

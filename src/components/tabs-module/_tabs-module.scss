@@ -2,6 +2,39 @@
 //================================================== //
 
 .tab-container.module-tabs {
+  &::after,
+  &::before {
+    @include transition(width 200ms $cubic-ease);
+
+    background-color: transparent;
+    content: '';
+    display: inline-block;
+    height: inherit;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 0;
+    z-index: 20;
+  }
+
+  &::before {
+    background-image:
+      linear-gradient(
+        to right,
+        rgba($module-default-bg-color, 1),
+        rgba($module-default-bg-color, 0)
+      );
+  }
+
+  &::after {
+    background-image:
+      linear-gradient(
+        to right,
+        rgba($module-default-bg-color, 0),
+        rgba($module-default-bg-color, 1)
+      );
+  }
+
   @include transition(background-color 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
   background-color: $module-tabs-bg-color;
@@ -12,9 +45,9 @@
   overflow: hidden;
 
   // Acts as a spacer that causes the toolbar items to vertically align.
-  &::before {
-    @include vertical-alignment-spacer;
-  }
+  // &::before {
+  //   @include vertical-alignment-spacer;
+  // }
 
   > * {
     display: inline-block;
@@ -59,13 +92,19 @@
   }
 
   .tab-list-container {
-    position: absolute;
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     width: calc(100% - 1px);
 
     .tab-list {
       height: 34px;
       overflow: hidden;
-      width: inherit;
+      display: inline-block;
+      white-space: nowrap;
 
       &.has-arrange-placeholder {
         .tab:hover {
@@ -197,6 +236,10 @@
       background-color: $module-tabs-active-bg-color;
       color: $module-tabs-active-text-color;
 
+      > a {
+        color: $module-tabs-active-text-color;
+      }
+
       &.arrange-dragging.is-touch {
         background-color: $module-tabs-active-bg-color;
       }
@@ -231,7 +274,7 @@
 
         height: 14px;
         position: absolute;
-        right: 10px;
+        right: 5px;
         top: 50%;
       }
 
@@ -279,10 +322,12 @@
   }
 
   .tab-more {
-    width: 70px;
+    width: 40px;
+    height: 40px;
 
     @media (min-width: $breakpoint-big-phone) {
-      width: 120px;
+      width: 40px;
+      height: 40px;
     }
   }
 
@@ -497,11 +542,39 @@
 
   // Change state when the spillover button is necessary
   &.has-more-button {
-    .tab-list {
-      width: calc(100% - 70px);
+    &.scrolled-right {
+      &::before {
+        left: 0;
+        width: 40px;
+      }
+    }
 
-      @media (min-width: $breakpoint-big-phone) {
-        width: calc(100% - 120px);
+    &.scrolled-left {
+      &::after {
+        right: 40px;
+        width: 40px;
+
+        @media (max-width: $breakpoint-phablet) {
+          right: 40px;
+        }
+      }
+    }
+
+    .tab-list-container {
+      width: calc(100% - 41px);
+    }
+
+    .tab-list {
+      width: unset;
+
+      .tab {
+        &.dismissible {
+          a {
+            padding: 10px 35px 10px 10px;
+            text-overflow: ellipsis;
+            width: inherit;
+          }
+        }
       }
     }
 
@@ -510,8 +583,8 @@
       top: 0;
 
       .more-text {
-        @media (min-width: $breakpoint-big-phone) {
-          display: inline-block;
+        @media (min-width: $breakpoint-phone) {
+          display: none;
         }
       }
     }
@@ -746,6 +819,43 @@ html[dir='rtl'] {
       }
     }
 
+    &.scrolled-left {
+      &::after {
+        width: 0;
+      }
+
+      &::before {
+        width: 40px;
+        left: 41px;
+        top: 2px;
+      }
+    }
+
+    &.scrolled-right {
+      &::before {
+        left: 40px;
+      }
+    }
+
+    .tab {
+      &.dismissible {
+        padding-left: 35px;
+      }
+    }
+
+    &.has-more-button {
+      .tab-list {
+        .tab {
+          &.dismissible {
+            a {
+              padding: 10px 50px 10px 10px;
+            }
+
+          }
+        }
+      }
+    }
+
    .searchfield-wrapper.has-close-icon-button.has-text .btn-icon.close {
     right: calc(300px - 25%);
    }
@@ -800,7 +910,7 @@ html[dir='rtl'] {
       }
 
       .icon {
-        left: 8px;
+        left: 5px;
         right: auto;
       }
     }
@@ -838,7 +948,7 @@ html[dir='rtl'] {
     .tab-list .tab:hover.dismissible svg.icon.close {
       right: 12px;
     }
-    
+
   }
 
   .tab-container.module-tabs {

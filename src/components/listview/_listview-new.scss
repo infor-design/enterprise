@@ -1,4 +1,4 @@
-// Uplift Listview
+// New Listview
 //================================================== //
 
 .listview .alert-text {
@@ -21,7 +21,7 @@
   }
 
   + .listview {
-    height: calc(100% - 44px);
+    height: calc(100% - 48px);
     overflow-y: auto;
   }
 
@@ -121,7 +121,7 @@ html[dir='rtl'] {
     + .listview {
       height: calc(100% - 55px);
     }
-  
+
   }
 }
 

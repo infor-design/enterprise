@@ -39,7 +39,7 @@
 
       cursor: pointer;
       line-height: 16px;
-      margin-bottom: ($form-size-field-regular-margin-bottom / 2 ) + 2;
+      margin-bottom: calc($form-size-field-regular-margin-bottom / 2 ) + 2;
       position: relative;
 
       &:hover {
@@ -160,7 +160,7 @@
     input:empty ~ .label-text,
     input:empty ~ label {
       font-size: $input-size-compact-font-size;
-      margin-bottom: ($form-size-field-compact-margin-bottom / 2) + 2;
+      margin-bottom: calc($form-size-field-compact-margin-bottom / 2) + 2;
       padding-left: 38px;
     }
   }

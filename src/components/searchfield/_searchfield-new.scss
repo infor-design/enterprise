@@ -1,4 +1,4 @@
-// Uplift Searchfield
+// New Searchfield
 //================================================== //
 
 .inline.searchfield-wrapper:not(.toolbar-searchfield-wrapper) {
@@ -32,7 +32,7 @@
 
     &:hover {
       .category {
-        color: $button-color-tertiary-hover-font-new;
+        color: $button-color-tertiary-hover-text-new;
       }
     }
   }

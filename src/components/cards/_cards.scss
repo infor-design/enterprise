@@ -1,7 +1,7 @@
 // Cards/Widgets
 //=======================================================
 
-@import '../button/button-chevron';
+// @import '../button/button-chevron';
 
 @mixin auto-height {
   height: auto;
@@ -520,7 +520,8 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   }
 
   .btn-actions,
-  .btn-system {
+  .btn-system,
+  .btn-actions:not([disabled]) {
     background-color: transparent !important;
 
     .icon {
@@ -529,6 +530,10 @@ $card-header-section: '.card-header-section', '.widget-header-section';
 
     .audible {
       color: $cardlist-actions-color !important;
+    }
+
+    :hover {
+      background-color: transparent !important;
     }
 
     &:hover .icon {
@@ -576,8 +581,8 @@ $card-header-section: '.card-header-section', '.widget-header-section';
 .widget-content,
 .card-content {
   flex-direction: column;
-  height: 320px;
-  min-height: 320px;
+  height: 317px;
+  min-height: 317px;
   overflow: auto;
   width: 100%;
 

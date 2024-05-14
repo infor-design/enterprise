@@ -1,20 +1,10 @@
-// Uplift Timeline
+// New Timeline
 //================================================== */
 
 .timeline {
   &::before {
     left: 1.22em;
     top: 4px;
-  }
-}
-
-.timeline-block {
-  &:nth-last-child(2)::before {
-    bottom: -20px;
-
-    @media (min-width: $breakpoint-phone-to-tablet) {
-      left: 20.3rem;
-    }
   }
 }
 

@@ -113,7 +113,7 @@ Soho.Locale.addCulture('hu-HU', {
     ChangeSelection: { id: 'ChangeSelection', value: 'A kijelölt elemet a nyílbillentyűkkel módosíthatja.', comment: 'Audible text for drop down list help' },
     ChangeView: { id: 'ChangeView', value: 'Nézetváltás', comment: 'Change the current page from a list of options' },
     CharactersLeft: { id: 'CharactersLeft', value: 'Felhasználható karakterek száma: {0}', comment: 'indicator showing how many more characters you can type.' },
-    CharactersMax: { id: 'CharactersMax', value: 'Maximális karakterszám: ', comment: 'indicator showing how many max characters you can type.' },
+    CharactersMax: { id: 'CharactersMax', value: 'Maximális karakterszám: {0}', comment: 'indicator showing how many max characters you can type.' },
     Checkbox: { id: 'Checkbox', value: 'Jelölőnégyzet', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'Bejelölve', comment: 'Checked tooltip' },
     Chinese: { id: 'Chinese', value: 'kínai', comment: 'Chinese language in general form' },

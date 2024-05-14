@@ -2,8 +2,9 @@
 //================================================== //
 
 // Form Background Color
-$header-bg-color: $ids-color-palette-azure-60;
-$subhead-bg-color: $ids-color-palette-azure-70;
+$header-bg-color: $ids-color-palette-white;
+$header-bottom-border-color: $ids-color-palette-slate-30;
+$subhead-bg-color: $ids-color-palette-white;
 $transparent: transparent;
 
 $header-button-disabled-color: rgba(0, 0, 0, 0.3);
@@ -14,9 +15,6 @@ $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 3px 2px rgba(255, 255, 255, 0.3);
 
 $header-full-searchfield-hyperlink-color: $ids-color-palette-white;
-
-$header-button-hover-color-new: $ids-color-palette-azure-60;
-
 $header-input-border-color: $ids-color-palette-slate-40;
 $ids-color-palette-alabaster: $ids-color-palette-white;
 
@@ -34,15 +32,14 @@ $widget-editable-border-color: $ids-color-palette-azure-60;
 
 // Header Colors
 $header-default-bg-color: $ids-color-palette-white;
+$module-default-bg-color: $ids-color-brand-primary-alt;
 $header-default-bg-border-color: $ids-color-palette-slate-30;
-$header-default-bg-hover-color: $ids-color-palette-azure-80;
 
 $header-border-color: $ids-color-palette-azure-80;
 $header-text-default-color: $ids-color-palette-slate-100;
 $header-text-actionable-color: $ids-color-palette-azure-60;
 $header-button-normal-color: $ids-color-palette-slate-100;
 $header-button-icon-color: $ids-color-palette-slate-100;
-$header-button-hover-color: $ids-color-palette-azure-60;
 $header-button-focus-color: $ids-color-palette-slate-100;
 $header-button-focus-border-color: $ids-color-palette-azure-60;
 
@@ -53,7 +50,6 @@ $hyperlinks-personalize-text-color: $header-text-default-color;
 $header-button-color: $header-button-normal-color;
 $header-text-color: $header-text-default-color;
 $header-toolbar-searchfield-icon-color: $header-button-icon-color;
-$header-toolbar-button-hover-color: $ids-color-palette-azure-10;
 
 // End of Header Colors
 
@@ -311,13 +307,13 @@ $loading-indicator-ai-bar-three-bg-color: #CBEFDC;
 // Button (Gen AI)
 $button-color-gen-ai: $button-color-primary-initial-font;
 $button-gen-ai-bg-color: linear-gradient(107deg, #254A92 17.32%, #10B7A6 95.32%);
-$button-gen-ai-hover-bg-color: linear-gradient(107deg, #1A3362 17.32%, #0B9789 95.32%);
-$button-gen-ai-active-bg-color: linear-gradient(107deg, #0B9789 5.97%, #1A3362 102.35%);
-$button-primary-disabled-color-gen-ai: linear-gradient(107deg, rgba(37, 74, 146, 0.50) 17.32%, rgba(16, 183, 166, 0.50) 95.32%);
-$button-primary-disabled-hover-color-gen-ai: linear-gradient(107deg, rgba(37, 74, 146, 0.50) 17.32%, rgba(16, 183, 166, 0.50) 95.32%);
+$button-gen-ai-hover-bg-color: linear-gradient(107deg, #1F405C 17.32%, #0EAA9B 95.32%);
+$button-gen-ai-active-bg-color: linear-gradient(107deg, #1F405C 17.32%, #0EAA9B 95.32%);
+$button-primary-disabled-color-gen-ai: linear-gradient(107deg, #254A92 17.32%, #10B7A6 95.32%);
+$button-primary-disabled-hover-color-gen-ai: linear-gradient(107deg, #254A92 17.32%, #10B7A6 95.32%);
 $button-tertiary-color-gen-ai: linear-gradient(107deg, #254A92 17.32%, #10B7A6 95.32%);
-$button-tertiary-hover-color-gen-ai: linear-gradient(107deg, #1A3362 17.32%, #0B9789 95.32%);
-$button-tertiary-disabled-color-gen-ai: linear-gradient(107deg, rgba(37, 74, 146, 0.50) 17.32%, rgba(16, 183, 166, 0.50) 95.32%);
+$button-tertiary-hover-color-gen-ai: linear-gradient(107deg, #1F405C 17.32%, #0EAA9B 95.32%);
+$button-tertiary-disabled-color-gen-ai: linear-gradient(107deg, #254A92 17.32%, #10B7A6 95.32%);
 $button-tertiary-gradient-color-one: #254A92;
 $button-tertiary-gradient-color-two: #10B7A6;
 $button-tertiary-gradient-hover-color-one: #1A3362;
@@ -330,46 +326,41 @@ $button-tertiary-dot-flashing-bg-color-key-one: #0B9789;
 $button-tertiary-dot-flashing-bg-color-key-two: #1A3362;
 $button-tertiary-disabled-icon-color-gen-ai-key-one: #254A92;
 $button-tertiary-disabled-icon-color-gen-ai-key-two: #10B7A6;
+$button-gen-ai-icon-disabled-color: #fff;
+$button-gen-ai-focus: 0 0 0 2px #fff, 0 0 0 3px #254A92, 0 0 4px 3px rgba(54, 138, 192, 0.1);
+$button-tertiary-gen-ai-focus: 0 0 0 0.5px #0B9789, 0 0 0 0.5px #0B9789;
 
 // Buttons
 $input-color-border-space: $header-bg-color;
 
 // Buttons
-$button-color-primary-disabled-background-new: $ids-color-palette-slate-20;
-$button-color-primary-disabled-font-new: $ids-color-palette-slate-40;
-
 $button-disabled-background-color: $ids-color-palette-graphite-80;
 
 $button-color-secondary-menu-open-new: $ids-color-palette-azure-60;
 $button-color-secondary-initial-font-new: $ids-color-palette-azure-60;
 $button-color-secondary-initial-border-new: $ids-color-palette-azure-60;
 $button-color-secondary-hover-border-new: $ids-color-palette-azure-60;
-$button-color-secondary-disabled-background-new: transparent;
-$button-color-secondary-disabled-border-new: $ids-color-palette-slate-30;
-$button-color-secondary-disabled-font-new: $ids-color-palette-slate-30;
 $button-color-secondary-hover-background-new: $ids-color-palette-azure-10;
 $button-color-secondary-hover-border-new: $ids-color-palette-azure-60;
 $button-color-secondary-initial-background: transparent;
-
+$button-color-secondary-focus-shadow: 0 0 0 2px transparent, 0 0 0 0.12rem $button-color-secondary-focus-background, $focus-box-shadow;
+$button-color-tertiary-focus-shadow: 0 0 0 2px transparent, 0 0 0 0.12rem $button-color-secondary-focus-background, $focus-box-shadow;
 $button-color-tertiary-hover-background: $ids-color-palette-slate-30;
 $button-color-tertiary-disabled-background-new: transparent;
-$button-color-tertiary-hover-background-new: $ids-color-palette-azure-10;
-$button-color-tertiary-hover-font-new: $ids-color-palette-graphite-100;
-
+$button-color-tertiary-hover-text-new: $ids-color-palette-graphite-100;
+$button-color-tertiary-hover-text: $ids-color-palette-graphite-100;
+$button-color-tertiary-hover-background-new: $ids-color-palette-graphite-10;
 $hero-button-color-tertiary-hover-background-new: $button-color-tertiary-hover-background-new;
-
 $button-color-destructive-focus-border-new: $ids-color-palette-ruby-60;
-
 $button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-60;
 $button-color-primary-destructive-hover-background-new: $ids-color-palette-ruby-70;
-
 $button-color-tertiary-destructive-initial-background-new: $ids-color-palette-ruby-60;
-$button-color-tertiary-destructive-hover-font-new: $ids-color-palette-ruby-80;
+$button-color-destructive-tertiary-focus-shadow: 0 0 0 2px transparent, 0 0 0 0.12rem $ids-color-palette-ruby-70, $focus-box-shadow;
+$button-color-tertiary-destructive-hover-font-new: $ids-color-palette-ruby-70;
 $button-color-tertiary-destructive-hover-background-new: $ids-color-palette-ruby-10;
-
 $button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-ruby-30;
 $button-color-tertiary-destructive-disabled-background-new: transparent;
-
+$button-color-tertiary-focus-border: transparent;
 $button-color-tertiary-actionsheet-initial-font: $ids-color-palette-slate-60;
 $button-color-tertiary-actionsheet-hover-font: $ids-color-palette-black;
 $button-color-secondary-actionsheet-hover-border: $button-color-secondary-hover-border-new;
@@ -377,7 +368,7 @@ $button-color-secondary-actionsheet-hover-font: $button-color-secondary-hover-bo
 $button-color-secondary-actionsheet-hover-background: $button-color-tertiary-hover-background-new;
 $button-color-secondary-actionsheet-border: $button-color-secondary-initial-font-new;
 $button-color-secondary-actionsheet-font: $button-color-secondary-initial-border-new;
-$button-icon-disabled-color: $button-color-tertiary-disabled-font;
+$button-icon-disabled-color: $button-color-tertiary-initial-font;
 
 $button-editor-color-hover-background-new: rgba(0, 0, 0, .3);
 $button-editor-color-tertiary-hover-font-new: $ids-color-palette-white;
@@ -502,7 +493,7 @@ $contextual-toolbar-button-disabled-color: rgba($button-color-primary-initial-fo
 $contextual-panel-separator-bg-color: $ids-color-brand-secondary-alt;
 $contextual-panel-button-color: $button-color-tertiary-initial-font;
 $contextual-panel-icon-color: $button-color-tertiary-initial-font;
-$contextual-panel-hover-icon-color: $button-color-tertiary-hover-font;
+$contextual-panel-hover-icon-color: $button-color-tertiary-hover-text;
 
 // Swaplist
 $swaplist-bg-color: $ids-color-palette-graphite-10;
@@ -879,6 +870,7 @@ $contextual-panel-color: $ids-color-palette-graphite-60;
 $contextual-panel-border-color: $ids-color-palette-graphite-30;
 $contextual-panel-searchfield-bg-color: $body-color-primary-background;
 $contextual-panel-searchfield-border-color: $ids-color-palette-graphite-30;
+$contextual-panel-button-hover-bg-color: $ids-color-palette-graphite-30;
 
 // BreadCrumb
 $breadcrumb-color: $ids-color-palette-graphite-60;
@@ -1233,7 +1225,7 @@ $module-tabs-list-container-bg-color: $ids-color-palette-slate-10;
 $module-tabs-normal-bg-color: $ids-color-palette-slate-10;
 $module-tabs-normal-text-color: $ids-color-palette-slate-100;
 
-$module-tabs-active-text-color: $ids-color-palette-azure-60;
+$module-tabs-active-text-color: $ids-color-palette-white;
 $module-tabs-close-hover-color: $ids-color-palette-slate-60;
 $module-tabs-icon-normal-color: $ids-color-palette-slate-60;
 $module-tabs-icon-hover-color: $ids-color-palette-slate-100;

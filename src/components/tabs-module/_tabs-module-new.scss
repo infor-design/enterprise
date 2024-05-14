@@ -1,4 +1,4 @@
-// Uplift Module Tabs
+// New Module Tabs
 //================================================== //
 
 .tab-container.module-tabs {
@@ -131,6 +131,16 @@
   }
 
   &.has-more-button {
+    .tab-list {
+      .tab {
+        &.dismissible {
+          a {
+            padding: 7px 24px;
+          }
+        }
+      }
+    }
+    
     .tab-more {
       padding: 6px 6px 7px;
       background-color: $module-tabs-normal-bg-color;
@@ -152,6 +162,12 @@
       &:hover {
         background-color: $module-tabs-hover-bg-color;
 
+        svg.icon {
+          color: $module-tabs-normal-text-color;
+        }
+      }
+
+      &.is-open {
         svg.icon {
           color: $module-tabs-normal-text-color;
         }

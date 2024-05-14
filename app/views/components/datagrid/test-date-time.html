@@ -1,0 +1,168 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="editable"  id="editable"/>
+      <label for="editable" class="checkbox-label">Editable</label>
+    </div>
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="filterable"  id="filterable"/>
+      <label for="filterable" class="checkbox-label">Filterable</label>
+    </div>
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="sortable"  id="sortable" checked="true"/>
+      <label for="sortable" class="checkbox-label">Sortable</label>
+    </div>
+    <div class="field">
+      <button type="button" class="btn-secondary" id="update-datagrid">Update Settings</button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+      var grid,
+        columns = [],
+        data = [],
+        //lookup data
+        lookupOptions,
+        lookupColumns = [];
+      //Define Columns for the Lookup Grid.
+      lookupColumns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
+      lookupColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
+      lookupOptions = {
+        field: 'productId',
+        options: {
+          columns: lookupColumns,
+          source: function(req, response) {
+            var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+            //Get Page Based on info in Req, return results into response;
+            $.getJSON(url, function(res) {
+              // This is the total going into the grid so the pager works (filtered total or total)
+              req.total = res.total;
+              response(res.data, req);
+            });
+          },
+          selectable: 'single',
+          paging: true,
+          pagesize: 5,
+          toolbar: {
+            results: true,
+            dateFilter: false,
+            keywordFilter: false,
+            advancedFilter: false,
+            actions: true,
+            views: false,
+            rowHeight: false,
+            collapsibleFilter: false
+          }
+        }
+      };
+      //Define Columns for the Grid.
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly});
+      columns.push({ id: 'productId', name: 'Product', field: 'productId', formatter: Soho.Formatters.Lookup, editor: Soho.Editors.Lookup, validate: 'required', editorOptions: lookupOptions, filterType: 'lookup' });
+      columns.push({ id: 'orderDateTime', name: 'Date / Time', field: 'orderDate', formatter: Soho.Formatters.Date,
+        dateFormat: Soho.Locale.calendar().dateFormat.short + ' ' + Soho.Locale.calendar().dateFormat.timestamp,
+        editor: Soho.Editors.Date, filterType: 'date', editorOptions: {
+        dateFormat: Soho.Locale.calendar().dateFormat.short + ' ' + Soho.Locale.calendar().dateFormat.timestamp,
+        secondInterval: 1,
+        minuteInterval: 1,
+        showTime: true,
+        showMonthYearPicker: true,
+        }});
+      columns.push({ id: 'orderDate', name: 'Date', field: 'orderDate', formatter: Soho.Formatters.Date,
+        dateFormat: Soho.Locale.calendar().dateFormat.short,
+        editor: Soho.Editors.Date, filterType: 'date', editorOptions: {
+        dateFormat: Soho.Locale.calendar().dateFormat.short,
+        showMonthYearPicker: true,
+      }});
+      columns.push({ id: 'orderDate', name: 'Anniversary', field: 'orderDate', formatter: Soho.Formatters.Date,
+        dateFormat: Soho.Locale.calendar().dateFormat.month,
+        editor: Soho.Editors.Date, filterType: 'date', editorOptions: {
+        dateFormat: Soho.Locale.calendar().dateFormat.month,
+      }});
+      columns.push({ id: 'orderDate', name: 'Period', field: 'orderDate', formatter: Soho.Formatters.Date,
+        dateFormat: Soho.Locale.calendar().dateFormat.year,
+        editor: Soho.Editors.Date, filterType: 'date', editorOptions: {
+        dateFormat: Soho.Locale.calendar().dateFormat.year,
+        showMonthYearPicker: true,
+        hideDays: true,
+      }});
+      columns.push({ id: 'orderDate', name: 'Year', field: 'orderDate', formatter: Soho.Formatters.Date,
+        dateFormat: 'yyyy',
+        editor: Soho.Editors.Date, filterType: 'date', editorOptions: {
+        dateFormat: 'yyyy',
+        showMonthYearPicker: true,
+        hideDays: true,
+      }});
+      columns.push({ id: 'orderTime', name: 'Time', field: 'orderDate', formatter: Soho.Formatters.Time,
+        timeFormat: Soho.Locale.calendar().dateFormat.timestamp,
+        editor: Soho.Editors.Time, filterType: 'time', editorOptions: {
+          showDate: false,
+          showTime: true,
+          minuteInterval: 1,
+          secondInterval: 1,
+          timeFormat: Soho.Locale.calendar().dateFormat.timestamp,
+      }});
+
+      //Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        paging: true,
+        editable: false,
+        filterable: false,
+        pagesize: 10,
+        source: function(req, response) {
+          var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+          if (req.sortField) {
+            url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
+          }
+          if (req.filterExpr && req.filterExpr[0]) {
+            url += '&filterValue=' + req.filterExpr[0].value;
+            url += '&filterOp=' + req.filterExpr[0].operator;
+            url += '&filterColumn=' + req.filterExpr[0].columnId;
+          }
+          //Get Page Based on info in Req, return results into response;
+          $.getJSON(url, function(res) {
+            // This is the total going into the grid so the pager works (filtered total or total)
+            req.total = res.total;
+            if ((req.filterExpr && req.filterExpr[0])) {
+              req.total = res.total;
+              req.grandTotal = res.grandTotal; // This is the total amount on the server
+            }
+            response(res.data, req);
+          });
+        },
+        toolbar: {title: 'Data Grid Header Title', filterRow: true, personalize: true, results: true, actions: true, rowHeight: true}
+      });
+
+      $('#update-datagrid').on('click', function() {
+        let api = $('#datagrid').data('datagrid');
+        let columns = api.settings.columns;
+        for (var j = 0; j < columns.length; j++) {
+          columns[j].sortable = $('#sortable')[0].checked;
+        }
+
+        const settings = {
+          columns: columns,
+          editable: $('#editable')[0].checked,
+          filterable: $('#filterable')[0].checked
+        };
+
+        api = api.updated(settings);
+
+        // Workaround as rerender does not work as expected if it's still initial
+        let pi = api.pagerAPI.state;
+        pi.type = 'rerender';
+        api.renderPager(pi, false);
+
+        // Workaround as updated should really render the header
+        api.rerender();
+      });
+  });
+</script>

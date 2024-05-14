@@ -50,7 +50,14 @@
   <script src="{{basepath}}js/sohoxi.js?v=MTIuMC4wLjAuMQ"></script>
   <script src="../../js/cultures/{{locale}}.js"></script>-->
 
-  <link href="https://fonts.googleapis.com/css?{{fontString}}" rel="stylesheet"/>
+  <!-- Do not use this going forward due to GDPR Issues. This will be deprecated soon. -->
+  <!--
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600&amp;display=swap" rel="stylesheet"/>
+  -->
+
+  <!-- Test and use this new style sheet in your demo app before we deprecate google apis -->
+  <link rel="stylesheet" id="font-faces" href="{{basepath}}css/font-face.css" type="text/css" />
+
   <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/theme-{{theme.name}}-{{theme.mode}}.css" type="text/css"/>
   <script>
     var colors;
@@ -194,6 +201,16 @@
             },'html');
           }
         }
+
+        setTimeout(() => {
+          const wcTheme = $('#ids-stylesheet');
+          if (wcTheme && wcTheme.length) {
+            const attr = wcTheme.attr('href');
+            if (parts[1] === 'new') {
+              wcTheme.attr('href', attr.replace('-light', `-${parts[2]}`).replace('-dark', `-${parts[2]}`).replace('-contrast', `-${parts[2]}`))
+            }
+          }
+        }, 100);
       });
   </script>
 

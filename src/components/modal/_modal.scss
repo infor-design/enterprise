@@ -1,8 +1,8 @@
 // Modal Dialog and Messages
 //================================================== //
 
-@import '../button/button';
-@import '../icons/icons';
+// Dependencies
+// icons/icons
 
 // NOTE: this element gets a margin dynamically set in the "resize" method of modal.js
 .modal-wrapper {
@@ -635,6 +635,13 @@ body.modal-engaged {
 
     .ripple-effect {
       background-color: $button-color-primary-initial-background;
+    }
+
+    span {
+      @include ellipsis();
+
+      display: block;
+      margin: 0 15px;
     }
   }
 

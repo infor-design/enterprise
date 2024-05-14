@@ -483,11 +483,11 @@
       }
 
       &:not(.is-selected):not(.is-disabled):hover {
-        border-bottom: 4px solid $tab-hover-color;
+        border-bottom: 7px solid $tab-hover-color;
       }
 
       &:not(.is-disabled).is-selected {
-        border-bottom: 4px solid $tab-selected-color;
+        border-bottom: 7px solid $tab-selected-color;
       }
 
       &:not(.separator):hover {
@@ -900,6 +900,11 @@ html[dir='rtl'] {
 
   .tab-focus-indicator {
     right: auto;
+  }
+
+  .popupmenu.tab-list-spillover li.dismissible > a > .icon.close {
+    left: 15px;
+    margin-right: auto;
   }
 }
 

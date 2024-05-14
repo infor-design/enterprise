@@ -1,10 +1,11 @@
 // Toolbars - New Theme overrides
 //================================================== */
 
-@import '../button/button-new';
-@import '../colorpicker/colorpicker-new';
-@import '../fontpicker/fontpicker-new';
-@import '../popupmenu/popupmenu-new';
+// Dependencies
+// button/button-new
+// colorpicker/colorpicker-new
+// fontpicker/fontpicker-new
+// popupmenu/popupmenu-new
 
 // Styles for regular toolbar only
 .toolbar {
@@ -46,7 +47,7 @@
         background-color: $toolbar-btn-actions-hover-bg-color;
 
         .icon {
-          color: $button-color-tertiary-hover-font-new;
+          color: $button-color-tertiary-hover-text-new;
         }
       }
 
@@ -68,7 +69,7 @@
       }
     }
 
-    .more:not(:disabled):hover {
+    .more:not(:disabled) button:hover {
       background-color: $toolbar-btn-actions-hover-bg-color;
       border-radius: 8px;
     }

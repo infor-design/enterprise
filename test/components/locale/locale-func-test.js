@@ -989,10 +989,10 @@ describe('Locale API', () => {
   it('should treat no-NO and nb-NO as the same locale', () => {
     Locale.set('no-NO');
 
-    expect(Locale.translate('Loading')).toEqual('Laden');
+    expect(Locale.translate('Loading')).toEqual('Laster');
     Locale.set('nb-NO');
 
-    expect(Locale.translate('Loading')).toEqual('Laden');
+    expect(Locale.translate('Loading')).toEqual('Laster');
     expect(Locale.calendar().timeFormat).toEqual('HH:mm');
     Locale.set('en-US');
   });
@@ -1007,7 +1007,7 @@ describe('Locale API', () => {
     Locale.set('de-DE');
 
     expect(Locale.translate('Required')).toEqual('Erforderlich');
-    expect(Locale.translate('Loading')).toEqual('Laden...');
+    expect(Locale.translate('Loading')).toEqual('Laden');
     expect(Locale.translate('Filter')).toEqual('Filtern');
 
     // Error
@@ -1634,7 +1634,7 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('en-US');
 
     Locale.setLanguage('nb').done(() => {
-      expect(Locale.translate('Actions')).toEqual('Acties');
+      expect(Locale.translate('Actions')).toEqual('Handlinger');
       expect(Locale.currentLanguage.name).toEqual('no');
       expect(Locale.currentLocale.name).toEqual('en-US');
       done();
@@ -1649,7 +1649,7 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('en-US');
 
     Locale.setLanguage('nn').done(() => {
-      expect(Locale.translate('Actions')).toEqual('Acties');
+      expect(Locale.translate('Actions')).toEqual('Handlinger');
       expect(Locale.currentLanguage.name).toEqual('no');
       expect(Locale.currentLocale.name).toEqual('en-US');
       done();
@@ -2024,7 +2024,7 @@ describe('Locale API', () => {
       expect(Locale.translate('Required')).toEqual('Required');
       expect(Locale.translate('Loading')).toEqual('Loading');
       expect(Locale.translate('Required', { language: 'de' })).toEqual('Erforderlich');
-      expect(Locale.translate('Loading', { language: 'de' })).toEqual('Laden...');
+      expect(Locale.translate('Loading', { language: 'de' })).toEqual('Laden');
       done();
     });
   });
@@ -2115,13 +2115,13 @@ describe('Locale API', () => {
 
     expect(Locale.currentLocale.name).toEqual('nb-NO');
     expect(Locale.currentLanguage.name).toEqual('no');
-    expect(Locale.translate('Required')).toEqual('Vereist');
+    expect(Locale.translate('Required')).toEqual('Obligatorisk');
 
     Locale.set('no-NO');
 
     expect(Locale.currentLocale.name).toEqual('no-NO');
     expect(Locale.currentLanguage.name).toEqual('no');
-    expect(Locale.translate('Required')).toEqual('Vereist');
+    expect(Locale.translate('Required')).toEqual('Obligatorisk');
   });
 
   it('should provide a different fr-CA and fr-FR', () => {

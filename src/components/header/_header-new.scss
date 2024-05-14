@@ -1,4 +1,4 @@
-// Uplift Site/App Header
+// New Site/App Header
 //================================================== //
 
 .header {
@@ -246,17 +246,17 @@
   .flex-toolbar {
     [class^='btn'] {
       &:not(.close):not(.collapse-button):not([disabled]):hover {
-        color: $ids-color-palette-white;
-        background-color: $header-toolbar-button-hover-color;
+        color: $button-color-tertiary-hover-text-new;
+        background-color: $button-color-tertiary-hover-background-new;
 
         svg.icon {
-          color: $header-button-hover-color-new;
+          color: $button-color-tertiary-hover-text-new;
         }
       }
 
       &.application-menu-trigger:hover {
         &:not(:focus) .icon {
-          color: $header-button-hover-color-new;
+          color: $button-color-tertiary-hover-text-new;
         }
       }
     }

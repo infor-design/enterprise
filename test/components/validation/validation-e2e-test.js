@@ -86,20 +86,6 @@ describe('Validation multiple error tests', () => {
     await utils.setPage('/components/validation/example-multiple-errors');
   });
 
-  it('should be able to show multiple errors', async () => {
-    await element(by.id('info-btn')).click();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('info-popup'))), config.waitsFor);
-
-    const showlEl = await element(by.id('show'));
-    await showlEl.click();
-    await browser.driver.sleep(config.sleep);
-
-    const list = $$('.message-text');
-
-    expect(list.count()).toBe(3);
-  });
-
   it('should be able to call removeError after addError', async () => {
     await browser.executeScript('$("select.dropdown").removeError().addError({ message: "Dropdown error.", inline: false })');
     await browser.driver

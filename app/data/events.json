@@ -778,5 +778,46 @@
     "ends": "2019-10-23T08:00:00.000",
     "type": "holiday",
     "isAllDay": "false"
+  },
+  {
+    "id": "79",
+    "subject": "Autumn Foliage Trip",
+    "comments": "Annual Autumn Foliage Trip",
+    "status": "Pending",
+    "icon": "icon-clock",
+    "starts": "2024-05-22T00:00:00.000",
+    "ends": "2024-05-24T23:59:59.999",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "80",
+    "subject": "Scrum",
+    "comments": "What are you working on? Any blockers?",
+    "location": "Us Office",
+    "starts": "2024-05-09T18:00:00.999",
+    "ends": "2024-05-09T19:00:00.999",
+    "type": "admin",
+    "isAllDay": "false"
+  },
+  {
+    "id": "81",
+    "subject": "Quick bite",
+    "comments": "Chick-fil-a Lancaster",
+    "starts": "2024-05-05T23:00:00.000",
+    "ends": "2024-05-06T05:00:00.000",
+    "type": "admin",
+    "isAllDay": "false"
+  },
+  {
+    "id": "82",
+    "subject": "Cancun on Three",
+    "comments": "Trip to Cancun",
+    "status": "Pending",
+    "icon": "icon-clock",
+    "starts": "2024-05-14T08:00:00.000",
+    "ends": "2024-05-16T07:00:00.00",
+    "type": "team",
+    "isAllDay": "false"
   }
 ]

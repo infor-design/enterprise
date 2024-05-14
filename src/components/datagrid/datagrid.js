@@ -493,7 +493,7 @@ Datagrid.prototype = {
 
     if (this.stretchColumnDiff < 0) {
       const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
-      currentCol.style.width = `${this.stretchColumnWidth}px`;
+      if (currentCol) currentCol.style.width = `${this.stretchColumnWidth}px`;
     }
 
     if (this.settings.emptyMessage) {
@@ -4460,7 +4460,7 @@ Datagrid.prototype = {
 
     if (this.stretchColumnDiff < 0) {
       const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
-      currentCol.style.width = `${this.stretchColumnWidth}px`;
+      if (currentCol) currentCol.style.width = `${this.stretchColumnWidth}px`;
     }
 
     this.element.find('.datagrid-img').off('error.datagrid').on('error.datagrid', (e) => {
@@ -6668,7 +6668,7 @@ Datagrid.prototype = {
 
     if (set) {
       const currentCol = this.bodyColGroup.find('col').eq(idx)[0];
-      currentCol.style.width = `${width}px`;
+      if (currentCol) currentCol.style.width = `${width}px`;
     }
 
     this.element.trigger('columnchange', [{ type: 'resizecolumn', index: idx, columns: this.settings.columns }]);
@@ -7421,6 +7421,7 @@ Datagrid.prototype = {
         colorPicker = null;
         return; // color picker closes on cell re-click;
       }
+
       const isEditable = self.makeCellEditable(self.activeCell.rowIndex, self.activeCell.cell, e);
 
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a, a.search-mode i, img') || target.parent().is('button:not(.trigger)')) {
@@ -7523,7 +7524,7 @@ Datagrid.prototype = {
 
         if (self.stretchColumnDiff > 0 || self.stretchColumnWidth > 0) {
           const currentCol = self.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
-          currentCol.style.width = `${self.stretchColumnDiff > 0 ? `${self.stretchColumnDiff}px` : `${self.stretchColumnWidth}px`}`;
+          if (currentCol) currentCol.style.width = `${self.stretchColumnDiff > 0 ? `${self.stretchColumnDiff}px` : `${self.stretchColumnWidth}px`}`;
         }
       });
     }
@@ -8023,7 +8024,7 @@ Datagrid.prototype = {
       let action;
       if (args?.attr) {
         action = args?.attr('data-option');
-      } else if (args2?.attr) {
+      } else if (typeof args2?.attr === 'function') {
         action = args2?.attr('data-option');
       }
 
@@ -10045,15 +10046,15 @@ Datagrid.prototype = {
 
       // Tab, Left and Right arrow keys.
       if ([9, 37, 39].indexOf(key) !== -1) {
-        if (key === 9 && !self.settings.actionableMode || !self.settings.cellNavigation) {
-          return;
-        }
-
         if (key !== 9 && e.altKey) {
           // [Alt + Left/Right arrow] to move to the first or last cell on the current row.
           cell = ((key === 37 && !isRTL) || (key === 39 && isRTL)) ? 0 : lastCell;
           self.setActiveCell(row, cell);
-        } else if (!self.quickEditMode || (key === 9)) {
+        } else if ((!self.quickEditMode || (key === 9))) {
+          if (key !== 9 && col.editor !== undefined && node.is('.is-editing')) {
+            return;
+          }
+
           // Handle `shift + tab` for code block formatter, it use sometime `.code-block-actions`
           if (key === 9 && e.shiftKey && target.is('.code-block-actions')) {
             self.focusNextPrev('prev', node);
@@ -10648,12 +10649,16 @@ Datagrid.prototype = {
     } else {
       if (typeof this.editor.val === 'function') {
         const editorValue = this.editor.val();
-        const format = this.columnSettings(this.editor.cell)?.dateFormat;
+        newValue = editorValue;
 
-        if (format === undefined) {
-          newValue = isNaN(Date.parse(editorValue)) && this.editor.name === 'date' ? '' : editorValue;
-        } else {
-          newValue = isNaN(Locale.parseDate(editorValue, { dateFormat: format })) && this.editor.name === 'date' ? '' : editorValue;
+        if (this.editor.name === 'date') {
+          const format = this.columnSettings(this.editor.cell)?.dateFormat;
+
+          if (format === undefined) {
+            newValue = isNaN(Locale.parseDate(editorValue)) ? '' : editorValue;
+          } else {
+            newValue = isNaN(Locale.parseDate(editorValue, { dateFormat: format })) ? '' : editorValue;
+          }
         }
       }
       this.commitCellEditUtil(input, newValue, isEditor, isFileupload, isUseActiveRow, isCallback);
@@ -10706,6 +10711,7 @@ Datagrid.prototype = {
     const col = this.columnSettings(cell);
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
       this.getActiveDataset()[dataRowIndex];
+
     let oldValue = this.fieldValue(rowData, col.field);
     if (col.beforeCommitCellEdit && (isFileupload || !isCallback)) {
       const vetoCommit = col.beforeCommitCellEdit({
@@ -10728,6 +10734,10 @@ Datagrid.prototype = {
     // Sanitize console methods
     oldValue = xssUtils.sanitizeConsoleMethods(oldValue);
     newValue = xssUtils.sanitizeConsoleMethods(newValue);
+
+    if (col.serialize) {
+      newValue = col.serialize(newValue, oldValue, col, dataRowIndex, cell, rowData);
+    }
 
     // Format Cell again
     const isInline = cellNode.hasClass('is-editing-inline');
@@ -11366,43 +11376,6 @@ Datagrid.prototype = {
   columnSettings(idx) {
     const foundColumn = this.settings.columns[idx];
     return foundColumn || {};
-  },
-
-  /**
-   * Attempt to serialize the value back into the dataset
-   * @private
-   * @param {any} value The new column value
-   * @param {any} oldVal The old column value.
-   * @param {number} col The column definition
-   * @param {number} row  The row index.
-   * @param {number} cell The cell index.
-   * @returns {void}
-   */
-  coerceValue(value, oldVal, col, row, cell) {
-    let newVal;
-    // eslint-disable-next-line no-useless-escape
-    const nonNumberCharacters = /[A-Za-z!@#$%^&*()_+\-=\[\]{};':"\\|<>/?]/;
-
-    if (col.serialize) {
-      const s = this.settings;
-      let dataset = s.treeGrid ? s.treeDepth : s.dataset;
-      if (this.settings.groupable) {
-        dataset = this.originalDataset || dataset;
-      }
-      const rowData = s.treeGrid ? dataset[row].node : dataset[row];
-      newVal = col.serialize(value, oldVal, col, row, cell, rowData);
-      return newVal;
-    } if (col.sourceFormat) {
-      if (value instanceof Date) {
-        newVal = Locale.parseDate(value, col.sourceFormat);
-      } else {
-        newVal = Locale.formatDate(value, { pattern: col.sourceFormat });
-      }
-    } else if (typeof oldVal === 'number' && value && (typeof value !== 'number' && !nonNumberCharacters.test(value))) {
-      newVal = Locale.parseNumber(value); // remove thousands sep , keep a number a number
-    }
-
-    return newVal;
   },
 
   /**

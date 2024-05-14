@@ -172,7 +172,7 @@
       color: $swaplist-title-text-color;
       font-weight: $ids-number-font-weight-base;
       position: relative;
-      top: 4px;
+      top: 0;
     }
 
     p {
@@ -261,7 +261,7 @@
           }
 
           &:hover:not(.is-disabled):not(.is-selected),
-          &:focus:not(.is-disabled):not(.is-selected), {
+          &:focus:not(.is-disabled):not(.is-selected) {
             .handle {
               display: none;
             }
@@ -286,7 +286,7 @@
       }
 
       &:hover:not(.is-disabled):not(.is-selected),
-      &:focus:not(.is-disabled):not(.is-selected), {
+      &:focus:not(.is-disabled):not(.is-selected) {
         .handle {
           color: $swaplist-text-color;
           display: inline-block;

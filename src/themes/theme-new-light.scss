@@ -16,7 +16,7 @@
 @import '../core/config';
 
 // New Theme Light Overrides
-$subhead-bg-color: $ids-color-palette-azure-70;
+$subhead-bg-color: $ids-color-palette-white;
 $disabled-color: $ids-color-palette-slate-30;
 $label-disabled-color: $input-color-disabled-border;
 $label-text-color: $ids-color-palette-slate-60;
@@ -30,6 +30,7 @@ $drop-shadow-depth: rgba($ids-color-boxshadow-base, 0.2);
 $application-menu-border-color: $ids-color-palette-slate-90;
 
 $header-default-bg-color: $ids-color-palette-white;
+$module-default-bg-color: $ids-color-palette-white;
 
 // Icons
 $icon-color: $icon-color-fill;
@@ -90,6 +91,7 @@ $contextual-panel-bg: $ids-color-palette-slate-10;
 $contextual-panel-color: $ids-color-palette-slate-60;
 $contextual-panel-border-color: $ids-color-palette-slate-30;
 $contextual-panel-searchfield-border-color: $ids-color-palette-slate-30;
+$contextual-panel-button-hover-bg-color: $ids-color-palette-slate-20;
 
 // Modal
 $modal-border-color: $ids-color-palette-slate-30;
@@ -229,12 +231,21 @@ $timepicker-readonly-icon-color: $ids-color-palette-slate-40;
 
 // Buttons
 $header-button-disabled-color: rgba(0, 0, 0, 0.3);
-$button-color-tertiary-initial-font: $ids-color-palette-slate-60;
-$button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-font-new;
+$button-color-tertiary-initial-font: rgba(0, 0, 0, 0.9);
+$button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-text-new;
 $button-disabled-background-color: transparent;
-$button-color-tertiary-hover-font-new: $ids-color-palette-azure-60;
-$button-color-tertiary-hover-font: $ids-color-palette-azure-60;
+$button-color-tertiary-hover-text: $ids-color-palette-slate-100;
 $button-color-secondary-initial-background: transparent;
+$button-color-secondary-initial-font-new: $ids-color-palette-azure-60;
+$header-button-focus-color: $ids-color-palette-slate-100;
+$button-color-tertiary-hover-background-new: $ids-color-palette-slate-10;
+$button-color-tertiary-hover-text-new: $ids-color-palette-black;
+$button-color-secondary-focus-shadow: 0 0 0 1px $ids-color-palette-azure-60, 0 0 0 1px $ids-color-palette-azure-60;
+$button-color-tertiary-focus-shadow: 0 0 0 .5px $ids-color-palette-azure-60, 0 0 0 .5px $ids-color-palette-azure-60;
+$button-color-destructive-tertiary-focus-shadow: 0 0 0 .5px $ids-color-palette-ruby-70, 0 0 0 .5px $ids-color-palette-ruby-70;
+$button-color-tertiary-focus-border: $ids-color-palette-azure-60;
+$button-color-tertiary-hover-background-new: $ids-color-palette-slate-10;
+$toolbar-btn-actions-hover-bg-color: $ids-color-palette-slate-10;
 
 // Badges
 $badge-neutral-color: $ids-color-palette-slate-100;
@@ -367,6 +378,8 @@ $listview-header-color: $ids-color-palette-slate-50;
 $listview-full-width-bg-color: $ids-color-palette-slate-10;
 $listview-full-width-border-color: $ids-color-palette-slate-30;
 $listview-border-color: $ids-color-palette-slate-20;
+$listview-toolbar-button-text-hover-color: $ids-color-palette-slate-100;
+$listview-toolbar-button-icon-hover-color: $ids-color-palette-slate-100;
 
 // Lookup
 $lookup-readonly-icon-color: $ids-color-palette-slate-40;

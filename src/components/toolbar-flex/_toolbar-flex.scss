@@ -2,10 +2,10 @@
 // Flexible Toolbar Component
 // ==================================== //
 
-@import '../button/button';
-@import '../colorpicker/colorpicker';
-@import '../fontpicker/fontpicker';
-@import '../popupmenu/popupmenu';
+// Dependencies
+// colorpicker/colorpicker
+// fontpicker/fontpicker
+// popupmenu/popupmenu
 
 .toolbar-container {
   &.in-page {
@@ -302,7 +302,7 @@
 
     &:not(.favor) {
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: hidden;
     }
 
     &.static {

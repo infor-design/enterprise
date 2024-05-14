@@ -112,7 +112,7 @@ Soho.Locale.addCulture('ms-MY', {
     ChangeSelection: { id: 'ChangeSelection', value: 'Untuk menukar item yang dipilih, gunakan kekunci anak panah.', comment: 'Audible text for drop down list help' },
     ChangeView: { id: 'ChangeView', value: 'Ubah pandangan', comment: 'Change the current page from a list of options' },
     CharactersLeft: { id: 'CharactersLeft', value: 'Baki aksara {0}', comment: 'indicator showing how many more characters you can type.' },
-    CharactersMax: { id: 'CharactersMax', value: 'Kiraan aksara maksimum ', comment: 'indicator showing how many max characters you can type.' },
+    CharactersMax: { id: 'CharactersMax', value: 'Kiraan aksara maksimum {0}', comment: 'indicator showing how many max characters you can type.' },
     Checkbox: { id: 'Checkbox', value: 'Kotak semak', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'Disemak', comment: 'Checked tooltip' },
     Chinese: { id: 'Chinese', value: 'Bahasa Cina', comment: 'Chinese language in general form' },

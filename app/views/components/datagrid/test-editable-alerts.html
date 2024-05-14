@@ -81,7 +81,7 @@
       columns.push({ id: 'price3', name: 'Tag', field: 'price', align: 'center', formatter: Soho.Formatters.Tag, editor: Soho.Editors.Input, ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: customDate, editor: Soho.Editors.Date, dateFormat: 'M/d/yyyy'});
       columns.push({ id: 'action', name: 'Action', field: 'action', formatter: myCustom, editor: Soho.Editors.Dropdown,
-        options: [{id: '', label: '', value: -1}, {id: 'oh1', label: 'On Hold', value: 1}, {id: 'sh1', label: 'Shipped', value: 2} , {id: 'ac1', label: 'Action', value: 3}, {id: 'pen', label: 'Pending', value: 4}, {id: 'bk1', label: 'Backorder', value: 5}, {id: 'can', label: 'Cancelled', value: 6}, {id: 'pro', label: 'Processing', value: 7}]});;
+        options: [{id: '', label: '', value: -1}, {id: 'oh1', label: 'On Hold', value: 1}, {id: 'sh1', label: 'Shipped', value: 2} , {id: 'ac1', label: 'Action', value: 3}, {id: 'pen', label: 'Pending', value: 4}, {id: 'bk1', label: 'Backorder', value: 5}, {id: 'can', label: 'Cancelled', value: 6}, {id: 'pro', label: 'Processing', value: 7}]});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', editor: Soho.Editors.Input, formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       // Init and get the api for the grid
