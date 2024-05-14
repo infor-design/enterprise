@@ -166,39 +166,52 @@
   }
 }
 
-.listview {
+.listview.personalize-col {
   .switch {
     input ~ .label-text::before,
     input ~ label::before {
-      left: 170px;
+      left: 165px;
+      top: 10px;
     }
 
     input:empty ~ .label-text::after,
     input:empty ~ label::after {
-      left: 165px;
+      left: 160px;
+      top: 3px;
     }
 
     input:checked ~ .label-text::after,
     input:checked ~ label::after {
-      left: 185px;
+      left: 180px;
+      top: 3px;
     }
   }
 
-  li.child .switch {
-    input ~ .label-text::before,
-    input ~ label::before {
-      left: 150px;
+  li.child {
+    &.arrange-dragging {
+      background-color: $listview-bg-color;
     }
 
-    input:empty ~ .label-text::after,
-    input:empty ~ label::after {
-      left: 145px;
-    }
+    .switch {
+      input ~ .label-text::before,
+      input ~ label::before {
+        left: 145px;
+      }
 
-    input:checked ~ .label-text::after,
-    input:checked ~ label::after {
-      left: 165px;
+      input:empty ~ .label-text::after,
+      input:empty ~ label::after {
+        left: 140px;
+      }
+
+      input:checked ~ .label-text::after,
+      input:checked ~ label::after {
+        left: 160px;
+      }
     }
+  }
+
+  li.arrange-placeholder.draggable {
+    background-color: transparent;
   }
 }
 

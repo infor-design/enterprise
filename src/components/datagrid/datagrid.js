@@ -6524,7 +6524,7 @@ Datagrid.prototype = {
   */
   personalizeColumns() {
     const self = this;
-    const markup = '<div class="listview alternate-bg" id="search-listview"><ul></ul></div>';
+    const markup = '<div class="listview alternate-bg personalize-col" id="search-listview"><ul></ul></div>';
     let pSource = self.settings.columns;
     let pTemplate = `
     <ul class="arrange list" data-arrange-handle=".handle">
@@ -6671,6 +6671,7 @@ Datagrid.prototype = {
 
         listviewApi.element.off('selected.datagrid')
           .on('selected.datagrid', (selectedEvent, args) => {
+            console.log(selectedEvent, args)
             const li = args.elem;
             const chk = li.find('input.switch');
             const id = chk.attr('data-column-id');

@@ -6179,8 +6179,6 @@ html[dir='rtl'] {
     }
 
     .listview {
-      overflow: inherit;
-
       &.alternate-bg {
         background-color: $listview-bg-color;
       }
