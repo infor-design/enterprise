@@ -8,6 +8,7 @@
 
 - `[Autocomplete]` Fixed autocomplete not properly highlighted on key down. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
 - `[Datagrid]` Fixed add row not triggering after cell commit. ([#8624](https://github.com/infor-design/enterprise/issues/8624))
+- `[Datagrid]` Fixed an error that occurred in some situations. ([#8709](https://github.com/infor-design/enterprise/issues/8709))
 - `[Datepicker]` Fixed focus date not properly assigned when calendar is used as datepicker. ([#8585](https://github.com/infor-design/enterprise/issues/8585))
 - `[Lookup]` Fixed bug on lookup not using minWidth settings. ([#8626](https://github.com/infor-design/enterprise/issues/8626))
 
