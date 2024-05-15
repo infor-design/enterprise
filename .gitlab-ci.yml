@@ -12,3 +12,6 @@ node_testing:
     - (npm run quickstart &) && sleep 5; npm run test
     - echo "$GITHUB_CONTEXT"
     - echo "$JOB_CONTEXT"
+  tags:
+    - dsa
+    - DIND
