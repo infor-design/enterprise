@@ -4,7 +4,7 @@ stages:
 
 node_testing:
   stage: test
-  image: node:18
+  image: macos-latest
   script:
     - npm ci
     - npm run build
