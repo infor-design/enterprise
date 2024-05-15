@@ -12037,7 +12037,7 @@ Datagrid.prototype = {
     }
 
     function isOffScreen(el) {
-      if (el === undefined) return;
+      if (el === undefined || el === null || !el[0]) return;
 
       const rect = el[0].getBoundingClientRect();
 
