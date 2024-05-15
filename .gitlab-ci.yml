@@ -1,0 +1,17 @@
+stages:
+  - test
+  - deploy
+
+node_testing:
+  stage: test
+  image: node:18
+  script:
+    - npm ci
+    - npm run build
+    - npm run lint
+    - (npm run quickstart &) && sleep 5; npm run test
+    - echo "$GITHUB_CONTEXT"
+    - echo "$JOB_CONTEXT"
+  tags:
+    - dsa
+    - DIND
