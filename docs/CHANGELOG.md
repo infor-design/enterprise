@@ -14,6 +14,7 @@
 - `[Dropdown]` Fixed dropdown height when `showTags` is set to true. ([#8566](https://github.com/infor-design/enterprise/issues/8566))
 - `[Lookup]` Fixed bug on lookup not using minWidth settings. ([#8626](https://github.com/infor-design/enterprise/issues/8626))
 - `[Monthview]` Fixed monthview not updating after changing activeDate. ([NG#1659](https://github.com/infor-design/enterprise-ng/issues/1659))
+- `[Popup Menu]` Fixed bug on popupmenu showing behind app menu on mobile. ([#8582](https://github.com/infor-design/enterprise/issues/8582))
 
 ## v4.95.0
 
