@@ -123,7 +123,6 @@ About.prototype = {
       const localeColon = frLocales ? ' :' : ':';
       const specs = this.getDeviceSpecs();
       const text = `<span class="platform">${Locale.translate('Platform')}${localeColon} ${specs.os}</span><br>
-        <span class="ds">${Locale.translate('Mobile')}${localeColon} ${env.devicespecs.isMobile}</span><br>
         <span class="locale">${Locale.translate('Locale')}${localeColon} ${Locale.currentLocale.name}</span><br>
         <span class="locale">${Locale.translate('Language')}${localeColon} ${Locale.currentLanguage.name}</span><br>
         <span class="browser">${Locale.translate('Browser')}${localeColon}${` ${env.devicespecs.browserVersionName}`} ${env.devicespecs.currentBrowser} (${env.devicespecs.browserVersion})</span><br>
