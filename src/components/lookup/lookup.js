@@ -133,6 +133,7 @@ Lookup.prototype = {
     this.inlineLabel = this.element.closest('label');
     this.inlineLabelText = this.inlineLabel.find('.label-text');
     this.isInlineLabel = !!this.inlineLabelText.length;
+    this.isContentOverflowing = false;
     this.build();
     this.handleEvents();
     this.grid = null;
@@ -329,18 +330,9 @@ Lookup.prototype = {
    * @returns {void}
    */
   setTooltip() {
-    setTimeout(() => {
-      const isOverlapping = this.element[0].scrollWidth > this.element[0].offsetWidth;
-      const tooltipApi = this.element.data('tooltip');
-
-      if (isOverlapping) {
-        this.element.tooltip({
-          content: this.element.val()
-        });
-      } else if (tooltipApi && !isOverlapping) {
-        tooltipApi.destroy();
-      }
-    }, 100);
+    this.element.tooltip({
+      content: this.element.val()
+    });
   },
 
   /**
@@ -576,7 +568,6 @@ Lookup.prototype = {
           * @property {object} grid in lookup
           */
         self.element.triggerHandler('close', [self.modal, self.grid]);
-        self.setTooltip();
       });
 
     self.modal = $('body').data('modal');
@@ -585,6 +576,21 @@ Lookup.prototype = {
     }
 
     self.modal.element.off('afterclose.lookup').on('afterclose.lookup', () => {
+      self.isContentOverflowing = self.element[0].scrollWidth > self.element[0].offsetWidth;
+      const tooltipApi = self.element.data('tooltip');
+      const isSelectableMultiple = self.settings.options?.selectable === 'multiple';
+
+      // Tooltip will be shown and destroy only if the content is overflowing.
+      // In case of associating the tooltip in the lookup field, it will not remove the tooltip.
+      if (isSelectableMultiple) {
+        if (self.isContentOverflowing) {
+          self.setTooltip();
+        // If the tooltip API exists and content is not overflowing, destroy the tooltip.
+        } else if (tooltipApi && !self.isContentOverflowing) {
+          tooltipApi.destroy();
+        }
+      }
+
       self.closeTearDown();
     });
 
