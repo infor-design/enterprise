@@ -1,0 +1,81 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div role="toolbar" class="flex-toolbar">
+
+      <div class="toolbar-section title">
+        Data Grid Header Title
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
+
+      <div class="toolbar-section buttonset">
+        <button type="button" id="add-btn" class="btn">
+          <span>Add Row</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<script>
+  var gridApi = null;
+  var grid,
+      columns = [],
+      data = [];
+
+  $('body').one('initialized', function () {
+    
+
+    var isDisabled = function(row, cell, value, item) {
+      return (row % 2 === 0);
+    }
+
+    var newDate = new Date();
+    let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(newDate);
+    let month = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(newDate);
+    let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
+    console.log(`${month}-${day}-${year}`);
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'id', name: 'Row Id', field: 'id', minWidth: 75, formatter: Soho.Formatters.Readonly});
+    columns.push({ id: 'productName', name: 'Product Name', minWidth: 150, sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+
+    //Init and get the api for the grid
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      showNewRowIndicator: false,
+      dataset: data,
+      editable: true,
+      toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true},
+      resizeMode: 'fit'
+    });
+
+    gridApi = $('#datagrid').data('datagrid');
+  });
+
+  var newId = 0;
+  var productId = 2642206;
+
+  //Add Code for Add and icon-delete
+  $('#add-btn').on('click', function () {
+    const newItem = {
+      id: newId++, 
+      productId: productId++, 
+      productName: ''
+    }
+    // gridApi.addRow({ id: newId++, productId: 2642206, productName: 'New Product'});
+    data.push(newItem);
+
+    grid = $('#datagrid').datagrid({
+      columns: this.columns,
+      showNewRowIndicator: false,
+      dataset: data,
+      editable: true,
+      toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true},
+      resizeMode: 'fit'
+    });
+  });
+
+</script>

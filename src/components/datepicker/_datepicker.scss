@@ -97,6 +97,21 @@
     + .trigger {
       color: $datepicker-readonly-icon-color;
       cursor: default;
+
+      &:hover {
+        color: $datepicker-readonly-icon-color !important;
+        cursor: default;
+        background-color: transparent !important;
+
+        &.icon,
+        &.btn-icon {
+          color: $datepicker-readonly-icon-color !important;
+        }
+      }
+
+      &.btn-icon:hover:not([disabled]) .icon {
+        color: $datepicker-readonly-icon-color !important;
+      }
     }
   }
 }

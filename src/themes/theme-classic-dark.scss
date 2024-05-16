@@ -108,7 +108,7 @@ $button-hyperlink-color: $ids-color-palette-slate-30;
 $button-hyperlink-hover-color: $ids-color-palette-slate-40;
 $button-color-tertiary-hover-background: $ids-color-palette-slate-50;
 $button-color-tertiary-hover-background-new: rgba(0, 0, 0, 0.25);
-$button-icon-disabled-color: $ids-color-palette-slate-60;
+$button-icon-disabled-color: $ids-color-palette-slate-10;
 $button-color-secondary-initial-font: $ids-color-palette-slate-10;
 $button-color-secondary-hover-background: $ids-color-palette-slate-50;
 $button-color-secondary-initial-background: $ids-color-palette-slate-40;
@@ -553,6 +553,7 @@ $application-menu-trigger-icon-fill-color: $trigger-icon-fill-color;
 $contextual-panel-bg: $ids-color-palette-slate-60;
 $contextual-panel-border-color: $ids-color-palette-slate-50;
 $contextual-panel-color: $ids-color-palette-slate-20;
+$contextual-panel-button-hover-bg-color: $ids-color-palette-graphite-80;
 
 // BreadCrumb
 $breadcrumb-color: $ids-color-palette-slate-40;

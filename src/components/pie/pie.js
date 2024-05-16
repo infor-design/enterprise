@@ -173,7 +173,7 @@ Pie.prototype = {
       height: h,
       width: w
     };
-    dims.isSmallView = dims.width - (hasParentBordered ? 2 : 0) < 360;
+    dims.isSmallView = dims.width - (hasParentBordered ? 2 : 0) < 400;
     const legendBotOnSingleWidget = s.legendPlacement === 'bottom' &&
       dims.isSmallView && !s.showMobile;
 

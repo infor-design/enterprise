@@ -81,7 +81,7 @@
       height: 34px;
       margin-inline-start: 5px;
       vertical-align: middle;
-      
+
       .go-back {
         svg {
           height: 14px;
@@ -239,6 +239,13 @@
   .buttonset {
     [class^='btn']:last-child {
       margin-inline-end: 10px;
+    }
+  }
+
+  .btn,
+  .btn-tertiary {
+    &:hover {
+      background-color: $contextual-panel-button-hover-bg-color !important;
     }
   }
 

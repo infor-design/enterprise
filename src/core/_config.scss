@@ -349,7 +349,7 @@ $button-color-tertiary-hover-background: $ids-color-palette-slate-30;
 $button-color-tertiary-disabled-background-new: transparent;
 $button-color-tertiary-hover-text-new: $ids-color-palette-graphite-100;
 $button-color-tertiary-hover-text: $ids-color-palette-graphite-100;
-$button-color-tertiary-hover-background-new: $ids-color-palette-azure-10;
+$button-color-tertiary-hover-background-new: $ids-color-palette-graphite-10;
 $hero-button-color-tertiary-hover-background-new: $button-color-tertiary-hover-background-new;
 $button-color-destructive-focus-border-new: $ids-color-palette-ruby-60;
 $button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-60;
@@ -869,6 +869,7 @@ $contextual-panel-color: $ids-color-palette-graphite-60;
 $contextual-panel-border-color: $ids-color-palette-graphite-30;
 $contextual-panel-searchfield-bg-color: $body-color-primary-background;
 $contextual-panel-searchfield-border-color: $ids-color-palette-graphite-30;
+$contextual-panel-button-hover-bg-color: $ids-color-palette-graphite-30;
 
 // BreadCrumb
 $breadcrumb-color: $ids-color-palette-graphite-60;

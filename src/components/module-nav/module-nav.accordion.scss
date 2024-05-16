@@ -472,3 +472,7 @@
     }
   }
 }
+
+.module-nav-main.accordion-section .btn:hover:not([disabled]) {
+  background-color: transparent !important;
+}

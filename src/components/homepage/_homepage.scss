@@ -12,7 +12,7 @@
   background-color: $homepage-background-color;
   height: inherit;
   margin: 0 auto;
-  padding: 16px 0;
+  padding: 0;
   position: relative;
 
   .card,
@@ -22,7 +22,6 @@
     left: 0;
     position: absolute;
     top: 0;
-    overflow: hidden;
     width: 360px;
 
     // Edit mode is on
@@ -30,13 +29,44 @@
       overflow: initial;
     }
 
-    &:last-child::after {
+    &::after {
       content: '';
       display: inline-block;
       height: 16px;
       position: absolute;
       top: 368px;
       width: 10px;
+    }
+
+    &.banner {
+      height: 380px;
+      background: none;
+      border: none;
+      box-shadow: none;
+
+      .widget-content {
+        height: 420px;
+        overflow-y: hidden;
+      }
+
+      .circlepager {
+        height: 417px;
+
+        .slide {
+          height: 368px;
+          margin: 0 2px;
+
+          &.is-visible.transition {
+            transition: opacity 0.1s ease 0s;
+          }
+
+          .small-widget {
+            height: 318px;
+            min-height: 318px;
+            width: 358px;
+          }
+        }
+      }
     }
   }
 
@@ -58,8 +88,14 @@
 
   > .content {
     left: 50%;
+    top: 16px;
     margin-left: -500px;
+    margin-top: 16px;
     position: absolute;
+
+    &.has-banner-icon {
+      margin-top: 76px;
+    }
   }
 
   .drop-indicator {
@@ -141,13 +177,32 @@
     height: 14px;
     width: 100%;
   }
+
+  .background-image {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 272px;
+  }
+
+  .banner-icon {
+    left: 50%;
+    margin-left: -500px;
+    margin-top: 24px;
+    position: absolute;
+    float: left;
+    height: 32px;
+    min-width: 32px;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
 }
 
 .header + .homepage,
 .header + nav + .homepage {
-  height: calc(100% - 46px);
+  height: calc(100% - 60px);
   margin-top: 0 !important;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .header + .page-container > .homepage {

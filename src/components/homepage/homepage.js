@@ -95,11 +95,34 @@ Homepage.prototype = {
     this.handleEvents();
     this.initEdit();
 
+    if (this.settings.background) {
+      const s = this.settings.background.banner;
+      const banner = $('<div></div>');
+      this.background = {};
+
+      if (s.image) {
+        banner.attr('style', `background-image: url(${s.image})`);
+        banner.addClass('background-image');
+        this.background.imageElement = banner;
+      }
+
+      if (s.icon) {
+        const content = this.element.find('> .content');
+        const style = `background-image: url(${s.icon.image});${s.icon.height ? `height: ${s.icon.height}px;` : ''}${s.icon.width ? `width: ${s.icon.width}px;` : ''}`;
+        const icon = $(`<div style="${style}"></div>`);
+        icon.addClass('banner-icon');
+        this.background.iconElement = icon;
+        this.element.prepend(icon);
+        content.addClass('has-banner-icon');
+      }
+
+      this.element.append(banner);
+    }
+
     // Initial Sizing
     setTimeout(() => { // Timeout to let rtl load first before the render of the resize
       this.resize(this, false);
     }, 100);
-    this.setHomepageHeight(100);
     this.element.parent().addClass('homepage-background');
   },
 
@@ -143,18 +166,6 @@ Homepage.prototype = {
   },
 
   /**
-   * Set height to the homepage container.
-   * @private
-   * @param {number} [timeout=0] Delay in milliseconds before setting height.
-   */
-  setHomepageHeight(timeout = 0) {
-    setTimeout(() => {
-      const homepageHeight = this.element.get(0).scrollHeight + 16; // 16px is based on the padding
-      this.element.css('height', `${homepageHeight}px`);
-    }, timeout);
-  },
-
-  /**
    * Initialize columns.
    * @private
    * @param {number} row to be initialize.
@@ -176,8 +187,20 @@ Homepage.prototype = {
    */
   initHeroWidget() {
     let heroWidget = this.element.parent().find('.hero-widget');
+    const heroWidgetBackground = this.settings.heroWidgetBackground;
+
     if (heroWidget.length > 1) {
       heroWidget = heroWidget.not(':first').remove();
+    }
+
+    if (heroWidgetBackground) {
+      if (heroWidgetBackground.image) {
+        heroWidget.attr('style', `background-image: url(${this.settings.heroWidgetBackground.image})`);
+      }
+
+      if (heroWidgetBackground.color) {
+        heroWidget.attr('style', `background-color: ${heroWidgetBackground.color}`);
+      }
     }
     this.heroWidget = heroWidget;
   },
@@ -542,7 +565,7 @@ Homepage.prototype = {
    * @returns {void}
    */
   setBlocks() {
-    const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card');
+    const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card, .banner .widget');
     this.blocks = [];
 
     for (let i = 0, l = cards.length; i < l; i++) {
@@ -678,6 +701,44 @@ Homepage.prototype = {
 
     if (content.length) {
       content[0].style.marginLeft = `-${(bp / 2)}px`;
+
+      if (self.background?.iconElement) {
+        self.background.iconElement[0].style.marginLeft = `-${(bp / 2)}px`;
+      }
+
+      const bannerWidgetPager = content.find('.banner .circlepager');
+
+      if (bannerWidgetPager) {
+        const bannerWidgetPagerApi = bannerWidgetPager.data('circlepager');
+
+        if (bannerWidgetPagerApi && bannerWidgetPagerApi.slidesToShow !== self.columns) {
+          bannerWidgetPagerApi.responsiveSlidesToShow(self.columns);
+
+          if (bannerWidgetPagerApi.slidesToShow === 1) {
+            bannerWidgetPagerApi.slidesJQ.each((i, e) => {
+              e.style.margin = 0;
+            });
+          } else {
+            bannerWidgetPagerApi.slidesJQ.each((i, e) => {
+              if (i !== 0 && i % self.columns === 0) {
+                let marginLeft = '-10px';
+
+                if (self.columns >= 4) {
+                  marginLeft = '-15px';
+                }
+
+                if (self.columns <= 2) {
+                  marginLeft = '-5px';
+                }
+
+                e.style.marginLeft = marginLeft;
+              } else {
+                e.style.margin = null;
+              }
+            });
+          }
+        }
+      }
     }
 
     this.setBlocks(); // setup blocks
@@ -712,12 +773,13 @@ Homepage.prototype = {
 
       // Get Availability
       const available = self.getAvailability(block);
+      const isBannerWidget = self.element.find('.banner.widget').length > 0;
 
       // Set positions
       const box = self.settings.widgetWidth + self.settings.gutterSize;
       const totalWidth = box * self.columns;
       const left = Locale.isRTL() ? totalWidth - ((box * block.w) + (box * available.col)) : box * available.col;// eslint-disable-line
-      const top = (self.settings.widgetHeight + self.settings.gutterSize) * available.row;
+      const top = ((self.settings.widgetHeight + self.settings.gutterSize) * available.row) - 12;
       const pos = { left, top };
 
       if (animate && !this.editing) {
@@ -727,7 +789,7 @@ Homepage.prototype = {
         if (easing === 'blockslide') {
           self.applyCubicBezier(block.elem, blockslide);
           block.elem[0].style.left = `${pos.left}px`;
-          block.elem[0].style.top = `${pos.top}px`;
+          block.elem[0].style.top = `${pos.top + (isBannerWidget && !block.elem.hasClass('banner') ? 40 : 0)}px`;
         } else {
           // Other easing effects ie (linear, swing)
           block.elem.animate(pos, self.settings.timeout, easing);
@@ -735,7 +797,7 @@ Homepage.prototype = {
       } else {
         self.applyCubicBezier(block.elem, null);
         block.elem[0].style.left = `${pos.left}px`;
-        block.elem[0].style.top = `${pos.top}px`;
+        block.elem[0].style.top = `${pos.top + (isBannerWidget && !block.elem.hasClass('banner') ? 40 : 0)}px`;
       }
 
       // Mark all spots as unavailable for this block, as we just used this one
@@ -856,12 +918,10 @@ Homepage.prototype = {
   handleEvents() {
     $('body').on('resize.homepage', () => {
       this.resize(this, this.settings.animate);
-      this.setHomepageHeight(500);
     });
 
     $('.application-menu').on('applicationmenuopen.homepage applicationmenuclose.homepage', () => {
       this.resize(this, this.settings.animate);
-      this.setHomepageHeight(400);
     });
   }
 
