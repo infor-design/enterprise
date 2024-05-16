@@ -426,6 +426,11 @@ $card-header-section: '.card-header-section', '.widget-header-section';
 .widget-footer {
   padding: 13px 20px;
   position: relative;
+
+  .btn {
+    position: relative;
+    top: -9px;
+  }
 }
 
 .card-header,

@@ -13,6 +13,14 @@
   }
 }
 
+.is-firefox {
+  .listview .alert-text {
+    &::before {
+      margin-top: 7px;
+    }
+  }
+}
+
 .listview-search,
 .card-search,
 .widget-search {
