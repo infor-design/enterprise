@@ -8,8 +8,6 @@
 
 ## v4.96.0 Fixes
 
-## v4.96.0 Fixes
-
 - `[About]` Removed `isMobile` in about spec. ([#8502](https://github.com/infor-design/enterprise/issues/8502))
 - `[Autocomplete]` Fixed autocomplete not properly highlighted on key down. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
 - `[Bar-Stacked/Column-Stacked]` Fixed an error encountered when having many records inside the graph. ([NG#1675](https://github.com/infor-design/enterprise-ng/issues/1675))
