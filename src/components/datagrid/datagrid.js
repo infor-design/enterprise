@@ -11540,7 +11540,7 @@ Datagrid.prototype = {
 
     const wrapper = cellNode.find('.datagrid-cell-wrapper');
     if (!isInline && wrapper[0]) {
-      wrapper[0].innerHTML = formatted;
+      wrapper.html(formatted);
 
       const children = wrapper.children();
       if (children.length === 0) {
@@ -12037,14 +12037,14 @@ Datagrid.prototype = {
     }
 
     function isOffScreen(el) {
-      if (el === undefined) return;
+      if (el === undefined || el === null || !el[0]) return;
 
       const rect = el[0].getBoundingClientRect();
 
       // eslint-disable-next-line consistent-return
-      return ((rect.x + rect.width) < 0 || 
-        (rect.y + rect.height) < 0 || 
-        (rect.x > window.innerWidth || 
+      return ((rect.x + rect.width) < 0 ||
+        (rect.y + rect.height) < 0 ||
+        (rect.x > window.innerWidth ||
         rect.y > window.innerHeight));
     }
 
