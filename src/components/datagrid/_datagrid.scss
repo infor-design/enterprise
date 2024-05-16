@@ -6174,6 +6174,8 @@ html[dir='rtl'] {
 // Modal
 .modal {
   &.datagrid-columns-dialog {
+    min-width: 400px;
+
     .listview-search.alternate-bg .searchfield-wrapper {
       background-color: $listview-bg-color;
     }
