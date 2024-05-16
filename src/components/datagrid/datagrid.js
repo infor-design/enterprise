@@ -6669,87 +6669,86 @@ Datagrid.prototype = {
             });
         }
 
-        listviewApi.element.off('selected.datagrid')
-          .on('selected.datagrid', (selectedEvent, args) => {
-            const li = args.elem;
-            const chk = li.find('input.switch');
-            const id = chk.attr('data-column-id');
-            const isChecked = chk.prop('checked');
+        listviewApi.element.find('.switch span.label-text, .switch input').on('click', (ev) => {
+          const li = $(ev.target).parent().parent();
+          const chk = li.find('input.switch');
+          const id = chk.attr('data-column-id');
+          const isChecked = chk.prop('checked');
 
-            li.removeClass('is-selected hide-selected-color');
+          li.removeClass('is-selected hide-selected-color');
 
-            if (chk.is(':disabled')) {
-              return;
-            }
+          if (chk.is(':disabled')) {
+            return;
+          }
 
-            self.isColumnsChanged = true;
+          self.isColumnsChanged = true;
 
-            if (self.settings.columnGroups) {
-              if (li.hasClass('child')) {
-                const groupId = li.attr('data-group-id');
-                const groupLi = li.siblings(`:not(.child)[data-group-id="${groupId}"]`);
-                let colsFalse = 0;
+          if (self.settings.columnGroups) {
+            if (li.hasClass('child')) {
+              const groupId = li.attr('data-group-id');
+              const groupLi = li.siblings(`:not(.child)[data-group-id="${groupId}"]`);
+              let colsFalse = 0;
 
-                if (!isChecked) {
-                  self.showColumn(id);
-                  chk.prop('checked', true);
-                } else {
-                  self.hideColumn(id);
-                  chk.prop('checked', false);
-                  colsFalse++;
-                }
-
-                colsFalse += li.siblings(`.child[data-group-id="${groupId}"]`).find('.switch input:not(:checked)').length;
-                if (colsFalse > 0) {
-                  $(groupLi).find('input.switch').prop('checked', false);
-                } else {
-                  $(groupLi).find('input.switch').prop('checked', true);
-                }
+              if (!isChecked) {
+                self.showColumn(id);
+                chk.prop('checked', true);
               } else {
-                const groupId = li.attr('data-group-id');
-                const cols = li.siblings(`.child[data-group-id="${groupId}"]`);
-                const toggle = (col, changeValue) => {
-                  const colChk = col.find('input.switch');
-                  const colId = colChk.attr('data-column-id');
-
-                  if (!colChk.is(':disabled')) {
-                    const colChkChecked = colChk.prop('checked');
-
-                    if (colChkChecked !== changeValue) {
-                      if (changeValue) {
-                        self.showColumn(colId);
-                      } else {
-                        self.hideColumn(colId);
-                      }
-                      colChk.prop('checked', changeValue);
-                    }
-                  }
-                };
-
-                if (!isChecked) {
-                  cols.each((i, ce) => {
-                    toggle($(ce), true);
-                  });
-                  chk.prop('checked', true);
-                } else {
-                  cols.each((i, ce) => {
-                    toggle($(ce), false);
-                  });
-                  chk.prop('checked', false);
-                }
+                self.hideColumn(id);
+                chk.prop('checked', false);
+                colsFalse++;
               }
-            } else if (!isChecked) {
-              self.showColumn(id);
-              chk.prop('checked', true);
-            } else {
-              self.hideColumn(id);
-              chk.prop('checked', false);
-            }
 
-            if (self.settings.groupable) {
-              self.rerender();
+              colsFalse += li.siblings(`.child[data-group-id="${groupId}"]`).find('.switch input:not(:checked)').length;
+              if (colsFalse > 0) {
+                $(groupLi).find('input.switch').prop('checked', false);
+              } else {
+                $(groupLi).find('input.switch').prop('checked', true);
+              }
+            } else {
+              const groupId = li.attr('data-group-id');
+              const cols = li.siblings(`.child[data-group-id="${groupId}"]`);
+              const toggle = (col, changeValue) => {
+                const colChk = col.find('input.switch');
+                const colId = colChk.attr('data-column-id');
+
+                if (!colChk.is(':disabled')) {
+                  const colChkChecked = colChk.prop('checked');
+
+                  if (colChkChecked !== changeValue) {
+                    if (changeValue) {
+                      self.showColumn(colId);
+                    } else {
+                      self.hideColumn(colId);
+                    }
+                    colChk.prop('checked', changeValue);
+                  }
+                }
+              };
+
+              if (!isChecked) {
+                cols.each((i, ce) => {
+                  toggle($(ce), true);
+                });
+                chk.prop('checked', true);
+              } else {
+                cols.each((i, ce) => {
+                  toggle($(ce), false);
+                });
+                chk.prop('checked', false);
+              }
             }
-          });
+          } else if (!isChecked) {
+            self.showColumn(id);
+            chk.prop('checked', true);
+          } else {
+            self.hideColumn(id);
+            chk.prop('checked', false);
+          }
+
+          if (self.settings.groupable) {
+            self.rerender();
+          }
+        });
 
         modal.element.on('close.datagrid', () => {
           self.isColumnsChanged = false;
