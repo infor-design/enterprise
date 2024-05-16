@@ -637,6 +637,12 @@ MonthView.prototype = {
     now.setMinutes(0);
     now.setSeconds(0);
 
+    if (this.toUpdate !== undefined && this.toUpdate) {
+      s.activeDateIslamic = null;
+      delete this.currentDay;
+      delete this.toUpdate;
+    }
+
     let elementDate;
     if (this.isIslamic) {
       elementDate = s.activeDate || Locale.gregorianToUmalqura(now);
@@ -646,16 +652,21 @@ MonthView.prototype = {
     this.setCurrentCalendar();
 
     if (this.isIslamic) {
-      const gregorianDate = new Date(year, month, this.settings.day);
-      const islamicDate = Locale.gregorianToUmalqura(gregorianDate);
-      this.todayDateIslamic = Locale.gregorianToUmalqura(now);
-      s.activeDateIslamic = [];
-      s.activeDateIslamic[0] = islamicDate[0];
-      s.activeDateIslamic[1] = islamicDate[1];
-      s.activeDateIslamic[2] = islamicDate[2];
-      year = islamicDate[0];
-      month = islamicDate[1];
-      elementDate = islamicDate;
+      if (!s.activeDateIslamic) {
+        const gregorianDate = new Date(year, month, this.currentDay || this.settings.day);
+        const islamicDate = Locale.gregorianToUmalqura(gregorianDate);
+        this.todayDateIslamic = Locale.gregorianToUmalqura(now);
+        s.activeDateIslamic = [];
+        s.activeDateIslamic[0] = islamicDate[0];
+        s.activeDateIslamic[1] = islamicDate[1];
+        s.activeDateIslamic[2] = islamicDate[2];
+        year = islamicDate[0];
+        month = islamicDate[1];
+        elementDate = islamicDate;
+        this.currentDay = islamicDate[2];
+      } else {  
+        elementDate = s.activeDateIslamic;
+      }
     }
 
     if (year.toString().length < 4) {
@@ -2983,6 +2994,7 @@ MonthView.prototype = {
 
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+      this.toUpdate = true;
     }
 
     return this
