@@ -646,21 +646,16 @@ MonthView.prototype = {
     this.setCurrentCalendar();
 
     if (this.isIslamic) {
-      if (!s.activeDateIslamic) {
-        const gregorianDate = new Date(year, month, this.currentDay || this.settings.day);
-        const islamicDate = Locale.gregorianToUmalqura(gregorianDate);
-        this.todayDateIslamic = Locale.gregorianToUmalqura(now);
-        s.activeDateIslamic = [];
-        s.activeDateIslamic[0] = islamicDate[0];
-        s.activeDateIslamic[1] = islamicDate[1];
-        s.activeDateIslamic[2] = islamicDate[2];
-        year = islamicDate[0];
-        month = islamicDate[1];
-        elementDate = islamicDate;
-        this.currentDay = islamicDate[2];
-      } else {
-        elementDate = s.activeDateIslamic;
-      }
+      const gregorianDate = new Date(year, month, this.settings.day);
+      const islamicDate = Locale.gregorianToUmalqura(gregorianDate);
+      this.todayDateIslamic = Locale.gregorianToUmalqura(now);
+      s.activeDateIslamic = [];
+      s.activeDateIslamic[0] = islamicDate[0];
+      s.activeDateIslamic[1] = islamicDate[1];
+      s.activeDateIslamic[2] = islamicDate[2];
+      year = islamicDate[0];
+      month = islamicDate[1];
+      elementDate = islamicDate;
     }
 
     if (year.toString().length < 4) {
