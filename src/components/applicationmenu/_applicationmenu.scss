@@ -724,3 +724,25 @@ html[dir='rtl'] .application-menu .hyperlink {
   display: flex;
   justify-content: center;
 }
+
+.application-menu .accordion.panel.inverse .accordion-header .btn:hover,
+.application-menu .accordion.panel.inverse .accordion-header .btn-expander:hover {
+  background-color: transparent !important;
+  color: #fff !important;
+}
+
+.accordion.panel.inverse .accordion-header:hover .icon {
+  color: #fff !important;
+}
+
+.application-menu .btn-icon.close:hover:not([disabled]) {
+  background-color: transparent !important;
+}
+
+.application-menu .btn:hover:not([disabled]) {
+  background-color: rgba(255, 255, 255, .1) !important;
+}
+
+.application-menu .btn-icon:hover:not([disabled]) {
+  background-color: rgba(255, 255, 255, .1) !important;
+}
