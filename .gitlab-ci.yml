@@ -4,7 +4,7 @@ stages:
 
 node_testing:
   stage: test
-  image: macos-latest
+  image: macos-13-xcode-14
   script:
     - npm ci
     - npm run build
