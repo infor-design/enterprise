@@ -32,4 +32,9 @@ deploy_demo:
   script:
     - echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
-    - docker buildx create --use
+    #- docker buildx create --use
+    - source scripts/deploy-environment/utils.sh
+    - install_packages
+    - make_dockerfile
+    - ls -al
+    - echo $CI_COMMIT_REF_NAME
