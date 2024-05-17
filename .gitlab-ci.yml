@@ -35,9 +35,24 @@ install_packages:
 
     #npm run build
     #npm run build:demoapp
+  artifacts:
+    paths:
+      - src/components/emptymessage/theme-classic-svg-empty.html
+      - src/components/emptymessage/theme-new-svg-empty.html
+      - src/components/icons/theme-classic-svg.html
+      - src/components/icons/theme-new-default-svg.html
+      - src/components/icons/theme-new-old-svg.html
+      - src/components/theme/theme-classic-colors.json
+      - src/components/theme/theme-classic-contrast-colors.json
+      - src/components/theme/theme-classic-dark-colors.json
+      - src/components/theme/theme-new-colors.json
+      - src/components/theme/theme-new-contrast-colors.json
+      - src/components/theme/theme-new-dark-colors.json
+      - node_modules/
+      - app/dist/
+      - dist/
+      - temp/
 
-    git stash
-    ls -al
 
 create_docker_file:
   stage: deploy
@@ -48,14 +63,34 @@ create_docker_file:
     - dsa
     - DIND
   script: |
-    git stash apply
     echo "FROM hookandloop/sohoxi-demo:1.0.1" > Dockerfile
     echo "ADD ./ /controls" >> Dockerfile
     echo "ADD ./dist /www/data/artifacts" >> Dockerfile
     echo "ADD ./docs /www/data/docs" >> Dockerfile
     echo "RUN chown -R www-data.www-data /www/data" >> Dockerfile
     ls -al
-    git stash
+  variables:
+    GIT_STRATEGY: fetch
+  artifacts:
+    paths: 
+      - Dockerfile
+  cache:
+    paths:
+      - src/components/emptymessage/theme-classic-svg-empty.html
+      - src/components/emptymessage/theme-new-svg-empty.html
+      - src/components/icons/theme-classic-svg.html
+      - src/components/icons/theme-new-default-svg.html
+      - src/components/icons/theme-new-old-svg.html
+      - src/components/theme/theme-classic-colors.json
+      - src/components/theme/theme-classic-contrast-colors.json
+      - src/components/theme/theme-classic-dark-colors.json
+      - src/components/theme/theme-new-colors.json
+      - src/components/theme/theme-new-contrast-colors.json
+      - src/components/theme/theme-new-dark-colors.json
+      - node_modules/
+      - app/dist/
+      - dist/
+      - temp/
 
 build_image:
   stage: deploy
@@ -69,7 +104,6 @@ build_image:
     - dsa
     - DIND
   script: |
-    git stash apply
     echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
     docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
     ls -al
@@ -77,7 +111,25 @@ build_image:
     DOCKER_HOST: tcp://host:2375/
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
-    GIT_STRATEGY: none
+    GIT_STRATEGY: fetch
+  cache:
+    paths:
+      - Dockerfile
+      - src/components/emptymessage/theme-classic-svg-empty.html
+      - src/components/emptymessage/theme-new-svg-empty.html
+      - src/components/icons/theme-classic-svg.html
+      - src/components/icons/theme-new-default-svg.html
+      - src/components/icons/theme-new-old-svg.html
+      - src/components/theme/theme-classic-colors.json
+      - src/components/theme/theme-classic-contrast-colors.json
+      - src/components/theme/theme-classic-dark-colors.json
+      - src/components/theme/theme-new-colors.json
+      - src/components/theme/theme-new-contrast-colors.json
+      - src/components/theme/theme-new-dark-colors.json
+      - node_modules/
+      - app/dist/
+      - dist/
+      - temp/
 
 clone_deployments_repo:
   stage: deploy
@@ -88,8 +140,12 @@ clone_deployments_repo:
     - dsa
     - DIND
   script: |
-    git stash apply
-    #apt-get update
-    #apt-get install -y git
-    #git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
+    apt-get update
+    apt-get install -y git
+    git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
     ls -al
+  variables:
+    GIT_STRATEGY: fetch
+  cache:
+    paths:
+      - /builds/infor-design/cache
