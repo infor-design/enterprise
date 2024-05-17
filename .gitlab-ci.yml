@@ -35,10 +35,12 @@ install_packages:
 
     #npm run build
     #npm run build:demoapp
-    ls -al
+
+    cp -r /builds/infor-design/ids-legacy /builds/infor-design/cache
+    ls -al /builds/infor-design/cache
   artifacts:
     paths:
-      - repo/
+      - /builds/infor-design/cache
 
 create_docker_file:
   stage: deploy
@@ -59,7 +61,7 @@ create_docker_file:
     GIT_STRATEGY: none
   cache:
     paths:
-      - repo/
+      - /builds/infor-design/cache
 
 build_image:
   stage: deploy
@@ -83,7 +85,7 @@ build_image:
     GIT_STRATEGY: none
   cache:
     paths:
-      - repo/
+      - /builds/infor-design/cache
 
 clone_deployments_repo:
   stage: deploy
@@ -94,10 +96,12 @@ clone_deployments_repo:
     - dsa
     - DIND
   script: |
+    apt-get update
+    apt-get install -y git
     git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
     ls -al
   variables:
     GIT_STRATEGY: none
   cache:
     paths:
-      - repo/
+      - /builds/infor-design/cache
