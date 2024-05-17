@@ -16,6 +16,20 @@ node_testing:
     - echo "$GITHUB_CONTEXT"
     - echo "$JOB_CONTEXT"
 
+install_packages:
+  stage: deploy
+  image: node:18
+  tags:
+    - dsa
+    - DIND
+  script: |
+    DEMO_PACKAGE_JSON_FILE=./app/package.json
+
+    if test -f "$DEMO_PACKAGE_JSON_FILE"; then
+      cp -fr $DEMO_PACKAGE_JSON_FILE ./package.json && rm -fr ./package-lock.json
+      npm install
+      git checkout package.json package-lock.json
+
 deploy_demo:
   stage: deploy
   image: docker:25
@@ -32,8 +46,3 @@ deploy_demo:
   script:
     - echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
-    - /bin/bash scripts/deploy-environment/utils.sh install_packages
-    #- make_dockerfile
-    - ls -al
-    - ls -al /bin/
-    - echo $CI_COMMIT_REF_NAME
