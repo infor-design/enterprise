@@ -37,10 +37,25 @@ install_packages:
     npm run build:demoapp
     ls -al
 
-deploy_demo:
+create_docker_file:
   stage: deploy
   needs:
     - install_packages
+  image: ubuntu:latest
+  tags:
+    - dsa
+    - DIND
+  script: |
+    echo "FROM hookandloop/sohoxi-demo:1.0.1" > Dockerfile
+    echo "ADD ./ /controls" >> Dockerfile
+    echo "ADD ./dist /www/data/artifacts" >> Dockerfile
+    echo "ADD ./docs /www/data/docs" >> Dockerfile
+    echo "RUN chown -R www-data.www-data /www/data" >> Dockerfile
+
+deploy_demo:
+  stage: deploy
+  needs:
+    - create_docker_file
   image: docker:25
   variables:
     DOCKER_HOST: tcp://host:2375/
@@ -53,5 +68,6 @@ deploy_demo:
     - dsa
     - DIND
   script:
+    - ls -al
     - echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
