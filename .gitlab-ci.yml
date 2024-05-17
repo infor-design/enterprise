@@ -36,11 +36,8 @@ install_packages:
     #npm run build
     #npm run build:demoapp
 
-    cp -r . cache/
-    ls -al cache/
-  artifacts:
-    paths:
-      - cache/
+    git stash
+    ls -al
 
 create_docker_file:
   stage: deploy
@@ -51,17 +48,14 @@ create_docker_file:
     - dsa
     - DIND
   script: |
+    git stash apply
     echo "FROM hookandloop/sohoxi-demo:1.0.1" > Dockerfile
     echo "ADD ./ /controls" >> Dockerfile
     echo "ADD ./dist /www/data/artifacts" >> Dockerfile
     echo "ADD ./docs /www/data/docs" >> Dockerfile
     echo "RUN chown -R www-data.www-data /www/data" >> Dockerfile
     ls -al
-  variables:
-    GIT_STRATEGY: none
-  cache:
-    paths:
-      - cache/
+    git stash
 
 build_image:
   stage: deploy
@@ -75,6 +69,7 @@ build_image:
     - dsa
     - DIND
   script: |
+    git stash apply
     echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
     docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
     ls -al
@@ -83,9 +78,6 @@ build_image:
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
     GIT_STRATEGY: none
-  cache:
-    paths:
-      - cache/
 
 clone_deployments_repo:
   stage: deploy
@@ -96,12 +88,8 @@ clone_deployments_repo:
     - dsa
     - DIND
   script: |
-    apt-get update
-    apt-get install -y git
-    git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
+    git stash apply
+    #apt-get update
+    #apt-get install -y git
+    #git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
     ls -al
-  variables:
-    GIT_STRATEGY: none
-  cache:
-    paths:
-      - cache/
