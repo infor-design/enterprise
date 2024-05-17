@@ -36,6 +36,9 @@ install_packages:
     npm run build
     npm run build:demoapp
     ls -al
+  artifacts:
+    paths:
+      - /repo
 
 create_docker_file:
   stage: deploy
@@ -54,6 +57,9 @@ create_docker_file:
     ls -al
   variables:
     GIT_STRATEGY: none
+  cache:
+    paths:
+      - /repo
 
 deploy_demo:
   stage: deploy
@@ -66,12 +72,15 @@ deploy_demo:
   tags:
     - dsa
     - DIND
-  script:
-    - echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
-    - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
-    - ls -al
+  script: |
+    echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
+    docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
+    ls -al
   variables:
     DOCKER_HOST: tcp://host:2375/
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
     GIT_STRATEGY: none
+  cache:
+    paths:
+      - /repo
