@@ -5,6 +5,9 @@ stages:
 node_testing:
   stage: test
   image: node:18
+  tags:
+    - dsa
+    - DIND
   script:
     - git config --global --add safe.directory /builds/infor-design/ids-legacy
     - npm ci
@@ -12,16 +15,13 @@ node_testing:
     #- npm run lint
     - echo "$GITHUB_CONTEXT"
     - echo "$JOB_CONTEXT"
-  tags:
-    - dsa
-    - DIND
 
 deploy_demo:
   stage: deploy
+  tags:
+    - dsa
+    - DIND
   script:
     - echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
     - docker buildx create --use
-  tags:
-    - dsa
-    - DIND
