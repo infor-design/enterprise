@@ -6,6 +6,9 @@ node_testing:
   stage: test
   image: sickcodes/docker-osx:latest
   script:
+    - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+    - apt-get install -y nodejs
+    - npm install -g npm@latest
     - npm ci
     - npm run build
     - npm run lint
@@ -15,3 +18,8 @@ node_testing:
   tags:
     - dsa
     - DIND
+
+deploy_demo:
+  stage: deploy
+  script:
+    - echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
