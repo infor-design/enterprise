@@ -33,12 +33,12 @@ install_packages:
       npm install
     fi
 
-    npm run build
-    npm run build:demoapp
+    #npm run build
+    #npm run build:demoapp
     ls -al
   artifacts:
     paths:
-      - repo
+      - repo/
 
 create_docker_file:
   stage: deploy
@@ -59,9 +59,9 @@ create_docker_file:
     GIT_STRATEGY: none
   cache:
     paths:
-      - repo
+      - repo/
 
-deploy_demo:
+build_image:
   stage: deploy
   needs:
     - create_docker_file
@@ -83,4 +83,21 @@ deploy_demo:
     GIT_STRATEGY: none
   cache:
     paths:
-      - repo
+      - repo/
+
+clone_deployments_repo:
+  stage: deploy
+  needs:
+    - build_image
+  image: ubuntu:latest
+  tags:
+    - dsa
+    - DIND
+  script: |
+    git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
+    ls -al
+  variables:
+    GIT_STRATEGY: none
+  cache:
+    paths:
+      - repo/
