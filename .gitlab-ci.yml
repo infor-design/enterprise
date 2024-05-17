@@ -22,6 +22,8 @@ install_packages:
     - DIND
   script: |
     /bin/bash scripts/deploy-environment/utils.sh install_packages
+    /bin/bash scripts/deploy-environment/utils.sh make_dockerfile
+    ls -al
 
 deploy_demo:
   stage: deploy
