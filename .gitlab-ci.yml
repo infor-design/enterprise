@@ -18,6 +18,14 @@ node_testing:
 
 deploy_demo:
   stage: deploy
+  image: docker:25
+  variables:
+    DOCKER_HOST: tcp://host:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - name: docker:25-dind
+      alias: host
   tags:
     - dsa
     - DIND
