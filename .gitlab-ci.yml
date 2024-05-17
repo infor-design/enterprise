@@ -38,7 +38,7 @@ install_packages:
     ls -al
   artifacts:
     paths:
-      - /repo
+      - repo
 
 create_docker_file:
   stage: deploy
@@ -59,7 +59,7 @@ create_docker_file:
     GIT_STRATEGY: none
   cache:
     paths:
-      - /repo
+      - repo
 
 deploy_demo:
   stage: deploy
@@ -83,4 +83,4 @@ deploy_demo:
     GIT_STRATEGY: none
   cache:
     paths:
-      - /repo
+      - repo
