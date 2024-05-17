@@ -13,7 +13,6 @@ node_testing:
     - npm ci
     - echo "$GITHUB_CONTEXT"
     - echo "$JOB_CONTEXT"
-
 install_packages:
   stage: deploy
   image: node:18
