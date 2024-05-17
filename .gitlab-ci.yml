@@ -11,8 +11,6 @@ node_testing:
   script:
     - git config --global --add safe.directory /builds/infor-design/ids-legacy
     - npm ci
-    #- npm run build
-    #- npm run lint
     - echo "$GITHUB_CONTEXT"
     - echo "$JOB_CONTEXT"
 
@@ -23,7 +21,7 @@ install_packages:
     - dsa
     - DIND
   script: |
-    ls -al /bin/
+    /bin/bash scripts/deploy-environment/utils.sh install_packages
 
 deploy_demo:
   stage: deploy
