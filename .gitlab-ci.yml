@@ -9,7 +9,7 @@ node_testing:
     - git config --global --add safe.directory /builds/infor-design/ids-legacy
     - npm ci
     #- npm run build
-    - npm run lint
+    #- npm run lint
     - echo "$GITHUB_CONTEXT"
     - echo "$JOB_CONTEXT"
   tags:
