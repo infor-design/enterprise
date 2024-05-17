@@ -20,3 +20,6 @@ deploy_demo:
   stage: deploy
   script:
     - echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
+  tags:
+    - dsa
+    - DIND
