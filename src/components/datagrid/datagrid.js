@@ -6524,7 +6524,9 @@ Datagrid.prototype = {
   */
   personalizeColumns() {
     const self = this;
-    const markup = '<div class="listview alternate-bg personalize-col" id="search-listview"><ul></ul></div>';
+    let markup = `<div class="listview-search alternate-bg"><label class="audible" for="gridfilter">Search</label><input class="searchfield" placeholder="${Locale.translate('SearchColumnName')}" name="searchfield" id="gridfilter"></div>`;
+    markup += '<div class="listview alternate-bg personalize-col" id="search-listview"><ul></ul></div>';
+
     let pSource = self.settings.columns;
     let pTemplate = `
     <ul class="arrange list" data-arrange-handle=".handle">
@@ -6577,7 +6579,7 @@ Datagrid.prototype = {
           pTemplate = `
             <ul class="arrange list" data-arrange-handle=".handle">
             {{#dataset}}
-              <li data-group-id="{{groupId}}" class="{{^hideable}}is-disabled{{/hideable}}">
+              <li data-group-id="{{groupId}}" {{^hideable}}class="is-disabled"{{/hideable}}>
                 <div class="switch field">
                   <span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
                   <input id="{{groupId}}-grp-switch" class="switch" type="checkbox" {{^hidden}}checked{{/hidden}} {{^hideable}}disabled{{/hideable}}/>
@@ -6600,154 +6602,177 @@ Datagrid.prototype = {
         }
 
         self.isColumnsChanged = false;
-        const listviewApi = modal.element.find('.listview').listview({
+
+        modal.element.find('.searchfield').searchfield({ clearable: true, tabbable: false });
+
+        const listviewSettings = {
           source: pSource,
           template: pTemplate,
-          selectOnFocus: false
-        }).data('listview');
+          searchable: true,
+          selectOnFocus: false,
+          listFilterSettings: {
+            filterMode: 'contains',
+            searchableTextCallback: item => item.name || item.id,
+          }
+        };
 
-        if (self.settings.columnReorder) {
-          const arrangeApi = listviewApi.element.find('ul').arrange({
-            handle: '.icon-handle.child',
-            isVisualItems: true
-          }).data('arrange');
-
-          arrangeApi.element
-            .on('arrangeupdate', (event, status) => {
-              const chk = status.start.find('input.switch');
-              const indexFrom = this.columnIdxById(chk.attr('data-column-id'));
-              let next = status.start.next();
-              let indexTo;
-
-              if (next.length === 0) {
-                next = status.start.prev();
-
-                if (self.settings.columnGroups) {
-                  status.start.attr('data-group-id', next.attr('data-group-id'));
-                  if (!next.hasClass('child')) {
-                    next = next.prev();
-                  }
-                }
-
-                const nextChk = next.find('input.switch');
-                indexTo = this.columnIdxById(nextChk.attr('data-column-id'));
-              } else {
-                if (self.settings.columnGroups) {
-                  if (next.hasClass('child')) {
-                    status.start.attr('data-group-id', next.attr('data-group-id'));
-                  } else {
-                    status.start.attr('data-group-id', status.start.prev().attr('data-group-id'));
-                    next = next.next();
-                  }
-                }
-
-                const nextChk = next.find('input.switch');
-                indexTo = this.columnIdxById(nextChk.attr('data-column-id'));
-
-                if (indexFrom < indexTo) {
-                  indexTo--;
-                }
-              }
-
-              self.updateGroupHeadersAfterColumnReorder(indexFrom, indexTo);
-              self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
-              self.updateColumns(self.settings.columns);
-
-              /**
-                * Fires after a column is moved to target.
-                * @event columnreorder
-                * @memberof Datagrid
-                * @property {object} event The jquery event object
-                * @property {number} indexTo The ending column index
-                * @property {number} indexFrom The starting column index
-                */
-              self.element.trigger('columnreorder', [{
-                indexFrom,
-                indexTo,
-                columns: self.settings.columns,
-              }]);
-            });
+        if (self.settings.columnGroups) {
+          listviewSettings.hasChildren = true;
+          listviewSettings.children = 'columns';
         }
 
-        listviewApi.element.find('.switch span.label-text, .switch input').on('click', (ev) => {
-          const li = $(ev.target).parent().parent();
-          const chk = li.find('input.switch');
-          const id = chk.attr('data-column-id');
-          const isChecked = chk.prop('checked');
+        const listviewApi = modal.element.find('.listview').listview(listviewSettings).data('listview');
 
-          li.removeClass('is-selected hide-selected-color');
+        const handleListEvents = () => {
+          listviewApi.element.find('.switch span.label-text, .switch input').on('click', (ev) => {
+            const li = $(ev.target).parent().parent();
+            const chk = li.find('input.switch');
+            const id = chk.attr('data-column-id');
+            const isChecked = chk.prop('checked');
 
-          if (chk.is(':disabled')) {
-            return;
-          }
+            li.removeClass('is-selected hide-selected-color');
 
-          self.isColumnsChanged = true;
+            if (chk.is(':disabled')) {
+              return;
+            }
 
-          if (self.settings.columnGroups) {
-            if (li.hasClass('child')) {
-              const groupId = li.attr('data-group-id');
-              const groupLi = li.siblings(`:not(.child)[data-group-id="${groupId}"]`);
-              let colsFalse = 0;
+            self.isColumnsChanged = true;
 
-              if (!isChecked) {
-                self.showColumn(id);
-                chk.prop('checked', true);
+            if (self.settings.columnGroups) {
+              if (li.hasClass('child')) {
+                const groupId = li.attr('data-group-id');
+                const groupLi = li.siblings(`:not(.child)[data-group-id="${groupId}"]`);
+                let colsFalse = 0;
+
+                if (!isChecked) {
+                  self.showColumn(id);
+                  chk.prop('checked', true);
+                } else {
+                  self.hideColumn(id);
+                  chk.prop('checked', false);
+                  colsFalse++;
+                }
+
+                colsFalse += li.siblings(`.child[data-group-id="${groupId}"]`).find('.switch input:not(:checked)').length;
+                if (colsFalse > 0) {
+                  $(groupLi).find('input.switch').prop('checked', false);
+                } else {
+                  $(groupLi).find('input.switch').prop('checked', true);
+                }
               } else {
-                self.hideColumn(id);
-                chk.prop('checked', false);
-                colsFalse++;
-              }
+                const groupId = li.attr('data-group-id');
+                const cols = li.siblings(`.child[data-group-id="${groupId}"]`);
+                const toggle = (col, changeValue) => {
+                  const colChk = col.find('input.switch');
+                  const colId = colChk.attr('data-column-id');
 
-              colsFalse += li.siblings(`.child[data-group-id="${groupId}"]`).find('.switch input:not(:checked)').length;
-              if (colsFalse > 0) {
-                $(groupLi).find('input.switch').prop('checked', false);
-              } else {
-                $(groupLi).find('input.switch').prop('checked', true);
-              }
-            } else {
-              const groupId = li.attr('data-group-id');
-              const cols = li.siblings(`.child[data-group-id="${groupId}"]`);
-              const toggle = (col, changeValue) => {
-                const colChk = col.find('input.switch');
-                const colId = colChk.attr('data-column-id');
+                  if (!colChk.is(':disabled')) {
+                    const colChkChecked = colChk.prop('checked');
 
-                if (!colChk.is(':disabled')) {
-                  const colChkChecked = colChk.prop('checked');
-
-                  if (colChkChecked !== changeValue) {
-                    if (changeValue) {
-                      self.showColumn(colId);
-                    } else {
-                      self.hideColumn(colId);
+                    if (colChkChecked !== changeValue) {
+                      if (changeValue) {
+                        self.showColumn(colId);
+                      } else {
+                        self.hideColumn(colId);
+                      }
+                      colChk.prop('checked', changeValue);
                     }
-                    colChk.prop('checked', changeValue);
+                  }
+                };
+
+                if (!isChecked) {
+                  cols.each((i, ce) => {
+                    toggle($(ce), true);
+                  });
+                  chk.prop('checked', true);
+                } else {
+                  cols.each((i, ce) => {
+                    toggle($(ce), false);
+                  });
+                  chk.prop('checked', false);
+                }
+              }
+            } else if (!isChecked) {
+              self.showColumn(id);
+              chk.prop('checked', true);
+            } else {
+              self.hideColumn(id);
+              chk.prop('checked', false);
+            }
+
+            if (self.settings.groupable) {
+              self.rerender();
+            }
+          });
+
+          if (self.settings.columnReorder) {
+            const arrangeApi = listviewApi.element.find('ul').arrange({
+              handle: '.icon-handle.child',
+              isVisualItems: true
+            }).data('arrange');
+
+            arrangeApi.element
+              .on('arrangeupdate', (event, status) => {
+                const chk = status.start.find('input.switch');
+                const indexFrom = this.columnIdxById(chk.attr('data-column-id'));
+                let next = status.start.next();
+                let indexTo;
+
+                if (next.length === 0) {
+                  next = status.start.prev();
+
+                  if (self.settings.columnGroups) {
+                    status.start.attr('data-group-id', next.attr('data-group-id'));
+                    if (!next.hasClass('child')) {
+                      next = next.prev();
+                    }
+                  }
+
+                  const nextChk = next.find('input.switch');
+                  indexTo = this.columnIdxById(nextChk.attr('data-column-id'));
+                } else {
+                  if (self.settings.columnGroups) {
+                    if (next.hasClass('child')) {
+                      status.start.attr('data-group-id', next.attr('data-group-id'));
+                    } else {
+                      status.start.attr('data-group-id', status.start.prev().attr('data-group-id'));
+                      next = next.next();
+                    }
+                  }
+
+                  const nextChk = next.find('input.switch');
+                  indexTo = this.columnIdxById(nextChk.attr('data-column-id'));
+
+                  if (indexFrom < indexTo) {
+                    indexTo--;
                   }
                 }
-              };
 
-              if (!isChecked) {
-                cols.each((i, ce) => {
-                  toggle($(ce), true);
-                });
-                chk.prop('checked', true);
-              } else {
-                cols.each((i, ce) => {
-                  toggle($(ce), false);
-                });
-                chk.prop('checked', false);
-              }
-            }
-          } else if (!isChecked) {
-            self.showColumn(id);
-            chk.prop('checked', true);
-          } else {
-            self.hideColumn(id);
-            chk.prop('checked', false);
-          }
+                self.updateGroupHeadersAfterColumnReorder(indexFrom, indexTo);
+                self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
+                self.updateColumns(self.settings.columns);
 
-          if (self.settings.groupable) {
-            self.rerender();
+                /**
+                  * Fires after a column is moved to target.
+                  * @event columnreorder
+                  * @memberof Datagrid
+                  * @property {object} event The jquery event object
+                  * @property {number} indexTo The ending column index
+                  * @property {number} indexFrom The starting column index
+                  */
+                self.element.trigger('columnreorder', [{
+                  indexFrom,
+                  indexTo,
+                  columns: self.settings.columns,
+                }]);
+              });
           }
+        };
+
+        handleListEvents();
+
+        listviewApi.element.on('rendered', () => {
+          handleListEvents();
         });
 
         modal.element.on('close.datagrid', () => {
