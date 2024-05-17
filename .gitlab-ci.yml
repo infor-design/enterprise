@@ -36,11 +36,11 @@ install_packages:
     #npm run build
     #npm run build:demoapp
 
-    cp -r /builds/infor-design/ids-legacy /builds/infor-design/cache
-    ls -al /builds/infor-design/cache
+    cp -r . cache/
+    ls -al cache/
   artifacts:
     paths:
-      - /builds/infor-design/cache
+      - cache/
 
 create_docker_file:
   stage: deploy
@@ -61,7 +61,7 @@ create_docker_file:
     GIT_STRATEGY: none
   cache:
     paths:
-      - /builds/infor-design/cache
+      - cache/
 
 build_image:
   stage: deploy
@@ -85,7 +85,7 @@ build_image:
     GIT_STRATEGY: none
   cache:
     paths:
-      - /builds/infor-design/cache
+      - cache/
 
 clone_deployments_repo:
   stage: deploy
@@ -104,4 +104,4 @@ clone_deployments_repo:
     GIT_STRATEGY: none
   cache:
     paths:
-      - /builds/infor-design/cache
+      - cache/
