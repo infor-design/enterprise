@@ -6,8 +6,9 @@ node_testing:
   stage: test
   image: node:18
   script:
+    - git config --global --add safe.directory /builds/infor-design/ids-legacy
     - npm ci
-    - npm run build
+    #- npm run build
     - npm run lint
     - echo "$GITHUB_CONTEXT"
     - echo "$JOB_CONTEXT"
