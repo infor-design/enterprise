@@ -21,6 +21,8 @@ install_packages:
     - dsa
     - DIND
   script: |
+    git config --global --add safe.directory /builds/infor-design/ids-legacy
+
     DEMO_PACKAGE_JSON_FILE=./app/package.json
 
     if test -f "$DEMO_PACKAGE_JSON_FILE"; then
