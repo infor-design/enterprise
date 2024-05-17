@@ -33,6 +33,10 @@ install_packages:
       npm install
     fi
 
+    cat src/components/emptymessage/theme-classic-svg-empty.html
+
+    ls -al
+
     #npm run build
     #npm run build:demoapp
   artifacts:
