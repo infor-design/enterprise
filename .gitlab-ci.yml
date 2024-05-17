@@ -51,16 +51,14 @@ create_docker_file:
     echo "ADD ./dist /www/data/artifacts" >> Dockerfile
     echo "ADD ./docs /www/data/docs" >> Dockerfile
     echo "RUN chown -R www-data.www-data /www/data" >> Dockerfile
+  variables:
+    GIT_STRATEGY: none
 
 deploy_demo:
   stage: deploy
   needs:
     - create_docker_file
   image: docker:25
-  variables:
-    DOCKER_HOST: tcp://host:2375/
-    DOCKER_DRIVER: overlay2
-    DOCKER_TLS_CERTDIR: ""
   services:
     - name: docker:25-dind
       alias: host
@@ -71,3 +69,8 @@ deploy_demo:
     - ls -al
     - echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
+  variables:
+    DOCKER_HOST: tcp://host:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+    GIT_STRATEGY: none
