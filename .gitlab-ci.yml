@@ -13,6 +13,7 @@ node_testing:
     - npm ci
     - echo "$GITHUB_CONTEXT"
     - echo "$JOB_CONTEXT"
+
 install_packages:
   stage: deploy
   image: node:18
@@ -20,8 +21,18 @@ install_packages:
     - dsa
     - DIND
   script: |
-    /bin/bash scripts/deploy-environment/utils.sh install_packages
-    /bin/bash scripts/deploy-environment/utils.sh make_dockerfile
+    DEMO_PACKAGE_JSON_FILE=./app/package.json
+
+    if test -f "$DEMO_PACKAGE_JSON_FILE"; then
+      cp -fr $DEMO_PACKAGE_JSON_FILE ./package.json && rm -fr ./package-lock.json
+      npm install
+      git checkout package.json package-lock.json
+    else
+      npm install
+    fi
+
+    npm run build
+    npm run build:demoapp
     ls -al
 
 deploy_demo:
