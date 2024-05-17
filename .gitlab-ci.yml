@@ -20,6 +20,8 @@ deploy_demo:
   stage: deploy
   script:
     - echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
+    - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
+    - docker buildx create --use
   tags:
     - dsa
     - DIND
