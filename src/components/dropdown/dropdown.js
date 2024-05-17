@@ -279,7 +279,7 @@ Dropdown.prototype = {
       this.pseudoElem[0].setAttribute('class', pseudoClassString);
     }
 
-    if (!this.isWrapped) {
+    if (!this.isWrapped && !Locale.isRTL()) {
       this.pseudoElem.append($('<span></span>'));
     }
     const toExclude = ['data-validate'];

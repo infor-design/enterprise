@@ -174,3 +174,25 @@
     }
   }
 }
+
+html[dir='rtl'] {
+  .field.fieldfilter-wrapper div.dropdown-wrapper {
+    &:hover + input {
+      border-left-color: $input-border-color;
+    }
+
+    &:focus-within + input {
+      border-left-color: $input-border-color;
+    }
+
+    .dropdown:not(.dropdown-md) {
+      &:hover {
+        border: 1px solid $trigger-hover-color;
+      }
+
+      &:focus {
+        border: 1px solid $input-color-focus-border;
+      }
+    }
+  }
+}
