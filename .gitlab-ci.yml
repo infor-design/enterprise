@@ -25,6 +25,8 @@ install_packages:
 
 deploy_demo:
   stage: deploy
+  needs:
+    - install_packages
   image: docker:25
   variables:
     DOCKER_HOST: tcp://host:2375/
