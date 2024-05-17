@@ -33,29 +33,27 @@ install_packages:
       npm install
     fi
 
-    cat src/components/emptymessage/theme-classic-svg-empty.html
-
     ls -al
 
     #npm run build
     #npm run build:demoapp
-  artifacts:
-    paths:
-      - src/components/emptymessage/theme-classic-svg-empty.html
-      - src/components/emptymessage/theme-new-svg-empty.html
-      - src/components/icons/theme-classic-svg.html
-      - src/components/icons/theme-new-default-svg.html
-      - src/components/icons/theme-new-old-svg.html
-      - src/components/theme/theme-classic-colors.json
-      - src/components/theme/theme-classic-contrast-colors.json
-      - src/components/theme/theme-classic-dark-colors.json
-      - src/components/theme/theme-new-colors.json
-      - src/components/theme/theme-new-contrast-colors.json
-      - src/components/theme/theme-new-dark-colors.json
-      - node_modules/
-      - app/dist/
-      - dist/
-      - temp/
+  #artifacts:
+  #  paths:
+  #    - src/components/emptymessage/theme-classic-svg-empty.html
+  #    - src/components/emptymessage/theme-new-svg-empty.html
+  #    - src/components/icons/theme-classic-svg.html
+  #    - src/components/icons/theme-new-default-svg.html
+  #    - src/components/icons/theme-new-old-svg.html
+  #    - src/components/theme/theme-classic-colors.json
+  #    - src/components/theme/theme-classic-contrast-colors.json
+  #    - src/components/theme/theme-classic-dark-colors.json
+  #    - src/components/theme/theme-new-colors.json
+  #    - src/components/theme/theme-new-contrast-colors.json
+  #    - src/components/theme/theme-new-dark-colors.json
+  #    - node_modules/
+  #    - app/dist/
+  #    - dist/
+  #    - temp/
 
 
 create_docker_file:
@@ -75,26 +73,27 @@ create_docker_file:
     ls -al
   variables:
     GIT_STRATEGY: fetch
-  artifacts:
-    paths: 
-      - Dockerfile
-  cache:
-    paths:
-      - src/components/emptymessage/theme-classic-svg-empty.html
-      - src/components/emptymessage/theme-new-svg-empty.html
-      - src/components/icons/theme-classic-svg.html
-      - src/components/icons/theme-new-default-svg.html
-      - src/components/icons/theme-new-old-svg.html
-      - src/components/theme/theme-classic-colors.json
-      - src/components/theme/theme-classic-contrast-colors.json
-      - src/components/theme/theme-classic-dark-colors.json
-      - src/components/theme/theme-new-colors.json
-      - src/components/theme/theme-new-contrast-colors.json
-      - src/components/theme/theme-new-dark-colors.json
-      - node_modules/
-      - app/dist/
-      - dist/
-      - temp/
+    GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp/"
+  #artifacts:
+  #  paths: 
+  #    - Dockerfile
+  #cache:
+  #  paths:
+  #    - src/components/emptymessage/theme-classic-svg-empty.html
+  #    - src/components/emptymessage/theme-new-svg-empty.html
+  #    - src/components/icons/theme-classic-svg.html
+  #    - src/components/icons/theme-new-default-svg.html
+  #    - src/components/icons/theme-new-old-svg.html
+  #    - src/components/theme/theme-classic-colors.json
+  #    - src/components/theme/theme-classic-contrast-colors.json
+  #    - src/components/theme/theme-classic-dark-colors.json
+  #    - src/components/theme/theme-new-colors.json
+  #    - src/components/theme/theme-new-contrast-colors.json
+  #    - src/components/theme/theme-new-dark-colors.json
+  #    - node_modules/
+  #    - app/dist/
+  #    - dist/
+  #    - temp/
 
 build_image:
   stage: deploy
@@ -116,24 +115,25 @@ build_image:
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
     GIT_STRATEGY: fetch
-  cache:
-    paths:
-      - Dockerfile
-      - src/components/emptymessage/theme-classic-svg-empty.html
-      - src/components/emptymessage/theme-new-svg-empty.html
-      - src/components/icons/theme-classic-svg.html
-      - src/components/icons/theme-new-default-svg.html
-      - src/components/icons/theme-new-old-svg.html
-      - src/components/theme/theme-classic-colors.json
-      - src/components/theme/theme-classic-contrast-colors.json
-      - src/components/theme/theme-classic-dark-colors.json
-      - src/components/theme/theme-new-colors.json
-      - src/components/theme/theme-new-contrast-colors.json
-      - src/components/theme/theme-new-dark-colors.json
-      - node_modules/
-      - app/dist/
-      - dist/
-      - temp/
+    GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp --exclude=Dockerfile"
+  #cache:
+  #  paths:
+  #    - Dockerfile
+  #    - src/components/emptymessage/theme-classic-svg-empty.html
+  #    - src/components/emptymessage/theme-new-svg-empty.html
+  #    - src/components/icons/theme-classic-svg.html
+  #    - src/components/icons/theme-new-default-svg.html
+  #    - src/components/icons/theme-new-old-svg.html
+  #    - src/components/theme/theme-classic-colors.json
+  #    - src/components/theme/theme-classic-contrast-colors.json
+  #    - src/components/theme/theme-classic-dark-colors.json
+  #    - src/components/theme/theme-new-colors.json
+  #    - src/components/theme/theme-new-contrast-colors.json
+  #    - src/components/theme/theme-new-dark-colors.json
+  #    - node_modules/
+  #    - app/dist/
+  #    - dist/
+  #    - temp/
 
 clone_deployments_repo:
   stage: deploy
@@ -149,7 +149,7 @@ clone_deployments_repo:
     git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
     ls -al
   variables:
-    GIT_STRATEGY: fetch
+    GIT_STRATEGY: none
   cache:
     paths:
       - /builds/infor-design/cache
