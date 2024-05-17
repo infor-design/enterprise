@@ -13,6 +13,8 @@ node_testing:
     - npm ci
     - echo "$GITHUB_CONTEXT"
     - echo "$JOB_CONTEXT"
+  variables:
+    GIT_STRATEGY: clone
 
 install_packages:
   stage: deploy
@@ -36,6 +38,8 @@ install_packages:
     npm run build
     npm run build:demoapp
     ls -al
+  variables:
+    GIT_STRATEGY: clone
 
 create_docker_file:
   stage: deploy
@@ -51,8 +55,9 @@ create_docker_file:
     echo "ADD ./dist /www/data/artifacts" >> Dockerfile
     echo "ADD ./docs /www/data/docs" >> Dockerfile
     echo "RUN chown -R www-data.www-data /www/data" >> Dockerfile
+    ls -al
   variables:
-    GIT_STRATEGY: none
+    GIT_STRATEGY: fetch
 
 deploy_demo:
   stage: deploy
@@ -66,11 +71,11 @@ deploy_demo:
     - dsa
     - DIND
   script:
-    - ls -al
     - echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
+    - ls -al
   variables:
     DOCKER_HOST: tcp://host:2375/
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
-    GIT_STRATEGY: none
+    GIT_STRATEGY: fetch
