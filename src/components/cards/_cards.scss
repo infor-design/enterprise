@@ -813,7 +813,7 @@ html[dir='rtl'] {
     }
 
     .searchfield-wrapper.has-close-icon-button.has-text .btn-icon.close {
-      right: 330px;
+      right: calc(100% - 28px) !important;
       top: 7px;
     }
 
