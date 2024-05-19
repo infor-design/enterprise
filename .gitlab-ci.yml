@@ -88,6 +88,7 @@ clone_deployments_repo:
     - dsa
     - DIND
   before_script:
+    - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY_DEPLOYMENTS" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
