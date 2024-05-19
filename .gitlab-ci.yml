@@ -84,7 +84,7 @@ build_push_image:
 
 deploy:
   stage: deploy
-  image: ubuntu:latest
+  image: python:3.12
   tags:
     - dsa
     - DIND
