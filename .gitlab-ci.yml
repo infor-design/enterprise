@@ -131,4 +131,5 @@ deploy:
       echo "there are changes"
         git add *
         git commit -am "$CHANGES"
+        git push origin main
     fi
