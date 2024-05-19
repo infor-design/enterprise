@@ -99,6 +99,8 @@ deploy:
     git config --global --add safe.directory /builds/infor-design/ids-legacy
     git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
 
+    python -m pip install -r scripts/deploy-environment/requirements.txt
+
     CHANGES=$(git status --porcelain)
     IMAGE_VERSION=enterprise-$(echo ${CI_COMMIT_REF_NAME})
     SERVICE_NAME=${IMAGE_VERSION//./}
