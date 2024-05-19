@@ -93,6 +93,8 @@ deploy:
     - echo "$SSH_PRIVATE_KEY_DEPLOYMENTS" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - git config --global user.email "$GITLAB_USER_EMAIL"
+    - git config --global user.name "$GITLAB_USER_NAME"
   script: |
     #apt-get update
     #apt-get install -y git
