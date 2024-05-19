@@ -94,8 +94,9 @@ deploy:
     - chmod 600 ~/.ssh/id_rsa
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script: |
-    apt-get update
-    apt-get install -y git
+    #apt-get update
+    #apt-get install -y git
+    git config --global --add safe.directory /builds/infor-design/ids-legacy
     git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
 
     CHANGES=$(git status --porcelain)
