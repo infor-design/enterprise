@@ -97,15 +97,14 @@ deploy:
     apt-get update
     apt-get install -y git
     git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
-    cd deployments
+    cd deployments/enterprise
 
-    IMAGE_VERSION=$(echo ${CI_COMMIT_REF_NAME})
+    IMAGE_VERSION=enterprise-$(echo ${CI_COMMIT_REF_NAME})
     SERVICE_NAME=${IMAGE_VERSION//./}
     SERVICE_NAME=$(echo "$SERVICE_NAME" | tr '[:punct:]' '-' | tr '[:upper:]' '[:lower:]')
 
-    echo $IMAGE_VERSION
-    echo $SERVICE_NAME
-
+    echo "Removing ${SERVICE_NAME}..."
+    rm -rf $SERVICE_NAME 2>/dev/null
     ls -al
   variables:
     GIT_STRATEGY: none
