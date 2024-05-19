@@ -1,6 +1,6 @@
 stages:
-  - clone
   - test
+  - build
   - deploy
 
 node_testing:
@@ -9,6 +9,8 @@ node_testing:
   tags:
     - dsa
     - DIND
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
     - git config --global --add safe.directory /builds/infor-design/ids-legacy
     - npm ci
@@ -16,7 +18,7 @@ node_testing:
     - echo "$JOB_CONTEXT"
 
 install_packages:
-  stage: deploy
+  stage: build
   image: node:18
   tags:
     - dsa
@@ -39,9 +41,8 @@ install_packages:
     npm run build
     npm run build:demoapp
 
-
 create_docker_file:
-  stage: deploy
+  stage: build
   needs:
     - install_packages
   image: ubuntu:latest
@@ -59,8 +60,8 @@ create_docker_file:
     GIT_STRATEGY: fetch
     GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp/"
 
-build_image:
-  stage: deploy
+build_push_image:
+  stage: build
   needs:
     - create_docker_file
   image: docker:25
@@ -81,8 +82,8 @@ build_image:
     GIT_STRATEGY: fetch
     GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp --exclude=Dockerfile"
 
-clone_deployments_repo:
-  stage: clone
+deploy:
+  stage: deploy
   image: ubuntu:latest
   tags:
     - dsa
@@ -96,6 +97,15 @@ clone_deployments_repo:
     apt-get update
     apt-get install -y git
     git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
+    cd deployments
+
+    IMAGE_VERSION=$(echo ${CI_COMMIT_REF_NAME})
+    SERVICE_NAME=${IMAGE_VERSION//./}
+    SERVICE_NAME=$(echo "$SERVICE_NAME" | tr '[:punct:]' '-' | tr '[:upper:]' '[:lower:]')
+
+    echo $IMAGE_VERSION
+    echo $SERVICE_NAME
+
     ls -al
   variables:
     GIT_STRATEGY: none
