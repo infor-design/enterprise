@@ -117,5 +117,3 @@ deploy:
     ls -al $SERVICE_NAME
 
     python -V
-  variables:
-    GIT_STRATEGY: none
