@@ -1,6 +1,6 @@
 stages:
-  #- test
-  #- deploy
+  - test
+  - deploy
   - clone
 
 node_testing:
