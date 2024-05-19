@@ -104,7 +104,7 @@ deploy:
     python -m pip install pyyaml pytz
 
     CHANGES=$(git status --porcelain)
-    IMAGE_VERSION=enterprise-$(echo ${CI_COMMIT_REF_NAME})
+    IMAGE_VERSION=$(echo ${CI_COMMIT_REF_NAME})
     SERVICE_NAME=${IMAGE_VERSION//./}
     SERVICE_NAME=$(echo "$SERVICE_NAME" | tr '[:punct:]' '-' | tr '[:upper:]' '[:lower:]')
 
