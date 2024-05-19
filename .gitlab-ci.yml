@@ -1,6 +1,7 @@
 stages:
-  - test
-  - deploy
+  #- test
+  #- deploy
+  - clone
 
 node_testing:
   stage: test
@@ -81,13 +82,17 @@ build_image:
     GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp --exclude=Dockerfile"
 
 clone_deployments_repo:
-  stage: deploy
+  stage: clone
   needs:
     - build_image
   image: ubuntu:latest
   tags:
     - dsa
     - DIND
+  before_script:
+    - echo "$SSH_PRIVATE_KEY_DEPLOYMENTS" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script: |
     apt-get update
     apt-get install -y git
@@ -95,6 +100,3 @@ clone_deployments_repo:
     ls -al
   variables:
     GIT_STRATEGY: none
-  cache:
-    paths:
-      - /builds/infor-design/cache
