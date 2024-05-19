@@ -1,7 +1,7 @@
 stages:
+  - clone
   - test
   - deploy
-  - clone
 
 node_testing:
   stage: test
