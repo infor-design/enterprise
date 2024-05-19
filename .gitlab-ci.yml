@@ -1,7 +1,7 @@
 stages:
   - test
-  - deploy
   - build
+  - deploy
 
 node_testing:
   stage: test
@@ -75,6 +75,9 @@ build_push_image:
     echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
     docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
     ls -al
+
+    docker build -t hookandloop/enterprise:test .
+    docker push hookandloop/enterprise:test
   variables:
     DOCKER_HOST: tcp://host:2375/
     DOCKER_DRIVER: overlay2
