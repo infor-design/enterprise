@@ -83,8 +83,6 @@ build_image:
 
 clone_deployments_repo:
   stage: clone
-  needs:
-    - build_image
   image: ubuntu:latest
   tags:
     - dsa
