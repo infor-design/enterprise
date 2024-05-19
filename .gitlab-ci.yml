@@ -103,8 +103,19 @@ deploy:
     SERVICE_NAME=${IMAGE_VERSION//./}
     SERVICE_NAME=$(echo "$SERVICE_NAME" | tr '[:punct:]' '-' | tr '[:upper:]' '[:lower:]')
 
-    echo "Removing ${SERVICE_NAME}..."
+    echo "Removing $CI_PROJECT_DIR/enterprise/${SERVICE_NAME}..."
     rm -rf $SERVICE_NAME 2>/dev/null
+
+    mkdir -p $SERVICE_NAME && cp -R $CI_PROJECT_DIR/scripts/deploy-environment/manifests/* $SERVICE_NAME/
+    sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $SERVICE_NAME/ingress.yaml
+    sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $SERVICE_NAME/service.yaml
+    sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $SERVICE_NAME/deployment.yaml
+    sed -i -e "s/%IMAGE_VERSION%/$IMAGE_VERSION/g" $SERVICE_NAME/deployment.yaml
+
     ls -al
+
+    ls -al $SERVICE_NAME
+
+    python -V
   variables:
     GIT_STRATEGY: none
