@@ -383,7 +383,8 @@ ListView.prototype = {
 
     // When DOM items are not rendered with "mustache" template, filtered items
     // have to be hidden specifically.
-    const hideFlag = items.length > displayedDataset.length;
+    const hideFlag = items.length > displayedDataset.length || self.settings.hasChildren;
+    let groupIndex = 0;
 
     items.each(function (i) {
       const item = $(this);
@@ -428,10 +429,16 @@ ListView.prototype = {
       }
 
       // Hide filtered items
-      if (hideFlag && !self.settings.hasChildren) {
+      if (hideFlag) {
         const n = firstRecordIdx + i;
 
-        if (n < self.settings.dataset.length) {
+        if (self.settings.hasChildren) {
+          const data = dataset[groupIndex];
+          if (!item.hasClass('child')) {
+            item.css('display', data[self.settings.children].length > 0 ? '' : 'none');
+            groupIndex++;
+          }
+        } else if (n < self.settings.dataset.length) {
           const data = self.settings.dataset[n];
           item.css('display', (data._isFilteredOut === undefined || data._isFilteredOut) ? '' : 'none');
         }
@@ -773,6 +780,7 @@ ListView.prototype = {
         item[this.settings.children] = childResults;
         item._isFilteredOut = childResults.length > 0;
       });
+      console.log(results)
       pagingInfo.searchActivePage = 1;
     } else {
       results = this.listfilter.filter(this.settings.dataset, this.searchTerm, true);
