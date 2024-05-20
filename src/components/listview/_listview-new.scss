@@ -9,7 +9,15 @@
   top: -2px;
 
   &::before {
-    margin-top: 8px;
+    margin-top: 9px;
+  }
+}
+
+.is-firefox {
+  .listview .alert-text {
+    &::before {
+      margin-top: 7px;
+    }
   }
 }
 
@@ -143,7 +151,7 @@ html[dir='rtl'] {
   &:not(.is-firefox) {
     .listview ul li {
       .alert-text::before {
-        margin-right: 28px;
+        margin-right: -14px;
       }
     }
   }
