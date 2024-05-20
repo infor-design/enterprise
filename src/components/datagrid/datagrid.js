@@ -6736,7 +6736,9 @@ Datagrid.prototype = {
                       status.start.attr('data-group-id', next.attr('data-group-id'));
                     } else {
                       status.start.attr('data-group-id', status.start.prev().attr('data-group-id'));
-                      next = next.next();
+                      while (!next.hasClass('child')) {
+                        next = next.next();
+                      }
                     }
                   }
 
