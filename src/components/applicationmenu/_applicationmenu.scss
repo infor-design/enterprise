@@ -746,3 +746,24 @@ html[dir='rtl'] .application-menu .hyperlink {
 .application-menu .btn-icon:hover:not([disabled]) {
   background-color: rgba(255, 255, 255, .1) !important;
 }
+
+.application-menu .btn-menu {
+  span {
+    position: relative;
+    top: 1px;
+  }
+
+  .icon-dropdown {
+    position: relative;
+    top: 1px;
+  }
+}
+
+.application-menu  .btn-menu:hover:not([disabled]) {
+  background-color: rgba(255, 255, 255, .1) !important;
+  color: #fff !important;
+
+  .icon-dropdown {
+    color: #fff !important;
+  }
+}
