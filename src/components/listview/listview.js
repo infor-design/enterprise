@@ -780,7 +780,7 @@ ListView.prototype = {
         item[this.settings.children] = childResults;
         item._isFilteredOut = childResults.length > 0;
       });
-      console.log(results)
+
       pagingInfo.searchActivePage = 1;
     } else {
       results = this.listfilter.filter(this.settings.dataset, this.searchTerm, true);
