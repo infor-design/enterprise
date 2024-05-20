@@ -10714,7 +10714,8 @@ Datagrid.prototype = {
 
     let oldValue = this.fieldValue(rowData, col.field);
 
-    if (typeof(oldValue) === "number" && typeof(newValue) === "string") {
+    if (typeof (oldValue) === 'number' && typeof (newValue) === 'string') {
+      // eslint-disable-next-line eqeqeq
       newValue = oldValue == newValue ? oldValue : newValue;
     }
 
