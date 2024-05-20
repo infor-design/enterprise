@@ -6717,13 +6717,17 @@ Datagrid.prototype = {
                 const indexFrom = this.columnIdxById(chk.attr('data-column-id'));
                 let next = status.start.next();
                 let indexTo;
+                let groupTo;
+                let groupFrom;
 
                 if (next.length === 0) {
                   next = status.start.prev();
 
                   if (self.settings.columnGroups) {
-                    status.start.attr('data-group-id', next.attr('data-group-id'));
-                    if (!next.hasClass('child')) {
+                    groupFrom = status.start.attr('data-group-id');
+                    groupTo = next.attr('data-group-id');
+                    status.start.attr('data-group-id', groupTo);
+                    while (!next.hasClass('child')) {
                       next = next.prev();
                     }
                   }
@@ -6732,10 +6736,13 @@ Datagrid.prototype = {
                   indexTo = this.columnIdxById(nextChk.attr('data-column-id'));
                 } else {
                   if (self.settings.columnGroups) {
+                    groupFrom = status.start.attr('data-group-id');
                     if (next.hasClass('child')) {
-                      status.start.attr('data-group-id', next.attr('data-group-id'));
+                      groupTo = next.attr('data-group-id');
+                      status.start.attr('data-group-id', groupTo);
                     } else {
-                      status.start.attr('data-group-id', status.start.prev().attr('data-group-id'));
+                      groupTo = status.start.prev().attr('data-group-id');
+                      status.start.attr('data-group-id', groupTo);
                       while (!next.hasClass('child')) {
                         next = next.next();
                       }
@@ -6748,6 +6755,13 @@ Datagrid.prototype = {
                   if (indexFrom < indexTo) {
                     indexTo--;
                   }
+                }
+
+                if (self.settings.columnGroups) {
+                  const grpIndexFrom = self.settings.columnGroups.findIndex(g => g.id === groupFrom);
+                  const grpIndexTo = self.settings.columnGroups.findIndex(g => g.id === groupTo);
+                  self.settings.columnGroups[grpIndexFrom].colspan--;
+                  self.settings.columnGroups[grpIndexTo].colspan++;
                 }
 
                 self.updateGroupHeadersAfterColumnReorder(indexFrom, indexTo);
