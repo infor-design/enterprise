@@ -12,6 +12,7 @@
 - `[Autocomplete]` Fixed autocomplete not properly highlighted on key down. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
 - `[AppMenu]` Fixed hover state on menu button in app menu. ([#8723](https://github.com/infor-design/enterprise/issues/8723))
 - `[Bar-Stacked/Column-Stacked]` Fixed an error encountered when having many records inside the graph. ([NG#1675](https://github.com/infor-design/enterprise-ng/issues/1675))
+- `[Datagrid]` Fixed cell changed trigger event on number and string comparison. ([#8719](https://github.com/infor-design/enterprise/issues/8719))
 - `[Datagrid]` Fixed styling issue with one cell and frozen columns. ([#8728](https://github.com/infor-design/enterprise/issues/8728))
 - `[Datagrid]` Fixed add row not triggering after cell commit. ([#8624](https://github.com/infor-design/enterprise/issues/8624))
 - `[Datagrid]` Fixed an error that occurred in some situations. ([#8709](https://github.com/infor-design/enterprise/issues/8709))
