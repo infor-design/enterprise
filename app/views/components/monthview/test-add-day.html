@@ -42,6 +42,7 @@
     $('#selected-date').text(selectedDate);
 
     $('#btn-add').on('click', () => {
+      selectedDate = monthViewApi.currentDate;
       selectedDate.setDate(selectedDate.getDate() + 1);
       var settings = {
         ...monthViewOptions,
