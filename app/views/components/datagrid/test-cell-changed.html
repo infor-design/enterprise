@@ -52,7 +52,6 @@
       });
 
       grid.on('cellchange', function (e, args) {
-        debugger;
         console.log('cellchange', args);
         gridApi.rowStatus(args.row, 'in-progress', 'Row data changed');
       });
