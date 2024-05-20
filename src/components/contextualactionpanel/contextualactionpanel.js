@@ -40,6 +40,8 @@ const CONTEXTUALACTIONPANEL_DEFAULTS = {
     showCloseBtn: false,
     title: undefined,
     trigger: 'click',
+    propagateStyle: false,
+    compactPanel: false,
     useFlexToolbar: false
   }
 };
