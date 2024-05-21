@@ -6,7 +6,7 @@
     "ends": "2024-05-27T23:59:59.999",
     "icon": "icon-success",
     "type": "dto",
-    "color": "#df78db",
+    "color": "amethyst-20",
     "borderColor": "#8e2e8a"
   },
   {
@@ -16,7 +16,7 @@
     "ends": "2024-05-28T23:59:59.999",
     "icon": "icon-success",
     "type": "dto",
-    "color": "lightsteelblue",
+    "color": "azure-20",
     "borderColor": "royalblue"
   },
   {
@@ -26,7 +26,7 @@
     "ends": "2024-05-29T23:59:59.999",
     "icon": "icon-success",
     "type": "sick",
-    "color": "lightsalmon",
+    "color": "amber-30",
     "borderColor": "orangered"
   },
   {
@@ -36,7 +36,7 @@
     "ends": "2024-05-30T23:59:59.999",
     "icon": "icon-success",
     "type": "sick",
-    "color": "ruby-40",
+    "color": "ruby-30",
     "borderColor": "red"
   },
   {
@@ -46,7 +46,7 @@
     "ends": "2024-05-31T23:59:59.999",
     "icon": "icon-success",
     "type": "sick",
-    "color": "turquoise-40",
+    "color": "turquoise-30",
     "borderColor": "green"
   }
 ]
