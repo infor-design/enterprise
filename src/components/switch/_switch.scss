@@ -19,6 +19,18 @@
     }
   }
 
+  label,
+  .label-text {
+    pointer-events: none;
+  }
+
+  label::before,
+  label::after,
+  .label-text::before,
+  .label-text::after {
+    pointer-events: all;
+  }
+
   // Invisible Input
   input {
     border: none;
