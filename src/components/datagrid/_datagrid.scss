@@ -3058,14 +3058,6 @@ $datagrid-small-row-height: 25px;
         min-height: $datagrid-row-height + 7;
       }
 
-      .datagrid-cell-wrapper {
-        left: 0;
-        position: absolute;
-        text-overflow: clip;
-        top: 0;
-        width: 100%;
-      }
-
       .lookup-wrapper {
         margin-bottom: 0;
         padding-left: 0;

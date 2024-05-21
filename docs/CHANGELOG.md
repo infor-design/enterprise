@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.92.8
+
+## v4.92.8 Fixes
+
+- `[Datagrid]` Fixed styling issue with one cell and frozen columns. ([#8728](https://github.com/infor-design/enterprise/issues/8728))
+- `[Locale]` Fixed issue parsing BitInt sized numbers. ([#8737](https://github.com/infor-design/enterprise/issues/8737))
+
 ## v4.92.7
 
 ## v4.92.7 Fixes
