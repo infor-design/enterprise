@@ -1695,7 +1695,7 @@ const Locale = {  // eslint-disable-line
     numString = numString.replace('$', '');
     numString = numString.replace(' ', '');
 
-    return numString > Number.MAX_SAFE_INTEGER ? numString : parseFloat(numString);
+    return (numString > Number.MAX_SAFE_INTEGER || (numString.indexOf('.') > -1 && numString.length > 17)) ? numString : parseFloat(numString);
   },
 
   /**
