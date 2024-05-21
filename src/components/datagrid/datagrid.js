@@ -10715,8 +10715,8 @@ Datagrid.prototype = {
     let oldValue = this.fieldValue(rowData, col.field);
 
     if (typeof (oldValue) === 'number' && typeof (newValue) === 'string') {
-      // eslint-disable-next-line eqeqeq
-      newValue = oldValue == newValue ? oldValue : newValue;
+      const newValueAsNumber = Number(newValue);
+      newValue = (oldValue === newValueAsNumber) ? oldValue : newValue;
     }
 
     if (col.beforeCommitCellEdit && (isFileupload || !isCallback)) {
