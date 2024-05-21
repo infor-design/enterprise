@@ -23,6 +23,7 @@
 - `[Grid]` Updated style adjustment on screen width for when module nav is expanded. ([#8485](https://github.com/infor-design/enterprise/issues/8485))
 - `[Icons]` Added new icons `trend-left` and `trend-right`. ([#8403](https://github.com/infor-design/enterprise/issues/8403))
 - `[Icons]` Added new icons `user-remove`, `trending-down`, `snooze`  and `trending-up`. ([#8403](https://github.com/infor-design/enterprise/issues/8403))
+- `[Locale]` Fixed dropdown height when `showTags` is set to true. ([#8737](https://github.com/infor-design/enterprise/issues/8737))
 - `[Lookup]` Fixed bug on lookup not using minWidth settings. ([#8626](https://github.com/infor-design/enterprise/issues/8626))
 - `[Lookup]` Fixed a bug where tooltip was not showing after selecting an item in lookup. ([#1646](https://github.com/infor-design/enterprise-ng/issues/1646))
 - `[Listview]` Fixed positioning of list alert icons in RTL mode. ([#8724](https://github.com/infor-design/enterprise/issues/8724))

@@ -1681,6 +1681,11 @@ const Locale = {  // eslint-disable-line
     const percentSign = options && options.percentSign ? options.percentSign : numSettings ? numSettings.percentSign : '%';
     const currencySign = options && options.currencySign ? options.currencySign : localeData.currencySign || '$';
 
+    if (numString > Number.MAX_SAFE_INTEGER) {
+      // eslint-disable-next-line no-undef
+      numString = BigInt(numString).toString();
+    }
+
     // eslint-disable-next-line prefer-regex-literals
     const exp = (group === ' ' || group === '') ? new RegExp(/\s/g) : new RegExp(`\\${group}`, 'g');
     numString = numString.replace(exp, '');
@@ -1690,7 +1695,7 @@ const Locale = {  // eslint-disable-line
     numString = numString.replace('$', '');
     numString = numString.replace(' ', '');
 
-    return numString.length >= 18 ? numString : parseFloat(numString);
+    return numString > Number.MAX_SAFE_INTEGER ? numString : parseFloat(numString);
   },
 
   /**
