@@ -1,0 +1,467 @@
+<div class="row">
+  <div class="two-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Bar Chart One</h2>
+      </div>
+      <div class="widget-content">
+        <div id="bar-example-1" class="chart-container">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <button class="btn-secondary" type="button" id="btn-set-selected-1">Set selected</button>
+  </div>
+  <div class="one column">&nbsp;</div>
+  <div class="two columns">
+    <button class="btn-secondary" type="button" id="btn-toggle-selection-1">Toggle selection</button>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    var dataset = [{
+      data: [{
+        name: 'Category A',
+        value: 373,
+        id: 1
+      }, {
+        name: 'Category B',
+        value: 372,
+        id: 2
+      }, {
+        name: 'Category C',
+        value: 236.35,
+        id: 3
+      }],
+      name: ''  //Can be optionally passed in makes less sense with one: Group 1
+    }];
+
+    var elem = $('#bar-example-1');
+
+    elem.chart({ type: 'bar', dataset: dataset })
+      .on('selected', function (e, args) {
+        console.log(args);
+      });
+
+    var options,
+      api = elem.data('chart'),
+      setOptions = function () {
+        // Use field "id" to select
+        options = {
+          fieldName: 'id',
+          fieldValue: 2
+        };
+
+        // Use index to select
+        //  options = { index: 1 };
+
+        // Use jQuery object to select
+        //  options = { elem: elem.find('.bar:eq(1)') };
+
+        // Use data to select
+        //  options = { data: dataset[0].data[1] };
+      };
+
+    // Set selected
+    $('#btn-set-selected-1').on('click', function () {
+      setOptions();
+      api.setSelected(options);
+    });
+
+    // Toggle selection
+    $('#btn-toggle-selection-1').on('click', function () {
+      setOptions();
+      api.toggleSelected(options);
+    });
+
+  });
+</script>
+
+<div class="row  top-padding">
+  <div class="two-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Bar Chart Two</h2>
+      </div>
+      <div class="widget-content">
+        <div id="bar-example-2" class="chart-container">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <button class="btn-secondary" type="button" id="btn-set-selected-2">Set selected</button>
+  </div>
+  <div class="one column">&nbsp;</div>
+  <div class="two columns">
+    <button class="btn-secondary" type="button" id="btn-toggle-selection-2">Toggle selection</button>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    var dataset = [{
+      data: [{
+        name: 'Category A',
+        value: 373,
+        id: 1
+      }, {
+        name: 'Category B',
+        value: 372,
+        id: 2
+      }, {
+        name: 'Category C',
+        value: 236.35,
+        id: 3
+      }],
+      name: ''  //Can be optionally passed in makes less sense with one: Group 1
+    }];
+
+    var elem = $('#bar-example-2');
+
+    elem.chart({ type: 'bar', dataset: dataset })
+      .on('selected', function (e, args) {
+        console.log(args);
+      });
+
+    var options,
+      api = elem.data('chart'),
+      setOptions = function () {
+        // Use field "id" to select
+        options = {
+          fieldName: 'id',
+          fieldValue: 2
+        };
+
+        // Use index to select
+        //  options = { index: 1 };
+
+        // Use jQuery object to select
+        //  options = { elem: elem.find('.bar:eq(1)') };
+
+        // Use data to select
+        //  options = { data: dataset[0].data[1] };
+      };
+
+    // Set selected
+    $('#btn-set-selected-2').on('click', function () {
+      setOptions();
+      api.setSelected(options);
+    });
+
+    // Toggle selection
+    $('#btn-toggle-selection-2').on('click', function () {
+      setOptions();
+      api.toggleSelected(options);
+    });
+
+  });
+</script>
+
+<div class="row top-padding">
+  <div class="two-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Line Chart 1</h2>
+      </div>
+      <div class="widget-content">
+        <div id="line-example-3" class="chart-container">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <button class="btn-secondary" type="button" id="btn-set-selected-3">Set Selected</button>
+  </div>
+  <div class="one column">&nbsp;</div>
+  <div class="two columns">
+    <button class="btn-secondary" type="button" id="btn-toggle-selection-3">Toggle Selection</button>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    var dataset = [{
+      data: [{
+        name: 'Jan',
+        value: 12
+      }, {
+        name: 'Feb',
+        value: 11
+      }, {
+        name: 'Mar',
+        value: 14
+      }, {
+        name: 'Apr',
+        value: 10
+      }, {
+        name: 'May',
+        value: 14
+      }, {
+        name: 'Jun',
+        value: 8
+      }],
+      name: 'Component A'
+    }, {
+      data: [{
+        name: 'Jan',
+        value: 22
+      }, {
+        name: 'Feb',
+        value: 21
+      }, {
+        name: 'Mar',
+        value: 24
+      }, {
+        name: 'Apr',
+        value: 20
+      }, {
+        name: 'May',
+        value: 24
+      }, {
+        name: 'Jun',
+        value: 28
+      }],
+      name: 'Component B'
+    }, {
+      data: [{
+        name: 'Jan',
+        value: 32
+      }, {
+        name: 'Feb',
+        value: 31
+      }, {
+        name: 'Mar',
+        value: 34
+      }, {
+        name: 'Apr',
+        value: 30
+      }, {
+        name: 'May',
+        value: 34
+      }, {
+        name: 'Jun',
+        value: 38
+      }],
+      name: 'Component C'
+    }];
+
+    var elem = $('#line-example-3');
+
+    elem.chart({ type: 'line', dataset: dataset })
+      .on('selected', function (e, args) {
+        console.log(args);
+      });
+
+    var options,
+      api = elem.data('chart'),
+      setOptions = function () {
+        // Use group "name" to select
+        // options = {
+        //   groupName: 'name',
+        //   groupValue: 'Component B'
+        // };
+
+        // Use field "name" to select
+        options = {
+          groupIndex: 0, //required
+          fieldName: 'name',
+          fieldValue: 'Feb'
+        };
+
+        // Use group index to select
+        // options = { groupIndex: 0 };
+
+        // Use point index to select
+        // options = {
+        //   groupIndex: 1, //required
+        //   index: 0
+        // };
+
+        // Use jQuery object to select
+        // options = { elem: elem.find('[data-group-id="1"]') };
+        // options = { elem: elem.find('[data-group-id="1"] .dot:eq(0)') };
+
+        // Use data to select
+        // options = { data: dataset[1] };
+        // options = { data: dataset[1].data[2] };
+      };
+
+
+    // Set selected
+    $('#btn-set-selected-3').on('click', function () {
+      setOptions();
+      api.setSelected(options);
+    });
+
+    // Toggle selection
+    $('#btn-toggle-selection-3').on('click', function () {
+      setOptions();
+      api.toggleSelected(options);
+    });
+
+  });
+</script>
+
+<div class="row top-padding">
+  <div class="two-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Line Chart 2</h2>
+      </div>
+      <div class="widget-content">
+        <div id="line-example-4" class="chart-container">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <button class="btn-secondary" type="button" id="btn-set-selected-4">Set Selected</button>
+  </div>
+  <div class="one column">&nbsp;</div>
+  <div class="two columns">
+    <button class="btn-secondary" type="button" id="btn-toggle-selection-4">Toggle Selection</button>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    var dataset = [{
+      data: [{
+        name: 'Jan',
+        value: 12
+      }, {
+        name: 'Feb',
+        value: 11
+      }, {
+        name: 'Mar',
+        value: 14
+      }, {
+        name: 'Apr',
+        value: 10
+      }, {
+        name: 'May',
+        value: 14
+      }, {
+        name: 'Jun',
+        value: 8
+      }],
+      name: 'Component A'
+    }, {
+      data: [{
+        name: 'Jan',
+        value: 22
+      }, {
+        name: 'Feb',
+        value: 21
+      }, {
+        name: 'Mar',
+        value: 24
+      }, {
+        name: 'Apr',
+        value: 20
+      }, {
+        name: 'May',
+        value: 24
+      }, {
+        name: 'Jun',
+        value: 28
+      }],
+      name: 'Component B'
+    }, {
+      data: [{
+        name: 'Jan',
+        value: 32
+      }, {
+        name: 'Feb',
+        value: 31
+      }, {
+        name: 'Mar',
+        value: 34
+      }, {
+        name: 'Apr',
+        value: 30
+      }, {
+        name: 'May',
+        value: 34
+      }, {
+        name: 'Jun',
+        value: 38
+      }],
+      name: 'Component C'
+    }];
+
+    var elem = $('#line-example-4');
+
+    elem.chart({ type: 'line', dataset: dataset })
+      .on('selected', function (e, args) {
+        console.log(args);
+      });
+
+    var options,
+      api = elem.data('chart'),
+      setOptions = function () {
+        // Use group "name" to select
+        // options = {
+        //   groupName: 'name',
+        //   groupValue: 'Component B'
+        // };
+
+        // Use field "name" to select
+        options = {
+          groupIndex: 0, //required
+          fieldName: 'name',
+          fieldValue: 'Feb'
+        };
+
+        // Use group index to select
+        // options = { groupIndex: 0 };
+
+        // Use point index to select
+        // options = {
+        //   groupIndex: 1, //required
+        //   index: 0
+        // };
+
+        // Use jQuery object to select
+        // options = { elem: elem.find('[data-group-id="1"]') };
+        // options = { elem: elem.find('[data-group-id="1"] .dot:eq(0)') };
+
+        // Use data to select
+        // options = { data: dataset[1] };
+        // options = { data: dataset[1].data[2] };
+      };
+
+
+    // Set selected
+    $('#btn-set-selected-4').on('click', function () {
+      setOptions();
+      api.setSelected(options);
+    });
+
+    // Toggle selection
+    $('#btn-toggle-selection-4').on('click', function () {
+      setOptions();
+      api.toggleSelected(options);
+    });
+
+  });
+</script>
