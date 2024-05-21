@@ -9,8 +9,8 @@
 ## v4.96.0 Fixes
 
 - `[About]` Removed `isMobile` in about spec. ([#8502](https://github.com/infor-design/enterprise/issues/8502))
-- `[Autocomplete]` Fixed autocomplete not properly highlighted on key down. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
 - `[AppMenu]` Fixed hover state on menu button in app menu. ([#8723](https://github.com/infor-design/enterprise/issues/8723))
+- `[Autocomplete]` Fixed autocomplete not properly highlighted on key down. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
 - `[Bar-Stacked/Column-Stacked]` Fixed an error encountered when having many records inside the graph. ([NG#1675](https://github.com/infor-design/enterprise-ng/issues/1675))
 - `[Datagrid]` Fixed styling issue with one cell and frozen columns. ([#8728](https://github.com/infor-design/enterprise/issues/8728))
 - `[Datagrid]` Fixed add row not triggering after cell commit. ([#8624](https://github.com/infor-design/enterprise/issues/8624))
@@ -18,6 +18,7 @@
 - `[Datepicker]` Fixed focus date not properly assigned when calendar is used as datepicker. ([#8585](https://github.com/infor-design/enterprise/issues/8585))
 - `[Dropdown]` Fixed dropdown height when `showTags` is set to true. ([#8566](https://github.com/infor-design/enterprise/issues/8566))
 - `[Dropdown]` Fixed RTL alignments and border colors for field filter. ([#8659](https://github.com/infor-design/enterprise/issues/8659))
+- `[FileuploadAdvanced]` Added fileupload-advanced in homepage widget. ([#7892](https://github.com/infor-design/enterprise/issues/7892))
 - `[Icons]` Added new icons `trend-left` and `trend-right`. ([#8403](https://github.com/infor-design/enterprise/issues/8403))
 - `[Icons]` Added new icons `user-remove`, `trending-down`, `snooze`  and `trending-up`. ([#8403](https://github.com/infor-design/enterprise/issues/8403))
 - `[Lookup]` Fixed bug on lookup not using minWidth settings. ([#8626](https://github.com/infor-design/enterprise/issues/8626))
