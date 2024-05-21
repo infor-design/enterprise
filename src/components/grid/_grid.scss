@@ -421,6 +421,27 @@ $gutter-neg-size: -20px;
   }
 }
 
+// For when its in page container for module nav
+.module-nav-container {
+  @media (max-width: $breakpoint-wide-tablet) {
+    .columns {
+      width: 100%;
+    }
+  }
+
+  &.mode-expanded {
+    .columns {
+      width: 100%;
+    }
+
+    @media (min-width: $breakpoint-tablet-to-desktop) {
+      .six.columns {
+        width: calc(50% - 20px);
+      }
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .column,
