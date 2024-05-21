@@ -421,15 +421,23 @@ $gutter-neg-size: -20px;
   }
 }
 
-// For when its in page container for expanded module nav
-.module-nav-container.mode-expanded {
-  .columns {
-    width: 100%;
+// For when its in page container for module nav
+.module-nav-container {
+  @media (max-width: $breakpoint-wide-tablet) {
+    .columns {
+      width: 100%;
+    }
   }
 
-  @media (min-width: $breakpoint-tablet-to-desktop) {
-    .six.columns {
-      width: calc(50% - 20px);
+  &.mode-expanded {
+    .columns {
+      width: 100%;
+    }
+
+    @media (min-width: $breakpoint-tablet-to-desktop) {
+      .six.columns {
+        width: calc(50% - 20px);
+      }
     }
   }
 }
