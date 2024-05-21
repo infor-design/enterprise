@@ -10713,6 +10713,12 @@ Datagrid.prototype = {
       this.getActiveDataset()[dataRowIndex];
 
     let oldValue = this.fieldValue(rowData, col.field);
+
+    if (typeof (oldValue) === 'number' && typeof (newValue) === 'string') {
+      const newValueAsNumber = Number(newValue);
+      newValue = (oldValue === newValueAsNumber) ? oldValue : newValue;
+    }
+
     if (col.beforeCommitCellEdit && (isFileupload || !isCallback)) {
       const vetoCommit = col.beforeCommitCellEdit({
         cell,
