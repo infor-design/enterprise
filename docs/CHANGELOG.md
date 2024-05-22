@@ -5,6 +5,7 @@
 ## v4.95.1 Fixes
 
 - `[Datagrid]` Fixed cell changed trigger event on number and string comparison. ([#8719](https://github.com/infor-design/enterprise/issues/8719))
+- `[Datagrid]` Fixed styling issue with one cell and frozen columns. ([#8728](https://github.com/infor-design/enterprise/issues/8728))
 - `[Locale]` Fixed issue parsing BitInt sized numbers. ([#8737](https://github.com/infor-design/enterprise/issues/8737))
 
 ## v4.95.0
