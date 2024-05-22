@@ -28,6 +28,7 @@
 - `[Listview]` Fixed positioning of list alert icons in RTL mode. ([#8724](https://github.com/infor-design/enterprise/issues/8724))
 - `[Monthview]` Fixed monthview not updating after changing activeDate. ([NG#1659](https://github.com/infor-design/enterprise-ng/issues/1659))
 - `[Popup Menu]` Fixed bug on popupmenu showing behind app menu on mobile. ([#8582](https://github.com/infor-design/enterprise/issues/8582))
+- `[Tabs]` Fixed the focus state border bottom being cut off in horizontal tabs. ([#8644](https://github.com/infor-design/enterprise/issues/8644))
 
 ## v4.95.0
 
