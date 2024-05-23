@@ -165,9 +165,34 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructiv
   border-color: ${colors.lightest};
 }
 
+html.theme-new-dark .is-personalizable:not(.header) .personalize-header.content .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+  background-color: ${colors.darker};
+  border-color: ${colors.darker};
+}
+
 html[class*="new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 html[class*="new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-secondary.btn-menu.is-open:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) {
   background-color: ${colors.lightestPalette};
+}
+
+
+html[class*="new-"] .is-personalizable:not(.header) .personalize-header .btn-secondary:not(:disabled):not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane) {
+  color: ${colors.tabHeaderColor !== '#ffffff' ? '#ffffff' : colors.btnPrimaryColor};
+  border-color: ${colors.tabHeaderColor !== '#ffffff' ? '#ffffff' : colors.btnPrimaryColor};
+}
+
+html.theme-new-dark .is-personalizable:not(.header) .personalize-header .btn-secondary:not(:disabled):not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover {
+  background-color: ${colors.btnBgHoverColor} !important;
+}
+
+html[class*="new-"] .is-personalizable:not(.header) .personalize-header .btn-secondary:not(:disabled):not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover {
+  background-color: ${colors.tabHeaderColor !== '#ffffff' ? colors.light : colors.darker};
+}
+
+html[class*="new-"] .is-personalizable:not(.header) .personalize-header .btn-tertiary:not(:disabled):not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
+html[class*="new-"] .is-personalizable:not(.header) .personalize-header .btn.btn-link:not(:disabled):not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
+html[class*="new-"] .is-personalizable:not(.header) .personalize-header .btn.btn-link:not(:disabled):not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane) svg {
+  color: ${colors.tabHeaderColor !== '#ffffff' ? '#ffffff' : '#000000'} !important;
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
@@ -193,8 +218,8 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-butto
 
 html[class*="new-"] .is-personalizable:not(.header):not(.hero-widget) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 html[class*="new-"] .is-personalizable:not(.header):not(.hero-widget) .btn-link:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.lightestPalette};
-  color: ${colors.btnTertiaryHoverColor};
+  background-color: ${colors.tabHeaderColor !== '#ffffff' ? colors.darker : colors.btnBgHoverColor} !important;
+  color: ${colors.tabHeaderColor !== '#ffffff' ? colors.btnHoverColor : colors.btnTertiaryHoverColor};
 }
 
 html.theme-new-dark .is-personalizable:not(.header):not(.hero-widget) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
@@ -976,6 +1001,10 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
 
 html[class*="theme-new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-icon:not(.destructive):not(:disabled):hover {
   background-color: ${colors.lightestPalette};
+}
+
+html[class*="theme-new-"] .is-personalizable:not(.header) .content.personalize-header .btn-icon:not(.destructive):not(:disabled):hover {
+  background-color: ${colors.tabHeaderColor !== '#ffffff' ? colors.darker : colors.btnBgHoverColor} !important;
 }
 
 html[class*="theme-new-"] .is-personalizable:not(.header) .btn-icon:not(.destructive):not(:disabled):hover .icon {
