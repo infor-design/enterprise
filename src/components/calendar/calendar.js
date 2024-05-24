@@ -389,7 +389,7 @@ Calendar.prototype = {
 
     this.weekView.settings.filteredTypes = this.filterEventTypes();
     this.weekView.settings.onChangeWeek = (args) => {
-      this.monthView.selectDay(args.startDate, false, true);
+      this.monthView.selectDay(args.startDate, false, true, null, args.endDate);
     };
     this.weekView.renderAllEvents();
     utils.addAttributes($('.calendar-weekview'), this, this.settings.attributes, 'weekview');
