@@ -1056,8 +1056,9 @@ ListView.prototype = {
    * Select the given list item.
    * @param {jquery|number} li Either the actually jQuery list element or a zero based index
    * @param {boolean} noTrigger Do not trigger the selected event.
+   * @param {boolean} isKey Check if select was triggered by key or not
    */
-  select(li, noTrigger) {
+  select(li, noTrigger, isKey = false) {
     const self = this;
     let isChecked = false;
     const isMixed = self.settings.selectable === 'mixed';
@@ -1140,6 +1141,7 @@ ListView.prototype = {
       this.element.triggerHandler(triggerStr, {
         selectedItems: this.selectedItems,
         elem: li,
+        isKey,
         selectedData
       });
 
@@ -1497,7 +1499,7 @@ ListView.prototype = {
             if (isMultiple && e.shiftKey) {
               self.selectItemsBetweenIndexes([self.lastSelectedItem, item.index()]);
             } else {
-              self.select(item);
+              self.select(item, false, true);
             }
             e.preventDefault();
           }

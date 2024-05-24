@@ -6623,74 +6623,78 @@ Datagrid.prototype = {
 
         const listviewApi = modal.element.find('.listview').listview(listviewSettings).data('listview');
 
+        const handleSelect = (li) => {
+          const chk = li.find('input.switch');
+          const id = chk.attr('data-column-id');
+          const isChecked = chk.prop('checked');
+
+          li.removeClass('is-selected hide-selected-color');
+
+          if (chk.is(':disabled')) {
+            return;
+          }
+
+          self.isColumnsChanged = true;
+
+          if (self.settings.columnGroups) {
+            if (li.hasClass('child')) {
+              if (!isChecked) {
+                self.showColumn(id);
+                chk.prop('checked', true);
+              } else {
+                self.hideColumn(id);
+                chk.prop('checked', false);
+              }
+            } else {
+              const groupId = li.attr('data-group-id');
+              const cols = li.siblings(`.child[data-group-id="${groupId}"]`);
+              const toggle = (col, changeValue) => {
+                const colChk = col.find('input.switch');
+                const colId = colChk.attr('data-column-id');
+
+                if (!colChk.is(':disabled')) {
+                  const colChkChecked = colChk.prop('checked');
+
+                  if (colChkChecked !== changeValue) {
+                    if (changeValue) {
+                      self.showColumn(colId);
+                    } else {
+                      self.hideColumn(colId);
+                    }
+                    colChk.prop('checked', changeValue);
+                  }
+                }
+              };
+
+              if (!isChecked) {
+                cols.each((i, ce) => {
+                  toggle($(ce), true);
+                });
+                chk.prop('checked', true);
+              } else {
+                cols.each((i, ce) => {
+                  toggle($(ce), false);
+                });
+                chk.prop('checked', false);
+              }
+            }
+          } else if (!isChecked) {
+            self.showColumn(id);
+            chk.prop('checked', true);
+          } else {
+            self.hideColumn(id);
+            chk.prop('checked', false);
+          }
+
+          if (self.settings.groupable) {
+            self.rerender();
+          }
+        };
+
         const handleListEvents = () => {
           listviewApi.element.find('.switch span.label-text, .switch input').on('click', (ev) => {
             const li = $(ev.target).parent().parent();
-            const chk = li.find('input.switch');
-            const id = chk.attr('data-column-id');
-            const isChecked = chk.prop('checked');
-
-            li.removeClass('is-selected hide-selected-color');
-
-            if (chk.is(':disabled')) {
-              return;
-            }
-
-            self.isColumnsChanged = true;
-
-            if (self.settings.columnGroups) {
-              if (li.hasClass('child')) {
-                if (!isChecked) {
-                  self.showColumn(id);
-                  chk.prop('checked', true);
-                } else {
-                  self.hideColumn(id);
-                  chk.prop('checked', false);
-                }
-              } else {
-                const groupId = li.attr('data-group-id');
-                const cols = li.siblings(`.child[data-group-id="${groupId}"]`);
-                const toggle = (col, changeValue) => {
-                  const colChk = col.find('input.switch');
-                  const colId = colChk.attr('data-column-id');
-
-                  if (!colChk.is(':disabled')) {
-                    const colChkChecked = colChk.prop('checked');
-
-                    if (colChkChecked !== changeValue) {
-                      if (changeValue) {
-                        self.showColumn(colId);
-                      } else {
-                        self.hideColumn(colId);
-                      }
-                      colChk.prop('checked', changeValue);
-                    }
-                  }
-                };
-
-                if (!isChecked) {
-                  cols.each((i, ce) => {
-                    toggle($(ce), true);
-                  });
-                  chk.prop('checked', true);
-                } else {
-                  cols.each((i, ce) => {
-                    toggle($(ce), false);
-                  });
-                  chk.prop('checked', false);
-                }
-              }
-            } else if (!isChecked) {
-              self.showColumn(id);
-              chk.prop('checked', true);
-            } else {
-              self.hideColumn(id);
-              chk.prop('checked', false);
-            }
-
-            if (self.settings.groupable) {
-              self.rerender();
-            }
+            handleSelect(li);
           });
 
           if (self.settings.columnReorder) {
@@ -6777,6 +6781,10 @@ Datagrid.prototype = {
 
         listviewApi.element.on('rendered', () => {
           handleListEvents();
+        }).on('selected', (e, selected) => {
+          if (selected.isKey) {
+            handleSelect(selected.elem);
+          }
         });
 
         modal.element.on('close.datagrid', () => {
