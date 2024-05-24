@@ -6781,7 +6781,7 @@ Datagrid.prototype = {
 
         listviewApi.element.on('rendered', () => {
           handleListEvents();
-        }).on('selected', (e, selected) => {
+        }).on('selected', (event, selected) => {
           if (selected.isKey) {
             handleSelect(selected.elem);
           }
