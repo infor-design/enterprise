@@ -911,7 +911,7 @@
   position: relative;
   left: 1px;
   top: -2px;
-  margin-left: -4px;
+  margin-left: 0;
 
   .listview-filters {
     height: 24px;
@@ -920,11 +920,23 @@
   }
 
   .listview-filters:first-child {
-    margin-left: 5px;
+    margin-left: 0;
   }
 
   .listview-filters:last-child {
-    margin-right: 5px;
+    margin-right: 6px;
+    margin-left: -4px;
+  }
+}
+
+html[dir='rtl'] .listview-filter-wrapper {
+  .listview-filters:first-child {
+    margin-left: -1px;
+  }
+
+  .listview-filters:last-child {
+    margin-right: -4px;
+    margin-left: 2px;
   }
 }
 
@@ -993,6 +1005,8 @@ html[dir='rtl'] {
       float: right;
       margin-left: 15px;
       margin-right: inherit;
+      left: 0;
+      right: unset;
 
       &.pending::before {
         left: auto;
