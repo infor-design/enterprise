@@ -2157,7 +2157,7 @@ MonthView.prototype = {
    * @param {boolean} closePopup Send a flag to close the popup
    * @param {boolean} insertDate Send a flag to insert the date in the field
   */
-  selectDay(date, closePopup, insertDate, action = null, endDate) {
+  selectDay(date, closePopup, insertDate, action = null, endDate = undefined) {
     // Check from onChangeWeek Callback
     let monthDifference = false;
     if (endDate !== undefined) {
