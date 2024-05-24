@@ -153,6 +153,7 @@ Calendar.prototype = {
   build() {
     this
       .setCurrentCalendar()
+      .saveColorFromApi()
       .renderEventTypes()
       .renderMonthView()
       .renderWeekView()
@@ -672,6 +673,28 @@ Calendar.prototype = {
     }
 
     return types;
+  },
+
+  /**
+   * Sets the colors from api before it gets overridden from updates
+   * @returns {object} The Calendar prototype, useful for chaining.
+   * @private
+   */
+  saveColorFromApi() {
+    const eventList = this.settings.events;
+    for (let i = 0; i < eventList.length; i++) {
+      const event = eventList[i];
+
+      if (event.color !== undefined) {
+        event.apiColor = event.color;
+      }
+
+      if (event.borderColor !== undefined) {
+        event.apiBorderColor = event.borderColor;
+      }
+    }
+
+    return this;
   },
 
   /**
@@ -1431,6 +1454,9 @@ Calendar.prototype = {
    */
   updateEvent(event) {
     const eventId = event.id;
+    event.color = event.apiColor !== undefined ? event.apiColor : event.color;
+    event.borderColor = event.apiBorderColor !== undefined ? event.apiBorderColor : event.borderColor;
+
     for (let i = this.settings.events.length - 1; i >= 0; i--) {
       if (this.settings.events[i].id === eventId) {
         this.settings.events[i] = utils.extend(true, this.settings.events[i], event);
