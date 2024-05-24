@@ -6,17 +6,11 @@
 
 ## v4.96.0 Fixes
 
-- `[Datagrid]` Fixed an error in expandable rows where paging causes to render white html. ([NG#1656](https://github.com/infor-design/enterprise-ng/issues/1656))
-- `[Lookup]` Fixed bug on lookup not using minWidth settings. ([#8626](https://github.com/infor-design/enterprise/issues/8626))
-- `[Monthview]` Fixed monthview not updating after changing activeDate. ([NG#1659](https://github.com/infor-design/enterprise-ng/issues/1659))
-- `[ContextualActionPanel/Modal]` Added new settings `propagateStyle` and `compactPanel`. ([NG#1594](https://github.com/infor-design/enterprise-ng/issues/1594))
-
-## v4.96.0 Fixes
-
 - `[About]` Removed `isMobile` in about spec. ([#8502](https://github.com/infor-design/enterprise/issues/8502))
 - `[AppMenu]` Fixed hover state on menu button in app menu. ([#8723](https://github.com/infor-design/enterprise/issues/8723))
 - `[Autocomplete]` Fixed autocomplete not properly highlighted on key down. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
 - `[Bar-Stacked/Column-Stacked]` Fixed an error encountered when having many records inside the graph. ([NG#1675](https://github.com/infor-design/enterprise-ng/issues/1675))
+- `[Datagrid]` Fixed an error in expandable rows where paging causes to render white html. ([NG#1656](https://github.com/infor-design/enterprise-ng/issues/1656))
 - `[Datagrid]` Fixed cell changed trigger event on number and string comparison. ([#8719](https://github.com/infor-design/enterprise/issues/8719))
 - `[Datagrid]` Fixed styling issue with one cell and frozen columns. ([#8728](https://github.com/infor-design/enterprise/issues/8728))
 - `[Datagrid]` Fixed add row not triggering after cell commit. ([#8624](https://github.com/infor-design/enterprise/issues/8624))
