@@ -199,7 +199,7 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-butto
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary.btn-menu:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary.btn-menu.is-open:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) {
   color: #ffffff !important;
-  border-color: ${colors.lightest} !important;
+  border-color: #ffffff !important;
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary.btn-menu.is-open:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) .icon {
