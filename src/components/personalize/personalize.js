@@ -266,6 +266,19 @@ Personalize.prototype = {
     colors.button = colorUtils.validateHex(colors.button ||
       colorUtils.getLuminousColorShade(colors.text, -0.8));
 
+    // Change the color for the buttons in content personalization
+    const colorMapping = {
+      '#0066D4': themeColors.palette.azure[60].value,
+      '#BB5500': themeColors.palette.amber[60].value,
+      '#1F9254': themeColors.palette.emerald[60].value,
+      '#8D0B0E': themeColors.palette.ruby[60].value,
+      '#297B7B': themeColors.palette.turquoise[60].value,
+    };
+
+    if (colors.header in colorMapping) {
+      colors.header = colorMapping[colors.header];
+    }
+
     colors.lightest = colors.btnColorHeader;
     colors.lighter = colors.subheader;
     colors.light = colors.verticalBorder;
