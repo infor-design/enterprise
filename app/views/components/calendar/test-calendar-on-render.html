@@ -215,7 +215,7 @@
       onRenderMonth: (element, response, calendar) => {
         if (calendar && calendar.api) {
           const date = calendar.api.monthView.currentDate;
-          alert(date)
+          console.log(date);
           response(events);
         }
       
