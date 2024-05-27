@@ -3912,7 +3912,7 @@ $datagrid-small-row-height: 25px;
 
     .lookup-wrapper {
       background-color: transparent;
-      display: inline;
+      display: inline-block;
       left: 0;
       vertical-align: top;
       width: calc(100% - 44px);
@@ -3921,7 +3921,7 @@ $datagrid-small-row-height: 25px;
         background-color: transparent;
         left: 10px;
         padding-right: 20px;
-        width: calc(100% - 44px);
+        width: 100%;
 
         &:not(:disabled) + .trigger > .icon:hover,
         &:hover:not(:disabled) + .trigger > .icon {
