@@ -1245,6 +1245,10 @@ Calendar.prototype = {
     if (this.settings.slideSelect) {
       let firstKey, lastKey;
       this.element.off(`mousedown.${COMPONENT_NAME}`).on(`mousedown.${COMPONENT_NAME}`, 'td', (e) => {
+        if (self.modalVisible()) {
+          self.removeModal();
+        }
+
         this.element.find('td').removeClass('slice-select-start');
         this.element.find('td').removeClass('slice-select');
         this.element.find('td').removeClass('slice-select-end');
@@ -1271,7 +1275,7 @@ Calendar.prototype = {
         });
       });
   
-      this.element.off(`mouseup.${COMPONENT_NAME}`).on(`mouseup.${COMPONENT_NAME}`, 'td', (e) => {
+      this.element.off(`mouseup.${COMPONENT_NAME}`).on(`mouseup.${COMPONENT_NAME}`, (e) => {
         self.element.off(`mouseenter.${COMPONENT_NAME}`, 'td');
         const startDay = new Date(firstKey.substr(0, 4), firstKey.substr(4, 2) - 1, firstKey.substr(6, 2));
         const endDay = new Date(lastKey.substr(0, 4), lastKey.substr(4, 2) - 1, lastKey.substr(6, 2));
