@@ -655,7 +655,14 @@ Tooltip.prototype = {
         title.classList.add('tooltip-title');
 
         if (this.settings.headerClass) {
+          const colorList = ['amber', 'amethyst', 'azure', 'emerald', 'graphite', 'ruby', 'slate', 'turquoise'];
+          const isColorList = colorList.filter(colorObj => this.settings.headerClass.indexOf(colorObj) > -1).length > 0;
+
           DOM.addClass(title, this.settings.headerClass, 'filled');
+
+          if (!isColorList) {
+            DOM.addClass(title, 'default');
+          }
         }
         titleFrag.appendChild(title);
         this.tooltip[0].insertBefore(titleFrag, this.tooltip[0].firstChild);
