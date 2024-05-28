@@ -61,6 +61,7 @@ const COMPONENT_NAME_DEFAULTS = {
     restrictMonths: false
   },
   showEventLegend: true,
+  slideSelect: false,
   dayLegend: null,
   displayRange: {
     start: '',
@@ -125,6 +126,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * It requires minDate and maxDate for the feature to activate.
  * For example if you have more non specific dates to disable then enable ect.
  * @param {boolean} [settings.showEventLegend=true] Restrict month selections on datepicker.
+ * @param {boolean} [settings.slideSelect=false] Allows you to slide select for a span of date ranges.
  * @param {array} [settings.dayLegend] Allows you to set legend for days. This is passed to the legend option in Monthview but only the colors and dates part are used since the calendar already has a legend.
  * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
@@ -308,6 +310,7 @@ Calendar.prototype = {
       onChangeView: this.onChangeToMonth,
       disable: this.settings.disable,
       showLegend: this.settings.dayLegend !== null,
+      slideSelect: this.settings.slideSelect,
       legend: this.settings.dayLegend,
       hitbox: this.settings.hitbox,
       attributes: this.settings.attributes,
@@ -1212,6 +1215,65 @@ Calendar.prototype = {
        */
       this.element.triggerHandler('dblclick', { eventData, api: this });
     });
+
+    // Slide Select Settings
+    if (this.settings.slideSelect) {
+      let firstKey, lastKey;
+      this.element.off(`mousedown.${COMPONENT_NAME}`).on(`mousedown.${COMPONENT_NAME}`, 'td', (e) => {
+        this.element.find('td').removeClass('slice-select-start');
+        this.element.find('td').removeClass('slice-select');
+        this.element.find('td').removeClass('slice-select-end');
+
+        const key = e.currentTarget.getAttribute('data-key');
+        firstKey = key;
+        lastKey = key;
+        $(e.currentTarget).addClass('slice-select-start');
+        $(e.currentTarget).addClass('slice-select-end');
+  
+        self.element.on(`mouseenter.${COMPONENT_NAME}`, 'td', (e) => {
+          if ($(e.currentTarget).prev().hasClass('slice-select-start') || 
+            $(e.currentTarget).prev().hasClass('slice-select') || 
+            $(e.currentTarget).is('.slice-select-start')) {
+              console.log($(e.currentTarget));
+            const key = e.currentTarget.getAttribute('data-key');
+            if (firstKey < key && key > lastKey) {
+              lastKey = key;
+              $(e.currentTarget).prev().removeClass('slice-select-end');
+              $(e.currentTarget).addClass('slice-select');
+              $(e.currentTarget).addClass('slice-select-end');
+            }
+          }
+        });
+      });
+  
+      this.element.off(`mouseup.${COMPONENT_NAME}`).on(`mouseup.${COMPONENT_NAME}`, 'td', (e) => {
+        self.element.off(`mouseenter.${COMPONENT_NAME}`, 'td');
+        const startDay = new Date(firstKey.substr(0, 4), firstKey.substr(4, 2) - 1, firstKey.substr(6, 2));
+        const endDay = new Date(lastKey.substr(0, 4), lastKey.substr(4, 2) - 1, lastKey.substr(6, 2));
+
+        if (startDay.getTime() === endDay.getTime()) {
+          return;
+        }
+  
+        const eventData = utils.extend({ }, this.settings.newEventDefaults);
+        eventData.startKey = firstKey;
+        eventData.endKey = lastKey;
+        eventData.starts = Locale.formatDate(startDay);
+        eventData.ends = Locale.formatDate(endDay);
+        e.stopPropagation();
+  
+        calendarShared.cleanEventData(
+          eventData,
+          false,
+          this.currentDate(),
+          this.locale,
+          this.language,
+          this.settings.events,
+          this.settings.eventTypes
+        );
+        this.showModalWithCallback(eventData, true);
+      });
+    }
 
     // Set up mobile list view events
     this.element.find('.listview')

@@ -4,6 +4,7 @@
 
 ## v4.96.0 Features
 
+- `[Calendar]` Added new setting `slideSelect` to allow users to select from span of range in creating an event. ([#8243](https://github.com/infor-design/enterprise/issues/8243))
 - `[ContextualActionPanel/Modal]` Added new settings `propagateStyle` and `compactPanel`. ([NG#1594](https://github.com/infor-design/enterprise-ng/issues/1594))
 
 ## v4.96.0 Fixes

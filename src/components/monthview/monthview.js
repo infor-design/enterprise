@@ -1646,6 +1646,12 @@ MonthView.prototype = {
 
     // Change Month Events
     this.header.off('click.monthview').on('click.monthview', '.btn-icon.prev, .btn-icon.next', function () {
+      if (s.slideSelect) {
+        self.element.find('td').removeClass('slice-select-start');
+        self.element.find('td').removeClass('slice-select');
+        self.element.find('td').removeClass('slice-select-end');
+      }
+
       const isNext = $(this).is('.next');
       const range = {};
       const d = { month: self.currentMonth, year: self.currentYear };
@@ -1720,6 +1726,7 @@ MonthView.prototype = {
         .addClass('is-selectable')
         .off('click.monthview-day')
         .on('click.monthview-day', 'td', (e) => {
+          e.preventDefault();
           const key = e.currentTarget.getAttribute('data-key');
           this.lastClickedKey = key;
 
