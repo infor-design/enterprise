@@ -155,6 +155,7 @@ Calendar.prototype = {
   build() {
     this
       .setCurrentCalendar()
+      .saveColorFromApi()
       .renderEventTypes()
       .renderMonthView()
       .renderWeekView()
@@ -678,6 +679,28 @@ Calendar.prototype = {
   },
 
   /**
+   * Sets the colors from api before it gets overridden from updates
+   * @returns {object} The Calendar prototype, useful for chaining.
+   * @private
+   */
+  saveColorFromApi() {
+    const eventList = this.settings.events;
+    for (let i = 0; i < eventList.length; i++) {
+      const event = eventList[i];
+
+      if (event.color !== undefined) {
+        event.apiColor = event.color;
+      }
+
+      if (event.borderColor !== undefined) {
+        event.apiBorderColor = event.borderColor;
+      }
+    }
+
+    return this;
+  },
+
+  /**
    * Render/ReRender the events attached to the settings.
    * @private
    * @param {boolean} isCallback Will be set to true when a callback occurs
@@ -869,9 +892,9 @@ Calendar.prototype = {
    * @returns {object} The Calendar prototype, useful for chaining.
    */
   appendEvent(container, event, type, idx) {
-    let node;
     const eventCnt = container.querySelectorAll('.calendar-event').length;
-    const colorList = ['ruby', 'amber', 'emerald', 'azure', 'turqoise', 'amethyst', 'graphite', 'slate'];
+    const colorList = ['amber', 'amethyst', 'azure', 'emerald', 'graphite', 'ruby', 'slate', 'turquoise'];
+    let node;
 
     if (idx > -1) {
       if (!this.monthView.dayMap[idx].events) {
@@ -912,7 +935,9 @@ Calendar.prototype = {
     node.setAttribute('data-key', event.startKey);
 
     // Let the border color / color be overriden
-    if ((event.color?.substr(0, 1) === '#' || event.color) && colorList.indexOf(event.color) < 0) {
+    if (event.color !== undefined && colorList.filter(color => event.color?.indexOf(color) > -1).length > 0 && event.color.indexOf('0') > -1) {
+      DOM.addClass(node, event.color);
+    } else if ((event.color?.substr(0, 1) === '#' || event.color) && colorList.indexOf(event.color) < 0) {
       node.style.backgroundColor = event.color;
       node.classList.remove(event.color);
     }
@@ -1448,6 +1473,16 @@ Calendar.prototype = {
     }
     container.innerHTML = renderedTmpl;
     container.classList.add('has-only-one');
+
+    const colorList = ['amber', 'amethyst', 'azure', 'emerald', 'graphite', 'ruby', 'slate', 'turquoise'];
+    if (container?.children[0]?.classList.contains('accordion-header')) {
+      const eventTypeColor = this.settings.eventTypes.filter(eventObj => eventObj.id === event.type)[0].color;
+      const isColorList = colorList.filter(colorObj => colorObj === eventTypeColor).length > 0;
+
+      if (eventTypeColor !== event.color || !isColorList) {
+        container.children[0].style.backgroundColor = event.color;
+      }
+    }
   },
 
   /**
@@ -1481,6 +1516,9 @@ Calendar.prototype = {
    */
   updateEvent(event) {
     const eventId = event.id;
+    event.color = event.apiColor !== undefined ? event.apiColor : event.color;
+    event.borderColor = event.apiBorderColor !== undefined ? event.apiBorderColor : event.borderColor;
+
     for (let i = this.settings.events.length - 1; i >= 0; i--) {
       if (this.settings.events[i].id === eventId) {
         this.settings.events[i] = utils.extend(true, this.settings.events[i], event);
@@ -1631,6 +1669,15 @@ Calendar.prototype = {
       .popover(modalOptions)
       .off('show.calendar')
       .on('show.calendar', (evt, elem) => {
+        const colorList = ['amber', 'amethyst', 'azure', 'emerald', 'graphite', 'ruby', 'slate', 'turquoise'];
+        const eventTypeColor = this.settings.eventTypes.filter(eventObj => eventObj.id === event.type)[0].color;
+        const isColorList = colorList.filter(colorObj => colorObj === eventTypeColor).length > 0;
+
+        if (eventTypeColor !== event.color || !isColorList) {
+          elem.find('.tooltip-title').css('backgroundColor', event.color);
+          elem.find('.tooltip-title').remove('default');
+        }
+
         this.element.trigger('showmodal', { elem: this.modalContents, event });
         // Wire the click on isAllDay to disable spinbox.
         elem.find('#isAllDay').off().on('click.calendar', (e) => {
@@ -1706,6 +1753,10 @@ Calendar.prototype = {
       for (let i = 0; i < inputs.length; i++) {
         event[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
       }
+
+      // Reset Colors for New Events from Default Event Type (Will be populated later)
+      event.color = undefined;
+      event.borderColor = undefined;
 
       if (isAdd) {
         this.addEvent(event);
