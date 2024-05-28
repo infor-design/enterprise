@@ -1249,27 +1249,23 @@ Calendar.prototype = {
           self.removeModal();
         }
 
-        this.element.find('td').removeClass('slice-select-start');
-        this.element.find('td').removeClass('slice-select');
-        this.element.find('td').removeClass('slice-select-end');
-
         const key = e.currentTarget.getAttribute('data-key');
         firstKey = key;
         lastKey = key;
-        $(e.currentTarget).addClass('slice-select-start');
-        $(e.currentTarget).addClass('slice-select-end');
+        $(e.currentTarget).addClass('slide-select-start');
+        $(e.currentTarget).addClass('slide-select-end');
   
         self.element.on(`mouseenter.${COMPONENT_NAME}`, 'td', (e) => {
-          if ($(e.currentTarget).prev().hasClass('slice-select-start') || 
-            $(e.currentTarget).prev().hasClass('slice-select') || 
-            $(e.currentTarget).is('.slice-select-start')) {
+          if ($(e.currentTarget).prev().hasClass('slide-select-start') || 
+            $(e.currentTarget).prev().hasClass('slide-select') || 
+            $(e.currentTarget).is('.slide-select-start')) {
               console.log($(e.currentTarget));
             const key = e.currentTarget.getAttribute('data-key');
             if (firstKey < key && key > lastKey) {
               lastKey = key;
-              $(e.currentTarget).prev().removeClass('slice-select-end');
-              $(e.currentTarget).addClass('slice-select');
-              $(e.currentTarget).addClass('slice-select-end');
+              $(e.currentTarget).prev().removeClass('slide-select-end');
+              $(e.currentTarget).addClass('slide-select');
+              $(e.currentTarget).addClass('slide-select-end');
             }
           }
         });
@@ -1279,6 +1275,10 @@ Calendar.prototype = {
         self.element.off(`mouseenter.${COMPONENT_NAME}`, 'td');
         const startDay = new Date(firstKey.substr(0, 4), firstKey.substr(4, 2) - 1, firstKey.substr(6, 2));
         const endDay = new Date(lastKey.substr(0, 4), lastKey.substr(4, 2) - 1, lastKey.substr(6, 2));
+
+        if (self.element.find('td.slide-select-start').length === 0) {
+          return;
+        }
 
         if (startDay.getTime() === endDay.getTime()) {
           return;
@@ -1319,6 +1319,12 @@ Calendar.prototype = {
       });
 
     return this;
+  },
+
+  clearSlideSelect() {
+    this.element.find('td').removeClass('slide-select-start');
+    this.element.find('td').removeClass('slide-select');
+    this.element.find('td').removeClass('slide-select-end');
   },
 
   /**
@@ -1783,6 +1789,10 @@ Calendar.prototype = {
    * @private
    */
   removeModal() {
+    if (this.settings.slideSelect) {
+      this.clearSlideSelect();
+    }
+
     this.modalContents = null;
     if (this.activeElem) {
       this.activeElem.off();
