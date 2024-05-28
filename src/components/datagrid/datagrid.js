@@ -7754,6 +7754,11 @@ Datagrid.prototype = {
       this.tableBody
         .off(`page.${COMPONENT_NAME}`)
         .on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
+          // NG#1656 Causes to re-initialize paging of main tbody inside the expandable resulting to an error
+          if (pagingInfo.type === undefined) {
+            return;
+          }
+
           if (pagingInfo.type === 'filtered' && this.settings.source) {
             return;
           }
