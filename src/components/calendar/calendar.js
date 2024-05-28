@@ -1249,11 +1249,14 @@ Calendar.prototype = {
           self.removeModal();
         }
 
+        self.clearSlideSelect();
+
         const key = e.currentTarget.getAttribute('data-key');
         firstKey = key;
         lastKey = key;
         $(e.currentTarget).addClass('slide-select-start');
         $(e.currentTarget).addClass('slide-select-end');
+        self.monthView.selectDay(firstKey, false, true, 'cell');
   
         self.element.on(`mouseenter.${COMPONENT_NAME}`, 'td', (e) => {
           if ($(e.currentTarget).prev().hasClass('slide-select-start') || 
@@ -1272,6 +1275,10 @@ Calendar.prototype = {
       });
   
       this.element.off(`mouseup.${COMPONENT_NAME}`).on(`mouseup.${COMPONENT_NAME}`, (e) => {
+        if (self.modalVisible()) {
+          self.removeModal();
+        }
+
         self.element.off(`mouseenter.${COMPONENT_NAME}`, 'td');
         const startDay = new Date(firstKey.substr(0, 4), firstKey.substr(4, 2) - 1, firstKey.substr(6, 2));
         const endDay = new Date(lastKey.substr(0, 4), lastKey.substr(4, 2) - 1, lastKey.substr(6, 2));
