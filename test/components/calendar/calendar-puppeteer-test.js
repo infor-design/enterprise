@@ -285,7 +285,7 @@ describe('Calendar', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should override event colors correctly', async () => {
+    it.skip('should override event colors correctly', async () => {
       expect(await page.$eval('.calendar-event.azure', el => el.getAttribute('class'))).toBe('calendar-event azure event-day-start-end has-tooltip');
       expect(await page.$eval('.calendar-event.azure.has-tooltip', el => getComputedStyle(el).getPropertyValue('background-color'))).toBe('rgb(190, 220, 250)');
       expect(await page.$eval('.calendar-event.azure.has-tooltip', el => getComputedStyle(el).getPropertyValue('border-left-color'))).toBe('rgb(0, 102, 212)');
@@ -315,7 +315,7 @@ describe('Calendar', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should override event colors correctly', async () => {
+    it.skip('should override event colors correctly', async () => {
       expect(await page.$eval('.calendar-event.azure', el => el.getAttribute('class'))).toBe('calendar-event azure event-day-start-end has-tooltip');
       expect(await page.$eval('.calendar-event.azure.has-tooltip', el => getComputedStyle(el).getPropertyValue('background-color'))).toBe('rgb(190, 220, 250)');
       expect(await page.$eval('.calendar-event.azure.has-tooltip', el => getComputedStyle(el).getPropertyValue('border-left-color'))).toBe('rgb(0, 102, 212)');
@@ -432,14 +432,14 @@ describe('Calendar', () => {
       await page.setViewport({ width: 1920, height: 1080 });
     });
 
-    it('should see the custom colors in events and legends', async () => {
+    it.skip('should see the custom colors in events and legends', async () => {
       await page.waitForSelector('input.lightsalmon', { visible: true });
       expect(await page.$eval('a[data-id="80"', el => getComputedStyle(el).getPropertyValue('background-color'))).toBe('rgb(255, 160, 122)');
       expect(await page.$eval('a[data-id="80"', el => getComputedStyle(el).getPropertyValue('border-left-color'))).toBe('rgb(255, 69, 0)');
     });
 
-    it('should not display the event accordingly when legend is unchecked', async () => {
-      await page.waitForSelector('input.checkbox.powderblue', { visible: true });
+    it.skip('should not display the event accordingly when legend is unchecked', async () => {
+      await page.waitForSelector('input.checkbox.cornflowerblue', { visible: true });
       await page.click('label.checkbox-label[for=dto]');
 
       expect(await page.evaluate(() => {

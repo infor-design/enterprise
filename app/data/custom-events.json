@@ -2,31 +2,51 @@
   {
     "id": "78",
     "subject": "Today is the Day!",
-    "starts": "2020-07-27T00:00:00.000",
-    "ends": "2020-07-27T23:59:59.999",
+    "starts": "2024-05-27T00:00:00.000",
+    "ends": "2024-05-27T23:59:59.999",
     "icon": "icon-success",
     "type": "dto",
-    "color": "powderblue",
-    "borderColor": "royalblue"
+    "color": "amethyst-20",
+    "borderColor": "#8e2e8a"
   },
   {
     "id": "79",
     "subject": "Dog Event!",
-    "starts": "2020-07-28T00:00:00.000",
-    "ends": "2020-07-28T23:59:59.999",
+    "starts": "2024-05-28T00:00:00.000",
+    "ends": "2024-05-28T23:59:59.999",
     "icon": "icon-success",
     "type": "dto",
-    "color": "powderblue",
+    "color": "azure-20",
     "borderColor": "royalblue"
   },
   {
     "id": "80",
     "subject": "Not Feeling Well",
-    "starts": "2020-07-29T00:00:00.000",
-    "ends": "2020-07-29T23:59:59.999",
+    "starts": "2024-05-29T00:00:00.000",
+    "ends": "2024-05-29T23:59:59.999",
     "icon": "icon-success",
     "type": "sick",
-    "color": "lightsalmon",
+    "color": "amber-30",
     "borderColor": "orangered"
+  },
+  {
+    "id": "81",
+    "subject": "Fever",
+    "starts": "2024-05-30T00:00:00.000",
+    "ends": "2024-05-30T23:59:59.999",
+    "icon": "icon-success",
+    "type": "sick",
+    "color": "ruby-30",
+    "borderColor": "red"
+  },
+  {
+    "id": "82",
+    "subject": "Light Fever",
+    "starts": "2024-05-31T00:00:00.000",
+    "ends": "2024-05-31T23:59:59.999",
+    "icon": "icon-success",
+    "type": "sick",
+    "color": "turquoise-30",
+    "borderColor": "green"
   }
 ]

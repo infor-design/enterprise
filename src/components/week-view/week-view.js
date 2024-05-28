@@ -280,11 +280,10 @@ WeekView.prototype = {
       if (this.isStackedView()) {
         this.appendToDayContainer(event);
       } else {
+        if (event.startsHour < this.settings.startHour) {
+          event.startsHour = this.settings.startHour;
+        }
         if (this.element.hasClass('is-day-view')) {
-          if (event.startsHour < this.settings.startHour) {
-            event.startsHour = this.settings.startHour;
-          }
-
           if (days[0].key === event.startKey && event.endsHour < this.settings.endHour) {
             event.endsHour = this.settings.endHour + 1;
           } else if (days[0].key !== event.startKey && days[0].key !== event.endKey) {
@@ -347,9 +346,29 @@ WeekView.prototype = {
    * @returns {HTMLElement} calendar elem
    */
   createEventElement(event, cssClass) {
+    const colorList = ['ruby', 'amber', 'emerald', 'azure', 'turqoise', 'amethyst', 'graphite', 'slate'];
     const node = document.createElement('a');
 
-    DOM.addClass(node, 'calendar-event', event.color, cssClass);
+    DOM.addClass(node, 'calendar-event');
+
+    if (event.color !== undefined && colorList.filter(color => event.color.indexOf(color) > -1).length > 0 && !event.color?.indexOf('0') > -1) {
+      DOM.addClass(node, event.color);
+    } else if (event.color?.substr(0, 1) === '#' && event.color !== undefined) {
+      node.style.backgroundColor = event.color;
+      node.classList.remove(event.color);
+    } else {
+      node.style.backgroundColor = 'slate';
+      $(node).css('backgroundColor', event.color);
+    }
+
+    if (event.borderColor?.substr(0, 1) === '#' || event.borderColor !== undefined) {
+      node.style.borderLeftColor = event.borderColor;
+    }
+
+    if (cssClass !== undefined) {
+      DOM.addClass(node, cssClass);
+    }
+
     node.setAttribute('data-id', event.id);
     node.setAttribute('data-key', event.startKey);
     node.setAttribute('href', '#');
@@ -385,7 +404,7 @@ WeekView.prototype = {
     const eventCount = containerEvents.length;
 
     if (eventCount >= 1) {
-      node.style.top = `${22 * eventCount}px`;
+      node.style.top = `${21 * eventCount}px`;
     }
     if (eventCount > 2) {
       const nodes = this.element[0].querySelectorAll('.week-view-all-day-wrapper');
@@ -393,6 +412,30 @@ WeekView.prototype = {
         nodes[i].style.height = `${44 + ((eventCount - 1) * 23)}px`;
       }
     }
+
+    // Get string value of item
+    function getString(item) {
+      if (typeof item === 'string') {
+        return item;
+      }
+      return item ? item.toString() : null;
+    }
+
+    // Make sure we are on the same "level", when events overlap
+    const eventHead = container.parentNode.querySelectorAll(`.calendar-event.calendar-event-start[data-id="${event.id}"]`);
+
+    if (eventHead[0]) {
+      const children = eventHead[0].parentNode.children;
+      const iterator = container.querySelector('.week-view-all-day-wrapper').children.length || 0;
+      for (let i = iterator; i < children.length; i++) {
+        const dataid = children[i].getAttribute('data-id');
+        if (getString(dataid) === getString(event.id)) {
+          node.style.top = i === 0 ? '1px' : `${21 * i}px`;
+          break;
+        }
+      }
+    }
+
     allDayContainer.appendChild(node);
 
     utils.addAttributes($(node), this, this.settings.attributes, `week-view-event-${event.id}`);
