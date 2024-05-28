@@ -1261,9 +1261,8 @@ Calendar.prototype = {
   
         self.element.on(`mouseenter.${COMPONENT_NAME}`, 'td', (ev) => {
           if ($(ev.currentTarget).prev().hasClass('slide-select-start') || 
-              $(ev.currentTarget).prev().hasClass('slide-select') || 
-              $(ev.currentTarget).is('.slide-select-start')) {
-              console.log($(ev.currentTarget));
+            $(ev.currentTarget).prev().hasClass('slide-select') || 
+            $(ev.currentTarget).is('.slide-select-start')) {
             const keySlide = ev.currentTarget.getAttribute('data-key');
             if (firstKey < keySlide && keySlide > lastKey) {
               lastKey = keySlide;
