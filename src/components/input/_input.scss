@@ -762,6 +762,21 @@ span.required::after {
   }
 }
 
+.error-message,
+.alert-message,
+.success-message,
+.info-message,
+.custom-icon-message {
+  &.truncated {
+    .message-text {
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
 // Error Field
 .error-message {
   $this-icon-width: 14px;

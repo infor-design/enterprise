@@ -27,7 +27,8 @@ const VALIDATION_MESSAGE_DEFAULTS = {
   message: '',
   type: 'error',
   showTooltip: false,
-  isHelpMessage: false
+  isHelpMessage: false,
+  truncated: false
 };
 
 /**
@@ -924,7 +925,7 @@ Validator.prototype = {
 
     if (rule.type === 'icon') {
       markup = '' +
-        `<div id="${messageId}" class="custom-icon-message" data-rule-id="${rule.id || rule.message}">
+        `<div id="${messageId}" class="custom-icon-message${this.settings.truncated || rule?.truncated ? ' truncated' : ''}" data-rule-id="${rule.id || rule.message}">
           ${$.createIcon({ classes: ['icon-custom'], icon: rule.icon })}
           <pre class="audible">
             ${Locale.translate(validationType.titleMessageID)}
@@ -933,7 +934,7 @@ Validator.prototype = {
         </div>`;
     } else {
       markup = '' +
-        `<div id="${messageId}" class="${validationType.type}-message" data-rule-id="${rule.id || rule.message}">
+        `<div id="${messageId}" class="${validationType.type}-message${this.settings.truncated || rule?.truncated ? ' truncated' : ''}" data-rule-id="${rule.id || rule.message}">
           ${$.createIcon({ classes: [`icon-${validationType.type}`], icon })}
           <pre class="audible">
             ${Locale.translate(validationType.titleMessageID)}
@@ -979,6 +980,12 @@ Validator.prototype = {
     // Trigger an event
     field.triggerHandler(validationType.type, { field, message: rule.message });
     field.closest('form').triggerHandler(validationType.type, { field, message: rule.message });
+
+    // Add tooltip when text is truncated
+    if (this.settings.truncated || rule?.truncated) {
+      const truncatedMessage = field.find('~ div[class*="-message"].truncated > .message-text');
+      truncatedMessage.tooltip({ content: truncatedMessage[0].innerText });
+    }
   },
 
   /**
