@@ -185,7 +185,7 @@ html.theme-new-dark .is-personalizable:not(.header) .personalize-header .btn-sec
   background-color: ${colors.btnBgHoverColor};
 }
 
-html[class*="new-"] .is-personalizable:not(.header) .personalize-header .btn-secondary:not(:disabled):not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover {
+html[class*="new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .personalize-header .btn-secondary:not(:disabled):not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover {
   background-color: ${colors.tabHeaderColor !== '#ffffff' ? colors.light : colors.darker} !important;
 }
 

@@ -273,6 +273,7 @@ Personalize.prototype = {
       '#1F9254': themeColors.palette.emerald[60].value,
       '#8D0B0E': themeColors.palette.ruby[60].value,
       '#297B7B': themeColors.palette.turquoise[60].value,
+      '#535353': themeColors.palette.graphite[50].value,
     };
 
     if (colors.header in colorMapping) {
@@ -288,7 +289,7 @@ Personalize.prototype = {
     colors.darker = colors.inactive;
     colors.darkest = colors.horizontalBorder;
     colors.btnHoverColor = colors.contrast;
-    colors.btnBgHoverColor = 'rgba(0, 0, 0, 0.25) !important';
+    colors.btnBgHoverColor = 'rgba(0, 0, 0, 0.10) !important';
     colors.focusBoxShadow = `0 0 0 0.5px ${colors.subtext}, 0 0 0 0.5px ${colors.subtext}`;
     colors.btnFocusBorderColor = colors.contrast;
     colors.btnDisabledColor = 'rgba(255, 255, 255, 0.5) !important';
