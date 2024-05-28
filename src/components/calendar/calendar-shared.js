@@ -219,6 +219,7 @@ calendarShared.formateTimeString = function formateTimeString(event, locale, lan
  * @returns {object} The Calendar prototype, useful for chaining.
  */
 calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes) {
+  const colorList = ['amber', 'amethyst', 'azure', 'emerald', 'graphite', 'ruby', 'slate', 'turquoise'];
   let color = 'azure';
   if (!event.type && !event.color) {
     return color;
@@ -240,14 +241,31 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
     }
   }
 
-  if (event.color !== undefined && eventInfo.length === 1) {
-    if (eventInfo[0].color !== event.color) {
-      return eventInfo[0].color;
-    }
+  if (event.color?.substr(0, 1) === '#' && event.color !== undefined) {
+    return event.color;
   }
 
-  if (event.color?.substr(0, 1) === '#' || event.color) {
+  if (event.color !== undefined && event.color.indexOf('-') > -1) {
+    const colorCheck = event.color?.split('-');
+    if (colorList.filter(colorObj => colorObj === colorCheck[0]).length > 0) {
+      let colorGrade = colorCheck[1] * 0.1;
+  
+      if (colorCheck[1] * 0.1 !== 10) {
+        colorGrade = `0${colorGrade}`;
+      }
+  
+      return colorCheck[0] + colorGrade;
+    }
+  }
+  
+  if (event.color?.indexOf('-') === -1 && colorList.filter(colorObj => event.color?.indexOf(colorObj) > -1).length > 0) {
     return event.color;
+  }
+
+  if (event.color !== undefined && eventInfo.length === 1) {
+    if (eventInfo[0].color !== event.color) {
+      return event.color;
+    }
   }
 
   if (eventInfo.length === 1) {
@@ -271,22 +289,21 @@ calendarShared.getEventTypeBorderColor = function getEventTypeBorderColor(event,
   const eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
   if (event.borderColor !== undefined && eventInfo.length === 1) {
     if (eventInfo[0].borderColor !== event.borderColor) {
-      return eventInfo[0].borderColor;
+      borderColor = eventInfo[0].borderColor;
     }
   }
 
-  if (event.borderColor?.substr(0, 1) === '#' || event.borderColor) {
+  if (event.borderColor?.substr(0, 1) === '#' && event.borderColor !== undefined) {
     return event.borderColor;
   }
 
   // Add colors to the border from the default set of colors available in Design
-  if (event.color !== null && event.color !== undefined && event.color.substr(0, 1) !== '#') {
-    borderColor = event.color;
+  if (event.borderColor !== undefined && event.borderColor.substr(0, 1) !== '#') {
     return event.borderColor;
   }
 
   if (eventInfo.length === 1) {
-    borderColor = eventInfo[0].borderColor || 'azure';
+    borderColor = eventInfo[0].borderColor || eventInfo[0].color || 'azure';
     return borderColor;
   }
 
