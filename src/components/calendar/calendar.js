@@ -1243,7 +1243,8 @@ Calendar.prototype = {
 
     // Slide Select Settings
     if (this.settings.slideSelect) {
-      let firstKey, lastKey;
+      let firstKey;
+      let lastKey;
       this.element.off(`mousedown.${COMPONENT_NAME}`).on(`mousedown.${COMPONENT_NAME}`, 'td', (e) => {
         if (self.modalVisible()) {
           self.removeModal();
@@ -1258,17 +1259,17 @@ Calendar.prototype = {
         $(e.currentTarget).addClass('slide-select-end');
         self.monthView.selectDay(firstKey, false, true, 'cell');
   
-        self.element.on(`mouseenter.${COMPONENT_NAME}`, 'td', (e) => {
-          if ($(e.currentTarget).prev().hasClass('slide-select-start') || 
-            $(e.currentTarget).prev().hasClass('slide-select') || 
-            $(e.currentTarget).is('.slide-select-start')) {
-              console.log($(e.currentTarget));
-            const key = e.currentTarget.getAttribute('data-key');
-            if (firstKey < key && key > lastKey) {
-              lastKey = key;
-              $(e.currentTarget).prev().removeClass('slide-select-end');
-              $(e.currentTarget).addClass('slide-select');
-              $(e.currentTarget).addClass('slide-select-end');
+        self.element.on(`mouseenter.${COMPONENT_NAME}`, 'td', (ev) => {
+          if ($(ev.currentTarget).prev().hasClass('slide-select-start') || 
+              $(ev.currentTarget).prev().hasClass('slide-select') || 
+              $(ev.currentTarget).is('.slide-select-start')) {
+              console.log($(ev.currentTarget));
+            const keySlide = ev.currentTarget.getAttribute('data-key');
+            if (firstKey < keySlide && keySlide > lastKey) {
+              lastKey = keySlide;
+              $(ev.currentTarget).prev().removeClass('slide-select-end');
+              $(ev.currentTarget).addClass('slide-select');
+              $(ev.currentTarget).addClass('slide-select-end');
             }
           }
         });
