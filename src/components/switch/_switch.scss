@@ -19,6 +19,18 @@
     }
   }
 
+  label,
+  .label-text {
+    pointer-events: none;
+  }
+
+  label::before,
+  label::after,
+  .label-text::before,
+  .label-text::after {
+    pointer-events: all;
+  }
+
   // Invisible Input
   input {
     border: none;
@@ -163,6 +175,63 @@
       margin-bottom: calc($form-size-field-compact-margin-bottom / 2) + 2;
       padding-left: 38px;
     }
+  }
+}
+
+.listview.personalize-col {
+  &.is-selectable li {
+    cursor: auto;
+  }
+
+  .switch {
+    .label-text {
+      top: 1px;
+    }
+
+    input ~ .label-text::before,
+    input ~ label::before {
+      left: 240px;
+      top: 10px;
+    }
+
+    input:empty ~ .label-text::after,
+    input:empty ~ label::after {
+      left: 235px;
+      top: 3px;
+    }
+
+    input:checked ~ .label-text::after,
+    input:checked ~ label::after {
+      left: 255px;
+      top: 3px;
+    }
+  }
+
+  li.child {
+    &.arrange-dragging {
+      background-color: $listview-bg-color;
+    }
+
+    .switch {
+      input ~ .label-text::before,
+      input ~ label::before {
+        left: 220px;
+      }
+
+      input:empty ~ .label-text::after,
+      input:empty ~ label::after {
+        left: 215px;
+      }
+
+      input:checked ~ .label-text::after,
+      input:checked ~ label::after {
+        left: 235px;
+      }
+    }
+  }
+
+  li.arrange-placeholder.draggable {
+    background-color: transparent;
   }
 }
 

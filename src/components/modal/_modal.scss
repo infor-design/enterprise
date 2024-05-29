@@ -183,6 +183,10 @@
         margin-top: 0;
       }
     }
+
+    @media (max-width: 380px) {
+      margin: 0;
+    }
   }
 
   &.is-draggable {
@@ -578,8 +582,8 @@ body.modal-engaged {
   }
 
   &.propagate-style {
-    max-height: inherit; 
-    max-width: inherit; 
+    max-height: inherit;
+    max-width: inherit;
     overflow: inherit;
   }
 
