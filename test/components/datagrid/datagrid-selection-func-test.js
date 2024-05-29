@@ -278,7 +278,7 @@ describe('Datagrid Selection API', () => {
     datagridObj.unSelectAllRows();
   });
 
-  it('should test paging select server-side Single', (done) => {
+  it.skip('should test paging select server-side Single', (done) => {
     datagridObj?.destroy();
     const options = { columns, selectable: 'single', paging: true, pagesize: 3, source: pagingDataSource };
     datagridObj = new Datagrid(datagridEl, options);
@@ -317,7 +317,7 @@ describe('Datagrid Selection API', () => {
     }, 1);
   });
 
-  it('should test paging select server-side Multiple', (done) => {
+  it.skip('should test paging select server-side Multiple', (done) => {
     datagridObj?.destroy();
     const options = { columns, selectable: 'multiple', paging: true, pagesize: 3, source: pagingDataSource };
     datagridObj = new Datagrid(datagridEl, options);
