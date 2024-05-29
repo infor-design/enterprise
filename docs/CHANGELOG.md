@@ -31,6 +31,7 @@
 - `[Module Nav]` Fixed module nav switcher text was not vertically aligned. ([#8736](https://github.com/infor-design/enterprise/issues/8736))
 - `[Monthview]` Fixed monthview not updating after changing activeDate. ([NG#1659](https://github.com/infor-design/enterprise-ng/issues/1659))
 - `[Popup Menu]` Fixed bug on popupmenu showing behind app menu on mobile. ([#8582](https://github.com/infor-design/enterprise/issues/8582))
+- `[Popup Menu]` Fixed bug on popupmenu not opening on second right click. ([#8637](https://github.com/infor-design/enterprise/issues/8637))
 - `[Tabs]` Fixed the focus state border bottom being cut off in horizontal tabs. ([#8644](https://github.com/infor-design/enterprise/issues/8644))
 
 ## v4.95.0
