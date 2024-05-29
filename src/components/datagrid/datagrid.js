@@ -1167,6 +1167,9 @@ Datagrid.prototype = {
     }
 
     if (this.pagerAPI) {
+      // Set the active page for the pager API. If no active page is provided, default to page 1.
+      this.pagerAPI.activePage = pagerInfo.activePage || 1;
+
       if (this.settings.showDirty && this.settings.source &&
         /first|last|next|prev|sorted/.test(pagerInfo.type)) {
         this.dirtyArray = undefined;
