@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.92.9
+
+## v4.92.9 Fixes
+
+- `[Locale]` Fixed mixed up Norwegian vs dutch. ([#8647](https://github.com/infor-design/enterprise/issues/8647))
+
 ## v4.92.8
 
 ## v4.92.8 Fixes
