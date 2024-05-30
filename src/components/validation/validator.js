@@ -981,10 +981,31 @@ Validator.prototype = {
     field.triggerHandler(validationType.type, { field, message: rule.message });
     field.closest('form').triggerHandler(validationType.type, { field, message: rule.message });
 
+    const isSafari = $('html.is-safari').length > 0;
+    const truncatedMessage = field.find('~ div[class*="-message"].truncated > .message-text');
+    const isOverflowing = truncatedMessage[0].scrollWidth > truncatedMessage[0].offsetWidth;
+    const isOverflowingInSafari = truncatedMessage[0].scrollWidth > field[0].clientWidth && isSafari;
+
     // Add tooltip when text is truncated
-    if (this.settings.truncated || rule?.truncated) {
-      const truncatedMessage = field.find('~ div[class*="-message"].truncated > .message-text');
-      truncatedMessage.tooltip({ content: truncatedMessage[0].innerText });
+    function truncateText(element) {
+      let text = element.textContent;
+
+      if (isOverflowingInSafari) {
+        text = text.slice(0, -1);
+        element.textContent = `${text}...`; // Add ellipsis
+      }
+    }
+
+    if ((this.settings.truncated || rule?.truncated) && isOverflowing || isOverflowingInSafari) {
+      truncatedMessage.tooltip({
+        content: truncatedMessage[0].innerText,
+        trigger: 'hover'
+      });
+
+      // Different approach of truncating text for Safari
+      if (isSafari) {
+        truncateText(truncatedMessage[0]);
+      }
     }
   },
 
