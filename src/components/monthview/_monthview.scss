@@ -710,6 +710,7 @@
         }
 
         &.slide-select-start {
+          background-color: $calendar-selected-bg-color;
           box-shadow: inset 1px 0 0 0 $calendar-selected-border-color,
             inset -1px 0 0 0 transparent,
             inset 0 1px 0 0 $calendar-selected-border-color,
@@ -717,6 +718,7 @@
         }
 
         &.slide-select {
+          background-color: $calendar-selected-bg-color;
           box-shadow: inset 1px 0 0 0 transparent, 
             inset -1px 0 0 0 transparent, 
             inset 0 1px 0 0 #0072ED, 
@@ -724,6 +726,7 @@
         }
 
         &.slide-select-end {
+          background-color: $calendar-selected-bg-color;
           box-shadow: inset 1px 0 0 0 transparent,
             inset -1px 0 0 0 $calendar-selected-border-color,
             inset 0 1px 0 0 $calendar-selected-border-color,
@@ -731,6 +734,7 @@
         }
 
         &.slide-select-start.slide-select-end {
+          background-color: $calendar-selected-bg-color;
           box-shadow: inset 1px 0 0 0 $calendar-selected-border-color,
             inset -1px 0 0 0 $calendar-selected-border-color,
             inset 0 1px 0 0 $calendar-selected-border-color,

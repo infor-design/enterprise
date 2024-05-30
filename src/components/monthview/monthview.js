@@ -1647,9 +1647,9 @@ MonthView.prototype = {
     // Change Month Events
     this.header.off('click.monthview').on('click.monthview', '.btn-icon.prev, .btn-icon.next', function () {
       if (s.slideSelect) {
-        self.element.find('td').removeClass('slice-select-start');
-        self.element.find('td').removeClass('slice-select');
-        self.element.find('td').removeClass('slice-select-end');
+        self.element.find('td').removeClass('slide-select-start');
+        self.element.find('td').removeClass('slide-select');
+        self.element.find('td').removeClass('slide-select-end');
       }
 
       const isNext = $(this).is('.next');
@@ -1733,6 +1733,11 @@ MonthView.prototype = {
           if (e.currentTarget.classList.contains('is-disabled')) {
             return;
           }
+
+          if (s.slideSelect && e.shiftKey) {
+            return;
+          }
+
           this.selectDay(key, false, true, 'cell');
         });
     }
@@ -2332,6 +2337,7 @@ MonthView.prototype = {
    */
   handleKeys() {
     const s = this.settings;
+    const self = this;
 
     this.element.off('keydown.monthview').on('keydown.monthview', '.monthview-table', (e) => {
       const key = e.keyCode || e.charCode || 0;
@@ -2341,6 +2347,34 @@ MonthView.prototype = {
       let idx = null;
       let selector = null;
       let handled = false;
+
+      if (s.slideSelect) {
+        if (key === 37 && e.shiftKey) {
+          if (!$(e.target).hasClass('slide-select-start') && ($(e.target).prev().hasClass('slide-select') || $(e.target).prev().hasClass('slide-select-start'))) {
+            $(e.target).removeClass('slide-select');
+            $(e.target).removeClass('slide-select-end');
+            
+            if (!$(e.target).prev().hasClass('slide-select-start')) {
+              $(e.target).prev().addClass('slide-select');
+            }
+            
+            $(e.target).prev().addClass('slide-select-end');
+          }
+        } else if (key === 39 && e.shiftKey) {
+          if (($(e.target).hasClass('slide-select-start') || 
+            $(e.target).prev().hasClass('slide-select-end') || 
+            $(e.target).hasClass('slide-select-end')) && $(e.target).next().length > 0) {
+            $(e.target).removeClass('slide-select-end');
+            $(e.target).next().addClass('slide-select');
+            $(e.target).next().addClass('slide-select-end');
+          } else {
+            self.clearSlideSelect();
+          }
+        } else if ((key === 37 && !e.shiftKey) || (key === 39 && !e.shiftKey) || key == 40 || key == 38) {
+          self.clearSlideSelect();
+        }
+      }
+
       const minDate = new Date(s.disable.minDate);
       const maxDate = new Date(s.disable.maxDate);
       const resetRange = () => {
@@ -2595,6 +2629,13 @@ MonthView.prototype = {
         }
 
         this.selectDay(this.currentDate, true, true);
+
+        if (s.slideSelect) {
+          self.clearSlideSelect();
+          $(e.target).addClass('slide-select-start');
+          $(e.target).addClass('slide-select-end');
+        }
+
         this.setRipple(e.target?.querySelector('.is-ripple'), e);
       }
 
@@ -2605,6 +2646,12 @@ MonthView.prototype = {
       }
       return true;
     });
+  },
+
+  clearSlideSelect() {
+    this.element.find('td').removeClass('slide-select-start');
+    this.element.find('td').removeClass('slide-select');
+    this.element.find('td').removeClass('slide-select-end');
   },
 
   /**

@@ -1250,28 +1250,47 @@ Calendar.prototype = {
           self.removeModal();
         }
 
-        self.clearSlideSelect();
+        if (e.shiftKey) {
+          let hasStartSelect = false;
+          let targetTd = $(e.currentTarget).prev();
 
-        const key = e.currentTarget.getAttribute('data-key');
-        firstKey = key;
-        lastKey = key;
-        $(e.currentTarget).addClass('slide-select-start');
-        $(e.currentTarget).addClass('slide-select-end');
-        self.monthView.selectDay(firstKey, false, true, 'cell');
+          if (targetTd.siblings().hasClass('slide-select-start')) {
+            $(e.currentTarget).addClass('slide-select-end');
+            while (!hasStartSelect) {
+              targetTd.addClass('slide-select');
   
-        self.element.on(`mouseenter.${COMPONENT_NAME}`, 'td', (ev) => {
-          if ($(ev.currentTarget).prev().hasClass('slide-select-start') || 
-            $(ev.currentTarget).prev().hasClass('slide-select') || 
-            $(ev.currentTarget).is('.slide-select-start')) {
-            const keySlide = ev.currentTarget.getAttribute('data-key');
-            if (firstKey < keySlide && keySlide > lastKey) {
-              lastKey = keySlide;
-              $(ev.currentTarget).prev().removeClass('slide-select-end');
-              $(ev.currentTarget).addClass('slide-select');
-              $(ev.currentTarget).addClass('slide-select-end');
+              if (targetTd.prev().hasClass('slide-select-start')) {
+                hasStartSelect = true;
+              }
+  
+              targetTd = targetTd.prev();
             }
+            targetTd.removeClass('slide-select-end');
           }
-        });
+        } else {
+          self.clearSlideSelect();
+
+          const key = e.currentTarget.getAttribute('data-key');
+          firstKey = key;
+          lastKey = key;
+          $(e.currentTarget).addClass('slide-select-start');
+          $(e.currentTarget).addClass('slide-select-end');
+          self.monthView.selectDay(firstKey, false, true, 'cell');
+    
+          self.element.on(`mouseenter.${COMPONENT_NAME}`, 'td', (ev) => {
+            if ($(ev.currentTarget).prev().hasClass('slide-select-start') || 
+              $(ev.currentTarget).prev().hasClass('slide-select') || 
+              $(ev.currentTarget).is('.slide-select-start')) {
+              const keySlide = ev.currentTarget.getAttribute('data-key');
+              if (firstKey < keySlide && keySlide > lastKey) {
+                lastKey = keySlide;
+                $(ev.currentTarget).prev().removeClass('slide-select-end');
+                $(ev.currentTarget).addClass('slide-select');
+                $(ev.currentTarget).addClass('slide-select-end');
+              }
+            }
+          });
+        }
       });
   
       this.element.off(`mouseup.${COMPONENT_NAME}`).on(`mouseup.${COMPONENT_NAME}`, (e) => {
@@ -1294,8 +1313,6 @@ Calendar.prototype = {
         const eventData = utils.extend({ }, this.settings.newEventDefaults);
         eventData.startKey = firstKey;
         eventData.endKey = lastKey;
-        eventData.starts = Locale.formatDate(startDay);
-        eventData.ends = Locale.formatDate(endDay);
         e.stopPropagation();
   
         calendarShared.cleanEventData(
@@ -1308,6 +1325,11 @@ Calendar.prototype = {
           this.settings.eventTypes
         );
         this.showModalWithCallback(eventData, true);
+      });
+
+      this.element.on('keydown', 'td', (e) => {
+        console.log(e);
+
       });
     }
 
@@ -1622,6 +1644,28 @@ Calendar.prototype = {
 
     if (this.modalVisible()) {
       this.removeModal();
+    }
+
+    if (this.settings.slideSelect) {
+      const firstKey = this.element.find('td.slide-select-start').attr('data-key');
+      const lastKey = this.element.find('td.slide-select-end').attr('data-key');
+      const startDay = new Date(firstKey.substr(0, 4), firstKey.substr(4, 2) - 1, firstKey.substr(6, 2));
+      const endDay = new Date(lastKey.substr(0, 4), lastKey.substr(4, 2) - 1, lastKey.substr(6, 2));
+
+      event.startKey = firstKey;
+      event.endKey = lastKey;
+      event.starts = Locale.formatDate(startDay);
+      event.ends = Locale.formatDate(endDay);
+
+      calendarShared.cleanEventData(
+        event,
+        false,
+        this.currentDate(),
+        this.locale,
+        this.language,
+        this.settings.events,
+        this.settings.eventTypes
+      );
     }
 
     this.modalContents = document.createElement('div');
