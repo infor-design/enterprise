@@ -732,7 +732,7 @@ Accordion.prototype = {
     if (!element || !element.length) {
       return;
     }
-    this.hasAnchor = false;
+
     // Make sure we select the anchor
     let anchor = element;
     let header = anchor.parent();
