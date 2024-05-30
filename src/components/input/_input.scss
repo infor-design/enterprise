@@ -402,7 +402,7 @@ span.required::after {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1; /* Number of lines to show */
-        max-height: 1.2em; /* Adjust the max-height to fit the desired number of lines */
+        max-height: 1.3em; /* Adjust the max-height to fit the desired number of lines */
         white-space: unset;
       }
     }
