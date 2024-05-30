@@ -2370,7 +2370,7 @@ MonthView.prototype = {
           } else {
             self.clearSlideSelect();
           }
-        } else if ((key === 37 && !e.shiftKey) || (key === 39 && !e.shiftKey) || key == 40 || key == 38) {
+        } else if ((key === 37 && !e.shiftKey) || (key === 39 && !e.shiftKey) || key === 40 || key === 38) {
           self.clearSlideSelect();
         }
       }

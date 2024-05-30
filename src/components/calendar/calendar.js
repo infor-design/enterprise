@@ -1326,11 +1326,6 @@ Calendar.prototype = {
         );
         this.showModalWithCallback(eventData, true);
       });
-
-      this.element.on('keydown', 'td', (e) => {
-        console.log(e);
-
-      });
     }
 
     // Set up mobile list view events
