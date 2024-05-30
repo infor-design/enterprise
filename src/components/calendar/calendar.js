@@ -1253,9 +1253,6 @@ Calendar.prototype = {
         if (e.shiftKey) {
           let hasStartSelect = false;
           let targetTd = $(e.currentTarget).prev();
-
-          const startKey = self.element.find('td.slide-select-start').attr('data-key');
-          const endKey = $(e.currentTarget).attr('data-key');
           const isProperSelect = self.element.find('td.slide-select-start').attr('data-key') < $(e.currentTarget).attr('data-key');
           if (targetTd.siblings().hasClass('slide-select-start') && isProperSelect) {
             $(e.currentTarget).addClass('slide-select-end');
