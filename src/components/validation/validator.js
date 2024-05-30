@@ -983,8 +983,8 @@ Validator.prototype = {
 
     const isSafari = $('html.is-safari').length > 0;
     const truncatedMessage = field.find('~ div[class*="-message"].truncated > .message-text');
-    const isOverflowing = truncatedMessage[0].scrollWidth > truncatedMessage[0].offsetWidth;
-    const isOverflowingInSafari = truncatedMessage[0].scrollWidth > field[0].clientWidth && isSafari;
+    const isOverflowing = truncatedMessage[0]?.scrollWidth > truncatedMessage[0]?.offsetWidth;
+    const isOverflowingInSafari = truncatedMessage[0]?.scrollWidth > field[0]?.clientWidth && isSafari;
 
     // Add tooltip when text is truncated
     function truncateText(element) {
