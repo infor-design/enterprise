@@ -10,7 +10,9 @@
 - `[AppMenu]` Fixed hover state on menu button in app menu. ([#8723](https://github.com/infor-design/enterprise/issues/8723))
 - `[Autocomplete]` Fixed autocomplete not properly highlighted on key down. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
 - `[Bar-Stacked/Column-Stacked]` Fixed an error encountered when having many records inside the graph. ([NG#1675](https://github.com/infor-design/enterprise-ng/issues/1675))
+- `[Button]` Fixed different buttons stylings in personalization inside of content form. ([#8714](https://github.com/infor-design/enterprise/issues/8714))
 - `[Calendar]` Fixed monthrendered being executed twice in week view and day view. ([#8469](https://github.com/infor-design/enterprise/issues/8469))
+- `[Datagrid]` Fixed `loadData` and `updateDataset` API to render the correct pager and it's data. ([#8677](https://github.com/infor-design/enterprise/issues/8677))
 - `[Datagrid]` Fixed an error in expandable rows where paging causes to render white html. ([NG#1656](https://github.com/infor-design/enterprise-ng/issues/1656))
 - `[Datagrid]` Fixed dropdown keys not properly triggering when using keyboard. ([#8745](https://github.com/infor-design/enterprise/issues/8745))
 - `[Datagrid]` Fixed cell changed trigger event on number and string comparison. ([#8719](https://github.com/infor-design/enterprise/issues/8719))
@@ -31,6 +33,7 @@
 - `[Module Nav]` Fixed module nav switcher text was not vertically aligned. ([#8736](https://github.com/infor-design/enterprise/issues/8736))
 - `[Monthview]` Fixed monthview not updating after changing activeDate. ([NG#1659](https://github.com/infor-design/enterprise-ng/issues/1659))
 - `[Popup Menu]` Fixed bug on popupmenu showing behind app menu on mobile. ([#8582](https://github.com/infor-design/enterprise/issues/8582))
+- `[Popup Menu]` Fixed bug on popupmenu not opening on second right click. ([#8637](https://github.com/infor-design/enterprise/issues/8637))
 - `[Tabs]` Fixed the focus state border bottom being cut off in horizontal tabs. ([#8644](https://github.com/infor-design/enterprise/issues/8644))
 
 ## v4.95.0

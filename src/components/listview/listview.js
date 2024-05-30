@@ -70,6 +70,7 @@ const LISTVIEW_DEFAULTS = {
   allowDeselect: true,
   showPageSizeSelector: false,
   listFilterSettings: null,
+  hasChildren: false,
   pagerSettings: {
     showFirstButton: false,
     showLastButton: false
@@ -382,7 +383,8 @@ ListView.prototype = {
 
     // When DOM items are not rendered with "mustache" template, filtered items
     // have to be hidden specifically.
-    const hideFlag = items.length > displayedDataset.length;
+    const hideFlag = items.length > displayedDataset.length || self.settings.hasChildren;
+    let groupIndex = 0;
 
     items.each(function (i) {
       const item = $(this);
@@ -429,7 +431,14 @@ ListView.prototype = {
       // Hide filtered items
       if (hideFlag) {
         const n = firstRecordIdx + i;
-        if (n < self.settings.dataset.length) {
+
+        if (self.settings.hasChildren) {
+          const data = dataset[groupIndex];
+          if (!item.hasClass('child')) {
+            item.css('display', data[self.settings.children].length > 0 ? '' : 'none');
+            groupIndex++;
+          }
+        } else if (n < self.settings.dataset.length) {
           const data = self.settings.dataset[n];
           item.css('display', (data._isFilteredOut === undefined || data._isFilteredOut) ? '' : 'none');
         }
@@ -743,18 +752,47 @@ ListView.prototype = {
     // Reset filter status
     this.settings.dataset.forEach((item) => {
       item._isFilteredOut = false;
+
+      if (this.settings.hasChildren) {
+        const children = item[this.settings.children];
+        children.forEach((child) => {
+          child._isFilteredOut = false;
+        });
+      }
     });
 
     // Filter the results and highlight things
-    let results = this.listfilter.filter(this.settings.dataset, this.searchTerm, true);
-    if (!results.length) {
-      results = [];
+    let results;
+    if (this.settings.hasChildren) {
+      pagingInfo.filteredTotal = 0;
+      results = utils.deepCopy(this.settings.dataset);
+      results.forEach((item) => {
+        let childResults = this.listfilter.filter(item[this.settings.children], this.searchTerm, true);
+        if (!childResults.length) {
+          childResults = [];
+        }
+
+        pagingInfo.filteredTotal += childResults.length;
+        childResults.forEach((result) => {
+          result._isFilteredOut = true;
+        });
+
+        item[this.settings.children] = childResults;
+        item._isFilteredOut = childResults.length > 0;
+      });
+
+      pagingInfo.searchActivePage = 1;
+    } else {
+      results = this.listfilter.filter(this.settings.dataset, this.searchTerm, true);
+      if (!results.length) {
+        results = [];
+      }
+      pagingInfo.filteredTotal = results.length;
+      pagingInfo.searchActivePage = 1;
+      results.forEach((result) => {
+        result._isFilteredOut = true;
+      });
     }
-    pagingInfo.filteredTotal = results.length;
-    pagingInfo.searchActivePage = 1;
-    results.forEach((result) => {
-      result._isFilteredOut = true;
-    });
 
     this.filteredDataset = results;
     this.loadData(null, pagingInfo);
@@ -782,6 +820,12 @@ ListView.prototype = {
     // reset filter status
     this.settings.dataset.forEach((item) => {
       delete item._isFilteredOut;
+
+      if (this.settings.hasChildren) {
+        item[this.settings.children].forEach((child) => {
+          delete child._isFilteredOut;
+        });
+      }
     });
 
     if (this.filteredDataset) {
@@ -1012,8 +1056,9 @@ ListView.prototype = {
    * Select the given list item.
    * @param {jquery|number} li Either the actually jQuery list element or a zero based index
    * @param {boolean} noTrigger Do not trigger the selected event.
+   * @param {boolean} isKey Check if select was triggered by key or not
    */
-  select(li, noTrigger) {
+  select(li, noTrigger, isKey = false) {
     const self = this;
     let isChecked = false;
     const isMixed = self.settings.selectable === 'mixed';
@@ -1096,6 +1141,7 @@ ListView.prototype = {
       this.element.triggerHandler(triggerStr, {
         selectedItems: this.selectedItems,
         elem: li,
+        isKey,
         selectedData
       });
 
@@ -1453,7 +1499,7 @@ ListView.prototype = {
             if (isMultiple && e.shiftKey) {
               self.selectItemsBetweenIndexes([self.lastSelectedItem, item.index()]);
             } else {
-              self.select(item);
+              self.select(item, false, true);
             }
             e.preventDefault();
           }
