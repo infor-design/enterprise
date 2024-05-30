@@ -47,6 +47,7 @@ const ACCORDION_DEFAULTS = {
   rerouteOnLinkClick: true,
   notificationBadge: false,
   source: null,
+  selected: null,
   tooltipStyle: 'light'
 };
 
@@ -264,7 +265,7 @@ Accordion.prototype = {
         });
       }
 
-      this.select(targetsToExpand.last());
+      this.select(this.settings.selected ? this.settings.selected : targetsToExpand.last());
       targetsToExpand.next('.accordion-pane').removeClass('no-transition');
     }
 
@@ -449,7 +450,6 @@ Accordion.prototype = {
     * @param {object} header - The header object
     */
     this.element.trigger('selected', header);
-
     return true;
   },
 
@@ -732,7 +732,7 @@ Accordion.prototype = {
     if (!element || !element.length) {
       return;
     }
-
+    this.hasAnchor = false;
     // Make sure we select the anchor
     let anchor = element;
     let header = anchor.parent();
