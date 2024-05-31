@@ -11,5 +11,26 @@
       <input id="limited-spinbox-2" name="limited-spinbox-2" type="text" class="spinbox"  data-options="{min: 100, max: 200}" />
     </div>
 
+    <div class="field">
+      <button id="update-max" type="button" class="btn-secondary"><span>Update to more than max</span></button>
+      <button id="update-min" type="button" class="btn-secondary"><span>Update to less than min</span></button>
+    </div>
+
   </div>
 </div>
+
+<script>
+$('body').on('initialized', function () {
+  const api = $('#limited-spinbox').data('spinbox');
+  const api2 = $('#limited-spinbox-2').data('spinbox');
+
+  $('#update-max').on('click', () => {
+    api.updateVal(20);
+    api2.updateVal(300);
+  });
+  $('#update-min').on('click', () => {
+    api.updateVal(-20);
+    api2.updateVal(0);
+  });
+});
+</script>

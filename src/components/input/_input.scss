@@ -391,6 +391,22 @@ span.required::after {
       -webkit-text-fill-color: $input-disabled-color;
     }
   }
+
+  .error-message,
+  .alert-message,
+  .success-message,
+  .info-message,
+  .custom-icon-message {
+    &.truncated {
+      .message-text {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1; /* Number of lines to show */
+        max-height: 1.3em; /* Adjust the max-height to fit the desired number of lines */
+        white-space: unset;
+      }
+    }
+  }
 }
 
 ::-moz-placeholder {
@@ -759,6 +775,21 @@ span.required::after {
     margin-top: -2px;
     max-width: 267px;
     padding-left: $this-icon-width + 5;
+  }
+}
+
+.error-message,
+.alert-message,
+.success-message,
+.info-message,
+.custom-icon-message {
+  &.truncated {
+    .message-text {
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 }
 

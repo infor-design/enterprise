@@ -47,6 +47,16 @@ span.required::after {
   }
 }
 
+div[class*='-message'].truncated {
+  .icon {
+    top: 1px !important;
+  }
+
+  .message-text {
+    line-height: normal;
+  }
+}
+
 .is-firefox {
   .field-short,
   .form-layout-compact .field {

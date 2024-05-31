@@ -241,6 +241,7 @@ ModuleNav.prototype = {
       });
       $(this.accordionEl).on(`selected.${COMPONENT_NAME}`, (e, header) => {
         if ($(header).is('#module-nav-settings-btn')) return;
+        this.settings.accordionSettings.selected = header;
         this.handleAutoCollapseOnMobile();
       });
       $(this.accordionEl).on(`followlink.${COMPONENT_NAME}`, (e, header) => {

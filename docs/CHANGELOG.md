@@ -6,6 +6,8 @@
 
 - `[Calendar]` Added new setting `slideSelect` to allow users to select from span of range in creating an event. ([#8243](https://github.com/infor-design/enterprise/issues/8243))
 - `[ContextualActionPanel/Modal]` Added new settings `propagateStyle` and `compactPanel`. ([NG#1594](https://github.com/infor-design/enterprise-ng/issues/1594))
+- `[ContextualActionPanel/Modal]` Added new settings `propagateStyle` and `compactPanel`. ([NG#1594](https://github.com/infor-design/enterprise-ng/issues/1594))
+- `[Validation]` Added `truncated` setting to truncate and have a tooltip on validation messages. ([#7909](https://github.com/infor-design/enterprise/issues/7909))
 
 ## v4.96.0 Fixes
 
@@ -33,9 +35,11 @@
 - `[Lookup]` Fixed a bug where tooltip was not showing after selecting an item in lookup. ([#1646](https://github.com/infor-design/enterprise-ng/issues/1646))
 - `[Listview]` Fixed positioning of list alert icons in RTL mode. ([#8724](https://github.com/infor-design/enterprise/issues/8724))
 - `[Module Nav]` Fixed module nav switcher text was not vertically aligned. ([#8736](https://github.com/infor-design/enterprise/issues/8736))
+- `[Module Nav]` Fixed module nav refreshing selected in accordion when closing then opening. ([#8527](https://github.com/infor-design/enterprise/issues/8527))
 - `[Monthview]` Fixed monthview not updating after changing activeDate. ([NG#1659](https://github.com/infor-design/enterprise-ng/issues/1659))
 - `[Popup Menu]` Fixed bug on popupmenu showing behind app menu on mobile. ([#8582](https://github.com/infor-design/enterprise/issues/8582))
 - `[Popup Menu]` Fixed bug on popupmenu not opening on second right click. ([#8637](https://github.com/infor-design/enterprise/issues/8637))
+- `[Spinbox]` Fixed bug where `updateVal` did not consider the min/max settings when updating. ([NG#1681](https://github.com/infor-design/enterprise-ng/issues/1681))
 - `[Tabs]` Fixed the focus state border bottom being cut off in horizontal tabs. ([#8644](https://github.com/infor-design/enterprise/issues/8644))
 
 ## v4.95.0
