@@ -100,6 +100,18 @@ Or you can specify either different events for multiple rules as per as:
 <input id="email" data-validation-events="{'required': 'keydown', 'checkGivenNamesCount': 'keydown change blur'}">
 ```
 
+## Truncated Message with Tooltip
+
+If you want to truncate the message and show the full message in a tooltip, you can do it via the:
+
+```javascript
+$.fn.validation.rules.range = {
+  truncated: true
+}
+```
+
+ This will truncate the message to the specified number of characters and show the full message in a tooltip. This is useful if you have a long validation message.
+
 ## Form Functions
 
 There a couple useful functions you can use on forms. To use them make sure you have `data-validate-on="submit"` and use the initializer to initialize them. When you do this the normal submit event will be blocked and you should use the `validated` event instead.
