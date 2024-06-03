@@ -32,6 +32,12 @@ const COMPONENT_NAME_DEFAULTS = {
   modalTemplate: null,
   menuId: null,
   menuSelected: null,
+  showTooltip: true,
+  tooltipSettings : {
+    subject: true,
+    comments: true,
+    time: true,
+  },
   eventTooltip: 'overflow',
   iconTooltip: 'overflow',
   newEventDefaults: {
@@ -94,6 +100,10 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string} [settings.menuId=null] ID of the menu to use for an event right click context menu
  * @param {function} [settings.menuSelected=null] Callback for the  right click context menu
  * @param {string} [settings.newEventDefaults] Initial event properties for the new events dialog.
+ * @param {boolean} [settings.showTooltip] If true, displays tooltip on event mouse hover.
+ * @param {boolean} [settings.tooltipSettings.subject] If true, displays event subject on tooltip.
+ * @param {boolean} [settings.tooltipSettings.comments] If true, displays event comments on tooltip.
+ * @param {boolean} [settings.tooltipSettings.time] If true, displays event start and end time on tooltip.
  * @param {string | function} [settings.eventTooltip] The content of event tooltip. Default value is 'overflow'
  * @param {string | function} [settings.iconTooltip] The content of event icon tooltip. Default value is 'overflow'
  * @param {boolean} [settings.showToday=true] Deterimines if the today button should be shown.
@@ -302,7 +312,9 @@ Calendar.prototype = {
       month: this.settings.month,
       year: this.settings.year,
       day: this.settings.day,
-      eventTooltip: this.eventTooltip,
+      showTooltip: this.settings.showTooltip,
+      tooltipSettings: this.settings.tooltipSettings,
+      eventTooltip: this.settings.eventTooltip,
       iconTooltip: this.iconTooltip,
       showToday: this.settings.showToday,
       showViewChanger: this.settings.showViewChanger,
@@ -381,6 +393,8 @@ Calendar.prototype = {
       showViewChanger: this.settings.showViewChanger,
       hitbox: this.settings.hitbox,
       onChangeView: this.onChangeToWeekDay,
+      showTooltip: this.settings.showTooltip,
+      tooltipSettings: this.settings.tooltipSettings,
       eventTooltip: this.settings.eventTooltip,
       iconTooltip: this.settings.iconTooltip,
       attributes: this.settings.attributes,
@@ -944,7 +958,7 @@ Calendar.prototype = {
     }
 
     node.innerHTML = `<div class="calendar-event-content">
-      ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
+      ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status !== undefined ? event.status : ''}"><use href="#${event.icon}"></use></svg></span>` : ''}
       <span class="calendar-event-title">${event.shortSubject || event.subject}</span>
     </div>`;
 
@@ -987,17 +1001,31 @@ Calendar.prototype = {
       }
     }
 
-    if (this.settings.eventTooltip !== 'overflow') {
-      if (typeof this.settings.eventTooltip === 'function') {
-        this.settings.eventTooltip({
-          month: this.settings.month,
-          year: this.settings.year,
-          event
-        });
-      } else if (event[this.settings.eventTooltip]) {
-        node.setAttribute('title', event[this.settings.eventTooltip]);
+    if (this.settings.showTooltip) {
+      if (this.settings.eventTooltip !== 'overflow') {
+        if (typeof this.settings.eventTooltip === 'function') {
+          this.settings.eventTooltip({
+            month: this.settings.month,
+            year: this.settings.year,
+            event
+          });
+        } else if (event[this.settings.eventTooltip]) {
+          node.setAttribute('title', event[this.settings.eventTooltip]);
+          $(node).tooltip({
+            content: node.innerText
+          });
+        }
+      } else {
+        const s = this.settings;
+        const testTooltip = `
+          ${s.tooltipSettings.subject ? event.subject + '<br>' : ''}
+          ${s.tooltipSettings.comments ? event.comments + '<br>' : ''}
+          ${s.tooltipSettings.time ? 'from ' + event.startsHourLocale + ' to ' + event.endsHourLocale : ''}
+          `;
+        node.setAttribute('title', testTooltip);
         $(node).tooltip({
-          content: node.innerText
+          content: node.innerText,
+          contentAlignment: 'left'
         });
       }
     }

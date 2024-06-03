@@ -608,16 +608,30 @@ WeekView.prototype = {
       }
     }
 
-    if (this.settings.eventTooltip !== 'overflow') {
-      if (typeof this.settings.eventTooltip === 'function') {
-        this.settings.eventTooltip({
-          settings: this.settings,
-          event
-        });
-      } else if (event[this.settings.eventTooltip]) {
-        node.setAttribute('title', event[this.settings.eventTooltip]);
+    if (this.settings.showTooltip) {
+      if (this.settings.eventTooltip !== 'overflow') {
+        if (typeof this.settings.eventTooltip === 'function') {
+          this.settings.eventTooltip({
+            settings: this.settings,
+            event
+          });
+        } else if (event[this.settings.eventTooltip]) {
+          node.setAttribute('title', event[this.settings.eventTooltip]);
+          $(node).tooltip({
+            content: node.innerText
+          });
+        }
+      } else {
+        const s = this.settings;
+        const testTooltip = `
+          ${s.tooltipSettings.subject ? event.subject + '<br>' : ''}
+          ${s.tooltipSettings.comments ? event.comments + '<br>' : ''}
+          ${s.tooltipSettings.time ? 'from ' + event.startsHourLocale + ' to ' + event.endsHourLocale : ''}
+          `;
+        node.setAttribute('title', testTooltip);
         $(node).tooltip({
-          content: node.innerText
+          content: node.innerText,
+          contentAlignment: 'left'
         });
       }
     }

@@ -4,6 +4,7 @@
 
 ## v4.96.0 Features
 
+- `[Calendar]` Added new setting `showTooltip` and `tooltipSettings` to display event information on event hover. ([#8453](https://github.com/infor-design/enterprise/issues/8453))
 - `[ContextualActionPanel/Modal]` Added new settings `propagateStyle` and `compactPanel`. ([NG#1594](https://github.com/infor-design/enterprise-ng/issues/1594))
 - `[Validation]` Added `truncated` setting to truncate and have a tooltip on validation messages. ([#7909](https://github.com/infor-design/enterprise/issues/7909))
 

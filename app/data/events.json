@@ -819,5 +819,41 @@
     "ends": "2024-05-16T07:00:00.00",
     "type": "team",
     "isAllDay": "false"
+  },
+  {
+    "id": "83",
+    "subject": "Discretionary Time Off",
+    "shortSubject": "DTO",
+    "comments": "Personal time",
+    "location": "Canada Office",
+    "status": "Approved",
+    "starts": "2024-06-24T10:00:00.999",
+    "ends": "2024-06-24T14:00:00.999",
+    "type": "dto",
+    "isAllDay": "false"
+  },
+  {
+    "id": "84",
+    "subject": "Team Event",
+    "shortSubject": "TE",
+    "comments": "Bowling and BBQ",
+    "location": "Manilla Office",
+    "status": "Approved",
+    "starts": "2024-06-01T16:00:00.999",
+    "ends": "2024-06-01T18:00:00.999",
+    "type": "team",
+    "isAllDay": "false"
+  },
+  {
+    "id": "85",
+    "subject": "Labor Day",
+    "shortSubject": "LD",
+    "comments": "US Holiday",
+    "location": "USA",
+    "status": "Approved",
+    "starts": "2024-06-03T00:00:00.000",
+    "ends": "2024-06-03T23:59:59.999",
+    "type": "holiday",
+    "isAllDay": "true"
   }
 ]
