@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.91.2
+
+## v4.91.2 Fixes
+
+- `[Datagrid]` Fixed a bug where date would be cleared after updating cell on different locales. ([NG#1710](https://github.com/infor-design/enterprise-ng/issues/1710))
+
 ## v4.91.1
 
 ## v4.91.1 Fixes

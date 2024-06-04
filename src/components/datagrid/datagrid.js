@@ -10523,6 +10523,7 @@ Datagrid.prototype = {
     return rowData;
   },
 
+
   /**
    * Commit the cell thats currently in edit mode.
    * @param {boolean} isCallback Indicates a call back so beforeCommitCellEdit is not called.
@@ -10549,12 +10550,16 @@ Datagrid.prototype = {
     } else {
       if (typeof this.editor.val === 'function') {
         const editorValue = this.editor.val();
-        const format = this.columnSettings(this.editor.cell)?.dateFormat;
+        newValue = editorValue;
 
-        if (format === undefined) {
-          newValue = isNaN(Date.parse(editorValue)) && this.editor.name === 'date' ? '' : editorValue;
-        } else {
-          newValue = isNaN(Locale.parseDate(editorValue, { dateFormat: format })) && this.editor.name === 'date' ? '' : editorValue;
+        if (this.editor.name === 'date' && !newValue) {
+          const format = this.columnSettings(this.editor.cell)?.dateFormat;
+
+          if (format === undefined) {
+            newValue = isNaN(Locale.parseDate(editorValue)) ? '' : editorValue;
+          } else {
+            newValue = isNaN(Locale.parseDate(editorValue, { dateFormat: format })) ? '' : editorValue;
+          }
         }
       }
       this.commitCellEditUtil(input, newValue, isEditor, isFileupload, isUseActiveRow, isCallback);
