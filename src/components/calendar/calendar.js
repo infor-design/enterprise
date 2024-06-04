@@ -33,7 +33,7 @@ const COMPONENT_NAME_DEFAULTS = {
   menuId: null,
   menuSelected: null,
   showTooltip: true,
-  tooltipSettings : {
+  tooltipSettings: {
     subject: true,
     comments: true,
     time: true,
@@ -1017,12 +1017,12 @@ Calendar.prototype = {
         }
       } else {
         const s = this.settings;
-        const testTooltip = `
-          ${s.tooltipSettings.subject ? event.subject + '<br>' : ''}
-          ${s.tooltipSettings.comments ? event.comments + '<br>' : ''}
-          ${s.tooltipSettings.time ? 'from ' + event.startsHourLocale + ' to ' + event.endsHourLocale : ''}
+        const tooltipContent = `
+          ${s.tooltipSettings.subject ? `${event.subject} <br>` : ''}
+          ${s.tooltipSettings.comments ? `${event.comments} <br>` : ''}
+          ${s.tooltipSettings.time ? `from ${event.startsHourLocale} to ${event.endsHourLocale}` : ''}
           `;
-        node.setAttribute('title', testTooltip);
+        node.setAttribute('title', tooltipContent);
         $(node).tooltip({
           content: node.innerText,
           contentAlignment: 'left'
