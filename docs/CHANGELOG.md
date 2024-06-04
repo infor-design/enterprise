@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.95.3
+
+## v4.95.3 Fixes
+
+- `[AppMenu]` Fixed hover issue on expand button. ([#8775](https://github.com/infor-design/enterprise/issues/8775))
+
 ## v4.95.2
 
 ## v4.95.2 Fixes
