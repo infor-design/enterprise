@@ -135,7 +135,7 @@ describe('Button Puppeteer Tests', () => {
 
       await page.waitForSelector('#tooltip', { visible: true })
         .then(element => element.evaluate(e => e.textContent))
-        .then(text => expect(text).toEqual('More'));
+        .then(text => expect(text.trim()).toEqual('More'));
     });
 
     it('should display "Tooltip will show" text when hovering the button', async () => {
@@ -144,7 +144,7 @@ describe('Button Puppeteer Tests', () => {
 
       await page.waitForSelector('#tooltip', { visible: true })
         .then(element => element.evaluate(e => e.textContent))
-        .then(text => expect(text).toEqual('Tooltip will show'));
+        .then(text => expect(text.trim()).toEqual('Tooltip will show'));
     });
   });
 
