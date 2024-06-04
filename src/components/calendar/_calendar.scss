@@ -493,14 +493,13 @@
 
 @include respond-to(phabletdown) {
   .calendar-popup.calendar-popup-mobile {
-    height: 100% !important;
     left: 0 !important;
     max-width: 100%;
     top: 0 !important;
     width: 100% !important;
 
     .tooltip-content {
-      height: calc(100% - 96px);
+      height: calc(100% - 45px);
     }
 
     .modal-buttonset {
