@@ -5,6 +5,7 @@
 ## v4.95.3 Fixes
 
 - `[AppMenu]` Fixed hover issue on expand button. ([#8775](https://github.com/infor-design/enterprise/issues/8775))
+- `[Datagrid]` Fixed hover issue on expand row button. ([#8775](https://github.com/infor-design/enterprise/issues/8775))
 
 ## v4.95.2
 
