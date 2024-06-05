@@ -22,6 +22,7 @@
 - `[Datagrid]` Fixed styling issue with one cell and frozen columns. ([#8728](https://github.com/infor-design/enterprise/issues/8728))
 - `[Datagrid]` Fixed add row not triggering after cell commit. ([#8624](https://github.com/infor-design/enterprise/issues/8624))
 - `[Datagrid]` Fixed an error that occurred in some situations. ([#8709](https://github.com/infor-design/enterprise/issues/8709))
+- `[Datagrid]` Fixed an error that occurred when clicking on a dropdown cell after calling `updated` method. ([NG#1644](https://github.com/infor-design/enterprise-ng/issues/1644))
 - `[Datepicker]` Fixed focus date not properly assigned when calendar is used as datepicker. ([#8585](https://github.com/infor-design/enterprise/issues/8585))
 - `[Dropdown]` Fixed dropdown height when `showTags` is set to true. ([#8566](https://github.com/infor-design/enterprise/issues/8566))
 - `[Dropdown]` Fixed RTL alignments and border colors for field filter. ([#8659](https://github.com/infor-design/enterprise/issues/8659))
