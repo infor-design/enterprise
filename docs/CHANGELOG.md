@@ -5,7 +5,7 @@
 ## v4.96.0 Features
 
 - `[Calendar]` Added new setting `slideSelect` to allow users to select from span of range in creating an event. ([#8243](https://github.com/infor-design/enterprise/issues/8243))
-- `[ContextualActionPanel/Modal]` Added new settings `propagateStyle` and `compactPanel`. ([NG#1594](https://github.com/infor-design/enterprise-ng/issues/1594))
+- `[Calendar]` Added new setting `showTooltip` and `tooltipSettings` to display event information on event hover. ([#8453](https://github.com/infor-design/enterprise/issues/8453))
 - `[ContextualActionPanel/Modal]` Added new settings `propagateStyle` and `compactPanel`. ([NG#1594](https://github.com/infor-design/enterprise-ng/issues/1594))
 - `[Validation]` Added `truncated` setting to truncate and have a tooltip on validation messages. ([#7909](https://github.com/infor-design/enterprise/issues/7909))
 
@@ -16,6 +16,7 @@
 - `[Autocomplete]` Fixed autocomplete not properly highlighted on key down. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
 - `[Bar-Stacked/Column-Stacked]` Fixed an error encountered when having many records inside the graph. ([NG#1675](https://github.com/infor-design/enterprise-ng/issues/1675))
 - `[Button]` Fixed different buttons stylings in personalization inside of content form. ([#8714](https://github.com/infor-design/enterprise/issues/8714))
+- `[Calendar]` Fixed monthrendered being executed twice in week view and day view. ([#8469](https://github.com/infor-design/enterprise/issues/8469))
 - `[Datagrid]` Fixed `loadData` and `updateDataset` API to render the correct pager and it's data. ([#8677](https://github.com/infor-design/enterprise/issues/8677))
 - `[Datagrid]` Fixed an error in expandable rows where paging causes to render white html. ([NG#1656](https://github.com/infor-design/enterprise-ng/issues/1656))
 - `[Datagrid]` Fixed dropdown keys not properly triggering when using keyboard. ([#8745](https://github.com/infor-design/enterprise/issues/8745))
@@ -23,6 +24,7 @@
 - `[Datagrid]` Fixed styling issue with one cell and frozen columns. ([#8728](https://github.com/infor-design/enterprise/issues/8728))
 - `[Datagrid]` Fixed add row not triggering after cell commit. ([#8624](https://github.com/infor-design/enterprise/issues/8624))
 - `[Datagrid]` Fixed an error that occurred in some situations. ([#8709](https://github.com/infor-design/enterprise/issues/8709))
+- `[Datagrid]` Fixed a bug where date would be cleared after updating cell on different locales. ([NG#1710](https://github.com/infor-design/enterprise-ng/issues/1710))
 - `[Datepicker]` Fixed focus date not properly assigned when calendar is used as datepicker. ([#8585](https://github.com/infor-design/enterprise/issues/8585))
 - `[Dropdown]` Fixed dropdown height when `showTags` is set to true. ([#8566](https://github.com/infor-design/enterprise/issues/8566))
 - `[Dropdown]` Fixed RTL alignments and border colors for field filter. ([#8659](https://github.com/infor-design/enterprise/issues/8659))

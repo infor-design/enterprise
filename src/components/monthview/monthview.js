@@ -2169,7 +2169,13 @@ MonthView.prototype = {
    * @param {boolean} closePopup Send a flag to close the popup
    * @param {boolean} insertDate Send a flag to insert the date in the field
   */
-  selectDay(date, closePopup, insertDate, action = null) {
+  selectDay(date, closePopup, insertDate, action = null, endDate = undefined) {
+    // Check from onChangeWeek Callback
+    let monthDifference = false;
+    if (endDate !== undefined) {
+      monthDifference = date.getMonth() !== endDate.getMonth();
+    }
+
     if (this.isIslamic && typeof date !== 'string') {
       this.currentDateIslamic = Locale.gregorianToUmalqura(date);
       date = stringUtils.padDate(
@@ -2204,8 +2210,10 @@ MonthView.prototype = {
     this.currentDay = day;
 
     if (dayObj.length === 0 || dayObj[0].elem.hasClass('alternate')) {
-      // Show month
-      this.showMonth(month, year);
+      if (!monthDifference) {
+        // Show month
+        this.showMonth(month, year);
+      }
       dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
     }
 
@@ -2241,8 +2249,10 @@ MonthView.prototype = {
       this.element.trigger('selected', args);
     }
 
-    this.focusDate = this.currentDate;
-    this.focusDay();
+    if (!monthDifference) {
+      this.focusDate = this.currentDate;
+      this.focusDay();
+    }
   },
 
   /**

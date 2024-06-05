@@ -10840,7 +10840,7 @@ Datagrid.prototype = {
         const editorValue = this.editor.val();
         newValue = editorValue;
 
-        if (this.editor.name === 'date') {
+        if (this.editor.name === 'date' && !newValue) {
           const format = this.columnSettings(this.editor.cell)?.dateFormat;
 
           if (format === undefined) {
