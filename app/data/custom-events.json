@@ -5,6 +5,7 @@
     "starts": "2024-05-27T00:00:00.000",
     "ends": "2024-05-27T23:59:59.999",
     "icon": "icon-success",
+    "status": "Approved",
     "type": "dto",
     "color": "amethyst-20",
     "borderColor": "#8e2e8a"
@@ -15,6 +16,7 @@
     "starts": "2024-05-28T00:00:00.000",
     "ends": "2024-05-28T23:59:59.999",
     "icon": "icon-success",
+    "status": "Approved",
     "type": "dto",
     "color": "azure-20",
     "borderColor": "royalblue"
@@ -25,6 +27,7 @@
     "starts": "2024-05-29T00:00:00.000",
     "ends": "2024-05-29T23:59:59.999",
     "icon": "icon-success",
+    "status": "Approved",
     "type": "sick",
     "color": "amber-30",
     "borderColor": "orangered"
@@ -35,6 +38,7 @@
     "starts": "2024-05-30T00:00:00.000",
     "ends": "2024-05-30T23:59:59.999",
     "icon": "icon-success",
+    "status": "Approved",
     "type": "sick",
     "color": "ruby-30",
     "borderColor": "red"
@@ -45,6 +49,7 @@
     "starts": "2024-05-31T00:00:00.000",
     "ends": "2024-05-31T23:59:59.999",
     "icon": "icon-success",
+    "status": "Approved",
     "type": "sick",
     "color": "turquoise-30",
     "borderColor": "green"
