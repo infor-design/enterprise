@@ -87,8 +87,14 @@
   }
 }
 
-.auto-height .chart-pie svg {
-  min-height: 240px;
+.auto-height .chart-pie {
+  svg {
+    min-height: 240px;
+  }
+
+  &.has-bottom-legend svg {
+    min-height: 290px;
+  }
 }
 
 // A bit different tooltip style
