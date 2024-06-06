@@ -1,4 +1,136 @@
-// Tag Component (New)
-// This component shares styles with the Badge Component
-// See '../badge/_badge.scss'
-// ======================================================== /
+// New Tags
+//================================================== //
+
+.tag {
+  display: inline-flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+
+  span {
+    line-height: 20px;
+  }
+
+  a {
+    font-size: 14px;
+    line-height: 20px;
+
+    &.round {
+      width: 30px;
+    }
+  }
+}
+
+// Firefox behaves odd
+.is-firefox {
+  .tag.is-linkable .btn-linkable .icon {
+    vertical-align: baseline;
+  }
+
+  .tag.is-dismissible .btn-dismissible .icon {
+    top: -1px;
+    vertical-align: middle;
+  }
+}
+
+// For multiselect support
+.form-layout-compact {
+  .multiselect {
+    ~.dropdown-wrapper .dropdown.has-tags {
+      .tag-list .tag.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            top: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.multiselect {
+  ~.dropdown-wrapper .dropdown.has-tags {
+    .tag-list .tag.is-dismissible {
+      .btn-dismissible {
+        .icon {
+          top: -2px;
+        }
+      }
+    }
+  }
+}
+
+// For multiselect firefox support
+.is-firefox {
+  .form-layout-compact {
+    .multiselect {
+      ~.dropdown-wrapper .dropdown.has-tags {
+        padding: 0 !important;
+
+        .tag-list .tag.is-dismissible {
+          .btn-dismissible {
+            .icon {
+              top: 3px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .multiselect {
+    ~.dropdown-wrapper .dropdown.has-tags {
+      .tag-list .tag.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            top: -2px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// For Safari
+.is-safari {
+  .multiselect {
+    ~.dropdown-wrapper .dropdown.has-tags {
+      .tag-list .tag.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            top: -2px;
+          }
+        }
+      }
+    }
+  }
+
+  .form-layout-compact {
+    .multiselect {
+      ~.dropdown-wrapper .dropdown.has-tags {
+        .tag-list .tag.is-dismissible {
+          .btn-dismissible {
+            .icon {
+              top: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+html.is-mac {
+  &.is-chrome {
+    .multiselect~.dropdown-wrapper .dropdown.has-tags .tag-list .tag {
+      &.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            top: -1px;
+          }
+        }
+      }
+    }
+  }
+}

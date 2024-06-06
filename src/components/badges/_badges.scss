@@ -1,4 +1,4 @@
-// Badges & Tags
+// Badges
 //================================================== */
 
 @mixin disabled-tag {
@@ -26,7 +26,6 @@
 }
 
 // See also Colors.scss
-.tag,
 .badge {
   @include antialiased();
 
@@ -351,26 +350,6 @@
   }
 }
 
-// Rules for multiselect with dismissible tags
-.multiselect {
-  ~ .dropdown-wrapper .dropdown.has-tags {
-    .tag-list .tag.is-dismissible {
-      .btn-dismissible {
-        .icon {
-          top: -1.5px;
-          vertical-align: middle;
-        }
-      }
-    }
-  }
-}
-
-.tag {
-  display: inline-flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-}
 
 .badge {
   display: inline-block;
@@ -465,12 +444,6 @@
   }
 }
 
-.hyperlink + .tag {
-  margin-bottom: 0;
-  margin-left: 10px;
-  margin-top: -2px;
-}
-
 .alert {
   &.slate03 {
     background-color: transparent;
@@ -481,19 +454,9 @@
   }
 }
 
-//Tag Strip/List
-.tag-list {
-  margin: 20px 20px 0 25px;
-
-  .tag {
-    margin: 0 5px 5px 0;
-  }
-}
-
 // Add borders to the standard tag style's hover state on Constrast themes only.
 html.theme-classic-contrast,
 html.theme-new-contrast {
-  .tag,
   .badge {
     &:not(.error):not(.alert):not(.info):not(.good) {
       &.is-linkable {
@@ -506,77 +469,8 @@ html.theme-new-contrast {
   }
 }
 
-html.is-mac {
-  &.is-chrome {
-    .tag {
-      &.is-dismissible {
-        .btn-dismissible {
-          .icon {
-            margin-inline-end: -1px;
-          }
-        }
-      }
-    }
-  }
-
-  &.is-firefox {
-    .multiselect {
-      ~ .dropdown-wrapper .dropdown.has-tags {
-        .tag-list .tag.is-dismissible {
-          .btn-dismissible {
-            .icon {
-              top: -1px;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-// Firefox behaves odd
-.is-firefox {
-  .tag.is-linkable .btn-linkable .icon {
-    vertical-align: middle;
-  }
-
-  .multiselect {
-    ~ .dropdown-wrapper .dropdown.has-tags {
-      .tag-list .tag.is-dismissible {
-        .btn-dismissible {
-          .icon {
-            top: -2px;
-            vertical-align: middle;
-          }
-        }
-      }
-    }
-  }
-}
-
-// For Safari
-.is-safari {
-  .multiselect {
-    ~ .dropdown-wrapper .dropdown.has-tags {
-      .tag-list .tag.is-dismissible {
-        .btn-dismissible {
-          .icon {
-            top: -1px;
-          }
-        }
-      }
-    }
-  }
-}
-
 // RTL Styles
 html[dir='rtl'] {
-  .hyperlink + .tag {
-    margin-left: inherit;
-    margin-right: 10px;
-  }
-
-  .tag,
   .badge {
     &.is-dismissible {
       .btn-dismissible {
