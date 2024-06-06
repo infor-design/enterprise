@@ -492,13 +492,20 @@
 }
 
 @include respond-to(phabletdown) {
+  .monthview-table {
+    border-bottom: 1px solid #E0E0E1;
+  }
+
   .calendar-popup.calendar-popup-mobile {
-    left: 50%;
-    top: 50%;
+    left: 50% !important;
+    top: 50% !important;
     transform: translate(-50%, -50%);
     max-width: 100%;
     width: 100% !important;
 
+    .arrow {
+      display: none;
+    }
     .tooltip-content {
       height: calc(100% - 45px);
     }
