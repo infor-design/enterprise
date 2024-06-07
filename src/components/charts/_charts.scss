@@ -309,10 +309,6 @@
         position: relative;
       }
     }
-
-    @media (min-width: 276px) {
-      border-top: 1px solid $chart-legend-border-color;
-    }
   }
 
   &.is-right {

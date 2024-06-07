@@ -119,7 +119,8 @@ Pie.prototype = {
 
     this
       .build()
-      .handleEvents();
+      .handleEvents()
+      .handleResize();
 
     /**
      * Fires when the chart is complete done rendering, for customization.
