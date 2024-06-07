@@ -1,17 +1,139 @@
 stages:
   - test
+  - build
   - deploy
 
 node_testing:
   stage: test
   image: node:18
-  script:
-    - npm ci
-    - npm run build
-    - npm run lint
-    - (npm run quickstart &) && sleep 5; npm run test
-    - echo "$GITHUB_CONTEXT"
-    - echo "$JOB_CONTEXT"
   tags:
     - dsa
     - DIND
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  script:
+    - git config --global --add safe.directory /builds/infor-design/ids-legacy
+    - npm ci
+    - echo "$GITHUB_CONTEXT"
+    - echo "$JOB_CONTEXT"
+
+install_packages:
+  stage: build
+  image: node:18
+  tags:
+    - dsa
+    - DIND
+  script: |
+    git config --global --add safe.directory /builds/infor-design/ids-legacy
+
+    DEMO_PACKAGE_JSON_FILE=./app/package.json
+
+    if test -f "$DEMO_PACKAGE_JSON_FILE"; then
+      cp -fr $DEMO_PACKAGE_JSON_FILE ./package.json && rm -fr ./package-lock.json
+      npm install
+      git checkout package.json package-lock.json
+    else
+      npm install
+    fi
+
+    ls -al
+
+    npm run build
+    npm run build:demoapp
+
+create_docker_file:
+  stage: build
+  needs:
+    - install_packages
+  image: ubuntu:latest
+  tags:
+    - dsa
+    - DIND
+  script: |
+    echo "FROM hookandloop/sohoxi-demo:1.0.1" > Dockerfile
+    echo "ADD ./ /controls" >> Dockerfile
+    echo "ADD ./dist /www/data/artifacts" >> Dockerfile
+    echo "ADD ./docs /www/data/docs" >> Dockerfile
+    echo "RUN chown -R www-data.www-data /www/data" >> Dockerfile
+    ls -al
+  variables:
+    GIT_STRATEGY: fetch
+    GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp/"
+
+build_push_image:
+  stage: build
+  needs:
+    - create_docker_file
+  image: docker:25
+  services:
+    - name: docker:25-dind
+      alias: host
+  tags:
+    - dsa
+    - DIND
+  script: |
+    echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
+    docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
+    ls -al
+
+    docker build -t hookandloop/enterprise:test .
+    docker push hookandloop/enterprise:test
+  variables:
+    DOCKER_HOST: tcp://host:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+    GIT_STRATEGY: fetch
+    GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp --exclude=Dockerfile"
+
+deploy:
+  stage: deploy
+  image: python:3.12
+  tags:
+    - dsa
+    - DIND
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY_DEPLOYMENTS" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - git config --global user.email "$GITLAB_USER_EMAIL"
+    - git config --global user.name "$GITLAB_USER_NAME"
+  script: |
+    #apt-get update
+    #apt-get install -y git
+    git config --global --add safe.directory /builds/infor-design/ids-legacy
+    git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
+
+    python -m pip install pyyaml pytz
+
+    CHANGES=$(git status --porcelain)
+    IMAGE_VERSION=$(echo ${CI_COMMIT_REF_NAME})
+    SERVICE_NAME=${IMAGE_VERSION//./}
+    SERVICE_NAME=$(echo "$SERVICE_NAME" | tr '[:punct:]' '-' | tr '[:upper:]' '[:lower:]')
+    SERVICE_FOLDER=enterprise-${SERVICE_NAME}
+
+    # either cd or use a full path?
+    cd deployments/enterprise
+
+    echo "Removing $CI_PROJECT_DIR/enterprise/${SERVICE_FOLDER}..."
+    rm -rf $SERVICE_FOLDER 2>/dev/null
+
+    mkdir -p $SERVICE_FOLDER && cp -R $CI_PROJECT_DIR/scripts/deploy-environment/manifests/* $SERVICE_FOLDER/
+    sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $SERVICE_FOLDER/ingress.yaml
+    sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $SERVICE_FOLDER/service.yaml
+    sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $SERVICE_FOLDER/deployment.yaml
+    sed -i -e "s/%IMAGE_VERSION%/$IMAGE_VERSION/g" $SERVICE_FOLDER/deployment.yaml
+    python $CI_PROJECT_DIR/scripts/deploy-environment/scripts/annotations.py -p $CI_PROJECT_DIR/deployments/enterprise/$SERVICE_FOLDER/deployment.yaml
+
+    ls -al
+
+    ls -al $SERVICE_NAME
+
+    if [[ -z $CHANGES ]]; then
+        echo "there are no changes"
+    else
+      echo "there are changes"
+        git add *
+        git commit -am "$CHANGES"
+        git push origin main
+    fi
