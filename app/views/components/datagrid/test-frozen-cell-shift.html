@@ -1,0 +1,34 @@
+<div class="full-height full-width">
+  <div id="datagrid" class="datagrid">
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var grid,
+      columns = [],
+      data = [];
+
+    var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
+    $.getJSON(url, function (res) {
+      data = res.data;
+
+      // Define Columns for the Grid.
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, href: 'http://www.google.com', target: '_blank' });
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', editor: Soho.Editors.Input });
+
+      // Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        paging: true,
+        pagesize: 50,
+        editable: true,
+        frozenColumns: {
+          left: ['productName']
+        },
+        toolbar: { title: 'Compressors', actions: true, rowHeight: true, results: true, personalize: true, exportToExcel: true }
+      });
+    });
+  });
+</script>

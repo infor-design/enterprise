@@ -4,17 +4,46 @@
 
 ## v4.96.0 Features
 
+- `[Calendar]` Added new setting `slideSelect` to allow users to select from span of range in creating an event. ([#8243](https://github.com/infor-design/enterprise/issues/8243))
+- `[Calendar]` Added new setting `showTooltip` and `tooltipSettings` to display event information on event hover. ([#8453](https://github.com/infor-design/enterprise/issues/8453))
+- `[ContextualActionPanel/Modal]` Added new settings `propagateStyle` and `compactPanel`. ([NG#1594](https://github.com/infor-design/enterprise-ng/issues/1594))
+- `[Validation]` Added `truncated` setting to truncate and have a tooltip on validation messages. ([#7909](https://github.com/infor-design/enterprise/issues/7909))
+
 ## v4.96.0 Fixes
 
 - `[About]` Removed `isMobile` in about spec. ([#8502](https://github.com/infor-design/enterprise/issues/8502))
+- `[AppMenu]` Fixed hover state on menu button in app menu. ([#8723](https://github.com/infor-design/enterprise/issues/8723))
 - `[Autocomplete]` Fixed autocomplete not properly highlighted on key down. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
 - `[Bar-Stacked/Column-Stacked]` Fixed an error encountered when having many records inside the graph. ([NG#1675](https://github.com/infor-design/enterprise-ng/issues/1675))
+- `[Button]` Fixed different buttons stylings in personalization inside of content form. ([#8714](https://github.com/infor-design/enterprise/issues/8714))
+- `[Calendar]` Fixed monthrendered being executed twice in week view and day view. ([#8469](https://github.com/infor-design/enterprise/issues/8469))
+- `[Datagrid]` Fixed `loadData` and `updateDataset` API to render the correct pager and it's data. ([#8677](https://github.com/infor-design/enterprise/issues/8677))
+- `[Datagrid]` Fixed an error in expandable rows where paging causes to render white html. ([NG#1656](https://github.com/infor-design/enterprise-ng/issues/1656))
+- `[Datagrid]` Fixed dropdown keys not properly triggering when using keyboard. ([#8745](https://github.com/infor-design/enterprise/issues/8745))
+- `[Datagrid]` Fixed cell changed trigger event on number and string comparison. ([#8719](https://github.com/infor-design/enterprise/issues/8719))
+- `[Datagrid]` Fixed styling issue with one cell and frozen columns. ([#8728](https://github.com/infor-design/enterprise/issues/8728))
 - `[Datagrid]` Fixed add row not triggering after cell commit. ([#8624](https://github.com/infor-design/enterprise/issues/8624))
+- `[Datagrid]` Fixed an error that occurred in some situations. ([#8709](https://github.com/infor-design/enterprise/issues/8709))
+- `[Datagrid]` Fixed an error that occurred when clicking on a dropdown cell after calling `updated` method. ([NG#1644](https://github.com/infor-design/enterprise-ng/issues/1644))
+- `[Datagrid]` Fixed a bug where date would be cleared after updating cell on different locales. ([NG#1710](https://github.com/infor-design/enterprise-ng/issues/1710))
 - `[Datepicker]` Fixed focus date not properly assigned when calendar is used as datepicker. ([#8585](https://github.com/infor-design/enterprise/issues/8585))
 - `[Dropdown]` Fixed dropdown height when `showTags` is set to true. ([#8566](https://github.com/infor-design/enterprise/issues/8566))
+- `[Dropdown]` Fixed RTL alignments and border colors for field filter. ([#8659](https://github.com/infor-design/enterprise/issues/8659))
+- `[FileuploadAdvanced]` Added fileupload-advanced in homepage widget. ([#7892](https://github.com/infor-design/enterprise/issues/7892))
+- `[Grid]` Updated style adjustment on screen width for when module nav is expanded. ([#8485](https://github.com/infor-design/enterprise/issues/8485))
+- `[Icons]` Added new icons `trend-left` and `trend-right`. ([#8403](https://github.com/infor-design/enterprise/issues/8403))
+- `[Icons]` Added new icons `user-remove`, `trending-down`, `snooze`  and `trending-up`. ([#8403](https://github.com/infor-design/enterprise/issues/8403))
+- `[Locale]` Fixed issue parsing BitInt sized numbers. ([#8737](https://github.com/infor-design/enterprise/issues/8737))
 - `[Lookup]` Fixed bug on lookup not using minWidth settings. ([#8626](https://github.com/infor-design/enterprise/issues/8626))
+- `[Lookup]` Fixed a bug where tooltip was not showing after selecting an item in lookup. ([#1646](https://github.com/infor-design/enterprise-ng/issues/1646))
+- `[Listview]` Fixed positioning of list alert icons in RTL mode. ([#8724](https://github.com/infor-design/enterprise/issues/8724))
+- `[Module Nav]` Fixed module nav switcher text was not vertically aligned. ([#8736](https://github.com/infor-design/enterprise/issues/8736))
+- `[Module Nav]` Fixed module nav refreshing selected in accordion when closing then opening. ([#8527](https://github.com/infor-design/enterprise/issues/8527))
 - `[Monthview]` Fixed monthview not updating after changing activeDate. ([NG#1659](https://github.com/infor-design/enterprise-ng/issues/1659))
 - `[Popup Menu]` Fixed bug on popupmenu showing behind app menu on mobile. ([#8582](https://github.com/infor-design/enterprise/issues/8582))
+- `[Popup Menu]` Fixed bug on popupmenu not opening on second right click. ([#8637](https://github.com/infor-design/enterprise/issues/8637))
+- `[Spinbox]` Fixed bug where `updateVal` did not consider the min/max settings when updating. ([NG#1681](https://github.com/infor-design/enterprise-ng/issues/1681))
+- `[Tabs]` Fixed the focus state border bottom being cut off in horizontal tabs. ([#8644](https://github.com/infor-design/enterprise/issues/8644))
 
 ## v4.95.0
 
@@ -38,6 +67,7 @@
 - `[Avatar/AppMenu]` Fixed size of the avatar on app menu. ([#8631](https://github.com/infor-design/enterprise/issues/8631))
 - `[Button]` Fixed unneeded timeout in performAnimation. ([#8541](https://github.com/infor-design/enterprise/issues/8541))
 - `[Cards]` Fixed title and button regression and position. ([#8602](https://github.com/infor-design/enterprise/issues/8602))
+- `[Calendar]` Fixed custom colors render of events. ([#7826](https://github.com/infor-design/enterprise/issues/7826))
 - `[Calendar]` Fixed modal button and input positions. ([#8657](https://github.com/infor-design/enterprise/issues/8657))
 - `[Contextual Action Panel]` Fixed added padding on contextual action panel. ([#8553](https://github.com/infor-design/enterprise/issues/8553))
 - `[Dropdown/Lookup]` Add option to remove margin in dropdown and lookup wrapper.([#8492](https://github.com/infor-design/enterprise/issues/8492))
@@ -155,8 +185,6 @@
 - `[Multiselect]` Fixed misaligned `x` buttons. ([8421](https://github.com/infor-design/enterprise/issues/8421))
 - `[Pie]` Fixed an error encountered when having many records inside the graph. ([#8422](https://github.com/infor-design/enterprise/issues/8422))
 - `[Popupmenu]` Fixed a bug where single select check items were getting deselected. ([8422](https://github.com/infor-design/enterprise/issues/8422))
-- `[Multiselect]` Fixed misaligned `x` buttons. ([#8421](https://github.com/infor-design/enterprise/issues/8421))
-- `[Popupmenu]` Fixed a bug where single select check items were getting deselected. ([#8422](https://github.com/infor-design/enterprise/issues/8422))
 - `[Searchfield]` Fixed alignment issues in go button.([#8334](https://github.com/infor-design/enterprise/issues/8334))
 - `[Searchfield]` Fixed alignment issues in clear button.([#8399](https://github.com/infor-design/enterprise/issues/8399))
 - `[Slider]` Fixed visibility of slider ticks inside of a modal.([#8397](https://github.com/infor-design/enterprise/issues/8397))

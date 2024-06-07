@@ -426,6 +426,11 @@ $card-header-section: '.card-header-section', '.widget-header-section';
 .widget-footer {
   padding: 13px 20px;
   position: relative;
+
+  .btn {
+    position: relative;
+    top: -9px;
+  }
 }
 
 .card-header,
@@ -808,7 +813,7 @@ html[dir='rtl'] {
     }
 
     .searchfield-wrapper.has-close-icon-button.has-text .btn-icon.close {
-      right: 330px;
+      right: calc(100% - 28px) !important;
       top: 7px;
     }
 
@@ -959,7 +964,7 @@ html[class*='theme-classic-'] {
           h4,
           h5,
           h6 {
-            font-size: $ids-size-font-px-20;
+            font-size: $ids-size-font-px-16;
             font-weight: $ids-number-font-weight-base;
             margin: 0;
           }

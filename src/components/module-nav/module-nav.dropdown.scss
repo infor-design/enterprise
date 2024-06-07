@@ -5,7 +5,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 
 @mixin module-nav-div-dropdown-adjustment() {
   background-color: $module-nav-switcher-dropdown-background-color;
-  padding-block-start: 7px;
+  padding-block-start: 9px;
   padding-block-end: 7px;
   padding-inline-start: 8px;
   padding-inline-end: 40px;
@@ -26,6 +26,10 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 
     height: $module-nav-switcher-dropdown-height;
     width: $module-nav-switcher-dropdown-width;
+
+    &.is-disabled {
+      padding-block-start: 7px;
+    }
 
     .icon {
       margin-block-end: $module-nav-common-border-radius;

@@ -40,8 +40,10 @@ const TOOLTIP_TRIGGER_METHODS = ['hover', 'immediate', 'click', 'focus'];
  * @param {object} [settings.parentElement] jQuery-wrapped element that gets.
   passed to the 'place' behavior as the element to place the tooltip against.
  * @param {boolean} [settings.keepOpen=false] Forces the tooltip to stay open in situations where it would normally close.
+* @param {boolean} [settings.contentAlignment] Content text alignment.
  * @param {string} [settings.extraClass] Extra css class.
  * @param {object} [settings.placementOpt] Placement options.
+ * 
  * @param {string} [settings.maxWidth] Toolip max width.
  * @param {boolean} [settings.initializeContent] Init the content in the tooltip.
  * @param {string} [settings.headerClass] If set this color will be used on the header (if a popover).
@@ -66,6 +68,7 @@ const TOOLTIP_DEFAULTS = {
   keepOpen: false,
   isRangeDatepicker: false,
   extraClass: null,
+  contentAlignment: 'center',
   placementOpts: {},
   maxWidth: null,
   initializeContent: true,
@@ -532,7 +535,7 @@ Tooltip.prototype = {
 
     // Wrap tooltip content in <p> tags if there isn't already one present.
     // Only happens for non-jQuery markup.
-    this.content = `<p>${this.content}</p>`;
+    this.content = `${this.settings.contentAlignment === 'left' ? '<p class="align-text-left">' : '<p>'} ${this.content}</p>`;
 
     doRender();
     return true;
@@ -655,7 +658,14 @@ Tooltip.prototype = {
         title.classList.add('tooltip-title');
 
         if (this.settings.headerClass) {
+          const colorList = ['amber', 'amethyst', 'azure', 'emerald', 'graphite', 'ruby', 'slate', 'turquoise'];
+          const isColorList = colorList.filter(colorObj => this.settings.headerClass.indexOf(colorObj) > -1).length > 0;
+
           DOM.addClass(title, this.settings.headerClass, 'filled');
+
+          if (!isColorList) {
+            DOM.addClass(title, 'default');
+          }
         }
         titleFrag.appendChild(title);
         this.tooltip[0].insertBefore(titleFrag, this.tooltip[0].firstChild);

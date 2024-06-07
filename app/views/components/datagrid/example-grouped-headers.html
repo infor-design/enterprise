@@ -32,6 +32,8 @@
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
       columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Text});
       columns.push({ id: 'action', name: 'Action Item', field: 'action', reorderable: false, hideable: false});
+      columns.push({ id: 'status2', name: 'Status 2', field: 'status', formatter: Soho.Formatters.Text});
+      columns.push({ id: 'action2', name: 'Action Item 2', field: 'action'});
 
       // Init and get the api for the grid
       $('#datagrid').datagrid({
@@ -41,7 +43,7 @@
           { colspan: 3, id: 'group1', name: 'Column Group One', align: 'center', tooltip: 'test', headerTooltip: 'test' },
           { colspan: 1, id: 'group2', name: 'Column Group Two', tooltip: 'test' },
           { colspan: 2, id: 'group3', name: 'Column Group Three', align: 'right', tooltip: 'test' },
-          { colspan: 3, id: 'group4', name: 'Column Group Four', align: 'left', tooltip: 'test' }
+          { colspan: 5, id: 'group4', name: 'Column Group Four', align: 'left', tooltip: 'test' }
         ],
         dataset: data,
         columnReorder: true,

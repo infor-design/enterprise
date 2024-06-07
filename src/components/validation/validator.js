@@ -27,7 +27,8 @@ const VALIDATION_MESSAGE_DEFAULTS = {
   message: '',
   type: 'error',
   showTooltip: false,
-  isHelpMessage: false
+  isHelpMessage: false,
+  truncated: false
 };
 
 /**
@@ -924,7 +925,7 @@ Validator.prototype = {
 
     if (rule.type === 'icon') {
       markup = '' +
-        `<div id="${messageId}" class="custom-icon-message" data-rule-id="${rule.id || rule.message}">
+        `<div id="${messageId}" class="custom-icon-message${this.settings.truncated || rule?.truncated ? ' truncated' : ''}" data-rule-id="${rule.id || rule.message}">
           ${$.createIcon({ classes: ['icon-custom'], icon: rule.icon })}
           <pre class="audible">
             ${Locale.translate(validationType.titleMessageID)}
@@ -933,7 +934,7 @@ Validator.prototype = {
         </div>`;
     } else {
       markup = '' +
-        `<div id="${messageId}" class="${validationType.type}-message" data-rule-id="${rule.id || rule.message}">
+        `<div id="${messageId}" class="${validationType.type}-message${this.settings.truncated || rule?.truncated ? ' truncated' : ''}" data-rule-id="${rule.id || rule.message}">
           ${$.createIcon({ classes: [`icon-${validationType.type}`], icon })}
           <pre class="audible">
             ${Locale.translate(validationType.titleMessageID)}
@@ -979,6 +980,33 @@ Validator.prototype = {
     // Trigger an event
     field.triggerHandler(validationType.type, { field, message: rule.message });
     field.closest('form').triggerHandler(validationType.type, { field, message: rule.message });
+
+    const isSafari = $('html.is-safari').length > 0;
+    const truncatedMessage = field.find('~ div[class*="-message"].truncated > .message-text');
+    const isOverflowing = truncatedMessage[0]?.scrollWidth > truncatedMessage[0]?.offsetWidth;
+    const isOverflowingInSafari = truncatedMessage[0]?.scrollWidth > field[0]?.clientWidth && isSafari;
+
+    // Add tooltip when text is truncated
+    function truncateText(element) {
+      let text = element.textContent;
+
+      if (isOverflowingInSafari) {
+        text = text.slice(0, -1);
+        element.textContent = `${text}...`; // Add ellipsis
+      }
+    }
+
+    if ((this.settings.truncated || rule?.truncated) && isOverflowing || isOverflowingInSafari) {
+      truncatedMessage.tooltip({
+        content: truncatedMessage[0].innerText,
+        trigger: 'hover'
+      });
+
+      // Different approach of truncating text for Safari
+      if (isSafari) {
+        truncateText(truncatedMessage[0]);
+      }
+    }
   },
 
   /**

@@ -4157,6 +4157,8 @@ Tabs.prototype = {
         if (!isClassic) {
           targetRectObj.height -= 2;
         }
+      } else if (!isSelected && !isClassic) {
+        targetRectObj.height -= 5;
       } else {
         targetRectObj.height -= 4;
       }

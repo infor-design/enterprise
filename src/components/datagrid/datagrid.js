@@ -1167,6 +1167,9 @@ Datagrid.prototype = {
     }
 
     if (this.pagerAPI) {
+      // Set the active page for the pager API. If no active page is provided, default to page 1.
+      this.pagerAPI.activePage = pagerInfo.activePage || 1;
+
       if (this.settings.showDirty && this.settings.source &&
         /first|last|next|prev|sorted/.test(pagerInfo.type)) {
         this.dirtyArray = undefined;
@@ -6525,7 +6528,23 @@ Datagrid.prototype = {
   personalizeColumns() {
     const self = this;
     let markup = `<div class="listview-search alternate-bg"><label class="audible" for="gridfilter">Search</label><input class="searchfield" placeholder="${Locale.translate('SearchColumnName')}" name="searchfield" id="gridfilter"></div>`;
-    markup += '<div class="listview alternate-bg" id="search-listview"><ul></ul></div>';
+    markup += '<div class="listview alternate-bg personalize-col" id="search-listview"><ul></ul></div>';
+
+    let pSource = self.settings.columns;
+    let pTemplate = `
+    <ul class="arrange list" data-arrange-handle=".handle">
+      {{#dataset}}
+        {{#name}}
+          <li {{^hideable}}data-arrange-exclude="true"{{/hideable}}>
+            <div class="switch field">
+              <span class="handle"><svg class="icon icon-handle child" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
+              <input id="{{id}}-switch" class="switch" type="checkbox" data-column-id="{{id}}" {{^hidden}}checked{{/hidden}} {{^hideable}}disabled{{/hideable}} />
+              <span for="{{id}}-switch" class="label-text">{{name}}</span>
+            </div>
+          </li>
+        {{/name}}
+      {{/dataset}}
+    </ul>`;
 
     $('body').modal({
       title: Locale.translate('PersonalizeColumns'),
@@ -6544,67 +6563,232 @@ Datagrid.prototype = {
           return;
         }
 
-        self.isColumnsChanged = false;
-        modal.element.find('.searchfield').searchfield({ clearable: true, tabbable: false });
-        modal.element.find('.listview')
-          .listview({
-            source: self.settings.columns,
-            template: `
-            <ul>
+        if (self.settings.columnGroups) {
+          const colGroups = utils.deepCopy(self.settings.columnGroups);
+          let colIndex = 0;
+          colGroups.forEach((group) => {
+            const col = self.settings.columns.slice(colIndex, colIndex + group.colspan);
+            group.hidden = col.some(c => c.hidden === true);
+            group.hideable = col.some(c => c.hideable === true);
+            group.columns = col;
+            group.groupId = group.id;
+            group.groupName = group.name;
+            delete group.id;
+            delete group.name;
+            colIndex += group.colspan;
+          });
+
+          pSource = colGroups;
+          pTemplate = `
+            <ul class="arrange list" data-arrange-handle=".handle">
             {{#dataset}}
-              {{#name}}
-              <li>
-                <a href="#" target="_self" tabindex="-1">
-                  <label class="inline">
-                    <input tabindex="-1" type="checkbox" class="checkbox" {{^hideable}}disabled{{/hideable}} {{^hidden}}checked{{/hidden}} data-column-id="{{id}}"/>
-                    <span class="label-text">{{name}}</span>
-                  </label>
-                </a>
+              <li data-group-id="{{groupId}}" {{^hideable}}class="is-disabled"{{/hideable}}>
+                <div class="switch field">
+                  <span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
+                  <input id="{{groupId}}-grp-switch" class="switch" type="checkbox" {{^hidden}}checked{{/hidden}} {{^hideable}}disabled{{/hideable}}/>
+                  <span for="{{groupId}}-grp-switch" class="label-text">{{groupName}}</span>
+                </div>
               </li>
-              {{/name}}
+              {{#columns}}
+                {{#name}}
+                <li class="child" data-group-id="{{groupId}}" {{^hideable}}data-arrange-exclude="true"{{/hideable}}>
+                  <div class="switch field">
+                    <span class="handle"><svg class="icon icon-handle child" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-drag"></use></svg></span>
+                    <input id="{{id}}-switch" class="switch" type="checkbox" data-column-id="{{id}}" {{^hidden}}checked{{/hidden}} {{^hideable}}disabled{{/hideable}}/>
+                    <span for="{{id}}-switch" class="label-text">{{name}}</span>
+                  </div>
+                </li>
+                {{/name}}
+              {{/columns}}
             {{/dataset}}
-            </ul>`,
-            searchable: true,
-            selectOnFocus: false,
-            listFilterSettings: {
-              filterMode: 'contains',
-              searchableTextCallback: item => item.name || item.id
-            }
-          })
-          .off('selected.datagrid')
-          .on('selected.datagrid', function (selectedEvent, args) {
-            const chk = args.elem.find('.checkbox');
-            const id = chk.attr('data-column-id');
-            const isChecked = chk.prop('checked');
+            </ul>`;
+        }
 
-            args.elem.removeClass('is-selected hide-selected-color');
+        self.isColumnsChanged = false;
 
-            if (chk.is(':disabled')) {
-              return;
-            }
-            self.isColumnsChanged = true;
+        modal.element.find('.searchfield').searchfield({ clearable: true, tabbable: false });
 
-            // Set listview dataset node state, to be in sync after filtering
-            const lv = { node: {}, api: $(this).data('listview') };
-            if (lv.api) {
-              const idx = self.columnIdxById(id);
-              if (idx !== -1 && lv.api.settings.dataset[idx]) {
-                lv.node = lv.api.settings.dataset[idx];
+        const listviewSettings = {
+          source: pSource,
+          template: pTemplate,
+          searchable: true,
+          selectOnFocus: false,
+          listFilterSettings: {
+            filterMode: 'contains',
+            searchableTextCallback: item => item.name || item.id,
+          }
+        };
+
+        if (self.settings.columnGroups) {
+          listviewSettings.hasChildren = true;
+          listviewSettings.children = 'columns';
+        }
+
+        const listviewApi = modal.element.find('.listview').listview(listviewSettings).data('listview');
+
+        const handleSelect = (li) => {
+          const chk = li.find('input.switch');
+          const id = chk.attr('data-column-id');
+          const isChecked = chk.prop('checked');
+
+          li.removeClass('is-selected hide-selected-color');
+
+          if (chk.is(':disabled')) {
+            return;
+          }
+
+          self.isColumnsChanged = true;
+
+          if (self.settings.columnGroups) {
+            if (li.hasClass('child')) {
+              if (!isChecked) {
+                self.showColumn(id);
+                chk.prop('checked', true);
+              } else {
+                self.hideColumn(id);
+                chk.prop('checked', false);
+              }
+            } else {
+              const groupId = li.attr('data-group-id');
+              const cols = li.siblings(`.child[data-group-id="${groupId}"]`);
+              const toggle = (col, changeValue) => {
+                const colChk = col.find('input.switch');
+                const colId = colChk.attr('data-column-id');
+
+                if (!colChk.is(':disabled')) {
+                  const colChkChecked = colChk.prop('checked');
+
+                  if (colChkChecked !== changeValue) {
+                    if (changeValue) {
+                      self.showColumn(colId);
+                    } else {
+                      self.hideColumn(colId);
+                    }
+                    colChk.prop('checked', changeValue);
+                  }
+                }
+              };
+
+              if (!isChecked) {
+                cols.each((i, ce) => {
+                  toggle($(ce), true);
+                });
+                chk.prop('checked', true);
+              } else {
+                cols.each((i, ce) => {
+                  toggle($(ce), false);
+                });
+                chk.prop('checked', false);
               }
             }
-            if (!isChecked) {
-              self.showColumn(id);
-              chk.prop('checked', true);
-              lv.node.hidden = false;
-            } else {
-              self.hideColumn(id);
-              chk.prop('checked', false);
-              lv.node.hidden = true;
-            }
-            if (self.settings.groupable) {
-              self.rerender();
-            }
+          } else if (!isChecked) {
+            self.showColumn(id);
+            chk.prop('checked', true);
+          } else {
+            self.hideColumn(id);
+            chk.prop('checked', false);
+          }
+
+          if (self.settings.groupable) {
+            self.rerender();
+          }
+        };
+
+        const handleListEvents = () => {
+          listviewApi.element.find('.switch span.label-text, .switch input').on('click', (ev) => {
+            const li = $(ev.target).parent().parent();
+            handleSelect(li);
           });
+
+          if (self.settings.columnReorder) {
+            const arrangeApi = listviewApi.element.find('ul').arrange({
+              handle: '.icon-handle.child',
+              isVisualItems: true
+            }).data('arrange');
+
+            arrangeApi.element
+              .on('arrangeupdate', (event, status) => {
+                const chk = status.start.find('input.switch');
+                const indexFrom = this.columnIdxById(chk.attr('data-column-id'));
+                let next = status.start.next();
+                let indexTo;
+                let groupTo;
+                let groupFrom;
+
+                if (next.length === 0) {
+                  next = status.start.prev();
+
+                  if (self.settings.columnGroups) {
+                    groupFrom = status.start.attr('data-group-id');
+                    groupTo = next.attr('data-group-id');
+                    status.start.attr('data-group-id', groupTo);
+                    while (!next.hasClass('child')) {
+                      next = next.prev();
+                    }
+                  }
+
+                  const nextChk = next.find('input.switch');
+                  indexTo = this.columnIdxById(nextChk.attr('data-column-id'));
+                } else {
+                  if (self.settings.columnGroups) {
+                    groupFrom = status.start.attr('data-group-id');
+                    if (next.hasClass('child')) {
+                      groupTo = next.attr('data-group-id');
+                      status.start.attr('data-group-id', groupTo);
+                    } else {
+                      groupTo = status.start.prev().attr('data-group-id');
+                      status.start.attr('data-group-id', groupTo);
+                      while (!next.hasClass('child')) {
+                        next = next.next();
+                      }
+                    }
+                  }
+
+                  const nextChk = next.find('input.switch');
+                  indexTo = this.columnIdxById(nextChk.attr('data-column-id'));
+
+                  if (indexFrom < indexTo) {
+                    indexTo--;
+                  }
+                }
+
+                if (self.settings.columnGroups) {
+                  const grpIndexFrom = self.settings.columnGroups.findIndex(g => g.id === groupFrom);
+                  const grpIndexTo = self.settings.columnGroups.findIndex(g => g.id === groupTo);
+                  self.settings.columnGroups[grpIndexFrom].colspan--;
+                  self.settings.columnGroups[grpIndexTo].colspan++;
+                }
+
+                self.updateGroupHeadersAfterColumnReorder(indexFrom, indexTo);
+                self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
+                self.updateColumns(self.settings.columns);
+
+                /**
+                  * Fires after a column is moved to target.
+                  * @event columnreorder
+                  * @memberof Datagrid
+                  * @property {object} event The jquery event object
+                  * @property {number} indexTo The ending column index
+                  * @property {number} indexFrom The starting column index
+                  */
+                self.element.trigger('columnreorder', [{
+                  indexFrom,
+                  indexTo,
+                  columns: self.settings.columns,
+                }]);
+              });
+          }
+        };
+
+        handleListEvents();
+
+        listviewApi.element.on('rendered', () => {
+          handleListEvents();
+        }).on('selected', (event, selected) => {
+          if (selected.isKey) {
+            handleSelect(selected.elem);
+          }
+        });
 
         modal.element.on('close.datagrid', () => {
           self.isColumnsChanged = false;
@@ -7754,6 +7938,11 @@ Datagrid.prototype = {
       this.tableBody
         .off(`page.${COMPONENT_NAME}`)
         .on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
+          // NG#1656 Causes to re-initialize paging of main tbody inside the expandable resulting to an error
+          if (pagingInfo.type === undefined) {
+            return;
+          }
+
           if (pagingInfo.type === 'filtered' && this.settings.source) {
             return;
           }
@@ -10651,7 +10840,7 @@ Datagrid.prototype = {
         const editorValue = this.editor.val();
         newValue = editorValue;
 
-        if (this.editor.name === 'date') {
+        if (this.editor.name === 'date' && !newValue) {
           const format = this.columnSettings(this.editor.cell)?.dateFormat;
 
           if (format === undefined) {
@@ -10713,6 +10902,12 @@ Datagrid.prototype = {
       this.getActiveDataset()[dataRowIndex];
 
     let oldValue = this.fieldValue(rowData, col.field);
+
+    if (typeof (oldValue) === 'number' && typeof (newValue) === 'string') {
+      const newValueAsNumber = Number(newValue);
+      newValue = (oldValue === newValueAsNumber) ? oldValue : newValue;
+    }
+
     if (col.beforeCommitCellEdit && (isFileupload || !isCallback)) {
       const vetoCommit = col.beforeCommitCellEdit({
         cell,
@@ -11540,7 +11735,7 @@ Datagrid.prototype = {
 
     const wrapper = cellNode.find('.datagrid-cell-wrapper');
     if (!isInline && wrapper[0]) {
-      wrapper[0].innerHTML = formatted;
+      wrapper.html(formatted);
 
       const children = wrapper.children();
       if (children.length === 0) {
@@ -12037,14 +12232,14 @@ Datagrid.prototype = {
     }
 
     function isOffScreen(el) {
-      if (el === undefined) return;
+      if (el === undefined || el === null || !el[0]) return;
 
       const rect = el[0].getBoundingClientRect();
 
       // eslint-disable-next-line consistent-return
-      return ((rect.x + rect.width) < 0 || 
-        (rect.y + rect.height) < 0 || 
-        (rect.x > window.innerWidth || 
+      return ((rect.x + rect.width) < 0 ||
+        (rect.y + rect.height) < 0 ||
+        (rect.x > window.innerWidth ||
         rect.y > window.innerHeight));
     }
 
@@ -13556,9 +13751,10 @@ Datagrid.prototype = {
   * Update the datagrid and optionally apply new settings.
   * @param  {object} settings the settings to update to.
   * @param  {object} pagingInfo information about the pager state
+  * @param  {boolean} rerender Rerender datagrid or not
   * @returns {object} The plugin api for chaining.
   */
-  updated(settings, pagingInfo) {
+  updated(settings, pagingInfo, rerender = true) {
     const isInitialPaging = this.settings.paging !== settings?.paging && settings?.paging && !pagingInfo;
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
 
@@ -13598,8 +13794,12 @@ Datagrid.prototype = {
     this.setRowHeightClass();
     this.handlePaging();
     this.attachPagingEvents();
-    this.render(null, pagingInfo, isInitialPaging);
-    this.renderHeader();
+
+    if (rerender) {
+      this.render(null, pagingInfo, isInitialPaging);
+      this.renderHeader();
+    }
+
     return this;
   }
 };

@@ -1,15 +1,3 @@
-<style>
-  input.checkbox.lightsalmon + label::before {
-    background-color: lightsalmon;
-    border-color: lightsalmon;
-  }
-
-  input.checkbox.cornflowerblue + label::before {
-    background-color: cornflowerblue;
-    border-color: cornflowerblue;
-  }
-</style>
-
 <div class="calendar" data-init="false">
   <div class="calendar-events">
     <div class="accordion" data-options="{'allowOnePane': false}">
@@ -44,102 +32,98 @@
   <li><a href="#" data-action="show-event"><span data-translate="text">ShowEvent</span></a></li>
 </ul>
 
-<script>
-$('body').one('initialized', function () {
-  // Get the Event Type and Events to show in the calendar
-  var eventTypes = [];
+<script id="test-script">
   var events = [];
+  $('body').one('initialized', function () {
+    // Get the Event Type and Events to show in the calendar
+    var eventTypes = [];
 
-  $.getJSON('{{basepath}}api/custom-event-colors', function(res) {
-    eventTypes = res;
+    $.getJSON('{{basepath}}api/event-types', function(res) {
+      eventTypes = res;
 
-    $.getJSON('{{basepath}}api/custom-events', function(res) {
-      events = res;
-      $('.calendar').calendar({
-        month: 4,
-        year: 2024,
-        day: 4,
-        eventTypes: eventTypes,
-        disable: {
-          dayOfWeek: [0, 6]
-        },
-        dayLegend: [
-          { name: 'Public Holiday', color: 'emerald02', dates: ['7/7/2020', '7/8/2020']} ,
-          { name: 'Other', color: 'amethyst02', dates: ['7/22/2020', '7/23/2020'] }
-        ],
-        events: events,
-        upcomingEventDays: 0,
-        template: 'tmpl-readonly',
-        mobileTemplate: 'tmpl-mbl-readonly',
-        modalTemplate: 'tmpl-modal',
-        menuId: 'calendar-actions-menu'
+      $.getJSON('{{basepath}}api/events', function(res) {
+        events = res;
+
+        $('.calendar').calendar({
+          eventTypes: eventTypes,
+          events: events,
+          month: 7,
+          day: 5,
+          template: 'tmpl-readonly',
+          mobileTemplate: 'tmpl-mbl-readonly',
+          modalTemplate: 'tmpl-modal',
+          menuId: 'calendar-actions-menu',
+          slideSelect: true,
+          attributes: [{ name: 'id', value: 'calendar-id' }, { name: 'data-automation-id', value: 'calendar-automation-id' } ],
+        }).on('selected', (e, args) => {
+          console.log(args);
+          console.log(args?.action);
+        });
       });
     });
   });
-});
 
-// Wire up the actions
-$('#actions').on('selected', function(e, args) {
-  var action = args[0].getAttribute('data-action');
-  var api = $('.calendar').data('calendar');
-  var selectedDate = api.getDayEvents();
-  var events = api.settings.events;
-  var defaultHours = 8;
-  var startDate = new Date(selectedDate.date);
-  var endDate = new Date(selectedDate.date);
-  var isAllDay = true;
-  startDate.setHours(0, 0, 0, 0);
-  endDate.setHours(startDate.getHours() + defaultHours);
-  // To default all day use
-  if (isAllDay) {
-    endDate.setHours(23, 59, 59, 999);
-  }
+  $('#actions').on('selected', function(e, args) {
+    var action = args[0].getAttribute('data-action');
+    var api = $('.calendar').data('calendar');
+    var selectedDate = api.getDayEvents();
+    var events = api.settings.events;
+    var defaultHours = 8;
+    var startDate = new Date(selectedDate.date);
+    var endDate = new Date(selectedDate.date);
+    var isAllDay = true;
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(startDate.getHours() + defaultHours);
+    // To default all day use
+    if (isAllDay) {
+      endDate.setHours(23, 59, 59, 999);
+    }
 
-  if (action === 'add-api') {
-    var newEvent = {
-      id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
-      subject: 'New Random Event',
-      comments: 'New Random Event Details',
-      starts: Soho.Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
-      ends: Soho.Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
-      type: 'team',
-      isAllDay: isAllDay
-    };
-    api.addEvent(newEvent);
-  }
-
-  if (action === 'add-modal') {
-    var newEvent = {
-      id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
-      title: 'Request Time Off',
-      subject: 'New Random Event',
-      comments: 'New Random Event Details',
-      starts: Soho.Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
-      ends: Soho.Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
-      type: 'dto',
-      isAllDay: isAllDay
-    };
-
-    var done = function(elem, event) {
-      // Collect the data and popuplate the event object
-      var inputs = elem.querySelectorAll('input, textarea, select');
-      for (var i = 0; i < inputs.length; i++) {
-        newEvent[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
-      }
-
+    if (action === 'add-api') {
+      var newEvent = {
+        id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
+        subject: 'New Random Event',
+        comments: 'New Random Event Details',
+        starts: Soho.Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        ends: Soho.Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        type: 'team',
+        isAllDay: isAllDay
+      };
       api.addEvent(newEvent);
-      return;
-    };
+    }
 
-    api.showEventModal(newEvent, done);
-  }
+    if (action === 'add-modal') {
+      var newEvent = {
+        id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
+        title: 'Request Time Off',
+        subject: 'New Random Event',
+        comments: 'New Random Event Details',
+        starts: Soho.Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        ends: Soho.Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        type: 'dto',
+        isAllDay: isAllDay
+      };
 
-  if (action === 'clear') {
-    api.clearEvents(selectedDate.date);
-  }
-});
+      var done = function(elem, event) {
+        // Collect the data and popuplate the event object
+        var inputs = elem.querySelectorAll('input, textarea, select');
+        for (var i = 0; i < inputs.length; i++) {
+          newEvent[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
+        }
 
+        api.addEvent(newEvent);
+        return;
+      };
+
+      api.showEventModal(newEvent, done);
+    }
+
+    if (action === 'clear') {
+      api.clearEvents(selectedDate.date);
+    }
+  });
 </script>
+
 
 <script id="tmpl-mbl-readonly" type="text/html">
   {{={{{ }}}=}}

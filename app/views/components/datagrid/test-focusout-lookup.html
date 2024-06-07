@@ -10,9 +10,6 @@
         <button type="button" id="add-row-button" class="btn">
           <span>Add Row</span>
         </button>
-        <button type="button" id="save-new-button" class="btn">
-          <span>Save and New</span>
-        </button>
       </div>
     </div>
 
@@ -22,10 +19,10 @@
 </div>
 
 <script>
-  var gridApi = null;
+  let gridApi = null;
 
   $('body').one('initialized', function () {
-      var grid,
+      let grid,
         data = [],
         columns = [],
 
@@ -33,11 +30,6 @@
         lookupOptions,
         lookupData = [],
         lookupColumns = [];
-
-        var customIsEditable = function(row, cell, value, item) {
-          console.log('customIsEditable row = ' + row + ' cell = ' + cell + ' value = ' + value);
-          return true;
-        }
 
         // Some Sample Data for Lookup
         lookupData.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
@@ -73,34 +65,25 @@
         };
 
       // Some Sample Data
-      data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  '<svg/onload=alert(1)>', quantity: 1, price: 210.99, status: 'OK', orderDate:  new Date(2016, 2, 15, 12, 30, 36), portable: false, action: 'ac', description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
+      data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  '<svg/onload=alert(1)>', quantity: 1, price: 210.99, status: 'OK', orderDate:  new Date(2016, 2, 15, 12, 30, 36), portable: false, action: 'pen', description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
       data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.991, status: '', orderDate: new Date(2016, 2, 15, 0, 30, 36), portable: false, action: 'oh', description: 'The kit has an air blow gun that can be used for cleaning'});
       data.push({ id: 3, productId: 2342203, productName: 'Portable Compressor', activity:  'Inspect and Repair', portable: true, quantity: 1, price: 120.992, status: null, orderDate: new Date(2014, 6, 3), action: 'ac'});
-      data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', portable: true, quantity: 3, price: null, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'ac', description: 'Compressor comes with with air tool kit'});
-      data.push({ id: 5, productId: 2542205, productName: 'De Wallt Compressor', activity:  'Inspect and Repair', portable: false, quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'oh'});
+      data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', portable: true, quantity: 3, price: null, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'bo', description: 'Compressor comes with with air tool kit'});
+      data.push({ id: 5, productId: 2542205, productName: 'De Wallt Compressor', activity:  'Inspect and Repair', portable: false, quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'can'});
       data.push({ id: 6, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', portable: false, quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
-      data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
+      data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'pre'});
 
       // Define Columns for the Grid.
       columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Ellipsis, editor: Soho.Editors.Input, isEditable: customIsEditable  });
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, editor: Soho.Editors.Lookup, editorOptions: lookupOptions, isEditable: customIsEditable  });
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, isEditable: customIsEditable });
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date, editorOptions: {
-        showTime: true,
-        timeFormat: Soho.Locale.calendar().timeFormat,
-        minuteInterval: 1,
-        secondInterval: 10,
-        roundToInterval: false,
-        dateFormat: Soho.Locale.calendar().dateFormat.short,
-        placeholder: 'placeholder',
-        showLegend: false,
-        showMonthYearPicker: true,
-        calendarName: 'gregorian'
-        } });
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Ellipsis, editor: Soho.Editors.Input });
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, editor: Soho.Editors.Lookup, editorOptions: lookupOptions });
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input });
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date });
+      columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown,
+        options: [{label: '', value: ''}, {label: 'On Hold', value: 'oh'}, {label: 'Shipped', value: 'sh'} , {label: 'Action', value: 'ac'}, {label: 'Pending', value: 'pen'}, {label: 'Backorder', value: 'bo'}, {label: 'Cancelled', value: 'can'}, {label: 'Processing', value: 'pre'}]
+      });
 
-      // Init and get the api for the grid
-      grid = $('#datagrid').datagrid({
+      const gridOptions = {
         columns: columns,
         dataset: data,
         editable: true,
@@ -117,36 +100,21 @@
         pagesize: 10,
         selectable: 'mixed',
         rowHeight: 'short'
-      }).on('cellchange', function (e, args) {
-        console.log(e, args);
-      }).on('rowadd', function (e, args) {
-        console.log(e, args);
-      }).on('rowremove', function (e, args) {
-        console.log(e, args);
-      }).on('exiteditmode', function (e, args) {
-        console.log('exiteditmode');
-        console.log(e, args);
-      }).on('rowactivated', function(e, args) {
-        gridApi.selectRows(args.row);
-      });
+      };
+
+      grid = $('#datagrid').datagrid(gridOptions)
+        .on('cellchange', function (e, args) {
+          if (gridApi) {
+            gridApi.validateAll();
+            gridApi.updateCell(args.row, args.cell, args.value)
+            gridApi.updated(gridOptions, null, false);
+          }
+        });
 
       gridApi = $('#datagrid').data('datagrid');
 
       $('#add-row-button').on('click', function (e) {
-        gridApi.addRow({ productName: '', productId: '0', isNewRow: true }, 0);
-        gridApi.editCell(0, 1, e);
-      });
-
-      $('#save-new-button').on('click', function () {
-        var data = { id: 8, productId: 2142201, productName: 'Test', quantity: 10, price: 100.00, status: 'OK', orderDate:  new Date(2020, 11, 16), portable: false, action: 1 };
-        gridApi.updateRow(0, data);
-        console.log('Number of selected rows = ' + gridApi.selectedRows().length);
-
-        gridApi.clearRowError(0);
-        gridApi.rowStatus(0, '', 'Row Saved');
-        gridApi.clearDirtyRow(0);
-        gridApi.addRow({ productName: '', productId: '0' }, 0);
-        console.log('Number of selected rows = ' + gridApi.selectedRows().length);
+        gridApi.addRow({}, 0);
       });
   });
 </script>

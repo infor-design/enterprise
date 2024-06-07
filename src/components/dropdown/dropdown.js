@@ -279,7 +279,7 @@ Dropdown.prototype = {
       this.pseudoElem[0].setAttribute('class', pseudoClassString);
     }
 
-    if (!this.isWrapped) {
+    if (!this.isWrapped && !Locale.isRTL()) {
       this.pseudoElem.append($('<span></span>'));
     }
     const toExclude = ['data-validate'];
@@ -2103,7 +2103,11 @@ Dropdown.prototype = {
     // It adjust the position of datagrid filter dropdown
     // if the element goes out of the datagrid's container
     if (this.list.hasClass('datagrid-filter-dropdown') && document.querySelector('.datagrid-container') !== null) {
-      const gridContainerPos = this.dropdownParent.closest('.datagrid-container').getBoundingClientRect();
+      let gridContainerPos = document.querySelector('.datagrid-container').getBoundingClientRect();
+      if (this.dropdownParent !== undefined) {
+        gridContainerPos = this.dropdownParent.closest('.datagrid-container').getBoundingClientRect();
+      }
+
       const gridFilterDropdownPos = document.querySelector('.datagrid-filter-dropdown').getBoundingClientRect();
       const pageContainerPos = document.querySelector(this.settings.appendTo).getBoundingClientRect().right;
       const adjustedPosition = pageContainerPos - gridContainerPos.right;
