@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.97.0
+
+## v4.97.0 Fixes
+
+- `[Multiselect]` Fixed bug in multiselect noted in RTL mode. ([#8811](https://github.com/infor-design/enterprise/issues/8811))
+
 ## v4.96.0
 
 ## v4.96.0 Features
