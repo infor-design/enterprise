@@ -468,7 +468,11 @@ Dropdown.prototype = {
       }
     });
 
-    const span = this.pseudoElem.children('span')[0];
+    let span = this.pseudoElem.children('span')[0];
+    if (!span) {
+      this.pseudoElem.append('<span></span>');
+      span = this.pseudoElem.children('span')[0];
+    }
     if (!this.tagListAPI) {
       this.tagListAPI = new TagList(span, {
         tags
@@ -679,10 +683,8 @@ Dropdown.prototype = {
           value: el.value || null
         });
 
-        const listIconEl = self.listIcon.items.filter(function (iconEl) {
-          return (iconEl.icon === icon || iconEl.icon === icon.icon) &&
-            iconEl.value === el.value;
-        });
+        const listIconEl = self.listIcon.items.filter(iconEl => (iconEl.icon === icon || iconEl.icon === icon.icon) &&
+            iconEl.value === el.value);
 
         if ((self.listIcon.items[i] && self.listIcon.items[i].isIcon) || listIconEl.length > 0) {
           count++;
@@ -795,9 +797,7 @@ Dropdown.prototype = {
       const iconRef = self.listIcon.items[i];
       const optionEl = opt[0];
 
-      const listIconEl = self.listIcon.items.filter(function (iconEl) {
-        return iconEl?.value === optionEl?.value;
-      });
+      const listIconEl = self.listIcon.items.filter(iconEl => iconEl?.value === optionEl?.value);
 
       target.each((j, el) => el.remove());
 
@@ -1089,9 +1089,7 @@ Dropdown.prototype = {
     const trueValue = (value && 'value' in value ? value.value : text).replace(/"/g, '/quot/');
     let iconHtml = '';
 
-    const listIconEl = self.listIcon.items.filter(function (iconEl) {
-      return iconEl.value === option.value;
-    });
+    const listIconEl = self.listIcon.items.filter(iconEl => iconEl.value === option.value);
 
     if (self.listIcon.hasIcons && listIconEl.length > 0) {
       iconHtml = listIconEl[0].html;
