@@ -16,45 +16,44 @@ check_required_vars()
 }
 
 check_required_vars \
-  GITHUB_ACCESS_TOKEN \
   NPM_TOKEN \
   BRANCH \
-  REPO_OWNER_NAME
+  REPO_OWNER_NAME \
+  DRY_RUN
 
-rm -rf /root/enterprise/{..?*,.[!.]*,*} 2>/dev/null
+npm set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
 
-#echo "[url \"git@github.com:\"]\n\tinsteadOf = https://github.com/" >> /root/.gitconfig
-#git config --global url."https://${GITHUB_ACCESS_TOKEN}:@github.com/".insteadOf "https://github.com/"
+_ROOT_DIR=/root/enterprise
 
-git clone https://$GITHUB_ACCESS_TOKEN@github.com/$REPO_OWNER_NAME.git /root/enterprise
-cd /root/enterprise
-git remote set-url origin https://${GITHUB_ACCESS_TOKEN}@github.com/$REPO_OWNER_NAME.git
+rm -rf $_ROOT_DIR/{..?*,.[!.]*,*} 2>/dev/null
 
-git checkout $BRANCH
+git clone $REPO_OWNER_NAME $_ROOT_DIR
+cd $_ROOT_DIR
 
-npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+git fetch --all
+git checkout $BRANCH > /dev/null
+
+if [ $? = 1 ] ; then
+    echo "Git checkout failed. Please make sure the branch you are checking out exists."
+    exit 1
+fi
+
 npm install
 npm run build
 
-if [ -n "$RELEASEIT_FLAGS" ];
+if [ -z $VERSION ]
 then
-  release-it $RELEASEIT_FLAGS --config .release-it.json --ci -- $RELEASE_INCREMENT
-else
-  if [ -n "$NPM_COMMAND" ];
-  then
-    npmcmd=($NPM_COMMAND)
-    "${npmcmd[@]}"
-  else
-    echo "warning: NPM_COMMAND not set"
-  fi
+    VERSION=$(node -p "require('./package.json').version")
 fi
 
-if [[ "$RELEASEIT_FLAGS" == *"--dry-run=false"* ]];
+git tag "${VERSION}"
+
+if [ "$DRY_RUN" = "true" ]
 then
-  if [ -n "$NPM_LATEST" ];
-  then
-    npm dist-tags add ids-enterprise@$NPM_LATEST latest
-  else
-    echo "warning: NPM_LATEST not set"
-  fi
+    echo "Skipping git push and npm publish in dry run mode."
+    npm publish --access public --dry-run
+    exit 0
 fi
+
+git push origin "${VERSION}"
+npm publish --access public
