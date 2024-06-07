@@ -73,11 +73,11 @@ build_push_image:
     - DIND
   script: |
     echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
+    BRANCH=$(echo ${CI_COMMIT_REF_NAME})
     docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
-    ls -al
 
-    docker build -t hookandloop/enterprise:test .
-    docker push hookandloop/enterprise:test
+    docker build -t hookandloop/enterprise:$BRANCH .
+    docker push hookandloop/enterprise:$BRANCH
   variables:
     DOCKER_HOST: tcp://host:2375/
     DOCKER_DRIVER: overlay2
@@ -99,8 +99,6 @@ deploy:
     - git config --global user.email "$GITLAB_USER_EMAIL"
     - git config --global user.name "$GITLAB_USER_NAME"
   script: |
-    #apt-get update
-    #apt-get install -y git
     git config --global --add safe.directory /builds/infor-design/ids-legacy
     git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
 
@@ -124,10 +122,6 @@ deploy:
     sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $SERVICE_FOLDER/deployment.yaml
     sed -i -e "s/%IMAGE_VERSION%/$IMAGE_VERSION/g" $SERVICE_FOLDER/deployment.yaml
     python $CI_PROJECT_DIR/scripts/deploy-environment/scripts/annotations.py -p $CI_PROJECT_DIR/deployments/enterprise/$SERVICE_FOLDER/deployment.yaml
-
-    ls -al
-
-    ls -al $SERVICE_NAME
 
     if [[ -z $CHANGES ]]; then
         echo "there are no changes"
