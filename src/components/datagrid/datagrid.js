@@ -13751,9 +13751,10 @@ Datagrid.prototype = {
   * Update the datagrid and optionally apply new settings.
   * @param  {object} settings the settings to update to.
   * @param  {object} pagingInfo information about the pager state
+  * @param  {boolean} rerender Rerender datagrid or not
   * @returns {object} The plugin api for chaining.
   */
-  updated(settings, pagingInfo) {
+  updated(settings, pagingInfo, rerender = true) {
     const isInitialPaging = this.settings.paging !== settings?.paging && settings?.paging && !pagingInfo;
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
 
@@ -13793,8 +13794,12 @@ Datagrid.prototype = {
     this.setRowHeightClass();
     this.handlePaging();
     this.attachPagingEvents();
-    this.render(null, pagingInfo, isInitialPaging);
-    this.renderHeader();
+
+    if (rerender) {
+      this.render(null, pagingInfo, isInitialPaging);
+      this.renderHeader();
+    }
+
     return this;
   }
 };

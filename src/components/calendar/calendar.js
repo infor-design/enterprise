@@ -32,6 +32,12 @@ const COMPONENT_NAME_DEFAULTS = {
   modalTemplate: null,
   menuId: null,
   menuSelected: null,
+  showTooltip: true,
+  tooltipSettings: {
+    subject: true,
+    comments: true,
+    time: true,
+  },
   eventTooltip: 'overflow',
   iconTooltip: 'overflow',
   newEventDefaults: {
@@ -61,6 +67,7 @@ const COMPONENT_NAME_DEFAULTS = {
     restrictMonths: false
   },
   showEventLegend: true,
+  slideSelect: false,
   dayLegend: null,
   displayRange: {
     start: '',
@@ -94,6 +101,10 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string} [settings.menuId=null] ID of the menu to use for an event right click context menu
  * @param {function} [settings.menuSelected=null] Callback for the  right click context menu
  * @param {string} [settings.newEventDefaults] Initial event properties for the new events dialog.
+ * @param {boolean} [settings.showTooltip] If true, displays tooltip on event mouse hover.
+ * @param {boolean} [settings.tooltipSettings.subject] If true, displays event subject on tooltip.
+ * @param {boolean} [settings.tooltipSettings.comments] If true, displays event comments on tooltip.
+ * @param {boolean} [settings.tooltipSettings.time] If true, displays event start and end time on tooltip.
  * @param {string | function} [settings.eventTooltip] The content of event tooltip. Default value is 'overflow'
  * @param {string | function} [settings.iconTooltip] The content of event icon tooltip. Default value is 'overflow'
  * @param {boolean} [settings.showToday=true] Deterimines if the today button should be shown.
@@ -125,6 +136,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * It requires minDate and maxDate for the feature to activate.
  * For example if you have more non specific dates to disable then enable ect.
  * @param {boolean} [settings.showEventLegend=true] Restrict month selections on datepicker.
+ * @param {boolean} [settings.slideSelect=false] Allows you to slide select for a span of date ranges.
  * @param {array} [settings.dayLegend] Allows you to set legend for days. This is passed to the legend option in Monthview but only the colors and dates part are used since the calendar already has a legend.
  * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
@@ -302,13 +314,16 @@ Calendar.prototype = {
       month: this.settings.month,
       year: this.settings.year,
       day: this.settings.day,
-      eventTooltip: this.eventTooltip,
+      showTooltip: this.settings.showTooltip,
+      tooltipSettings: this.settings.tooltipSettings,
+      eventTooltip: this.settings.eventTooltip,
       iconTooltip: this.iconTooltip,
       showToday: this.settings.showToday,
       showViewChanger: this.settings.showViewChanger,
       onChangeView: this.onChangeToMonth,
       disable: this.settings.disable,
       showLegend: this.settings.dayLegend !== null,
+      slideSelect: this.settings.slideSelect,
       legend: this.settings.dayLegend,
       hitbox: this.settings.hitbox,
       attributes: this.settings.attributes,
@@ -381,6 +396,8 @@ Calendar.prototype = {
       showViewChanger: this.settings.showViewChanger,
       hitbox: this.settings.hitbox,
       onChangeView: this.onChangeToWeekDay,
+      showTooltip: this.settings.showTooltip,
+      tooltipSettings: this.settings.tooltipSettings,
       eventTooltip: this.settings.eventTooltip,
       iconTooltip: this.settings.iconTooltip,
       attributes: this.settings.attributes,
@@ -944,7 +961,7 @@ Calendar.prototype = {
     }
 
     node.innerHTML = `<div class="calendar-event-content">
-      ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
+      ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status !== undefined ? event.status : ''}"><use href="#${event.icon}"></use></svg></span>` : ''}
       <span class="calendar-event-title">${event.shortSubject || event.subject}</span>
     </div>`;
 
@@ -987,17 +1004,31 @@ Calendar.prototype = {
       }
     }
 
-    if (this.settings.eventTooltip !== 'overflow') {
-      if (typeof this.settings.eventTooltip === 'function') {
-        this.settings.eventTooltip({
-          month: this.settings.month,
-          year: this.settings.year,
-          event
-        });
-      } else if (event[this.settings.eventTooltip]) {
-        node.setAttribute('title', event[this.settings.eventTooltip]);
+    if (this.settings.showTooltip) {
+      if (this.settings.eventTooltip !== 'overflow') {
+        if (typeof this.settings.eventTooltip === 'function') {
+          this.settings.eventTooltip({
+            month: this.settings.month,
+            year: this.settings.year,
+            event
+          });
+        } else if (event[this.settings.eventTooltip]) {
+          node.setAttribute('title', event[this.settings.eventTooltip]);
+          $(node).tooltip({
+            content: node.innerText
+          });
+        }
+      } else {
+        const s = this.settings;
+        const tooltipContent = `
+          ${s.tooltipSettings.subject ? `${event.subject} <br>` : ''}
+          ${s.tooltipSettings.comments ? `${event.comments} <br>` : ''}
+          ${s.tooltipSettings.time ? `from ${event.startsHourLocale} to ${event.endsHourLocale}` : ''}
+          `;
+        node.setAttribute('title', tooltipContent);
         $(node).tooltip({
-          content: node.innerText
+          content: node.innerText,
+          contentAlignment: 'left'
         });
       }
     }
@@ -1238,6 +1269,92 @@ Calendar.prototype = {
       this.element.triggerHandler('dblclick', { eventData, api: this });
     });
 
+    // Slide Select Settings
+    if (this.settings.slideSelect) {
+      let firstKey;
+      let lastKey;
+      this.element.off(`mousedown.${COMPONENT_NAME}`).on(`mousedown.${COMPONENT_NAME}`, 'td', (e) => {
+        if (self.modalVisible()) {
+          self.removeModal();
+        }
+
+        if (e.shiftKey) {
+          let hasStartSelect = false;
+          let targetTd = $(e.currentTarget).prev();
+          const isProperSelect = self.element.find('td.slide-select-start').attr('data-key') < $(e.currentTarget).attr('data-key');
+          if (targetTd.siblings().hasClass('slide-select-start') && isProperSelect) {
+            $(e.currentTarget).addClass('slide-select-end');
+            while (!hasStartSelect) {
+              targetTd.addClass('slide-select');
+  
+              if (targetTd.prev().hasClass('slide-select-start')) {
+                hasStartSelect = true;
+              }
+  
+              targetTd = targetTd.prev();
+            }
+            targetTd.removeClass('slide-select-end');
+          }
+        } else {
+          self.clearSlideSelect();
+          const key = e.currentTarget.getAttribute('data-key');
+          firstKey = key;
+          lastKey = key;
+          $(e.currentTarget).addClass('slide-select-start');
+          $(e.currentTarget).addClass('slide-select-end');
+          self.monthView.selectDay(firstKey, false, true, 'cell');
+    
+          self.element.on(`mouseenter.${COMPONENT_NAME}`, 'td', (ev) => {
+            if ($(ev.currentTarget).prev().hasClass('slide-select-start') || 
+              $(ev.currentTarget).prev().hasClass('slide-select') || 
+              $(ev.currentTarget).is('.slide-select-start')) {
+              const keySlide = ev.currentTarget.getAttribute('data-key');
+              if (firstKey < keySlide && keySlide > lastKey) {
+                lastKey = keySlide;
+                $(ev.currentTarget).prev().removeClass('slide-select-end');
+                $(ev.currentTarget).addClass('slide-select');
+                $(ev.currentTarget).addClass('slide-select-end');
+              }
+            }
+          });
+        }
+      });
+  
+      this.element.off(`mouseup.${COMPONENT_NAME}`).on(`mouseup.${COMPONENT_NAME}`, (e) => {
+        if (self.modalVisible()) {
+          self.removeModal();
+        }
+
+        self.element.off(`mouseenter.${COMPONENT_NAME}`, 'td');
+        const startDay = new Date(firstKey.substr(0, 4), firstKey.substr(4, 2) - 1, firstKey.substr(6, 2));
+        const endDay = new Date(lastKey.substr(0, 4), lastKey.substr(4, 2) - 1, lastKey.substr(6, 2));
+
+        if (self.element.find('td.slide-select-start').length === 0) {
+          return;
+        }
+
+        if (startDay.getTime() === endDay.getTime()) {
+          return;
+        }
+  
+        const eventData = utils.extend({ }, this.settings.newEventDefaults);
+        eventData.startKey = firstKey;
+        eventData.endKey = lastKey;
+        e.stopPropagation();
+  
+        calendarShared.cleanEventData(
+          eventData,
+          false,
+          this.currentDate(),
+          this.locale,
+          this.language,
+          this.settings.events,
+          this.settings.eventTypes
+        );
+        this.showModalWithCallback(eventData, true);
+      });
+    }
+
     // Set up mobile list view events
     this.element.find('.listview')
       .off(`click.${COMPONENT_NAME}-mobile`)
@@ -1253,6 +1370,12 @@ Calendar.prototype = {
       });
 
     return this;
+  },
+
+  clearSlideSelect() {
+    this.element.find('td').removeClass('slide-select-start');
+    this.element.find('td').removeClass('slide-select');
+    this.element.find('td').removeClass('slide-select-end');
   },
 
   /**
@@ -1545,6 +1668,28 @@ Calendar.prototype = {
       this.removeModal();
     }
 
+    if (this.settings.slideSelect) {
+      const firstKey = this.element.find('td.slide-select-start').attr('data-key');
+      const lastKey = this.element.find('td.slide-select-end').attr('data-key');
+      const startDay = new Date(firstKey.substr(0, 4), firstKey.substr(4, 2) - 1, firstKey.substr(6, 2));
+      const endDay = new Date(lastKey.substr(0, 4), lastKey.substr(4, 2) - 1, lastKey.substr(6, 2));
+
+      event.startKey = firstKey;
+      event.endKey = lastKey;
+      event.starts = Locale.formatDate(startDay);
+      event.ends = Locale.formatDate(endDay);
+
+      calendarShared.cleanEventData(
+        event,
+        false,
+        this.currentDate(),
+        this.locale,
+        this.language,
+        this.settings.events,
+        this.settings.eventTypes
+      );
+    }
+
     this.modalContents = document.createElement('div');
     DOM.addClass(this.modalContents, 'calendar-event-modal', 'hidden');
     document.getElementsByTagName('body')[0].appendChild(this.modalContents);
@@ -1717,6 +1862,10 @@ Calendar.prototype = {
    * @private
    */
   removeModal() {
+    if (this.settings.slideSelect) {
+      this.clearSlideSelect();
+    }
+
     this.modalContents = null;
     if (this.activeElem) {
       this.activeElem.off();

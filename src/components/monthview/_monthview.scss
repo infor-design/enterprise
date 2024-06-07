@@ -708,6 +708,39 @@
           -moz-box-shadow: inset 0 0 0 1px $calendar-selected-border-color;
           box-shadow: inset 0 0 0 1px $calendar-selected-border-color;
         }
+
+        &.slide-select-start {
+          background-color: $calendar-selected-bg-color;
+          box-shadow: inset 1px 0 0 0 $calendar-selected-border-color,
+            inset -1px 0 0 0 transparent,
+            inset 0 1px 0 0 $calendar-selected-border-color,
+            inset 0 -1px 0 0 $calendar-selected-border-color;
+        }
+
+        &.slide-select {
+          background-color: $calendar-selected-bg-color;
+          box-shadow: inset 1px 0 0 0 transparent, 
+            inset -1px 0 0 0 transparent, 
+            inset 0 1px 0 0 #0072ED, 
+            inset 0 -1px 0 0 #0072ED;
+        }
+
+        &.slide-select-end {
+          background-color: $calendar-selected-bg-color;
+          box-shadow: inset 1px 0 0 0 transparent,
+            inset -1px 0 0 0 $calendar-selected-border-color,
+            inset 0 1px 0 0 $calendar-selected-border-color,
+            inset 0 -1px 0 0 $calendar-selected-border-color;
+        }
+
+        &.slide-select-start.slide-select-end {
+          background-color: $calendar-selected-bg-color;
+          box-shadow: inset 1px 0 0 0 $calendar-selected-border-color,
+            inset -1px 0 0 0 $calendar-selected-border-color,
+            inset 0 1px 0 0 $calendar-selected-border-color,
+            inset 0 -1px 0 0 $calendar-selected-border-color;
+
+        }
       }
 
       thead th {
@@ -1103,9 +1136,43 @@ html[dir='rtl'] {
     }
 
     &.is-fullsize {
-      td .day-text {
-        left: unset;
-        right: calc(100% - 25px);
+      td {
+        .day-text {
+          left: unset;
+          right: calc(100% - 25px);
+        }
+
+        &.slide-select-start {
+          background-color: $calendar-selected-bg-color;
+          box-shadow: inset 1px 0 0 0 transparent,
+            inset -1px 0 0 0 $calendar-selected-border-color,
+            inset 0 1px 0 0 $calendar-selected-border-color,
+            inset 0 -1px 0 0 $calendar-selected-border-color;
+        }
+  
+        &.slide-select {
+          background-color: $calendar-selected-bg-color;
+          box-shadow: inset 1px 0 0 0 transparent, 
+            inset -1px 0 0 0 transparent, 
+            inset 0 1px 0 0 #0072ED, 
+            inset 0 -1px 0 0 #0072ED;
+        }
+  
+        &.slide-select-end {
+          background-color: $calendar-selected-bg-color;
+          box-shadow: inset 1px 0 0 0 $calendar-selected-border-color,
+            inset -1px 0 0 0 transparent,
+            inset 0 1px 0 0 $calendar-selected-border-color,
+            inset 0 -1px 0 0 $calendar-selected-border-color;
+        }
+  
+        &.slide-select-start.slide-select-end {
+          background-color: $calendar-selected-bg-color;
+          box-shadow: inset 1px 0 0 0 $calendar-selected-border-color,
+            inset -1px 0 0 0 $calendar-selected-border-color,
+            inset 0 1px 0 0 $calendar-selected-border-color,
+            inset 0 -1px 0 0 $calendar-selected-border-color;
+        }
       }
     }
 
