@@ -496,6 +496,16 @@
     border-bottom: 1px solid #E0E0E1;
   }
 
+  .monthview-popup {
+    .tooltip-content {
+      .monthview {
+        .monthview-table {
+          border-bottom: unset;
+        }
+      }
+    }
+  }
+
   .calendar-popup.calendar-popup-mobile {
     left: 50% !important;
     top: 50% !important;
