@@ -53,6 +53,10 @@
     padding-right: 2%;
   }
 
+  &.has-bottom-legend svg {
+    min-height: 290px;
+  }
+
   // Adjust smaller bottom legend for the pie chart
   &.is-mobile {
     svg {
@@ -111,6 +115,24 @@
   b {
     display: block;
     text-align: center;
+  }
+}
+
+.card,
+.widget {
+  &:not(.auto-height):has(div.has-bottom-legend) {
+    min-height: 390px;
+
+    .card-content,
+    .widget-content {
+      height: auto;
+      min-height: auto;
+      max-height: 360px;
+    }
+
+    &.to-single {
+      min-height: 360px;
+    }
   }
 }
 
