@@ -50,25 +50,36 @@ create_docker_file:
     - install_packages
   image: ubuntu:latest
   script: |
-    echo $DOCKER_HOST
-    BRANCH=$(echo ${CI_COMMIT_REF_NAME})
-    BRANCH=${BRANCH//\//-}
-
     echo "FROM hookandloop/sohoxi-demo:1.0.1" > Dockerfile
     echo "ADD ./ /controls" >> Dockerfile
     echo "ADD ./dist /www/data/artifacts" >> Dockerfile
     echo "ADD ./docs /www/data/docs" >> Dockerfile
     echo "RUN chown -R www-data.www-data /www/data" >> Dockerfile
     ls -al
+  variables:
+    GIT_STRATEGY: fetch
+    GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp/"
 
-    docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
-    docker build -t hookandloop/enterprise:$BRANCH .
+docker-test:
+  tags:
+    - dsa
+    - DIND
+  image: docker:25
   variables:
     DOCKER_HOST: tcp://host:2375/
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
-    GIT_STRATEGY: fetch
-    GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp/"
+  stage: build
+  script: |
+    echo "FROM node:18-alpine" > Dockerfile
+    echo "WORKDIR /app" >> Dockerfile
+    echo "COPY . ." >> Dockerfile
+    echo "EXPOSE 3000" >> Dockerfile
+    docker build .
+
+  services:
+    - name: docker:25-dind
+      alias: host
 
 build_push_image:
   stage: build
