@@ -4,6 +4,7 @@
 
 ## v4.97.0 Fixes
 
+- `[DataGrid]` Fixed bug with non refreshed tooltip in filter row conditions. ([#8773](https://github.com/infor-design/enterprise/issues/8773))
 - `[ModuleNav]` Fix icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 

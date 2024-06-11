@@ -5830,6 +5830,29 @@ Datagrid.prototype = {
         const width = self.getOuterWidth(containerEl);
 
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
+        if ($(elem).hasClass('btn-filter')) {
+          const contents = $(elem).attr('data-default');
+          const tooltips = {
+            contains: 'Contains',
+            'does-not-contain': 'DoesNotContain',
+            equals: 'Equals',
+            'does-not-equal': 'DoesNotEqual',
+            'is-empty': 'IsEmpty',
+            'is-not-empty': 'IsNotEmpty',
+            'end-with': 'EndsWith',
+            'does-not-end-with': 'DoesNotEndWith',
+            'start-with': 'StartsWith',
+            'does-not-start-with': 'DoesNotStartWith',
+            'selected-notselected': 'All',
+            selected: 'Selected',
+            'not-selected': 'NotSelected',
+            'less-than': 'EarlyThan',
+            'less-equals': 'EarlyOrEquals',
+            'greater-than': 'LaterThan',
+            'greater-equals': 'LaterOrEquals'
+          };
+          tooltip.content = `<p>${Locale.translate(tooltips[contents])}</p>`;
+        }
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
