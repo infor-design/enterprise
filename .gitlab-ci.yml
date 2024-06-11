@@ -50,13 +50,23 @@ create_docker_file:
     - install_packages
   image: ubuntu:latest
   script: |
+    echo $DOCKER_HOST
+    BRANCH=$(echo ${CI_COMMIT_REF_NAME})
+    BRANCH=${BRANCH//\//-}
+
     echo "FROM hookandloop/sohoxi-demo:1.0.1" > Dockerfile
     echo "ADD ./ /controls" >> Dockerfile
     echo "ADD ./dist /www/data/artifacts" >> Dockerfile
     echo "ADD ./docs /www/data/docs" >> Dockerfile
     echo "RUN chown -R www-data.www-data /www/data" >> Dockerfile
     ls -al
+
+    docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
+    docker build -t hookandloop/enterprise:$BRANCH .
   variables:
+    DOCKER_HOST: tcp://host:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
     GIT_STRATEGY: fetch
     GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp/"
 
@@ -68,15 +78,12 @@ build_push_image:
   needs:
     - create_docker_file
   image: docker:25
-  services:
-    - name: docker:25-dind
-      alias: host
   script: |
-    echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
+    echo $DOCKER_HOST
     BRANCH=$(echo ${CI_COMMIT_REF_NAME})
     BRANCH=${BRANCH//\//-}
-    docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
 
+    docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
     docker build -t hookandloop/enterprise:$BRANCH .
     docker push hookandloop/enterprise:$BRANCH
   variables:
@@ -85,6 +92,9 @@ build_push_image:
     DOCKER_TLS_CERTDIR: ""
     GIT_STRATEGY: fetch
     GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp --exclude=Dockerfile"
+  services:
+    - name: docker:25-dind
+      alias: host
 
 deploy:
   stage: deploy
