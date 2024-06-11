@@ -74,6 +74,7 @@ build_push_image:
   script: |
     echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
     BRANCH=$(echo ${CI_COMMIT_REF_NAME})
+    BRANCH=${BRANCH//./}
     docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
 
     docker build -t hookandloop/enterprise:$BRANCH .
