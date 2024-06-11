@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.97.0
+
+## v4.97.0 Fixes
+
+- `[ModuleNav]` Fix icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
+- `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
+
 ## v4.96.0
 
 ## v4.96.0 Features
