@@ -5,10 +5,10 @@ stages:
 
 node_testing:
   stage: test
-  image: node:18
   tags:
     - dsa
     - DIND
+  image: node:18
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
@@ -19,10 +19,10 @@ node_testing:
 
 install_packages:
   stage: build
-  image: node:18
   tags:
     - dsa
     - DIND
+  image: node:18
   script: |
     git config --global --add safe.directory /builds/infor-design/ids-legacy
 
@@ -43,12 +43,12 @@ install_packages:
 
 create_docker_file:
   stage: build
-  needs:
-    - install_packages
-  image: ubuntu:latest
   tags:
     - dsa
     - DIND
+  needs:
+    - install_packages
+  image: ubuntu:latest
   script: |
     echo "FROM hookandloop/sohoxi-demo:1.0.1" > Dockerfile
     echo "ADD ./ /controls" >> Dockerfile
@@ -62,15 +62,15 @@ create_docker_file:
 
 build_push_image:
   stage: build
+  tags:
+    - dsa
+    - DIND
   needs:
     - create_docker_file
   image: docker:25
   services:
     - name: docker:25-dind
       alias: host
-  tags:
-    - dsa
-    - DIND
   script: |
     echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
     BRANCH=$(echo ${CI_COMMIT_REF_NAME})
@@ -87,10 +87,10 @@ build_push_image:
 
 deploy:
   stage: deploy
-  image: python:3.12
   tags:
     - dsa
     - DIND
+  image: python:3.12
   before_script:
     - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY_DEPLOYMENTS" | tr -d '\r' > ~/.ssh/id_rsa
