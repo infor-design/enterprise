@@ -34,7 +34,7 @@ import { hideBin } from 'yargs/helpers';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import * as fs from 'fs';
-import glob from 'glob';
+import { glob } from 'glob';
 import logger from './logger.js';
 import createDirs from './build/create-dirs.js';
 import getFileContents from './build/get-file-contents.js';

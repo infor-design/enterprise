@@ -5,7 +5,7 @@
 
 // Libs
 import * as fs from 'fs';
-import glob from 'glob';
+import { glob } from 'glob';
 import * as path from 'path';
 import slash from 'slash';
 
