@@ -124,6 +124,7 @@ Homepage.prototype = {
       this.resize(this, false);
     }, 100);
     this.element.parent().addClass('homepage-background');
+    this.element.closest('.page-container').addClass('homepage-background');
   },
 
   /**
