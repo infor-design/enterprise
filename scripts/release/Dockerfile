@@ -11,6 +11,7 @@ RUN apt-get -y update \
     && apt-get -y install \
     zip \
     git \
+    jq \
     wget \
     curl
 
