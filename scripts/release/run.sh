@@ -19,7 +19,8 @@ check_required_vars \
   NPM_TOKEN \
   BRANCH \
   REPO_OWNER_NAME \
-  DRY_RUN
+  DRY_RUN \
+  SANDBOX_RELEASE
 
 npm set "//registry.npmjs.org/:_authToken=${NPM_TOKEN}"
 
@@ -36,6 +37,13 @@ git checkout $BRANCH > /dev/null
 if [ $? = 1 ] ; then
     echo "Git checkout failed. Please make sure the branch you are checking out exists."
     exit 1
+fi
+
+if [ "$SANDBOX_RELEASE" = "true" ]
+then
+  PACKAGE_NAME=$(cat package.json | jq -r '.name')
+  NEW_NAME="@ids-sandbox/$PACKAGE_NAME"
+  jq --arg new_name "$NEW_NAME" '.name = $new_name' package.json > "tmp" && mv "tmp" package.json
 fi
 
 npm install

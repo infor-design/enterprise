@@ -2,7 +2,7 @@ CURRENT_DIR=$(shell pwd)
 
 ORGANIZATION = hookandloop
 IMAGE = enterprise-release
-IMAGE_TAG = 1.0.2
+IMAGE_TAG = 1.0.3
 
 
 ifneq (,$(wildcard ./.env))
@@ -41,6 +41,7 @@ shell :
 		--env BRANCH=${BRANCH} \
 		--env REPO_OWNER_NAME=${REPO_OWNER_NAME} \
 		--env NPM_LATEST=${NPM_LATEST} \
+		--env SANDBOX_RELEASE=${SANDBOX_RELEASE} \
 		-v ${PWD}/build:/root/enterprise \
 		-v ${PWD}/.gitconfig:/root/.gitconfig \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
