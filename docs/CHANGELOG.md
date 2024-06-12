@@ -4,8 +4,9 @@
 
 ## v4.97.0 Fixes
 
-- `[ModuleNav]` Fix icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
+- `[ModuleNav]` Fix icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
+- `[Multiselect]` Fixed bug in multiselect noted in RTL mode. ([#8811](https://github.com/infor-design/enterprise/issues/8811))
 
 ## v4.96.0
 
