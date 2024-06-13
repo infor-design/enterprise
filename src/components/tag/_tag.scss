@@ -1,4 +1,502 @@
-// Tag Component
-// This component shares styles with the Badge Component
-// See '../badge/_badge.scss'
-// ======================================================== /
+// Tags
+//================================================== */
+
+@mixin disabled-tag {
+  &.is-disabled {
+    background-color: transparent;
+    border-color: $input-color-disabled-border;
+    color: $badge-disabled-text-color;
+    pointer-events: none;
+
+    .btn-dismissible,
+    .btn-linkable {
+      color: $badge-disabled-text-color;
+
+      .icon {
+        color: $badge-disabled-text-color;
+      }
+    }
+
+    &:hover {
+      .icon {
+        color: $badge-disabled-text-color;
+      }
+    }
+  }
+}
+
+// See also Colors.scss
+.tag {
+  @include antialiased();
+
+  background-color: $badge-neutral-bg-color;
+  border-radius: 12px;
+  color: $badge-neutral-color;
+  font-size: $ids-size-font-sm;
+  font-weight: $ids-number-font-weight-base;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 10px;
+  text-decoration: none;
+  vertical-align: middle;
+
+  a {
+    color: inherit;
+    line-height: 21px;
+    text-decoration: none;
+  }
+
+  [class^='btn'] {
+    cursor: pointer;
+    height: auto;
+    margin-right: 0;
+    min-height: auto;
+    min-width: 0;
+  }
+
+  .btn-dismissible,
+  .btn-linkable {
+    color: $badge-neutral-icon-color;
+
+    .icon {
+      color: inherit;
+      position: relative;
+    }
+
+    &:hover {
+      .icon {
+        color: $badge-neutral-hover-icon-color;
+      }
+    }
+  }
+
+  span {
+    line-height: inherit;
+  }
+
+  &.round {
+    display: inline-flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+  }
+
+  &.is-linkable {
+    @include transition(background-color 200ms $cubic-ease, border-color 200ms $cubic-ease, color 200ms $cubic-ease);
+
+    border: 1px solid transparent;
+    line-height: 20px;
+
+    a {
+      cursor: pointer;
+    }
+
+    .btn-linkable {
+      height: 24px;
+      padding-inline-start: 4px;
+      display: flex;
+      align-self: center;
+      justify-content: center;
+      flex-flow: column;
+
+      .icon {
+        height: 120px;
+        margin: 0;
+        vertical-align: baseline;
+        width: 12px;
+      }
+    }
+
+    &:not(.hide-focus) {
+      border-color: $ids-color-brand-primary-base;
+      box-shadow: $focus-box-shadow;
+    }
+
+    // Neutral color style for focus/hover
+    &:hover,
+    &.is-focused:not(.hide-focus) {
+      background-color: $badge-neutral-hover-bg-color;
+    }
+  }
+
+  &.is-dismissible {
+    border: 1px solid transparent;
+    line-height: 20px;
+    padding: 0 10px;
+
+    .btn-dismissible {
+      height: 20px;
+      padding-left: 6px;
+      vertical-align: top;
+
+      .icon {
+        height: 12px;
+        margin: 0;
+        margin-inline-end: -2px;
+        vertical-align: unset;
+        top: 1px;
+        width: 12px;
+      }
+    }
+  }
+
+  &.is-focused:not(.hide-focus) {
+    border-color: $ids-color-brand-primary-base;
+    box-shadow: $focus-box-shadow;
+
+    a {
+      outline: none;
+      outline-style: none;
+      -moz-outline-style: none;
+    }
+  }
+
+  // Include the disabled styles on the default tag.
+  @include disabled-tag();
+
+  // Neutral (Default-style) Tags
+  &.neutral {
+    background-color: $badge-neutral-bg-color;
+    color: $badge-neutral-color;
+
+    .btn-dismissible,
+    .btn-linkable {
+      color: $badge-neutral-icon-color;
+
+      &:hover {
+        .icon {
+          color: $badge-neutral-hover-icon-color;
+        }
+      }
+    }
+
+    &.is-linkable {
+      &:hover,
+      &.is-focused:not(.hide-focus) {
+        background-color: $badge-neutral-hover-bg-color;
+      }
+    }
+
+    @include disabled-tag();
+  }
+
+  // Alternate Color Tags
+  &.secondary {
+    border: 1px solid $badge-secondary-border-color;
+    color: $badge-secondary-color;
+    line-height: 20px;
+
+    .btn-dismissible,
+    .btn-linkable {
+      color: $badge-secondary-icon-color;
+
+      &:hover {
+        color: $badge-secondary-hover-icon-color;
+      }
+    }
+
+    &.is-linkable {
+      &:hover,
+      &.is-focused:not(.hide-focus) {
+        background-color: $badge-secondary-hover-bg-color;
+        border-color: $badge-secondary-hover-border-color;
+      }
+    }
+
+    &.is-dismissible {
+      border-color: $badge-secondary-border-color;
+    }
+
+    // Re-inforce the border color on secondary-style tags, which
+    // add a border by default.
+    &.is-focused,
+    &.is-linkable.is-focused,
+    &.is-dismissible.is-focused {
+      &:not(.hide-focus) {
+        border-color: $ids-color-brand-primary-base;
+      }
+    }
+
+    @include disabled-tag();
+  }
+
+  // Error Tags
+  &.error {
+    background-color: $badge-error-bg-color;
+    color: $badge-error-color;
+
+    .btn-dismissible,
+    .btn-linkable {
+      color: $badge-error-icon-color;
+
+      &:hover {
+        .icon {
+          color: $badge-error-icon-color;
+        }
+      }
+    }
+
+    &.is-linkable {
+      &:hover,
+      &.is-focused:not(.hide-focus) {
+        background-color: $badge-error-hover-bg-color;
+      }
+    }
+
+    @include disabled-tag();
+  }
+
+  // Alert / Warning Tags
+  &.alert,
+  &.warning {
+    background-color: $alert-color;
+    color: $badge-alert-text-color;
+
+    .btn-dismissible,
+    .btn-linkable {
+      color: $badge-pending-light-icon-color;
+
+      &:hover {
+        .icon {
+          color: $badge-pending-light-icon-color;
+        }
+      }
+    }
+
+    &.is-linkable {
+      &:hover,
+      &.is-focused:not(.hide-focus) {
+        background-color: $badge-alert-hover-bg-color;
+      }
+    }
+
+    @include disabled-tag();
+  }
+
+  &.caution {
+    background-color: $ids-color-status-status-03;
+    color: $badge-warning-text-color;
+
+    .btn-dismissible,
+    .btn-linkable {
+      color: $badge-warning-text-color;
+
+      &:hover {
+        color: $badge-warning-text-color;
+
+        .icon {
+          color: $badge-warning-text-color;
+        }
+      }
+    }
+  }
+
+  // Good (Success) Tags
+  &.good,
+  &.success {
+    background-color: $badge-good-bg-color;
+    color: $badge-good-color;
+
+    .btn-dismissible,
+    .btn-linkable {
+      color: $badge-good-icon-color;
+
+      &:hover {
+        color: $badge-good-hover-icon-color;
+
+        .icon {
+          color: $badge-good-hover-icon-color;
+        }
+      }
+    }
+
+    &.is-linkable {
+      &:hover,
+      &.is-focused:not(.hide-focus) {
+        background-color: $badge-good-hover-bg-color;
+      }
+    }
+
+    @include disabled-tag();
+  }
+
+  // Info Tags
+  &.info {
+    background-color: $badge-info-bg-color;
+    color: $badge-info-color;
+
+    .btn-dismissible,
+    .btn-linkable {
+      color: $badge-info-icon-color;
+
+      &:hover {
+        color: $badge-info-hover-icon-color;
+
+        .icon {
+          color: $badge-info-icon-color;
+        }
+      }
+    }
+
+    &.is-linkable {
+      &:hover,
+      &.is-focused:not(.hide-focus) {
+        background-color: $badge-info-hover-bg-color;
+      }
+    }
+
+    @include disabled-tag();
+  }
+}
+
+// Rules for multiselect with dismissible tags
+.multiselect {
+  ~.dropdown-wrapper .dropdown.has-tags {
+    .tag-list .tag.is-dismissible {
+      .btn-dismissible {
+        .icon {
+          top: -1.5px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+.tag {
+  display: inline-flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.hyperlink+.tag {
+  margin-bottom: 0;
+  margin-left: 10px;
+  margin-top: -2px;
+}
+
+.alert {
+  &.slate03 {
+    background-color: transparent;
+
+    svg {
+      color: $ids-color-palette-slate-30;
+    }
+  }
+}
+
+//Tag Strip/List
+.tag-list {
+  margin: 20px 20px 0 25px;
+
+  .tag {
+    margin: 0 5px 5px 0;
+  }
+}
+
+// Add borders to the standard tag style's hover state on Constrast themes only.
+html.theme-classic-contrast,
+html.theme-new-contrast {
+  .tag {
+    &:not(.error):not(.alert):not(.info):not(.good) {
+      &.is-linkable {
+        &:hover,
+        &.is-focused:not(.hide-focus) {
+          border-color: $badge-neutral-hover-border-color;
+        }
+      }
+    }
+  }
+}
+
+html.is-mac {
+  &.is-chrome {
+    .tag {
+      &.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            margin-inline-end: -1px;
+          }
+        }
+      }
+    }
+  }
+
+  &.is-firefox {
+    .multiselect {
+      ~.dropdown-wrapper .dropdown.has-tags {
+        .tag-list .tag.is-dismissible {
+          .btn-dismissible {
+            .icon {
+              top: -1px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Firefox behaves odd
+.is-firefox {
+  .tag.is-linkable .btn-linkable .icon {
+    vertical-align: middle;
+  }
+
+  .multiselect {
+    ~.dropdown-wrapper .dropdown.has-tags {
+      .tag-list .tag.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            top: -2px;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+}
+
+// For Safari
+.is-safari {
+  .multiselect {
+    ~.dropdown-wrapper .dropdown.has-tags {
+      .tag-list .tag.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            top: -1px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+  .hyperlink+.tag {
+    margin-left: inherit;
+    margin-right: 10px;
+  }
+
+  .tag {
+    &.is-dismissible {
+      .btn-dismissible {
+        .icon {
+          left: -5px;
+        }
+      }
+    }
+
+    &.is-linkable .btn-linkable {
+      margin-left: -6px;
+      padding: 0 5px;
+
+      .icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}

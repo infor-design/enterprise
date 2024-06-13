@@ -5,6 +5,9 @@
 ## v4.97.0 Fixes
 
 - `[Donut]` Fixed bug where chart is cut off on bottom legend placement mode. ([#8755](https://github.com/infor-design/enterprise/issues/8755))
+- `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
+- `[ModuleNav]` Fix icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
+- `[Multiselect]` Fixed bug in multiselect noted in RTL mode. ([#8811](https://github.com/infor-design/enterprise/issues/8811))
 
 ## v4.96.0
 
@@ -23,6 +26,7 @@
 - `[Bar-Stacked/Column-Stacked]` Fixed an error encountered when having many records inside the graph. ([NG#1675](https://github.com/infor-design/enterprise-ng/issues/1675))
 - `[Button]` Fixed different buttons stylings in personalization inside of content form. ([#8714](https://github.com/infor-design/enterprise/issues/8714))
 - `[Calendar]` Fixed monthrendered being executed twice in week view and day view. ([#8469](https://github.com/infor-design/enterprise/issues/8469))
+- `[Calendar]` Fixed calendar event popup render in mobile view. ([#8675](https://github.com/infor-design/enterprise/issues/8675))
 - `[Datagrid]` Fixed `loadData` and `updateDataset` API to render the correct pager and it's data. ([#8677](https://github.com/infor-design/enterprise/issues/8677))
 - `[Datagrid]` Fixed an error in expandable rows where paging causes to render white html. ([NG#1656](https://github.com/infor-design/enterprise-ng/issues/1656))
 - `[Datagrid]` Fixed dropdown keys not properly triggering when using keyboard. ([#8745](https://github.com/infor-design/enterprise/issues/8745))
