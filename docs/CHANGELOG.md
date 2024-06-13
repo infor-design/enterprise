@@ -4,6 +4,7 @@
 
 ## v4.97.0 Fixes
 
+- `[Dropdown]` Fixed no results text still displaying after removing filter text. ([#8768](https://github.com/infor-design/enterprise/issues/8768))
 - `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[ModuleNav]` Fix icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Multiselect]` Fixed bug in multiselect noted in RTL mode. ([#8811](https://github.com/infor-design/enterprise/issues/8811))
@@ -36,7 +37,6 @@
 - `[Datagrid]` Fixed an error that occurred when clicking on a dropdown cell after calling `updated` method. ([NG#1644](https://github.com/infor-design/enterprise-ng/issues/1644))
 - `[Datagrid]` Fixed a bug where date would be cleared after updating cell on different locales. ([NG#1710](https://github.com/infor-design/enterprise-ng/issues/1710))
 - `[Datepicker]` Fixed focus date not properly assigned when calendar is used as datepicker. ([#8585](https://github.com/infor-design/enterprise/issues/8585))
-- `[Dropdown]` Fixed no results text still displaying after removing filter text. ([#8768](https://github.com/infor-design/enterprise/issues/8768))
 - `[Dropdown]` Fixed dropdown height when `showTags` is set to true. ([#8566](https://github.com/infor-design/enterprise/issues/8566))
 - `[Dropdown]` Fixed RTL alignments and border colors for field filter. ([#8659](https://github.com/infor-design/enterprise/issues/8659))
 - `[FileuploadAdvanced]` Added fileupload-advanced in homepage widget. ([#7892](https://github.com/infor-design/enterprise/issues/7892))
