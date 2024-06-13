@@ -7635,7 +7635,8 @@ Datagrid.prototype = {
         }
 
         if (!td.hasClass('is-cell-readonly') && !target.is('[disabled]') && target.is('button, input[checkbox], a, a.search-mode i, img') || target.parent().is('button')) {  //eslint-disable-line
-          col.click(e, [{ row: rowIdx, cell: self.activeCell.cell, item, originalEvent: e }]);
+          const colIdx = self.columnIdxById(col.id) - (self.settings.frozenColumns?.left?.length || 0);
+          col.click(e, [{ row: rowIdx, cell: colIdx, item, originalEvent: e }]);
         }
         if (target.is('[disabled]') && col.formatter === Formatters.Hyperlink) {
           e.stopImmediatePropagation();

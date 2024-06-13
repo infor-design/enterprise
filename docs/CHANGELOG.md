@@ -4,6 +4,7 @@
 
 ## v4.97.0 Fixes
 
+- `[Datagrid]` Fixed cell value from argument passed on hyperlink click. ([#8762](https://github.com/infor-design/enterprise/issues/8762))
 - `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[ModuleNav]` Fix icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Multiselect]` Fixed bug in multiselect noted in RTL mode. ([#8811](https://github.com/infor-design/enterprise/issues/8811))
