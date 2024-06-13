@@ -1426,6 +1426,10 @@ Dropdown.prototype = {
       return;
     }
 
+    if (this.listUl.find('li.no-results').length > 0) {
+      this.listUl.find('li.no-results').remove();
+    }
+
     this.list.removeClass('search-mode');
     const lis = this.listUl.find('li');
 
