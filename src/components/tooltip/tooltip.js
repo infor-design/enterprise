@@ -43,7 +43,7 @@ const TOOLTIP_TRIGGER_METHODS = ['hover', 'immediate', 'click', 'focus'];
 * @param {boolean} [settings.contentAlignment] Content text alignment.
  * @param {string} [settings.extraClass] Extra css class.
  * @param {object} [settings.placementOpt] Placement options.
- * 
+ *
  * @param {string} [settings.maxWidth] Toolip max width.
  * @param {boolean} [settings.initializeContent] Init the content in the tooltip.
  * @param {string} [settings.headerClass] If set this color will be used on the header (if a popover).
