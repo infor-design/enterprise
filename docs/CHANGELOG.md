@@ -4,7 +4,9 @@
 
 ## v4.97.0 Fixes
 
+- `[DataGrid]` Fixed bug with non refreshed tooltip in filter row conditions. ([#8773](https://github.com/infor-design/enterprise/issues/8773))
 - `[Donut]` Fixed bug where chart is cut off on bottom legend placement mode. ([#8755](https://github.com/infor-design/enterprise/issues/8755))
+- `[ModuleNav]` Fix icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[ModuleNav]` Fix icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Multiselect]` Fixed bug in multiselect noted in RTL mode. ([#8811](https://github.com/infor-design/enterprise/issues/8811))
