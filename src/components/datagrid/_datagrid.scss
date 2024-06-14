@@ -3393,6 +3393,10 @@ $datagrid-small-row-height: 25px;
         }
       }
 
+      &.l-right-text .datagrid-cell-wrapper {
+        text-overflow: initial;
+      }
+
       &:not(.has-editor) {
         .trigger + .icon {
           display: none;
