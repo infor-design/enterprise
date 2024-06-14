@@ -119,7 +119,8 @@ Pie.prototype = {
 
     this
       .build()
-      .handleEvents();
+      .handleEvents()
+      .handleResize();
 
     /**
      * Fires when the chart is complete done rendering, for customization.
@@ -208,13 +209,16 @@ Pie.prototype = {
       heightAdjusted = 35;
       this.element.closest('.widget-content').css({ height: 'auto', 'min-height': 'auto' });
       let minHeight = dims.height - (23 + (Math.round(s.dataset[0].data.length / 2) * 25));
-      const autoHeight = this.element.closest('.auto-height ');
+      const autoHeight = this.element.closest('.auto-height');
 
       if (autoHeight.length > 0 && !autoHeight.hasClass('has-bottom-legend')) {
         minHeight += 78;
       }
       if (s.fitHeight) {
         minHeight -= utils.getSiblingsHeight(self.element[0]);
+      }
+      if (this.element.closest('.has-bottom-legend').length > 0 && minHeight < 260) {
+        minHeight = 260;
       }
 
       $(this.svg.node()).css({ 'min-height': minHeight });
