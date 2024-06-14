@@ -296,7 +296,7 @@ charts.chartColorName = function chartColor(i, chartType, data) {
 
     return tempSelector;
   }
-  
+
   // Some configuration by specific chart types
   if (/^(pie|donut)$/.test(chartType)) {
     return this.colorNameRange()[getColorIndex()];
@@ -586,8 +586,11 @@ charts.addLegend = function (series, chartType, settings, container) {
       const widgetHeight = $(container).parents('.widget').height();
       const widgetHeader = $($(container).parents('.widget').children().get(0)).height();
       const widgetContent = $($(container).parents('.widget').children().get(1)).height();
-      const additionalPadding = (widgetHeight - (widgetHeader + widgetContent)) / 2;
-      legend.css('padding-top', `${additionalPadding}px`);
+
+      if (!legend.hasClass('is-bottom')) {
+        const additionalPadding = (widgetHeight - (widgetHeader + widgetContent)) / 2;
+        legend.css('padding-top', `${additionalPadding}px`);
+      }
 
       listButton.on('selected', (e, args) => {
         const idx = $(args[0]).attr('index-id').match(regex)[1];
