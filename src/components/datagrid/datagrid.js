@@ -2225,6 +2225,30 @@ Datagrid.prototype = {
   },
 
   /**
+  * Maps the Filter text to the tooltip/text
+  * @returns {Array} The mapping array
+  */
+  filterText: {
+    contains: 'Contains',
+    'does-not-contain': 'DoesNotContain',
+    equals: 'Equals',
+    'does-not-equal': 'DoesNotEqual',
+    'is-empty': 'IsEmpty',
+    'is-not-empty': 'IsNotEmpty',
+    'end-with': 'EndsWith',
+    'does-not-end-with': 'DoesNotEndWith',
+    'start-with': 'StartsWith',
+    'does-not-start-with': 'DoesNotStartWith',
+    'selected-notselected': 'All',
+    selected: 'Selected',
+    'not-selected': 'NotSelected',
+    'less-than': 'EarlyThan',
+    'less-equals': 'EarlyOrEquals',
+    'greater-than': 'LaterThan',
+    'greater-equals': 'LaterOrEquals'
+  },
+
+  /**
   * Render the Filter Button and Menu based on filterType - which determines the options
   * @private
   * @param {object} col The column object
@@ -2280,7 +2304,8 @@ Datagrid.prototype = {
 
     const renderButton = function (defaultValue, extraClass) {
       const isSingle = col.filterConditions !== undefined && col.filterConditions.length === 1;
-      return `<button type="button" ${attrs} class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}${isSingle ? ' single' : ''}" data-init="false" ${isDisabled || isSingle ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} tabindex="0" type="button"><span class="audible">Filter</span>` +
+      const text = Locale.translate(self.filterText[defaultValue]);
+      return `<button type="button" ${attrs} class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}${isSingle ? ' single' : ''}" data-init="false" ${isDisabled || isSingle ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} tabindex="0" type="button"><span class="audible">${text}</span>` +
       `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-filter-{{icon}}"></use></svg>${
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
@@ -5830,6 +5855,10 @@ Datagrid.prototype = {
         const width = self.getOuterWidth(containerEl);
 
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
+        if ($(elem).hasClass('btn-filter')) {
+          const contents = (elem?.querySelector('span')?.textContent || '').trim();
+          tooltip.content = `<p>${contents}</p>`;
+        }
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
