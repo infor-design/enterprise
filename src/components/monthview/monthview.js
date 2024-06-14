@@ -334,6 +334,10 @@ MonthView.prototype = {
     this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, this.settings.showWeekNumber ? this.monthAndWeekContainer : useElement);
 
     if (this.settings.showWeekNumber) {
+      this.validateWeekNumbers();
+    }
+
+    if (this.settings.showWeekNumber) {
       this.calendar.addClass('has-monthview-week-table');
     }
 
@@ -621,6 +625,21 @@ MonthView.prototype = {
   },
 
   /**
+   * Rechecks week numbers after appending monthview table to realign the number of weeks
+   */
+  validateWeekNumbers() {
+    if (!this.settings.showWeekNumber) {
+      return;
+    }
+
+    const weekCount = this.weekNumber.find('td').length;
+
+    if (weekCount === 6) {
+      this.weekNumber.find('tr').last().hide()
+    }
+  },
+
+  /**
    * Update the calendar to show the given month and year
    * @param {number} month The zero based month to display
    * @param {number} year The year to display
@@ -864,6 +883,7 @@ MonthView.prototype = {
     const row = this.days.find('tr').eq(5);
     if (row.find('td.alternate').length === 7) {
       row.hide();
+      this.validateWeekNumbers();
     } else {
       row.show();
     }
