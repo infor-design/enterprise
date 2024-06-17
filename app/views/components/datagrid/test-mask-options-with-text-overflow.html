@@ -42,7 +42,8 @@
       columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', filterType: 'decimal', editor: Soho.Editors.Input});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', headerAlign: 'right', textOverflow: 'ellipsis', maskOptions: maskFormatter, filterType: 'text', editor: Soho.Editors.Input,
         filterMaskOptions: {process: 'number', patternOptions: {allowDecimal: true, allowNegative: true, allowLeadingZeros: true, allowThousandsSeparator: false, integerLimit: 4, decimalLimit: 3}}});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text', editor: Soho.Editors.Input});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', align: 'right', headerAlign: 'right', textOverflow: 'ellipsis', filterType: 'text', editor: Soho.Editors.Input});
+      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', filterType: 'decimal', editor: Soho.Editors.Input });
 
       //Init and get the api for the grid
       $('#readonly-datagrid').datagrid({
