@@ -635,7 +635,7 @@ MonthView.prototype = {
     const weekCount = this.weekNumber.find('td').length;
 
     if (weekCount === 6) {
-      this.weekNumber.find('tr').last().hide()
+      this.weekNumber.find('tr').last().hide();
     }
   },
 
