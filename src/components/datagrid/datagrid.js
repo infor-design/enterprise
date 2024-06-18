@@ -5190,7 +5190,7 @@ Datagrid.prototype = {
       let renderedTmpl = '';
 
       if (!self.settings.cellLayout) {
-        tmpl = tmpl.replace("datagrid-cell-layout", "");
+        tmpl = tmpl.replace('datagrid-cell-layout', '');
       }
 
       if (Tmpl && item) {
