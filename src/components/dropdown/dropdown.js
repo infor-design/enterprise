@@ -1371,7 +1371,8 @@ Dropdown.prototype = {
       // Checking the position of the dropdown element
       // If near at the bottom of the page, will not be flowing up
       // and stay still to its position.
-      const totalPageHeight = document.body.scrollHeight;
+      const isFirefoxMac = $('html.is-mac.is-firefox').length > 0;
+      const totalPageHeight = isFirefoxMac ? document.body.scrollHeight - 1 : document.body.scrollHeight;
       const scrollPoint = window.scrollY + window.innerHeight;
       const isNearBottom = scrollPoint >= totalPageHeight;
 
