@@ -248,6 +248,7 @@ const DATAGRID_DEFAULTS = {
   activeCheckboxSelection: false,
   dblClickApply: false,
   attributes: null,
+  cellLayout: true,
   allowPasteFromExcel: false,
   showEditorIcons: false,
   fallbackImage: 'insert-image',
@@ -5183,10 +5184,14 @@ Datagrid.prototype = {
     containerHtml.right += '</tr>';
 
     if (self.settings.rowTemplate && !isSummaryRow) {
-      const tmpl = self.settings.rowTemplate;
+      let tmpl = self.settings.rowTemplate;
       const item = rowData;
       const height = self.settings.rowTemplateHeight || 107;
       let renderedTmpl = '';
+
+      if (!self.settings.cellLayout) {
+        tmpl = tmpl.replace("datagrid-cell-layout", "");
+      }
 
       if (Tmpl && item) {
         renderedTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`, { dataset: item });
