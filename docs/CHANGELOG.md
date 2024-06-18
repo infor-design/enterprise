@@ -2,6 +2,10 @@
 
 ## v4.97.0
 
+## v4.97.0 Features
+
+- `[Weekview]` Added settings `showOvernightBothDays` and `overnightLabel` to customize overnight days. ([#8630](https://github.com/infor-design/enterprise/issues/8630))
+
 ## v4.97.0 Fixes
 
 - `[Datagrid]` Fixed cell value from argument passed on hyperlink click. ([#8762](https://github.com/infor-design/enterprise/issues/8762))
