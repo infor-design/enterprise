@@ -290,23 +290,21 @@ Datagrid.prototype = {
   },
   /* Unbind elements' events and remove elements' data and attributes */
   cleanupElements($element){
-    let allElements = $lement.find("*");
-      allElements.each(function (i, el) {
-        $(el).off();
-        $(el).removeData();
-        removeAttributes($(el));
-      });
-      allElements.remove();
-  },
-  removeAttributes($element) {
-    return $element.each(function () {
+    let removeAttributes = function($element) {
       let attributes = $.map($element[0].attributes, function (item) {
         return item.name;
       });
       $.each(attributes, function (i, item) {
         $element.removeAttr(item);
       });
+    };
+  let allElements = $element.find("*");
+    allElements.each(function (i, el) {
+      $(el).off();
+      $(el).removeData();
+      removeAttributes($(el));
     });
+    allElements.remove();
   },
   clearArray(arr){
     if (arr) {
@@ -4411,15 +4409,15 @@ Datagrid.prototype = {
     }
     
     if (self.hasLeftPane) {
-      cleanupElements(self.tableBodyLeft);
+      this.cleanupElements(self.tableBodyLeft);
       DOM.html(self.tableBodyLeft, tableHtmlLeft, '*');
     }
 
-    cleanupElements(self.tableBody);
+    this.cleanupElements(self.tableBody);
     DOM.html(self.tableBody, tableHtml, '*');
 
     if (self.hasRightPane) {
-      cleanupElements(self.tableBodyRight);
+      this.cleanupElements(self.tableBodyRight);
       DOM.html(self.tableBodyRight, tableHtmlRight, '*');
     }
 
@@ -13836,37 +13834,37 @@ Datagrid.prototype = {
     $('body').off('open.modal.datagrid');
     $(window).off('orientationchange.datagrid');
     $(window).off('resize.datagrid');
-    clearArray(this.settings.columns);
-    clearArray(this.settings.dataset);
-    clearArray(this.settings.treeDepth);
-    clearArray(this.settings.treeRootNodes);
-    clearArray(this.dataset);
-    clearArray(this.columns);
-    clearArray(this.treeDepth);
-    clearArray(this.columnIds);
-    clearArray(this.originalColumns);
-    clearArray(this.nonVisibleCellErrors);
-    clearArray(this.originalColumns);
-    clearArray(this.rowSpans);
-    clearArray(this.currentPageRows);
+    this.clearArray(this.settings.columns);
+    this.clearArray(this.settings.dataset);
+    this.clearArray(this.settings.treeDepth);
+    this.clearArray(this.settings.treeRootNodes);
+    this.clearArray(this.dataset);
+    this.clearArray(this.columns);
+    this.clearArray(this.treeDepth);
+    this.clearArray(this.columnIds);
+    this.clearArray(this.originalColumns);
+    this.clearArray(this.nonVisibleCellErrors);
+    this.clearArray(this.originalColumns);
+    this.clearArray(this.rowSpans);
+    this.clearArray(this.currentPageRows);
 
-    cleanupElements(this.table);
-    cleanupElements(this.tableBody);
-    cleanupElements(this.tableLeft);
-    cleanupElements(this.tableRight);
-    cleanupElements(this.tableBodyLeft);
-    cleanupElements(this.tableBodyRight);
-    cleanupElements(this.bodyWrapperCenter);
-    cleanupElements(this.bodyWrapperLeft);
-    cleanupElements(this.bodyWrapperRight);
-    cleanupElements(this.bodyColGroup);
-    cleanupElements(this.container);
-    cleanupElements(this.contextualToolbar);
-    cleanupElements(this.element);
-    cleanupElements(this.currentHeader);
-    cleanupElements(this.emptyMessageContainer);
-    cleanupElements(this.headerRow);
-    cleanupElements(this.activeCell.node);
+    this.cleanupElements(this.table);
+    this.cleanupElements(this.tableBody);
+    this.cleanupElements(this.tableLeft);
+    this.cleanupElements(this.tableRight);
+    this.cleanupElements(this.tableBodyLeft);
+    this.cleanupElements(this.tableBodyRight);
+    this.cleanupElements(this.bodyWrapperCenter);
+    this.cleanupElements(this.bodyWrapperLeft);
+    this.cleanupElements(this.bodyWrapperRight);
+    this.cleanupElements(this.bodyColGroup);
+    this.cleanupElements(this.container);
+    this.cleanupElements(this.contextualToolbar);
+    this.cleanupElements(this.element);
+    this.cleanupElements(this.currentHeader);
+    this.cleanupElements(this.emptyMessageContainer);
+    this.cleanupElements(this.headerRow);
+    this.cleanupElements(this.activeCell.node);
     allElements.remove();
 
     return this;
