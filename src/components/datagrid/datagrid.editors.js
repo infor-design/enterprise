@@ -137,9 +137,9 @@ const editors = {
         return;
       }
 
-      setTimeout(() => {
-        this.input.remove();
-      }, 0);
+      setTimeout((arg) => {
+        arg.input.remove();
+      }, 0, this);
     };
 
     this.init();
@@ -192,10 +192,10 @@ const editors = {
 
     this.destroy = function () {
       container.removeClass('datagrid-textarea-cell-wrapper');
-      setTimeout(() => {
-        this.input.off('click.textareaeditor');
-        this.input.remove();
-      }, 0);
+      setTimeout((arg) => {
+        arg.input.off('click.textareaeditor');
+        arg.input.remove();
+      }, 0, this);
     };
 
     this.init();
@@ -265,9 +265,9 @@ const editors = {
     };
 
     this.focus = function () {
-      setTimeout(() => {
-        this.input.focus();
-      }, 0);
+      setTimeout((arg) => {
+        arg.input.focus();
+      }, 0, this);
     };
 
     this.destroy = function () {
@@ -327,10 +327,10 @@ const editors = {
     };
 
     this.destroy = function () {
-      setTimeout(() => {
-        this.input.next('.checkbox-label').remove();
-        this.input.remove();
-      }, 0);
+      setTimeout((arg) => {
+        arg.input.next('.checkbox-label').remove();
+        arg.input.remove();
+      }, 0, this);
     };
 
     this.init();
@@ -534,9 +534,9 @@ const editors = {
         }
 
         if (type === 'tab') {
-          setTimeout(() => {
-            container.parent('td').focus();
-          }, 100);
+          setTimeout((arg) => {
+            arg.parent('td').focus();
+          }, 100, container);
         }
       });
     };
@@ -700,9 +700,9 @@ const editors = {
         }
 
         if (type === 'tab') {
-          setTimeout(() => {
-            container.parent('td').focus();
-          }, 100);
+          setTimeout((arg) => {
+            arg.parent('td').focus();
+          }, 100, container);
         }
       });
     };
@@ -758,19 +758,21 @@ const editors = {
       }
 
       this.input.on('listclosed', () => {
-        setTimeout(() => {
+        setTimeout((param) => {
+          let self = param[0], container = param[1], grid = param[2];
           self.input.trigger('focusout');
           container.parent().focus();
           grid.setNextActiveCell(event);
-        }, 1);
+        }, 1, [this, container, grid]);
       });
     };
 
     this.destroy = function () {
-      setTimeout(() => {
+      setTimeout((param) => {
+        let self = param[0], grid = param[1];
         grid.quickEditMode = false;
-        this.input.remove();
-      }, 0);
+        self.input.remove();
+      }, 0, [this, grid]);
     };
 
     this.init();
@@ -819,17 +821,18 @@ const editors = {
     this.val = function (v) {
       // eslint-disable-next-line compat/compat
       return new Promise((resolve) => {
-        setTimeout(() => {
+        setTimeout((param) => {
+          let self = param[0];
           let output;
           if (v) {
             v = xssUtils.stripTags(v);
-            this.input.attr('value', v);
+            self.input.attr('value', v);
             output = v;
           } else {
-            output = this.input.val();
+            output = self.input.val();
           }
           resolve(output);
-        }, 300);
+        }, 300, [this]);
       });
     };
 
@@ -844,12 +847,13 @@ const editors = {
        */
       const handleCancel = () => {
         $('body').one('focusin.fileuploadeditor', () => {
-          setTimeout(() => {
-            if (this.status !== 'change') {
-              this.status = 'cancel';
-              grid.commitCellEdit(this.input);
+          setTimeout((param) => {
+            let self = param[0], grid = param[1];
+            if (self.status !== 'change') {
+              self.status = 'cancel';
+              grid.commitCellEdit(self.input);
             }
-          }, 100);
+          }, 100, [this, grid]);
         });
       };
 
@@ -960,11 +964,13 @@ const editors = {
       }
 
       this.api.trigger.on('hide.editortime', () => {
-        setTimeout(() => {
+        setTimeout((param) => {
+          let self = param[0], grid = param[1], container = param[2];
+
           self.input.trigger('focusout');
           container.parent().focus();
           grid.setNextActiveCell(event);
-        }, 1);
+        }, 1, [this, grid, container]);
       });
     };
 
@@ -974,10 +980,11 @@ const editors = {
         self.api.trigger.off('hide.editortime');
       }
 
-      setTimeout(() => {
+      setTimeout((param) => {
+        let self = param[0], grid = param[1];
         grid.quickEditMode = false;
         self.input.remove();
-      }, 0);
+      }, 0, [this, grid]);
     };
 
     this.init();
@@ -1081,12 +1088,13 @@ const editors = {
     this.destroy = function () {
       const self = this;
       const td = this.input.closest('td');
-      setTimeout(() => {
+      setTimeout((param) => {
+        let self = param[0], grid = param[1], td = param[2];
         grid.quickEditMode = false;
         td.off('keydown.editorlookup')
           .find('.trigger').off('touchcancel.editorlookup touchend.editorlookup');
         self.input.remove();
-      }, 0);
+      }, 0, [this, grid, td]);
     };
 
     this.init();
@@ -1129,10 +1137,11 @@ const editors = {
     };
 
     this.destroy = function () {
-      setTimeout(() => {
+      setTimeout((param) => {
+        let self = param[0], grid = param[1];
         grid.quickEditMode = false;
-        this.input.remove();
-      }, 0);
+        self.input.remove();
+      }, 0, [this, grid]);
     };
 
     this.init();
@@ -1185,7 +1194,8 @@ const editors = {
         return;
       }
 
-      setTimeout(() => {
+      setTimeout((param) => {
+        let self = param[0], grid = param[1];
         grid.quickEditMode = false;
         const textVal = self.val();
         if (self.input && self.input.data('spinbox')) {
@@ -1195,7 +1205,7 @@ const editors = {
           self.input.remove();
         }
         container.text(textVal);
-      }, 0);
+      }, 0, [this, grid]);
     };
 
     this.init();
@@ -1241,9 +1251,10 @@ const editors = {
     };
 
     this.destroy = function () {
-      setTimeout(() => {
-        this.input.parent().remove();
-      }, 0);
+      setTimeout((param) => {
+        let self = param[0];
+        self.input.parent().remove();
+      }, 0, [this]);
     };
 
     this.init();
