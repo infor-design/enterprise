@@ -290,12 +290,12 @@ Datagrid.prototype = {
   },
   /* Unbind elements' events and remove elements' data and attributes */
   cleanupElements($element){
-    let removeAttributes = function($element) {
-      let attributes = $.map($element[0].attributes, function (item) {
+    const removeAttributes = function($el) {
+      let attributes = $.map($el[0].attributes, function (item) {
         return item.name;
       });
       $.each(attributes, function (i, item) {
-        $element.removeAttr(item);
+        $el.removeAttr(item);
       });
     };
   let allElements = $element.find("*");
