@@ -288,29 +288,29 @@ Datagrid.prototype = {
     }
     return api;
   },
-  /* Unbind elements' events and remove elements' data and attributes */
-  cleanupElements($element){
-    const removeAttributes = function($el) {
-      let attributes = $.map($el[0].attributes, function (item) {
-        return item.name;
+    cleanupElements:function($element){
+      const removeAttributes = function($el) {
+        let attributes = $.map($el[0].attributes, function (item) {
+          return item.name;
+        });
+        $.each(attributes, function (i, item) {
+          $el.removeAttr(item);
+        });
+      };
+  
+    let allElements = $element.find("*");
+      allElements.each(function (i, el) {
+        $(el).off();
+        $(el).removeData();
+        removeAttributes($(el));
       });
-      $.each(attributes, function (i, item) {
-        $el.removeAttr(item);
-      });
-    };
-  let allElements = $element.find("*");
-    allElements.each(function (i, el) {
-      $(el).off();
-      $(el).removeData();
-      removeAttributes($(el));
-    });
-    allElements.remove();
-  },
-  clearArray(arr){
-    if (arr) {
-      arr.splice(0, arr.length);
-    }
-  },
+      allElements.remove();
+    },
+    clearArray:function(arr){
+      if (arr) {
+        arr.splice(0, arr.length);
+      }
+    },
   /**
   * Init the datagrid from its uninitialized state.
   * @private
