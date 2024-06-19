@@ -2,6 +2,10 @@
 
 ## v4.97.0
 
+## v4.97.0 Features
+
+- `[Weekview]` Added settings `showOvernightBothDays` and `overnightLabel` to customize overnight days. ([#8630](https://github.com/infor-design/enterprise/issues/8630))
+
 ## v4.97.0 Fixes
 
 - `[Dropdown]` Fixed no results text still displaying after removing filter text. ([#8768](https://github.com/infor-design/enterprise/issues/8768))
