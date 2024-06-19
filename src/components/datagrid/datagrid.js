@@ -5360,7 +5360,7 @@ Datagrid.prototype = {
       let rowStart = Math.floor(this.element.find(".datagrid-wrapper.scrollable-x.scrollable-y").scrollTop()/rowHtAssume);
       let rowCnt = rowStart + Math.floor(this.element.closest(".h5-datagrid-container").height()/rowHtAssume);
       let arrayToTestlen = arrayToTest.length < rowCnt ? arrayToTest.length : rowCnt;
-      for (var _i7 = rowStart; _i7 < arrayToTestlen; _i7++) {
+      for (var i = rowStart; i < arrayToTestlen; this.initSettings++) {
      let val = this.fieldValue(arrayToTest[i], columnDef.field);
         const row = arrayToTest[i];
 
@@ -10192,13 +10192,11 @@ Datagrid.prototype = {
         }
       }
     });
-      self.element.data("_this20", _this20); //must remove this on destroy
     // Handle Editing / Keyboard
     self.element.on('keydown.datagrid', 'td, input', (e) => { //eslint-disable-line
       const key = e.which || e.keyCode || e.charCode || 0;
       let handled = false;
       const self = $(this).data("self");
-      const _this20 = $(this).data("_this20");
       // F2 - toggles actionableMode "true" and "false"
       // Force to not toggle, if "inlineMode: true"
       if (key === 113 && !this.inlineMode) {
@@ -12860,14 +12858,13 @@ Datagrid.prototype = {
               setTimeout((param) => {
                 let self = param[0];
                 let elms = param[1];
-                let _this25 = param[2];
                 elms.rows.center.classList.add(cssClass);
                 self.frozenExpandRowSetHeight(elms.details);
                 elms.padding.style.opacity = '';
                 $(window).on('resize.datagrid.expandedfrozen', () => {
                   self.frozenExpandRowSetHeight(elms.details);
                 });
-              }, 10, [self, elms, _this25]);
+              }, 10, [self, elms]);
             }
           })
           .one('animateclosedstart.datagrid.expandedfrozen', () => {
