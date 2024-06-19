@@ -36,17 +36,16 @@
 
 <script>
   $('body').on('initialized', function() {
-    var tabs = $('#dismissible-tabs');
+    const tabs = $('#dismissible-tabs');
 
-    function announceEvent(e, li) {
-      var type = e.type,
-        a = li.children('a'),
-        href = a.attr('href');
+    function announceEvent(e, a) {
+      const type = e.type;
+      const href = a.attr('href');
 
       $('body').toast({
-        title: '<span style="color: #bb6666; font-weight: bold;">' + e.type + '</span> triggered!',
-        message: 'A ' + e.type + ' event was triggered on the <span class="color: #66bbbb; font-weight: bold;">' + href + '</span> tab.'
-      });
+          title: '<span style="color: #bb6666; font-weight: bold;">' + e.type + '</span> triggered!',
+          message: 'A ' + e.type + ' event was triggered on the <span class="color: #66bbbb; font-weight: bold;">' + href + '</span> tab.'
+        });
 
       if (type === 'beforeclose' && href === '#tabs-prevented-dismissible') {
         return false;

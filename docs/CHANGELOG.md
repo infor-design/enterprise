@@ -5,13 +5,17 @@
 ## v4.97.0 Fixes
 
 - `[Datagrid]` Added `cellLayout` setting to remove datagrid cell layout from expandable rows. ([NG#1524](https://github.com/infor-design/enterprise-ng/issues/1524))
+- `[Dropdown]` Fixed no results text still displaying after removing filter text. ([#8768](https://github.com/infor-design/enterprise/issues/8768))
+- `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Datagrid]` Fixed cell value from argument passed on hyperlink click. ([#8762](https://github.com/infor-design/enterprise/issues/8762))
+- `[Datagrid]` Fixed issue with textEllipsis in right aligned number columns. ([#8821](https://github.com/infor-design/enterprise/issues/8821))
 - `[DataGrid]` Fixed bug with non refreshed tooltip in filter row conditions. ([#8773](https://github.com/infor-design/enterprise/issues/8773))
 - `[Donut]` Fixed bug where chart is cut off on bottom legend placement mode. ([#8755](https://github.com/infor-design/enterprise/issues/8755))
 - `[ModuleNav]` Fix icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[ModuleNav]` Fixed icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Multiselect]` Fixed bug in multiselect noted in RTL mode. ([#8811](https://github.com/infor-design/enterprise/issues/8811))
+- `[Tabs]` Fixed example page for disabling dismissible tags. ([NG#1697](https://github.com/infor-design/enterprise/issues/1697))
 
 ## v4.96.0
 
