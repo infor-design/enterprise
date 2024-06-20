@@ -10922,8 +10922,14 @@ Datagrid.prototype = {
     let rowIndex;
     let dataRowIndex;
     if (this.settings.source !== null && isUseActiveRow) {
-      rowIndex = this.activeCell.rowIndex;
-      dataRowIndex = this.activeCell.dataRow;
+      if(cellNode && this.actualRowIndex(cellNode.parent()) !== this.activeCell.rowIndex){
+        rowIndex = this.actualRowIndex(cellNode.parent());
+        dataRowIndex = this.dataRowIndex(cellNode.parent());
+      }
+      else{
+        rowIndex = this.activeCell.rowIndex;
+        dataRowIndex = this.activeCell.dataRow;
+      }
     } else {
       rowIndex = this.actualRowIndex(cellNode.parent());
       dataRowIndex = this.dataRowIndex(cellNode.parent());
