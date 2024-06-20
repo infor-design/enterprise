@@ -288,29 +288,26 @@ Datagrid.prototype = {
     }
     return api;
   },
-    cleanupElements:function($element){
-      const removeAttributes = function($el) {
-        let attributes = $.map($el[0].attributes, function (item) {
-          return item.name;
-        });
-        $.each(attributes, function (i, item) {
-          $el.removeAttr(item);
-        });
-      };
-  
-    let allElements = $element.find("*");
-      allElements.each(function (i, el) {
-        $(el).off();
-        $(el).removeData();
-        removeAttributes($(el));
+  cleanupElements($element) {
+    const removeAttributes = function ($el) {
+      const attributes = $.map($el[0].attributes, item => item.name);
+      $.each(attributes, (i, item) => {
+        $el.removeAttr(item);
       });
-      allElements.remove();
-    },
-    clearArray:function(arr){
-      if (arr) {
-        arr.splice(0, arr.length);
-      }
-    },
+    };
+    const allElements = $element.find('*');
+    allElements.each((i, el) => {
+      $(el).off();
+      $(el).removeData();
+      removeAttributes($(el));
+    });
+    allElements.remove();
+  },
+  clearArray(arr) {
+    if (arr) {
+      arr.splice(0, arr.length);
+    }
+  },
   /**
   * Init the datagrid from its uninitialized state.
   * @private
@@ -554,16 +551,11 @@ Datagrid.prototype = {
    * @param {object} event The event information.
    */
   editCell(row, cell, event) {
-    const self = this;
     setTimeout((param) => {
-      let self = param[0];
-      let row = param[1];
-      let cell = param[2];
-      let event = param[3];
-
-      self.setActiveCell(row, cell);
-      self.makeCellEditable(row, cell, event);
-    }, 100, [self, row, cell, event]);
+      const self1 = param[0];
+      self1.setActiveCell(row, cell);
+      self1.makeCellEditable(row, cell, event);
+    }, 100, [this]);
   },
 
   /**
@@ -738,12 +730,16 @@ Datagrid.prototype = {
 
     // Set active and fire handler
     setTimeout((param) => {
-      let self = param[0], row = param[1], cell = param[2], rowNode = param[3], data = param[4]; 
-      self.setActiveCell(row, cell);
-      if (!self.settings.groupable) {
-        rowNode = self.visualRowNode(row);
+      const self1 = param[0];
+      const row1 = param[1];
+      const cell1 = param[2];
+      let rowNode1 = param[3];
+      const data1 = param[4];
+      self1.setActiveCell(row1, cell1);
+      if (!self1.settings.groupable) {
+        rowNode1 = self1.visualRowNode(row1);
       }
-      args = { row, cell, target: rowNode, value: data, oldValue: {} };
+      args = { row1, cell1, target1: rowNode1, value: data1, oldValue: {} };
 
       /**
        * Fires after a row is added via the api.
@@ -811,14 +807,18 @@ Datagrid.prototype = {
 
     // Set active and fire handler
     setTimeout((param) => {
-      let self = param[0], rows = param[1], cell = param[2], rowNodes = param[3], dataArr = param[4]; 
-      self.setActiveCell(rows[0], cell);
-      if (!self.settings.groupable) {
-        rows.forEach((row) => {
-          rowNodes.push(self.visualRowNode(row));
+      const self1 = param[0];
+      const rows1 = param[1];
+      const cell1 = param[2];
+      const rowNodes1 = param[3];
+      const dataArr1 = param[4]; 
+      self1.setActiveCell(rows1[0], cell1);
+      if (!self1.settings.groupable) {
+        rows1.forEach((row) => {
+          rowNodes1.push(self1.visualRowNode(row));
         });
       }
-      args = { rows, cell, target: rowNodes, value: dataArr, oldValue: {} };
+      args = { rows1, cell1, target: rowNodes1, value: dataArr1, oldValue: {} };
 
       /**
        * Fires after a row is added via the api.
@@ -832,7 +832,7 @@ Datagrid.prototype = {
       * @property {object} args.oldValue - Always an empty object added for consistent api.
       */
       self.element.triggerHandler('addrow', args);
-    }, 100, [self, row, cell, rowNodes, dataArr]);
+    }, 100, [self, rows, cell, rowNodes, dataArr]);
   },
 
   /**
@@ -1103,10 +1103,11 @@ Datagrid.prototype = {
       * @property {object} pagingInfo - The paging info object
       */
       setTimeout((param) => {
-        let self = param[0], pagingInfo = param[1];
-        self.afterPaging(pagingInfo);
-        self.element.trigger('afterpaging', pagingInfo);
-      },0, [self, pagingInfo]);
+        const self1 = param[0];
+        const pagingInfo1 = param[1];
+        self1.afterPaging(pagingInfo1);
+        self1.element.trigger('afterpaging', pagingInfo1);
+      }, 0, [self, pagingInfo]);
     }
 
     if (this.sortColumn && this.sortColumn.sortId) {
@@ -2106,8 +2107,8 @@ Datagrid.prototype = {
 
         clearTimeout(typingTimer);
         typingTimer = setTimeout((param) => {
-          let self = param[0];
-          self.applyFilter(null, 'keyup');
+          const self1 = param[0];
+          self1.applyFilter(null, 'keyup');
         }, 400, [self]);
       });
     }
@@ -4547,9 +4548,9 @@ Datagrid.prototype = {
     * @property {HTMLElement} pager Object pager body area
     */
     setTimeout((param) => {
-      let self = param[0];
-      self.element.trigger('afterrender', { body: self.container.find('tbody'), header: self.container.find('thead'), pager: self.pagerAPI });
-      self.activateFirstCell();
+      const self1 = param[0];
+      self1.element.trigger('afterrender', { body: self1.container.find('tbody'), header: self1.container.find('thead'), pager: self1.pagerAPI });
+      self1.activateFirstCell();
     }, 0, [self]);
   },
 
@@ -5353,13 +5354,13 @@ Datagrid.prototype = {
         arrayToTest = this.originalDataset;
       }
 
-      //calculate what is visible in the screen only
-      let rowHtAssume = 33;
-      let rowStart = Math.floor(this.element.find(".datagrid-wrapper.scrollable-x.scrollable-y").scrollTop()/rowHtAssume);
-      let rowCnt = rowStart + Math.floor(this.element.closest(".h5-datagrid-container").height()/rowHtAssume);
-      let arrayToTestlen = arrayToTest.length < rowCnt ? arrayToTest.length : rowCnt;
-      for (var i = rowStart; i < arrayToTestlen; this.initSettings++) {
-     let val = this.fieldValue(arrayToTest[i], columnDef.field);
+      // calculate what is visible in the screen only
+      const rowHtAssume = 33;
+      const rowStart = Math.floor(this.element.find('.datagrid-wrapper.scrollable-x.scrollable-y').scrollTop() / rowHtAssume);
+      const rowCnt = rowStart + Math.floor(this.element.closest('.h5-datagrid-container').height() / rowHtAssume);
+      const arrayToTestlen = arrayToTest.length < rowCnt ? arrayToTest.length : rowCnt;
+      for (let i = rowStart; i < arrayToTestlen; i++) {
+        let val = this.fieldValue(arrayToTest[i], columnDef.field);
         const row = arrayToTest[i];
 
         // Get formatted value (without html) so we have accurate string that
@@ -5888,26 +5889,26 @@ Datagrid.prototype = {
     const handleShow = (elem, delay) => {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       tooltipTimer = setTimeout((param) => {
-        //receive the passed parameters
-        let self = param[0];
-        let elem = param[1];
-        const isHeaderColumn = DOM.hasClass(elem, 'datagrid-column-wrapper');
-        const isHeaderFilter = DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
-        const isHeaderIcon = DOM.hasClass(elem, 'datagrid-header-icon');
+        // receive the passed parameters
+        const self1 = param[0];
+        const elem1 = param[1];
+        const isHeaderColumn = DOM.hasClass(elem1, 'datagrid-column-wrapper');
+        const isHeaderFilter = DOM.hasClass(elem1.parentNode, 'datagrid-filter-wrapper');
+        const isHeaderIcon = DOM.hasClass(elem1, 'datagrid-header-icon');
         const isPopup = isHeaderFilter ?
-          elem.parentNode.querySelectorAll('.popupmenu.is-open').length > 0 : false;
-        const containerEl = isHeaderColumn ? elem.parentNode : isHeaderIcon ? elem.parentNode : elem;
-        const width = self.getOuterWidth(containerEl);
+          elem1.parentNode.querySelectorAll('.popupmenu.is-open').length > 0 : false;
+        const containerEl = isHeaderColumn ? elem1.parentNode : isHeaderIcon ? elem1.parentNode : elem1;
+        const width = self1.getOuterWidth(containerEl);
 
-        const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
-        if ($(elem).hasClass('btn-filter')) {
-          const contents = (elem?.querySelector('span')?.textContent || '').trim();
+        const tooltip = $(elem1).data('gridtooltip') || self1.cacheTooltip(elem1);
+        if ($(elem1).hasClass('btn-filter')) {
+          const contents = (elem1?.querySelector('span')?.textContent || '').trim();
           tooltip.content = `<p>${contents}</p>`;
         }
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
-          self.showTooltip(tooltip);
+          self1.showTooltip(tooltip);
         }
-      }, delay, [self, elem]); //pass the parameters (self and elem)
+      }, delay, [self, elem]); // pass the parameters (self and elem)
     };
 
     // Handle tooltip to hide
@@ -5915,19 +5916,19 @@ Datagrid.prototype = {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       clearTimeout(tooltipTimer);
       setTimeout((param) => {
-        //receive the external variables
-        let self = param[0];
-        let elem = param[1];
+        // receive the external variables
+        const self1 = param[0];
+        const elem1 = param[1];
 
         // Prevents the tooltip to show on and off
         if ($('.grid-tooltip:hover').length > 0) {
           return;
         }
 
-        self.hideTooltip();
+        self1.hideTooltip();
         // Clear cache for header filter, so it can use always current selected
-        if (DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper')) {
-          self.removeTooltipData(elem);
+        if (DOM.hasClass(elem1.parentNode, 'datagrid-filter-wrapper')) {
+          self1.removeTooltipData(elem1);
         }
       }, delay, [self, elem]);
     };
@@ -7757,10 +7758,10 @@ Datagrid.prototype = {
       // Apply Quick Edit Mode
       if (isEditable && self.settings?.actionableMode) {
         setTimeout((param) => {
-          //receive the external variables
-          let self = param[0];
-          let td = param[1];
-          if ($('textarea, input', td).length &&
+          // receive the external variables
+          const self1 = param[0];
+          const td1 = param[1];
+          if ($('textarea, input', td1).length &&
               (!$('.dropdown,' +
               '[type=file],' +
               '[type=image],' +
@@ -7768,8 +7769,8 @@ Datagrid.prototype = {
               '[type=submit],' +
               '[type=reset],' +
               '[type=checkbox],' +
-                '[type=radio]', td).length)) {
-            self.quickEditMode = true;
+                '[type=radio]', td1).length)) {
+            self1.quickEditMode = true;
           }
         }, 0, [self, td]);
       }
@@ -7975,22 +7976,22 @@ Datagrid.prototype = {
         // Wait for modal popup, if did not found modal popup means
         // icon was not clicked, then commit cell edit
         setTimeout((param) => {
-          let self = param[0];
+          const self1 = param[0];
           const focusElem = $('*:focus');
 
           if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
-              self.editor) {
+              self1.editor) {
             if (focusElem.is('.spinbox, .trigger, .code-block-actions') || !$(target).is(':visible')) {
               return;
             }
 
-            if (focusElem && self.editor.className &&
-              focusElem.closest(self.editor.className).length > 0) {
+            if (focusElem && self1.editor.className &&
+              focusElem.closest(self1.editor.className).length > 0) {
               return;
             }
-            self.commitCellEdit();
+            self1.commitCellEdit();
           }
-        }, 150,[self]);
+        }, 150, [self]);
 
         return;
       }
@@ -8367,7 +8368,10 @@ Datagrid.prototype = {
       const clearButton = thisSearch.next();
 
       let typingTimer;
+      thisSearch.data('self', self);
       thisSearch.off('keypress.datagrid').on('keypress.datagrid', (e) => {
+        // eslint-disable-next-line no-shadow
+        const self = $(this).data('self');
         if (e.keyCode === 13 || e.type === 'change') {
           clearTimeout(typingTimer);
           e.preventDefault();
@@ -8377,12 +8381,12 @@ Datagrid.prototype = {
         if (self.settings.filterWhenTyping) {
           clearTimeout(typingTimer);
           typingTimer = setTimeout((param) => {
-            let self = param[0], thisSearch = param[1];
-            self.keywordSearch(thisSearch.val());
+            const self1 = param[0];
+            const thisSearch1 = param[1];
+            self1.keywordSearch(thisSearch1.val());
           }, 400, [self, thisSearch]);
         }
       });
-
       clearButton.off('click.datagrid').on('click.datagrid', () => {
         self.keywordSearch(thisSearch.val());
       });
@@ -10083,12 +10087,14 @@ Datagrid.prototype = {
   handleKeys() {
     const self = this;
     const checkbox = $('th .datagrid-checkbox', self.headerRow);
-    self.element.data("self", self); //must remove this on destroy
-    self.element.data("checkbox", checkbox); //must remove this on destroy
+    self.element.data('self', self); // must remove this on destroy
+    self.element.data('checkbox', checkbox); // must remove this on destroy
     // Handle header navigation
     self.element.on('keydown.datagrid', 'th', function (e) {
-      const self = $(this).data("self");
-      const checkbox = $(this).data("checkbox");
+      // eslint-disable-next-line no-shadow
+      const self = $(this).data('self');
+      // eslint-disable-next-line no-shadow
+      const checkbox = $(this).data('checkbox');
       const key = e.which || e.keyCode || e.charCode || 0;
       const th = $(this);
       const index = self.columnIdxById(th.attr('data-column-id'));
@@ -10194,7 +10200,8 @@ Datagrid.prototype = {
     self.element.on('keydown.datagrid', 'td, input', (e) => { //eslint-disable-line
       const key = e.which || e.keyCode || e.charCode || 0;
       let handled = false;
-      const self = $(this).data("self");
+      // eslint-disable-next-line no-shadow
+      const self = $(this).data('self');
       // F2 - toggles actionableMode "true" and "false"
       // Force to not toggle, if "inlineMode: true"
       if (key === 113 && !this.inlineMode) {
@@ -10223,7 +10230,8 @@ Datagrid.prototype = {
 
     // Handle rest of the keyboard
     self.element.on('keydown.datagrid', 'td', function (e) {
-      const self = $(this).data("self");
+      // eslint-disable-next-line no-shadow
+      const self = $(this).data('self');
       const key = e.which || e.keyCode || e.charCode || 0;
       let handled = false;
       const target = $(e.target);
@@ -12429,12 +12437,12 @@ Datagrid.prototype = {
           return;
         }
         setTimeout((param) => {
-          let self = param[0];
-          let keyCode = param[1];
+          const self1 = param[0];
+          const keyCode1 = param[1];
           const evt = $.Event('keydown.datagrid');
-          evt.keyCode = keyCode;
+          evt.keyCode = keyCode1;
 
-          self.activeCell.node.trigger(evt);
+          self1.activeCell.node.trigger(evt);
         }, 0, [self, keyCode]);
       } else {
         this.setActiveCell(this.activeCell.row, this.activeCell.cell);
@@ -12854,13 +12862,15 @@ Datagrid.prototype = {
           .one('animateopencomplete.datagrid.expandedfrozen', () => {
             if (elms.details.left || elms.details.right) {
               setTimeout((param) => {
-                let self = param[0];
-                let elms = param[1];
-                elms.rows.center.classList.add(cssClass);
-                self.frozenExpandRowSetHeight(elms.details);
-                elms.padding.style.opacity = '';
+                const self1 = param[0];
+                const elms1 = param[1];
+                elms1.rows.center.classList.add(cssClass);
+                self1.frozenExpandRowSetHeight(elms1.details);
+                elms1.padding.style.opacity = '';
+                $('resize.datagrid.expandedfrozen').data('self', self1);
                 $(window).on('resize.datagrid.expandedfrozen', () => {
-                  self.frozenExpandRowSetHeight(elms.details);
+                  const self2 = $('resize.datagrid.expandedfrozen').data('self');
+                  self2.frozenExpandRowSetHeight(elms.details);
                 });
               }, 10, [self, elms]);
             }
@@ -13865,8 +13875,6 @@ Datagrid.prototype = {
     this.cleanupElements(this.emptyMessageContainer);
     this.cleanupElements(this.headerRow);
     this.cleanupElements(this.activeCell.node);
-    allElements.remove();
-
     return this;
   },
 

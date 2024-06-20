@@ -745,8 +745,6 @@ const editors = {
     };
 
     this.focus = function () {
-      const self = this;
-
       this.input.focus();
       if (grid.settings.selectOnEdit) {
         this.input.select();
@@ -759,19 +757,22 @@ const editors = {
 
       this.input.on('listclosed', () => {
         setTimeout((param) => {
-          let self = param[0], container = param[1], grid = param[2];
-          self.input.trigger('focusout');
-          container.parent().focus();
-          grid.setNextActiveCell(event);
+          const self1 = param[0];
+          const container1 = param[1];
+          const grid1 = param[2];
+          self1.input.trigger('focusout');
+          container1.parent().focus();
+          grid1.setNextActiveCell(event);
         }, 1, [this, container, grid]);
       });
     };
 
     this.destroy = function () {
       setTimeout((param) => {
-        let self = param[0], grid = param[1];
-        grid.quickEditMode = false;
-        self.input.remove();
+        const self1 = param[0];
+        const grid1 = param[1];
+        grid1.quickEditMode = false;
+        self1.input.remove();
       }, 0, [this, grid]);
     };
 
@@ -822,14 +823,14 @@ const editors = {
       // eslint-disable-next-line compat/compat
       return new Promise((resolve) => {
         setTimeout((param) => {
-          let self = param[0];
+          const self1 = param[0];
           let output;
           if (v) {
             v = xssUtils.stripTags(v);
-            self.input.attr('value', v);
+            self1.input.attr('value', v);
             output = v;
           } else {
-            output = self.input.val();
+            output = self1.input.val();
           }
           resolve(output);
         }, 300, [this]);
@@ -848,10 +849,11 @@ const editors = {
       const handleCancel = () => {
         $('body').one('focusin.fileuploadeditor', () => {
           setTimeout((param) => {
-            let self = param[0], grid = param[1];
-            if (self.status !== 'change') {
-              self.status = 'cancel';
-              grid.commitCellEdit(self.input);
+            const self1 = param[0];
+            const grid1 = param[1];
+            if (self1.status !== 'change') {
+              self1.status = 'cancel';
+              grid1.commitCellEdit(self1.input);
             }
           }, 100, [this, grid]);
         });
@@ -951,8 +953,6 @@ const editors = {
     };
 
     this.focus = function () {
-      const self = this;
-
       this.input.focus();
       if (grid.settings.selectOnEdit) {
         this.input.select();
@@ -965,11 +965,12 @@ const editors = {
 
       this.api.trigger.on('hide.editortime', () => {
         setTimeout((param) => {
-          let self = param[0], grid = param[1], container = param[2];
-
-          self.input.trigger('focusout');
-          container.parent().focus();
-          grid.setNextActiveCell(event);
+          const self1 = param[0];
+          const grid1 = param[1];
+          const container1 = param[2];
+          self1.input.trigger('focusout');
+          container1.parent().focus();
+          grid1.setNextActiveCell(event);
         }, 1, [this, grid, container]);
       });
     };
@@ -981,9 +982,10 @@ const editors = {
       }
 
       setTimeout((param) => {
-        let self = param[0], grid = param[1];
-        grid.quickEditMode = false;
-        self.input.remove();
+        const self1 = param[0];
+        const grid1 = param[1];
+        grid1.quickEditMode = false;
+        self1.input.remove();
       }, 0, [this, grid]);
     };
 
@@ -1086,14 +1088,15 @@ const editors = {
     };
 
     this.destroy = function () {
-      const self = this;
       const td = this.input.closest('td');
       setTimeout((param) => {
-        let self = param[0], grid = param[1], td = param[2];
-        grid.quickEditMode = false;
-        td.off('keydown.editorlookup')
+        const self1 = param[0];
+        const grid1 = param[1];
+        const td1 = param[2];
+        grid1.quickEditMode = false;
+        td1.off('keydown.editorlookup')
           .find('.trigger').off('touchcancel.editorlookup touchend.editorlookup');
-        self.input.remove();
+        self1.input.remove();
       }, 0, [this, grid, td]);
     };
 
@@ -1138,9 +1141,10 @@ const editors = {
 
     this.destroy = function () {
       setTimeout((param) => {
-        let self = param[0], grid = param[1];
-        grid.quickEditMode = false;
-        self.input.remove();
+        const self1 = param[0];
+        const grid1 = param[1];
+        grid1.quickEditMode = false;
+        self1.input.remove();
       }, 0, [this, grid]);
     };
 
@@ -1195,17 +1199,18 @@ const editors = {
       }
 
       setTimeout((param) => {
-        let self = param[0], grid = param[1];
+        const self1 = param[0];
+        const container1 = param[1];
         grid.quickEditMode = false;
-        const textVal = self.val();
-        if (self.input && self.input.data('spinbox')) {
-          self.input.data('spinbox').destroy();
+        const textVal = self1.val();
+        if (self1.input && self1.input.data('spinbox')) {
+          self1.input.data('spinbox').destroy();
         }
-        if (self.input) {
-          self.input.remove();
+        if (self1.input) {
+          self1.input.remove();
+          container1.text(textVal);
         }
-        container.text(textVal);
-      }, 0, [this, grid]);
+      }, 0, [this, container]);
     };
 
     this.init();
@@ -1252,8 +1257,8 @@ const editors = {
 
     this.destroy = function () {
       setTimeout((param) => {
-        let self = param[0];
-        self.input.parent().remove();
+        const self1 = param[0];
+        self1.input.parent().remove();
       }, 0, [this]);
     };
 
