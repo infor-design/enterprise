@@ -289,6 +289,9 @@ Datagrid.prototype = {
     return api;
   },
   cleanupElements($element) {
+    if (!$element) {
+      return;
+    }
     const removeAttributes = function ($el) {
       const attributes = $.map($el[0].attributes, item => item.name);
       $.each(attributes, (i, item) => {
