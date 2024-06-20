@@ -1123,7 +1123,7 @@ charts.setSelected = function (o, isToggle, internals) {
     if (selected < 1) {
       setSelectedGroup();
     }
-  } else if (internals.this.namespace.includes('line')) {
+  } else if (internals.this.namespace.includes('line') || internals.this.namespace.includes('area')) {
     let selectorData;
     let elem;
     const that = internals.this;
