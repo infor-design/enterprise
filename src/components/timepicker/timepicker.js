@@ -810,6 +810,11 @@ TimePicker.prototype = {
    * @returns {object} containing key/value pairs representing time parts.
    */
   getTimeFromField(value) {
+    // ELEPHANT
+    // check hasSeparator?
+    // if hasSeparator go as normal
+    // else add separator
+    // then at the end, remove it?
     const self = this;
     let val = value || this.element.val();
     const sep = this.getTimeSeparator();
@@ -817,6 +822,21 @@ TimePicker.prototype = {
     let endParts;
     const timeparts = {};
     const timeFormat = this.settings.timeFormat;
+
+    if (val.length > 0 && !val.includes(sep)) {
+      let newVal = '';
+      let i = 0;
+      const formatArr = timeFormat.match(/(.)\1*/g);
+      formatArr.forEach((timeStr, index) => {
+        newVal += val.substring(i, i + timeStr.length);
+        i += timeStr.length;
+        if (index !== formatArr.length - 1) {
+          newVal += sep;
+        }
+      });
+      val = newVal;
+    }
+
     const ampmHasDot = !!this.dayPeriods.filter(x => x.indexOf('.') > -1).length &&
       val.indexOf('.') > -1 &&
       timeFormat.indexOf('a') > -1 &&
@@ -938,7 +958,7 @@ TimePicker.prototype = {
     } else if (!this.is24HourFormat() && this.hasSeconds()) {
       timeparts.period = this.translateDayPeriod('AM');
     }
-
+    console.log('getTimeFromField', timeparts)
     return timeparts;
   },
 

@@ -14,7 +14,8 @@
 - `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[ModuleNav]` Fixed icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Multiselect]` Fixed bug in multiselect noted in RTL mode. ([#8811](https://github.com/infor-design/enterprise/issues/8811))
-- `[Tabs]` Fixed example page for disabling dismissible tags. ([NG#1697](https://github.com/infor-design/enterprise/issues/1697))
+- `[Tabs]` Fixed example page for disabling dismissible tags. ([NG#1697](https://github.com/infor-design/enterprise-ng/issues/1697))
+- `[Timepicker]` Fixed bug in using custom format that has no separator. ([NG#1691](https://github.com/infor-design/enterprise-ng/issues/1691))
 
 ## v4.96.0
 
