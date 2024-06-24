@@ -68,8 +68,6 @@ jobs:
           sed -i -e "s/%IMAGE_VERSION%/$IMAGE_VERSION/g" $WORKDIR/$SERVICE_NAME/deployment.yaml
           python $WORKDIR/scripts/deploy-environment/scripts/annotations.py -p $WORKDIR/$SERVICE_NAME/deployment.yaml
 
-          echo python -V
-
           mkdir -p $REPOROOT/enterprise/enterprise-$SERVICE_NAME/
           mv -f $WORKDIR/$SERVICE_NAME/* $REPOROOT/enterprise/enterprise-$SERVICE_NAME/
 
