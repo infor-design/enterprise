@@ -2245,7 +2245,10 @@ PopupMenu.prototype = {
     if (anchor) {
       anchor.focus();
     }
-    li.closest('.header').scrollTop(0);
+
+    if (!this.element.is('.autocomplete')) {
+      li.closest('.header').scrollTop(0);
+    }
   },
 
   /**
