@@ -1998,6 +1998,7 @@ $datagrid-small-row-height: 25px;
 
     .is-editing .datagrid-cell-wrapper {
       padding: 2px 4px 0 !important;
+      text-overflow: initial;
     }
 
     .datagrid-cell-wrapper {
@@ -3391,6 +3392,11 @@ $datagrid-small-row-height: 25px;
         .hyperlink {
           display: inline;
         }
+      }
+
+      &.l-center-text.is-tag .datagrid-cell-wrapper {
+        text-overflow: initial;
+        left: -2px;
       }
 
       &:not(.has-editor) {

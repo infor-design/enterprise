@@ -315,7 +315,9 @@ WeekView.prototype = {
       } else {
         event.overnightStartsHour = event.startsHour;
         event.overnightEndsHour = event.endsHour;
-        for (let i = 0; i < days.length; i++) {
+        const end = this.settings.showOvernightBothDays ? days.length : 1;
+
+        for (let i = 0; i < end; i++) {
           const overnight = { ...event };
           overnight.endsHour = this.settings.endHour + 0.6;
 
@@ -505,7 +507,7 @@ WeekView.prototype = {
 
         node.innerHTML = `<div class="calendar-event-content">
           ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
-          ${isOvernight ? '<span style="font-weight: bold">Overnight</span><br/>' : ''}
+          ${isOvernight && this.settings.overnightLabel ? `<span style="font-weight: bold">${this.settings.overnightLabel}</span><br/>` : ''}
           <span class="calendar-event-title">${event.shortSubject || event.subject}${displayedTime}</span>
         </div>`;
 
@@ -518,7 +520,7 @@ WeekView.prototype = {
           const monthKey = tdEl.getAttribute('data-key');
           const calendarBody = tdEl.parentNode.parentNode;
           const startTdEl = calendarBody.children[0].querySelectorAll(`td[data-key="${monthKey}"]`)[0];
-          
+
           containerEvents = startTdEl.querySelectorAll('.calendar-event');
           eventCount = containerEvents.length;
         }
@@ -576,7 +578,7 @@ WeekView.prototype = {
 
       node.innerHTML = `<div class="calendar-event-content">
         ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
-        ${isOvernight ? '<span style="font-weight: bold">Overnight</span><br/>' : ''}
+        ${isOvernight && this.settings.overnightLabel ? `<span style="font-weight: bold">${this.settings.overnightLabel}</span><br/>` : ''}
         ${subject}
       </div>`;
 
