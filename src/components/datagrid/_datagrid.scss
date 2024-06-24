@@ -1998,6 +1998,7 @@ $datagrid-small-row-height: 25px;
 
     .is-editing .datagrid-cell-wrapper {
       padding: 2px 4px 0 !important;
+      text-overflow: initial;
     }
 
     .datagrid-cell-wrapper {
@@ -3393,6 +3394,11 @@ $datagrid-small-row-height: 25px;
         }
       }
 
+      &.l-center-text.is-tag .datagrid-cell-wrapper {
+        text-overflow: initial;
+        left: -2px;
+      }
+
       &:not(.has-editor) {
         .trigger + .icon {
           display: none;
@@ -3912,7 +3918,7 @@ $datagrid-small-row-height: 25px;
 
     .lookup-wrapper {
       background-color: transparent;
-      display: inline;
+      display: inline-block;
       left: 0;
       vertical-align: top;
       width: calc(100% - 44px);
@@ -3921,7 +3927,7 @@ $datagrid-small-row-height: 25px;
         background-color: transparent;
         left: 10px;
         padding-right: 20px;
-        width: calc(100% - 44px);
+        width: 100%;
 
         &:not(:disabled) + .trigger > .icon:hover,
         &:hover:not(:disabled) + .trigger > .icon {

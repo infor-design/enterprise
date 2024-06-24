@@ -5,7 +5,15 @@
 ## v4.95.3 Fixes
 
 - `[AppMenu]` Fixed hover issue on expand button. ([#8775](https://github.com/infor-design/enterprise/issues/8775))
+- `[Datagrid]` Fixed cell value from argument passed on hyperlink click. ([#8762](https://github.com/infor-design/enterprise/issues/8762))
+- `[Datagrid]` Fixed issue with textEllipsis in right aligned number columns. ([#8821](https://github.com/infor-design/enterprise/issues/8821))
 - `[Datagrid]` Fixed hover issue on expand row button. ([#8775](https://github.com/infor-design/enterprise/issues/8775))
+- `[Datagrid]` Fixed dropdown keys not properly triggering when using keyboard. ([#8745](https://github.com/infor-design/enterprise/issues/8745))
+- `[Dropdown]` Fixed no results text still displaying after removing filter text. ([#8768](https://github.com/infor-design/enterprise/issues/8768))
+- `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
+- `[Datagrid]` Fixed a bug where date would be cleared after updating cell on different locales. ([NG#1710](https://github.com/infor-design/enterprise-ng/issues/1710))
+- `[DataGrid]` Fixed bug with non refreshed tooltip in filter row conditions. ([#8773](https://github.com/infor-design/enterprise/issues/8773))
+- `[ModuleNav]` Fixed icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 
 ## v4.95.2
 
