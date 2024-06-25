@@ -306,11 +306,6 @@ Datagrid.prototype = {
     });
     allElements.remove();
   },
-  clearArray(arr) {
-    if (arr) {
-      arr.splice(0, arr.length);
-    }
-  },
   /**
   * Init the datagrid from its uninitialized state.
   * @private
@@ -13811,8 +13806,6 @@ Datagrid.prototype = {
       this.pagerAPI.destroy();
     }
 
-    // Remove the toolbar, clean the div out and remove the pager
-    this.element.off().empty().removeClass('datagrid-container');
     const toolbar = this.element.prev('.toolbar');
 
     this.triggerDestroyCell();
@@ -13838,28 +13831,12 @@ Datagrid.prototype = {
       toolbar.remove();
     }
 
-    this.element.next('.pager-toolbar').remove();
-    $.removeData(this.element[0], COMPONENT_NAME);
 
-    this.element.off();
     $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
     $('body').off('resize.vtable resize.datagrid resize.frozencolumns');
     $('body').off('open.modal.datagrid');
     $(window).off('orientationchange.datagrid');
     $(window).off('resize.datagrid');
-    this.clearArray(this.settings.columns);
-    this.clearArray(this.settings.dataset);
-    this.clearArray(this.settings.treeDepth);
-    this.clearArray(this.settings.treeRootNodes);
-    this.clearArray(this.dataset);
-    this.clearArray(this.columns);
-    this.clearArray(this.treeDepth);
-    this.clearArray(this.columnIds);
-    this.clearArray(this.originalColumns);
-    this.clearArray(this.nonVisibleCellErrors);
-    this.clearArray(this.originalColumns);
-    this.clearArray(this.rowSpans);
-    this.clearArray(this.currentPageRows);
 
     this.cleanupElements(this.table);
     this.cleanupElements(this.tableBody);
@@ -13878,6 +13855,10 @@ Datagrid.prototype = {
     this.cleanupElements(this.emptyMessageContainer);
     this.cleanupElements(this.headerRow);
     this.cleanupElements(this.activeCell.node);
+    // Remove the toolbar, clean the div out and remove the pager
+    this.element.next('.pager-toolbar').remove();
+    $.removeData(this.element[0], COMPONENT_NAME);
+    this.element.off().empty().removeClass('datagrid-container');
     return this;
   },
 
