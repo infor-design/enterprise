@@ -13831,7 +13831,6 @@ Datagrid.prototype = {
       toolbar.remove();
     }
 
-
     $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
     $('body').off('resize.vtable resize.datagrid resize.frozencolumns');
     $('body').off('open.modal.datagrid');
