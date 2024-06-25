@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.95.4
+
+## v4.95.4 Fixes
+
+- `[ModuleNav]` Fixed zindex issue on the overlay in mobile mode. ([#8817](https://github.com/infor-design/enterprise/issues/8817))
+- `[Module Nav]` Fixed module nav switcher text was not vertically aligned. ([#8736](https://github.com/infor-design/enterprise/issues/8736))
+
 ## v4.95.3
 
 ## v4.95.3 Fixes
