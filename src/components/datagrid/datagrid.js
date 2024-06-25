@@ -8366,10 +8366,7 @@ Datagrid.prototype = {
       const clearButton = thisSearch.next();
 
       let typingTimer;
-      thisSearch.data('self', self);
       thisSearch.off('keypress.datagrid').on('keypress.datagrid', (e) => {
-        // eslint-disable-next-line no-shadow
-        const self = $(this).data('self');
         if (e.keyCode === 13 || e.type === 'change') {
           clearTimeout(typingTimer);
           e.preventDefault();
@@ -10085,14 +10082,9 @@ Datagrid.prototype = {
   handleKeys() {
     const self = this;
     const checkbox = $('th .datagrid-checkbox', self.headerRow);
-    self.element.data('self', self); // must remove this on destroy
-    self.element.data('checkbox', checkbox); // must remove this on destroy
+
     // Handle header navigation
     self.element.on('keydown.datagrid', 'th', function (e) {
-      // eslint-disable-next-line no-shadow
-      const self = $(this).data('self');
-      // eslint-disable-next-line no-shadow
-      const checkbox = $(this).data('checkbox');
       const key = e.which || e.keyCode || e.charCode || 0;
       const th = $(this);
       const index = self.columnIdxById(th.attr('data-column-id'));
@@ -10194,12 +10186,12 @@ Datagrid.prototype = {
         }
       }
     });
+
     // Handle Editing / Keyboard
     self.element.on('keydown.datagrid', 'td, input', (e) => { //eslint-disable-line
       const key = e.which || e.keyCode || e.charCode || 0;
       let handled = false;
-      // eslint-disable-next-line no-shadow
-      const self = $(this).data('self');
+
       // F2 - toggles actionableMode "true" and "false"
       // Force to not toggle, if "inlineMode: true"
       if (key === 113 && !this.inlineMode) {
@@ -10228,8 +10220,6 @@ Datagrid.prototype = {
 
     // Handle rest of the keyboard
     self.element.on('keydown.datagrid', 'td', function (e) {
-      // eslint-disable-next-line no-shadow
-      const self = $(this).data('self');
       const key = e.which || e.keyCode || e.charCode || 0;
       let handled = false;
       const target = $(e.target);
@@ -12865,10 +12855,8 @@ Datagrid.prototype = {
                 elms1.rows.center.classList.add(cssClass);
                 self1.frozenExpandRowSetHeight(elms1.details);
                 elms1.padding.style.opacity = '';
-                $('resize.datagrid.expandedfrozen').data('self', self1);
                 $(window).on('resize.datagrid.expandedfrozen', () => {
-                  const self2 = $('resize.datagrid.expandedfrozen').data('self');
-                  self2.frozenExpandRowSetHeight(elms.details);
+                  self1.frozenExpandRowSetHeight(elms.details);
                 });
               }, 10, [self, elms]);
             }
@@ -13858,6 +13846,9 @@ Datagrid.prototype = {
     this.element.next('.pager-toolbar').remove();
     $.removeData(this.element[0], COMPONENT_NAME);
     this.element.off().empty().removeClass('datagrid-container');
+    this.handleKeys = null;
+    this.appendToolbar = null;
+    this.frozenExpandRowAcrossAllCells = null;
     return this;
   },
 
