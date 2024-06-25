@@ -17,6 +17,7 @@
 - `[DataGrid]` Fixed bug with non refreshed tooltip in filter row conditions. ([#8773](https://github.com/infor-design/enterprise/issues/8773))
 - `[Datepicker]` Fixed buttons truncated when using other languages. ([#8787](https://github.com/infor-design/enterprise/issues/8787))
 - `[Donut]` Fixed bug where chart is cut off on bottom legend placement mode. ([#8755](https://github.com/infor-design/enterprise/issues/8755))
+- `[Grid]` Fixed an issue where module nav would change grid styles. ([#8828](https://github.com/infor-design/enterprise/issues/8828))
 - `[ModuleNav]` Fix icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[ModuleNav]` Fixed icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
