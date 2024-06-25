@@ -537,7 +537,7 @@ Autocomplete.prototype = {
     }
 
     function highlight(item) {
-      item.addClass('is-selected').find('a')
+      item.addClass('is-selected').find('a');
     }
 
     const excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
