@@ -1030,6 +1030,11 @@
 
 // RTL Styles
 html[dir='rtl'] {
+  .monthview .monthview-week-container .monthview-week-table {
+    border-right: unset;
+    border-left: 1px solid $datepicker-monthview-week-table-border;
+  }
+
   .monthview {
     td {
       &.range-prev.include-disabled,
