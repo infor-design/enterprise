@@ -4982,6 +4982,9 @@ Datagrid.prototype = {
         cssClass += ' text-ellipsis';
       }
 
+      const colName = (col?.formatter?.name || 'text').toLowerCase();
+      cssClass += ` is-${colName}`;
+
       if (col.uppercase) {
         cssClass += ' uppercase-text';
       }

@@ -3394,7 +3394,7 @@ $datagrid-small-row-height: 25px;
         }
       }
 
-      &.l-center-text.is-tag .datagrid-cell-wrapper {
+      &.is-tag .datagrid-cell-wrapper {
         text-overflow: initial;
         left: -2px;
       }
