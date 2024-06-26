@@ -1,0 +1,21 @@
+{
+  "reporter": [
+    "json",
+    "lcov",
+    "html"
+  ],
+  "include": [
+    "src/**/**/*.js"
+  ],
+  "exclude": [
+    "coverage/**",
+    "dist/**",
+    "app/**",
+    "dist/**",
+    "scripts/**",
+    "tests/**",
+    "node_modules",
+    "test/**",
+    "tests-to-convert/**"
+  ]
+}

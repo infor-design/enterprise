@@ -5,7 +5,6 @@ app/docs/*.html
 app/docs/components/*.html
 designs/
 dist/
-dist/
 docs/ids-website/dist.zip
 docs/ids-website/dist/
 documentation/
@@ -61,3 +60,20 @@ ids-enterprise/
 src/components/emptymessage/*svg-empty.html
 src/components/icons/*svg.html
 yarn.lock
+
+# Tests
+test-results
+playwright-report
+playwright
+playwright/.cache
+results
+/test-results/
+/playwright-report/
+/playwright/
+/blob-report/
+/playwright/.cache/
+coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

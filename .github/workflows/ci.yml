@@ -19,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -33,7 +33,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: enterprise-1023
+        key: enterprise-1024
 
     - name: Setup timezone
       uses: szenius/set-timezone@v1.0
@@ -48,6 +48,9 @@ jobs:
 
     - name: Run Lint Checks
       run: npm run lint
+
+    - name: Install Browsers
+      run: npx playwright install --with-deps
 
     - name: Run tests
       run:  (npm run quickstart &) && sleep 5; npm run test;

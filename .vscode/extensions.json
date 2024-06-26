@@ -1,6 +1,8 @@
 {
   "recommendations": [
     "stylelint.vscode-stylelint",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "vunguyentuan.vscode-css-variables",
+    "ms-playwright.playwright"
   ]
 }
