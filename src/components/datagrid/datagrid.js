@@ -12291,10 +12291,6 @@ Datagrid.prototype = {
       }
     }
 
-    if (self.activeCell.node.is('.is-focusable')) {
-      self.activeCell.node.find('button').focus();
-    }
-
     if (dataRowNum !== undefined) {
       self.activeCell.dataRow = dataRowNum;
     }
