@@ -118,6 +118,7 @@ describe('Datagrid Settings', () => {
       rowReorder: false,
       resizeMode: 'flex',
       showDirty: false,
+      addCellLayoutClass: true,
       showSelectAllCheckBox: true,
       allowOneExpandedRow: true,
       enableTooltips: false,

@@ -22,7 +22,7 @@
     }
 
     &.is-monthonly {
-      min-width: 225px;
+      min-width: 235px;
 
       .picklist-section {
         float: none !important;
@@ -31,14 +31,24 @@
         &.is-year {
           display: none;
         }
+
+        &.is-month {
+          width: 100%
+        }
       }
     }
 
     &.is-yearonly {
-      min-width: 225px;
+      min-width: 235px;
 
       .picklist-section.is-month {
         display: none;
+      }
+
+      .picklist-section {
+        &.is-year {
+          width: 100%
+        }
       }
     }
 
@@ -1020,6 +1030,11 @@
 
 // RTL Styles
 html[dir='rtl'] {
+  .monthview .monthview-week-container .monthview-week-table {
+    border-right: unset;
+    border-left: 1px solid $datepicker-monthview-week-table-border;
+  }
+
   .monthview {
     td {
       &.range-prev.include-disabled,
