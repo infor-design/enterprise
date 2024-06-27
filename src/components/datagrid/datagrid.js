@@ -147,6 +147,7 @@ const COMPONENT_NAME = 'datagrid';
  * and if only parent has a match then make expand/collapse button to be collapsed, disabled
  * and do not add any children nodes
  * or if one or more child node got match then add parent node and only matching children nodes
+ * @param {boolean} [settings.addCellLayoutClass=true] If set false, will remove datagrid-cell-layout class from expandable rows.
  * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to trigger select row in datagrid.
  * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
@@ -248,6 +249,7 @@ const DATAGRID_DEFAULTS = {
   activeCheckboxSelection: false,
   dblClickApply: false,
   attributes: null,
+  addCellLayoutClass: true,
   allowPasteFromExcel: false,
   showEditorIcons: false,
   fallbackImage: 'insert-image',
@@ -5186,10 +5188,14 @@ Datagrid.prototype = {
     containerHtml.right += '</tr>';
 
     if (self.settings.rowTemplate && !isSummaryRow) {
-      const tmpl = self.settings.rowTemplate;
+      let tmpl = self.settings.rowTemplate;
       const item = rowData;
       const height = self.settings.rowTemplateHeight || 107;
       let renderedTmpl = '';
+
+      if (!self.settings.addCellLayoutClass) {
+        tmpl = tmpl.replace('datagrid-cell-layout', '');
+      }
 
       if (Tmpl && item) {
         renderedTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`, { dataset: item });

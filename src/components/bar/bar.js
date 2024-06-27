@@ -1185,7 +1185,8 @@ Bar.prototype = {
       chartData: this.settings.dataset,
       isStacked: this.settingsisStacked,
       isGrouped: this.settings.isGrouped,
-      isSingle: this.settings.isSingle
+      isSingle: this.settings.isSingle,
+      this: this
     };
     charts.setSelected(options, isToggle, internals);
   },
