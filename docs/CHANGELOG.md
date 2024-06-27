@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.95.5
+
+## v4.95.5 Fixes
+
+- `[DataGrid]` ReFixed bug with non refreshed tooltip in filter row conditions. ([#8773](https://github.com/infor-design/enterprise/issues/8773))
+- `[Datagrid]` ReFixed issue with textEllipsis in right aligned number columns. ([#8821](https://github.com/infor-design/enterprise/issues/8821))
+
 ## v4.95.4
 
 ## v4.95.4 Fixes
