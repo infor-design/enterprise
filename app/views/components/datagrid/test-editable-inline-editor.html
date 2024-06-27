@@ -50,13 +50,26 @@
       columns: columns,
       isList: true,
       dataset: data,
-      selectable: false,
-      cellNavigation: false,
+      selectable: true,
+      cellNavigation: true,
       rowNavigation: false,
       editable: true,
+      source: () => {},
       toolbar: { keyword: true, results: true },
-      paging: true,
+      paging: false,
       pagesize: 10
+    }).on('keyup', function(e, args){
+      if (e.key === 'Enter') {
+        const gridApi = $('#datagrid').data('datagrid');
+        const input0 = document.querySelector("#datagrid-inline-input-0-2");
+        const input2 = document.querySelector("#datagrid-inline-input-2-2");
+        if(input2){
+            gridApi.setActiveCell(2, 3);
+            input2.click();
+            gridApi.setActiveCell(0, 3);
+            input0.click();
+          };
+      }
     }).on('cellchange', function (e, args) {
       console.log(args);
     });
