@@ -5856,7 +5856,7 @@ Datagrid.prototype = {
 
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
         if ($(elem).hasClass('btn-filter')) {
-          const contents = (elem?.querySelector('span')?.textContent || '').trim();
+          const contents = tooltip?.content || (elem?.querySelector('span')?.textContent || '').trim();
           tooltip.content = `<p>${contents}</p>`;
         }
 
