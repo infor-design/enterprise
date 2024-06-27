@@ -2242,10 +2242,12 @@ PopupMenu.prototype = {
     }
 
     // Prevent chrome from scrolling - toolbar
-    if (anchor) {
-      anchor.focus();
+    if (!this.element.is('.autocomplete')) {
+      if (anchor) {
+        anchor.focus();
+      }
+      li.closest('.header').scrollTop(0);
     }
-    li.closest('.header').scrollTop(0);
   },
 
   /**
