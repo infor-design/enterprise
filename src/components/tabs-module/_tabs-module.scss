@@ -596,8 +596,8 @@
     }
 
     &.has-add-button {
-      .tab-list {
-        width: calc(100% - 166px);
+      .tab-list-container {
+        width: calc(100% - 86px);
       }
 
       .tab-more {

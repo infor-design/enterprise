@@ -3327,7 +3327,7 @@ Tabs.prototype = {
 
     this.checkCutOffTitle(sizeableTabs, this.visibleTabSize);
   },
-  
+
   /**
    * @private
    * @returns {void}
@@ -3593,7 +3593,7 @@ Tabs.prototype = {
         return;
       }
 
-      if (!self.isScrollableTabs() && !self.isTabOverflowed($item)) {
+      if (!self.isTabOverflowed($item, true)) {
         return;
       }
 
@@ -3863,10 +3863,15 @@ Tabs.prototype = {
    * Used for checking if a particular tab (in the form of a jquery-wrapped list item)
    * is spilled into the overflow area of the tablist container <UL>.
    * @param {jQuery} li tab list item
+   * @param {boolean} checkHorizontal Check y-axis overflow
    * @returns {boolean} whether or not the tab is overflowed.
    */
-  isTabOverflowed(li) {
-    if (this.isVerticalTabs() || this.isScrollableTabs() || this.tablist.find('.arrange-dragging').length) {
+  isTabOverflowed(li, checkHorizontal = false) {
+    if (li.hasClass('application-menu-trigger')) {
+      return false;
+    }
+
+    if (this.isVerticalTabs() || this.tablist.find('.arrange-dragging').length) {
       return false;
     }
 
@@ -3877,16 +3882,21 @@ Tabs.prototype = {
     if (this.tablist.scrollTop() > 0) {
       this.tablist.scrollTop(0);
     }
+    const tablistBounding = this.tablist[0].getBoundingClientRect();
+    const liBounding = li[0].getBoundingClientRect();
 
-    const liTop = Math.round(li[0].getBoundingClientRect().top);
-    let tablistTop = Math.round(this.tablist[0].getBoundingClientRect().top + 1);
+    const liTop = Math.round(liBounding.top);
+    const liRight = Math.round(liBounding.right + li[0].offsetWidth + 500);
+
+    let tablistTop = Math.round(tablistBounding.top + 1);
+    const tablistRight = Math.round(tablistBounding.right);
 
     // +1 to compensate for top border on Module Tabs
     if (this.isModuleTabs()) {
       tablistTop += 1;
     }
 
-    return liTop > tablistTop;
+    return liTop > tablistTop || (checkHorizontal && liRight > tablistRight);
   },
 
   /**
