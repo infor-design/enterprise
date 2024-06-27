@@ -860,7 +860,7 @@ PopupMenu.prototype = {
       return;
     }
 
-    const itemA = item.querySelector('a');
+    const itemA = item.className.includes('heading') ? item : item.querySelector('a');
     const itemIcon = item.querySelector('.icon:not(.close):not(.icon-dropdown)');
     let itemIconUse;
 

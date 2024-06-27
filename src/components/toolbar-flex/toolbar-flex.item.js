@@ -765,7 +765,9 @@ ToolbarFlexItem.prototype = {
       if (submenu && submenu.length) {
         const submenuItems = actionMenuElement.querySelector('.popupmenu').children;
         for (let j = 0; j < submenuItems.length; j++) {
-          doLinkSubmenuItem(submenu[j], submenuItems[j]);
+          if (submenu[j] && submenuItems[j]) {
+            doLinkSubmenuItem(submenu[j], submenuItems[j]);
+          }
         }
       }
     }
@@ -779,7 +781,9 @@ ToolbarFlexItem.prototype = {
       if (submenu && submenu.length) {
         const submenuItems = itemElement.querySelector('.popupmenu').children;
         for (let j = 0; j < submenuItems.length; j++) {
-          doLinkSubmenuItem(submenu[j], submenuItems[j]);
+          if (submenu[j] && submenuItems[j]) {
+            doLinkSubmenuItem(submenu[j], submenuItems[j]);
+          }
         }
       }
     }
