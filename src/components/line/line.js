@@ -810,65 +810,6 @@ Line.prototype = {
       }
     }
 
-    charts.setSelected = function (o, isToggle) {
-      let selected = 0;
-      const equals = utils.equals;
-      let selector;
-      let selectorData;
-      let elem;
-
-      const setSelected = function (d, i1, d2, i2) {
-        if (d2) {
-          elem = self.svg.select(`[data-group-id="${i1}"]`)
-            .select(`.dot:nth-child(${i2 + 2})`);
-          if ((typeof o.groupIndex === 'number' &&
-                typeof o.fieldName !== 'undefined' &&
-                  typeof o.fieldValue !== 'undefined' &&
-                    o.groupIndex === i1 &&
-                      o.fieldValue === d2[o.fieldName]) ||
-              (typeof o.index !== 'undefined' &&
-                typeof o.groupIndex === 'number' &&
-                  o.groupIndex === i1 && o.index === i2) ||
-              (o.elem && $(elem.node()).is(o.elem)) ||
-              (o.data && equals(o.data, d2))) {
-            selected++;
-            selectorData = d2;
-            selector = self.svg.select(`[data-group-id="${i1}"]`);
-          }
-        } else {
-          elem = self.svg.select(`[data-group-id="${i1}"]`);
-          if ((typeof o.groupName !== 'undefined' &&
-                typeof o.groupValue !== 'undefined' &&
-                  o.groupValue === d[o.groupName]) ||
-              (typeof o.groupIndex !== 'undefined' &&
-                o.groupIndex === i1) ||
-              (o.elem && $(elem.node()).is(o.elem)) ||
-              (o.data && equals(o.data, d))) {
-            selected++;
-            selectorData = d;
-            selector = elem;
-          }
-        }
-      };
-
-      dataset.forEach(function (d, i3) {
-        if (selected < 1 && d && d.data) {
-          d.data.forEach(function (d2, i2) {
-            if (selected < 1 && d2) {
-              setSelected(d, i3, d2, i2);
-            }
-          });
-          if (selected < 1) {
-            setSelected(d, i3);
-          }
-        }
-      });
-
-      if (selected > 0 && (isToggle || !selector.classed('is-selected')) && self.settings.selectable) {
-        charts.selectElement(selector, self.svg.selectAll('.line-group'), selectorData, self.element, dataset, self.initialSelectCall);
-      }
-    };
-
     // By default, if the all the values are zero, the line-group will be centered
     // With this, it will be more consistent in terms of look even if it has only one y-axis tick
     // It should be positioned close contact with the names
@@ -1103,7 +1044,8 @@ Line.prototype = {
       chartData: this.settings.dataset,
       isStacked: false,
       isGrouped: false,
-      isSingle: false
+      isSingle: false,
+      this: this,
     };
     charts.setSelected(options, isToggle, internals);
   },

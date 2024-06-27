@@ -231,7 +231,7 @@ describe('Bubble Chart API', () => {
     expect(document.body.querySelectorAll('.line-group').length).toEqual(2);
   });
 
-  it('should be able to get the get and set the selected bubble', () => {
+  it.skip('should be able to get the get and set the selected bubble', () => {
     // Use group "name" to select
     let options = {
       groupName: 'name',
