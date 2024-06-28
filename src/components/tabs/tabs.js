@@ -3892,17 +3892,25 @@ Tabs.prototype = {
     const liBounding = li[0].getBoundingClientRect();
 
     const liTop = Math.round(liBounding.top);
-    const liRight = liBounding.right + li[0].offsetWidth + 400;
+    let liRight = liBounding.right + li[0].offsetWidth;
 
     let tablistTop = Math.round(tablistBounding.top + 1);
-    const tablistRight = tablistBounding.right;
+    const tablistRight = Math.floor(tablistBounding.right);
 
     // +1 to compensate for top border on Module Tabs
     if (this.isModuleTabs()) {
       tablistTop += 1;
     }
 
-    return liTop > tablistTop || (checkHorizontal && liRight > tablistRight);
+    if (this.addTabButton) {
+      liRight += this.addTabButton[0].offsetWidth + 10;
+    }
+
+    if (this.moreButton) {
+      liRight += this.moreButton[0].offsetWidth + 10;
+    }
+
+    return liTop > tablistTop || (checkHorizontal && Math.ceil(liRight) > tablistRight);
   },
 
   /**
