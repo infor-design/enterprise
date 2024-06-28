@@ -34,7 +34,7 @@ import { hideBin } from 'yargs/helpers';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import * as fs from 'fs';
-import glob from 'glob';
+import pkg from 'glob';
 import logger from './logger.js';
 import createDirs from './build/create-dirs.js';
 import getFileContents from './build/get-file-contents.js';
@@ -48,6 +48,7 @@ import IdsMetadata from './helpers/ids-metadata.js';
 
 import bannerText from './generate-bundle-banner.js';
 
+const { glob } = pkg;
 const yargs = _yargs(hideBin(process.argv));
 
 const argv = await yargs
@@ -946,7 +947,7 @@ function runBuildProcesses(requested) {
     rollupArgs += ` --types=${argv.types}`;
   }
   if (argv.coverage) {
-    rollupArgs += ` --coverage=true`;
+    rollupArgs += ' --coverage=true';
   }
 
   // if Requested

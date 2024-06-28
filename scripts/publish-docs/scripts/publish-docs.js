@@ -23,7 +23,7 @@ import archiver from 'archiver';
 import { build, formats } from 'documentation';
 import frontMatter from 'front-matter';
 import * as fs from 'fs';
-import glob from 'glob';
+import pkg from 'glob';
 import handlebars from 'handlebars';
 import hbsRegistrar from 'handlebars-wax';
 import { marked, setOptions } from 'marked';
@@ -40,6 +40,7 @@ import swlog from './helpers/stopwatch-log.js';
 import getJSONFile from '../app/src/js/get-json-file.js';
 
 const yargs = _yargs(hideBin(process.argv));
+const { glob } = pkg;
 
 const argv = await yargs
   .usage('Usage $node ./scripts/deploy-documentation.js [-s] [-d] [-T]')

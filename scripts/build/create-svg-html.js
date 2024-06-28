@@ -5,12 +5,12 @@
 
 // Libs
 import * as fs from 'fs';
-import glob from 'glob';
+import pkg from 'glob';
 import * as path from 'path';
 import slash from 'slash';
-
 import logger from '../logger.js';
 
+const { glob } = pkg;
 const ROOT_DIR = slash(process.cwd());
 const NL = process.platform === 'win32' ? '\r\n' : '\n';
 let IS_VERBOSE = false;
