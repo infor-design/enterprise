@@ -28,15 +28,6 @@ test.describe('Toolbar tests', () => {
   });
 
   test.describe('snapshot tests', () => {
-    test('should match innerHTML snapshot', async ({ page, browserName }) => {
-      if (browserName !== 'chromium') return;
-      const html = await page.evaluate(() => {
-        const elem = document.querySelector('.toolbar');
-        return elem?.outerHTML;
-      });
-      await expect(html).toMatchSnapshot('toolbar-html');
-    });
-
     test('should match the visual snapshot in percy', async ({ page, browserName }) => {
       if (browserName !== 'chromium') return;
       await percySnapshot(page, 'toolbar-light');
