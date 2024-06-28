@@ -230,6 +230,5 @@ test.describe('Tag tests', () => {
 
       expect(value).toEqual(true);
     });
-
   });
 });

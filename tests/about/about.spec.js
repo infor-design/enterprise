@@ -70,11 +70,10 @@ test.describe('About tests', () => {
 
   test.describe('Translation tests', () => {
     test.beforeEach(async ({ page }) => {
-      const url = '/components/about/example-index?locale=uk-UA';
-      await page.goto(url);
+      await page.goto('/components/about/example-index?locale=uk-UA');
     });
 
-    test('should show the about dialog in ukranian', async ({ page}) => {
+    test('should show the about dialog in ukranian', async ({ page }) => {
       await page.locator('#about-trigger').click();
       await page.waitForSelector('.modal-body', { state: 'visible' });
       const ukText = `Авторські права © Infor, ${new Date().getFullYear()}. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників. www.infor.com.`;
@@ -82,7 +81,7 @@ test.describe('About tests', () => {
     });
 
     test('should show version correctly in arabic', async ({ page }) => {
-      await page.goto('/components/about/example-index?locale=ar-SA')
+      await page.goto('/components/about/example-index?locale=ar-SA');
       await page.locator('#about-trigger').click();
       await page.waitForSelector('.modal-body', { state: 'visible' });
 

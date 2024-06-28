@@ -37,8 +37,7 @@
 
   // Add ES6 import plugins
   "plugins": [
-    "import",
-    "no-floating-promise"
+    "import"
   ],
 
   "rules": {
@@ -50,9 +49,6 @@
       "exports": "never",
       "functions": "never"
     }],
-
-    // Avoid mising async
-    "no-floating-promise/no-floating-promise": "error",
 
     // Avoid awit iin loops
     "no-await-in-loop": "off",

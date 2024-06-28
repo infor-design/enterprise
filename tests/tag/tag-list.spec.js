@@ -1,5 +1,3 @@
-import AxeBuilder from '@axe-core/playwright';
-import percySnapshot from '@percy/playwright';
 import { expect } from '@playwright/test';
 import { test } from '../base-fixture';
 
@@ -18,9 +16,7 @@ test.describe('Tag List tests', () => {
 
   test.describe('general tests', () => {
     test('should be get tag list length', async ({ page }) => {
-      const value = await page.evaluate(() => {
-        return $('.tag-list:first-child').data('taglist').length;
-      });
+      const value = await page.evaluate(() => $('.tag-list:first-child').data('taglist').length);
       await expect(value).toBe(9);
     });
   });
