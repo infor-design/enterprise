@@ -12,7 +12,7 @@ $('body').one('initialized', function () {
   $.getJSON('{{basepath}}api/event-types', function(res) {
     eventTypes = res;
 
-    $.getJSON('{{basepath}}api/events', function(res) {
+  $.getJSON('{{basepath}}api/events', function(res) {
       events = res;
       $('.week-view').weekview({
         eventTypes: eventTypes,
@@ -23,6 +23,7 @@ $('body').one('initialized', function () {
         startDate: new Date(2019, 9, 20),
         endDate: new Date(2019, 9, 26, 23, 59, 59, 59),
         stacked: true,
+        overnightLabel: 'Overnight',
         attributes: [
           { name: 'id', value: 'custom-id' },
           { name: 'data-automation-id', value: 'custom-automation-id' }

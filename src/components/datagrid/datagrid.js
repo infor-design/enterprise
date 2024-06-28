@@ -147,6 +147,7 @@ const COMPONENT_NAME = 'datagrid';
  * and if only parent has a match then make expand/collapse button to be collapsed, disabled
  * and do not add any children nodes
  * or if one or more child node got match then add parent node and only matching children nodes
+ * @param {boolean} [settings.addCellLayoutClass=true] If set false, will remove datagrid-cell-layout class from expandable rows.
  * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to trigger select row in datagrid.
  * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
@@ -248,6 +249,7 @@ const DATAGRID_DEFAULTS = {
   activeCheckboxSelection: false,
   dblClickApply: false,
   attributes: null,
+  addCellLayoutClass: true,
   allowPasteFromExcel: false,
   showEditorIcons: false,
   fallbackImage: 'insert-image',
@@ -5220,10 +5222,14 @@ Datagrid.prototype = {
     containerHtml.right += '</tr>';
 
     if (self.settings.rowTemplate && !isSummaryRow) {
-      const tmpl = self.settings.rowTemplate;
+      let tmpl = self.settings.rowTemplate;
       const item = rowData;
       const height = self.settings.rowTemplateHeight || 107;
       let renderedTmpl = '';
+
+      if (!self.settings.addCellLayoutClass) {
+        tmpl = tmpl.replace('datagrid-cell-layout', '');
+      }
 
       if (Tmpl && item) {
         renderedTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`, { dataset: item });
@@ -5911,9 +5917,9 @@ Datagrid.prototype = {
         const containerEl = isHeaderColumn ? elem1.parentNode : isHeaderIcon ? elem1.parentNode : elem1;
         const width = self1.getOuterWidth(containerEl);
 
-        const tooltip = $(elem1).data('gridtooltip') || self1.cacheTooltip(elem1);
-        if ($(elem1).hasClass('btn-filter')) {
-          const contents = (elem1?.querySelector('span')?.textContent || '').trim();
+        const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
+        if ($(elem).hasClass('btn-filter')) {
+          const contents = tooltip?.content || (elem?.querySelector('span')?.textContent || '').trim();
           tooltip.content = `<p>${contents}</p>`;
         }
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
@@ -10985,8 +10991,13 @@ Datagrid.prototype = {
     let rowIndex;
     let dataRowIndex;
     if (this.settings.source !== null && isUseActiveRow) {
-      rowIndex = this.activeCell.rowIndex;
-      dataRowIndex = this.activeCell.dataRow;
+      if (cellNode && this.actualRowIndex(cellNode.parent()) !== this.activeCell.rowIndex) {
+        rowIndex = this.actualRowIndex(cellNode.parent());
+        dataRowIndex = this.dataRowIndex(cellNode.parent());
+      } else {
+        rowIndex = this.activeCell.rowIndex;
+        dataRowIndex = this.activeCell.dataRow;
+      }
     } else {
       rowIndex = this.actualRowIndex(cellNode.parent());
       dataRowIndex = this.dataRowIndex(cellNode.parent());
@@ -12346,10 +12357,6 @@ Datagrid.prototype = {
       if (isGroupRow) {
         self.activeCell.groupNode = self.activeCell.node;
       }
-    }
-
-    if (self.activeCell.node.is('.is-focusable')) {
-      self.activeCell.node.find('button').focus();
     }
 
     if (dataRowNum !== undefined) {

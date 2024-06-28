@@ -1,7 +1,21 @@
 <div class="row">
   <div class="twelve columns">
+
+    <div class="toolbar no-actions-button" role="toolbar">
+      <div class="title">
+        Data Grid Header Title
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
+      <div class="buttonset">
+        <button type="button" class="btn" id="set-filter-conditions">
+          <span>Set Filter Conditions</span>
+        </button>
+      </div>
+    </div>
+
     <div id="datagrid">
     </div>
+
   </div>
 </div>
 
@@ -64,6 +78,10 @@
       var gridApi = grid.data('datagrid');
 
       gridApi.hideColumn('quantity');
+
+    $('#set-filter-conditions').on('click', function () {
+      gridApi.setFilterConditions([{ columnId: 'productName', operator: 'contains', value: 'Air' }]);
+    });
  });
 
 </script>
