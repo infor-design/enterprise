@@ -10,6 +10,7 @@
 
 - `[Autocomplete]` Fixed losing focus on keydown. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
 - `[Charts]` Fixed a bug where the `charts.setSelected()` method was not working in multiple charts in a single page. ([#NG#1671](https://github.com/infor-design/enterprise-ng/issues/1671))
+- `[Datagrid]` Fixed incorrect updates in commitCellEditUtil. ([#8850](https://github.com/infor-design/enterprise/issues/8850))
 - `[Datagrid]` Fixed a bug where button gets focus always during editing of lookup field. ([#8758](https://github.com/infor-design/enterprise/issues/8758))
 - `[Datagrid]` Added `cellLayout` setting to remove datagrid cell layout from expandable rows. ([NG#1524](https://github.com/infor-design/enterprise-ng/issues/1524))
 - `[Dropdown]` Fixed no results text still displaying after removing filter text. ([#8768](https://github.com/infor-design/enterprise/issues/8768))
