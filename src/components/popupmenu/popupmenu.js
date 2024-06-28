@@ -860,7 +860,7 @@ PopupMenu.prototype = {
       return;
     }
 
-    const itemA = item.querySelector('a');
+    const itemA = item.className.includes('heading') ? item : item.querySelector('a');
     const itemIcon = item.querySelector('.icon:not(.close):not(.icon-dropdown)');
     let itemIconUse;
 
@@ -2242,10 +2242,12 @@ PopupMenu.prototype = {
     }
 
     // Prevent chrome from scrolling - toolbar
-    if (anchor) {
-      anchor.focus();
+    if (!this.element.is('.autocomplete')) {
+      if (anchor) {
+        anchor.focus();
+      }
+      li.closest('.header').scrollTop(0);
     }
-    li.closest('.header').scrollTop(0);
   },
 
   /**
