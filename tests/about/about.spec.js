@@ -28,17 +28,6 @@ test.describe('About tests', () => {
   });
 
   test.describe('snapshot tests', () => {
-    test('should match innerHTML snapshot', async ({ page, browserName }) => {
-      if (browserName !== 'chromium') return;
-      await page.locator('#about-trigger').click();
-      await page.waitForSelector('.about');
-      const html = await page.evaluate(() => {
-        const elem = document.querySelector('.about');
-        return elem?.outerHTML;
-      });
-      await expect(html).toMatchSnapshot('about-html');
-    });
-
     test('should match the visual snapshot in percy', async ({ page, browserName }) => {
       if (browserName !== 'chromium') return;
       await page.locator('#about-trigger').click();

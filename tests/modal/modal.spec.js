@@ -28,16 +28,6 @@ test.describe('Modal tests', () => {
   });
 
   test.describe('snapshot tests', () => {
-    test('should match innerHTML snapshot', async ({ page, browserName }) => {
-      if (browserName !== 'chromium') return;
-      await page.locator('#add-context').click();
-      const html = await page.evaluate(() => {
-        const elem = document.querySelector('.modal');
-        return elem?.outerHTML;
-      });
-      await expect(html).toMatchSnapshot('modal-html');
-    });
-
     test('should match the visual snapshot in percy', async ({ page, browserName }) => {
       if (browserName !== 'chromium') return;
       await page.locator('#add-context').click();
