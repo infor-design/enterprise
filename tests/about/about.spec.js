@@ -41,6 +41,7 @@ test.describe('About tests', () => {
 
     test('should match the visual snapshot in percy', async ({ page, browserName }) => {
       if (browserName !== 'chromium') return;
+      await page.locator('#about-trigger').click();
       await percySnapshot(page, 'about-light');
     });
   });

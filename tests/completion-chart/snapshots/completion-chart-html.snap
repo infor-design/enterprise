@@ -1,0 +1,4 @@
+<div id="example-1" class="chart-container completion-chart chart-completion-target-padding" role="image"><span class="label">
+        <span class="name">Available Credit </span>
+        <span class="l-pull-right total value">$95,000</span>
+      </span><div class="total bar chart-completion-target"><div class="target remaining bar has-tooltip" "="" style="width: 11%; left: 53%;"><span><span class="value " "="">$10,000</span><br><span class="text " "="">Pending</span></span></div><div class="completed bar has-tooltip" style="width: 53%;"><span><span class="value " "="">$50,000</span><br><span class="text " "="">Spent</span></span></div></div></div>

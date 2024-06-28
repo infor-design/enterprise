@@ -1,0 +1,1 @@
+<input id="slider-id-1" name="slider-regular" value="10" class="slider" type="hidden" data-options="{'persistTooltip': false, tooltipContent: [''], attributes: [{ name: 'id', value: 'slider-id-1' }, { name: 'data-automation-id', value: 'slider-automation-id-1' }]}" data-automation-id="slider-automation-id-1">

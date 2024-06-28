@@ -1,6 +1,7 @@
 /**
  * Made this to generate the tests in tests folder initially.
  * Kept it around in case useful can be removed if it isnt.
+ * Command: clear && node ./scripts/generate-tests.js
  */
 import * as path from 'path';
 import * as fs from 'fs';
@@ -102,7 +103,7 @@ const capitalize = (string) => string.replaceAll('-', ' ').replace(/(^\w{1})|(\s
 
 componentArray.forEach((entry) => {
   const folder = `tests/${entry}/`;
-  const file = `${folder}/${entry}.spec.ts`;
+  const file = `${folder}/${entry}.spec.js`;
 
   if (!fs.existsSync(folder)) {
     fs.mkdirSync(folder);

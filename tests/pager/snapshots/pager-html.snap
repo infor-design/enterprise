@@ -1,0 +1,26 @@
+<ul class="pager-toolbar is-listview two-button"><li class="pager-prev">
+        <button type="button" class="btn-icon no-ripple hide-focus has-tooltip" aria-disabled="true" disabled="">
+          <div class="disabled-tooltip has-tooltip"></div><span>Previous page</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-previous-page"></use></svg>
+        </button>
+      </li><li class="pager-no selected">
+        <button type="button" class="btn-icon no-ripple hide-focus has-tooltip" data-page="1" aria-disabled="true">
+          <span>You are currently on page </span>
+          1
+        </button>
+      </li><li class="pager-no">
+        <button type="button" class="btn-icon no-ripple hide-focus has-tooltip" data-page="2">
+          <span>page </span>
+          2
+        </button>
+      </li><li class="pager-no">
+        <button type="button" class="btn-icon no-ripple hide-focus has-tooltip" data-page="3">
+          <span>page </span>
+          3
+        </button>
+      </li><li class="pager-next">
+        <button type="button" class="btn-icon no-ripple hide-focus has-tooltip">
+          <span>Next page</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-next-page"></use></svg>
+        </button>
+      </li></ul>

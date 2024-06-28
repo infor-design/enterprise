@@ -1,0 +1,1 @@
+<input id="date-field-normal" data-automation-id="custom-automation-id" class="datepicker" name="date-field" type="text" data-init="false" autocomplete="off" role="combobox" aria-expanded="false" data-validate="date availableDate" data-validation-events="{&quot;date&quot;:&quot;change blur enter&quot;,&quot;availableDate&quot;:&quot;change blur&quot;}">

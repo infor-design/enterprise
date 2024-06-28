@@ -1,0 +1,6 @@
+<div id="notification-badge-1" class="container-spacer">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-menu"></use>
+            </svg>
+          <span class="notification-badge-container">
+      <span class="notification-dot notification-dot-upper-right notification-dot-alert"></span></span></div>
