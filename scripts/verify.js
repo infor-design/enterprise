@@ -6,7 +6,7 @@
  * folder to ensure that all expected files are present.
  */
 import * as fs from 'fs';
-import pkg from 'glob';
+import { glob } from 'glob';
 import * as path from 'path';
 import slash from 'slash';
 import { hideBin } from 'yargs/helpers';
@@ -18,7 +18,6 @@ import logger from './logger.js';
 import writeFile from './build/write-file.js';
 
 const yargs = _yargs(hideBin(process.argv));
-const { glob } = pkg;
 
 const argv = await yargs
   .usage('Usage: $node ./scripts/verify.js [-v] [-r]')

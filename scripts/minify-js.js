@@ -5,7 +5,7 @@
  * IDS Enterprise Minify Process (Terser Wrapper)
  */
 
-import pkg from 'glob';
+import { glob } from 'glob';
 import * as path from 'path';
 import extend from 'extend';
 import { minify } from 'terser';
@@ -20,7 +20,6 @@ import writeFile from './build/write-file.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const { glob } = pkg;
 const argv = _yargs(hideBin(process.argv)).argv;
 
 const paths = {

@@ -5,7 +5,7 @@
 
 // Libs
 import * as fs from 'fs';
-import pkg from 'glob';
+import { glob } from 'glob';
 import * as path from 'path';
 import slash from 'slash';
 
@@ -15,7 +15,6 @@ import logger from '../logger.js';
 import IdsMetadata from '../helpers/ids-metadata.js';
 
 const IDS_THEMES = new IdsMetadata().getThemes();
-const { glob } = pkg;
 const NL = process.platform === 'win32' ? '\r\n' : '\n';
 const ROOT_DIR = slash(process.cwd());
 const PATHS = {
