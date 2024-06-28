@@ -4,6 +4,7 @@
 
 ## v4.97.0 Features
 
+- `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8016](https://github.com/infor-design/enterprise/issues/8016))
 - `[Weekview]` Added settings `showOvernightBothDays` and `overnightLabel` to customize overnight days. ([#8630](https://github.com/infor-design/enterprise/issues/8630))
 
 ## v4.97.0 Fixes
