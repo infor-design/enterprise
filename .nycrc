@@ -5,9 +5,10 @@
     "html"
   ],
   "include": [
-    "src/**/**/*.js"
+    "src/components/**/*.js"
   ],
   "exclude": [
+    "src/components/**/*.jquery.js",
     "coverage/**",
     "dist/**",
     "app/**",

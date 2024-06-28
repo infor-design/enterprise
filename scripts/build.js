@@ -66,6 +66,11 @@ const argv = await yargs
     describe: 'Run the script with preset components',
     default: false
   })
+  .option('coverage', {
+    alias: 'g',
+    describe: 'Run the script adding coverage',
+    default: false
+  })
   .option('disable-css', {
     alias: 'c',
     describe: 'Disables the build process for CSS'
@@ -939,6 +944,9 @@ function runBuildProcesses(requested) {
   }
   if (argv.types) {
     rollupArgs += ` --types=${argv.types}`;
+  }
+  if (argv.coverage) {
+    rollupArgs += ` --coverage=true`;
   }
 
   // if Requested

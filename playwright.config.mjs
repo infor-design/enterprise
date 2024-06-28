@@ -19,7 +19,7 @@ export default defineConfig({
   // Reporter to use
   reporter: 'html',
 
-  timeout: 30000,
+  timeout: 15000,
 
   /* Control the snap shot names */
   snapshotPathTemplate: '{testDir}/{testFileDir}/snapshots/{arg}.snap',
@@ -42,6 +42,6 @@ export default defineConfig({
   webServer: {
     command: 'npm run test:start-server',
     url: 'http://localhost:3000',
-    reuseExistingServer: false
+    reuseExistingServer: true
   },
 });

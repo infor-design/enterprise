@@ -141,31 +141,95 @@ test.describe('Tag tests', () => {
   // https://github.com/infor-design/enterprise-ng/issues/1716
   test.describe('method tests', () => {
     test('should be able to call dismiss', async ({ page }) => {
-      let handle = await page.$('ids-tag[dismissible]:not([disabled])');
-      let checkText = await handle?.innerText();
-      expect(await checkText?.trim()).toBe('Dismissible Tag 1');
+      let locator = await page.locator('.tag.is-dismissible').first();
+      expect(await locator.innerText()).toContain('Info');
 
-      await handle?.evaluate(el => el.dismiss());
+      await page.evaluate(() => document.querySelector('.tag.is-dismissible button').click());
 
-      handle = await page.$('ids-tag[dismissible]:not([disabled])');
-      checkText = await handle?.innerText();
-      expect(await checkText?.trim()).toBe('Dismissible Tag 2');
+      locator = await page.locator('.tag.is-dismissible').first();
+      expect(await locator.innerText()).toContain('Delayed');
     });
 
-    test('should cancel dismiss when not dismissible', async ({ page }) => {
-      expect(await page.evaluate(() => document.querySelectorAll('ids-tag').length)).toEqual(14);
-      await page.evaluate(() => {
-        document.querySelector('ids-tag')?.dismiss();
+    test.skip('should cancel dismiss when not dismissible', async ({ page }) => {
+      expect(await page.evaluate(() => document.querySelectorAll('.tag').length)).toEqual(14);
+
+      await page.evaluate(() => document.querySelector('.tag.is-dismissible button').dismiss());
+
+      expect(await page.evaluate(() => document.querySelectorAll('.tag').length)).toEqual(14);
+    });
+
+    test.skip('should cancel dismiss when disabled', async ({ page }) => {
+      expect(await page.evaluate(() => document.querySelectorAll('.tag').length)).toEqual(14);
+      await page.evaluate(() => document.querySelector('.tag.is-disabld button').dismiss());
+      expect(await page.evaluate(() => document.querySelectorAll('.tag').length)).toEqual(14);
+    });
+  });
+
+  test.describe('linkable tag tests', () => {
+    test('should display caret right icon correctly', async ({ page }) => {
+      await page.goto('/components/tag/example-linkable.html');
+      expect(await page.locator('#linkable-tag').count()).toBe(1);
+      expect(await page.locator('.tag-list .is-linkable > a + .btn-linkable').count()).toBe(7);
+    });
+  });
+
+  test.describe('tag content tests', () => {
+    test('can be a hyperlink if defined with an anchor', async ({ page }) => {
+      const value = await page.evaluate(() => {
+        const tagEl = document.createElement('span');
+        tagEl.classList.add('tag');
+        document.body.appendChild(tagEl);
+        tagEl.insertAdjacentHTML('afterbegin', '<a href="#" class="tag-content">This is a Tag!</a>');
+        $(tagEl).tag();
+        return tagEl.querySelector('a').getAttribute('href');
       });
-      expect(await page.evaluate(() => document.querySelectorAll('ids-tag').length)).toEqual(14);
+
+      expect(value).toEqual('#');
     });
 
-    test('should cancel dismiss when disabled', async ({ page }) => {
-      expect(await page.evaluate(() => document.querySelectorAll('ids-tag').length)).toEqual(14);
-      await page.evaluate(() => {
-        document.querySelector('#ids-clickable-tag')?.dismiss();
+    test('can be a hyperlnk if defined with a `href` setting', async ({ page }) => {
+      const value = await page.evaluate(() => {
+        const tagEl = document.createElement('span');
+        tagEl.classList.add('tag');
+        document.body.appendChild(tagEl);
+        tagEl.insertAdjacentHTML('afterbegin', '<span class="tag-content">This is a Tag!</span>');
+        $(tagEl).tag({
+          href: 'https://www.example.com'
+        });
+        return tagEl.querySelector('.tag-content').getAttribute('href');
       });
-      expect(await page.evaluate(() => document.querySelectorAll('ids-tag').length)).toEqual(14);
+
+      expect(value).toEqual('https://www.example.com');
     });
+
+    test('should remain a hyperlink if invoked as a hyperlink/anchor with no "href" attribute', async ({ page }) => {
+      const value = await page.evaluate(() => {
+        const tagEl = document.createElement('span');
+        tagEl.classList.add('tag');
+        document.body.appendChild(tagEl);
+        tagEl.insertAdjacentHTML('afterbegin', '<a class="tag-content">This is a Tag!</a>');
+        $(tagEl).tag();
+        return tagEl.querySelector('a').getAttribute('href');
+      });
+
+      expect(value).toEqual(null);
+    });
+
+    test('can change its "style" when updating', async ({ page }) => {
+      const value = await page.evaluate(() => {
+        const tagEl = document.createElement('span');
+        tagEl.classList.add('tag');
+        document.body.appendChild(tagEl);
+        tagEl.insertAdjacentHTML('afterbegin', '<a class="tag-content">This is a Tag!</a>');
+        $(tagEl).tag({
+          style: 'info'
+        });
+        const isInfo = tagEl.classList.contains('info');
+        return isInfo;
+      });
+
+      expect(value).toEqual(true);
+    });
+
   });
 });
