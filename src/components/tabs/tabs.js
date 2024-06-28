@@ -3209,7 +3209,7 @@ Tabs.prototype = {
       .each(function tabOverflowIterator() {
         const tab = $(this);
 
-        if (!self.isTabOverflowed(tab)) {
+        if (!self.isTabOverflowed(tab, true)) {
           tabHash = tabHash.add(tab);
         }
       });
@@ -3692,6 +3692,12 @@ Tabs.prototype = {
       let href = anchor.attr('href');
       const id = href.substr(1, href.length);
       const tab = self.doGetTab(id) || $();
+
+      const visibleTabs = self.getVisibleTabs();
+      const lastVisibleTab = $(visibleTabs[visibleTabs.length - 1]);
+
+      tab.insertBefore(lastVisibleTab);
+
       let a = tab ? tab.children('a') : $();
       let originalTab = anchor.data('original-tab').parent();
 
@@ -3867,15 +3873,15 @@ Tabs.prototype = {
    * @returns {boolean} whether or not the tab is overflowed.
    */
   isTabOverflowed(li, checkHorizontal = false) {
+    if (li === undefined || li === null || li.length === 0) {
+      return false;
+    }
+
     if (li.hasClass('application-menu-trigger')) {
       return false;
     }
 
     if (this.isVerticalTabs() || this.tablist.find('.arrange-dragging').length) {
-      return false;
-    }
-
-    if (!li) {
       return false;
     }
 
@@ -3886,10 +3892,10 @@ Tabs.prototype = {
     const liBounding = li[0].getBoundingClientRect();
 
     const liTop = Math.round(liBounding.top);
-    const liRight = Math.round(liBounding.right + li[0].offsetWidth + 500);
+    const liRight = liBounding.right + li[0].offsetWidth + 400;
 
     let tablistTop = Math.round(tablistBounding.top + 1);
-    const tablistRight = Math.round(tablistBounding.right);
+    const tablistRight = tablistBounding.right;
 
     // +1 to compensate for top border on Module Tabs
     if (this.isModuleTabs()) {
