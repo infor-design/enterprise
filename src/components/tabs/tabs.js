@@ -3722,7 +3722,7 @@ Tabs.prototype = {
       // remove the line below.
       self.moreButton.focus();
 
-      self.scrollTabList(tab);
+      self.scrollTabList(tab.prev());
     }
 
     self.moreButton
@@ -3890,27 +3890,21 @@ Tabs.prototype = {
     }
     const tablistBounding = this.tablist[0].getBoundingClientRect();
     const liBounding = li[0].getBoundingClientRect();
+    const tablistContainerBounding = this.tablist.parent()[0].getBoundingClientRect();
 
     const liTop = Math.round(liBounding.top);
-    let liRight = liBounding.right + li[0].offsetWidth;
+    const liRight = Math.round(liBounding.right);
 
     let tablistTop = Math.round(tablistBounding.top + 1);
-    const tablistRight = Math.floor(tablistBounding.right);
+    let tablistContainerRight = Math.round(tablistContainerBounding.right);
 
     // +1 to compensate for top border on Module Tabs
     if (this.isModuleTabs()) {
       tablistTop += 1;
+      tablistContainerRight += 1;
     }
 
-    if (this.addTabButton) {
-      liRight += this.addTabButton[0].offsetWidth + 10;
-    }
-
-    if (this.moreButton) {
-      liRight += this.moreButton[0].offsetWidth + 10;
-    }
-
-    return liTop > tablistTop || (checkHorizontal && Math.ceil(liRight) > tablistRight);
+    return liTop > tablistTop || (checkHorizontal && liRight > tablistContainerRight);
   },
 
   /**
