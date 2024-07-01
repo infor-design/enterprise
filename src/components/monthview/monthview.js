@@ -3081,7 +3081,6 @@ MonthView.prototype = {
       this.toUpdate = true;
     }
 
-    this.teardown();
     this.element.empty();
     this.init();
     
