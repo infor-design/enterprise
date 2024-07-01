@@ -137,9 +137,9 @@ const editors = {
         return;
       }
 
-      setTimeout(() => {
-        this.input.remove();
-      }, 0);
+      setTimeout((arg) => {
+        arg.input.remove();
+      }, 0, this);
     };
 
     this.init();
@@ -192,10 +192,10 @@ const editors = {
 
     this.destroy = function () {
       container.removeClass('datagrid-textarea-cell-wrapper');
-      setTimeout(() => {
-        this.input.off('click.textareaeditor');
-        this.input.remove();
-      }, 0);
+      setTimeout((arg) => {
+        arg.input.off('click.textareaeditor');
+        arg.input.remove();
+      }, 0, this);
     };
 
     this.init();
@@ -265,9 +265,9 @@ const editors = {
     };
 
     this.focus = function () {
-      setTimeout(() => {
-        this.input.focus();
-      }, 0);
+      setTimeout((arg) => {
+        arg.input.focus();
+      }, 0, this);
     };
 
     this.destroy = function () {
@@ -327,10 +327,10 @@ const editors = {
     };
 
     this.destroy = function () {
-      setTimeout(() => {
-        this.input.next('.checkbox-label').remove();
-        this.input.remove();
-      }, 0);
+      setTimeout((arg) => {
+        arg.input.next('.checkbox-label').remove();
+        arg.input.remove();
+      }, 0, this);
     };
 
     this.init();
@@ -534,9 +534,9 @@ const editors = {
         }
 
         if (type === 'tab') {
-          setTimeout(() => {
-            container.parent('td').focus();
-          }, 100);
+          setTimeout((arg) => {
+            arg.parent('td').focus();
+          }, 100, container);
         }
       });
     };
@@ -700,9 +700,9 @@ const editors = {
         }
 
         if (type === 'tab') {
-          setTimeout(() => {
-            container.parent('td').focus();
-          }, 100);
+          setTimeout((arg) => {
+            arg.parent('td').focus();
+          }, 100, container);
         }
       });
     };
@@ -745,8 +745,6 @@ const editors = {
     };
 
     this.focus = function () {
-      const self = this;
-
       this.input.focus();
       if (grid.settings.selectOnEdit) {
         this.input.select();
@@ -758,19 +756,24 @@ const editors = {
       }
 
       this.input.on('listclosed', () => {
-        setTimeout(() => {
-          self.input.trigger('focusout');
-          container.parent().focus();
-          grid.setNextActiveCell(event);
-        }, 1);
+        setTimeout((param) => {
+          const self1 = param[0];
+          const container1 = param[1];
+          const grid1 = param[2];
+          self1.input.trigger('focusout');
+          container1.parent().focus();
+          grid1.setNextActiveCell(event);
+        }, 1, [this, container, grid]);
       });
     };
 
     this.destroy = function () {
-      setTimeout(() => {
-        grid.quickEditMode = false;
-        this.input.remove();
-      }, 0);
+      setTimeout((param) => {
+        const self1 = param[0];
+        const grid1 = param[1];
+        grid1.quickEditMode = false;
+        self1.input.remove();
+      }, 0, [this, grid]);
     };
 
     this.init();
@@ -819,17 +822,18 @@ const editors = {
     this.val = function (v) {
       // eslint-disable-next-line compat/compat
       return new Promise((resolve) => {
-        setTimeout(() => {
+        setTimeout((param) => {
+          const self1 = param[0];
           let output;
           if (v) {
             v = xssUtils.stripTags(v);
-            this.input.attr('value', v);
+            self1.input.attr('value', v);
             output = v;
           } else {
-            output = this.input.val();
+            output = self1.input.val();
           }
           resolve(output);
-        }, 300);
+        }, 300, [this]);
       });
     };
 
@@ -844,12 +848,14 @@ const editors = {
        */
       const handleCancel = () => {
         $('body').one('focusin.fileuploadeditor', () => {
-          setTimeout(() => {
-            if (this.status !== 'change') {
-              this.status = 'cancel';
-              grid.commitCellEdit(this.input);
+          setTimeout((param) => {
+            const self1 = param[0];
+            const grid1 = param[1];
+            if (self1.status !== 'change') {
+              self1.status = 'cancel';
+              grid1.commitCellEdit(self1.input);
             }
-          }, 100);
+          }, 100, [this, grid]);
         });
       };
 
@@ -947,8 +953,6 @@ const editors = {
     };
 
     this.focus = function () {
-      const self = this;
-
       this.input.focus();
       if (grid.settings.selectOnEdit) {
         this.input.select();
@@ -960,11 +964,14 @@ const editors = {
       }
 
       this.api.trigger.on('hide.editortime', () => {
-        setTimeout(() => {
-          self.input.trigger('focusout');
-          container.parent().focus();
-          grid.setNextActiveCell(event);
-        }, 1);
+        setTimeout((param) => {
+          const self1 = param[0];
+          const grid1 = param[1];
+          const container1 = param[2];
+          self1.input.trigger('focusout');
+          container1.parent().focus();
+          grid1.setNextActiveCell(event);
+        }, 1, [this, grid, container]);
       });
     };
 
@@ -974,10 +981,12 @@ const editors = {
         self.api.trigger.off('hide.editortime');
       }
 
-      setTimeout(() => {
-        grid.quickEditMode = false;
-        self.input.remove();
-      }, 0);
+      setTimeout((param) => {
+        const self1 = param[0];
+        const grid1 = param[1];
+        grid1.quickEditMode = false;
+        self1.input.remove();
+      }, 0, [this, grid]);
     };
 
     this.init();
@@ -1079,14 +1088,16 @@ const editors = {
     };
 
     this.destroy = function () {
-      const self = this;
       const td = this.input.closest('td');
-      setTimeout(() => {
-        grid.quickEditMode = false;
-        td.off('keydown.editorlookup')
+      setTimeout((param) => {
+        const self1 = param[0];
+        const grid1 = param[1];
+        const td1 = param[2];
+        grid1.quickEditMode = false;
+        td1.off('keydown.editorlookup')
           .find('.trigger').off('touchcancel.editorlookup touchend.editorlookup');
-        self.input.remove();
-      }, 0);
+        self1.input.remove();
+      }, 0, [this, grid, td]);
     };
 
     this.init();
@@ -1129,10 +1140,12 @@ const editors = {
     };
 
     this.destroy = function () {
-      setTimeout(() => {
-        grid.quickEditMode = false;
-        this.input.remove();
-      }, 0);
+      setTimeout((param) => {
+        const self1 = param[0];
+        const grid1 = param[1];
+        grid1.quickEditMode = false;
+        self1.input.remove();
+      }, 0, [this, grid]);
     };
 
     this.init();
@@ -1185,17 +1198,19 @@ const editors = {
         return;
       }
 
-      setTimeout(() => {
+      setTimeout((param) => {
+        const self1 = param[0];
+        const container1 = param[1];
         grid.quickEditMode = false;
-        const textVal = self.val();
-        if (self.input && self.input.data('spinbox')) {
-          self.input.data('spinbox').destroy();
+        const textVal = self1.val();
+        if (self1.input && self1.input.data('spinbox')) {
+          self1.input.data('spinbox').destroy();
         }
-        if (self.input) {
-          self.input.remove();
+        if (self1.input) {
+          self1.input.remove();
+          container1.text(textVal);
         }
-        container.text(textVal);
-      }, 0);
+      }, 0, [this, container]);
     };
 
     this.init();
@@ -1241,9 +1256,10 @@ const editors = {
     };
 
     this.destroy = function () {
-      setTimeout(() => {
-        this.input.parent().remove();
-      }, 0);
+      setTimeout((param) => {
+        const self1 = param[0];
+        self1.input.parent().remove();
+      }, 0, [this]);
     };
 
     this.init();
