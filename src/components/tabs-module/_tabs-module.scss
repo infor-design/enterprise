@@ -170,6 +170,10 @@
     overflow: hidden;
     text-align: center;
 
+    &.tab.application-menu-trigger .icon {
+      color: $module-tabs-icon-normal-color;
+    }
+
     .icon {
       color: $module-tabs-inactive-text-color;
     }
@@ -601,7 +605,7 @@
       }
 
       .tab-more {
-        right: 45px;
+        right: 43px;
         top: 0;
       }
     }
