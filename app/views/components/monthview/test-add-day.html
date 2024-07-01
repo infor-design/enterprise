@@ -14,6 +14,7 @@
 
 <script>
   $('body').on('initialized', function() {
+    var el = $('.monthview')
     var monthViewApi = null;
     var selectedDate = new Date();
     var monthViewOptions = {
@@ -29,7 +30,8 @@
       ]
     },
     }
-    $('.monthview').monthview({
+
+    el.monthview({
       ...monthViewOptions,
       day: selectedDate.getDate(),
       month: selectedDate.getMonth(),
@@ -37,7 +39,10 @@
       activeDate: selectedDate
     });
 
-    monthViewApi = $('.monthview').data('monthview');
+    monthViewApi = el.data('monthview');
+    el.on('selected', () => {
+      console.log('Selected event');
+    });
 
     $('#selected-date').text(selectedDate);
 

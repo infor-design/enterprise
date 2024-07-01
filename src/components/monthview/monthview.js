@@ -3081,9 +3081,10 @@ MonthView.prototype = {
       this.toUpdate = true;
     }
 
-    return this
-      .destroy()
-      .init();
+    this.element.empty();
+    this.init();
+    
+    return this;
   },
 
   /**
