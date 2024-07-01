@@ -66,7 +66,7 @@
     "test:build": "npm run build:demoapp && npm run build",
     "test:coverage": "npx rimraf .nyc_output && npm run build:coverage && npm run test && npx nyc report && open coverage/index.html",
     "test:coverage:no-build": "npx rimraf .nyc_output && npm run test && npx nyc report && open coverage/index.html",
-    "test:ci": "PERCY_LOGLEVEL=silent npx playwright test && npx nyc report",
+    "test:ci": "PERCY_LOGLEVEL=silent npx rimraf .nyc_output && npm run build:coverage && npm run test && npx nyc report",
     "watch": "npm run watch:js & npm run watch:scss",
     "watch:js": "nodemon --watch \"src/\" -e js --ignore dist/ --ignore app/ -x \"npm run build:js\" --on-change-only",
     "watch:scss": "nodemon --watch \"src/\" -e scss --ignore dist/ --ignore app/ -x \"npm run build:css\" --on-change-only",

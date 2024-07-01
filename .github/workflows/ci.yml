@@ -52,8 +52,11 @@ jobs:
     - name: Install Browsers
       run: npx playwright install --with-deps
 
-    - name: Run tests
-      run:  (npm run quickstart &) && sleep 5; npm run test;
+    - name: Run Tests
+      run: npx percy exec -- npm run test:ci
+      env:
+        NODE_OPTIONS: "--max-old-space-size=8192"
+        PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
 
     - name: Dump GitHub context
       env:
