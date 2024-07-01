@@ -39,6 +39,7 @@ test.describe('Hierarchy tests', () => {
 
     test('should match the visual snapshot in percy', async ({ page, browserName }) => {
       if (browserName !== 'chromium') return;
+      await page.goto('/components/hierarchy/example-stacked.html');
       await percySnapshot(page, 'hierarchy-light');
     });
   });

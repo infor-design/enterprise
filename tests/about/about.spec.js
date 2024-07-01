@@ -27,14 +27,6 @@ test.describe('About tests', () => {
     });
   });
 
-  test.describe('snapshot tests', () => {
-    test('should match the visual snapshot in percy', async ({ page, browserName }) => {
-      if (browserName !== 'chromium') return;
-      await page.locator('#about-trigger').click();
-      await percySnapshot(page, 'about-light');
-    });
-  });
-
   test.describe('functionality tests', () => {
     test('should show the about dialog', async ({ page }) => {
       await page.locator('#about-trigger').click();

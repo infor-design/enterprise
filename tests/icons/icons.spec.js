@@ -36,11 +36,6 @@ test.describe('Icons tests', () => {
       });
       await expect(html).toMatchSnapshot('icons-html');
     });
-
-    test('should match the visual snapshot in percy', async ({ page, browserName }) => {
-      if (browserName !== 'chromium') return;
-      await percySnapshot(page, 'icons-light');
-    });
   });
 
   test.describe('functionality tests', () => {

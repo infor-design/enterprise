@@ -30,7 +30,7 @@ test.describe('WeekView tests', () => {
   test.describe('snapshot tests', () => {
     test('should match the visual snapshot in percy', async ({ page, browserName }) => {
       if (browserName !== 'chromium') return;
-      await page.goto('/components/week-view/test-specific-week.html');
+      await page.goto('/components/week-view/test-specific-lang.html');
       await percySnapshot(page, 'week-view-light');
     });
   });

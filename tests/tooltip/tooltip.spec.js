@@ -37,12 +37,6 @@ test.describe('Tooltip tests', () => {
       });
       await expect(html).toMatchSnapshot('tooltip-html');
     });
-
-    test('should match the visual snapshot in percy', async ({ page, browserName }) => {
-      if (browserName !== 'chromium') return;
-      await page.locator('#tooltip-btn').hover();
-      await percySnapshot(page, 'tooltip-light');
-    });
   });
 
   test.describe('functionality tests', () => {

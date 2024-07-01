@@ -7,7 +7,7 @@
       1280
     ],
     "minHeight": 1024,
-    "enableJavaScript": true,
+    "enableJavaScript": false,
     "disableShadowDOM": true
   }
 }

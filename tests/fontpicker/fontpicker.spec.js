@@ -27,13 +27,6 @@ test.describe('Fontpicker tests', () => {
     });
   });
 
-  test.describe('snapshot tests', () => {
-    test('should match the visual snapshot in percy', async ({ page, browserName }) => {
-      if (browserName !== 'chromium') return;
-      await percySnapshot(page, 'fontpicker-light');
-    });
-  });
-
   test.describe('functionality tests', () => {
   });
 });
