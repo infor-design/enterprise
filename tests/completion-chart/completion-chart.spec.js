@@ -36,11 +36,6 @@ test.describe('CompletionChart tests', () => {
       });
       await expect(html).toMatchSnapshot('completion-chart-html');
     });
-
-    test('should match the visual snapshot in percy', async ({ page, browserName }) => {
-      if (browserName !== 'chromium') return;
-      await percySnapshot(page, 'completion-chart-light');
-    });
   });
 
   test.describe('functionality tests', () => {

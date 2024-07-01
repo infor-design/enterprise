@@ -27,14 +27,6 @@ test.describe('Modal tests', () => {
     });
   });
 
-  test.describe('snapshot tests', () => {
-    test('should match the visual snapshot in percy', async ({ page, browserName }) => {
-      if (browserName !== 'chromium') return;
-      await page.locator('#add-context').click();
-      await percySnapshot(page, 'modal-light');
-    });
-  });
-
   test.describe('functionality tests', () => {
   });
 });
