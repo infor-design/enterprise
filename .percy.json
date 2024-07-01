@@ -1,13 +1,10 @@
 
 {
-  "version": 2,
   "snapshot": {
     "widths": [
       375,
       1280
     ],
-    "minHeight": 1024,
-    "enableJavaScript": false,
-    "disableShadowDOM": true
+    "minHeight": 1024
   }
 }
