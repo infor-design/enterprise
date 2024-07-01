@@ -3722,7 +3722,7 @@ Tabs.prototype = {
       // remove the line below.
       self.moreButton.focus();
 
-      self.scrollTabList(tab.prev());
+      self.scrollTabList(tab);
     }
 
     self.moreButton
