@@ -1,0 +1,86 @@
+<div class="circlepager example1 is-active" data-options="{slidesToShow: 3}" id="circlepager-id-1" data-automation-id="automation-id-circlepager-1">
+                <div class="slides" style="width: 900%; left: 0%;">
+
+                  <div class="slide is-visible transition" style="width: 3.7037%;">
+                    <div class="slide-content">
+                      <p>
+                        <a href="#" class="hyperlink hide-focus" id="slide-link-1">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br>
+                      $750.00 (Item 1)
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="slide is-visible transition" style="width: 3.7037%;">
+                    <div class="slide-content">
+                      <p>
+                        <a href="#" class="hyperlink hide-focus" id="slide-link-2">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br>
+                      $750.00 (Item 2)
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="slide is-visible transition" style="width: 3.7037%;">
+                    <div class="slide-content">
+                      <p>
+                        <a href="#" class="hyperlink hide-focus" id="slide-link-3">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br>
+                      $750.00 (Item 3)
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="slide is-visible transition" style="width: 3.7037%;">
+                    <div class="slide-content">
+                      <p>
+                        <a href="#" class="hyperlink hide-focus" id="slide-link-4">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br>
+                      $750.00 (Item 4)
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="slide is-visible transition" style="width: 3.7037%;">
+                    <div class="slide-content">
+                      <p>
+                        <a href="#" class="hyperlink hide-focus" id="slide-link-5">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br>
+                      $750.00 (Item 5)
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="slide is-visible transition" style="width: 3.7037%;">
+                    <div class="slide-content">
+                      <p>
+                        <a href="#" class="hyperlink hide-focus" id="slide-link-6">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br>
+                      $750.00 (Item 6)
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="slide is-visible transition" style="width: 3.7037%;">
+                    <div class="slide-content">
+                      <p>
+                        <a href="#" class="hyperlink hide-focus" id="slide-link-7">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br>
+                      $750.00 (Item 7)
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="slide is-visible transition" style="width: 3.7037%;">
+                    <div class="slide-content">
+                      <p>
+                        <a href="#" class="hyperlink hide-focus" id="slide-link-8">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br>
+                      $750.00 (Item 8)
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="slide is-visible transition" style="width: 3.7037%;">
+                    <div class="slide-content">
+                      <p>
+                        <a href="#" class="hyperlink hide-focus" id="slide-link-9">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br>
+                      $750.00 (Item 9)
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+              <div class="controls circlepager-controls"><a href="#slides-1-2-and-3-of-9" class="control-button hyperlink hide-focus is-active" undefined="" id="circlepager-id-1-control-1" data-automation-id="automation-id-circlepager-1-control-1"><span class="audible">Slides 1, 2 and 3 of 9</span></a><a href="#slides-4-5-and-6-of-9" class="control-button hyperlink hide-focus" undefined="" id="circlepager-id-1-control-2" data-automation-id="automation-id-circlepager-1-control-2"><span class="audible">Slides 4, 5 and 6 of 9</span></a><a href="#slides-7-8-and-9-of-9" class="control-button hyperlink hide-focus" undefined="" id="circlepager-id-1-control-3" data-automation-id="automation-id-circlepager-1-control-3"><span class="audible">Slides 7, 8 and 9 of 9</span></a></div></div>

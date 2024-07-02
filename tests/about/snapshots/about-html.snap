@@ -1,0 +1,12 @@
+<div class="modal about is-active" id="about-modal" style="z-index: 1020;" aria-labelledby="about-modal-title" data-automation-id="about-modal-automation-id" aria-describedby="about-modal-text" role="dialog" aria-modal="true"><div class="modal-content"><div class="modal-header"><div class="close-container"><button name="close" type="button" class="btn-icon btn-close hide-focus" id="about-modal-btn-close" data-automation-id="about-modal-automation-id-btn-close"><svg class="icon-close icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-close"></use></svg><span>Close'</span></button></div><svg class="icon about-logo" focusable="false" aria-hidden="true" role="presentation" viewBox="0 0 44 44"><use href="#icon-logo"></use></svg><h1 class="title" id="about-modal-title" data-automation-id="about-modal-automation-id-title">IDS Enterprise</h1></div><div class="modal-body-wrapper" style="max-height: 468px; max-width: 1280px;"><button type="button" class="btn-icon has-tooltip" id="copy-to-clipboard">
+          <span>Copy to clipboard</span>
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use href="#icon-copy"></use>
+          </svg>
+        </button><div class="modal-body" tabindex="0" id="about-modal-text"><p>Controls Example Application Version No. XX</p><div class="additional-content"><p>Fashionable components for fashionable applications.</p></div><p>Copyright © 2024 Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All other trademarks listed herein are the property of their respective owners <a class="hyperlink" href="http://www.infor.com" target="_blank">www.infor.com</a>.</p><p><span class="platform">Platform: MacIntel</span><br>
+        <span class="locale">Locale: en-US</span><br>
+        <span class="locale">Language: en</span><br>
+        <span class="browser">Browser:  Chrome (127)</span><br>
+        <span class="locale">Browser language: en-US</span><br>
+        <span class="cookiesEnabled">Cookies enabled: true</span><br>
+        <span class="version">IDS version: 4.97.0-dev.0</span><br></p></div></div></div></div>

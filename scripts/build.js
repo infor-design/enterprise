@@ -34,7 +34,7 @@ import { hideBin } from 'yargs/helpers';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import * as fs from 'fs';
-import glob from 'glob';
+import { glob } from 'glob';
 import logger from './logger.js';
 import createDirs from './build/create-dirs.js';
 import getFileContents from './build/get-file-contents.js';
@@ -64,6 +64,11 @@ const argv = await yargs
   .option('test-mode', {
     alias: 'T',
     describe: 'Run the script with preset components',
+    default: false
+  })
+  .option('coverage', {
+    alias: 'g',
+    describe: 'Run the script adding coverage',
     default: false
   })
   .option('disable-css', {
@@ -939,6 +944,9 @@ function runBuildProcesses(requested) {
   }
   if (argv.types) {
     rollupArgs += ` --types=${argv.types}`;
+  }
+  if (argv.coverage) {
+    rollupArgs += ' --coverage=true';
   }
 
   // if Requested

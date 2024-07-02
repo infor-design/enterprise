@@ -1,0 +1,35 @@
+<div class="modal is-active" id="my-id" aria-labelledby="my-id-title" aria-describedby="my-id-text" style="z-index: 1020;">
+        <div class="modal-content">
+          <div class="modal-header "><h1 class="modal-title" id="my-id-title">Add Context</h1></div>
+          <div class="modal-body-wrapper ">
+            <div class="modal-body  " id="my-id-text"><div id="modal-add-context" class="">
+            <div class="container">
+              <div class="form-responsive row no-indent">
+                <div class="full-width column">
+
+                    <div class="field">
+                      <label for="subject">Problem</label>
+                      <input type="text" id="subject" name="subject">
+                    </div>
+
+                    <div class="field">
+                      <label for="location" class="label">Location</label>
+                      <select id="location" name="location" class="dropdown">
+                        <option value="N">North</option>
+                        <option value="S">South</option>
+                        <option value="E">East</option>
+                        <option value="W">West</option>
+                      </select><div class="dropdown-wrapper "><div class="dropdown" role="combobox" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false" aria-label="Location, North" tabindex="0"><span class="has-tooltip" style="max-width: 100%;"><span class="audible has-tooltip" style="max-width: 100%;">Location </span>North</span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></div>
+                    </div>
+
+                    <div class="field">
+                      <label for="notes-max">Notes (maxlength)</label>
+                      <span class="textarea-print">Line One</span><textarea id="notes-max" class="textarea" maxlength="90" name="notes-max">Line One</textarea><span class="textarea-wordcount">Characters left 82</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div></div>
+          </div><div class="modal-buttonset"><button class="btn-modal no-ripple hide-focus" id="modal-button-1" style="width: 50%;"><span>Cancel</span></button><button class="btn-modal btn-modal-primary no-ripple hide-focus" id="modal-button-2" style="width: 50%;"><span>Save</span></button></div>
+        </div>
+      </div>

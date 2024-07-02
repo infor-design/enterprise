@@ -1,0 +1,35 @@
+<section class="signin" role="main" id="signin-container-id">
+
+          <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-logo"></use>
+          </svg>
+
+          <h1>Application Name</h1>
+
+          <form id="signin" data-validate-on="submit" autocomplete="off" data-automation-id="signin-automation-id">
+
+            <div class="field">
+              <label for="username" class="required accessible">Email<span class="required-asterisk" aria-hidden="true">*</span></label>
+              <input type="text" name="username" id="username" autocomplete="off" data-validate="required" data-automation-id="username-automation-id" aria-required="true" class="required">
+            </div>
+
+            <div class="field">
+              <label for="password" class="required accessible">Password<span class="required-asterisk" aria-hidden="true">*</span></label>
+              <input type="password" id="password" data-validate="required" name="password" data-automation-id="password-automation-id" aria-required="true" class="required">
+            </div>
+
+            <div class="field">
+              <label for="states" class="label">Server</label>
+              <select id="states" name="states" class="dropdown" data-automation-id="states-automation-id">
+                <option value="N">NL</option>
+                <option value="U">US</option>
+                <option value="E">EU</option>
+                <option value="c">China</option>
+              </select><div class="dropdown-wrapper "><div class="dropdown" data-automation-id="states-automation-id" role="combobox" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false" aria-label="Server, NL" tabindex="0"><span><span class="audible">Server </span>NL</span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></div>
+            </div>
+
+            <button id="submit" class="btn-primary no-ripple hide-focus" type="submit" data-automation-id="submit-automation-id">Sign in</button>
+            <a id="forgot-password" class="hyperlink hide-focus" href="./example-forgotpassword">Forgot Password?</a>
+
+          </form>
+      </section>

@@ -3,6 +3,7 @@
 // IDS Enterprise - Rollup Configuration
 // ================================================= /
 import resolve from '@rollup/plugin-node-resolve';
+import istanbul from 'rollup-plugin-istanbul';
 import json from '@rollup/plugin-json';
 import { babel } from '@rollup/plugin-babel';
 import license from 'rollup-plugin-license';
@@ -107,5 +108,17 @@ const exports = getTargetBundleTypes({
   standard: standardConfig,
   esm: esmConfig
 });
+
+if (argv.coverage) {
+  standardConfig.plugins.push(
+    istanbul({
+      exclude: ['test/**/*', 'node_modules/**/*']
+    })
+  );
+
+  console.log('Building with coverage');
+} else {
+  console.log('Building without coverage');
+}
 
 export default exports;

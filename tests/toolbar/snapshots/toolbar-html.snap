@@ -1,0 +1,55 @@
+<div id="regular-toolbar-example" class="toolbar do-resize has-title has-more-button" role="toolbar" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'my-toolbar' } ] }" data-automation-id="my-toolbar" aria-label="Toolbar Title">
+            <div class="title has-tooltip" style="width: 477.711px;">
+              Toolbar Title
+            </div>
+            <div class="buttonset" style="width: 780.289px;">
+
+              <div class="searchfield-wrapper toolbar-searchfield-wrapper has-close-icon-button"><label class="audible" for="test-sf">Toolbar Searchfield</label>
+                
+                <input class="searchfield" placeholder="keyword" id="test-sf" autocomplete="off" aria-label="keyword" data-automation-id="my-toolbar-searchfield" tabindex="0"><svg class="close is-empty icon" focusable="true" aria-hidden="true" role="presentation" tabindex="-1"><use href="#icon-close"></use></svg><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-search"></use></svg>
+              </div>
+
+              <button id="btn-row" class="btn has-text no-ripple hide-focus" type="button" data-automation-id="my-toolbar-button-0" tabindex="0">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-add"></use>
+                </svg>
+                <span>Row</span>
+              </button>
+
+              <button id="btn-category" class="btn has-text no-ripple hide-focus is-overflowed" type="button" data-automation-id="my-toolbar-button-1" tabindex="0">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-filter"></use>
+                </svg>
+                <span>Category</span>
+              </button>
+
+              <button id="btn-date" class="btn-tertiary has-text no-ripple hide-focus is-overflowed" type="button" data-automation-id="my-toolbar-button-2" tabindex="0">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-calendar"></use>
+                </svg>
+                <span>Date</span>
+              </button>
+
+              <button id="btn-share" class="btn has-text no-ripple hide-focus is-overflowed" disabled="" type="button" data-automation-id="my-toolbar-button-3" tabindex="0">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-mingle-share"></use>
+                </svg>
+                <span>Share</span>
+              </button>
+
+              <button id="option-1" class="btn has-text no-ripple hide-focus is-overflowed" type="button" data-automation-id="my-toolbar-button-4" tabindex="0">
+                <span>Option #1</span>
+              </button>
+
+              <button id="option-2" class="btn-menu has-text no-ripple hide-focus is-overflowed" type="button" data-automation-id="my-toolbar-menubutton-5-trigger" aria-haspopup="true" aria-controls="popupmenu-2" tabindex="0">
+                <span>Option #2</span>
+              <svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></button>
+              
+
+              <button id="option-3" class="btn-menu has-text no-ripple hide-focus is-overflowed" type="button" data-automation-id="my-toolbar-menubutton-6-trigger" aria-haspopup="true" aria-controls="popupmenu-3" tabindex="0">
+                <span>Option #3</span>
+              <svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></button>
+              
+
+            </div>
+          <div class="more"><button class="btn-actions no-ripple hide-focus has-tooltip" type="button" data-automation-id="my-toolbar-button-7" aria-haspopup="true" aria-controls="popupmenu-toolbar-0" tabindex="0"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-more"></use></svg><span class="audible">More actions</span></button></div></div>

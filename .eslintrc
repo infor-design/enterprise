@@ -5,6 +5,13 @@
     "airbnb-base"
   ],
 
+  "globals": {
+    "document": true,
+    "window": true,
+    "jQuery": true,
+    "$": true
+  },
+
   // This is the root eslint file.
   // We should ONLY be using eslint rules specific to this project.
   "root": true,
@@ -43,6 +50,7 @@
       "functions": "never"
     }],
 
+    // Avoid awit iin loops
     "no-await-in-loop": "off",
 
     // Re-enable anonymous/unnamed functions
@@ -143,6 +151,8 @@
     // https://eslint.org/docs/rules/operator-linebreak
     "operator-linebreak": ["error", "after"],
     // Allow js in imports
-    "import/extensions": ["off"]
+    "import/extensions": ["off"],
+    // Allow devDependencies
+    "import/no-extraneous-dependencies": ["off"]
   }
 }

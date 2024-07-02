@@ -1,0 +1,10 @@
+<div class="notification error" style="transition: height 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94); height: 42.3984px;" id="notification-id-1" data-automation-id="notification-automation-id-1">
+      <svg class="icon notification-icon icon-error" focusable="false" aria-hidden="true" role="presentation" id="notification-id-1-icon" data-automation-id="notification-automation-id-1-icon">
+        <use href="#icon-error"></use>
+      </svg><p class="notification-text" id="notification-id-1-text" data-automation-id="notification-automation-id-1-text">DTO rejected by your manager for Sept 30, 2018.<a class="notification-link" href="#" id="notification-id-1-link" data-automation-id="notification-automation-id-1-link">Click to view</a></p>
+      <button type="text" class="notification-close" id="notification-id-1-btn-close" data-automation-id="notification-automation-id-1-btn-close">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation" id="notification-id-1-icon-close" data-automation-id="notification-automation-id-1-icon-close">
+          <use href="#icon-close"></use>
+        </svg>
+        <span class="audible">Close</span>
+      </button></div>

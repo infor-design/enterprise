@@ -1,0 +1,1 @@
+<input id="searchfield" data-init="false" class="searchfield autocomplete" placeholder="Type a search term" role="combobox" autocomplete="off" data-automation-id="searchfield-automation-id" aria-label="Type a search term">

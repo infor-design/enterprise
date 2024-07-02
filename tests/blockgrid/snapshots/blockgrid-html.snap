@@ -1,0 +1,17 @@
+<div class="row blockgrid l-center">
+            <div class="block">
+              <img alt="Placeholder Image" src="//localhost:3000/images/placeholder-200x200.png">
+            </div>
+            <div class="block">
+              <img alt="Placeholder Image" src="//localhost:3000/images/placeholder-200x200.png">
+            </div>
+            <div class="block">
+              <img alt="Placeholder Image" src="//localhost:3000/images/placeholder-200x200.png">
+            </div>
+            <div class="block">
+              <img alt="Placeholder Image" src="//localhost:3000/images/placeholder-200x200.png">
+            </div>
+            <div class="block">
+              <img alt="Placeholder Image" src="//localhost:3000/images/placeholder-200x200.png">
+            </div>
+          </div>

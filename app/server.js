@@ -4,20 +4,21 @@
  * 1. starts the IDS Enterprise Components Development Server
  *
  * @example `node ./server.js`
- * @example `node ./server.js --verbose`
+ * @example `node ./server.js --test-port`
  *
  * Flags:
  * --verbose       - Log all details
- * --livereload    - Enable livereload
- *
+ * --test-port     - Set port to test port
  * NOTE: More than likely there is a command in the package.json
  * to run this script with NPM.
  */
 
 import app from './app.js';
 
+let port = process.env.PORT || 4000;
+port = process.argv.includes('--test-port') ? 3000 : port;
+
 // With the express server and routes defined, we can start to listen for requests.
-const port = process.env.PORT || 4000;
 app.listen(port);
 
 /* eslint-disable no-console */

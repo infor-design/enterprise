@@ -1,0 +1,86 @@
+<div class="homepage page-container scrollable homepage-background" data-init="false" id="maincontent" data-columns="3" role="main">
+      <div class="content" style="margin-left: -556px;">
+
+        <div class="widget triple-width show-buttons" style="cursor: auto; transition: none; left: 0px; top: -12px;">
+          <div class="widget-header">
+            <div class="widget-header-section title">
+              <h2>Widget/Card Header</h2>
+            </div>
+            <div class="widget-header-section custom-action">
+              <button class="btn-icon no-ripple hide-focus">
+                <span>Search</span>
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-search"></use>
+                </svg>
+                <span class="audible">Search</span>
+              </button>
+      
+              <button type="button" class="btn-tertiary no-ripple hide-focus" id="tertiary-filter-one">
+                <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+                  <use href="#icon-export"></use>
+                </svg>
+                <span>Export</span>
+              </button>
+            </div>
+            <div class="widget-header-section more">
+              <button class="btn-actions has-tooltip" aria-haspopup="true" aria-controls="popupmenu-2"><svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-vertical-ellipsis"></use>
+                </svg>
+                
+                <span class="audible">More Actions</span>
+              </button>
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="widget" style="cursor: auto; transition: none; left: 0px; top: 372px;">
+          <div class="widget-header">
+            <h2 class="widget-title">Alerts</h2>
+            <button class="btn-actions has-tooltip" type="button" aria-haspopup="true" aria-controls="popupmenu-3"><svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-vertical-ellipsis"></use>
+              </svg>
+              <span class="audible">Actions</span>
+              
+            </button>
+            
+          </div>
+
+          <div class="widget-content">
+          </div>
+        </div>
+
+        <div class="widget" style="cursor: auto; transition: none; left: 376px; top: 372px;">
+          <div class="widget-header">
+            <h2 class="widget-title">Tasks</h2>
+            <button class="btn-actions has-tooltip" type="button" aria-haspopup="true" aria-controls="popupmenu-4"><svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-vertical-ellipsis"></use>
+              </svg>
+              <span class="audible">Actions</span>
+              
+            </button>
+            
+          </div>
+
+          <div class="widget-content">
+          </div>
+        </div>
+
+        <div class="widget" style="cursor: auto; transition: none; left: 752px; top: 372px;">
+          <div class="widget-header">
+            <h2 class="widget-title">Business Insight</h2>
+            <button class="btn-actions has-tooltip" type="button" aria-haspopup="true" aria-controls="popupmenu-5"><svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-vertical-ellipsis"></use>
+              </svg>
+              <span class="audible">Actions</span>
+              
+            </button>
+            
+          </div>
+
+          <div class="widget-content">
+          </div>
+        </div>
+
+      </div>
+    </div>

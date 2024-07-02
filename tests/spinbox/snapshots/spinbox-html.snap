@@ -1,0 +1,1 @@
+<input id="spinbox-id-1-spinbox" name="regular-spinbox" type="text" class="spinbox is-number-mask" data-options="{min: 0, max: 10}" max="10" role="spinbutton" min="0" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" autocomplete="off" data-automation-id="spinbox-automation-id-1-spinbox">

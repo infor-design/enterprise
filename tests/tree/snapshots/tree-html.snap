@@ -1,0 +1,133 @@
+<ul role="tree" aria-label="Asset Types" class="tree">
+              <li role="none">
+                  <a id="home" href="#" role="treeitem" tabindex="0" aria-selected="false" aria-level="0" aria-posinset="1" aria-setsize="6" class="hide-focus"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-node"></use></svg><span class="tree-text">Home</span></a>
+              </li>
+              <li role="none"><a id="about-us" href="#" role="treeitem" tabindex="-1" aria-selected="false" aria-level="0" aria-posinset="2" aria-setsize="6" class="hide-focus"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-node"></use></svg><span class="tree-text">About Us</span></a></li>
+              <li class="is-open mycustom folder" role="none">
+                  <a id="public-folders" href="#" role="treeitem" tabindex="-1" aria-selected="false" aria-level="0" aria-posinset="3" aria-setsize="6" aria-expanded="true" class="hide-focus"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-open-folder"></use></svg><span class="tree-text">Public Folders</span></a>
+                  <ul class="is-open root" role="group">
+                    <li class="is-open folder" role="none">
+                        <a id="leadership" href="#" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="1" aria-setsize="3" aria-expanded="true" class="hide-focus"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-open-folder"></use></svg><span class="tree-text">Leadership</span></a>
+                        <ul class="is-open" role="group">
+                          <li role="none">
+                            <a href="#" role="treeitem" tabindex="-1" aria-selected="false" aria-level="2" aria-posinset="1" aria-setsize="3" class="hide-focus"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-node"></use></svg><span class="tree-text">Leadership</span></a>
+                          </li>
+                          <li role="none">
+                            <a id="history" href="#" class="is-disabled hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-disabled="true" aria-level="2" aria-posinset="2" aria-setsize="3"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-node"></use></svg><span class="tree-text">History</span></a>
+                          </li>
+                          <li role="none">
+                            <a id="careers-last" href="#" role="treeitem" tabindex="-1" aria-selected="false" aria-level="2" aria-posinset="3" aria-setsize="3" class="hide-focus"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-node"></use></svg><span class="tree-text">Careers last</span></a>
+                          </li>
+                        </ul>
+                    </li>
+                    <li role="none"><a id="history2" href="#" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="2" aria-setsize="3" class="hide-focus"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-node"></use></svg><span class="tree-text">History2</span></a></li>
+                    <li role="none"><a id="careers" href="#" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="3" aria-setsize="3" class="hide-focus"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-node"></use></svg><span class="tree-text">Careers</span></a></li>
+                  </ul>
+              </li>
+              <li class="folder" role="none">
+                  <a id="icons" href="#" role="treeitem" tabindex="-1" aria-selected="false" aria-level="0" aria-posinset="4" aria-setsize="6" aria-expanded="false" class="hide-focus"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-closed-folder"></use></svg><span class="tree-text">Icons</span></a>
+                  <ul class="root" role="group">
+                    <li role="none">
+                      <a id="audio" href="#" class="icon-tree-audio hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="1" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-audio"></use></svg><span class="tree-text">Audio</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="avi" href="#" class="icon-tree-avi hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="2" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-avi"></use></svg><span class="tree-text">Avi</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="bmp" href="#" class="icon-tree-bmp hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="3" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-bmp"></use></svg><span class="tree-text">Bmp</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="chart" href="#" class="icon-tree-chart hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="4" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-chart"></use></svg><span class="tree-text">Chart</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="code" href="#" class="icon-tree-code hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="5" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-code"></use></svg><span class="tree-text">Code</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="csv" href="#" class="icon-tree-csv hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="6" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-csv"></use></svg><span class="tree-text">Csv</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="doc" href="#" class="icon-tree-doc hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="7" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-doc"></use></svg><span class="tree-text">Doc</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="excel" href="#" class="icon-tree-excel hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="8" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-excel"></use></svg><span class="tree-text">Excel</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="expenses" href="#" class="icon-tree-expenses hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="9" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-expenses"></use></svg><span class="tree-text">Expenses</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="gif" href="#" class="icon-tree-gif hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="10" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-gif"></use></svg><span class="tree-text">Gif</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="img" href="#" class="icon-tree-image hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="11" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-image"></use></svg><span class="tree-text">Image</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="jpg" href="#" class="icon-tree-jpg hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="12" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-jpg"></use></svg><span class="tree-text">Jpg</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="link" href="#" class="icon-tree-link hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="13" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-link"></use></svg><span class="tree-text">Link</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="mail" href="#" class="icon-tree-mail hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="14" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-mail"></use></svg><span class="tree-text">Mail</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="mp3" href="#" class="icon-tree-mp3 hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="15" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-mp3"></use></svg><span class="tree-text">Mp3</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="msg" href="#" class="icon-tree-msg hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="16" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-msg"></use></svg><span class="tree-text">Msg</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="pdf" href="#" class="icon-tree-pdf hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="17" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-pdf"></use></svg><span class="tree-text">Pdf</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="png" href="#" class="icon-tree-png hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="18" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-png"></use></svg><span class="tree-text">Png</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="ppt" href="#" class="icon-tree-ppt hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="19" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-ppt"></use></svg><span class="tree-text">Ppt</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="prj" href="#" class="icon-tree-prj hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="20" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-prj"></use></svg><span class="tree-text">Prj</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="psd" href="#" class="icon-tree-psd hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="21" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-psd"></use></svg><span class="tree-text">Psd</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="pub" href="#" class="icon-tree-pub hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="22" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-pub"></use></svg><span class="tree-text">Pub</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="rar" href="#" class="icon-tree-rar hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="23" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-rar"></use></svg><span class="tree-text">Rar</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="text" href="#" class="icon-tree-text hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="24" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-text"></use></svg><span class="tree-text">Text</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="tif" href="#" class="icon-tree-tif hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="25" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-tif"></use></svg><span class="tree-text">Tif</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="video" href="#" class="icon-tree-video hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="26" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-video"></use></svg><span class="tree-text">Video</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="vis" href="#" class="icon-tree-vis hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="27" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-vis"></use></svg><span class="tree-text">Vis</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="word" href="#" class="icon-tree-word hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="28" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-word"></use></svg><span class="tree-text">Word</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="xls" href="#" class="icon-tree-xls hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="29" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-xls"></use></svg><span class="tree-text">Xls</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="xml" href="#" class="icon-tree-xml hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="30" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-xml"></use></svg><span class="tree-text">Xml</span></a>
+                    </li>
+                    <li role="none">
+                      <a id="zip" href="#" class="icon-tree-zip hide-focus" role="treeitem" tabindex="-1" aria-selected="false" aria-level="1" aria-posinset="31" aria-setsize="31"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-zip"></use></svg><span class="tree-text">Zip</span></a>
+                    </li>
+                  </ul>
+              </li>
+
+              <li role="none">
+                <a id="blog" href="#" role="treeitem" tabindex="-1" aria-selected="false" aria-level="0" aria-posinset="5" aria-setsize="6" class="hide-focus"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-node"></use></svg><span class="tree-text">Blog</span></a>
+              </li>
+
+              <li role="none">
+                <a id="contact" href="#" role="treeitem" tabindex="-1" aria-selected="false" aria-level="0" aria-posinset="6" aria-setsize="6" class="hide-focus"><svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-tree-node"></use></svg><span class="tree-text">Contact</span></a>
+              </li>
+            </ul>

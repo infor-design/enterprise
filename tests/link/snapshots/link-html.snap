@@ -1,0 +1,12 @@
+<div class="link hide-focus" tabindex="0">
+                <div class="status">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use href="#icon-stacked"></use>
+                  </svg>
+                </div>
+                <div class="text">
+                  <div class="title has-tooltip">
+                    Purchase Order Intake Workbench
+                  </div>
+                </div>
+              </div>

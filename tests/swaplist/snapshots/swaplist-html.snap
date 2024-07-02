@@ -1,0 +1,123 @@
+<div class="swaplist" id="example-swaplist-1" data-init="false">
+            <div class="card available">
+              <div class="card-header">
+                <h2 class="card-title">Available</h2>
+                <div class="buttons">
+                  <button class="btn btn-moveto-selected no-ripple hide-focus" type="button">
+                    <span class="audible">Select</span>
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                      <use href="#icon-right-arrow"></use>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="card-content">
+                <div class="listview is-selectable is-multiselect" tabindex="-1" x-ms-format-detection="none">
+        <ul data-swap-handle=".handle" role="listbox" aria-label="Available" aria-dropeffect="none">
+          
+          
+            <li data-id="1" data-value="opt-1" tabindex="0" role="option" aria-posinset="1" aria-setsize="7" draggable="true">
+              <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+              <div class="swaplist-item-content">
+                <p>Option A</p>
+              </div>
+            </li>
+          
+          
+          
+            <li data-id="2" data-value="opt-2" role="option" aria-posinset="2" aria-setsize="7" draggable="true">
+              <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+              <div class="swaplist-item-content">
+                <p>Option B</p>
+              </div>
+            </li>
+          
+          
+          
+            <li data-id="3" data-value="opt-3" role="option" aria-posinset="3" aria-setsize="7" draggable="true">
+              <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+              <div class="swaplist-item-content">
+                <p>Option C</p>
+              </div>
+            </li>
+          
+          
+          
+            <li data-id="4" data-value="opt-4" role="option" aria-posinset="4" aria-setsize="7" draggable="true">
+              <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+              <div class="swaplist-item-content">
+                <p>Option D</p>
+              </div>
+            </li>
+          
+          
+          
+            <li data-id="5" data-value="opt-5" class="is-disabled" role="option" aria-posinset="5" aria-setsize="7" aria-disabled="true">
+              <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+              <div class="swaplist-item-content">
+                <p>Option E</p>
+              </div>
+            </li>
+          
+          
+          
+            <li data-id="6" data-value="opt-6" role="option" aria-posinset="6" aria-setsize="7" draggable="true">
+              <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+              <div class="swaplist-item-content">
+                <p>Option F</p>
+              </div>
+            </li>
+          
+          
+          
+            <li data-id="9" data-value="opt-9" role="option" aria-posinset="7" aria-setsize="7" draggable="true">
+              <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+              <div class="swaplist-item-content">
+                <p>Option I</p>
+              </div>
+            </li>
+          
+          
+        </ul>
+      </div>
+              </div>
+            </div>
+            <div class="card selected">
+              <div class="card-header">
+                <h2 class="card-title">Selected</h2>
+                <div class="buttons">
+                  <button class="btn btn-moveto-left no-ripple hide-focus" type="button">
+                    <span class="audible">Move to left</span>
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                      <use href="#icon-left-arrow"></use>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="card-content">
+                <div class="listview is-selectable is-multiselect" tabindex="-1" x-ms-format-detection="none">
+        <ul data-swap-handle=".handle" role="listbox" aria-label="Selected" aria-dropeffect="none">
+          
+          
+            <li data-id="7" data-value="opt-7" tabindex="0" role="option" aria-posinset="1" aria-setsize="2" draggable="true">
+              <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+              <div class="swaplist-item-content">
+                <p>Option G</p>
+              </div>
+            </li>
+          
+          
+          
+            <li data-id="8" data-value="opt-8" role="option" aria-posinset="2" aria-setsize="2" draggable="true">
+              <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+              <div class="swaplist-item-content">
+                <p>Option H</p>
+              </div>
+            </li>
+          
+          
+        </ul>
+      </div>
+              </div>
+            </div>
+          </div>

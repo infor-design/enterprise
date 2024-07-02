@@ -1,0 +1,5 @@
+<ul class="popupmenu" data-init="false" id="popupmenu-1" data-automation-id="popupmenu-automation-id-menu" role="menu" aria-labelledby="popupmenu-trigger">
+              <li role="none"><a href="#" id="test1" role="menuitem" tabindex="-1" data-automation-id="popupmenu-automation-id-option-0-menu-item">Menu Option #1</a></li>
+              <li role="none"><a href="#" id="test2" role="menuitem" tabindex="-1" data-automation-id="popupmenu-automation-id-option-1-menu-item">Menu Option #2</a></li>
+              <li role="none"><a href="#" id="test3" role="menuitem" tabindex="-1" data-automation-id="popupmenu-automation-id-option-2-menu-item">Menu Option #3</a></li>
+            </ul>

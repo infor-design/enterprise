@@ -1,0 +1,113 @@
+<div class="listview disable-hover" id="task-listview" data-options="{'source': '//localhost:3000/api/inventory-tasks', 'template': 'task-tmpl', 'selectable': 'false', 'attributes': [ { 'name': 'data-automation-id', 'value': 'test' } ] }" tabindex="-1" x-ms-format-detection="none" data-automation-id="test-listview">
+        <ul role="listbox" aria-label="Tasks">
+          
+            
+            
+              <li tabindex="0" role="option" data-automation-id="test-listview-item-0" aria-posinset="1" aria-setsize="12">
+            
+              <p class="listview-heading">Task #Task 191/2001</p>
+              <p class="listview-subheading">Special fields test - New item has been created. </p>
+              <p class="listview-micro">Due: 10/11/2015</p>
+            </li>
+          
+            
+              <li class="is-disabled" role="option" data-automation-id="test-listview-item-1" aria-posinset="2" aria-setsize="12" aria-disabled="true">
+            
+            
+              <p class="listview-heading">Task #Task #063002</p>
+              <p class="listview-subheading">Part #4212132 has low inventory level </p>
+              <p class="listview-micro">Due: 10/11/2015</p>
+            </li>
+          
+            
+            
+              <li role="option" data-automation-id="test-listview-item-2" aria-posinset="3" aria-setsize="12">
+            
+              <p class="listview-heading">Task #Task #063003</p>
+              <p class="listview-subheading">Check #112412 parts ordering. </p>
+              <p class="listview-micro">Due: 10/07/2015</p>
+            </li>
+          
+            
+            
+              <li role="option" data-automation-id="test-listview-item-3" aria-posinset="4" aria-setsize="12">
+            
+              <p class="listview-heading">Task #Task #063004</p>
+              <p class="listview-subheading">Special fields test - New item has been created. </p>
+              <p class="listview-micro">Due: 10/07/2015</p>
+            </li>
+          
+            
+            
+              <li role="option" data-automation-id="test-listview-item-4" aria-posinset="5" aria-setsize="12">
+            
+              <p class="listview-heading">Task #Task #063005</p>
+              <p class="listview-subheading">Call XYZ Inc at 5 PM </p>
+              <p class="listview-micro">Due: 10/11/2015</p>
+            </li>
+          
+            
+            
+              <li role="option" data-automation-id="test-listview-item-5" aria-posinset="6" aria-setsize="12">
+            
+              <p class="listview-heading">Task #Task 191/2002</p>
+              <p class="listview-subheading">Part #4212132 has low inventory level </p>
+              <p class="listview-micro">Due: 10/11/2015</p>
+            </li>
+          
+            
+            
+              <li role="option" data-automation-id="test-listview-item-6" aria-posinset="7" aria-setsize="12">
+            
+              <p class="listview-heading">Task #(888) 888-8888</p>
+              <p class="listview-subheading">Special fields test - New item has been created. </p>
+              <p class="listview-micro">Due: 07/11/2015</p>
+            </li>
+          
+            
+            
+              <li role="option" data-automation-id="test-listview-item-7" aria-posinset="8" aria-setsize="12">
+            
+              <p class="listview-heading">Task #Task #063008</p>
+              <p class="listview-subheading">Part #5212132 has low inventory level </p>
+              <p class="listview-micro">Due: 10/11/2015</p>
+            </li>
+          
+            
+            
+              <li role="option" data-automation-id="test-listview-item-8" aria-posinset="9" aria-setsize="12">
+            
+              <p class="listview-heading">Task #Task #063009</p>
+              <p class="listview-subheading">Check #212412 parts ordering. </p>
+              <p class="listview-micro">Due: 10/07/2015</p>
+            </li>
+          
+            
+            
+              <li role="option" data-automation-id="test-listview-item-9" aria-posinset="10" aria-setsize="12">
+            
+              <p class="listview-heading">Task #Task #191/2004</p>
+              <p class="listview-subheading">Special fields test - New item has been created. </p>
+              <p class="listview-micro">Due: 10/11/2015</p>
+            </li>
+          
+            
+            
+              <li role="option" data-automation-id="test-listview-item-10" aria-posinset="11" aria-setsize="12">
+            
+              <p class="listview-heading">Task #Task #063011</p>
+              <p class="listview-subheading">Call TMZ Inc at 5 PM </p>
+              <p class="listview-micro">Due: 10/11/2015</p>
+            </li>
+          
+            
+            
+              <li role="option" data-automation-id="test-listview-item-11" aria-posinset="12" aria-setsize="12">
+            
+              <p class="listview-heading">Task #Task #063012</p>
+              <p class="listview-subheading">Part #6212132 has low inventory level </p>
+              <p class="listview-micro">Due: 07/08/2015</p>
+            </li>
+          
+        </ul>
+      </div>
