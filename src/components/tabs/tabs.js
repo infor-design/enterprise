@@ -1605,6 +1605,8 @@ Tabs.prototype = {
    */
   triggerEventAfterTabAdded(id) {
     const a = this.anchors.filter(`[href="#${id}"]`);
+    const tab = this.getTab(null, id);
+    this.scrollTabList(tab);
     this.element.triggerHandler('aftertabadded', [a]);
   },
 
