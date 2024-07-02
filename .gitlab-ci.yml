@@ -61,21 +61,18 @@ build_push_image:
     - DIND
   needs:
     - create_docker_file
-  image: docker:25
-  script: |
-    echo "branch=$(echo ${CI_COMMIT_REF_NAME})"
-    docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
-    docker build -t hookandloop/enterprise:test .
-    docker push hookandloop/enterprise:test
+  image:
+    name: gcr.io/kaniko-project/executor:v1.14.0-debug
+    entrypoint: [""]
+  script:
+    - echo -n "{\"auths\":{\"https://index.docker.io/v1/\":{\"auth\":\"$(echo -n $DOCKERHUB_USERNAME:$DOCKERHUB_TOKEN | base64)\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "hookandloop/enterprise:test"
   variables:
-    DOCKER_HOST: tcp://host:2375/
-    DOCKER_DRIVER: overlay2
-    DOCKER_TLS_CERTDIR: ""
     GIT_STRATEGY: fetch
     GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp --exclude=Dockerfile"
-  services:
-    - name: docker:25-dind
-      alias: host
 
 deploy:
   stage: deploy
