@@ -643,6 +643,7 @@ Tabs.prototype = {
    * @returns {this} component instance
    */
   renderHelperMarkup() {
+    const self = this;
     const auxilaryButtonLocation = this.tablistContainer || this.tablist;
     this.focusState = this.element.find('.tab-focus-indicator');
     if (!this.focusState?.length) {
@@ -713,8 +714,24 @@ Tabs.prototype = {
         utils.addAttributes(appMenuTrigger, this, this.settings.attributes, 'appmenu-trigger-btn');
       }
 
+      this.appMenuApi = $('#application-menu')?.data('applicationmenu');
+
       // Add it to the App Menu's list of triggers to adjust on open/close
-      $('#application-menu').data('applicationmenu')?.modifyTriggers([appMenuTrigger.children('a')], null, true);
+      if (this.appMenuApi) {
+        this.appMenuApi.modifyTriggers([appMenuTrigger.children('a')], null, true);
+        this.appMenuApi.accordion.on('selected', (e, args) => {
+          const href = args.getAttribute('tab-id');
+          if (href) {
+            const id = href.substr(1, href.length);
+            const tab = self.doGetTab(id);
+
+            if (tab) {
+              self.activate(href);
+              self.scrollTabList(tab);
+            }
+          }
+        });
+      }
     }
 
     // Add Tab Button

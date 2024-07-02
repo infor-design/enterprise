@@ -105,9 +105,20 @@
     </div>
 
   </div>
-  
-  <script>
 
+  <script>
+    $('body').on('initialized', () => {
+      const appMenu = $('#application-menu').data('applicationmenu');
+      const accordion = appMenu.accordion.data('accordion');
+      const headers = accordion.headers;
+
+      headers[0].setAttribute('tab-id', '#first-tab');
+      headers[1].setAttribute('tab-id', '#second-tab');
+      headers[2].setAttribute('tab-id', '#third-tab');
+      headers[3].setAttribute('tab-id', '#fourth-tab');
+      headers[4].setAttribute('tab-id', '#new-tab-0');
+      headers[5].setAttribute('tab-id', '#new-tab-1');
+    });
     $("#primary-action-two").click(function() {
       $('body').message({
         title: "Z-Index Issue",
@@ -119,7 +130,7 @@
                   $(this).data('modal').close();
                 },
                 isDefault: true
-            }]		
+            }]
       });
     });
   </script>
