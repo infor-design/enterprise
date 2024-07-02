@@ -61,6 +61,11 @@ build_push_image:
     - DIND
   needs:
     - create_docker_file
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
   image:
     name: gcr.io/kaniko-project/executor:v1.14.0-debug
     entrypoint: [""]
