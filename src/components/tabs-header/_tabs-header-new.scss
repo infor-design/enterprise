@@ -279,10 +279,10 @@
   color: $header-tab-disabled-color-new;
 }
 
-.tab-container.is-personalizable {
+.tab-container {
   .tab-more {
     svg {
-      top: -1px;
+      top: 2px;
     }
   }
 }

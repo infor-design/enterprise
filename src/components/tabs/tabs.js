@@ -643,6 +643,7 @@ Tabs.prototype = {
    * @returns {this} component instance
    */
   renderHelperMarkup() {
+    const self = this;
     const auxilaryButtonLocation = this.tablistContainer || this.tablist;
     this.focusState = this.element.find('.tab-focus-indicator');
     if (!this.focusState?.length) {
@@ -713,8 +714,24 @@ Tabs.prototype = {
         utils.addAttributes(appMenuTrigger, this, this.settings.attributes, 'appmenu-trigger-btn');
       }
 
+      this.appMenuApi = $('#application-menu')?.data('applicationmenu');
+
       // Add it to the App Menu's list of triggers to adjust on open/close
-      $('#application-menu').data('applicationmenu')?.modifyTriggers([appMenuTrigger.children('a')], null, true);
+      if (this.appMenuApi) {
+        this.appMenuApi.modifyTriggers([appMenuTrigger.children('a')], null, true);
+        this.appMenuApi.accordion.on('selected', (e, args) => {
+          const href = args.getAttribute('tab-id');
+          if (href) {
+            const id = href.substr(1, href.length);
+            const tab = self.doGetTab(id);
+
+            if (tab) {
+              self.activate(href);
+              self.scrollTabList(tab);
+            }
+          }
+        });
+      }
     }
 
     // Add Tab Button
@@ -1605,6 +1622,8 @@ Tabs.prototype = {
    */
   triggerEventAfterTabAdded(id) {
     const a = this.anchors.filter(`[href="#${id}"]`);
+    const tab = this.getTab(null, id);
+    this.scrollTabList(tab);
     this.element.triggerHandler('aftertabadded', [a]);
   },
 
@@ -3209,7 +3228,7 @@ Tabs.prototype = {
       .each(function tabOverflowIterator() {
         const tab = $(this);
 
-        if (!self.isTabOverflowed(tab)) {
+        if (!self.isTabOverflowed(tab, true)) {
           tabHash = tabHash.add(tab);
         }
       });
@@ -3327,7 +3346,7 @@ Tabs.prototype = {
 
     this.checkCutOffTitle(sizeableTabs, this.visibleTabSize);
   },
-  
+
   /**
    * @private
    * @returns {void}
@@ -3593,7 +3612,7 @@ Tabs.prototype = {
         return;
       }
 
-      if (!self.isScrollableTabs() && !self.isTabOverflowed($item)) {
+      if (!self.isTabOverflowed($item, true)) {
         return;
       }
 
@@ -3692,6 +3711,12 @@ Tabs.prototype = {
       let href = anchor.attr('href');
       const id = href.substr(1, href.length);
       const tab = self.doGetTab(id) || $();
+
+      const visibleTabs = self.getVisibleTabs();
+      const lastVisibleTab = $(visibleTabs[visibleTabs.length - 1]);
+
+      tab.insertBefore(lastVisibleTab);
+
       let a = tab ? tab.children('a') : $();
       let originalTab = anchor.data('original-tab').parent();
 
@@ -3863,30 +3888,42 @@ Tabs.prototype = {
    * Used for checking if a particular tab (in the form of a jquery-wrapped list item)
    * is spilled into the overflow area of the tablist container <UL>.
    * @param {jQuery} li tab list item
+   * @param {boolean} checkHorizontal Check y-axis overflow
    * @returns {boolean} whether or not the tab is overflowed.
    */
-  isTabOverflowed(li) {
-    if (this.isVerticalTabs() || this.isScrollableTabs() || this.tablist.find('.arrange-dragging').length) {
+  isTabOverflowed(li, checkHorizontal = false) {
+    if (li === undefined || li === null || li.length === 0) {
       return false;
     }
 
-    if (!li) {
+    if (li.hasClass('application-menu-trigger')) {
+      return false;
+    }
+
+    if (this.isVerticalTabs() || this.tablist.find('.arrange-dragging').length) {
       return false;
     }
 
     if (this.tablist.scrollTop() > 0) {
       this.tablist.scrollTop(0);
     }
+    const tablistBounding = this.tablist[0].getBoundingClientRect();
+    const liBounding = li[0].getBoundingClientRect();
+    const tablistContainerBounding = this.tablist.parent()[0].getBoundingClientRect();
 
-    const liTop = Math.round(li[0].getBoundingClientRect().top);
-    let tablistTop = Math.round(this.tablist[0].getBoundingClientRect().top + 1);
+    const liTop = Math.round(liBounding.top);
+    const liRight = Math.round(liBounding.right);
+
+    let tablistTop = Math.round(tablistBounding.top + 1);
+    let tablistContainerRight = Math.round(tablistContainerBounding.right);
 
     // +1 to compensate for top border on Module Tabs
     if (this.isModuleTabs()) {
       tablistTop += 1;
+      tablistContainerRight += 1;
     }
 
-    return liTop > tablistTop;
+    return liTop > tablistTop || (checkHorizontal && liRight > tablistContainerRight);
   },
 
   /**

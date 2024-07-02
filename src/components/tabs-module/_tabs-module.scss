@@ -170,6 +170,10 @@
     overflow: hidden;
     text-align: center;
 
+    &.tab.application-menu-trigger .icon {
+      color: $module-tabs-icon-normal-color;
+    }
+
     .icon {
       color: $module-tabs-inactive-text-color;
     }
@@ -275,7 +279,7 @@
         height: 14px;
         position: absolute;
         right: 5px;
-        top: 50%;
+        top: 48%;
       }
 
       a {
@@ -596,12 +600,12 @@
     }
 
     &.has-add-button {
-      .tab-list {
-        width: calc(100% - 166px);
+      .tab-list-container {
+        width: calc(100% - 86px);
       }
 
       .tab-more {
-        right: 45px;
+        right: 43px;
         top: 0;
       }
     }
