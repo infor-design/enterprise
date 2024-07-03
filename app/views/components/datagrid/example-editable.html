@@ -138,7 +138,7 @@
     columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
     columns.push({ id: 'id', name: 'Row Id', field: 'id', minWidth: 75, formatter: Soho.Formatters.Readonly});
     columns.push({ id: 'productName', name: 'Product Name', minWidth: 150, sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
-    columns.push({ id: 'activity', name: 'Activity', field: 'activity', minWidth: 75, required: true, editor: Soho.Editors.Input, validate: 'required'});  //maxLength: 2
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', minWidth: 75, required: true, textOverflow: 'ellipsis', editor: Soho.Editors.Input, validate: 'required'});  //maxLength: 2
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', minWidth: 90, align: 'right', editor: Soho.Editors.Input, mask: '###', isEditable: isDisabled});
     columns.push({ id: 'portable', name: 'Portable', field: 'portable', minWidth: 75, align: 'center', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox});
     columns.push({ id: 'price', name: 'Price', field: 'price', minWidth: 75, align: 'right', formatter: Soho.Formatters.Decimal, validate: 'required', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input});

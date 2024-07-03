@@ -3577,7 +3577,7 @@ $datagrid-small-row-height: 25px;
 
       &.required::after {
         @include required-indicator();
-
+        position: static;
         color: $datagrid-required-icon-color;
       }
     }
