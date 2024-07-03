@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="datagrid">
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var data = [];
+    var columns = [];
+
+    for (var i = 0; i < 30; i++) {
+      data.push({ id: i, productId: 87924 + i, productName: 'Dewalt 18V XR', productDesc: 'Brushless Hammer Drill', image: '{{basepath}}images/drill.jpg', stock: '3,5', quantity: i, uom: 'e', price: 79 + i });
+    }
+
+    // Custom Formatters
+    Soho.Formatters.LinkText = function (row, cell, value, col, item, api) {
+      var link = Soho.Formatters.Hyperlink(row, cell, item[col.fields[0]] + ' ' + item[col.fields[1]], col, item, api);
+      return '<p class="word-wrap">' + link + '<br><small class="micro-text">' + item[col.fields[2]] + '</small></p>';
+    };
+
+    Soho.Formatters.PriceText = function (row, cell, value, col, item, api) {
+      Soho.Locale.currentLocale.data.currencySign = '£';
+      var formatted = Soho.Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : { style: 'currency' }));
+
+      // Set the href here based on data?
+      return '<p><b> Trade: ' + formatted + '</b><br><a href="#" class="hyperlink micro-text">Price Details</a></p>';
+    };
+
+    Soho.Formatters.BadgeDecimal = function (row, cell, value, col, item, api) {
+      var colorClass = 'good';
+      return '<span class="badge ' + colorClass + '">' + value + ' </span>';
+      return link;
+    };
+
+    // Define Columns for the Grid.
+    columns.push({ id: 'image', name: '', field: 'image', formatter: Soho.Formatters.Image, width: 80, align: 'image' });
+    columns.push({ id: 'productInfo', name: 'Name / Product Code', formatter: Soho.Formatters.LinkText, fields: ['productName', 'productDesc', 'productId'], width: 170 });
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 175, formatter: Soho.Formatters.Input, inlineEditor: true, editor: Soho.Editors.Input, mask: '###.###', align: 'right' });
+    columns.push({ id: 'uom', name: 'Unit of Measure', field: 'uom', width: 140, formatter: Soho.Formatters.Dropdown, inlineEditor: true, editor: Soho.Editors.Dropdown, options: [{ id: 'e', value: 'e', label: 'each' }, { id: 'p', value: 'p', label: 'pieces' }, { id: 'm', value: 'm', label: 'meters' }] });
+    columns.push({ id: 'price', name: 'Price (ex VAT)', field: 'price', width: 110, formatter: Soho.Formatters.PriceText });
+    columns.push({ id: 'add', name: '', field: '', text: 'Add Product', sortable: false, align: 'center', formatter: Soho.Formatters.Button, click: function (e, args) { console.log('Button was clicked', args); } });
+
+    // Init and get the api for the grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      isList: true,
+      dataset: data,
+      selectable: true,
+      cellNavigation: true,
+      rowNavigation: false,
+      editable: true,
+      source: () => { },
+      toolbar: { keyword: true, results: true },
+      paging: false,
+      pagesize: 10
+    }).on('keyup', function (e, args) {
+      if (e.key === 'Enter') {
+        const gridApi = $('#datagrid').data('datagrid');
+        const input0 = document.querySelector("#datagrid-inline-input-0-2");
+        const input2 = document.querySelector("#datagrid-inline-input-2-2");
+        if (input2) {
+          gridApi.setActiveCell(2, 3);
+          input2.click();
+          gridApi.setActiveCell(0, 3);
+          input0.click();
+        };
+      }
+    }).on('cellchange', function (e, args) {
+      console.log(args);
+    });
+
+  });
+</script>

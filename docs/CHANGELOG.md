@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.90.5
+
+## v4.90.5 Fixes
+
+- `[Dates]` Added a new `twoDigitYear` setting to set the switch over for two digit years. ([#8061](https://github.com/infor-design/enterprise/issues/8061))
+- `[Datagrid]` Fixed memory leak in data grid editors. ([#8832](https://github.com/infor-design/enterprise/issues/8832))
+- `[Datagrid]` Fixed incorrect updates in commitCellEditUtil. ([#8850](https://github.com/infor-design/enterprise/issues/8850))
+
 ## v4.90.4
 
 ## v4.90.4 Fixes
