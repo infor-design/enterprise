@@ -5717,6 +5717,7 @@ html[dir='rtl'] {
     .required::after {
       @include required-indicator();
 
+      position: static;
       color: $datagrid-required-icon-color;
       left: -2px;
       top: 0;
