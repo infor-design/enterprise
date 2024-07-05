@@ -9,6 +9,7 @@
 ## v4.97.0 Fixes
 
 - `[Autocomplete]` Fixed losing focus on keydown. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
+- `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
 - `[Charts]` Fixed a bug where the `charts.setSelected()` method was not working in multiple charts in a single page. ([#NG#1671](https://github.com/infor-design/enterprise-ng/issues/1671))
 - `[Datagrid]` Fixed incorrect updates in commitCellEditUtil. ([#8850](https://github.com/infor-design/enterprise/issues/8850))
 - `[Datagrid]` Fixed a bug where button gets focus always during editing of lookup field. ([#8758](https://github.com/infor-design/enterprise/issues/8758))
