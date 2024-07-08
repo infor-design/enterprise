@@ -5,6 +5,7 @@
 ## v4.97.0 Features
 
 - `[Datagrid]` Added searched event for toolbar search. ([#8814](https://github.com/infor-design/enterprise/issues/8814))
+- `[Datagrid]` Added setting `overrideTabbing` to disable tabbing sequence of datagrind which will allow custom tabbing from users. ([#8825](https://github.com/infor-design/enterprise/issues/8825))
 - `[Weekview]` Added settings `showOvernightBothDays` and `overnightLabel` to customize overnight days. ([#8630](https://github.com/infor-design/enterprise/issues/8630))
 
 ## v4.97.0 Fixes
