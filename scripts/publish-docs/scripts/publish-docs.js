@@ -23,7 +23,7 @@ import archiver from 'archiver';
 import { build, formats } from 'documentation';
 import frontMatter from 'front-matter';
 import * as fs from 'fs';
-import glob from 'glob';
+import { glob } from 'glob';
 import handlebars from 'handlebars';
 import hbsRegistrar from 'handlebars-wax';
 import { marked, setOptions } from 'marked';

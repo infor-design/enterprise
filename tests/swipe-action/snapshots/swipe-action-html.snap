@@ -1,0 +1,41 @@
+<div class="swipe-action">
+              <div class="swipe-container">
+                <div class="swipe-action-left">
+                  <button id="action-left-reveal" class="btn-swipe-action-left" tabindex="-1" aria-hidden="true">
+                    <div class="swipe-action-text-container">
+                      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                        <use href="#icon-reply"></use>
+                      </svg>
+                      <span>Left Action</span>
+                    </div>
+                  </button>
+                </div>
+                <div class="swipe-element">
+                  <div class="card-content">
+                    <div class="card-content-header">Tuesday, 21nd September</div>
+                    <div class="card-content-sub">8:40AM-2:00PM</div>
+                  </div>
+                  <div class="card-buttonset">
+                    <div class="card-content-action">
+                      <button class="btn-actions has-tooltip no-ripple hide-focus" type="button" data-popupmenu="popupmenu" data-options="{ 'showOnKeyboardFocus': false }" aria-haspopup="true" aria-controls="popupmenu"><svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                          <use href="#icon-drag"></use>
+                        </svg>
+                        <span class="audible">Actions</span>
+                        
+                      </button>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="swipe-action-right">
+                  <button id="action-right-reveal" class="btn-swipe-action-right" tabindex="-1" aria-hidden="true">
+                    <div class="swipe-action-text-container">
+                      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                        <use href="#icon-tack"></use>
+                      </svg>
+                      <span>Right Action</span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>

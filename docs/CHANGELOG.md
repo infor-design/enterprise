@@ -12,6 +12,7 @@
 
 - `[Datagrid]` Added searched event for toolbar search. ([#8814](https://github.com/infor-design/enterprise/issues/8814))
 - `[Weekview]` Added settings `showOvernightBothDays` and `overnightLabel` to customize overnight days. ([#8630](https://github.com/infor-design/enterprise/issues/8630))
+- `[Tests]` Changed test framework to playwright. ([#8549](https://github.com/infor-design/enterprise-wc/issues/8549))
 
 ## v4.97.0 Fixes
 
