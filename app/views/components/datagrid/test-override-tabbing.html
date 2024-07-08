@@ -96,8 +96,8 @@
 
     //Define Columns for the Grid.
     columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
-    columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, formatter: Soho.Formatters.Input, inlineEditor: true, editor: Soho.Editors.Input, validate: 'required'});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', inlineEditor: true, formatter: Soho.Formatters.Input, editor: Soho.Editors.Input});
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, formatter: Soho.Formatters.Input, editor: Soho.Editors.Input, validate: 'required'});
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', formatter: Soho.Formatters.Input, editor: Soho.Editors.Input});
     columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, validate: 'required', isEditable: isDisabled,
     options: [{id: '', label: '', value: -1}, {id: 'oh1', label: 'On Hold', value: 1}, {id: 'sh1', label: 'Shipped', value: 2} , {id: 'ac1', label: 'Action', value: 3}, {id: 'pen', label: 'Pending', value: 4}, {id: 'bk1', label: 'Backorder', value: 5}, {id: 'can', label: 'Cancelled', value: 6}, {id: 'pro', label: 'Processing', value: 7}]
@@ -161,7 +161,12 @@
 
     var fields = document.getElementsByClassName('datagrid')[0].querySelectorAll('.datagrid-row');
     fields.forEach((el) => {
-      console.log(el);
+      const index = el.getAttribute('data-index');
+      const input = el.querySelector('input');
+      if (index && input) {
+        const indexNum = +index + 1;
+        input.setAttribute('tabindex', indexNum.toString());
+      }
     });
   });
 
