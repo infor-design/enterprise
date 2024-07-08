@@ -22,6 +22,7 @@
 - `[Datagrid]` Fixed incorrect updates in commitCellEditUtil. ([#8850](https://github.com/infor-design/enterprise/issues/8850))
 - `[Datagrid]` Fixed a bug where button gets focus always during editing of lookup field. ([#8758](https://github.com/infor-design/enterprise/issues/8758))
 - `[Datagrid]` Added `cellLayout` setting to remove datagrid cell layout from expandable rows. ([NG#1524](https://github.com/infor-design/enterprise-ng/issues/1524))
+- `[Datagrid]` Fixed asterisk being cut off when `textOverflow` is set to ellipsis. ([NG#1651](https://github.com/infor-design/enterprise-ng/issues/1651))
 - `[Dropdown]` Fixed no results text still displaying after removing filter text. ([#8768](https://github.com/infor-design/enterprise/issues/8768))
 - `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Datagrid]` Fixed cell value from argument passed on hyperlink click. ([#8762](https://github.com/infor-design/enterprise/issues/8762))
