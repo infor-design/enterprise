@@ -1,0 +1,185 @@
+<aside id="nav" class="module-nav" data-options="{ 'filterable': true }">
+      <div class="module-nav-bar">
+        <!-- Module Nav's top-level navigation items are inside the accordion -->
+        <div class="module-nav-accordion accordion panel has-icons" data-options="{'allowOnePane': false }">
+          <!-- Module switcher -->
+          <div class="module-nav-header accordion-section">
+            <div class="module-nav-switcher has-tooltip mode-collapsed"><div class="module-nav-section module-btn">
+  <button id="module-nav-homepage-btn" class="btn-icon btn-tertiary no-ripple hide-focus">
+    <svg class="icon-custom" focusable="false" aria-hidden="true" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" rx="8" fill="#1C86EF"></rect>
+  <path d="M7.8315 20V11.2727H13.5076V12.598H9.41246V14.9673H13.2136V16.2926H9.41246V18.6747H13.5417V20H7.8315ZM15.0524 20V13.4545H16.5268V14.5668H16.6035C16.7399 14.1918 16.9657 13.8991 17.2811 13.6889C17.5964 13.4759 17.9728 13.3693 18.4103 13.3693C18.8535 13.3693 19.2271 13.4773 19.5311 13.6932C19.8379 13.9062 20.0538 14.1974 20.1788 14.5668H20.247C20.3919 14.2031 20.6362 13.9134 20.9799 13.6974C21.3265 13.4787 21.737 13.3693 22.2115 13.3693C22.8137 13.3693 23.3052 13.5597 23.6859 13.9403C24.0666 14.321 24.2569 14.8764 24.2569 15.6065V20H22.7101V15.8452C22.7101 15.4389 22.6021 15.142 22.3862 14.9545C22.1703 14.7642 21.9061 14.669 21.5936 14.669C21.2214 14.669 20.9302 14.7855 20.72 15.0185C20.5126 15.2486 20.4089 15.5483 20.4089 15.9176V20H18.8961V15.7812C18.8961 15.4432 18.7939 15.1733 18.5893 14.9716C18.3876 14.7699 18.1234 14.669 17.7967 14.669C17.5751 14.669 17.3734 14.7259 17.1916 14.8395C17.0098 14.9503 16.8649 15.108 16.7569 15.3125C16.649 15.5142 16.595 15.75 16.595 16.0199V20H15.0524Z" fill="white"></path>
+</svg>
+    <span>Standard Module</span>
+  </button>
+</div>
+              <div class="module-nav-section role-dropdown">
+                <label for="module-nav-role-switcher" class="label audible">Roles</label>
+                <select id="module-nav-role-switcher" name="module-nav-role-switcher" class="dropdown" data-options="{attributes: [{ name: 'id', value: 'switcher-id-1' }, { name: 'data-automation-id', value: 'switcher-automation-id' }]}" data-automation-id="custom-automation-dropdown-id">
+                  <option value="admin" data-icon="{icon: 'app-ac'}">Admin Console</option>
+                  <option value="job-console" data-icon="{icon: 'app-jo'}">Job Console</option>
+                  <option value="landing-page-designer" data-icon="{icon: 'app-lmd'}">Landing Page Designer</option>
+                  <option value="process-server-admin" data-icon="{icon: 'app-psa'}">Process Server Administrator</option>
+                  <option value="proxy-management" data-icon="{icon: 'app-pm'}">Proxy Management</option>
+                  <option value="security-system-management" data-icon="{icon: 'app-ssm'}">Security System Management</option>
+                  <option value="user-management" data-icon="{icon: 'app-um'}">User Management</option>
+                </select><div class="dropdown-wrapper "><div class="dropdown" data-options="{attributes: [{ name: 'id', value: 'switcher-id-1' }, { name: 'data-automation-id', value: 'switcher-automation-id' }]}" data-automation-id="switcher-automation-id-dropdown" role="combobox" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false" aria-label="Roles, Admin Console" id="switcher-id-1-dropdown" tabindex="0"><svg class="listoption-icon icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-app-ac"></use></svg><span><span class="audible">Roles </span>Admin Console</span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-expand-all"></use></svg></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="module-nav-search-container accordion-section">
+            <label class="audible" for="module-nav-searchfield">Search</label>
+            <span class="searchfield-wrapper non-collapsible has-close-icon-button is-open"><input id="module-nav-searchfield" data-init="false" class="searchfield module-nav-search autocomplete" placeholder="Search" role="combobox" autocomplete="off" aria-label="Search"><button type="button" class="btn-icon hide-focus close is-empty" tabindex="0" focusable="true"><svg class="close icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-close"></use></svg></button><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-search"></use></svg></span>
+          </div>
+
+          <!-- Most accordion items should be placed in the "main" section -->
+          <div class="module-nav-separator">&nbsp;</div><div class="module-nav-main accordion-section">
+            <div class="accordion-header has-chevron hide-focus has-tooltip">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-male"></use>
+              </svg>
+              <a href="#" id="item-config" data-automation-id="module-nav-item-config" aria-haspopup="true" role="button"><span>Configuration and Personalization</span></a><button class="btn" type="button" tabindex="-1"><svg class="chevron icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></button>
+            </div>
+            <div class="accordion-pane" style="height: 0px">
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+            </div>
+
+            <div class="accordion-header has-chevron hide-focus has-tooltip">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-database"></use>
+              </svg>
+              <a href="#" id="item-database" data-automation-id="module-nav-item-databasde" aria-haspopup="true" role="button"><span>Database</span></a><button class="btn" type="button" tabindex="-1"><svg class="chevron icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></button>
+            </div>
+            <div class="accordion-pane" style="height: 0px">
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+            </div>
+
+            <div class="accordion-header has-chevron hide-focus has-tooltip">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-translate"></use>
+              </svg>
+              <a href="#" id="item-translation" data-automation-id="module-nav-item-translation" aria-haspopup="true" role="button"><span>Data Translation</span></a><button class="btn" type="button" tabindex="-1"><svg class="chevron icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></button>
+            </div>
+            <div class="accordion-pane" style="height: 0px">
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+            </div>
+
+            <div class="accordion-header has-chevron hide-focus has-tooltip">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-security-on"></use>
+              </svg>
+              <a href="#" id="item-security" data-automation-id="module-nav-item-security" aria-haspopup="true" role="button"><span>Security</span></a><button class="btn" type="button" tabindex="-1"><svg class="chevron icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></button>
+            </div>
+            <div class="accordion-pane" style="height: 0px">
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+            </div>
+
+            <div class="accordion-header has-chevron hide-focus has-tooltip">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-line-bar-chart"></use>
+              </svg>
+              <a href="#" id="item-analytics" data-automation-id="module-nav-item-analytics" aria-haspopup="true" role="button"><span>Analytics</span></a><button class="btn" type="button" tabindex="-1"><svg class="chevron icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></button>
+            </div>
+            <div class="accordion-pane" style="height: 0px">
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+
+              <div class="accordion-header no-icon hide-focus">
+                <a href="#"><span>Label</span></a>
+              </div>
+            </div>
+
+            <div class="accordion-header hide-focus has-tooltip">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-import-spreadsheet"></use>
+              </svg>
+              <a href="#" id="item-audit" data-automation-id="module-nav-item-audit"><span>Audit and Monitoring</span></a>
+            </div>
+          </div>
+
+          <!-- Footer items are separate and "optionally" pinnable -->
+          <div class="module-nav-separator">&nbsp;</div><div class="module-nav-footer accordion-section">
+            <div class="accordion-header hide-focus has-tooltip">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-document"></use>
+              </svg>
+              <a href="#" id="module-nav-item-documents" data-automation-id="module-nav-documents"><span>Documents</span></a>
+            </div>
+
+            <div class="accordion-header hide-focus is-selected has-tooltip">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-report"></use>
+              </svg>
+              <a href="#" id="module-nav-item-reports" data-automation-id="module-nav-reports"><span>Reports</span></a>
+            </div>
+
+            <div class="accordion-header hide-focus has-tooltip">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-notification"></use>
+              </svg>
+              <a href="#" id="module-nav-item-notifications" data-automation-id="module-nav-notifications"><span>Notification</span></a>
+            </div>
+          </div>
+
+          <!-- Settings area is also separate and permanently "pinned" to the bottom -->
+          <div class="module-nav-settings accordion-section mode-collapsed">
+            <div class="module-nav-settings-btn accordion-header hide-focus has-tooltip" data-automation-id="module-nav-settings" id="module-nav-settings-btn" aria-haspopup="true">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-settings"></use>
+              </svg>
+              <a href="#"><span>Settings</span></a>
+            </div>
+            
+          </div><div class="popupmenu-wrapper><ul class=" popupmenu"=""></div>
+        </div>
+      </div>
+
+      <!-- Detail area is optional and can have additional context -->
+      <div class="module-nav-detail">&nbsp;</div>
+    </aside>

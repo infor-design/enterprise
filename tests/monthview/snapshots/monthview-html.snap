@@ -1,0 +1,90 @@
+<div class="monthview is-fullsize is-selectable" data-init="false">
+          <div class="monthview-header"><div class="calendar-toolbar flex-toolbar" data-init="false" role="toolbar">
+        <div class="toolbar-section">
+          <button type="button" class="btn-icon prev no-ripple hide-focus">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-caret-left"></use>
+        </svg>
+        <span>Previous month</span>
+      </button>
+      <button type="button" class="btn-icon next no-ripple hide-focus">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-caret-right"></use>
+          </svg>
+          <span>Next month</span>
+      </button>
+          <span class="monthview-datepicker">
+            <span class="hidden month" data-month="9">October</span>
+            <span class="hidden year"> 2018</span>
+            <span class="audible">Select a day</span>
+            <span tabindex="0" aria-label="Today" id="monthview-datepicker-field" class="datepicker input-auto" data-validation="" autocomplete="off" role="combobox" aria-expanded="false" data-validate="date availableDate" data-validation-events="{&quot;date&quot;:&quot;change blur enter&quot;,&quot;availableDate&quot;:&quot;change blur&quot;}">October 2018</span><button class="btn-icon trigger no-ripple hide-focus" type="button" tabindex="0" role="button" aria-haspopup="dialog">
+        <span class="audible">Date picker trigger</span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-calendar"></use></svg>
+      </button>
+          </span>
+          <a class="today hyperlink hide-focus" href="#">Today</a>
+        </div>
+        <div class="toolbar-section buttonset l-align-right">
+          
+        </div>
+      </div></div><table class="monthview-table" aria-label="Calendar" role="application"><thead>
+        <tr>
+          <th>Sun</th>
+          <th>Mon</th>
+          <th>Tue</th>
+          <th>Wed</th>
+          <th>Thu</th>
+          <th>Fri</th>
+          <th>Sat</th>
+        </tr>
+      </thead><tbody>
+        <tr>
+          <td class="alternate prev-month" data-key="20180930"><span class="day-container"><span aria-hidden="true" class="day-text">30</span></span></td>
+          <td class="" data-key="20181001" aria-label="Monday, October 1, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">1</span></span></td>
+          <td class="" data-key="20181002" aria-label="Tuesday, October 2, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">2</span></span></td>
+          <td class="" data-key="20181003" aria-label="Wednesday, October 3, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">3</span></span></td>
+          <td class="" data-key="20181004" aria-label="Thursday, October 4, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">4</span></span></td>
+          <td class="" data-key="20181005" aria-label="Friday, October 5, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">5</span></span></td>
+          <td data-key="20181006" aria-label="Saturday, October 6, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">6</span></span></td>
+        </tr><tr>
+          <td data-key="20181007" aria-label="Sunday, October 7, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">7</span></span></td>
+          <td data-key="20181008" aria-label="Monday, October 8, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">8</span></span></td>
+          <td data-key="20181009" aria-label="Tuesday, October 9, 2018" role="link" class="is-selected" aria-selected="true" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">9</span></span></td>
+          <td data-key="20181010" aria-label="Wednesday, October 10, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">10</span></span></td>
+          <td data-key="20181011" aria-label="Thursday, October 11, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">11</span></span></td>
+          <td data-key="20181012" aria-label="Friday, October 12, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">12</span></span></td>
+          <td data-key="20181013" aria-label="Saturday, October 13, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">13</span></span></td>
+        </tr><tr>
+          <td data-key="20181014" aria-label="Sunday, October 14, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">14</span></span></td>
+          <td data-key="20181015" aria-label="Monday, October 15, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">15</span></span></td>
+          <td data-key="20181016" aria-label="Tuesday, October 16, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">16</span></span></td>
+          <td data-key="20181017" aria-label="Wednesday, October 17, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">17</span></span></td>
+          <td data-key="20181018" aria-label="Thursday, October 18, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">18</span></span></td>
+          <td data-key="20181019" aria-label="Friday, October 19, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">19</span></span></td>
+          <td data-key="20181020" aria-label="Saturday, October 20, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">20</span></span></td>
+        </tr><tr>
+          <td data-key="20181021" aria-label="Sunday, October 21, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">21</span></span></td>
+          <td data-key="20181022" aria-label="Monday, October 22, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">22</span></span></td>
+          <td data-key="20181023" aria-label="Tuesday, October 23, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">23</span></span></td>
+          <td data-key="20181024" aria-label="Wednesday, October 24, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">24</span></span></td>
+          <td class="" data-key="20181025" aria-label="Thursday, October 25, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">25</span></span></td>
+          <td data-key="20181026" aria-label="Friday, October 26, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">26</span></span></td>
+          <td data-key="20181027" aria-label="Saturday, October 27, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">27</span></span></td>
+        </tr><tr>
+          <td data-key="20181028" aria-label="Sunday, October 28, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">28</span></span></td>
+          <td data-key="20181029" aria-label="Monday, October 29, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">29</span></span></td>
+          <td data-key="20181030" aria-label="Tuesday, October 30, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">30</span></span></td>
+          <td data-key="20181031" aria-label="Wednesday, October 31, 2018" role="link" tabindex="-1"><span class="day-container"><span aria-hidden="true" class="day-text">31</span></span></td>
+          <td class="alternate next-month" data-key="20181101"><span class="day-container"><span aria-hidden="true" class="day-text">1</span></span></td>
+          <td class="alternate next-month" data-key="20181102"><span class="day-container"><span aria-hidden="true" class="day-text">2</span></span></td>
+          <td class="alternate next-month" data-key="20181103"><span class="day-container"><span aria-hidden="true" class="day-text">3</span></span></td>
+        </tr><tr style="display: none;">
+          <td class="alternate next-month" data-key="20181104"><span class="day-container"><span aria-hidden="true" class="day-text">4</span></span></td>
+          <td class="alternate next-month" data-key="20181105"><span class="day-container"><span aria-hidden="true" class="day-text">5</span></span></td>
+          <td class="alternate next-month" data-key="20181106"><span class="day-container"><span aria-hidden="true" class="day-text">6</span></span></td>
+          <td class="alternate next-month" data-key="20181107"><span class="day-container"><span aria-hidden="true" class="day-text">7</span></span></td>
+          <td class="alternate next-month" data-key="20181108"><span class="day-container"><span aria-hidden="true" class="day-text">8</span></span></td>
+          <td class="alternate next-month" data-key="20181109"><span class="day-container"><span aria-hidden="true" class="day-text">9</span></span></td>
+          <td class="alternate next-month" data-key="20181110"><span class="day-container"><span aria-hidden="true" class="day-text">10</span></span></td>
+        </tr>
+      </tbody></table></div>

@@ -811,7 +811,7 @@ Datagrid.prototype = {
       const rows1 = param[1];
       const cell1 = param[2];
       const rowNodes1 = param[3];
-      const dataArr1 = param[4]; 
+      const dataArr1 = param[4];
       self1.setActiveCell(rows1[0], cell1);
       if (!self1.settings.groupable) {
         rows1.forEach((row) => {
@@ -4408,7 +4408,7 @@ Datagrid.prototype = {
       self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
       (self.tableBodyRight || self.headerRowRight).before(self.bodyColGroupRight);
     }
-    
+
     if (self.hasLeftPane) {
       this.cleanupElements(self.tableBodyLeft);
       DOM.html(self.tableBodyLeft, tableHtmlLeft, '*');
@@ -8519,10 +8519,19 @@ Datagrid.prototype = {
     this.clearCache();
     this.renderRows();
     this.setSearchActivePage({ trigger: 'searched', type: 'filtered' });
-
     if (!(this.settings.paging && this.settings.source)) {
       this.highlightSearchRows(term);
     }
+
+    /**
+     * Fires after filter search is done
+     * @event searched
+     * @memberof Datagrid
+     * @property {object} event The jquery event object
+     * @property {object} args Additional arguments
+     * @property {array} args.filteredRows An array of filtered rows.
+     */
+    this.element.triggerHandler('searched', [this.settings.dataset.filter(data => !data._isFilteredOut)]);
   },
 
   /**

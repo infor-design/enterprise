@@ -1,0 +1,16 @@
+<div id="ids-actionsheet-root" class="ids-actionsheet-container" aria-hidden="true"><div class="overlay" aria-hidden="true"></div><div role="dialog" id="my-actions-sheet" data-automation-id="my-actions-sheet" class="ids-actionsheet has-icons"><button class="btn-tertiary ids-action no-ripple hide-focus" data-index="0" id="my-actions-action-0" data-automation-id="my-actions-action-0">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-mail"></use></svg>
+          <span class="ids-action-text">Email</span>
+        </button><button class="btn-tertiary ids-action no-ripple hide-focus" data-index="1" id="my-actions-action-1" data-automation-id="my-actions-action-1">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-user-profile"></use></svg>
+          <span class="ids-action-text">Go to Profile</span>
+        </button><button class="btn-tertiary ids-action no-ripple hide-focus" data-index="2" id="my-actions-action-2" data-automation-id="my-actions-action-2">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-workflow"></use></svg>
+          <span class="ids-action-text">Share</span>
+        </button><button class="btn-tertiary ids-action no-ripple hide-focus" data-index="3" id="my-actions-action-3" data-automation-id="my-actions-action-3">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-user-status-do-not-disturb"></use></svg>
+          <span class="ids-action-text">Remove</span>
+        </button><div class="separator"></div>
+        <button class="btn-secondary btn-cancel ids-action no-ripple hide-focus">
+          <span>Cancel</span>
+        </button></div></div>

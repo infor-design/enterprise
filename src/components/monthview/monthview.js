@@ -683,7 +683,7 @@ MonthView.prototype = {
         month = islamicDate[1];
         elementDate = islamicDate;
         this.currentDay = islamicDate[2];
-      } else {  
+      } else {
         elementDate = s.activeDateIslamic;
       }
     }
@@ -2383,16 +2383,16 @@ MonthView.prototype = {
           if (!$(e.target).hasClass('slide-select-start') && ($(e.target).prev().hasClass('slide-select') || $(e.target).prev().hasClass('slide-select-start'))) {
             $(e.target).removeClass('slide-select');
             $(e.target).removeClass('slide-select-end');
-            
+
             if (!$(e.target).prev().hasClass('slide-select-start')) {
               $(e.target).prev().addClass('slide-select');
             }
-            
+
             $(e.target).prev().addClass('slide-select-end');
           }
         } else if (key === 39 && e.shiftKey) {
-          if (($(e.target).hasClass('slide-select-start') || 
-            $(e.target).prev().hasClass('slide-select-end') || 
+          if (($(e.target).hasClass('slide-select-start') ||
+            $(e.target).prev().hasClass('slide-select-end') ||
             $(e.target).hasClass('slide-select-end')) && $(e.target).next().length > 0) {
             $(e.target).removeClass('slide-select-end');
             $(e.target).next().addClass('slide-select');
@@ -3083,7 +3083,7 @@ MonthView.prototype = {
 
     this.element.empty();
     this.init();
-    
+
     return this;
   },
 

@@ -84,8 +84,8 @@
                 idProperty:'officeId',
                 dataset: data,
                 selectable: 'single',
-                toolbar: {keywordFilter: true, results: true}
-            });
+                toolbar: { keywordFilter: true, results: true}
+            }).on('searched', (e, args) => console.log('searched', args));
 
             $('#export').on('click', function () {
               grid.data('datagrid').exportToCsv();

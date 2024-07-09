@@ -932,10 +932,12 @@ Calendar.prototype = {
         // Switch to day view on click
         $(container)
           .off(`click.${COMPONENT_NAME}`)
-          .on(`click.${COMPONENT_NAME}`, '.calendar-event-more span', () => {
+          .on(`click.${COMPONENT_NAME}`, '.calendar-event-more span', (e) => {
             const thisDate = this.monthView.dayMap[idx].key;
             this.monthView.selectDay(thisDate, false, true);
             this.changeView('day');
+            e.preventDefault();
+            e.stopPropagation();
           });
       } else {
         setMoreSpan(moreSpan, parseInt(moreSpan.getAttribute('data-count'), 10) + 1);
@@ -1286,11 +1288,11 @@ Calendar.prototype = {
             $(e.currentTarget).addClass('slide-select-end');
             while (!hasStartSelect) {
               targetTd.addClass('slide-select');
-  
+
               if (targetTd.prev().hasClass('slide-select-start')) {
                 hasStartSelect = true;
               }
-  
+
               targetTd = targetTd.prev();
             }
             targetTd.removeClass('slide-select-end');
@@ -1303,10 +1305,10 @@ Calendar.prototype = {
           $(e.currentTarget).addClass('slide-select-start');
           $(e.currentTarget).addClass('slide-select-end');
           self.monthView.selectDay(firstKey, false, true, 'cell');
-    
+
           self.element.on(`mouseenter.${COMPONENT_NAME}`, 'td', (ev) => {
-            if ($(ev.currentTarget).prev().hasClass('slide-select-start') || 
-              $(ev.currentTarget).prev().hasClass('slide-select') || 
+            if ($(ev.currentTarget).prev().hasClass('slide-select-start') ||
+              $(ev.currentTarget).prev().hasClass('slide-select') ||
               $(ev.currentTarget).is('.slide-select-start')) {
               const keySlide = ev.currentTarget.getAttribute('data-key');
               if (firstKey < keySlide && keySlide > lastKey) {
@@ -1319,7 +1321,7 @@ Calendar.prototype = {
           });
         }
       });
-  
+
       this.element.off(`mouseup.${COMPONENT_NAME}`).on(`mouseup.${COMPONENT_NAME}`, (e) => {
         if (self.modalVisible()) {
           self.removeModal();
@@ -1336,12 +1338,12 @@ Calendar.prototype = {
         if (startDay.getTime() === endDay.getTime()) {
           return;
         }
-  
+
         const eventData = utils.extend({ }, this.settings.newEventDefaults);
         eventData.startKey = firstKey;
         eventData.endKey = lastKey;
         e.stopPropagation();
-  
+
         calendarShared.cleanEventData(
           eventData,
           false,

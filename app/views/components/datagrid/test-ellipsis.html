@@ -55,7 +55,7 @@
     // Define Columns for the Grid.
     columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly, filterType: 'text' });
     columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, editorOptions: lookupOptions, width: 120, filterType: 'lookup' });
-    columns.push({ id: 'productName', name: 'Formatter Ellipsis', field: 'productName',  formatter: Soho.Formatters.Ellipsis, filterType: 'text' });
+    columns.push({ id: 'productName', name: 'Formatter Ellipsis', field: 'productName', required: true, textOverflow: 'ellipsis',  formatter: Soho.Formatters.Ellipsis, filterType: 'text' });
     columns.push({ id: 'productName', name: 'Formatter Hyperlink', field: 'productName',  formatter: Soho.Formatters.Hyperlink, filterType: 'text', textOverflow: 'ellipsis' });
     columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Soho.Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: { showSelectAll: true }, textOverflow: 'ellipsis' });
     columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer' });
