@@ -132,6 +132,7 @@ describe('Datagrid Settings', () => {
       attributes: null,
       onPostRenderCell: null,
       onDestroyCell: null,
+      overrideTabbing: false,
       onEditCell: null,
       onExpandRow: null,
       showEditorIcons: false,

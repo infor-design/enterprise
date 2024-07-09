@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.97.1
+
+## v4.97.1 Features
+
+- `[Datagrid]` Added setting `overrideTabbing` to disable tabbing sequence of datagrid which will allow custom tabbing from users. ([#8825](https://github.com/infor-design/enterprise/issues/8825))
+
 ## v4.97.0
 
 ## v4.97.0 Features
@@ -25,7 +31,7 @@
 - `[ModuleNav]` Fix icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[ModuleNav]` Fixed icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
-- `[ModuleNav]` Fixed zindex issue on the overlay in mobile mode. ([#8817](https://github.com/infor-design/enterprise/issues/8817))
+- `[ModuleNav]` Fixed `zindex` issue on the overlay in mobile mode. ([#8817](https://github.com/infor-design/enterprise/issues/8817))
 - `[Multiselect]` Fixed bug in multiselect noted in RTL mode. ([#8811](https://github.com/infor-design/enterprise/issues/8811))
 - `[Popupmenu]` Fixed bug in popupmenu when heading element is added in NG. ([NG#1700](https://github.com/infor-design/enterprise-ng/issues/1700))
 - `[Tabs]` Fixed example page for disabling dismissible tags. ([NG#1697](https://github.com/infor-design/enterprise/issues/1697))
@@ -48,7 +54,7 @@
 - `[Autocomplete]` Fixed autocomplete not properly highlighted on key down. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
 - `[Bar-Stacked/Column-Stacked]` Fixed an error encountered when having many records inside the graph. ([NG#1675](https://github.com/infor-design/enterprise-ng/issues/1675))
 - `[Button]` Fixed different buttons stylings in personalization inside of content form. ([#8714](https://github.com/infor-design/enterprise/issues/8714))
-- `[Calendar]` Fixed monthrendered being executed twice in week view and day view. ([#8469](https://github.com/infor-design/enterprise/issues/8469))
+- `[Calendar]` Fixed month rendered being executed twice in week view and day view. ([#8469](https://github.com/infor-design/enterprise/issues/8469))
 - `[Calendar]` Fixed calendar event popup render in mobile view. ([#8675](https://github.com/infor-design/enterprise/issues/8675))
 - `[Datagrid]` Fixed `loadData` and `updateDataset` API to render the correct pager and it's data. ([#8677](https://github.com/infor-design/enterprise/issues/8677))
 - `[Datagrid]` Fixed an error in expandable rows where paging causes to render white html. ([NG#1656](https://github.com/infor-design/enterprise-ng/issues/1656))

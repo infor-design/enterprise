@@ -150,6 +150,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean} [settings.addCellLayoutClass=true] If set false, will remove datagrid-cell-layout class from expandable rows.
  * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to trigger select row in datagrid.
+ * @param {boolean} [settings.overrideTabbing=false] If true, disables tabbing sequence of datagrid to allow custom tabbing.
  * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
  * @param {boolean} [settings.showEditorIcons=false] If true will always show hoverable icons.
  * @param {string} [settings.fallbackImage='insert-image'] Will set a fall back image if the image formatter cannot load an image.
@@ -248,6 +249,7 @@ const DATAGRID_DEFAULTS = {
   allowChildExpandOnMatch: false,
   activeCheckboxSelection: false,
   dblClickApply: false,
+  overrideTabbing: false,
   attributes: null,
   addCellLayoutClass: true,
   allowPasteFromExcel: false,
@@ -811,7 +813,7 @@ Datagrid.prototype = {
       const rows1 = param[1];
       const cell1 = param[2];
       const rowNodes1 = param[3];
-      const dataArr1 = param[4]; 
+      const dataArr1 = param[4];
       self1.setActiveCell(rows1[0], cell1);
       if (!self1.settings.groupable) {
         rows1.forEach((row) => {
@@ -4408,7 +4410,7 @@ Datagrid.prototype = {
       self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
       (self.tableBodyRight || self.headerRowRight).before(self.bodyColGroupRight);
     }
-    
+
     if (self.hasLeftPane) {
       this.cleanupElements(self.tableBodyLeft);
       DOM.html(self.tableBodyLeft, tableHtmlLeft, '*');
@@ -10337,6 +10339,10 @@ Datagrid.prototype = {
 
       // Tab, Left and Right arrow keys.
       if ([9, 37, 39].indexOf(key) !== -1) {
+        if (self.settings.overrideTabbing) {
+          return;
+        }
+
         if (key !== 9 && e.altKey) {
           // [Alt + Left/Right arrow] to move to the first or last cell on the current row.
           cell = ((key === 37 && !isRTL) || (key === 39 && isRTL)) ? 0 : lastCell;
