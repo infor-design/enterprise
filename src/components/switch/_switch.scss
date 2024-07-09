@@ -8,6 +8,36 @@ $slider-compact-width: 34px;
 $handle-width: 20px;
 $handle-compact-width: 16px;
 
+@mixin switch-compact {
+  input:empty {
+    ~ .label-text,
+    ~ label {
+      font-size: $input-size-compact-font-size;
+      margin-bottom: calc($form-size-field-compact-margin-bottom / 2) + 2;
+      padding-left: 38px;
+    }
+
+    ~ .label-text::before,
+    ~ label::before {
+      width: $slider-compact-width;
+      height: $slider-compact-height;
+    }
+
+    ~ .label-text::after,
+    ~ label::after {
+      width: $handle-compact-width;
+      height: $handle-compact-width;
+    }
+  }
+
+  input:checked {
+    ~ .label-text::after,
+    ~ label::after {
+      inset-inline-start: 16px;
+    }
+  }
+}
+
 .switch {
   clear: both;
   display: block;
@@ -131,38 +161,17 @@ $handle-compact-width: 16px;
       pointer-events: none;
     }
   }
+
+  // Compact
+  &.compact {
+    @include switch-compact();
+  }
 }
 
 // Switch in Compact Form Layout
 .form-layout-compact {
   .switch {
-    input:empty ~ .label-text,
-    input:empty ~ label {
-      font-size: $input-size-compact-font-size;
-      margin-bottom: calc($form-size-field-compact-margin-bottom / 2) + 2;
-      padding-left: 38px;
-    }
-
-    input {
-      ~ .label-text::before,
-      ~ label::before {
-        width: $slider-compact-width;
-        height: $slider-compact-height;
-      }
-
-      ~ .label-text::after,
-      ~ label::after {
-        width: $handle-compact-width;
-        height: $handle-compact-width;
-      }
-    }
-
-    input:checked {
-      ~ .label-text::after,
-      ~ label::after {
-        inset-inline-start: 16px;
-      }
-    }
+    @include switch-compact();
   }
 }
 
