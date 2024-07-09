@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.98.0
+
+## v4.98.0 Features
+
+- `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8016](https://github.com/infor-design/enterprise/issues/8016))
+
 ## v4.97.0
 
 ## v4.97.0 Features
@@ -7,14 +13,17 @@
 - `[Datagrid]` Added searched event for toolbar search. ([#8814](https://github.com/infor-design/enterprise/issues/8814))
 - `[Datagrid]` Added setting `overrideTabbing` to disable tabbing sequence of datagrind which will allow custom tabbing from users. ([#8825](https://github.com/infor-design/enterprise/issues/8825))
 - `[Weekview]` Added settings `showOvernightBothDays` and `overnightLabel` to customize overnight days. ([#8630](https://github.com/infor-design/enterprise/issues/8630))
+- `[Tests]` Changed test framework to playwright. ([#8549](https://github.com/infor-design/enterprise-wc/issues/8549))
 
 ## v4.97.0 Fixes
 
 - `[Autocomplete]` Fixed losing focus on keydown. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
+- `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
 - `[Charts]` Fixed a bug where the `charts.setSelected()` method was not working in multiple charts in a single page. ([#NG#1671](https://github.com/infor-design/enterprise-ng/issues/1671))
 - `[Datagrid]` Fixed incorrect updates in commitCellEditUtil. ([#8850](https://github.com/infor-design/enterprise/issues/8850))
 - `[Datagrid]` Fixed a bug where button gets focus always during editing of lookup field. ([#8758](https://github.com/infor-design/enterprise/issues/8758))
 - `[Datagrid]` Added `cellLayout` setting to remove datagrid cell layout from expandable rows. ([NG#1524](https://github.com/infor-design/enterprise-ng/issues/1524))
+- `[Datagrid]` Fixed asterisk being cut off when `textOverflow` is set to ellipsis. ([NG#1651](https://github.com/infor-design/enterprise-ng/issues/1651))
 - `[Dropdown]` Fixed no results text still displaying after removing filter text. ([#8768](https://github.com/infor-design/enterprise/issues/8768))
 - `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[Datagrid]` Fixed cell value from argument passed on hyperlink click. ([#8762](https://github.com/infor-design/enterprise/issues/8762))
@@ -30,7 +39,6 @@
 - `[ModuleNav]` Fixed zindex issue on the overlay in mobile mode. ([#8817](https://github.com/infor-design/enterprise/issues/8817))
 - `[Multiselect]` Fixed bug in multiselect noted in RTL mode. ([#8811](https://github.com/infor-design/enterprise/issues/8811))
 - `[Popupmenu]` Fixed bug in popupmenu when heading element is added in NG. ([NG#1700](https://github.com/infor-design/enterprise-ng/issues/1700))
-- `[Tabs]` Fixed example page for disabling dismissible tags. ([NG#1697](https://github.com/infor-design/enterprise/issues/1697))
 - `[Tabs]` Fixed example page for disabling dismissible tags. ([NG#1697](https://github.com/infor-design/enterprise-ng/issues/1697))
 - `[Timepicker]` Fixed bug in using custom format that has no separator. ([NG#1691](https://github.com/infor-design/enterprise-ng/issues/1691))
 

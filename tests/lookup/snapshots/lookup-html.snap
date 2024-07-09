@@ -1,0 +1,1 @@
+<input id="product-lookup" data-init="false" data-validate="required" class="lookup required" name="product-lookup" type="text" aria-required="true" autocomplete="off" data-automation-id="my-lookup-input">

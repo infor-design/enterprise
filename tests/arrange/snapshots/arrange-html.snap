@@ -1,0 +1,8 @@
+<ul class="arrange list example">
+            <li draggable="true" class="draggable">Item 1</li>
+            <li draggable="true" class="draggable">Item 2</li>
+            <li draggable="true" class="draggable">Item 3</li>
+            <li draggable="true" class="draggable">Item 4</li>
+            <li draggable="true" class="draggable">Item 5</li>
+            <li draggable="true" class="draggable">Item 6</li>
+          </ul>

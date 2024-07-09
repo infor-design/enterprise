@@ -1,0 +1,1 @@
+<input id="timepicker-id-1" class="timepicker" type="text" data-init="false" autocomplete="off" role="combobox" aria-expanded="false" data-validate="time" data-validation-events="{&quot;time&quot;:&quot;blur change enter&quot;}" data-automation-id="timepicker-automation-id-1">

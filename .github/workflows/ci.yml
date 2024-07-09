@@ -19,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -33,7 +33,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: enterprise-1023
+        key: enterprise-1024
 
     - name: Setup timezone
       uses: szenius/set-timezone@v1.0
@@ -49,8 +49,14 @@ jobs:
     - name: Run Lint Checks
       run: npm run lint
 
-    - name: Run tests
-      run:  (npm run quickstart &) && sleep 5; npm run test;
+    - name: Install Browsers
+      run: npx playwright install --with-deps
+
+    - name: Run Tests
+      run: npx percy exec -- npm run test:ci
+      env:
+        NODE_OPTIONS: "--max-old-space-size=8192"
+        PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
 
     - name: Dump GitHub context
       env:
@@ -61,3 +67,8 @@ jobs:
       env:
         JOB_CONTEXT: ${{ toJson(job) }}
       run: echo "$JOB_CONTEXT"
+
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}

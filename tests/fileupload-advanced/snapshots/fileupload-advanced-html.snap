@@ -1,0 +1,10 @@
+<div class="fileupload-advanced" data-init="false">
+          <div class="fileupload-wrapper standalone">
+          <div class="container drop-area" id="fileupload-advanced" data-automation-id="fileupload-advanced-automation-id">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation" id="fileupload-advanced-icon" data-automation-id="fileupload-advanced-automation-id-icon"><use href="#icon-upload"></use></svg>
+            <label class="fileupload-adv-browse-lbl" id="fileupload-advanced-label" data-automation-id="fileupload-advanced-automation-id-label">
+              <span>Drag and drop here or <span class="hyperlink">upload files</span> to upload</span>
+              <input type="file" name="fileupload-adv--1" accept="" multiple="" class="hide-focus">
+            </label>
+          </div>
+        </div></div>
