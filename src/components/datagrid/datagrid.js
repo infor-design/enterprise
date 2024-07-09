@@ -7664,6 +7664,10 @@ Datagrid.prototype = {
         canSelect = false;
       }
 
+      if (target.closest('td').hasClass('is-readonly')) {
+        canSelect = false;
+      }
+
       if (self.settings.selectable === 'mixed') {
         canSelect = isSelectionCheckbox;
 
@@ -8411,7 +8415,7 @@ Datagrid.prototype = {
     if (this.settings.toolbar && this.settings.toolbar.contextualToolbar) {
       const contextualToolbar = `
         <div class="contextual-toolbar datagrid-contextual-toolbar toolbar is-hidden">
-          <div class="title selection-count">1 Selected</div>
+          <div class="title selection-count">0 Selected</div>
         </div>`;
 
       this.element.before(contextualToolbar);
@@ -10516,7 +10520,7 @@ Datagrid.prototype = {
           e.preventDefault(); // This will prevent scrolling down when the list is overflowing.
         }
 
-        if (!self.editor) {
+        if (!self.editor && self.settings.clickToSelect) {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
       }
