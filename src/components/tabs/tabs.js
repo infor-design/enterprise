@@ -2505,7 +2505,7 @@ Tabs.prototype = {
     } else {
       window.location.hash = href;
     }
-    console.trace('changeHash')
+
     /**
      * @event hash-change
      * @memberof Tabs
