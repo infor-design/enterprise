@@ -720,15 +720,19 @@ Tabs.prototype = {
       if (this.appMenuApi) {
         this.appMenuApi.modifyTriggers([appMenuTrigger.children('a')], null, true);
         this.appMenuApi.accordion.on('selected', (e, args) => {
-          const href = args.getAttribute('tab-id');
-          if (href) {
-            const id = href.substr(1, href.length);
-            const tab = self.doGetTab(id);
+          const id = args.getAttribute('tab-id');
 
-            if (tab) {
-              self.activate(href);
-              self.scrollTabList(tab);
-            }
+          if (id) {
+            const tab = self.doGetTab(id);
+            const a = tab ? tab.children('a').first() : $();
+            const href = a.attr('href');
+
+            self.activate(href);
+            self.changeHash(href);
+
+            a.focus();
+
+            self.scrollTabList(tab);
           }
         });
       }
@@ -3005,11 +3009,15 @@ Tabs.prototype = {
         return null;
       }
 
+      const viaId = self.anchors.filter(`[id="${id}"]`);
+
       if (id.indexOf('#') === -1) {
         id = `#${id}`;
       }
 
-      const anchor = self.anchors.filter(`[href="${id}"]`);
+      const viaHref = self.anchors.filter(`[href="${id}"]`);
+
+      const anchor = viaHref.length > 0 ? viaHref : viaId;
       if (!anchor.length) {
         return null;
       }
