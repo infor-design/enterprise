@@ -21,8 +21,8 @@
 - `[Datagrid]` Added setting `overrideTabbing` to disable tabbing sequence of datagrid which will allow custom tabbing from users. ([#8825](https://github.com/infor-design/enterprise/issues/8825))
 - `[Weekview]` Added settings `showOvernightBothDays` and `overnightLabel` to customize overnight days. ([#8630](https://github.com/infor-design/enterprise/issues/8630))
 - `[Tabs Vertical]` Added settings `moduleTabsTooltips` available for tabs vertical to for showing tooltips. ([#8846](https://github.com/infor-design/enterprise/issues/8846))
-- `[Switch]` Update switch design. ([#8852](https://github.com/infor-design/enterprise/issues/8852))
 - `[Tests]` Changed test framework to playwright. ([#8549](https://github.com/infor-design/enterprise-wc/issues/8549))
+- `[Switch]` Update switch design. ([#8852](https://github.com/infor-design/enterprise/issues/8852))
 
 ## v4.97.0 Fixes
 
