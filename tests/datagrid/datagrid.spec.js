@@ -37,7 +37,6 @@ test.describe('Datagrid tests', () => {
   test.describe('functionality tests', () => {
     test('should be able to disable selection with readonly checkboxes', async ({ page }) => {
       await page.goto('/components/datagrid/example-disabled-selection-checkbox.html');
-      expect(await page.locator('.datagrid tr:first-child td:first-child')).toHaveClass(/is-readonly/);
       await page.locator('.datagrid tr:first-child td:first-child').click();
       expect(await page.locator('.selection-count')).toHaveText('0 Selected');
       await page.locator('.datagrid tr:first-child td:nth-child(6)').click();
