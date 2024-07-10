@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.68.6
+
+## v4.68.6 Fixes
+
+- `[Datagrid]` Add the ability for isEditable on selection checkbox columns to disable row selection. ([#1689](https://github.com/infor-design/enterprise-ng/issues/1689))
+
 ## v4.68.5
 
 ## v4.68.5 Fixes
