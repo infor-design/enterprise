@@ -6,7 +6,7 @@
   <div class="page-container no-scroll">
 
     <!-- Module Tabs -->
-    <section id="module-tabs-example" class="tab-container page-container module-tabs is-personalizable" data-options="{ containerElement: '#module-tabs-container', 'changeTabOnHashChange': true, 'maxWidth': 150, 'moduleTabsTooltips': true }">
+    <section id="module-tabs-example" class="tab-container page-container module-tabs is-personalizable" data-options="{ containerElement: '#module-tabs-container', 'appMenuTrigger': true, 'changeTabOnHashChange': true, 'maxWidth': 150, 'moduleTabsTooltips': true }">
       <div class="tab-list-container">
         <ul class="tab-list">
           <li class="tab is-selected dismissible">
@@ -529,7 +529,17 @@
     }
 
     $('body').on('initialized', function() {
-      var tabsAPI = $('#module-tabs-example').data('tabs');
+      const tabsAPI = $('#module-tabs-example').data('tabs');
+
+      const appMenu = $('#application-menu').data('applicationmenu');
+      const accordion = appMenu.accordion.data('accordion');
+      const headers = accordion.headers;
+      const tabAnchors = tabsAPI.anchors;
+
+      accordion.headers.each((i, e) => {
+        const id = tabAnchors[i + 1].getAttribute('id');
+        e.setAttribute('tab-id', id);
+      });
 
       function toggleFields(fillAutomatically) {
         if (fillAutomatically) {
