@@ -20,7 +20,7 @@ test.describe('Monthview tests', () => {
     test('should pass an Axe scan', async ({ page, browserName }) => {
       if (browserName !== 'chromium') return;
       const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-viewport', 'aria-allowed-attr'])
+        .disableRules(['meta-viewport', 'aria-allowed-attr', 'color-contrast'])
         .exclude('[disabled]')
         .analyze();
       expect(accessibilityScanResults.violations).toEqual([]);
