@@ -667,6 +667,12 @@ button {
     color: $button-color-primary-initial-font;
   }
 
+  &.btn-icon {
+    .icon {
+      color:  $button-color-primary-initial-font;
+    }
+  }
+
   // In case both are specified
   &.btn {
     color: $button-color-primary-initial-font;

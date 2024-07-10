@@ -713,6 +713,8 @@ $subheader-height: 60px;
 
       &[disabled] {
         color: $header-button-disabled-color !important;
+        background-color: transparent;
+        border: 1px solid transparent;
 
         .icon {
           color: $header-button-disabled-color !important;
