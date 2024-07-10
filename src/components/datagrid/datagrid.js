@@ -10925,21 +10925,18 @@ Datagrid.prototype = {
       newValue = xssUtils.escapeHTML(newValue);
     }
 
-    let rowIndex;
+    let rowIndex = this.actualRowIndex(cellNode.parent());
     let dataRowIndex;
     if (this.settings.source !== null && isUseActiveRow) {
-      if (cellNode && this.actualRowIndex(cellNode.parent()) !== this.activeCell.rowIndex) {
-        rowIndex = this.actualRowIndex(cellNode.parent());
+      if (!isNaN(rowIndex) && rowIndex !== this.activeCell.rowIndex) {
         dataRowIndex = this.dataRowIndex(cellNode.parent());
       } else {
         rowIndex = this.activeCell.rowIndex;
         dataRowIndex = this.activeCell.dataRow;
       }
     } else {
-      rowIndex = this.actualRowIndex(cellNode.parent());
       dataRowIndex = this.dataRowIndex(cellNode.parent());
     }
-
     const cell = cellNode.attr('aria-colindex') - 1;
     const col = this.columnSettings(cell);
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
