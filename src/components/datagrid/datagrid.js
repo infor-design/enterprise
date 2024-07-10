@@ -7664,7 +7664,9 @@ Datagrid.prototype = {
         canSelect = false;
       }
 
-      if (target.closest('td').hasClass('is-readonly')) {
+      if (target.closest('td').hasClass('is-readonly') ||
+        target.find('.datagrid-selection-checkbox').hasClass('disabled') ||
+        target.hasClass('disabled')) {
         canSelect = false;
       }
 
@@ -10504,7 +10506,7 @@ Datagrid.prototype = {
           return;
         }
 
-        if (target?.is('td.is-selectioncheckbox.is-readonly')) {
+        if (target?.is('td.is-selectioncheckbox.is-readonly') || target.find('.datagrid-selection-checkbox').hasClass('disabled')) {
           return;
         }
 

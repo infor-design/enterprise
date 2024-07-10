@@ -4333,6 +4333,15 @@ td .btn-actions {
     position: relative;
     top: -14px;
   }
+
+  &.datagrid-selection-checkbox.disabled {
+    cursor: default;
+
+    &::before {
+      background-color: $checkbox-color-unchecked-disabled-background;
+      border-color: $checkbox-color-unchecked-disabled-border;
+    }
+  }
 }
 
 .datagrid > tbody > tr.datagrid-row {

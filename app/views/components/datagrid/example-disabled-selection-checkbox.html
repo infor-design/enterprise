@@ -55,6 +55,36 @@
       }
       return isEditable;
     };
+    const checkDisabled = (row, cell, value, item, rowData) => {
+      let isDisabled = true;
+      if (rowData.lineType === 'Amount Only') {
+        if (item.field === 'orderAmount') {
+          isDisabled = false;
+        }
+      } else if (rowData.lineType === 'Rate Only') {
+        if (
+          item.field === 'procurementRate' ||
+          item.field === 'procurementRateUnit'
+        ) {
+          isDisabled = false;
+        }
+      } else if (rowData.lineType === 'Quantity & Rate') {
+        if (
+          item.field === 'procurementRate' ||
+          item.field === 'procurementRateUnit' ||
+          item.field === 'quantity' ||
+          item.field === 'quantityUnit'
+        ) {
+          isDisabled = false;
+        }
+      }
+      if (rowData.status === 'Modified') {
+        if (item.id === 'selectionCheckbox') {
+          isDisabled = false;
+        }
+      }
+      return isDisabled;
+    };
     const columnGroups = [
       {
         colspan: 1,
@@ -105,7 +135,8 @@
         resizable: false,
         formatter: Soho.Formatters.SelectionCheckbox,
         align: 'center',
-        isEditable: checkEditable,
+        // isEditable: checkEditable -> this also works
+        disabled: checkDisabled
       },
       {
         id: 'LineEdit',
