@@ -10504,6 +10504,10 @@ Datagrid.prototype = {
           return;
         }
 
+        if (target?.is('td.is-selectioncheckbox.is-readonly')) {
+          return;
+        }
+
         if ((self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed') && e.shiftKey) {
           self.selectRowsBetweenIndexes([self.lastSelectedRow, row.attr('aria-rowindex') - 1]);
         } else {
