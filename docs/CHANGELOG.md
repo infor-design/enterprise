@@ -11,13 +11,14 @@
 - `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
 - `[Datagrid]` Fixed asterisk being cut off when `textOverflow` is set to ellipsis. ([NG#1651](https://github.com/infor-design/enterprise-ng/issues/1651))
 - `[Tab]` Selecting an item in the appmenu accordion will also select the corresponding assigned tab to it (via `tab-id`). ([NG#1665](https://github.com/infor-design/enterprise-ng/issues/1665))
+- `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8880](https://github.com/infor-design/enterprise/issues/8880))
 
 ## v4.97.0
 
 ## v4.97.0 Features
 
 - `[Datagrid]` Added searched event for toolbar search. ([#8814](https://github.com/infor-design/enterprise/issues/8814))
-- `[Datagrid]` Added setting `overrideTabbing` to disable tabbing sequence of datagrind which will allow custom tabbing from users. ([#8825](https://github.com/infor-design/enterprise/issues/8825))
+- `[Datagrid]` Added setting `overrideTabbing` to disable tabbing sequence of datagrid which will allow custom tabbing from users. ([#8825](https://github.com/infor-design/enterprise/issues/8825))
 - `[Weekview]` Added settings `showOvernightBothDays` and `overnightLabel` to customize overnight days. ([#8630](https://github.com/infor-design/enterprise/issues/8630))
 - `[Tests]` Changed test framework to playwright. ([#8549](https://github.com/infor-design/enterprise-wc/issues/8549))
 
@@ -37,8 +38,8 @@
 - `[Dropdown]` Fixed no results text still displaying after removing filter text. ([#8768](https://github.com/infor-design/enterprise/issues/8768))
 - `[Grid]` Fixed an issue where module nav would change grid styles. ([#8828](https://github.com/infor-design/enterprise/issues/8828))
 - `[Masthead]` Fixed size of image avatar. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
-- `[ModuleNav]` Fix icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
-- `[ModuleNav]` Fixed zindex issue on the overlay in mobile mode. ([#8817](https://github.com/infor-design/enterprise/issues/8817))
+- `[ModuleNav]` Fixed icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
+- `[ModuleNav]` Fixed `zindex` issue on the overlay in mobile mode. ([#8817](https://github.com/infor-design/enterprise/issues/8817))
 - `[Multiselect]` Fixed bug in multiselect noted in RTL mode. ([#8811](https://github.com/infor-design/enterprise/issues/8811))
 - `[Popupmenu]` Fixed bug in popupmenu when heading element is added in NG. ([NG#1700](https://github.com/infor-design/enterprise-ng/issues/1700))
 - `[Tabs]` Fixed example page for disabling dismissible tags. ([NG#1697](https://github.com/infor-design/enterprise-ng/issues/1697))
@@ -60,7 +61,7 @@
 - `[Autocomplete]` Fixed autocomplete not properly highlighted on key down. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
 - `[Bar-Stacked/Column-Stacked]` Fixed an error encountered when having many records inside the graph. ([NG#1675](https://github.com/infor-design/enterprise-ng/issues/1675))
 - `[Button]` Fixed different buttons stylings in personalization inside of content form. ([#8714](https://github.com/infor-design/enterprise/issues/8714))
-- `[Calendar]` Fixed monthrendered being executed twice in week view and day view. ([#8469](https://github.com/infor-design/enterprise/issues/8469))
+- `[Calendar]` Fixed `monthrendered` being executed twice in week view and day view. ([#8469](https://github.com/infor-design/enterprise/issues/8469))
 - `[Calendar]` Fixed calendar event popup render in mobile view. ([#8675](https://github.com/infor-design/enterprise/issues/8675))
 - `[Datagrid]` Fixed `loadData` and `updateDataset` API to render the correct pager and it's data. ([#8677](https://github.com/infor-design/enterprise/issues/8677))
 - `[Datagrid]` Fixed an error in expandable rows where paging causes to render white html. ([NG#1656](https://github.com/infor-design/enterprise-ng/issues/1656))
