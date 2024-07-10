@@ -3491,8 +3491,7 @@ Tabs.prototype = {
         if (a[0]) a[0].style.width = `${visibleTabSize - diff}px`;
       }
 
-      // if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
-      // debugger;
+      if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
         cutoff = 'no';
 
         prevWidth = parseInt(window.getComputedStyle(tabs[i]).width, 10);
@@ -3511,7 +3510,7 @@ Tabs.prototype = {
         }
 
         a?.data('cutoffTitle', cutoff);
-      // }
+      }
     }
   },
 
