@@ -428,7 +428,7 @@ $toolbar-buttonset-height: 40px;
     // Show text with icon buttons by using this class.
     // Text will still become invisible on small breakpoint (but still visible to screen readers).
     // See respond-to(tabletdown) below.
-    [class^='btn'] {
+    [class^='btn']:not(.has-notification-badge) {
       min-width: 34px;
       width: auto;
 
