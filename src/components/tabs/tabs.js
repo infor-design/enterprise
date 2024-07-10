@@ -3491,7 +3491,8 @@ Tabs.prototype = {
         if (a[0]) a[0].style.width = `${visibleTabSize - diff}px`;
       }
 
-      if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
+      // if (this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips || this.settings.headerTabsTooltips) {
+      // debugger;
         cutoff = 'no';
 
         prevWidth = parseInt(window.getComputedStyle(tabs[i]).width, 10);
@@ -3500,12 +3501,17 @@ Tabs.prototype = {
           cutoff = 'yes';
         }
 
-        if (this.settings.maxWidth === null && prevWidth > (visibleTabSize - anchorPadding)) {
+        if (this.settings.maxWidth === null && prevWidth > (visibleTabSize - anchorPadding) && !this.element.hasClass('vertical')) {
           cutoff = 'yes';
         }
 
+        // Different Comparison for Vertical Tabs
+        if (this.settings.maxWidth === null && this.element.hasClass('vertical') && a[0].scrollWidth > a.innerWidth()) {
+          cutoff = 'yes'
+        }
+
         a?.data('cutoffTitle', cutoff);
-      }
+      // }
     }
   },
 
