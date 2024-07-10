@@ -12862,6 +12862,8 @@ Datagrid.prototype = {
         padding: this.tableBody[0].querySelector(selector.padding)
       };
 
+      const gridSelf = this;
+
       if (elms.padding && (elms.details.left || elms.details.right)) {
         const cssClass = 'is-expanded-frozen';
         elms.padding.style.opacity = '0';
@@ -12884,7 +12886,7 @@ Datagrid.prototype = {
                 $(window).on('resize.datagrid.expandedfrozen', () => {
                   self1.frozenExpandRowSetHeight(elms.details);
                 });
-              }, 10, [self, elms]);
+              }, 10, [gridSelf, elms]);
             }
           })
           .one('animateclosedstart.datagrid.expandedfrozen', () => {

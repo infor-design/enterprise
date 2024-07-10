@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.97.2
+
+## v4.97.2 Features
+
+- `[Datagrid]` Fixed an error expanding rows with frozen columns. ([#8889](https://github.com/infor-design/enterprise/issues/8889))
+
 ## v4.97.1
 
 ## v4.97.1 Features
