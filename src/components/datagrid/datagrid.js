@@ -7664,6 +7664,10 @@ Datagrid.prototype = {
         canSelect = false;
       }
 
+      if (target.closest('td').hasClass('is-readonly')) {
+        canSelect = false;
+      }
+
       if (self.settings.selectable === 'mixed') {
         canSelect = isSelectionCheckbox;
 
@@ -8411,7 +8415,7 @@ Datagrid.prototype = {
     if (this.settings.toolbar && this.settings.toolbar.contextualToolbar) {
       const contextualToolbar = `
         <div class="contextual-toolbar datagrid-contextual-toolbar toolbar is-hidden">
-          <div class="title selection-count">1 Selected</div>
+          <div class="title selection-count">0 Selected</div>
         </div>`;
 
       this.element.before(contextualToolbar);
@@ -10500,6 +10504,10 @@ Datagrid.prototype = {
           return;
         }
 
+        if (target?.is('td.is-selectioncheckbox.is-readonly')) {
+          return;
+        }
+
         if ((self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed') && e.shiftKey) {
           self.selectRowsBetweenIndexes([self.lastSelectedRow, row.attr('aria-rowindex') - 1]);
         } else {
@@ -10516,7 +10524,7 @@ Datagrid.prototype = {
           e.preventDefault(); // This will prevent scrolling down when the list is overflowing.
         }
 
-        if (!self.editor) {
+        if (!self.editor && self.settings.clickToSelect) {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
       }
@@ -12871,6 +12879,8 @@ Datagrid.prototype = {
         padding: this.tableBody[0].querySelector(selector.padding)
       };
 
+      const gridSelf = this;
+
       if (elms.padding && (elms.details.left || elms.details.right)) {
         const cssClass = 'is-expanded-frozen';
         elms.padding.style.opacity = '0';
@@ -12893,7 +12903,7 @@ Datagrid.prototype = {
                 $(window).on('resize.datagrid.expandedfrozen', () => {
                   self1.frozenExpandRowSetHeight(elms.details);
                 });
-              }, 10, [self, elms]);
+              }, 10, [gridSelf, elms]);
             }
           })
           .one('animateclosedstart.datagrid.expandedfrozen', () => {
