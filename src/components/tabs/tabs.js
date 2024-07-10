@@ -3466,11 +3466,7 @@ Tabs.prototype = {
     this.adjustSpilloverNumber();
   },
 
-  /**
-   * Checks cut off title for tabs.
-   * @private
-   * @returns {void}
-   */
+  /* Checks cut off title for tabs */
   checkCutOffTitle(tabs, visibleTabSize) {
     if (tabs.is('a')) {
       tabs = tabs.parent();
@@ -3514,7 +3510,7 @@ Tabs.prototype = {
 
         // Different Comparison for Vertical Tabs
         if (this.settings.maxWidth === null && this.element.hasClass('vertical') && a[0].scrollWidth > a.innerWidth()) {
-          cutoff = 'yes'
+          cutoff = 'yes';
         }
 
         a?.data('cutoffTitle', cutoff);
