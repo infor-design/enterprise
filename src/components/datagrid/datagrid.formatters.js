@@ -234,7 +234,7 @@ const formatters = {
     const checkIfNaN = /[\s]*($)?[#,0-9\s\.]+%?[\s]*/;
 
     if (typeof Locale !== 'undefined' &&
-        formatted !== null && formatted !== undefined && formatted !== '' && checkIfNaN.test(formatted)) {
+      formatted !== null && formatted !== undefined && formatted !== '' && checkIfNaN.test(formatted)) {
       formatted = Locale.formatNumber(value, col.numberFormat);
     }
 
@@ -253,7 +253,7 @@ const formatters = {
   Integer(row, cell, value, col) {
     let formatted = value;
     if (typeof Locale !== 'undefined' &&
-        formatted !== null && formatted !== undefined && formatted !== '') {
+      formatted !== null && formatted !== undefined && formatted !== '') {
       formatted = Locale.formatNumber(value, col.numberFormat || { style: 'integer' });
     }
     return (formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted;
@@ -363,7 +363,8 @@ const formatters = {
     }
 
     ariaString = xssUtils.ensureAlphaNumericWithSpaces(ariaString);
-    return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString)}" class="datagrid-checkbox datagrid-selection-checkbox${(isChecked ? ' is-checked no-animate' : '')}"></span></div>`;
+    const disabledClass = isColumnDisabled(row, cell, value, col, item) ? ' disabled' : '';
+    return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString)}" class="datagrid-checkbox datagrid-selection-checkbox${(isChecked ? ' is-checked no-animate' : '')}${disabledClass}"></span></div>`;
   },
 
   SelectionRadio(row, cell, value, col, item, api) {

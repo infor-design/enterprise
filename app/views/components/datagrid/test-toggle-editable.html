@@ -29,7 +29,7 @@
     </div>
 
     <div class="contextual-toolbar toolbar is-hidden">
-      <div class="title selection-count">1 Selected</div>
+      <div class="title selection-count">0 Selected</div>
       <div class="buttonset">
         <button class="btn" type="button" id="remove-btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -114,7 +114,7 @@
   //Add Code for Add and icon-delete
   $('#edit-btn').on('click', function () {
     gridApi.settings.editable = !gridApi.settings.editable;
-    
+
     // Workaround as rerender does not work as expected if it's still initial
     let pi = gridApi.pagerAPI.state;
     pi.type = 'rerender';
