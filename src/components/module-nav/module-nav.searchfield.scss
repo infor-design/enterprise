@@ -78,19 +78,6 @@
         }
       }
     }
-
-    &:active {
-      color: $module-nav-search-input-text-color;
-
-      input.module-nav-search {
-        background-color: $module-nav-item-selected-bg-color;
-        border-color: $module-nav-item-selected-text-color;
-
-        &::placeholder {
-          color: $module-nav-search-input-placeholder-text-color;
-        }
-      }
-    }
   }
 
   .empty-message {
