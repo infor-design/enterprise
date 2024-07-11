@@ -58,10 +58,9 @@ ol {
 }
 
 h1 {
-  @include rem(line-height, 2.5rem);
-
   color: $font-color-default;
   font-size: $ids-size-font-lg;
+  line-height: 2.5rem;
 
   + p {
     margin: 20px 0;
@@ -70,9 +69,9 @@ h1 {
 
 h2 {
   @include font-size(16);
-  @include rem(line-height, 2rem);
 
   color: $font-color-default;
+  line-height: 2rem;
 
   + p {
     margin: 20px 0;
@@ -81,16 +80,16 @@ h2 {
 
 h3 {
   @include font-size(16);
-  @include rem(line-height, 2rem);
 
   color: $font-color-default;
+  line-height: 2rem;
 }
 
 h4 {
   @include font-size(16);
-  @include rem(line-height, 2rem);
 
   color: $font-color-default;
+  line-height: 2rem;
 }
 
 p {
@@ -102,32 +101,31 @@ p {
   + h2,
   + h3,
   + h4 {
-    @include rem(margin-top, 2rem);
+    margin-top: 2rem;
   }
 
   + p {
-    @include rem(margin-top, 1.5rem);
+    margin-top: 1.5rem;
   }
 }
 
 .text-primary,
 a.text-primary {
-  @include rem(line-height, 2.5rem);
-
   font-size: $ids-size-font-lg;
+  margin-top: 2.5rem;
 }
 
 .text-secondary,
 a.text-secondary {
   @include font-size(16);
-  @include rem(line-height, 2rem);
+
+  line-height: 2rem;
 }
 
 .text-base,
 a.text-base {
-  @include rem(line-height, 1.5rem);
-
   font-size: $ids-size-font-base;
+  line-height: 1.5rem;
 }
 
 .text-small,
@@ -172,41 +170,40 @@ label.side,
 
 .widget-title,
 .card-title {
-  @include rem(margin-bottom, 1rem);
-  @include rem(line-height, 2.2rem);
   @include font-size(16);
   @include ellipsis();
 
   color: $cardlist-header-color;
   margin-top: 2px;
+  line-height: 2.2rem;
+  margin-bottom: 1rem;
   max-width: calc(100% - 45px);
 }
 
 .list-title {
   @include font-size(16);
-  @include rem(margin-bottom, 1rem);
-  @include rem(line-height, 2rem);
 
   color: $font-color-highcontrast;
+  margin-bottom: 1rem;
+  line-height: 2rem;
 }
 
 small,
 .micro-text {
-  @include rem(margin-bottom, 1rem);
-  @include rem(line-height, 1.5rem);
-
   color: $font-color-default;
   font-size: $ids-size-font-sm;
+  margin-bottom: 1rem;
+  line-height: 1.5rem;
 }
 
 .alert-text {
   @include font-size(11);
-  @include rem(margin-bottom, 1rem);
-  @include rem(line-height, 2rem);
 
   color: $error-color;
   font-weight: $ids-number-font-weight-bold;
   padding-left: 15px;
+  margin-bottom: 1rem;
+  line-height: 2rem;
 
   &::before {
     background-color: $error-color;

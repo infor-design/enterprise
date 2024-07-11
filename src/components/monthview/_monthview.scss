@@ -218,7 +218,7 @@
   // Header
   thead {
     th {
-      @include rem(font-size, 1.4rem);
+      @include font-size(14);
 
       color: $datepicker-day-color;
       margin: 20px;
@@ -252,8 +252,8 @@
     }
 
     .day-text {
-      @include rem(font-size, 1.4rem);
       @include no-select();
+      @include font-size(14);
 
       border-radius: 50%;
       color: $datepicker-day-color;

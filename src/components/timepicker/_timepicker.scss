@@ -95,7 +95,7 @@
     padding: 15px;
 
     .colons {
-      @include rem(font-size, 1.4rem);
+      @include font-size(14);
 
       font-weight: $ids-number-font-weight-bold;
       min-width: 15px;

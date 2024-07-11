@@ -151,8 +151,6 @@
 }
 
 .editor {
-  @include rem(line-height, 2.2rem);
-
   background-color: $editor-bg-color;
   border: 1px solid;
   border-color: $editor-border-color;
@@ -165,6 +163,7 @@
   height: 320px;
   margin-bottom: 20px;
   min-height: 128px;
+  line-height: 2.2rem;
   outline: none;
   overflow: auto;
   padding: 12px;
@@ -246,10 +245,9 @@
 .editor,
 .fontpicker-menu {
   p {
-    @include rem(line-height, 2.2rem);
-
     color: $editor-color;
     font-size: $input-size-regular-font-size;
+    line-height: 2.2rem;
 
     .hyperlink {
       color: $hyperlink-color;

@@ -28,10 +28,10 @@
   .chart-targeted-achievement {
     .bar,
     &.bar {
-      height: ($input-size-compact-height / 2) !important;
+      height: 1.4rem !important;
 
       &.completed {
-        margin-top: -($input-size-compact-height / 2) !important;
+        margin-top: -1.4rem !important;
       }
     }
   }
