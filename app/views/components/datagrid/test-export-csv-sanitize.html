@@ -2,12 +2,12 @@
 <div class="row">
     <div class="twelve columns">
       <div role="toolbar" class="toolbar">
-  
+
         <div class="title">
           Data Grid Header Title
           <span class="datagrid-result-count">(N Results)</span>
         </div>
-  
+
         <div class="buttonset">
             <button type="button" class="btn" id="export-to-csv">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -37,7 +37,7 @@
             <span class="audible">Add</span>
           </button>
         </div>
-  
+
         <div class="more">
           <button class="btn-actions" type="button">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -53,12 +53,12 @@
             <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
             <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
           </ul>
-  
+
         </div>
       </div>
-  
+
       <div class="contextual-toolbar toolbar is-hidden">
-        <div class="title selection-count">1 Selected</div>
+        <div class="title selection-count">0 Selected</div>
         <div class="buttonset">
           <button class="btn-icon" type="button" id="remove-btn">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -68,23 +68,23 @@
           </button>
         </div>
       </div>
-  
+
       <div id="datagrid"></div>
     </div>
   </div>
-  
+
   <script>
     var gridApi = null;
-  
+
     $('body').one('initialized', function () {
       var grid,
         columns = [],
         data = [];
-  
+
       var isDisabled = function(row, cell, value, item) {
         return (row % 2 === 0);
       }
-  
+
       // Some Sample Data
       data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity: '<svg/onload=alert(1)>', quantity: 1, price: 210.99, status: 'OK', orderDate: '00000000', portable: false, action: 1, description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
       data.push({ id: 2, productId: 2241202, productName: 'console.log', activity: 'Inspect and Repair', quantity: 2, price: 210.991, status: '', orderDate: '', portable: false, action: 1, description: 'The kit has an air blow gun that can be used for cleaning'});
@@ -93,7 +93,7 @@
       data.push({ id: 5, productId: 2542205, productName: 'De Wallt Compressor', activity:  'Inspect and Repair', portable: false, quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 1});
       data.push({ id: 6, productId: 2642205, productName: 'Air Compressors', activity: 'Inspect and Repair', portable: false, quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 2});
       data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity: 'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 2});
-  
+
       //Define Columns for the Grid.
       // columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Soho.Formatters.Status, align: 'center'});
       columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
@@ -107,7 +107,7 @@
       columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, validate: 'required', isEditable: isDisabled,
       options: [{id: '', label: '', value: -1}, {id: 'oh1', label: 'On Hold', value: 1}, {id: 'sh1', label: 'Shipped', value: 2} , {id: 'ac1', label: 'Action', value: 3}, {id: 'pen', label: 'Pending', value: 4}, {id: 'bk1', label: 'Backorder', value: 5}, {id: 'can', label: 'Cancelled', value: 6}, {id: 'pro', label: 'Processing', value: 7}]
       });
-  
+
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
         columns: columns,
@@ -129,9 +129,9 @@
       }).on('dblclick', function (e, args) {
         console.log('dblclick', args);
       });
-  
+
       gridApi = $('#datagrid').data('datagrid');
-  
+
       //Example row status
       $('#toggle-row-status').on('click', function () {
         var btn = $(this).find('span');
@@ -155,26 +155,26 @@
           gridApi.resetRowStatus();
         }
       });
-  
+
       window.data = data;
     });
-  
+
     var newId = 8;
     //Add Code for Add and icon-delete
     $('#add-btn').on('click', function () {
       gridApi.addRow({ id: newId++, productId: 2642206, productName: 'New Product'});
       console.log(gridApi.settings.dataset[1]);
     });
-  
+
     //Add Code for Add and icon-delete
     $('#remove-btn').on('click', function () {
       gridApi.removeSelected();
     });
-  
+
     //A few other ways
     $('#validate').on('selected', function (e, args) {
       var action = args.attr('data-action');
-  
+
       if (action === 'specific-row-error') {
         gridApi.showRowError(2, 'This row has a custom error message.', 'error');
       }
@@ -191,10 +191,9 @@
         gridApi.clearAllErrors();
       }
     });
-  
+
     $('#export-to-csv').on('click', function () {
       gridApi.exportToCsv('myExport');
     });
-  
+
   </script>
-  

@@ -4,6 +4,7 @@
 
 ## v4.98.0 Features
 
+- `[Datagrid]` Add the ability for isEditable on selection checkbox columns to disable row selection. ([#1689](https://github.com/infor-design/enterprise-ng/issues/1689))
 - `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8016](https://github.com/infor-design/enterprise/issues/8016))
 
 ## v4.98.0 Fixes
@@ -11,6 +12,7 @@
 - `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
 - `[Datagrid]` Fixed asterisk being cut off when `textOverflow` is set to ellipsis. ([NG#1651](https://github.com/infor-design/enterprise-ng/issues/1651))
 - `[Datagrid]` Fixed an error expanding rows with frozen columns. ([#8889](https://github.com/infor-design/enterprise/issues/8889))
+- `[Modal]` Removed accordion fixed width when used in modal. ([NG#1719](https://github.com/infor-design/enterprise-ng/issues/1719))
 - `[Tab]` Selecting an item in the appmenu accordion will also select the corresponding assigned tab to it (via `tab-id`). ([NG#1665](https://github.com/infor-design/enterprise-ng/issues/1665))
 - `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8880](https://github.com/infor-design/enterprise/issues/8880))
 
@@ -43,6 +45,7 @@
 - `[ModuleNav]` Fixed icon layout issue. ([#8788](https://github.com/infor-design/enterprise/issues/8788))
 - `[ModuleNav]` Fixed `zindex` issue on the overlay in mobile mode. ([#8817](https://github.com/infor-design/enterprise/issues/8817))
 - `[Multiselect]` Fixed bug in multiselect noted in RTL mode. ([#8811](https://github.com/infor-design/enterprise/issues/8811))
+- `[NotificationBadge]` Fixed notification badge disappearance in toolbar on mobile view. ([#8812](https://github.com/infor-design/enterprise/issues/8812))
 - `[Popupmenu]` Fixed bug in popupmenu when heading element is added in NG. ([NG#1700](https://github.com/infor-design/enterprise-ng/issues/1700))
 - `[Tabs]` Fixed example page for disabling dismissible tags. ([NG#1697](https://github.com/infor-design/enterprise-ng/issues/1697))
 - `[Timepicker]` Fixed bug in using custom format that has no separator. ([NG#1691](https://github.com/infor-design/enterprise-ng/issues/1691))

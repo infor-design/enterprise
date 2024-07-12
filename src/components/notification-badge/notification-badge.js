@@ -63,6 +63,8 @@ NotificationBadge.prototype = {
       this.notificationBadgeContainerEl = this.element.append('<span class="notification-badge-container"></span>');
     }
 
+    this.element.addClass('has-notification-badge');
+
     const htmlNotificationBadge = `
       <span class="notification-dot notification-dot-${this.settings.position} notification-dot-${this.settings.color}"></span>`;
 
