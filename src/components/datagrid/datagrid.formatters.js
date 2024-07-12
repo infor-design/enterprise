@@ -390,7 +390,6 @@ const formatters = {
 
     ariaString = xssUtils.ensureAlphaNumericWithSpaces(ariaString);
     const disabledClass = isColumnDisabled(row, cell, value, col, item) ? ' disabled' : '';
-    console.log(disabledClass);
     return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString)}" class="datagrid-checkbox datagrid-selection-checkbox${(isChecked ? ' is-checked no-animate' : '')}${disabledClass}"></span></div>`;
   },
 
