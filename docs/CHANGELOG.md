@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.97.3
+
+## v4.97.3 Features
+
+- `[Switch]` Fix issue of not being able to click the label. ([#8896](https://github.com/infor-design/enterprise/issues/8896))
+
 ## v4.97.2
 
 ## v4.97.2 Features
