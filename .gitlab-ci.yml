@@ -8,19 +8,24 @@ node_testing:
   tags:
     - dsa
     - DIND
-  image: node:18
+  image: node:20
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
     - git config --global --add safe.directory /builds/infor-design/ids-legacy
     - npm ci
+    - npm run build
+    - npm run lint
+    - npx playwright install --with-deps
+    - npx percy exec -- npm run test:ci
+  coverage: '/Code coverage: \d+(?:\.\d+)?/'
 
 install_packages:
   stage: build
   tags:
     - dsa
     - DIND
-  image: node:18
+  image: node:20
   script: |
     git config --global --add safe.directory /builds/infor-design/ids-legacy
     DEMO_PACKAGE_JSON_FILE=./app/package.json
