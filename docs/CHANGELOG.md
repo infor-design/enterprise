@@ -14,6 +14,7 @@
 - `[Modal]` Removed accordion fixed width when used in modal. ([NG#1719](https://github.com/infor-design/enterprise-ng/issues/1719))
 - `[Tab]` Selecting an item in the appmenu accordion will also select the corresponding assigned tab to it (via `tab-id`). ([NG#1665](https://github.com/infor-design/enterprise-ng/issues/1665))
 - `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8880](https://github.com/infor-design/enterprise/issues/8880))
+- `[Switch]` Fix issue of not being able to click the label. ([#8896](https://github.com/infor-design/enterprise/issues/8896))
 
 ## v4.97.0
 

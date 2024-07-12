@@ -72,11 +72,6 @@ $handle-compact-width: 16px;
     }
   }
 
-  label,
-  .label-text {
-    pointer-events: none;
-  }
-
   label::before,
   label::after,
   .label-text::before,
@@ -108,6 +103,7 @@ $handle-compact-width: 16px;
       border-radius: 99px;
       box-sizing: border-box;
       inset-inline-start: 0;
+      top: -2px;
     }
 
     ~ .label-text::before,
@@ -129,7 +125,7 @@ $handle-compact-width: 16px;
       background-color: $ids-color-palette-white;
       border-radius: 99px;
       inset-inline-start: 2px;
-      top: 2px;
+      top: 0;
     }
   }
 
