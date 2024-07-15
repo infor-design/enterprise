@@ -12,6 +12,9 @@
       @include antialiased();
       @include css3(user-select, none);
       @include css3(touch-callout, none);
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
 
       color: $vertical-tab-text-color;
       display: block;
