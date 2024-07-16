@@ -1,4 +1,4 @@
-<div id="notification-badge-1" class="container-spacer">
+<div id="notification-badge-1" class="container-spacer has-notification-badge">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-menu"></use>
             </svg>
