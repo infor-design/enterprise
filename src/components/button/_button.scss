@@ -661,6 +661,10 @@ button {
 
   &.btn {
     color: $button-color-primary-initial-font;
+
+    .icon {
+      color: $button-color-primary-initial-font;
+    }
   }
 
   .icon {
@@ -706,8 +710,7 @@ button {
     }
   }
 
-  &[disabled],
-  &[disabled]:hover {
+  &[disabled] {
     background-color: $button-color-primary-disabled-background;
     border-color: $button-color-primary-disabled-border;
     box-shadow: none;

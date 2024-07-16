@@ -126,3 +126,10 @@
     </div>
   </div>
 </div>
+
+<script>
+  $('body').one('initialized', () =>{
+    $('#header-more-actions').data('popupmenu').menu.children().eq(6).addClass('is-disabled')
+    $('#header-more-actions').data('popupmenu').menu.children().eq(7).addClass('is-disabled')
+  })
+</script>
