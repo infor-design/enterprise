@@ -165,6 +165,8 @@ $delay: 0.14s; // Define common delay value
 
     .progress {
       animation: 1.52s linear infinite both indeterminate-spinner-progress-anim;
+      stroke-dasharray: 283;
+      stroke: rgba($busy-indicator-color, 1);
     }
 
     .circle {
@@ -173,11 +175,6 @@ $delay: 0.14s; // Define common delay value
 
     circle {
       transform-origin: 50% 50%;
-    }
-
-    .progress {
-      stroke-dasharray: 283;
-      stroke: rgba($busy-indicator-color, 1);
     }
   }
 }
