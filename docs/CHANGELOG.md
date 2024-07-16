@@ -10,6 +10,7 @@
 ## v4.98.0 Fixes
 
 - `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
+- `[Button]` Fixed primary buttons on header flex toolbar. ([#8669](https://github.com/infor-design/enterprise/issues/8669))
 - `[Datagrid]` Fixed asterisk being cut off when `textOverflow` is set to ellipsis. ([NG#1651](https://github.com/infor-design/enterprise-ng/issues/1651))
 - `[Modal]` Removed accordion fixed width when used in modal. ([NG#1719](https://github.com/infor-design/enterprise-ng/issues/1719))
 - `[Tab]` Selecting an item in the appmenu accordion will also select the corresponding assigned tab to it (via `tab-id`). ([NG#1665](https://github.com/infor-design/enterprise-ng/issues/1665))
@@ -28,7 +29,6 @@
 ## v4.97.0 Fixes
 
 - `[Autocomplete]` Fixed losing focus on keydown. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
-- `[Button]` Fixed primary buttons on header flex toolbar. ([#8669](https://github.com/infor-design/enterprise/issues/8669))
 - `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
 - `[Charts]` Fixed a bug where the `charts.setSelected()` method was not working in multiple charts in a single page. ([#NG#1671](https://github.com/infor-design/enterprise-ng/issues/1671))
 - `[Datagrid]` Fixed incorrect updates in commitCellEditUtil. ([#8850](https://github.com/infor-design/enterprise/issues/8850))
