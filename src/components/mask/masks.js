@@ -289,7 +289,7 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
 
       let trailingZeros = masks.EMPTY_STRING;
       for (let j = 0; j < options.decimalLimit; j++) {
-        trailingZeros += "0";
+        trailingZeros += '0';
       }
 
       mask.push(trailingZeros);

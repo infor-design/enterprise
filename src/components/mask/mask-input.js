@@ -392,9 +392,9 @@ MaskInput.prototype = {
 
     // Use the piped value, if applicable.
     let finalValue = processed.pipedValue ? processed.pipedValue : processed.conformedValue;
-    const decimal = "."
-    const zero = "0";
-    const blank = "";
+    const decimal = '.';
+    const zero = '0';
+    const blank = '';
     if (this.settings.patternOptions.allowTrailingDecimalZeros) {
       const hasDecimal = finalValue.lastIndexOf(decimal) !== -1;
 
@@ -402,7 +402,7 @@ MaskInput.prototype = {
         finalValue += decimal;
       }
 
-      let value = hasDecimal ? finalValue.split(decimal)[1].length : 0;
+      const value = hasDecimal ? finalValue.split(decimal)[1].length : 0;
       
       let trailingZeros = blank;
       for (let j = value; j < this.settings.patternOptions.decimalLimit; j++) {
@@ -639,7 +639,6 @@ MaskInput.prototype = {
         if (decimalParts[1]) {
           this.settings.patternOptions.allowDecimal = true;
           this.settings.patternOptions.decimalLimit = decimalParts[1].toString().replace(/[^#0]/g, '').length;
-          debugger;
           if (!this.settings.patternOptions.symbols.decimal) {
             this.settings.patternOptions.symbols.decimal = decimal;
           }
