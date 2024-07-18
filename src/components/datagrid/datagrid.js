@@ -10925,7 +10925,7 @@ Datagrid.prototype = {
       newValue = xssUtils.escapeHTML(newValue);
     }
 
-    let rowIndex = this.actualRowIndex(cellNode.parent());
+    let rowIndex = this.actualRowIndex(cellNode?.parent());
     let dataRowIndex;
     if (this.settings.source !== null && isUseActiveRow) {
       if (!isNaN(rowIndex) && rowIndex !== this.activeCell.rowIndex) {
