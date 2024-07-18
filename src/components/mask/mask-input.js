@@ -41,6 +41,7 @@ const COMPONENT_NAME = 'mask';
  * @param {boolean} [settings.patternOptions.requireDecimal] [number masks only] forces the placement of a decimal point in a number mask with a decimal limit defined.
  * @param {number} [settings.patternOptions.decimalLimit] [number masks only] defines the number of characters allowed after the decimal point.
  * @param {number} [settings.patternOptions.integerLimit] [number masks only] defines the number of characters allowed before the decimal point.
+ * @param {number} [settings.patternOptions.allowTrailingDecimalZeros] [number masks only] defines where to show trailing decimal zeros.
  * @param {boolean} [settings.patternOptions.allowNegative] [number masks only] allows a number to be negative (adds/retains a "minus" symbol at the beginning of the value)
  * @param {boolean} [settings.patternOptions.allowLeadingZeros] [number masks only] allows a zero be placed before a decimal or other numbers.
  * @param {string} [settings.placeholderChar='_'] If using the `settings.guide`, will be used as the placeholder
@@ -391,6 +392,26 @@ MaskInput.prototype = {
 
     // Use the piped value, if applicable.
     let finalValue = processed.pipedValue ? processed.pipedValue : processed.conformedValue;
+    const decimal = "."
+    const zero = "0";
+    const blank = "";
+    if (this.settings.patternOptions.allowTrailingDecimalZeros) {
+      const hasDecimal = finalValue.lastIndexOf(decimal) !== -1;
+
+      if (!hasDecimal) {
+        finalValue += decimal;
+      }
+
+      let value = hasDecimal ? finalValue.split(decimal)[1].length : 0;
+      
+      let trailingZeros = blank;
+      for (let j = value; j < this.settings.patternOptions.decimalLimit; j++) {
+        trailingZeros += zero;
+      }
+
+      finalValue += trailingZeros;
+    }
+
     if (finalValue !== '' && patternOptions && patternOptions.suffix && finalValue.indexOf(patternOptions.suffix) < 0) {
       finalValue += this.settings.patternOptions.suffix;
     }
@@ -618,6 +639,7 @@ MaskInput.prototype = {
         if (decimalParts[1]) {
           this.settings.patternOptions.allowDecimal = true;
           this.settings.patternOptions.decimalLimit = decimalParts[1].toString().replace(/[^#0]/g, '').length;
+          debugger;
           if (!this.settings.patternOptions.symbols.decimal) {
             this.settings.patternOptions.symbols.decimal = decimal;
           }

@@ -5,6 +5,7 @@
 ## v4.98.0 Features
 
 - `[Datagrid]` Add the ability for isEditable on selection checkbox columns to disable row selection. ([#1689](https://github.com/infor-design/enterprise-ng/issues/1689))
+- `[Mask]` Added setting `allowTrailingDecimalZeros` to always display decimals in input mask. ([NG#1715](https://github.com/infor-design/enterprise-ng/issues/1715))
 - `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8016](https://github.com/infor-design/enterprise/issues/8016))
 
 ## v4.98.0 Fixes
