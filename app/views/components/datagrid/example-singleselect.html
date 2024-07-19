@@ -31,7 +31,6 @@
       columns.push({ id: 'price', name: 'Status', field: 'price', formatter: Soho.Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
       columns.push({ id: 'quantity', name: 'Badge', field: 'quantity', align: 'center', formatter: Soho.Formatters.Badge, sortable: false, ranges: [{'min': 0, 'max': 2, 'classes': 'error'}, {'value': 3, 'classes': 'alert'}, {'value': 41, 'classes': 'good'}]});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
-      columns.push({ id: 'checked', name: 'Checked', field: 'checked', formatter: Soho.Formatters.Checkbox});
 
       //Init and get the api for the grid
       $('#datagrid').datagrid({
