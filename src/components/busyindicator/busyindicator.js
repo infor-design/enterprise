@@ -20,6 +20,7 @@ const COMPONENT_NAME = 'busyindicator';
  * an overlay that prevents interaction, but appears transparent instead of gray.
  * @param {string} [settings.overlayOnly=false] If true, the busy indicator will only be the overlay.
  * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {string} [settings.type] Loading type (bar, circular). Default is bar.
  */
 const BUSYINDICATOR_DEFAULTS = {
   blockUI: true,
@@ -28,7 +29,8 @@ const BUSYINDICATOR_DEFAULTS = {
   timeToComplete: 0,
   transparentOverlay: false,
   overlayOnly: false,
-  attributes: null
+  attributes: null,
+  type: 'bar'
 };
 
 function BusyIndicator(element, settings) {
@@ -119,12 +121,23 @@ BusyIndicator.prototype = {
     });
     this.loader = $('<div class="busy-indicator active"></div>').appendTo(this.container);
 
-    if (!this.settings.overlayOnly) {
-      $('<div class="bar one"></div>' +
+    let indicator;
+
+    if (this.settings.type === 'circular') {
+      indicator = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="circular-indicator indeterminate" part="container">
+        <circle cx="50" cy="50" r="45" stroke-width="3" class="circle" part="circle"></circle>
+        <circle cx="50" cy="50" r="45" stroke-width="6" class="progress" part="progress"></circle>
+      </svg>`;
+    } else {
+      indicator = '<div class="bar one"></div>' +
         '<div class="bar two"></div>' +
         '<div class="bar three"></div>' +
         '<div class="bar four"></div>' +
-        '<div class="bar five"></div>').appendTo(this.loader);
+        '<div class="bar five"></div>';
+    }
+
+    if (!this.settings.overlayOnly) {
+      $(indicator).appendTo(this.loader);
 
       this.label = $(`<span>${this.loadingText}</span>`).appendTo(this.container);
     }

@@ -55,6 +55,38 @@ $delay: 0.14s; // Define common delay value
   }
 }
 
+@keyframes indeterminate-spinner-anim {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes indeterminate-spinner-progress-anim {
+  0%,
+  15% {
+    stroke-dashoffset: 272;
+    transform: rotate(0);
+  }
+
+  60% {
+    stroke-dashoffset: 80;
+    transform: rotate(45deg);
+  }
+
+  65% {
+    stroke-dashoffset: 80;
+    transform: rotate(45deg);
+  }
+
+  100% {
+    stroke-dashoffset: 272;
+    transform: rotate(360deg);
+  }
+}
 
 .busy-indicator-container {
   @include opacity(1);
@@ -120,6 +152,30 @@ $delay: 0.14s; // Define common delay value
     &.three { @include css3(animation-delay, -0.3s); }
     &.four { @include css3(animation-delay, -0.2s); }
     &.five { @include css3(animation-delay, -0.1s); }
+  }
+
+  svg.circular-indicator {
+    fill: transparent;
+    width: 50px;
+    height: 50px;
+
+    &.indeterminate {
+      animation: 2.4s linear infinite indeterminate-spinner-anim;
+    }
+
+    .progress {
+      animation: 1.52s linear infinite both indeterminate-spinner-progress-anim;
+      stroke-dasharray: 283;
+      stroke: rgba($busy-indicator-color, 1);
+    }
+
+    .circle {
+      stroke: rgba($busy-indicator-color, 0.5);
+    }
+
+    circle {
+      transform-origin: 50% 50%;
+    }
   }
 }
 
