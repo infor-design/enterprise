@@ -9,6 +9,7 @@
 
 ## v4.98.0 Fixes
 
+- `[Datagrid]` Fixed a bug where disabled button are not properly rendered in widgets. ([#8893](https://github.com/infor-design/enterprise/issues/8893))
 - `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
 - `[Datagrid]` Fixed asterisk being cut off when `textOverflow` is set to ellipsis. ([NG#1651](https://github.com/infor-design/enterprise-ng/issues/1651))
 - `[Modal]` Removed accordion fixed width when used in modal. ([NG#1719](https://github.com/infor-design/enterprise-ng/issues/1719))
