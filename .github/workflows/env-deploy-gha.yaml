@@ -94,6 +94,10 @@ jobs:
           repository: infor-design/apps
           github_token: ${{ secrets.GH_ACCESS_TOKEN }}
           branch: main
+
+      - name: Install
+        run: npm ci
+
       - name: Run Tests
         run: npx percy exec -- npm run test:ci
         env:
