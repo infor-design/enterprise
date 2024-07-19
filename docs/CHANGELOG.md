@@ -10,6 +10,7 @@
 ## v4.98.0 Fixes
 
 - `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
+- `[Cards]` Fixed a bug selected and deselected event are not triggered on action. ([NG#1731](https://github.com/infor-design/enterprise-ng/issues/1731))
 - `[Datagrid]` Fixed asterisk being cut off when `textOverflow` is set to ellipsis. ([NG#1651](https://github.com/infor-design/enterprise-ng/issues/1651))
 - `[Modal]` Removed accordion fixed width when used in modal. ([NG#1719](https://github.com/infor-design/enterprise-ng/issues/1719))
 - `[Tab]` Selecting an item in the appmenu accordion will also select the corresponding assigned tab to it (via `tab-id`). ([NG#1665](https://github.com/infor-design/enterprise-ng/issues/1665))
