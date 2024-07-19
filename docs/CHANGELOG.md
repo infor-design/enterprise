@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.90.6
+
+## v4.90.6 Fixes
+
+- `[Datagrid]` Additional fixe for incorrect updates in commitCellEditUtil. ([#8850](https://github.com/infor-design/enterprise/issues/8850))
+
 ## v4.90.5
 
 ## v4.90.5 Fixes
