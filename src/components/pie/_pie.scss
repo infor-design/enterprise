@@ -138,8 +138,14 @@
 
 // RTL Styles
 html[dir='rtl'] {
-  .chart-pie.has-right-legend .chart-legend-item-text {
-    padding-left: 0;
-    padding-right: 7px;
+  .chart-pie.has-right-legend {
+    .chart-legend {
+      margin: 0;
+    }
+
+    .chart-legend-item-text {
+      padding-left: 0;
+      padding-right: 7px;
+    }
   }
 }
