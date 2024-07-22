@@ -68,7 +68,11 @@
           name: 'data-automation-id',
           value: 'multiple-card-automation-id'
         }]
-    })
+    }).on('selected', (args) => {
+      console.log('selected');
+    }).on('deselected', (args) => {
+      console.log('deselect');
+    });
   });
 
 </script>
