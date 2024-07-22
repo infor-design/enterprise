@@ -80,6 +80,7 @@ const DEFAULT_NUMBER_MASK_OPTIONS = {
     thousands: ','
   },
   allowDecimal: true,
+  allowTrailingDecimalZeros: false,
   decimalLimit: 2,
   locale: '',
   requireDecimal: false,
@@ -277,6 +278,21 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
       if (options.requireDecimal === true && thisRawValue[indexOfLastDecimal - 1] === DECIMAL) {
         mask.push(masks.DIGITS_REGEX);
       }
+    }
+
+    if (!hasDecimal && options.allowDecimal && options.decimalLimit && options.allowTrailingDecimalZeros) {
+      mask.push(masks.CARET_TRAP);
+
+      if (!options.requireDecimal) {
+        mask.push(DECIMAL);
+      }
+
+      let trailingZeros = masks.EMPTY_STRING;
+      for (let j = 0; j < options.decimalLimit; j++) {
+        trailingZeros += '0';
+      }
+
+      mask.push(trailingZeros);
     }
 
     if (prefixLength > 0) {
