@@ -2566,12 +2566,16 @@ Datagrid.prototype = {
       this.filterExpr = [];
     }
 
-    if (this.pagerAPI && JSON.stringify(conditions) !== JSON.stringify(this.filterExpr)) {
-      this.filterExpr = conditions;
-      filterChanged = true;
+    if (this.pagerAPI) {
+      this.pagerRefresh(this.pagerAPI.settings.position, true);
 
-      if (this.settings.treeGrid) {
-        removeFilteredOut(this.settings.dataset);
+      if (JSON.stringify(conditions) !== JSON.stringify(this.filterExpr)) {
+        this.filterExpr = conditions;
+        filterChanged = true;
+
+        if (this.settings.treeGrid) {
+          removeFilteredOut(this.settings.dataset);
+        }
       }
     }
 
