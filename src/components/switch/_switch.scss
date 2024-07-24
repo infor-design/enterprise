@@ -184,19 +184,19 @@ $handle-compact-width: 16px;
 
     input ~ .label-text::before,
     input ~ label::before {
-      inset-inline-start: 240px;
-      top: 10px;
+      inset-inline-start: 246px;
+      top: 1px;
     }
 
     input:empty ~ .label-text::after,
     input:empty ~ label::after {
-      inset-inline-start: 235px;
+      inset-inline-start: 249px;
       top: 3px;
     }
 
     input:checked ~ .label-text::after,
     input:checked ~ label::after {
-      inset-inline-start: 255px;
+      inset-inline-start: 264px;
       top: 3px;
     }
   }
