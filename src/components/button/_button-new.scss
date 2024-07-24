@@ -11,10 +11,6 @@
   &:hover {
     background-color: $button-color-primary-hover-background;
     border: 2px solid $button-color-primary-hover-background;
-
-    &.btn {
-      color: $button-color-tertiary-hover-text-new;
-    }
   }
 
   &:active {

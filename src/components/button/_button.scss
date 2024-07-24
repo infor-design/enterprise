@@ -905,7 +905,7 @@ a.btn-close {
   color: $button-color-tertiary-initial-font;
   overflow: hidden;
 
-  &:hover:not([disabled]) {
+  &:hover:not([disabled]):not(.btn-primary) {
     background-color: $button-color-tertiary-hover-background-new !important;
     color: $button-color-tertiary-hover-text;
 
