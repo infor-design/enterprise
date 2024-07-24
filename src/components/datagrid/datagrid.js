@@ -7336,11 +7336,11 @@ Datagrid.prototype = {
         isTrigger = false; // No need to trigger if no data item
       } else {
         row = self.actualPagingRowIndex(self.actualRowIndex(rowElem));
-
         if (self.groupArray[row]) {
           item = self.settings.dataset[self.groupArray[row].group];
+
           if (item && item.values) {
-            item = item.values[self.groupArray[row].node];
+            item = item.values[self.groupArray[row].node - 1];
           }
         }
       }
