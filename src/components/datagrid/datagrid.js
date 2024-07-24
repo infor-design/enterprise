@@ -2566,12 +2566,16 @@ Datagrid.prototype = {
       this.filterExpr = [];
     }
 
-    if (this.pagerAPI && JSON.stringify(conditions) !== JSON.stringify(this.filterExpr)) {
-      this.filterExpr = conditions;
-      filterChanged = true;
+    if (this.pagerAPI) {
+      this.pagerRefresh(this.pagerAPI.settings.position, true);
 
-      if (this.settings.treeGrid) {
-        removeFilteredOut(this.settings.dataset);
+      if (JSON.stringify(conditions) !== JSON.stringify(this.filterExpr)) {
+        this.filterExpr = conditions;
+        filterChanged = true;
+
+        if (this.settings.treeGrid) {
+          removeFilteredOut(this.settings.dataset);
+        }
       }
     }
 
@@ -11013,21 +11017,18 @@ Datagrid.prototype = {
       newValue = xssUtils.escapeHTML(newValue);
     }
 
-    let rowIndex;
+    let rowIndex = this.actualRowIndex(cellNode?.parent());
     let dataRowIndex;
     if (this.settings.source !== null && isUseActiveRow) {
-      if (cellNode && this.actualRowIndex(cellNode.parent()) !== this.activeCell.rowIndex) {
-        rowIndex = this.actualRowIndex(cellNode.parent());
+      if (!isNaN(rowIndex) && rowIndex !== this.activeCell.rowIndex) {
         dataRowIndex = this.dataRowIndex(cellNode.parent());
       } else {
         rowIndex = this.activeCell.rowIndex;
         dataRowIndex = this.activeCell.dataRow;
       }
     } else {
-      rowIndex = this.actualRowIndex(cellNode.parent());
       dataRowIndex = this.dataRowIndex(cellNode.parent());
     }
-
     const cell = cellNode.attr('aria-colindex') - 1;
     const col = this.columnSettings(cell);
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
@@ -12881,6 +12882,8 @@ Datagrid.prototype = {
         padding: this.tableBody[0].querySelector(selector.padding)
       };
 
+      const gridSelf = this;
+
       if (elms.padding && (elms.details.left || elms.details.right)) {
         const cssClass = 'is-expanded-frozen';
         elms.padding.style.opacity = '0';
@@ -12903,7 +12906,7 @@ Datagrid.prototype = {
                 $(window).on('resize.datagrid.expandedfrozen', () => {
                   self1.frozenExpandRowSetHeight(elms.details);
                 });
-              }, 10, [self, elms]);
+              }, 10, [gridSelf, elms]);
             }
           })
           .one('animateclosedstart.datagrid.expandedfrozen', () => {

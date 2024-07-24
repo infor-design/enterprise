@@ -94,3 +94,15 @@ jobs:
           repository: infor-design/apps
           github_token: ${{ secrets.GH_ACCESS_TOKEN }}
           branch: main
+  
+      - name: Install Browsers
+        run: npx playwright install --with-deps
+
+      - name: Install
+        run: npm ci
+
+      - name: Run Tests
+        run: npx percy exec -- npm run test:ci
+        env:
+          NODE_OPTIONS: "--max-old-space-size=8192"
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
