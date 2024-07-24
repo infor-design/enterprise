@@ -141,6 +141,12 @@ html[dir='rtl'] {
   .chart-pie.has-right-legend {
     .chart-legend {
       margin: 0;
+
+      &.is-right {
+        position: relative;
+        left: 16px;
+        width: 32%;
+      }
     }
 
     .chart-legend-item-text {
