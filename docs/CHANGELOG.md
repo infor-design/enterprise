@@ -7,13 +7,16 @@
 - `[Busy Indicator]` Added circular loading type. ([#8662](https://github.com/infor-design/enterprise/issues/8662))
 - `[Datagrid]` Add the ability for isEditable on selection checkbox columns to disable row selection. ([#1689](https://github.com/infor-design/enterprise-ng/issues/1689))
 - `[Pie Chart]` Fixed alignment bug in chart on RTL. ([NG#1736](https://github.com/infor-design/enterprise-ng/issues/1736))
+- `[Mask]` Added setting `allowTrailingDecimalZeros` to always display decimals in input mask. ([NG#1715](https://github.com/infor-design/enterprise-ng/issues/1715))
 - `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8016](https://github.com/infor-design/enterprise/issues/8016))
 
 ## v4.98.0 Fixes
 
 - `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
+- `[Cards]` Fixed a bug selected and deselected event are not triggered on action. ([NG#1731](https://github.com/infor-design/enterprise-ng/issues/1731))
 - `[Datagrid]` Fixed asterisk being cut off when `textOverflow` is set to ellipsis. ([NG#1651](https://github.com/infor-design/enterprise-ng/issues/1651))
 - `[Datagrid]` Fixed an error expanding rows with frozen columns. ([#8889](https://github.com/infor-design/enterprise/issues/8889))
+- `[Datagrid]` Refresh pager when `applyFilter` is called. ([#8744](https://github.com/infor-design/enterprise/issues/8744))
 - `[Modal]` Removed accordion fixed width when used in modal. ([NG#1719](https://github.com/infor-design/enterprise-ng/issues/1719))
 - `[Tab]` Selecting an item in the appmenu accordion will also select the corresponding assigned tab to it (via `tab-id`). ([NG#1665](https://github.com/infor-design/enterprise-ng/issues/1665))
 - `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8880](https://github.com/infor-design/enterprise/issues/8880))
@@ -26,8 +29,9 @@
 - `[Datagrid]` Added searched event for toolbar search. ([#8814](https://github.com/infor-design/enterprise/issues/8814))
 - `[Datagrid]` Added setting `overrideTabbing` to disable tabbing sequence of datagrid which will allow custom tabbing from users. ([#8825](https://github.com/infor-design/enterprise/issues/8825))
 - `[Weekview]` Added settings `showOvernightBothDays` and `overnightLabel` to customize overnight days. ([#8630](https://github.com/infor-design/enterprise/issues/8630))
-- `[Switch]` Update switch design. ([#8852](https://github.com/infor-design/enterprise/issues/8852))
+- `[Tabs Vertical]` Added settings `moduleTabsTooltips` available for tabs vertical to for showing tooltips. ([#8846](https://github.com/infor-design/enterprise/issues/8846))
 - `[Tests]` Changed test framework to playwright. ([#8549](https://github.com/infor-design/enterprise-wc/issues/8549))
+- `[Switch]` Update switch design. ([#8852](https://github.com/infor-design/enterprise/issues/8852))
 
 ## v4.97.0 Fixes
 
