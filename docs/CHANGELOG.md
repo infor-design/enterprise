@@ -11,6 +11,7 @@
 
 ## v4.98.0 Fixes
 
+- `[Button]` Fixed a bug where disabled button are not properly rendered in widgets. ([#8893](https://github.com/infor-design/enterprise/issues/8893))
 - `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
 - `[Cards]` Fixed a bug selected and deselected event are not triggered on action. ([NG#1731](https://github.com/infor-design/enterprise-ng/issues/1731))
 - `[Datagrid]` Fixed a bug in search keyword not functioning properly when using special characters. ([#8864](https://github.com/infor-design/enterprise/issues/8864))

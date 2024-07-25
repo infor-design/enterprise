@@ -58,7 +58,7 @@
   background-color: $button-color-primary-initial-background;
   border: 2px solid $button-color-primary-initial-background;
   color: $button-color-primary-initial-font;
-  opacity: 0.4;
+  opacity: $button-disabled-opacity;
 
   svg.icon {
     color: $button-color-primary-initial-font;
