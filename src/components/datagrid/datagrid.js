@@ -8624,7 +8624,8 @@ Datagrid.prototype = {
         // Strip any html markup that might be in the formatted value
         value = value.replace(/(<([^>]+)>)|(amp;)|(&lt;([^>]+)&gt;)/ig, '');
 
-        return value.indexOf(xssUtils.escapeHTML(filterExpr.value)) > -1;
+        // Compare both values with escape html strips
+        return xssUtils.escapeHTML(value).indexOf(xssUtils.escapeHTML(filterExpr.value)) > -1;
       };
 
       // Check in all visible columns
