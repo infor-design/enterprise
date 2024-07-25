@@ -16,6 +16,7 @@
 - `[Datagrid]` Fixed asterisk being cut off when `textOverflow` is set to ellipsis. ([NG#1651](https://github.com/infor-design/enterprise-ng/issues/1651))
 - `[Datagrid]` Fixed an error expanding rows with frozen columns. ([#8889](https://github.com/infor-design/enterprise/issues/8889))
 - `[Datagrid]` Refresh pager when `applyFilter` is called. ([#8744](https://github.com/infor-design/enterprise/issues/8744))
+- `[Datagrid]` Fixed issue on selecting rows in group. ([NG#1740](https://github.com/infor-design/enterprise-ng/issues/1740))
 - `[Modal]` Removed accordion fixed width when used in modal. ([NG#1719](https://github.com/infor-design/enterprise-ng/issues/1719))
 - `[Tab]` Selecting an item in the appmenu accordion will also select the corresponding assigned tab to it (via `tab-id`). ([NG#1665](https://github.com/infor-design/enterprise-ng/issues/1665))
 - `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8880](https://github.com/infor-design/enterprise/issues/8880))
