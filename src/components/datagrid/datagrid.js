@@ -8763,9 +8763,17 @@ Datagrid.prototype = {
   selectAllRows() {
     const rows = [];
     const dataset = this.getActiveDataset();
+    // Check for the selection checkbox in case it has a disabled function
+    const selectionCol = this.columnById('selectionCheckbox')[0];
+    const selectionIdx = this.columnIdxById('selectionCheckbox');
+    const disabledFunc = selectionCol?.disabled;
 
     for (let i = 0, l = dataset.length; i < l; i++) {
       const idx = this.settings.groupable ? i : this.pagingRowIndex(i);
+      if (disabledFunc) {
+        const isDisabled = disabledFunc(idx, selectionIdx, '', selectionCol, dataset[idx]);
+        if (isDisabled) continue;
+      }
 
       if (this.filterRowRendered ||
         (this.filterExpr && this.filterExpr[0] && this.filterExpr[0].keywordSearch)) {
