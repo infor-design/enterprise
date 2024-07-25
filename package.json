@@ -62,7 +62,7 @@
     "stylelint:demo": "npx stylelint app/src/**/*.scss --config .stylelintrc",
     "stylelint:src": "npx stylelint src/**/**/*.scss --config .stylelintrc",
     "test:start-server": "node app/server.js --test-port",
-    "test": "PERCY_LOGLEVEL=silent npx playwright test",
+    "test": "PERCY_LOGLEVEL=silent npx playwright test --reporter=list",
     "test:build": "npm run build:demoapp && npm run build",
     "test:coverage": "npx rimraf .nyc_output && npm run build:coverage && npm run test && npx nyc report && open coverage/index.html",
     "test:coverage:no-build": "npx rimraf .nyc_output && npm run test && npx nyc report && open coverage/index.html",
