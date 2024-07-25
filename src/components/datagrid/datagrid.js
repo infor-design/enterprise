@@ -9791,7 +9791,9 @@ Datagrid.prototype = {
           rowData = s.dataset[selIdx];
         }
         if (s.groupable) {
-          rowData = self.originalDataset[selIdx];
+          const row = self.actualPagingRowIndex(self.actualRowIndex(rowNode));
+          const gData = self.groupArray[row];
+          rowData = self.settings.dataset[gData.group].values[gData.node];
         }
         if (rowData !== undefined) {
           if (s.paging && s.source) {
