@@ -7756,7 +7756,7 @@ Datagrid.prototype = {
         if (e.type === 'click' && e.target.nodeName.toLowerCase() === 'input') {
           const el = e.target;
           el.focus();
-          el.select();
+          if (self.settings.selectOnEdit) el.select();
           e.preventDefault();
           e.stopPropagation();
         }
