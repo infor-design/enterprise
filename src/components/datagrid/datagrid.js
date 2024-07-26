@@ -7316,6 +7316,7 @@ Datagrid.prototype = {
     const rowElem = target.closest('tr');
     const cellElem = target.closest('td');
     const cell = cellElem.index();
+
     let row = this.settings.treeGrid ? this.actualRowIndex(rowElem) : this.dataRowIndex(rowElem);
     let isTrigger = true;
 
@@ -7336,13 +7337,7 @@ Datagrid.prototype = {
         isTrigger = false; // No need to trigger if no data item
       } else {
         row = self.actualPagingRowIndex(self.actualRowIndex(rowElem));
-        if (self.groupArray[row]) {
-          item = self.settings.dataset[self.groupArray[row].group];
-
-          if (item && item.values) {
-            item = item.values[self.groupArray[row].node - 1];
-          }
-        }
+        item = self.originalDataset[row];
       }
     }
 
@@ -9101,8 +9096,9 @@ Datagrid.prototype = {
           if (isNaN(row)) {
             return;
           }
-          const gData = self.groupArray[row];
-          rowData = self.settings.dataset[gData.group].values[gData.node];
+          rowData = self.originalDataset[row];
+          // const gData = self.groupArray[row];
+          // rowData = self.settings.dataset[gData.group].values[gData.node];
           if (!isExists(rowData.idx, rowNode)) {
             args = {
               idx: rowData.idx,
@@ -9791,9 +9787,7 @@ Datagrid.prototype = {
           rowData = s.dataset[selIdx];
         }
         if (s.groupable) {
-          const row = self.actualPagingRowIndex(self.actualRowIndex(rowNode));
-          const gData = self.groupArray[row];
-          rowData = self.settings.dataset[gData.group].values[gData.node];
+          rowData = self.originalDataset[selIdx];
         }
         if (rowData !== undefined) {
           if (s.paging && s.source) {
@@ -13075,6 +13069,8 @@ Datagrid.prototype = {
     if (this.settings.selectable) {
       this.syncDatasetWithSelectedRows();
     }
+
+    this.refreshIndexes();
   },
 
   /**
