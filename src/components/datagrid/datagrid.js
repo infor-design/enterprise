@@ -9097,8 +9097,6 @@ Datagrid.prototype = {
             return;
           }
           rowData = self.originalDataset[row];
-          // const gData = self.groupArray[row];
-          // rowData = self.settings.dataset[gData.group].values[gData.node];
           if (!isExists(rowData.idx, rowNode)) {
             args = {
               idx: rowData.idx,
@@ -13069,8 +13067,6 @@ Datagrid.prototype = {
     if (this.settings.selectable) {
       this.syncDatasetWithSelectedRows();
     }
-
-    this.refreshIndexes();
   },
 
   /**
