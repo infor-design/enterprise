@@ -9025,7 +9025,16 @@ Datagrid.prototype = {
             // if selectChildren is false
             if (s.selectChildren || (!s.selectChildren && i === 0)) {
               const canAdd = (!elem.is(rowNode) && !elem.hasClass('is-selected'));
-              self.selectNode(elem, index, data);
+
+              // Check for the selection checkbox in case it has a disabled function
+              const selectionCol = self.columnById('selectionCheckbox')[0];
+              const selectionIdx = self.columnIdxById('selectionCheckbox');
+              const disabledFunc = selectionCol?.disabled;
+              let isDisabled = false;
+              if (disabledFunc) {
+                isDisabled = disabledFunc(actualIdx, selectionIdx, '', selectionCol, data);
+              }
+              if (!isDisabled) self.selectNode(elem, index, data);
               if (canAdd && !isExists(actualIdx, elem)) {
                 args = {
                   idx: actualIdx,

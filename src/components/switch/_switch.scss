@@ -179,25 +179,26 @@ $handle-compact-width: 16px;
 
   .switch {
     .label-text {
-      top: 1px;
+      position: relative;
+      top: 2px;
     }
 
     input ~ .label-text::before,
     input ~ label::before {
-      inset-inline-start: 246px;
-      top: 1px;
+      inset-inline-start: 235px;
+      top: -3px;
     }
 
     input:empty ~ .label-text::after,
     input:empty ~ label::after {
-      inset-inline-start: 249px;
-      top: 3px;
+      inset-inline-start: 253px;
+      top: -1px;
     }
 
     input:checked ~ .label-text::after,
     input:checked ~ label::after {
-      inset-inline-start: 264px;
-      top: 3px;
+      inset-inline-start: 254px;
+      top: -1px;
     }
   }
 
