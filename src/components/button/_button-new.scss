@@ -172,7 +172,7 @@
     padding: 0;
   }
 
-  &:hover:not([disabled]):not(.btn-primary):not(.trigger):not(.application-menu-trigger) {
+  &:hover:not([disabled]):not(.btn-primary):not(.btn-secondary):not(.trigger):not(.application-menu-trigger) {
     &:not(:disabled) {
       background-color: $button-color-tertiary-hover-background-new;
       color: $button-color-tertiary-hover-text-new;
