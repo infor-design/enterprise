@@ -14,6 +14,7 @@
 - `[Button]` Fixed a bug where disabled button are not properly rendered in widgets. ([#8893](https://github.com/infor-design/enterprise/issues/8893))
 - `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
 - `[Cards]` Fixed a bug selected and deselected event are not triggered on action. ([NG#1731](https://github.com/infor-design/enterprise-ng/issues/1731))
+- `[Datagrid]` Fixed selecting issue on inline editor by adding `selectOnEdit` setting. ([#8870](https://github.com/infor-design/enterprise/issues/8870))
 - `[Datagrid]` Fixed a bug in search keyword not functioning properly when using special characters. ([#8864](https://github.com/infor-design/enterprise/issues/8864))
 - `[Datagrid]` Fixed layout issue on switch in personalization dialog. ([#8913](https://github.com/infor-design/enterprise/issues/8913))
 - `[Datagrid]` Fixed asterisk being cut off when `textOverflow` is set to ellipsis. ([NG#1651](https://github.com/infor-design/enterprise-ng/issues/1651))
