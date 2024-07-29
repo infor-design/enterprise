@@ -6,18 +6,23 @@
 
 - `[Busy Indicator]` Added circular loading type. ([#8662](https://github.com/infor-design/enterprise/issues/8662))
 - `[Datagrid]` Add the ability for isEditable on selection checkbox columns to disable row selection. ([#1689](https://github.com/infor-design/enterprise-ng/issues/1689))
+- `[Pie Chart]` Fixed alignment bug in chart on RTL. ([NG#1736](https://github.com/infor-design/enterprise-ng/issues/1736))
 - `[Mask]` Added setting `allowTrailingDecimalZeros` to always display decimals in input mask. ([NG#1715](https://github.com/infor-design/enterprise-ng/issues/1715))
 - `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8016](https://github.com/infor-design/enterprise/issues/8016))
 
 ## v4.98.0 Fixes
 
+- `[Button]` Fixed a bug where disabled button are not properly rendered in widgets. ([#8893](https://github.com/infor-design/enterprise/issues/8893))
 - `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
 - `[Button]` Fixed primary buttons on header flex toolbar. ([#8669](https://github.com/infor-design/enterprise/issues/8669))
 - `[Cards]` Fixed a bug selected and deselected event are not triggered on action. ([NG#1731](https://github.com/infor-design/enterprise-ng/issues/1731))
+- `[Datagrid]` Fixed selecting issue on inline editor by adding `selectOnEdit` setting. ([#8870](https://github.com/infor-design/enterprise/issues/8870))
+- `[Datagrid]` Fixed a bug in search keyword not functioning properly when using special characters. ([#8864](https://github.com/infor-design/enterprise/issues/8864))
 - `[Datagrid]` Fixed layout issue on switch in personalization dialog. ([#8913](https://github.com/infor-design/enterprise/issues/8913))
 - `[Datagrid]` Fixed asterisk being cut off when `textOverflow` is set to ellipsis. ([NG#1651](https://github.com/infor-design/enterprise-ng/issues/1651))
 - `[Datagrid]` Fixed an error expanding rows with frozen columns. ([#8889](https://github.com/infor-design/enterprise/issues/8889))
 - `[Datagrid]` Refresh pager when `applyFilter` is called. ([#8744](https://github.com/infor-design/enterprise/issues/8744))
+- `[Datagrid]` Fixed issue on selecting rows in group. ([NG#1740](https://github.com/infor-design/enterprise-ng/issues/1740))
 - `[Modal]` Removed accordion fixed width when used in modal. ([NG#1719](https://github.com/infor-design/enterprise-ng/issues/1719))
 - `[Tab]` Selecting an item in the appmenu accordion will also select the corresponding assigned tab to it (via `tab-id`). ([NG#1665](https://github.com/infor-design/enterprise-ng/issues/1665))
 - `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8880](https://github.com/infor-design/enterprise/issues/8880))

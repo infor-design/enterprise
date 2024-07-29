@@ -7316,6 +7316,7 @@ Datagrid.prototype = {
     const rowElem = target.closest('tr');
     const cellElem = target.closest('td');
     const cell = cellElem.index();
+
     let row = this.settings.treeGrid ? this.actualRowIndex(rowElem) : this.dataRowIndex(rowElem);
     let isTrigger = true;
 
@@ -7336,13 +7337,7 @@ Datagrid.prototype = {
         isTrigger = false; // No need to trigger if no data item
       } else {
         row = self.actualPagingRowIndex(self.actualRowIndex(rowElem));
-
-        if (self.groupArray[row]) {
-          item = self.settings.dataset[self.groupArray[row].group];
-          if (item && item.values) {
-            item = item.values[self.groupArray[row].node];
-          }
-        }
+        item = self.originalDataset[row];
       }
     }
 
@@ -7756,7 +7751,7 @@ Datagrid.prototype = {
         if (e.type === 'click' && e.target.nodeName.toLowerCase() === 'input') {
           const el = e.target;
           el.focus();
-          el.select();
+          if (self.settings.selectOnEdit) el.select();
           e.preventDefault();
           e.stopPropagation();
         }
@@ -8624,7 +8619,8 @@ Datagrid.prototype = {
         // Strip any html markup that might be in the formatted value
         value = value.replace(/(<([^>]+)>)|(amp;)|(&lt;([^>]+)&gt;)/ig, '');
 
-        return value.indexOf(xssUtils.escapeHTML(filterExpr.value)) > -1;
+        // Compare both values with escape html strips
+        return xssUtils.escapeHTML(value).indexOf(xssUtils.escapeHTML(filterExpr.value)) > -1;
       };
 
       // Check in all visible columns
@@ -8762,9 +8758,17 @@ Datagrid.prototype = {
   selectAllRows() {
     const rows = [];
     const dataset = this.getActiveDataset();
+    // Check for the selection checkbox in case it has a disabled function
+    const selectionCol = this.columnById('selectionCheckbox')[0];
+    const selectionIdx = this.columnIdxById('selectionCheckbox');
+    const disabledFunc = selectionCol?.disabled;
 
     for (let i = 0, l = dataset.length; i < l; i++) {
       const idx = this.settings.groupable ? i : this.pagingRowIndex(i);
+      if (disabledFunc) {
+        const isDisabled = disabledFunc(idx, selectionIdx, '', selectionCol, dataset[idx]);
+        if (isDisabled) continue;
+      }
 
       if (this.filterRowRendered ||
         (this.filterExpr && this.filterExpr[0] && this.filterExpr[0].keywordSearch)) {
@@ -9101,8 +9105,7 @@ Datagrid.prototype = {
           if (isNaN(row)) {
             return;
           }
-          const gData = self.groupArray[row];
-          rowData = self.settings.dataset[gData.group].values[gData.node];
+          rowData = self.originalDataset[row];
           if (!isExists(rowData.idx, rowNode)) {
             args = {
               idx: rowData.idx,

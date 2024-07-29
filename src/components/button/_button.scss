@@ -959,7 +959,7 @@ a.btn-close {
 .btn-icon {
   &[disabled] {
     background-color: transparent;
-    opacity: 0.4;
+    opacity: $button-disabled-opacity;
 
     .icon {
       color: $button-icon-disabled-color;

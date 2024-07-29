@@ -489,7 +489,7 @@ $card-header-section: '.card-header-section', '.widget-header-section';
     }
 
     &:focus,
-    &:hover {
+    &:hover:not([disabled]) {
       color: $listview-toolbar-button-text-hover-color;
 
       span {

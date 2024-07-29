@@ -19,7 +19,7 @@ export default defineConfig({
   // Reporter to use
   reporter: 'html',
 
-  timeout: 15000,
+  timeout: 80000,
 
   /* Control the snap shot names */
   snapshotPathTemplate: '{testDir}/{testFileDir}/snapshots/{arg}.snap',

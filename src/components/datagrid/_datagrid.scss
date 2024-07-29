@@ -3622,9 +3622,8 @@ $datagrid-small-row-height: 25px;
 
     // Editing and Focus State
     &:focus {
-      background-color: $datagrid-header-focus-bg-color;
       color: $datagrid-header-color;
-      outline: 1px solid $datagrid-header-focus-border-color;
+      outline: 1px solid $datagrid-header-focus-bg-color;
       outline-offset: -2px;
 
       .icon {

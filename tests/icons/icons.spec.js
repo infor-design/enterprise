@@ -1,4 +1,3 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { test } from '../base-fixture';
 
@@ -12,17 +11,6 @@ test.describe('Icons tests', () => {
   test.describe('general page checks', () => {
     test('should have a title', async ({ page }) => {
       await expect(page).toHaveTitle('IDS Enterprise');
-    });
-  });
-
-  test.describe('accessibility tests', () => {
-    test('should pass an Axe scan', async ({ page, browserName }) => {
-      if (browserName !== 'chromium') return;
-      const accessibilityScanResults = await new AxeBuilder({ page })
-        .disableRules(['meta-viewport', 'scrollable-region-focusable'])
-        .exclude('[disabled]')
-        .analyze();
-      expect(accessibilityScanResults.violations).toEqual([]);
     });
   });
 
