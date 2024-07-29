@@ -91,8 +91,7 @@ $subheader-height: 60px;
     }
   }
 
-  .btn-primary {
-    background-color: $header-primary-btn-background-color;
+  .btn-primary:not([disabled]) {
     border: 1px solid $header-primary-btn-background-color;
 
     &:hover,
@@ -633,7 +632,7 @@ $subheader-height: 60px;
     }
 
     // Buttons in the header will all appear as Tertiary/Destructive-style
-    [class^='btn'] {
+    [class^='btn']:not(.btn-primary) {
       background-color: transparent;
       border: 1px solid transparent;
       border-radius: 8px;
@@ -713,6 +712,8 @@ $subheader-height: 60px;
 
       &[disabled] {
         color: $header-button-disabled-color !important;
+        background-color: transparent;
+        border: 1px solid transparent;
 
         .icon {
           color: $header-button-disabled-color !important;

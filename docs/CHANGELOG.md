@@ -14,6 +14,7 @@
 
 - `[Button]` Fixed a bug where disabled button are not properly rendered in widgets. ([#8893](https://github.com/infor-design/enterprise/issues/8893))
 - `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
+- `[Button]` Fixed primary buttons on header flex toolbar. ([#8669](https://github.com/infor-design/enterprise/issues/8669))
 - `[Cards]` Fixed a bug selected and deselected event are not triggered on action. ([NG#1731](https://github.com/infor-design/enterprise-ng/issues/1731))
 - `[Datagrid]` Fixed selecting issue on inline editor by adding `selectOnEdit` setting. ([#8870](https://github.com/infor-design/enterprise/issues/8870))
 - `[Datagrid]` Fixed a bug in search keyword not functioning properly when using special characters. ([#8864](https://github.com/infor-design/enterprise/issues/8864))
@@ -41,6 +42,7 @@
 ## v4.97.0 Fixes
 
 - `[Autocomplete]` Fixed losing focus on keydown. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
+- `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
 - `[Charts]` Fixed a bug where the `charts.setSelected()` method was not working in multiple charts in a single page. ([#NG#1671](https://github.com/infor-design/enterprise-ng/issues/1671))
 - `[Datagrid]` Fixed incorrect updates in commitCellEditUtil. ([#8850](https://github.com/infor-design/enterprise/issues/8850))
 - `[Datagrid]` Fixed a bug where button gets focus always during editing of lookup field. ([#8758](https://github.com/infor-design/enterprise/issues/8758))
