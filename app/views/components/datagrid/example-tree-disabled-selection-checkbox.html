@@ -1,0 +1,45 @@
+<div class="full-height full-width">
+  <div id="datagrid">
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    var grid,
+      columns = [];
+      const checkDisabled = (row, cell, value, item, rowData) => {
+        let isDisabled = false;
+        if (rowData.id === 2 || rowData.id === 1 || rowData.id === 5 || rowData.id === 8 || rowData.id === 11) {
+          isDisabled = true;
+        }
+        return isDisabled;
+      };
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'selectionCheckbox', width: 15, sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center', disabled: checkDisabled });
+      columns.push({ id: 'taskName', hideable: false, name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Soho.Formatters.Tree });
+      columns.push({ id: 'id', name: 'Id', field: 'id' });
+      columns.push({ id: 'desc', name: 'Description', field: 'desc' });
+      columns.push({ id: 'comments', name: 'Comments', field: 'comments', formatter: Soho.Formatters.Hyperlink });
+      columns.push({ id: 'time', name: 'Time', field: 'time' });
+
+      //Get some data via ajax
+      var url = '{{basepath}}api/tree-tasks';
+
+      $.getJSON(url, function (data) {
+
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: data,
+          treeGrid: true,
+          selectable: 'multiple',
+          toolbar: { title: 'Tasks (Hierarchical)', results: true, personalize: true, actions: true, rowHeight: true }
+        }).on('selected', function (e, args) {
+          console.log(args);
+        }).on('rowactivated', function (e, args) {
+          console.log(args);
+        });
+      });
+    });
+</script>
