@@ -149,12 +149,7 @@ stringUtils.count = function count(string, subString) {
  * @returns {boolean} true if the value is a valid URL
  */
 stringUtils.isValidURL = function isValidURL(val) {
-  const urlRegexPattern = new RegExp('^(https?:\\/\\/)?' + // validate protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // validate domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))' + // validate OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // validate port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?' + // validate query string
-    '(\\#[-a-z\\d_]*)?$', 'i'); // validate fragment locator
+  const urlRegexPattern = /^(https?:\/\/)?([^_.-][\w]+(\.[\w]+[^_.-])+|(\d{1,3}\.){3}\d{1,3})(:\d{1,5})?(\/\S*)?$/i;
   return !!urlRegexPattern.test(val);
 };
 
