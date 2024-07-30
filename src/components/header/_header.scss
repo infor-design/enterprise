@@ -26,11 +26,6 @@ $subheader-height: 60px;
     overflow: auto;
   }
 
-  ::selection {
-    background: $ids-color-palette-azure-90;
-    color: $inverse-color;
-  }
-
   .toolbar [class^='btn'] {
     &.is-open {
       .icon {

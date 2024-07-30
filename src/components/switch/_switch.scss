@@ -230,6 +230,10 @@ $handle-compact-width: 16px;
   }
 }
 
+html[dir='rtl'] .listview.personalize-col .field {
+  float: right;
+}
+
 // Rule to remove bottom padding on modal if its the last element.
 .modal-body-wrapper .switch:last-child {
   margin-bottom: 0;

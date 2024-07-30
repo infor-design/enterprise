@@ -23,11 +23,14 @@
 - `[Datagrid]` Fixed layout issue on switch in personalization dialog. ([#8913](https://github.com/infor-design/enterprise/issues/8913))
 - `[Datagrid]` Fixed asterisk being cut off when `textOverflow` is set to ellipsis. ([NG#1651](https://github.com/infor-design/enterprise-ng/issues/1651))
 - `[Datagrid]` Fixed an error expanding rows with frozen columns. ([#8889](https://github.com/infor-design/enterprise/issues/8889))
+- `[Datagrid]` Fixed incorrect layouts on the personalization dialog in RTL mode. ([#8924](https://github.com/infor-design/enterprise/issues/8924))
 - `[Datagrid]` Refresh pager when `applyFilter` is called. ([#8744](https://github.com/infor-design/enterprise/issues/8744))
 - `[Datagrid]` Fixed issue on selecting rows in group. ([NG#1740](https://github.com/infor-design/enterprise-ng/issues/1740))
+- `[Datepicker]` Fixed a bug where the readonly button could be hovered. ([#8923](https://github.com/infor-design/enterprise/issues/8923))
 - `[Modal]` Removed accordion fixed width when used in modal. ([NG#1719](https://github.com/infor-design/enterprise-ng/issues/1719))
 - `[Tab]` Selecting an item in the `appmenu` accordion will also select the corresponding assigned tab to it (via `tab-id`). ([NG#1665](https://github.com/infor-design/enterprise-ng/issues/1665))
 - `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8880](https://github.com/infor-design/enterprise/issues/8880))
+- `[Text]` Selecting text was not showing up in safari. ([#8926](https://github.com/infor-design/enterprise/issues/8926))
 - `[Switch]` Fix issue of not being able to click the label. ([#8896](https://github.com/infor-design/enterprise/issues/8896))
 
 ## v4.97.0
