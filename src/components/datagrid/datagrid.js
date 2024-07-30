@@ -8921,6 +8921,16 @@ Datagrid.prototype = {
     const self = this;
     const selectClasses = `is-selected${self.settings.selectable === 'mixed' ? ' hide-selected-color' : ''}`;
 
+    // Do not select if checkbox is disabled
+    const selectionCol = this.columnById('selectionCheckbox')[0];
+    const selectionIdx = this.columnIdxById('selectionCheckbox');
+    const disabledFunc = selectionCol?.disabled;
+
+    if (disabledFunc) {
+      const isDisabled = disabledFunc(index, selectionIdx, '', selectionCol, data);
+      if (isDisabled) return;
+    }
+
     // do not add if already exists in selected
     if ((!data || self.isRowSelected(data)) && !force) {
       return;
