@@ -1,5 +1,8 @@
 # What's New with Enterprise
 
+## v4.99.0
+- `[Datagrid]` Optimize the initial loading of datagrids with filterable setting. ([#8935](https://github.com/infor-design/enterprise-ng/issues/8935))
+
 ## v4.98.0
 
 ## v4.98.0 Features
