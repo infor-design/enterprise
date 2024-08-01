@@ -5363,8 +5363,8 @@ Datagrid.prototype = {
       if (this.settings.groupable) {
         arrayToTest = this.originalDataset;
       }
-      let rowStart = 0;
-      let arrayToTestlen = arrayToTest.length;
+      const rowStart = 0;
+      const arrayToTestlen = arrayToTest.length;
       for (let i = rowStart; i < arrayToTestlen; i++) {
         let val = this.fieldValue(arrayToTest[i], columnDef.field);
         const row = arrayToTest[i];
