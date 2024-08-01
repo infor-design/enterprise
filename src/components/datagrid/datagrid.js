@@ -5365,23 +5365,6 @@ Datagrid.prototype = {
       }
       let rowStart = 0;
       let arrayToTestlen = arrayToTest.length;
-      if (this.settings.paging === false) { // calculate what is visible in the screen only
-        let rowHt;
-        switch (this.settings.rowHeight) {
-          case 'normal':
-          case 'large':
-            rowHt = 40;
-            break;
-          case 'medium':
-            rowHt = 30;
-            break;
-          default:
-            rowHt = 25;
-        }
-        rowStart = Math.floor(this.element.find('.datagrid-wrapper.scrollable-x.scrollable-y').scrollTop() / rowHt);
-        const rowCnt = rowStart + Math.floor(this.element.closest('.h5-datagrid-container').height() / rowHt);
-        arrayToTestlen = arrayToTest.length < rowCnt ? arrayToTest.length : rowCnt;
-      }
       for (let i = rowStart; i < arrayToTestlen; i++) {
         let val = this.fieldValue(arrayToTest[i], columnDef.field);
         const row = arrayToTest[i];
