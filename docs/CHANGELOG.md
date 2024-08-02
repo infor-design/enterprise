@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.99.0 Fixes
+
+- `[Datagrid]` Remove modification in calculateTextWidth that had incorrect selectors. ([#8938](https://github.com/infor-design/enterprise/issues/8938))
+
 ## v4.98.0
 
 ## v4.98.0 Features
