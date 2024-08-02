@@ -2,6 +2,7 @@
 
 ## v4.99.0 Fixes
 
+- `[Datagrid]` Optimize the initial loading of datagrids with filterable setting. ([#8935](https://github.com/infor-design/enterprise-ng/issues/8935))
 - `[Datagrid]` Remove modification in calculateTextWidth that had incorrect selectors. ([#8938](https://github.com/infor-design/enterprise/issues/8938))
 
 ## v4.98.0
