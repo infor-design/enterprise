@@ -473,6 +473,12 @@ Spinbox.prototype = {
    * @returns {void}
    */
   updateVal(newVal) {
+    if (newVal > this.settings.max) {
+      newVal = this.settings.max;
+    } else if (newVal < this.settings.min) {
+      newVal = this.settings.min;
+    }
+
     this.element.val(newVal).trigger('change');
     this.updateAria(newVal);
   },

@@ -6,7 +6,7 @@ function cleanup() {
   exit $exit_code
 }
 
-function exit_trap () {
+function exit_trap() {
   local lc="$BASH_COMMAND" rc=$?
   echo "Command [$lc] exited with code [$rc]"
 }
@@ -35,9 +35,9 @@ function install_packages() {
   DEMO_PACKAGE_JSON_FILE=./app/package.json
 
   if test -f "$DEMO_PACKAGE_JSON_FILE"; then
-      cp -fr $DEMO_PACKAGE_JSON_FILE ./package.json && rm -fr ./package-lock.json
-      npm install
-      git checkout package.json package-lock.json
+    cp -fr $DEMO_PACKAGE_JSON_FILE ./package.json && rm -fr ./package-lock.json
+    npm install
+    git checkout package.json package-lock.json
   else
     npm install
   fi

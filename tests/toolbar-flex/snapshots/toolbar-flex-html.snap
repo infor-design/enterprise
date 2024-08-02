@@ -1,0 +1,24 @@
+<div class="flex-toolbar has-more-button do-resize" role="toolbar">
+        <div class="toolbar-section title">
+    
+          <h1>
+      <!--
+      -->
+
+      
+        <span>IDS Enterprise</span>
+      
+      </h1>
+    </div>
+
+        <!-- included in all "header-*.html" templates -->
+    <div class="more">
+      <button id="header-more-actions" class="btn-actions page-changer personalize-actionable has-tooltip no-ripple hide-focus" type="button" aria-label="Header More Actions Button" tabindex="0" aria-haspopup="true">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-more"></use>
+        </svg>
+        <span class="audible" data-translate="text" data-translate-key="More">More</span>
+      </button>
+      
+    </div>
+  </div>

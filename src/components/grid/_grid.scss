@@ -421,6 +421,13 @@ $gutter-neg-size: -20px;
   }
 }
 
+// Seperate fields in module nav
+.module-nav-container {
+  .columns .field {
+    margin-inline-end: 20px;
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .column,
@@ -460,6 +467,8 @@ html[dir='rtl'] {
     .twelve.columns,
     .full.column,
     .one-third.column,
+    .one-fourth.column,
+    .one-fifth.column,
     .two-thirds.column,
     .one-half.column {
       margin-left: inherit;

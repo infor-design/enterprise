@@ -40,7 +40,8 @@ $header-text-actionable-color: $header-text-default-color;
 // Inputs
 $input-color-focus-border: $ids-color-palette-slate-10;
 $input-border-color: $ids-color-palette-slate-30;
-
+$selected-text-color: $ids-color-palette-white;
+$selected-text-background-color: $ids-color-palette-azure-70;
 $homepage-header-menu-button-color: $ids-color-palette-white;
 
 // Form Background Color
@@ -192,7 +193,7 @@ $tooltip-error-color: $ids-color-palette-white;
 $badge-neutral-color: $ids-color-palette-white;
 $badge-neutral-icon-color: $ids-color-palette-white;
 $badge-neutral-bg-color: $ids-color-palette-slate-60;
-$badge-neutral-hover-bg-color: $ids-color-palette-slate-100;
+$badge-neutral-hover-bg-color: $ids-color-palette-slate-70;
 $badge-secondary-color: $ids-color-palette-white;
 $badge-secondary-bg-color: $ids-color-palette-slate-70;
 $badge-secondary-border-color: $ids-color-palette-slate-50;
@@ -476,10 +477,10 @@ $checkbox-color-unchecked-disabled-arrow: $ids-color-palette-slate-100;
 
 // Switch
 $radio-checked-color: $ids-color-brand-primary-base;
-$switch-checked-bg-color: $ids-color-palette-azure-30;
+$switch-checked-bg-color: $ids-color-palette-azure-60;
 $switch-unchecked-bg-color: $ids-color-palette-white;
-$switch-unchecked-bar-color: $ids-color-palette-slate-40;
-$switch-unchecked-border-color: $ids-color-palette-white;
+$switch-unchecked-bar-color: $ids-color-palette-slate-80;
+$switch-unchecked-border-color: $ids-color-palette-slate-60;
 $switch-unchecked-color: $ids-color-palette-slate-50;
 $switch-unchecked-pressed-bg-color: $ids-color-palette-slate-40;
 $switch-checked-disabled-bar-color: $ids-color-palette-azure-20;

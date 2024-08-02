@@ -1,0 +1,36 @@
+
+<div class="row">
+  <div class="full-width">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var columns = [], data = [];
+
+      // Some Sample Data
+      data.push({ id: 1, productId: 2142201, productName: 'Compressor', productFieldA: 'productFieldA', productFieldB: 'productFieldB', productFieldC: 'productFieldC'});
+
+      // Define Columns for the Grid.
+      columns.push({ id: 'productId', formatter: Soho.Formatters.Lookup, focusable: true, align: 'left', editor: Soho.Editors.Lookup, name: 'Product Id', field: 'productId'});
+      columns.push({ id: 'productName', formatter: Soho.Formatters.Lookup, focusable: true, align: 'left', editor: Soho.Editors.Lookup, name: 'Product Name', field: 'productName'});
+      columns.push({ id: 'productFieldA', formatter: Soho.Formatters.Lookup, focusable: true, align: 'left', editor: Soho.Editors.Lookup, name: 'Product Field A', field: 'productFieldA'});
+      columns.push({ id: 'productFieldB', formatter: Soho.Formatters.Lookup, focusable: true, align: 'left', editor: Soho.Editors.Lookup, name: 'Product Field B', field: 'productFieldB'});
+      columns.push({ id: 'productFieldC', formatter: Soho.Formatters.Lookup, focusable: true, align: 'left', editor: Soho.Editors.Lookup, name: 'Product Field C', field: 'productFieldC'});
+
+      // Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        editable: true,
+        selectable: 'single',
+        cellNavigation: false,
+        clickToSelect: true,
+        toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
+      }).data('datagrid');
+ });
+
+</script>

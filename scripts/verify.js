@@ -6,7 +6,7 @@
  * folder to ensure that all expected files are present.
  */
 import * as fs from 'fs';
-import glob from 'glob';
+import { glob } from 'glob';
 import * as path from 'path';
 import slash from 'slash';
 import { hideBin } from 'yargs/helpers';

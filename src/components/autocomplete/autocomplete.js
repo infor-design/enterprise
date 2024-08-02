@@ -137,7 +137,7 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
 * into the source method, and augmented with parameters specific to the implementation.
 * @param {boolean} [settings.template If defined, use this to draw the contents of each search result instead of the default draw routine.
 * @param {boolean} [settings.caseSensitive=false] if true, causes filter results that don't match case to be thrown out
-* @param {string} [settings.filterMode='startsWith'] The matching algorithm, startsWith, keyword and contains are supported - false will not filter client side
+* @param {string} [settings.filterMode='wordStartsWith'] The matching algorithm, wordStartsWith, startsWith, keyword and contains are supported - false will not filter client side
 * @param {boolean} [settings.delay=300] The delay between key strokes on the keypad before it thinks you stopped typing
 * @param {string} [settings.width=null] Width of the open auto complete menu
 * @param {string} [settings.offset=null] For the open menu, the left or top offset
@@ -537,7 +537,7 @@ Autocomplete.prototype = {
     }
 
     function highlight(item) {
-      item.addClass('is-selected').find('a').focus();
+      item.addClass('is-selected').find('a');
     }
 
     const excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';

@@ -1,0 +1,15 @@
+<div class="expandable-area" id="expandablearea-id-1" data-init="false" data-automation-id="expandablearea-automation-id-1">
+            <div class="expandable-header" aria-expanded="false" aria-controls="expandable-area-1-content" id="expandablearea-id-1-header" data-automation-id="expandablearea-automation-id-1-header">
+              <span class="title">Procurement</span>
+            </div>
+            <div class="expandable-pane" id="expandablearea-id-1-content" role="region" aria-labelledby="expandable-area-1-header" data-automation-id="expandablearea-automation-id-1-content" style="height: 0px; display: none;">
+              <div class="content">
+                <p>
+                  Ubiquitous out-of-the-box, scalable; communities disintermediate beta-test, enable utilize markets dynamic
+                  infomediaries virtual data-driven synergistic aggregate infrastructures, "cross-platform, feeds
+                  bleeding-edge tagclouds." Platforms extend interactive B2C benchmark proactive, embrace e-markets,
+                  transition generate peer-to-peer.
+                </p>
+              </div>
+            </div>
+          <div class="expandable-footer" id="expandablearea-id-1-footer" data-automation-id="expandablearea-automation-id-1-footer"><a href="#" target="_self" role="button" class="expandable-expander hyperlink hide-focus" aria-expanded="false" id="expandablearea-id-1-expander" data-automation-id="expandablearea-automation-id-1-expander"><span data-translated="true">Show more</span></a></div></div>

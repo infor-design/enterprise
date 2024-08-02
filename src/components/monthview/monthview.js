@@ -334,6 +334,10 @@ MonthView.prototype = {
     this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, this.settings.showWeekNumber ? this.monthAndWeekContainer : useElement);
 
     if (this.settings.showWeekNumber) {
+      this.validateWeekNumbers();
+    }
+
+    if (this.settings.showWeekNumber) {
       this.calendar.addClass('has-monthview-week-table');
     }
 
@@ -621,6 +625,21 @@ MonthView.prototype = {
   },
 
   /**
+   * Rechecks week numbers after appending monthview table to realign the number of weeks
+   */
+  validateWeekNumbers() {
+    if (!this.settings.showWeekNumber) {
+      return;
+    }
+
+    const weekCount = this.weekNumber.find('td').length;
+
+    if (this.settings.firstDayOfWeek > 0 && weekCount === 6) {
+      this.weekNumber.find('tr').last().hide();
+    }
+  },
+
+  /**
    * Update the calendar to show the given month and year
    * @param {number} month The zero based month to display
    * @param {number} year The year to display
@@ -636,6 +655,12 @@ MonthView.prototype = {
     now.setHours(0);
     now.setMinutes(0);
     now.setSeconds(0);
+
+    if (this.toUpdate !== undefined && this.toUpdate) {
+      s.activeDateIslamic = null;
+      delete this.currentDay;
+      delete this.toUpdate;
+    }
 
     let elementDate;
     if (this.isIslamic) {
@@ -796,7 +821,7 @@ MonthView.prototype = {
           const setHours = el => (el ? el.setHours(tHours, tMinutes, tSeconds, 0) : 0);
 
           const newDate = setHours(new Date(year, month, dayCnt));
-          const comparisonDate = self.currentDate || elementDate;
+          const comparisonDate = elementDate || self.currentDate;
           if (!(s.day && !s.activeDate) && newDate === setHours(comparisonDate)) {
             setSelected(th, true);
           }
@@ -858,6 +883,7 @@ MonthView.prototype = {
     const row = this.days.find('tr').eq(5);
     if (row.find('td.alternate').length === 7) {
       row.hide();
+      this.validateWeekNumbers();
     } else {
       row.show();
     }
@@ -1640,6 +1666,12 @@ MonthView.prototype = {
 
     // Change Month Events
     this.header.off('click.monthview').on('click.monthview', '.btn-icon.prev, .btn-icon.next', function () {
+      if (s.slideSelect) {
+        self.element.find('td').removeClass('slide-select-start');
+        self.element.find('td').removeClass('slide-select');
+        self.element.find('td').removeClass('slide-select-end');
+      }
+
       const isNext = $(this).is('.next');
       const range = {};
       const d = { month: self.currentMonth, year: self.currentYear };
@@ -1714,12 +1746,18 @@ MonthView.prototype = {
         .addClass('is-selectable')
         .off('click.monthview-day')
         .on('click.monthview-day', 'td', (e) => {
+          e.preventDefault();
           const key = e.currentTarget.getAttribute('data-key');
           this.lastClickedKey = key;
 
           if (e.currentTarget.classList.contains('is-disabled')) {
             return;
           }
+
+          if (s.slideSelect && e.shiftKey) {
+            return;
+          }
+
           this.selectDay(key, false, true, 'cell');
         });
     }
@@ -2151,7 +2189,13 @@ MonthView.prototype = {
    * @param {boolean} closePopup Send a flag to close the popup
    * @param {boolean} insertDate Send a flag to insert the date in the field
   */
-  selectDay(date, closePopup, insertDate, action = null) {
+  selectDay(date, closePopup, insertDate, action = null, endDate = undefined) {
+    // Check from onChangeWeek Callback
+    let monthDifference = false;
+    if (endDate !== undefined) {
+      monthDifference = date.getMonth() !== endDate.getMonth();
+    }
+
     if (this.isIslamic && typeof date !== 'string') {
       this.currentDateIslamic = Locale.gregorianToUmalqura(date);
       date = stringUtils.padDate(
@@ -2186,8 +2230,10 @@ MonthView.prototype = {
     this.currentDay = day;
 
     if (dayObj.length === 0 || dayObj[0].elem.hasClass('alternate')) {
-      // Show month
-      this.showMonth(month, year);
+      if (!monthDifference) {
+        // Show month
+        this.showMonth(month, year);
+      }
       dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
     }
 
@@ -2223,8 +2269,10 @@ MonthView.prototype = {
       this.element.trigger('selected', args);
     }
 
-    this.focusDate = this.currentDate;
-    this.focusDay();
+    if (!monthDifference) {
+      this.focusDate = this.currentDate;
+      this.focusDay();
+    }
   },
 
   /**
@@ -2319,6 +2367,7 @@ MonthView.prototype = {
    */
   handleKeys() {
     const s = this.settings;
+    const self = this;
 
     this.element.off('keydown.monthview').on('keydown.monthview', '.monthview-table', (e) => {
       const key = e.keyCode || e.charCode || 0;
@@ -2328,6 +2377,34 @@ MonthView.prototype = {
       let idx = null;
       let selector = null;
       let handled = false;
+
+      if (s.slideSelect) {
+        if (key === 37 && e.shiftKey) {
+          if (!$(e.target).hasClass('slide-select-start') && ($(e.target).prev().hasClass('slide-select') || $(e.target).prev().hasClass('slide-select-start'))) {
+            $(e.target).removeClass('slide-select');
+            $(e.target).removeClass('slide-select-end');
+
+            if (!$(e.target).prev().hasClass('slide-select-start')) {
+              $(e.target).prev().addClass('slide-select');
+            }
+
+            $(e.target).prev().addClass('slide-select-end');
+          }
+        } else if (key === 39 && e.shiftKey) {
+          if (($(e.target).hasClass('slide-select-start') ||
+            $(e.target).prev().hasClass('slide-select-end') ||
+            $(e.target).hasClass('slide-select-end')) && $(e.target).next().length > 0) {
+            $(e.target).removeClass('slide-select-end');
+            $(e.target).next().addClass('slide-select');
+            $(e.target).next().addClass('slide-select-end');
+          } else {
+            self.clearSlideSelect();
+          }
+        } else if ((key === 37 && !e.shiftKey) || (key === 39 && !e.shiftKey) || key === 40 || key === 38) {
+          self.clearSlideSelect();
+        }
+      }
+
       const minDate = new Date(s.disable.minDate);
       const maxDate = new Date(s.disable.maxDate);
       const resetRange = () => {
@@ -2582,6 +2659,13 @@ MonthView.prototype = {
         }
 
         this.selectDay(this.currentDate, true, true);
+
+        if (s.slideSelect) {
+          self.clearSlideSelect();
+          $(e.target).addClass('slide-select-start');
+          $(e.target).addClass('slide-select-end');
+        }
+
         this.setRipple(e.target?.querySelector('.is-ripple'), e);
       }
 
@@ -2592,6 +2676,12 @@ MonthView.prototype = {
       }
       return true;
     });
+  },
+
+  clearSlideSelect() {
+    this.element.find('td').removeClass('slide-select-start');
+    this.element.find('td').removeClass('slide-select');
+    this.element.find('td').removeClass('slide-select-end');
   },
 
   /**
@@ -2988,11 +3078,13 @@ MonthView.prototype = {
 
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+      this.toUpdate = true;
     }
 
-    return this
-      .destroy()
-      .init();
+    this.element.empty();
+    this.init();
+
+    return this;
   },
 
   /**

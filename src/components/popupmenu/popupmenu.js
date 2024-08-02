@@ -860,7 +860,7 @@ PopupMenu.prototype = {
       return;
     }
 
-    const itemA = item.querySelector('a');
+    const itemA = item.className.includes('heading') ? item : item.querySelector('a');
     const itemIcon = item.querySelector('.icon:not(.close):not(.icon-dropdown)');
     let itemIconUse;
 
@@ -982,10 +982,11 @@ PopupMenu.prototype = {
         self.holdingDownClick = true;
       }
 
-      if (self.isOpen) {
+      if (isLeftClick && self.isOpen) {
         self.close();
         return;
       }
+
       doOpen(e);
     }
 
@@ -2235,11 +2236,18 @@ PopupMenu.prototype = {
     li.parent().children('li').removeClass('is-focused');
     li.addClass('is-focused');
 
-    // Prevent chrome from scrolling - toolbar
-    if (anchor) {
-      anchor.focus();
+    if (this.element.is('.autocomplete')) {
+      li.parent().children('li').removeClass('is-selected');
+      li.addClass('is-selected');
     }
-    li.closest('.header').scrollTop(0);
+
+    // Prevent chrome from scrolling - toolbar
+    if (!this.element.is('.autocomplete')) {
+      if (anchor) {
+        anchor.focus();
+      }
+      li.closest('.header').scrollTop(0);
+    }
   },
 
   /**

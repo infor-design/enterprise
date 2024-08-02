@@ -1,0 +1,17 @@
+<ul class="tab-list" role="tablist">
+              <li class="tab" role="tab">
+                <a id="tabs-a-contracts" data-automation-id="tabs-a-contracts" href="#tabs-normal-contracts" role="tab" aria-selected="false" tabindex="-1">Contracts</a>
+              </li>
+              <li class="tab" role="tab">
+                <a id="tabs-a-opportunities" data-automation-id="tabs-a-opportunities" href="#tabs-normal-opportunities" role="tab" aria-selected="false" tabindex="-1">Opportunities</a>
+              </li>
+              <li class="tab is-selected" role="tab">
+                <a id="tabs-a-attachments" data-automation-id="tabs-a-attachments" href="#tabs-normal-attachments" role="tab" aria-selected="true" tabindex="0">Attachments</a>
+              </li>
+              <li class="tab" role="tab">
+                <a id="tabs-a-contacts" data-automation-id="tabs-a-contacts" href="#tabs-normal-contacts" role="tab" aria-selected="false" tabindex="-1">Contacts</a>
+              </li>
+              <li class="tab" role="tab">
+                <a id="tabs-a-notes" data-automation-id="tabs-a-notes" href="#tabs-normal-notes" role="tab" aria-selected="false" tabindex="-1">Notes</a>
+              </li>
+            </ul>

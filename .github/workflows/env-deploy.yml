@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -34,7 +34,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: node_modules
-          key: enterprise-1022
+          key: enterprise-1023
 
       - uses: szenius/set-timezone@v1.0
         with:

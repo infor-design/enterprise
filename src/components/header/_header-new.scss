@@ -244,7 +244,7 @@
 .personalize-subheader {
   .toolbar,
   .flex-toolbar {
-    [class^='btn'] {
+    [class^='btn']:not(.btn-primary) {
       &:not(.close):not(.collapse-button):not([disabled]):hover {
         color: $button-color-tertiary-hover-text-new;
         background-color: $button-color-tertiary-hover-background-new;

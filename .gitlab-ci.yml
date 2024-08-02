@@ -1,0 +1,124 @@
+stages:
+  - test
+  - build
+  - deploy
+
+node_testing:
+  stage: test
+  tags:
+    - dsa
+    - DIND
+  image: node:18
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  script:
+    - git config --global --add safe.directory /builds/infor-design/ids-legacy
+    - npm ci
+
+install_packages:
+  stage: build
+  tags:
+    - dsa
+    - DIND
+  image: node:18
+  script: |
+    git config --global --add safe.directory /builds/infor-design/ids-legacy
+    DEMO_PACKAGE_JSON_FILE=./app/package.json
+
+    if test -f "$DEMO_PACKAGE_JSON_FILE"; then
+      cp -fr $DEMO_PACKAGE_JSON_FILE ./package.json && rm -fr ./package-lock.json
+      npm install
+      git checkout package.json package-lock.json
+    else
+      npm install
+    fi
+
+    npm run build
+    npm run build:demoapp
+
+create_docker_file:
+  stage: build
+  tags:
+    - dsa
+    - DIND
+  needs:
+    - install_packages
+  image: ubuntu:latest
+  script: |
+    echo "FROM hookandloop/sohoxi-demo:1.0.1" > Dockerfile
+    echo "ADD ./ /controls" >> Dockerfile
+    echo "ADD ./dist /www/data/artifacts" >> Dockerfile
+    echo "ADD ./docs /www/data/docs" >> Dockerfile
+    echo "RUN chown -R www-data.www-data /www/data" >> Dockerfile
+  variables:
+    GIT_STRATEGY: fetch
+    GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp/"
+
+build_push_image:
+  stage: build
+  tags:
+    - dsa
+    - DIND
+  needs:
+    - create_docker_file
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
+  image:
+    name: gcr.io/kaniko-project/executor:v1.14.0-debug
+    entrypoint: [""]
+  script:
+    - echo -n "{\"auths\":{\"https://index.docker.io/v1/\":{\"auth\":\"$(echo -n $DOCKERHUB_USERNAME:$DOCKERHUB_TOKEN | base64)\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "hookandloop/enterprise:test"
+  variables:
+    GIT_STRATEGY: fetch
+    GIT_CLEAN_FLAGS: "-xdfq --exclude=app/dist/ --exclude=dist/ --exclude=node_modules/ --exclude=src/components/*/theme-*.html --exclude=temp --exclude=Dockerfile"
+
+deploy:
+  stage: deploy
+  image: python:3.12
+  tags:
+    - dsa
+    - DIND
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY_DEPLOYMENTS" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - git config --global user.email "$GITLAB_USER_EMAIL"
+    - git config --global user.name "$GITLAB_USER_NAME"
+  script: |
+    git config --global --add safe.directory /builds/infor-design/ids-legacy
+    git clone ssh://git@oxfordssh.awsdev.infor.com:7999/infor-design/deployments.git deployments
+    CHANGES=$(git status --porcelain)
+
+    if [[ -z $CHANGES ]]; then
+      echo "no changes found"
+      exit 0
+    fi
+
+    python -m pip install pyyaml pytz
+
+    IMAGE_VERSION=$(echo ${CI_COMMIT_REF_NAME})
+    SERVICE_NAME=${IMAGE_VERSION//./}
+    SERVICE_NAME=$(echo "$SERVICE_NAME" | tr '[:punct:]' '-' | tr '[:upper:]' '[:lower:]')
+    SERVICE_FOLDER=enterprise-${SERVICE_NAME}
+
+    cd deployments/enterprise
+    rm -rf $SERVICE_FOLDER 2>/dev/null
+
+    mkdir -p $SERVICE_FOLDER && cp -R $CI_PROJECT_DIR/scripts/deploy-environment/manifests/* $SERVICE_FOLDER/
+    sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $SERVICE_FOLDER/ingress.yaml
+    sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $SERVICE_FOLDER/service.yaml
+    sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $SERVICE_FOLDER/deployment.yaml
+    sed -i -e "s/%IMAGE_VERSION%/$IMAGE_VERSION/g" $SERVICE_FOLDER/deployment.yaml
+    python $CI_PROJECT_DIR/scripts/deploy-environment/scripts/annotations.py -p $CI_PROJECT_DIR/deployments/enterprise/$SERVICE_FOLDER/deployment.yaml
+
+    git add *
+    git commit -am "$CHANGES"
+    git push origin main

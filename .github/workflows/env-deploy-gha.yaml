@@ -9,6 +9,10 @@ jobs:
     name: Build and push image
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [20.x]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -48,7 +52,7 @@ jobs:
           ref: main
           path: apps
           token: ${{ secrets.GH_ACCESS_TOKEN }}
-      
+
       - name: Push app update
         run: |
           source ${GITHUB_WORKSPACE}/scripts/deploy-environment/utils.sh
@@ -67,8 +71,6 @@ jobs:
           sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $WORKDIR/$SERVICE_NAME/deployment.yaml
           sed -i -e "s/%IMAGE_VERSION%/$IMAGE_VERSION/g" $WORKDIR/$SERVICE_NAME/deployment.yaml
           python $WORKDIR/scripts/deploy-environment/scripts/annotations.py -p $WORKDIR/$SERVICE_NAME/deployment.yaml
-
-          echo python -V
 
           mkdir -p $REPOROOT/enterprise/enterprise-$SERVICE_NAME/
           mv -f $WORKDIR/$SERVICE_NAME/* $REPOROOT/enterprise/enterprise-$SERVICE_NAME/
@@ -92,3 +94,15 @@ jobs:
           repository: infor-design/apps
           github_token: ${{ secrets.GH_ACCESS_TOKEN }}
           branch: main
+  
+      - name: Install Browsers
+        run: npx playwright install --with-deps
+
+      - name: Install
+        run: npm ci
+
+      - name: Run Tests
+        run: npx percy exec -- npm run test:ci
+        env:
+          NODE_OPTIONS: "--max-old-space-size=8192"
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}

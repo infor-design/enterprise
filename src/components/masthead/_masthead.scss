@@ -235,9 +235,12 @@
   .image-round {
     font-size: 1.2rem;
     height: 29px;
+    min-height: 29px;
     line-height: 29px;
+    margin-left: -4px;
     margin-right: 0;
     width: 29px;
+    min-width: 29px;
   }
 
   .image-user-status {

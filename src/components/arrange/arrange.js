@@ -229,6 +229,7 @@ Arrange.prototype = {
             }
             return false;// eslint-disable-line
           }
+
           isHandle = false;
           self.dragging = $(this);
 

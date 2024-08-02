@@ -322,7 +322,7 @@ Cards.prototype = {
      * @property {object} event - The jQuery event object
      * @property {object} ui - The dialog object
      */
-    this.element.triggerHandler(isSelected ? 'deselected' : 'selected', [{ selectedRows: this.selectedRows, action }]);
+    this.element.trigger(isSelected ? 'deselected' : 'selected', [{ selectedRows: this.selectedRows, action }]);
   },
 
   /**

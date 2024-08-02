@@ -661,10 +661,20 @@ button {
 
   &.btn {
     color: $button-color-primary-initial-font;
+
+    .icon {
+      color: $button-color-primary-initial-font;
+    }
   }
 
   .icon {
     color: $button-color-primary-initial-font;
+  }
+
+  &.btn-icon {
+    .icon {
+      color:  $button-color-primary-initial-font;
+    }
   }
 
   // In case both are specified
@@ -700,8 +710,7 @@ button {
     }
   }
 
-  &[disabled],
-  &[disabled]:hover {
+  &[disabled] {
     background-color: $button-color-primary-disabled-background;
     border-color: $button-color-primary-disabled-border;
     box-shadow: none;
@@ -863,24 +872,6 @@ a.btn-close {
   .ripple-effect {
     background: $secondary-btn-ripple-color;
   }
-
-  // Menu Button Form
-  &.btn-menu {
-    color: $button-color-secondary-initial-font;
-
-    .icon {
-      color: $button-color-secondary-initial-font;
-    }
-
-    &:hover,
-    &.is-open {
-      color: $button-color-secondary-initial-font;
-
-      .icon {
-        color: $button-color-secondary-initial-font;
-      }
-    }
-  }
 }
 
 // Destructive Actions / Third Level Button
@@ -896,7 +887,7 @@ a.btn-close {
   color: $button-color-tertiary-initial-font;
   overflow: hidden;
 
-  &:hover:not([disabled]) {
+  &:hover:not([disabled]):not(.btn-primary):not(.btn-secondary) {
     background-color: $button-color-tertiary-hover-background-new !important;
     color: $button-color-tertiary-hover-text;
 
@@ -1226,7 +1217,7 @@ a.btn-close {
   .btn-icon,
   .btn-actions,
   .btn-close {
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 0;
   }
 

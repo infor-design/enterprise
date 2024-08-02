@@ -389,7 +389,8 @@ const formatters = {
     }
 
     ariaString = xssUtils.ensureAlphaNumericWithSpaces(ariaString);
-    return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString)}" class="datagrid-checkbox datagrid-selection-checkbox${(isChecked ? ' is-checked no-animate' : '')}"></span></div>`;
+    const disabledClass = isColumnDisabled(row, cell, value, col, item) ? ' disabled' : '';
+    return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString).trim()}" class="datagrid-checkbox datagrid-selection-checkbox${(isChecked ? ' is-checked no-animate' : '')}${disabledClass}"></span></div>`;
   },
 
   SelectionRadio(row, cell, value, col, item, api) {

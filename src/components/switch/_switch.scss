@@ -1,25 +1,50 @@
 // Switch
 //================================================== //
 
+$slider-width: 40px;
+$slider-height: 24px;
+$slider-compact-height: 20px;
+$slider-compact-width: 34px;
+$handle-width: 20px;
+$handle-compact-width: 16px;
+
+@mixin switch-compact {
+  input:empty {
+    ~ .label-text,
+    ~ label {
+      font-size: $input-size-compact-font-size;
+      margin-bottom: calc($form-size-field-compact-margin-bottom / 2) + 2;
+      padding-left: 38px;
+    }
+
+    ~ .label-text::before,
+    ~ label::before {
+      width: $slider-compact-width;
+      height: $slider-compact-height;
+    }
+
+    ~ .label-text::after,
+    ~ label::after {
+      width: $handle-compact-width;
+      height: $handle-compact-width;
+    }
+  }
+
+  input:checked {
+    ~ .label-text::after,
+    ~ label::after {
+      inset-inline-start: 16px;
+    }
+  }
+}
+
 .switch {
   clear: both;
   display: block;
   margin: 0;
   position: relative;
 
-  // Text Label
-  label {
-    color: $label-color;
-    display: inline-block;
-    font-size: $ids-size-font-base;
-    padding-left: 42px;
-
-    &.inline {
-      margin-bottom: 0;
-    }
-  }
-
-  // Invisible Input
+  // Invisible Native Input
   input {
     border: none;
     clip: rect(0, 0, 0, 0);
@@ -31,16 +56,35 @@
     }
   }
 
+  // Text Label
+  label {
+    color: $label-color;
+    font-size: $ids-size-font-base;
+    display: inline-flex;
+    min-height: $slider-height;
+    position: relative;
+    padding-inline-start: ($slider-width + 8px);
+    margin-bottom: calc($form-size-field-regular-margin-bottom / 2 ) + 2;
+    cursor: pointer;
+
+    &.inline {
+      margin-bottom: 0;
+    }
+  }
+
+  label::before,
+  label::after,
+  .label-text::before,
+  .label-text::after {
+    pointer-events: all;
+  }
+
+
   // Unchecked Styling
   input:empty {
     ~ .label-text,
     ~ label {
       @include no-select();
-
-      cursor: pointer;
-      line-height: 16px;
-      margin-bottom: calc($form-size-field-regular-margin-bottom / 2 ) + 2;
-      position: relative;
 
       &:hover {
         &::after {
@@ -52,12 +96,14 @@
     // ::before is the bar
     ~ .label-text::before,
     ~ label::before {
+      width: $slider-width;
+      height: $slider-height;
+      border: 1px solid $switch-unchecked-border-color;
       background-color: $switch-unchecked-bar-color;
-      border-radius: 4px;
-      height: 4px;
-      left: 0;
-      top: 7px;
-      width: 31px;
+      border-radius: 99px;
+      box-sizing: border-box;
+      inset-inline-start: 0;
+      top: -2px;
     }
 
     ~ .label-text::before,
@@ -74,140 +120,121 @@
     // ::after is the actual sphere
     ~ .label-text::after,
     ~ label::after {
-      background-color: $switch-unchecked-bg-color;
-      border: 1px solid $switch-unchecked-border-color;
-      border-radius: 50%;
-      height: 14px;
-      left: 0;
+      width: $handle-width;
+      height: $handle-width;
+      background-color: $ids-color-palette-white;
+      border-radius: 99px;
+      inset-inline-start: 2px;
       top: 0;
-      width: 14px;
     }
   }
 
-  //Checked Styling - Inner
+  // Checked Styling - Inner
   input:checked ~ .label-text::before,
   input:checked ~ label::before {
     background-color: $switch-checked-bg-color;
+    border-color: $switch-checked-bg-color;
   }
 
-  //Checked Styling - Toggle Handle
+  // Checked Styling - Toggle Handle
   input:checked ~ .label-text::after,
   input:checked ~ label::after {
-    background: $radio-color-checked-initial-fill;
     border-color: $radio-color-checked-initial-fill;
-    left: 15px;
+    inset-inline-start: 18px;
   }
 
-  // Active State
-  input:not(:disabled):active ~ .label-text::after,
-  input:not(:disabled):not(.hide-focus):focus ~ .label-text::after,
-  input:not(:disabled):active ~ label::after,
-  input:not(:disabled):not(.hide-focus):focus ~ label::after {
-    background-color: $switch-unchecked-pressed-bg-color;
-    box-shadow: $switch-focus-box-shadow;
+  // Focused State
+  input:focus-visible ~ label::before {
+    box-shadow: 0 0 3px 1px $switch-checked-bg-color;
   }
 
-  input:not(:disabled):checked:active ~ .label-text::after,
-  input:not(:disabled):checked:focus ~ .label-text::after,
-  input:not(:disabled):checked:active ~ label::after,
-  input:not(:disabled):checked:focus ~ label::after {
-    background-color: $radio-color-checked-initial-fill;
+  // Disabled
+  input:disabled {
+    ~ label,
+    ~ .label-text {
+      opacity: .4;
+      cursor: default;
+      pointer-events: none;
+    }
   }
 
-  input:not(:disabled):checked:hover ~ .label-text::after,
-  input:not(:disabled):checked:hover ~ label::after {
-    background-color: $switch-checked-hover-color;
+  // Compact
+  &.compact {
+    @include switch-compact();
+  }
+}
+
+// Switch in Compact Form Layout
+.form-layout-compact {
+  .switch {
+    @include switch-compact();
+  }
+}
+
+// Switch in listview
+.listview.personalize-col {
+  &.is-selectable li {
+    cursor: auto;
   }
 
-  //Disabled
-  input:disabled ~ .label-text,
-  input:disabled ~ label {
-    color: $switch-disabled-label-color;
-    cursor: default;
+  .switch {
+    .label-text {
+      position: relative;
+      top: 2px;
+    }
 
-    &:hover {
-      &::after {
-        box-shadow: none;
+    input ~ .label-text::before,
+    input ~ label::before {
+      inset-inline-start: 235px;
+      top: -3px;
+    }
+
+    input:empty ~ .label-text::after,
+    input:empty ~ label::after {
+      inset-inline-start: 253px;
+      top: -1px;
+    }
+
+    input:checked ~ .label-text::after,
+    input:checked ~ label::after {
+      inset-inline-start: 254px;
+      top: -1px;
+    }
+  }
+
+  li.child {
+    &.arrange-dragging {
+      background-color: $listview-bg-color;
+    }
+
+    .switch {
+      input ~ .label-text::before,
+      input ~ label::before {
+        inset-inline-start: 220px;
+      }
+
+      input:empty ~ .label-text::after,
+      input:empty ~ label::after {
+        inset-inline-start: 215px;
+      }
+
+      input:checked ~ .label-text::after,
+      input:checked ~ label::after {
+        inset-inline-start: 235px;
       }
     }
   }
 
-  input:disabled ~ .label-text::before,
-  input:disabled ~ label::before {
-    background-color: $switch-disabled-bar-color;
-  }
-
-  input:disabled ~ .label-text::after,
-  input:disabled ~ label::after {
-    background-color: $switch-disabled-bg-color;
-    border-color: $switch-disabled-border-color;
-  }
-
-  input:disabled:checked ~ .label-text::before,
-  input:disabled:checked ~ label::before {
-    background-color: $switch-checked-disabled-bar-color;
-  }
-
-  input:disabled:checked ~ .label-text::after,
-  input:disabled:checked ~ label::after {
-    background-color: $switch-checked-disabled-bg-color;
-    border-color: $switch-checked-disabled-border-color;
+  li.arrange-placeholder.draggable {
+    background-color: transparent;
   }
 }
 
-.form-layout-compact {
-  .switch {
-    input:empty ~ .label-text,
-    input:empty ~ label {
-      font-size: $input-size-compact-font-size;
-      margin-bottom: calc($form-size-field-compact-margin-bottom / 2) + 2;
-      padding-left: 38px;
-    }
-  }
+html[dir='rtl'] .listview.personalize-col .field {
+  float: right;
 }
 
 // Rule to remove bottom padding on modal if its the last element.
 .modal-body-wrapper .switch:last-child {
   margin-bottom: 0;
-}
-
-// RTL Styles
-html[dir='rtl'] {
-  .switch {
-    input {
-      border: 0;
-      padding: 0;
-      width: 0;
-    }
-
-    label {
-      padding-left: 0;
-      padding-right: 42px;
-    }
-
-    // Unchecked Styling
-    input:empty {
-      margin-left: 0;
-      margin-right: -9999px;
-
-      ~ .label-text::before,
-      ~ label::before {
-        left: auto;
-        right: 0;
-      }
-
-      ~ .label-text::after,
-      ~ label::after {
-        left: auto;
-        right: 0;
-      }
-    }
-
-    // Checked Styling - Toggle Handle
-    input:checked ~ .label-text::after,
-    input:checked ~ label::after {
-      left: auto;
-      right: 15px;
-    }
-  }
 }

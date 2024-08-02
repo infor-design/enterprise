@@ -11,10 +11,6 @@
   &:hover {
     background-color: $button-color-primary-hover-background;
     border: 2px solid $button-color-primary-hover-background;
-
-    &.btn {
-      color: $button-color-primary-initial-font;
-    }
   }
 
   &:active {
@@ -58,7 +54,7 @@
   background-color: $button-color-primary-initial-background;
   border: 2px solid $button-color-primary-initial-background;
   color: $button-color-primary-initial-font;
-  opacity: 0.4;
+  opacity: $button-disabled-opacity;
 
   svg.icon {
     color: $button-color-primary-initial-font;
@@ -176,7 +172,7 @@
     padding: 0;
   }
 
-  &:hover:not([disabled]):not(.btn-primary):not(.trigger) {
+  &:hover:not([disabled]):not(.btn-primary):not(.btn-secondary):not(.trigger):not(.application-menu-trigger) {
     &:not(:disabled) {
       background-color: $button-color-tertiary-hover-background-new;
       color: $button-color-tertiary-hover-text-new;
@@ -185,7 +181,7 @@
     &.close,
     &.btn-filter,
     &.personalize-actionable {
-      background-color: unset;
+      background-color: unset !important;
       color: unset;
     }
 

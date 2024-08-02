@@ -1998,6 +1998,7 @@ $datagrid-small-row-height: 25px;
 
     .is-editing .datagrid-cell-wrapper {
       padding: 2px 4px 0 !important;
+      text-overflow: initial;
     }
 
     .datagrid-cell-wrapper {
@@ -3063,14 +3064,6 @@ $datagrid-small-row-height: 25px;
         min-height: $datagrid-row-height + 7;
       }
 
-      .datagrid-cell-wrapper {
-        left: 0;
-        position: absolute;
-        text-overflow: clip;
-        top: 0;
-        width: 100%;
-      }
-
       .lookup-wrapper {
         margin-bottom: 0;
         padding-left: 0;
@@ -3401,6 +3394,11 @@ $datagrid-small-row-height: 25px;
         }
       }
 
+      &.is-tag .datagrid-cell-wrapper {
+        text-overflow: initial;
+        left: -2px;
+      }
+
       &:not(.has-editor) {
         .trigger + .icon {
           display: none;
@@ -3580,6 +3578,7 @@ $datagrid-small-row-height: 25px;
       &.required::after {
         @include required-indicator();
 
+        position: static;
         color: $datagrid-required-icon-color;
       }
     }
@@ -3623,9 +3622,8 @@ $datagrid-small-row-height: 25px;
 
     // Editing and Focus State
     &:focus {
-      background-color: $datagrid-header-focus-bg-color;
       color: $datagrid-header-color;
-      outline: 1px solid $datagrid-header-focus-border-color;
+      outline: 1px solid $datagrid-header-focus-bg-color;
       outline-offset: -2px;
 
       .icon {
@@ -3920,7 +3918,7 @@ $datagrid-small-row-height: 25px;
 
     .lookup-wrapper {
       background-color: transparent;
-      display: inline;
+      display: inline-block;
       left: 0;
       vertical-align: top;
       width: calc(100% - 44px);
@@ -3929,7 +3927,7 @@ $datagrid-small-row-height: 25px;
         background-color: transparent;
         left: 10px;
         padding-right: 20px;
-        width: calc(100% - 44px);
+        width: 100%;
 
         &:not(:disabled) + .trigger > .icon:hover,
         &:hover:not(:disabled) + .trigger > .icon {
@@ -4334,6 +4332,15 @@ td .btn-actions {
     position: relative;
     top: -14px;
   }
+
+  &.datagrid-selection-checkbox.disabled {
+    cursor: default;
+
+    &::before {
+      background-color: $checkbox-color-unchecked-disabled-background;
+      border-color: $checkbox-color-unchecked-disabled-border;
+    }
+  }
 }
 
 .datagrid > tbody > tr.datagrid-row {
@@ -4624,7 +4631,7 @@ td .btn-actions {
   }
 
   &:hover:not([disabled]) {
-    background-color: $button-color-tertiary-hover-background;
+    background-color: transparent !important;
 
     .icon.plus-minus::before,
     .icon.plus-minus::after {
@@ -5718,6 +5725,7 @@ html[dir='rtl'] {
     .required::after {
       @include required-indicator();
 
+      position: static;
       color: $datagrid-required-icon-color;
       left: -2px;
       top: 0;
@@ -6053,12 +6061,8 @@ html[dir='rtl'] {
   }
 
   li {
-    height: 30px;
-    padding: 0 15px;
-
-    &:first-child {
-      margin-top: 3px;
-    }
+    height: 45px;
+    padding: 9px 15px;
   }
 
   .searchfield-wrapper {
@@ -6174,12 +6178,16 @@ html[dir='rtl'] {
 // Modal
 .modal {
   &.datagrid-columns-dialog {
+    min-width: 400px;
+
     .listview-search.alternate-bg .searchfield-wrapper {
       background-color: $listview-bg-color;
     }
 
-    .listview.alternate-bg {
-      background-color: $listview-bg-color;
+    .listview {
+      &.alternate-bg {
+        background-color: $listview-bg-color;
+      }
     }
 
     .listview-search {

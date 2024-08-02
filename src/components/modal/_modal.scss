@@ -183,6 +183,10 @@
         margin-top: 0;
       }
     }
+
+    @media (max-width: 380px) {
+      margin: 0;
+    }
   }
 
   &.is-draggable {
@@ -277,7 +281,7 @@
   .accordion {
     @media (min-width: ($breakpoint-phone + 1px)) {
       max-width: 100%;
-      width: 300px;
+      width: inherit;
     }
   }
 
@@ -575,6 +579,16 @@ body.modal-engaged {
 
   p:last-child {
     padding-bottom: 0;
+  }
+
+  &.propagate-style {
+    max-height: inherit;
+    max-width: inherit;
+    overflow: inherit;
+  }
+
+  &.compact {
+    padding: 0;
   }
 }
 

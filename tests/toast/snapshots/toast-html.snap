@@ -1,0 +1,9 @@
+<div class="toast effect-scale" id="toast-id-1">
+        <span aria-relevant="additions text" aria-live="polite">
+          <span class="toast-title">Application Offline</span>
+          <span class="toast-message">This is a Toast message.</span>
+        </span>
+      <div class="toast-progress" style="width: 99.165%;"></div><button type="button" class="btn-icon btn-close" title="Close" aria-hidden="true" id="toast-id-1-btn-close">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-close"></use></svg>
+        <span class="audible">Close</span>
+      </button></div>

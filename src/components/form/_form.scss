@@ -73,7 +73,7 @@
     }
 
     .label,
-    label {
+    label:not(.fileupload-adv-browse-lbl) {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -155,6 +155,65 @@
 
   .form-responsive .checkbox-group-label + .compound-field .field .checkbox-label {
     margin-bottom: 0;
+  }
+}
+
+.form-responsive {
+  .fileupload-wrapper.standalone {
+    padding: 25px 0;
+  }
+
+  .fileupload-wrapper {
+    min-width: unset;
+
+    .container {
+      .file-row {
+        .status-icon {
+          .icon {
+            top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: $breakpoint-phone-to-tablet) and (max-width: $breakpoint-wide-tablet) {
+    .column {
+      &.one-fourth,
+      &.one-fifth {
+        .fileupload-wrapper {
+          .container.drop-area {
+            padding: 20px 15px;
+          }
+    
+          .container {
+            .file-row {
+              .description {
+                max-width: calc(100% - 45px);
+              }
+    
+              .size {
+                margin: 0;
+                width: calc(100% - 10px);
+              }
+            }
+    
+            .l-pull-right {
+              float: unset;
+              text-align: center;
+            }
+    
+            &.completed {
+              .file-row {
+                .size {
+                  width: inherit;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 

@@ -39,7 +39,7 @@ $trigger-size: 30px;
 }
 
 .colorpicker-input-xs {
-  width: 18px !important;
+  width: 41px !important;
 }
 
 .colorpicker-input-sm {
@@ -221,7 +221,7 @@ $trigger-size: 30px;
   .colorpicker {
     border: 0;
     max-height: 34px;
-    padding: 7px 0 10px 10px;
+    padding: 10px 0 10px 10px;
     text-overflow: ellipsis;
     width: 93px; //Small Size
 
@@ -402,12 +402,6 @@ html[dir='rtl'] {
       position: relative;
       right: -35px;
       text-align: left;
-    }
-
-    .swatch {
-      left: 0;
-      position: relative;
-      right: 87px;
     }
 
     .trigger .icon {

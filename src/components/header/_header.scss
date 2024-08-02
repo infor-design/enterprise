@@ -16,7 +16,7 @@ $subheader-height: 60px;
   /* stylelint-disable-next-line selector-type-no-unknown */
   ids-breadcrumb {
     margin: 0 8px;
-    width: calc(100% - 32px);
+    width: calc(100% - 16px);
     position: relative;
     top: 12px;
     display: inline-flex;
@@ -24,11 +24,6 @@ $subheader-height: 60px;
 
   &.scrollable {
     overflow: auto;
-  }
-
-  ::selection {
-    background: $ids-color-palette-azure-90;
-    color: $inverse-color;
   }
 
   .toolbar [class^='btn'] {
@@ -91,8 +86,7 @@ $subheader-height: 60px;
     }
   }
 
-  .btn-primary {
-    background-color: $header-primary-btn-background-color;
+  .btn-primary:not([disabled]) {
     border: 1px solid $header-primary-btn-background-color;
 
     &:hover,
@@ -633,7 +627,7 @@ $subheader-height: 60px;
     }
 
     // Buttons in the header will all appear as Tertiary/Destructive-style
-    [class^='btn'] {
+    [class^='btn']:not(.btn-primary) {
       background-color: transparent;
       border: 1px solid transparent;
       border-radius: 8px;
@@ -713,6 +707,8 @@ $subheader-height: 60px;
 
       &[disabled] {
         color: $header-button-disabled-color !important;
+        background-color: transparent;
+        border: 1px solid transparent;
 
         .icon {
           color: $header-button-disabled-color !important;

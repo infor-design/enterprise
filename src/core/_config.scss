@@ -9,7 +9,7 @@ $transparent: transparent;
 
 $header-button-disabled-color: rgba(0, 0, 0, 0.3);
 $header-primary-btn-background-color: $ids-color-palette-azure-50;
-$header-primary-btn-background-hover-color: $ids-color-brand-primary-base;
+$header-primary-btn-background-hover-color: $ids-color-palette-azure-70;
 
 $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 3px 2px rgba(255, 255, 255, 0.3);
@@ -297,6 +297,8 @@ $input-placeholder-color: $ids-color-palette-slate-60;
 $input-readonly-color: $input-color-readonly-font;
 $input-color-border-space: $header-bg-color;
 $input-border-color: $input-color-initial-border;
+$selected-text-color: $ids-color-palette-white;
+$selected-text-background-color:  $ids-color-palette-azure-70;
 
 // Loading Indicator
 $loading-indicator-ai-bar-base-bg-color: $ids-color-palette-amber-60;
@@ -336,6 +338,7 @@ $input-color-border-space: $header-bg-color;
 // Buttons
 $button-disabled-background-color: $ids-color-palette-graphite-80;
 
+$button-disabled-opacity: 0.4;
 $button-color-secondary-menu-open-new: $ids-color-palette-azure-60;
 $button-color-secondary-initial-font-new: $ids-color-palette-azure-60;
 $button-color-secondary-initial-border-new: $ids-color-palette-azure-60;
@@ -1208,7 +1211,7 @@ $header-breadcrumb-alt-color: $font-color-highcontrast;
 $header-breadcrumb-border-color: $ids-color-palette-graphite-30;
 
 // Module Tabs
-$module-tabs-bg-color: $ids-color-palette-azure-80;
+$module-tabs-bg-color: $ids-color-palette-slate-40;
 $module-tabs-x-border-color: $ids-color-brand-primary-base;
 $module-tabs-y-border-color: $ids-color-palette-azure-90;
 $module-tabs-inactive-bg-color: $ids-color-palette-azure-80;

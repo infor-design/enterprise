@@ -53,6 +53,10 @@
     padding-right: 2%;
   }
 
+  &.has-bottom-legend svg {
+    min-height: 290px;
+  }
+
   // Adjust smaller bottom legend for the pie chart
   &.is-mobile {
     svg {
@@ -87,8 +91,14 @@
   }
 }
 
-.auto-height .chart-pie svg {
-  min-height: 240px;
+.auto-height .chart-pie {
+  svg {
+    min-height: 240px;
+  }
+
+  &.has-bottom-legend svg {
+    min-height: 290px;
+  }
 }
 
 // A bit different tooltip style
@@ -108,10 +118,40 @@
   }
 }
 
+.card,
+.widget {
+  &:not(.auto-height):has(div.has-bottom-legend) {
+    min-height: 390px;
+
+    .card-content,
+    .widget-content {
+      height: auto;
+      min-height: auto;
+      max-height: 360px;
+    }
+
+    &.to-single {
+      min-height: 360px;
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
-  .chart-pie.has-right-legend .chart-legend-item-text {
-    padding-left: 0;
-    padding-right: 7px;
+  .chart-pie.has-right-legend {
+    .chart-legend {
+      margin: 0;
+
+      &.is-right {
+        position: relative;
+        left: 16px;
+        width: 32%;
+      }
+    }
+
+    .chart-legend-item-text {
+      padding-left: 0;
+      padding-right: 7px;
+    }
   }
 }

@@ -492,15 +492,33 @@
 }
 
 @include respond-to(phabletdown) {
+  .monthview-table {
+    border-bottom: 1px solid #E0E0E1;
+  }
+
+  .monthview-popup {
+    .tooltip-content {
+      .monthview {
+        .monthview-table {
+          border-bottom: unset;
+        }
+      }
+    }
+  }
+
   .calendar-popup.calendar-popup-mobile {
-    height: 100% !important;
-    left: 0 !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%);
     max-width: 100%;
-    top: 0 !important;
     width: 100% !important;
 
+    .arrow {
+      display: none;
+    }
+
     .tooltip-content {
-      height: calc(100% - 96px);
+      height: calc(100% - 45px);
     }
 
     .modal-buttonset {

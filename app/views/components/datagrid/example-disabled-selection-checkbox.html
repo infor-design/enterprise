@@ -1,0 +1,298 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count">0 Selected</div>
+      <div class="buttonset">
+        <button class="btn" type="button" id="defer-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-change-time-code"></use>
+          </svg>
+          <span>Defer</span>
+        </button>
+        <button class="btn" type="button" id="cancel-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-cancel"></use>
+          </svg>
+          <span>Cancel</span>
+        </button>
+      </div>
+    </div>
+    <div id="datagrid" class="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    const checkEditable = (row, cell, value, item, rowData) => {
+      let isEditable = false;
+      if (rowData.lineType === 'Amount Only') {
+        if (item.field === 'orderAmount') {
+          isEditable = true;
+        }
+      } else if (rowData.lineType === 'Rate Only') {
+        if (
+          item.field === 'procurementRate' ||
+          item.field === 'procurementRateUnit'
+        ) {
+          isEditable = true;
+        }
+      } else if (rowData.lineType === 'Quantity & Rate') {
+        if (
+          item.field === 'procurementRate' ||
+          item.field === 'procurementRateUnit' ||
+          item.field === 'quantity' ||
+          item.field === 'quantityUnit'
+        ) {
+          isEditable = true;
+        }
+      }
+      if (rowData.status === 'Modified') {
+        if (item.id === 'selectionCheckbox') {
+          isEditable = true;
+        }
+      }
+      return isEditable;
+    };
+    const checkDisabled = (row, cell, value, item, rowData) => {
+      let isDisabled = true;
+      if (rowData.lineType === 'Amount Only') {
+        if (item.field === 'orderAmount') {
+          isDisabled = false;
+        }
+      } else if (rowData.lineType === 'Rate Only') {
+        if (
+          item.field === 'procurementRate' ||
+          item.field === 'procurementRateUnit'
+        ) {
+          isDisabled = false;
+        }
+      } else if (rowData.lineType === 'Quantity & Rate') {
+        if (
+          item.field === 'procurementRate' ||
+          item.field === 'procurementRateUnit' ||
+          item.field === 'quantity' ||
+          item.field === 'quantityUnit'
+        ) {
+          isDisabled = false;
+        }
+      }
+      if (rowData.status === 'Modified') {
+        if (item.id === 'selectionCheckbox') {
+          isDisabled = false;
+        }
+      }
+      return isDisabled;
+    };
+    const columns = [
+      {
+        id: 'selectionCheckbox',
+        width: 15,
+        sortable: false,
+        resizable: false,
+        formatter: Soho.Formatters.SelectionCheckbox,
+        align: 'center',
+        // isEditable: checkEditable -> this also works
+        disabled: checkDisabled
+      },
+      {
+        id: 'LineEdit',
+        field: 'lineEdit',
+        name: '',
+        formatter: Soho.Formatters.Button,
+        sortable: false,
+        icon: 'edit',
+        width: 45,
+        align: 'center',
+      },
+      {
+        id: 'Line',
+        name: 'Line',
+        sortable: true,
+        width: 50,
+        field: 'allLinesValue',
+        textOverflow: 'ellipsis',
+      },
+      {
+        id: 'description',
+        name: 'Description',
+        field: 'description',
+        textOverflow: 'ellipsis',
+      },
+      {
+        id: 'ScopeofWork',
+        field: 'scopeOfWork',
+        name: 'Scope of work',
+        width: 70,
+        textOverflow: 'ellipsis',
+        sortable: true,
+      },
+      {
+        id: 'lineType',
+        name: 'Line Type',
+        field: 'lineType',
+        width: 80,
+      },
+      {
+        id: 'callOff',
+        field: 'callOff',
+        name: 'Call Off',
+        formatter: Soho.Formatters.Checkbox,
+        isEditable: checkEditable,
+      },
+      {
+        id: 'variationLineQuantity',
+        name: 'Quantity',
+        field: 'quantity',
+        width: 30,
+        sortable: true,
+        editor: Soho.Editors.Input,
+        isEditable: checkEditable,
+      },
+    ];
+    const pagingData = [
+      {
+        id: 1,
+        line: '10',
+        allLinesValue: '10/0',
+        variationLine: 0,
+        scopeOfWork: 'NLDS00300 - Hazardous Materials Restoration',
+        description: 'Testing purpose',
+        descriptionOnly: 'true',
+        lineType: '',
+        startDateOnSite: '2023-07-31T16:15:00',
+        endDateAtSite: '2023-11-10T16:15:00',
+        quantity: 20,
+        quantityUnit: 'mts',
+        status: 'Created',
+        orderAmount: '6000',
+        procurementRate: 3,
+        procurementRateCurrency: 'EUR' + ' ' + '/',
+        procurementRateUnit: '/mts',
+      },
+      {
+        id: 2,
+        line: '20',
+        allLinesValue: '20/1',
+        variationLine: 1,
+        scopeOfWork: 'NLDS00300 - Hazardous Materials Restoration',
+        description: '',
+        lineType: 'Amount Only',
+        startDateOnSite: '2023-07-31T16:15:00',
+        endDateAtSite: '2023-11-10T16:15:00',
+        quantity: '',
+        quantityUnit: '',
+        procurementRate: '',
+        status: 'Created',
+        orderAmount: '250',
+        procurementRateUnit: '',
+      },
+      {
+        id: 3,
+        line: '30',
+        allLinesValue: '30/3',
+        variationLine: 0,
+        scopeOfWork: 'NLDS00300 - Hazardous Materials Restoration',
+        description: '',
+        lineType: 'Rate Only',
+        startDateOnSite: '2023-07-31T16:15:00',
+        endDateAtSite: '2023-11-10T16:15:00',
+        quantity: 40,
+        quantityUnit: 'mts',
+        procurementRate: 20,
+        orderAmount: '600',
+        status: 'Created',
+        procurementRateCurrency: 'EUR' + ' ' + '/',
+        procurementRateUnit: '/mts',
+      },
+      {
+        id: 4,
+        line: '40',
+        allLinesValue: '40/4',
+        variationLine: 0,
+        scopeOfWork: 'NLDS00300 - Hazardous Materials Restoration',
+        description: '',
+        lineType: 'Quantity & Rate',
+        startDateOnSite: '2023-07-31T16:15:00',
+        endDateAtSite: '2023-11-10T16:15:00',
+        quantity: 50,
+        quantityUnit: 'mts',
+        procurementRate: 500,
+        status: 'Created',
+        orderAmount: '2500',
+        procurementRateCurrency: 'EUR' + ' ' + '/',
+        procurementRateUnit: '/mts',
+      },
+      {
+        id: 5,
+        allLinesValue: '50/1',
+        line: '50',
+        variationLine: 1,
+        scopeOfWork: 'NLDS00300 - Hazardous Materials Restoration',
+        description: '',
+        lineType: 'Quantity & Rate',
+        startDateOnSite: '2023-07-31T16:15:00',
+        endDateAtSite: '2023-11-10T16:15:00',
+        quantity: 201,
+        quantityUnit: 'mts',
+        procurementRate: 100,
+        orderAmount: '3000',
+        status: 'Created',
+        procurementRateCurrency: 'EUR' + ' ' + '/',
+        procurementRateUnit: '/mts',
+      },
+      {
+        id: 6,
+        allLinesValue: '60/2',
+        line: '60',
+        variationLine: 2,
+        scopeOfWork: 'NLDS00300 - Hazardous Materials Restoration',
+        description: '',
+        lineType: 'Quantity & Rate',
+        startDateOnSite: '2023-07-31T16:15:00',
+        endDateAtSite: '2023-11-10T16:15:00',
+        quantity: 2090,
+        quantityUnit: 'mts',
+        status: 'Modified',
+        orderAmount: '209',
+        procurementRate: 10,
+        procurementRateCurrency: 'EUR' + ' ' + '/',
+        procurementRateUnit: '/mts',
+      },
+      {
+        id: 7,
+        allLinesValue: '70/0',
+        line: '70',
+        variationLine: 0,
+        scopeOfWork: 'NLDS00300 - Hazardous Materials Restoration',
+        description: '',
+        lineType: 'Quantity & Rate',
+        startDateOnSite: '2023-07-31T16:15:00',
+        endDateAtSite: '2023-11-10T16:15:00',
+        quantity: 2000,
+        quantityUnit: 'mts',
+        status: 'Modified',
+        orderAmount: '6000',
+        procurementRate: 3,
+        procurementRateCurrency: 'EUR' + ' ' + '/',
+        procurementRateUnit: '/mts',
+      },
+    ];
+
+    // Init and get the api for the grid
+    const api = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: pagingData,
+      selectable: 'multiple',
+      showNewRowIndicator: true,
+      editable: true,
+      showDirty: true,
+      columnSizing: 'data',
+      enableTooltips: true,
+      clickToSelect: false,
+      rowHeight: 'extra-small',
+      toolbar: { results: true, keywordFilter: false },
+    });
+  });
+</script>

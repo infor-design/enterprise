@@ -15,7 +15,7 @@ Source Sans Pro supports many of our languages but some languages require [alter
 
 NOTE: It is no longer recommended to use fonts.googleapis to use the fonts.
 
-SSUE: The problems can be:
+ISSUE: The problems can be:
 
 (a) use of Google Fonts API may violate cross border data transfer restrictions under local privacy laws (e.g. EU’s [GDPR](https://www.cookieyes.com/documentation/google-fonts-and-gdpr/) or China’s PDPL)
 (b) if the application needs to run without an internet connection, or

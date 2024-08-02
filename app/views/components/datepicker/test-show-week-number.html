@@ -12,6 +12,7 @@
   $('body').on('initialized', function() {
     $('#date-field-normal')
       .datepicker({
+        firstDayOfWeek: 1,
         showWeekNumber: true,
         attributes: [
           { name: 'id', value: 'custom-id' },

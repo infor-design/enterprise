@@ -1,0 +1,37 @@
+<header class="header is-personalizable">
+      <div class="flex-toolbar" role="toolbar">
+        <div class="toolbar-section">
+          <button id="header-hamburger" class="btn-icon application-menu-trigger personalize-actionable no-ripple hide-focus" type="button" aria-controls="application-menu" aria-expanded="false" tabindex="0">
+        <span class="audible" data-translate="text" data-translate-key="AppMenuTriggerTextAlt">Application menu trigger</span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-menu"></use>
+        </svg>
+      </button>
+    </div>
+        <div class="toolbar-section title">
+          <h1>Page Title</h1>
+        </div>
+
+        <div class="toolbar-section search">
+          
+          <span class="searchfield-wrapper toolbar-searchfield-wrapper has-collapse-button has-close-icon-button"><label for="header-searchfield" class="audible">Search</label><input id="header-searchfield" class="searchfield" name="header-searchfield" data-options="{'collapsible': true, 'clearable': true}" tabindex="-1" autocomplete="off" aria-label="Search"><svg class="close is-empty icon" focusable="true" aria-hidden="true" role="presentation" tabindex="-1"><use href="#icon-close"></use></svg><button class="btn-icon collapse-button" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-exit-fullview"></use>
+            </svg>
+            <span class="audible">Collapse</span>
+          </button><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-search"></use></svg></span>
+        </div>
+
+        <!-- included in all "header-*.html" templates -->
+    <div class="more">
+      <button id="header-more-actions" class="btn-actions page-changer personalize-actionable has-tooltip no-ripple hide-focus" type="button" aria-label="Header More Actions Button" tabindex="-1" aria-haspopup="true">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-more"></use>
+        </svg>
+        <span class="audible" data-translate="text" data-translate-key="More">More</span>
+      </button>
+      
+    </div>
+
+      </div>
+    </header>

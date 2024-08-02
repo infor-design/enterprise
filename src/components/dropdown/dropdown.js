@@ -468,7 +468,11 @@ Dropdown.prototype = {
       }
     });
 
-    const span = this.pseudoElem.children('span')[0];
+    let span = this.pseudoElem.children('span')[0];
+    if (!span) {
+      this.pseudoElem.append('<span></span>');
+      span = this.pseudoElem.children('span')[0];
+    }
     if (!this.tagListAPI) {
       this.tagListAPI = new TagList(span, {
         tags
@@ -679,10 +683,8 @@ Dropdown.prototype = {
           value: el.value || null
         });
 
-        const listIconEl = self.listIcon.items.filter(function (iconEl) {
-          return (iconEl.icon === icon || iconEl.icon === icon.icon) &&
-            iconEl.value === el.value;
-        });
+        const listIconEl = self.listIcon.items.filter(iconEl => (iconEl.icon === icon || iconEl.icon === icon.icon) &&
+            iconEl.value === el.value);
 
         if ((self.listIcon.items[i] && self.listIcon.items[i].isIcon) || listIconEl.length > 0) {
           count++;
@@ -795,9 +797,7 @@ Dropdown.prototype = {
       const iconRef = self.listIcon.items[i];
       const optionEl = opt[0];
 
-      const listIconEl = self.listIcon.items.filter(function (iconEl) {
-        return iconEl?.value === optionEl?.value;
-      });
+      const listIconEl = self.listIcon.items.filter(iconEl => iconEl?.value === optionEl?.value);
 
       target.each((j, el) => el.remove());
 
@@ -1089,9 +1089,7 @@ Dropdown.prototype = {
     const trueValue = (value && 'value' in value ? value.value : text).replace(/"/g, '/quot/');
     let iconHtml = '';
 
-    const listIconEl = self.listIcon.items.filter(function (iconEl) {
-      return iconEl.value === option.value;
-    });
+    const listIconEl = self.listIcon.items.filter(iconEl => iconEl.value === option.value);
 
     if (self.listIcon.hasIcons && listIconEl.length > 0) {
       iconHtml = listIconEl[0].html;
@@ -1373,7 +1371,8 @@ Dropdown.prototype = {
       // Checking the position of the dropdown element
       // If near at the bottom of the page, will not be flowing up
       // and stay still to its position.
-      const totalPageHeight = document.body.scrollHeight;
+      const isFirefoxMac = $('html.is-mac.is-firefox').length > 0;
+      const totalPageHeight = isFirefoxMac ? document.body.scrollHeight - 1 : document.body.scrollHeight;
       const scrollPoint = window.scrollY + window.innerHeight;
       const isNearBottom = scrollPoint >= totalPageHeight;
 
@@ -1426,6 +1425,10 @@ Dropdown.prototype = {
 
     if (!this.list || this.list && !this.list.length) {
       return;
+    }
+
+    if (this.listUl.find('li.no-results').length > 0) {
+      this.listUl.find('li.no-results').remove();
     }
 
     this.list.removeClass('search-mode');
@@ -2103,7 +2106,11 @@ Dropdown.prototype = {
     // It adjust the position of datagrid filter dropdown
     // if the element goes out of the datagrid's container
     if (this.list.hasClass('datagrid-filter-dropdown') && document.querySelector('.datagrid-container') !== null) {
-      const gridContainerPos = this.dropdownParent.closest('.datagrid-container').getBoundingClientRect();
+      let gridContainerPos = document.querySelector('.datagrid-container').getBoundingClientRect();
+      if (this.dropdownParent !== undefined) {
+        gridContainerPos = this.dropdownParent.closest('.datagrid-container').getBoundingClientRect();
+      }
+
       const gridFilterDropdownPos = document.querySelector('.datagrid-filter-dropdown').getBoundingClientRect();
       const pageContainerPos = document.querySelector(this.settings.appendTo).getBoundingClientRect().right;
       const adjustedPosition = pageContainerPos - gridContainerPos.right;

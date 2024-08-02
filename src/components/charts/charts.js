@@ -236,21 +236,32 @@ charts.chartColor = function chartColor(i, chartType, data) {
     }
   }
 
+  function getColorIndex() {
+    let tempSelector = i;
+
+    if (i >= themeColors.length) { // Checks for more than the array length of the color sets
+      tempSelector = i - themeColors.length;
+    }
+
+    return tempSelector;
+  }
+
   // Some configuration by specific chart types
   if (/^(pie|donut)$/.test(chartType)) {
-    return themeColors[i];
+    return themeColors[getColorIndex()];
   }
   if (/^(bar-single|column-single)$/.test(chartType)) {
     return themeColors[0];
   }
   if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|scatterplot|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
-    return themeColors[i];
+    return themeColors[getColorIndex()];
   }
 
   return '';
 };
 
 charts.chartColorName = function chartColor(i, chartType, data) {
+  const self = this;
   const specifiedColor = (data && data.color ? data.color : null);
 
   // Handle passed in colors.
@@ -276,19 +287,25 @@ charts.chartColorName = function chartColor(i, chartType, data) {
     return data.color;
   }
 
+  function getColorIndex() {
+    let tempSelector = i;
+
+    if (i >= self.colorNameRange().length) { // Checks for more than the array length of the color sets
+      tempSelector = i - self.colorNameRange().length;
+    }
+
+    return tempSelector;
+  }
+
   // Some configuration by specific chart types
   if (/^(pie|donut)$/.test(chartType)) {
-    let tempSelector = i;
-    if ((i + 1) >= this.colorNameRange().length) { // Checks for more than the array length of the color sets
-      tempSelector = i - i;
-    }
-    return this.colorNameRange()[tempSelector];
+    return this.colorNameRange()[getColorIndex()];
   }
   if (/^(bar-single|column-single)$/.test(chartType)) {
     return this.colorNameRange()[0];
   }
   if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|scatterplot|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
-    return this.colorNameRange()[i];
+    return this.colorNameRange()[getColorIndex()];
   }
 
   return '';
@@ -569,8 +586,11 @@ charts.addLegend = function (series, chartType, settings, container) {
       const widgetHeight = $(container).parents('.widget').height();
       const widgetHeader = $($(container).parents('.widget').children().get(0)).height();
       const widgetContent = $($(container).parents('.widget').children().get(1)).height();
-      const additionalPadding = (widgetHeight - (widgetHeader + widgetContent)) / 2;
-      legend.css('padding-top', `${additionalPadding}px`);
+
+      if (!legend.hasClass('is-bottom')) {
+        const additionalPadding = (widgetHeight - (widgetHeader + widgetContent)) / 2;
+        legend.css('padding-top', `${additionalPadding}px`);
+      }
 
       listButton.on('selected', (e, args) => {
         const idx = $(args[0]).attr('index-id').match(regex)[1];
@@ -1102,6 +1122,61 @@ charts.setSelected = function (o, isToggle, internals) {
     });
     if (selected < 1) {
       setSelectedGroup();
+    }
+  } else if (internals.this.namespace.includes('line') || internals.this.namespace.includes('area')) {
+    let selectorData;
+    let elem;
+    const that = internals.this;
+
+    const setSelected = function (d, i1, d2, i2) {
+      if (d2) {
+        elem = that.svg.select(`[data-group-id="${i1}"]`)
+          .select(`.dot:nth-child(${i2 + 2})`);
+        if ((typeof o.groupIndex === 'number' &&
+              typeof o.fieldName !== 'undefined' &&
+                typeof o.fieldValue !== 'undefined' &&
+                  o.groupIndex === i1 &&
+                    o.fieldValue === d2[o.fieldName]) ||
+            (typeof o.index !== 'undefined' &&
+              typeof o.groupIndex === 'number' &&
+                o.groupIndex === i1 && o.index === i2) ||
+            (o.elem && $(elem.node()).is(o.elem)) ||
+            (o.data && equals(o.data, d2))) {
+          selected++;
+          selectorData = d2;
+          selector = that.svg.select(`[data-group-id="${i1}"]`);
+        }
+      } else {
+        elem = that.svg.select(`[data-group-id="${i1}"]`);
+        if ((typeof o.groupName !== 'undefined' &&
+              typeof o.groupValue !== 'undefined' &&
+                o.groupValue === d[o.groupName]) ||
+            (typeof o.groupIndex !== 'undefined' &&
+              o.groupIndex === i1) ||
+            (o.elem && $(elem.node()).is(o.elem)) ||
+            (o.data && equals(o.data, d))) {
+          selected++;
+          selectorData = d;
+          selector = elem;
+        }
+      }
+    };
+
+    that.settings.dataset.forEach((d, i3) => {
+      if (selected < 1 && d && d.data) {
+        d.data.forEach((d2, i2) => {
+          if (selected < 1 && d2) {
+            setSelected(d, i3, d2, i2);
+          }
+        });
+        if (selected < 1) {
+          setSelected(d, i3);
+        }
+      }
+    });
+
+    if (selected > 0 && (isToggle || !selector.classed('is-selected')) && that.settings.selectable) {
+      charts.selectElement(selector, that.svg.selectAll('.line-group'), selectorData, that.element, that.settings.dataset, that.initialSelectCall);
     }
   } else {
     setSelectedBar();
