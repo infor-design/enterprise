@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.90.7
+
+## v4.90.7 Fixes
+
+- `[Datagrid]` Remove modification in calculateTextWidth that had incorrect selectors. ([#8938](https://github.com/infor-design/enterprise/issues/8938))
+- `[Datagrid]` Optimize the initial loading of datagrids with filterable setting. ([#8935](https://github.com/infor-design/enterprise-ng/issues/8935))
+
 ## v4.90.6
 
 ## v4.90.6 Fixes
