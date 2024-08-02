@@ -59,7 +59,7 @@
     message: 'ION API Error, please contact admin',
     parent: '.notification-container',
     linkText: '',
-    callback: function () {
+    closeCallback: function () {
       showToastMessage(this.type);
     }
   });
@@ -72,7 +72,7 @@
       message: 'Session Timeout, Reconnecting in 2 seconds before it resumes',
       parent: '.notification-container',
       linkText: '',
-      callback: function () {
+      closeCallback: function () {
         showToastMessage(this.type);
       }
     });
@@ -85,7 +85,7 @@
       message: 'Records successfully updated!',
       parent: '.notification-container',
       linkText: '',
-      callback: function () {
+      closeCallback: function () {
         showToastMessage(this.type);
       }
     });
@@ -93,12 +93,12 @@
   </script>
 
 <script>
-  $('.notification-cointainer').notification({
+  $('.notification-container').notification({
     type: 'info',
     message: 'You can drag/drop items ',
-    parent: '.notification-cointainer',
+    parent: '.notification-container',
     linkText: '',
-    callback: function () {
+    closeCallback: function () {
       showToastMessage(this.type);
     }
   });

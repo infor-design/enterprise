@@ -48,7 +48,7 @@ test.describe('Notification widget tests', () => {
   test.describe('e2e tests', () => {
     test('should display toast on notification close', async ({ page }) => {
       // Selectors for different types of notifications
-      const notifications = ['.error .notification-close', '.alert .notification-close', '.success .notification-close'];
+      const notifications = ['.error .notification-close', '.alert .notification-close', '.success .notification-close', '.info .notification-close'];
 
       for (const notification of notifications) {
         await page.click(notification);
