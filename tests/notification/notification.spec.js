@@ -37,3 +37,24 @@ test.describe('Notification tests', () => {
   test.describe('functionality tests', () => {
   });
 });
+
+test.describe('Notification widget tests', () => {
+  const url = '/components/notification/example-widget.html';
+
+  test.beforeEach(async ({ page }) => {
+    await page.goto(url);
+  });
+
+  test.describe('e2e tests', () => {
+    test('should display toast on notification close', async ({ page }) => {
+      // Selectors for different types of notifications
+      const notifications = ['.error .notification-close', '.alert .notification-close', '.success .notification-close'];
+
+      for (const notification of notifications) {
+        await page.click(notification);
+        const isVisible = await page.isVisible('#toast-container');
+        expect(isVisible).toBe(true); // Check if toast container is visible
+      }
+    });
+  });
+});
