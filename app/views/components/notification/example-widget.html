@@ -45,11 +45,23 @@
 </script>
 
 <script>
+  function showToastMessage(type) {
+    $('body').toast({
+      title: 'Notification',
+      message: `This is ${type} type.`,
+    });
+  }
+</script>
+
+<script>
   $('.notification-container').notification({
     type: 'error',
     message: 'ION API Error, please contact admin',
     parent: '.notification-container',
-    linkText: ''
+    linkText: '',
+    callback: function () {
+      showToastMessage(this.type);
+    }
   });
 
 </script>
@@ -59,7 +71,10 @@
       type: 'alert',
       message: 'Session Timeout, Reconnecting in 2 seconds before it resumes',
       parent: '.notification-container',
-      linkText: ''
+      linkText: '',
+      callback: function () {
+        showToastMessage(this.type);
+      }
     });
 
   </script>
@@ -69,7 +84,10 @@
       type: 'success',
       message: 'Records successfully updated!',
       parent: '.notification-container',
-      linkText: ''
+      linkText: '',
+      callback: function () {
+        showToastMessage(this.type);
+      }
     });
 
   </script>
@@ -79,7 +97,10 @@
     type: 'info',
     message: 'You can drag/drop items ',
     parent: '.notification-cointainer',
-    linkText: ''
+    linkText: '',
+    callback: function () {
+      showToastMessage(this.type);
+    }
   });
 
 </script>

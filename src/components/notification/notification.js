@@ -26,6 +26,7 @@ const NOTIFICATION_DEFAULTS = {
  * @param {string} [settings.link] The url to use for the hyperlink
  * @param {string} [settings.linkText] The text to show in the hyperlink. Leave empty for no link.
  * @param {array|object} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {Function} [settings.callback = undefined] A callback function to call after the notification button is closed.
  */
 function Notification(element, settings) {
   this.settings = utils.mergeSettings(element, settings, NOTIFICATION_DEFAULTS);
@@ -73,6 +74,12 @@ Notification.prototype = {
         </svg>
         <span class="audible">${Locale.translate('Close')}</span>
       </button>`;
+
+    $(this.notificationEl).on('click', '.notification-close', () => {
+      if (typeof this.settings.callback === 'function') {
+        this.settings.callback();
+      }
+    });
 
     this.notificationEl.innerHTML = htmlIcon.concat(htmlText, htmlButton);
     const parentEl = document.querySelector(this.settings.parent);
