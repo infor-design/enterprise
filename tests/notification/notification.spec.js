@@ -52,8 +52,10 @@ test.describe('Notification widget tests', () => {
 
       for (const notification of notifications) {
         await page.click(notification);
-        const isVisible = await page.isVisible('#toast-container');
-        expect(isVisible).toBe(true); // Check if toast container is visible
+        // Use page.locator to create a locator for the toast container
+        const toastLocator = page.locator('#toast-container');
+        // Check if the toast container is visible
+        await expect(toastLocator).toBeVisible();
       }
     });
   });
