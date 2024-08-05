@@ -4,7 +4,7 @@
 
 - `[Datagrid]` Optimize the initial loading of datagrids with filterable setting. ([#8935](https://github.com/infor-design/enterprise-ng/issues/8935))
 - `[Datagrid]` Remove modification in calculateTextWidth that had incorrect selectors. ([#8938](https://github.com/infor-design/enterprise/issues/8938))
-- `[ModuleNav]` Fixed tooltip not showing on render if set collapsed by default. ([NG#1678](https://github.com/infor-design/enterprise-ng/issues/1678))
+- `[ModuleNav]` Fixed a bug where the tooltip was not showing when collapsed by default. ([NG#1678](https://github.com/infor-design/enterprise-ng/issues/1678))
 
 ## v4.98.0
 
