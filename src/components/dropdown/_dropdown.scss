@@ -75,8 +75,6 @@ select.dropdown-xs {
 div.dropdown,
 div.multiselect {
   @include input-style();
-  @include css3(touch-callout, none);
-  @include css3(user-select, none);
   @include transition(background-color 0.2s ease);
 
   background-color: $input-color-initial-background;
@@ -89,6 +87,9 @@ div.multiselect {
   text-overflow: ellipsis;
   vertical-align: middle;
   white-space: nowrap;
+
+  @include css3(touch-callout, none);
+  @include css3(user-select, none);
 
   &.text-align-reverse {
     text-align: right;

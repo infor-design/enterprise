@@ -534,12 +534,12 @@
   }
 
   > [class^='btn'] {
-    @include btn-chevron-style;
-
     border-radius: 8px;
     width: 38px;
     height: 38px;
     margin: unset;
+
+    @include btn-chevron-style;
   }
 
   > [class^='btn'],
