@@ -8,7 +8,7 @@
 
 - `[Datagrid]` Optimize the initial loading of datagrids with filterable setting. ([#8935](https://github.com/infor-design/enterprise-ng/issues/8935))
 - `[Datagrid]` Remove modification in calculateTextWidth that had incorrect selectors. ([#8938](https://github.com/infor-design/enterprise/issues/8938))
-- `[Datagrid]` Updated styles for pagination in test page. ([NG#1756](https://github.com/infor-design/enterprise-ng/issues/1756))
+- `[Datagrid]` Updated styles so pager works on cards. ([NG#1756](https://github.com/infor-design/enterprise-ng/issues/1756))
 
 ## v4.98.0
 
