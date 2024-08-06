@@ -28,7 +28,7 @@ div.multiselect {
     }
 
     + span {
-      padding-left: 25px;
+      padding-left: 19px !important;
     }
   }
 
@@ -144,7 +144,8 @@ div.multiselect {
     }
 
     > .listoption-icon {
-      top: 8.5px;
+      top: 6.5px;
+      left: 6px;
     }
 
     &.has-tags {
