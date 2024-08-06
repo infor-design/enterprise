@@ -18,7 +18,7 @@ const COMPONENT_NAME = 'message';
  * @param {string} [settings.status='']  Pass a status to style icon and title color ('error', 'alert', 'success', 'info')
  * @param {string} [settings.message='Message Summary']  The message content or text
  * @param {number} [settings.width='auto']  Pass a specific width or defaults to auto
- * @param {string} [settings.maxWidth=null]  Pass a specific string or defaults to null
+ * @param {string} [settings.maxWidth=null]  Pass a specific string or defaults to null. The string can be a value (width in px or em) or keywords like 'fit-content'.
  * @param {object} [settings.buttons=null]  Array of buttons to add to the message (see modal examples as well)
  * @param {boolean} [settings.showCloseBtn] If true, show a close icon button on the top right of the message.
  * @param {string} [settings.cssClass=null]  Extra Class to add to the dialog for customization.
