@@ -4415,14 +4415,14 @@ td .btn-actions {
   }
 
   .icon:not(.datagrid-alert-icon) {
-    &:not(.icon-rowstatus) {
-      @include trigger-icon-background($datagrid-cell-bg-color);
-    }
-
     color: $trigger-icon-fill-color;
     left: 3px;
     top: 4px;
     visibility: hidden;
+
+    &:not(.icon-rowstatus) {
+        @include trigger-icon-background($datagrid-cell-bg-color);
+    }
 
     &.datagrid-alert-icon {
       visibility: visible;
