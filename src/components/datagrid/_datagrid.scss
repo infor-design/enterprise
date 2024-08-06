@@ -333,12 +333,6 @@ $datagrid-small-row-height: 25px;
     }
   }
 
-  // Heights for scrollbars
-  &.paginated {
-    height: calc(100% - 78px) !important;
-  }
-
-
   &.show-space td {
     white-space: pre-wrap;
   }
@@ -6171,6 +6165,15 @@ html[dir='rtl'] {
     .pager-prev,
     .pager-next {
       position: static;
+    }
+  }
+}
+
+:not(.card-content) {
+  > .datagrid-container {
+    // Heights for scrollbars
+    &.paginated {
+      height: calc(100% - 78px) !important;
     }
   }
 }
