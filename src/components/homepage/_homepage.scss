@@ -263,7 +263,16 @@
 
 .card.auto-height,
 .widget.auto-height {
-  @include auto-height;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+
+  .widget-content,
+  .card-content {
+    height: auto;
+    min-height: auto;
+    max-height: none;
+  }
 
   .chart-container {
     margin-top: 0;
@@ -273,7 +282,16 @@
 }
 
 .small-widget.auto-height {
-  @include auto-height;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+
+  .widget-content,
+  .card-content {
+    height: auto;
+    min-height: auto;
+    max-height: none;
+  }
 
   .chart-container {
     padding-bottom: 24px;
