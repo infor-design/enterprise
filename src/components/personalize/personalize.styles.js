@@ -395,6 +395,18 @@ a.is-personalizable svg.ripple-effect {
   background-color: ${colors.toolbarBtnHoverColor} !important;
 }
 
+.tab-container.module-tabs.is-personalizable .tab.is-selected > a {
+  color: ${colors.contrast};
+}
+
+.tab-container.module-tabs.is-personalizable::before {
+  background-image: linear-gradient(to right, ${colors.tabColor}, ${colors.tabColor}00);
+}
+
+.tab-container.module-tabs.is-personalizable::after {
+  background-image: linear-gradient(to right, ${colors.tabColor}00, ${colors.tabColor});
+}
+
 .module-tabs.is-personalizable .tab {
   color: ${colors.contrast};
 }
