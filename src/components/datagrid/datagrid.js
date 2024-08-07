@@ -7277,6 +7277,12 @@ Datagrid.prototype = {
         canSelect = false;
       }
 
+      if (target.closest('td').hasClass('is-readonly') ||
+        target.find('.datagrid-selection-checkbox').hasClass('disabled') ||
+        target.hasClass('disabled')) {
+        canSelect = false;
+      }
+
       if (self.settings.selectable === 'mixed') {
         canSelect = isSelectionCheckbox;
 
@@ -8297,10 +8303,18 @@ Datagrid.prototype = {
   selectAllRows() {
     const rows = [];
     const dataset = this.getActiveDataset();
+    // Check for the selection checkbox in case it has a disabled function
+    const selectionCol = this.columnById('selectionCheckbox')[0];
+    const selectionIdx = this.columnIdxById('selectionCheckbox');
+    const disabledFunc = selectionCol?.disabled;
 
     for (let i = 0, l = dataset.length; i < l; i++) {
       const idx = this.settings.groupable ? i : this.pagingRowIndex(i);
 
+      if (disabledFunc) {
+        const isDisabled = disabledFunc(idx, selectionIdx, '', selectionCol, dataset[idx]);
+        if (isDisabled) continue;
+      }
       if (this.filterRowRendered ||
         (this.filterExpr && this.filterExpr[0] && this.filterExpr[0].keywordSearch)) {
         if (!dataset[i]._isFilteredOut && !dataset[i]._selected) {
@@ -8452,6 +8466,16 @@ Datagrid.prototype = {
     const self = this;
     const selectClasses = `is-selected${self.settings.selectable === 'mixed' ? ' hide-selected-color' : ''}`;
 
+    // Do not select if checkbox is disabled
+    const selectionCol = this.columnById('selectionCheckbox')[0];
+    const selectionIdx = this.columnIdxById('selectionCheckbox');
+    const disabledFunc = selectionCol?.disabled;
+
+    if (disabledFunc) {
+      const isDisabled = disabledFunc(index, selectionIdx, '', selectionCol, data);
+      if (isDisabled) return;
+    }
+
     // do not add if already exists in selected
     if ((!data || self.isRowSelected(data)) && !force) {
       return;
@@ -8556,7 +8580,15 @@ Datagrid.prototype = {
             // if selectChildren is false
             if (s.selectChildren || (!s.selectChildren && i === 0)) {
               const canAdd = (!elem.is(rowNode) && !elem.hasClass('is-selected'));
-              self.selectNode(elem, index, data);
+              // Check for the selection checkbox in case it has a disabled function
+              const selectionCol = self.columnById('selectionCheckbox')[0];
+              const selectionIdx = self.columnIdxById('selectionCheckbox');
+              const disabledFunc = selectionCol?.disabled;
+              let isDisabled = false;
+              if (disabledFunc) {
+                isDisabled = disabledFunc(actualIdx, selectionIdx, '', selectionCol, data);
+              }
+              if (!isDisabled) self.selectNode(elem, index, data);
               if (canAdd && !isExists(actualIdx, elem)) {
                 args = {
                   idx: actualIdx,
@@ -10038,6 +10070,10 @@ Datagrid.prototype = {
         if (btn && btn.length) {
           btn.trigger('click');
           e.preventDefault();
+          return;
+        }
+
+        if (target?.is('td.is-selectioncheckbox.is-readonly') || target.find('.datagrid-selection-checkbox').hasClass('disabled')) {
           return;
         }
 

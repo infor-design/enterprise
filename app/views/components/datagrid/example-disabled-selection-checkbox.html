@@ -1,7 +1,7 @@
 <div class="row">
   <div class="twelve columns">
     <div class="contextual-toolbar toolbar is-hidden">
-      <div class="title selection-count">0 Selected</div>
+      <div class="title selection-count">1 Selected</div>
       <div class="buttonset">
         <button class="btn" type="button" id="defer-btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -84,48 +84,7 @@
       }
       return isDisabled;
     };
-    const columnGroups = [
-      {
-        colspan: 1,
-        id: 'selectionCheckbox',
-        name: '',
-      },
-      {
-        colspan: 1,
-        id: 'LineEdit',
-        name: '',
-      },
-      {
-        colspan: 1,
-        id: 'Line',
-        name: 'line',
-      },
-      {
-        colspan: 1,
-        id: 'description',
-        name: 'description',
-      },
-      {
-        colspan: 1,
-        id: 'ScopeofWork',
-        name: 'scopeOfWork',
-      },
-      {
-        colspan: 1,
-        id: 'lineType',
-        name: 'lineType',
-      },
-      {
-        colspan: 1,
-        id: 'callOff',
-        name: 'callOffLine',
-      },
-      {
-        colspan: 1,
-        id: 'LineQuantity',
-        name: 'quantity',
-      },
-    ];
+
     const columns = [
       {
         id: 'selectionCheckbox',
@@ -326,7 +285,6 @@
       columns: columns,
       dataset: pagingData,
       selectable: 'multiple',
-      showSelectAllCheckBox: false,
       showNewRowIndicator: true,
       editable: true,
       showDirty: true,
