@@ -2,9 +2,6 @@
 //================================================== //
 
 @mixin input-style() {
-  @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
-  @include antialiased();
-
   -webkit-appearance: none;
   background-color: $input-color-initial-background;
   border: 1px solid $input-color-initial-border;
@@ -19,6 +16,9 @@
   resize: none;
   text-align: left;
   width: 300px;
+
+  @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
+  @include antialiased();
 
   &:hover {
     border-color: $input-color-hover-border;
@@ -61,7 +61,6 @@
     border-color: $error-border-color;
 
     &:focus {
-      // Needed for printing
       border-color: $error-border-color !important;
       box-shadow: $error-focus-box-shadow !important;
       color: $input-color !important;
@@ -72,7 +71,6 @@
     border-color: $alert-color;
 
     &:focus {
-      // Needed for printing
       border-color: $alert-color !important;
       color: $input-color !important;
     }
@@ -82,7 +80,6 @@
     border-color: $success-color;
 
     &:focus {
-      // Needed for printing
       border-color: $success-color !important;
       color: $input-color !important;
     }
@@ -92,7 +89,6 @@
     border-color: $info-color;
 
     &:focus {
-      // Needed for printing
       border-color: $info-color !important;
       color: $input-color !important;
     }
