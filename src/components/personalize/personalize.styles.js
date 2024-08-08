@@ -922,8 +922,13 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
   color: ${colors.contrast};
 }
 
-.is-personalizable.tab-container.module-tabs .tab .icon {
-  color: ${colors.contrast};
+.is-personalizable.tab-container.module-tabs {
+  .tab,
+  .tab.tab.application-menu-trigger {
+    .icon {
+      color: ${colors.contrast};
+    }
+  }
 }
 
 .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar {

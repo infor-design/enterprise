@@ -337,7 +337,6 @@ Personalize.prototype = {
     colors.tabCloseHoverColor = themeColors.palette.white.value;
     colors.btnMenuColor = colors.base;
     colors.btnBoxShadow = `0 0 0 0.5px ${colors.btnMenuColor}, 0 0 0 0.5px ${colors.btnMenuColor}`;
-
     const isAlabaster = colors.header === '#ffffff';
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
     const isClassicDark = this.currentTheme.indexOf('classic-dark') >= 0;
@@ -526,6 +525,49 @@ Personalize.prototype = {
         colors.headerTabsSelectedTextColor = themeColors.palette.azure[90].value;
         colors.moduleTabsSelectedTextColor = themeColors.palette.azure[90].value;
       }
+    }
+
+    const setTabColors = (selectedColor) => {
+      colors.tabColor = themeColors.palette[selectedColor][100].value;
+      colors.tabSelectedColor = themeColors.palette[selectedColor][90].value;
+      colors.tabHoverColor = themeColors.palette[selectedColor][80].value;
+    };
+
+    // Change tab colors here
+    // eslint-disable-next-line default-case
+    switch (colors.header) {
+      // Amber
+      case '#F98300':
+        setTabColors('amber');
+        break;
+      // Amethyst
+      case '#7928E1':
+        setTabColors('amethyst');
+        break;
+      // Azure
+      case '#0072ED':
+        setTabColors('azure');
+        break;
+      // Emerald
+      case '#2AC371':
+        setTabColors('emerald');
+        break;
+      // Graphite
+      case '#6C6C6C':
+        setTabColors('graphite');
+        break;
+      // Ruby
+      case '#DA1217':
+        setTabColors('ruby');
+        break;
+      // Slate
+      case '#6F6F76':
+        setTabColors('slate');
+        break;
+      // Turquoise
+      case '#40BDBE':
+        setTabColors('turquoise');
+        break;
     }
 
     const darkestColorMap = this.getColorMap(100);
