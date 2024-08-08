@@ -1,33 +1,5 @@
 // Cards/Widgets
 //=======================================================
-
-// @import '../button/button-chevron';
-
-@mixin auto-height {
-  height: auto;
-  min-height: 0;
-  max-height: none;
-
-  .widget-content,
-  .card-content {
-    height: auto;
-    min-height: auto;
-    max-height: none;
-  }
-}
-
-@mixin auto-width {
-  min-width: 0;
-  width: auto;
-
-  .widget-content,
-  .card-content {
-    min-width: 0;
-    width: auto;
-  }
-}
-
-
 $card: '.card', '.widget', '.small-widget';
 $card-content: '.card-content', '.widget-content';
 $card-header: '.card-header', '.widget-header';
@@ -129,12 +101,20 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   }
 
   &.card-variant {
-    @include auto-height;
-
+    height: auto;
+    min-height: 0;
+    max-height: none;
     align-items: center;
     display: flex;
     flex-flow: nowrap;
     justify-content: space-between;
+
+    .widget-content,
+    .card-content {
+      height: auto;
+      min-height: auto;
+      max-height: none;
+    }
 
     .card-image {
       padding: 15px 0 15px 15px;
@@ -295,7 +275,16 @@ $card-header-section: '.card-header-section', '.widget-header-section';
 
   // Expandable card headers set auto-height automatically
   &.expandable-area {
-    @include auto-height;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+
+    .widget-content,
+    .card-content {
+      height: auto;
+      min-height: auto;
+      max-height: none;
+    }
 
     .expandable-header {
       &:first-child {
@@ -334,8 +323,20 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   }
 
   &.auto-size {
-    @include auto-height;
-    @include auto-width;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    min-width: 0;
+    width: auto;
+
+    .widget-content,
+    .card-content {
+      min-width: 0;
+      width: auto;
+      height: auto;
+      min-height: auto;
+      max-height: none;
+    }
   }
 }
 
@@ -470,12 +471,12 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   .card-title,
   .widget-title {
     ~ svg.icon {
-      @include colorPalettesProperty(color);
-
       background: transparent;
       cursor: pointer;
       margin-left: 5px;
       position: relative;
+
+      @include colorPalettesProperty(color);
     }
   }
 
