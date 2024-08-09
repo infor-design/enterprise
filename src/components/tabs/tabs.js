@@ -4043,6 +4043,10 @@ Tabs.prototype = {
       target = self.tablist.children('.is-selected').children('a');
     }
 
+    if (this.focusState === undefined) {
+      this.focusState = this.element.find('.tab-focus-indicator');
+    }
+
     if (!target || target === undefined || !target.length ||
       (target.is(this.moreButton) && this.isScrollableTabs())) {
       this.focusState?.removeClass('is-visible');
