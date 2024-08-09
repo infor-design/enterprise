@@ -88,12 +88,10 @@
     </div>
 
     <script>
-      $('button').on('click', function(e) {
+      $('button:not(.btn-menu)').on('click', function(e) {
         var toolbar = $(e.target).closest('.toolbar');
         toolbar.data('toolbar').destroy();
-        setTimeout(function() {
-          toolbar.empty();
-        }, 0);
+        toolbar.empty();
       });
     </script>
   </div>

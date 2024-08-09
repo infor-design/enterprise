@@ -818,6 +818,7 @@ Toolbar.prototype = {
    * @returns {boolean} basic "false" return expected for click events
    */
   handleClick(e) {
+    if (!this.items) return false;
     this.setActiveButton($(e.currentTarget));
     this.triggerSelect($(e.currentTarget));
     return false;
