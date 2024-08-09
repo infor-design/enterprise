@@ -4,9 +4,8 @@ import { expect } from '@playwright/test';
 import { test } from '../base-fixture';
 
 test.describe('Toolbar tests', () => {
-  const baseUrl = 'localhost:4000/components/toolbar';
   test.describe('Index tests', () => {
-    const url = `${baseUrl}/example-index.html`;
+    const url = 'localhost:4000/components/toolbar/example-index.html';
 
     test.beforeEach(async ({ page }) => {
       await page.goto(url);
@@ -53,7 +52,7 @@ test.describe('Toolbar tests', () => {
   });
 
   test.describe('Destroy and remove tests', () => {
-    const url = `${baseUrl}/test-destroy-and-remove.html`;
+    const url = 'localhost:4000/components/toolbar/test-destroy-and-remove.html';
 
     test.beforeEach(async ({ page }) => {
       await page.goto(url);
