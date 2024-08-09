@@ -3,7 +3,6 @@ import percySnapshot from '@percy/playwright';
 import { expect } from '@playwright/test';
 import { test } from '../base-fixture';
 
-
 test.describe('Index tests', () => {
   const url = 'localhost:4000/components/toolbar/example-index.html';
 
