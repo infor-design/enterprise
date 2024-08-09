@@ -781,7 +781,6 @@ $datagrid-small-row-height: 25px;
 
           input {
             left: 0;
-            width: calc(100% - 41px);
           }
 
           .lookup-wrapper .trigger {
@@ -821,7 +820,6 @@ $datagrid-small-row-height: 25px;
         font-size: $input-size-compact-font-size;
         height: 22px;
         left: 3px !important;
-        width: calc(100% - 43px) !important;
       }
 
       .dropdown {
