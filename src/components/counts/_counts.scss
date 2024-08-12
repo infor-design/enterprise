@@ -15,9 +15,6 @@
   width: 120px;
 
   .count {
-    @include font-size(16);
-    @include colorPalettesProperty(border-color);
-
     background: transparent;
     border: 1px solid;
     border-radius: 50%;
@@ -30,17 +27,20 @@
     text-align: center;
     vertical-align: middle;
     width: 80px;
+
+    @include font-size(16);
+    @include colorPalettesProperty(border-color);
   }
 
   svg.icon {
-    @include colorPalettesProperty(color);
-
     background: $cardlist-bg-color;
     height: 19px;
     position: absolute;
     right: 23px;
     top: 0;
     width: 20px;
+
+    @include colorPalettesProperty(color);
 
     &.icon-alert {
       right: 22px;

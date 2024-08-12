@@ -1,0 +1,88 @@
+<div class="page-container no-scroll" id="application-container" role="main">
+  <div class="page-container no-scroll">
+    <div class="flex-toolbar" role="toolbar">
+      <div class="toolbar-section title">
+        <nav class="breadcrumb">
+          <ol class="breadcrumb-list" aria-label="breadcrumb">
+            <li id="home" class="current"><span class="breadcrumb-text" style="cursor: pointer">HelloWorld</span></li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <div class="page-container scrollable" id="launchPanelContainer"></div>
+  </div>
+</div>
+
+<style>
+  .blockgrid .block.configblock .hyperlink-even {
+    background: #368ac0;
+    outline: none;
+  }
+  .blockgrid .block.configblock .hyperlink {
+    width: 200px;
+    height: 200px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    font-size: 2.2rem;
+    text-decoration: none;
+    color: #fff;
+  }
+</style>
+
+
+<script>
+  var html = '<div class="blockgrid" role="list" id="my-blockgrid">\n' +
+    '          <div class="block configblock" id="Application"><a class="hyperlink hyperlink-even hide-focus"\n' +
+    '                                                             href="javascript:;" control_id="Application1"\n' +
+    '                                                             id="Application1">Application1</a></div>\n' +
+     '        </div>';
+
+
+  var tabsHtml = '<div class="page-container no-scroll">\n' +
+    '  <section id="tabs-vertical" class="tab-container vertical">\n' +
+    '    <div class="tab-list-container">\n' +
+    '      <ul class="tab-list">\n' +
+    '      </ul>\n' +
+    '    </div>\n' +
+    '  </section>\n' +
+    '</div>';
+
+
+  var initFn = function () {
+    $('#launchPanelContainer').empty();
+    $('#launchPanelContainer').append(html);
+
+    $('#Application').on('click', function () {
+
+      $('#launchPanelContainer').empty();
+      $('#launchPanelContainer').append(tabsHtml);
+
+      var options = {containerElement: '#launchPanelContainer'};
+
+      // 1.We init 'tabs' firstly.
+      var $tabs = $('#tabs-vertical').tabs(options);
+      var control = $tabs.data('tabs');
+
+      control.add('tab1', {name: 'Tab 1', content: '<p style="font-size:20em;">Tab 1</p>', isDismissible: true});
+      control.add('tab2', {name: 'Tab 2', content: '<p style="font-size:20em;">Tab 2</p>', isDismissible: true});
+      control.add('tab3', {name: 'Tab 3', content: '<p style="font-size:20em;">Tab 3</p>', isDismissible: true});
+      control.select('tab1');
+
+      // 2.For some special logics, we destroy the 'tabs' almost immediately after init the 'tabs'.
+      $tabs.data('tabs').destroy();
+
+      // 3.And then we re-init the 'tabs'.
+      $('#tabs-vertical').tabs(options);
+    });
+  };
+
+  var result = $('body').on('initialized', function () {
+    initFn();
+
+    $('#home').on('click', initFn);
+  });
+</script>
+

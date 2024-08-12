@@ -9,7 +9,11 @@
 
 - `[Datagrid]` Optimize the initial loading of datagrids with filterable setting. ([#8935](https://github.com/infor-design/enterprise-ng/issues/8935))
 - `[Datagrid]` Remove modification in calculateTextWidth that had incorrect selectors. ([#8938](https://github.com/infor-design/enterprise/issues/8938))
+- `[Datagrid]` Updated styles so pager works on cards. ([NG#1756](https://github.com/infor-design/enterprise-ng/issues/1756))
+- `[General]` Upgrade dependencies, this involved updating sass and test dependencies with a few css deprecations that were fixed. ([#8947](https://github.com/infor-design/enterprise-ng/issues/8947))
+- `[Message]` Updated docs in settings. ([#8839](https://github.com/infor-design/enterprise/issues/8839))
 - `[ModuleNav]` Fixed a bug where the tooltip was not showing when collapsed by default. ([NG#1678](https://github.com/infor-design/enterprise-ng/issues/1678))
+- `[Tabs]` Fixed a bug where focus state is undefined when using breadcrumbs startup. ([#8910](https://github.com/infor-design/enterprise/issues/8910))
 
 ## v4.98.0
 
