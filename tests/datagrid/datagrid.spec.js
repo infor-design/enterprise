@@ -74,6 +74,9 @@ test.describe('Datagrid tests', () => {
 
         // Capture snapshot for "medium" row height
         await captureSnapshot('medium', 'datagrid-expandable-row-medium-padding');
+
+        // Capture snapshot for "large" / "Normal" row height
+        await captureSnapshot('large', 'datagrid-expandable-row-large-padding');
       });
     });
   });
