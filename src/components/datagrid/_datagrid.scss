@@ -4649,7 +4649,7 @@ td .btn-actions {
 }
 
 .normal-rowheight {
-  @include row-height-padding(0px);
+  @include row-height-padding(0);
 }
 
 .medium-rowheight {
