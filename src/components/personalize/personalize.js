@@ -562,7 +562,9 @@ Personalize.prototype = {
         break;
       // Slate
       case '#6F6F76':
-        setTabColors('slate');
+        colors.tabColor = themeColors.palette.slate[70].value;
+        colors.tabSelectedColor = themeColors.palette.slate[60].value;
+        colors.tabHoverColor = themeColors.palette.slate[30].value;
         break;
       // Turquoise
       case '#40BDBE':
