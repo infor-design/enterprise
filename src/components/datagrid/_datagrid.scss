@@ -17,6 +17,16 @@
 // toolbar/toolbar
 // tooltip/tooltip
 
+$datagrid-expandable-padding: 30px;
+
+@mixin row-height-padding($adjustment) {
+  .datagrid-expandable-row {
+    .datagrid-row-detail-padding {
+      padding: $datagrid-expandable-padding - $adjustment
+    }
+  }
+}
+
 @mixin rowstatus($color) {
   td {
     border-bottom: 1px solid $color !important;
@@ -4636,6 +4646,22 @@ td .btn-actions {
       color: transparent;
     }
   }
+}
+
+.normal-rowheight {
+  @include row-height-padding(0);
+}
+
+.medium-rowheight {
+  @include row-height-padding(5px);
+}
+
+.small-rowheight {
+  @include row-height-padding(10px);
+}
+
+.extra-small-rowheight {
+  @include row-height-padding(15px);
 }
 
 //Grid Expandable Area
