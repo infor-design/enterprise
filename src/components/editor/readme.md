@@ -22,7 +22,7 @@ A Rich Text Editor is implemented using a `contenteditable` element with several
 
 The editor can be `readonly` or `disabled` and the toolbar will disappear appropriately.
 
-To save and get the data from the `contenteditable` element, you should simply save and restore the markup inside the `<div>`.
+To save and get the data from the `contenteditable` element, you should simply save and restore the markup inside the `<div>` using `innerHTML`.
 
 ```html
 <div class="field">
