@@ -1,8 +1,8 @@
 # What's New with Enterprise
 
-## v4.90.7
+## v4.90.8
 
-## v4.90.7 Fixes
+## v4.90.8 Fixes
 
 - `[BusyIndicator]` Fixed updated method of busy indicator throwing error when calling with no parameters. ([#8257](https://github.com/infor-design/enterprise/issues/8257))
 
