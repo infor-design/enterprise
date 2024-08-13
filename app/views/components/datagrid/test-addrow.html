@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="twelve columns">
+    <div role="toolbar" class="toolbar">
+
+      <div class="title">
+        Example illustrates selected row issue with Save and New.
+       </div>
+
+      <div class="buttonset">
+        <button type="button" id="add-row-button" class="btn">
+          <span>Add Row</span>
+        </button>
+        <button type="button" id="save-new-button" class="btn">
+          <span>Save and New</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  var gridApi = null;
+
+  $('body').one('initialized', function () {
+      var grid,
+        data = [],
+        columns = [];
+
+      // Some Sample Data
+      data.push({name: 'Lorem', compressor: 'Compressor 1', price: 210.99})
+      data.push({name: 'Abc', compressor: 'Pomp', price: 210.992})
+      data.push({name: 'Prop', compressor: 'Pump 1', price: 210.991})
+
+      // Define Columns for the Grid.
+      columns.push({ id: 'name', name: 'Name', sortable: false, field: 'name', formatter: Soho.Formatters.Ellipsis, editor: Soho.Editors.Input, filterType: 'text' });
+      columns.push({ id: 'compressor', name: 'Compressor', sortable: false, field: 'compressor', formatter: Soho.Formatters.Ellipsis, editor: Soho.Editors.Input, filterType: 'text' });
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, filterType: 'text'});
+
+      // Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        editable: true,
+        selectable: 'single',
+        filterable: true,
+        rowHeight: 'small',
+        toolbar: {keywordFilter: true, results: true},
+        showNewRowIndicator: true
+      }).on('selected', function (e, args) {
+        // alert(args[0].data)
+        alert(args[0].data.name);
+      });
+
+      gridApi = $('#datagrid').data('datagrid');
+
+      $('#add-row-button').on('click', function (e) {
+        gridApi.addRow({ name: 'Order', compressor: '0' }, 0);
+        gridApi.editCell(0, 1, e);
+      });
+
+      $('#save-new-button').on('click', function () {
+        var data = { id: 8, productId: 2142201, productName: 'Test', quantity: 10, price: 100.00, status: 'OK', orderDate:  new Date(2020, 11, 16), portable: false, action: 1 };
+        gridApi.updateRow(0, data);
+        console.log('Number of selected rows = ' + gridApi.selectedRows().length);
+
+        gridApi.clearRowError(0);
+        gridApi.rowStatus(0, '', 'Row Saved');
+        gridApi.clearDirtyRow(0);
+        gridApi.addRow({ productName: '', productId: '0' }, 0);
+        console.log('Number of selected rows = ' + gridApi.selectedRows().length);
+      });
+  });
+</script>
