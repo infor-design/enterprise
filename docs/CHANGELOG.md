@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.98.1
+
+## v4.98.1 Fixes
+
+- `[Tabs]` Fixed a bug where focus state is undefined when using breadcrumbs startup. ([#8910](https://github.com/infor-design/enterprise/issues/8910))
+
 ## v4.98.0
 
 ## v4.98.0 Features
