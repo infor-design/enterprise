@@ -3327,7 +3327,7 @@ Tabs.prototype = {
 
     this.checkCutOffTitle(sizeableTabs, this.visibleTabSize);
   },
-  
+
   /**
    * @private
    * @returns {void}
@@ -3439,11 +3439,7 @@ Tabs.prototype = {
     this.adjustSpilloverNumber();
   },
 
-  /**
-   * Checks cut off title for tabs.
-   * @private
-   * @returns {void}
-   */
+  /* Checks cut off title for tabs. */
   checkCutOffTitle(tabs, visibleTabSize) {
     if (tabs.is('a')) {
       tabs = tabs.parent();
@@ -3995,6 +3991,10 @@ Tabs.prototype = {
       target = self.moreButton;
     } else if (self.tablist.children('.is-selected').length > 0) {
       target = self.tablist.children('.is-selected').children('a');
+    }
+
+    if (this.focusState === undefined) {
+      this.focusState = this.element.find('.tab-focus-indicator');
     }
 
     if (!target || target === undefined || !target.length ||
