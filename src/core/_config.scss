@@ -298,7 +298,7 @@ $input-readonly-color: $input-color-readonly-font;
 $input-color-border-space: $header-bg-color;
 $input-border-color: $input-color-initial-border;
 $selected-text-color: $ids-color-palette-white;
-$selected-text-background-color:  $ids-color-palette-azure-70;
+$selected-text-background-color: $ids-color-palette-azure-70;
 
 // Loading Indicator
 $loading-indicator-ai-bar-base-bg-color: $ids-color-palette-amber-60;
@@ -1335,7 +1335,7 @@ $swipeaction-right-active-bg-color: $ids-color-palette-azure-60;
 $swipeaction-right-hover-bg-color: $ids-color-palette-azure-60;
 $swipeaction-right-hover-color: $ids-color-palette-white;
 
-//Misc
+// Misc
 $cubic-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
 $button-size-compact-height: 24px;
 $searchfield-button-size-compact-height-new: 28px;
