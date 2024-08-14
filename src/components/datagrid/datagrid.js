@@ -7312,7 +7312,7 @@ Datagrid.prototype = {
       e.preventDefault();
     }
 
-    let item = self.settings.dataset[row];
+    let item = this.settings.dataset.filter(obj => obj?._isFilteredOut !== true)[row];
 
     //  Groupable
     if (this.settings.groupable) {
