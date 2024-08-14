@@ -49,7 +49,7 @@
         toolbar: {keywordFilter: true, results: true},
         showNewRowIndicator: true
       }).on('selected', function (e, args) {
-        console.log(args[0]?.data?.name);
+        console.log(args[0]?.data?.name, args[0]?.data);
       });
 
       gridApi = $('#datagrid').data('datagrid');
