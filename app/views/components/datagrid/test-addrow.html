@@ -43,21 +43,19 @@
       grid = $('#datagrid').datagrid({
         columns: columns,
         dataset: data,
-        editable: true,
         selectable: 'single',
         filterable: true,
         rowHeight: 'small',
         toolbar: {keywordFilter: true, results: true},
         showNewRowIndicator: true
       }).on('selected', function (e, args) {
-        // alert(args[0].data)
-        alert(args[0].data.name);
+        console.log(args[0]?.data?.name);
       });
 
       gridApi = $('#datagrid').data('datagrid');
 
       $('#add-row-button').on('click', function (e) {
-        gridApi.addRow({ name: 'Order', compressor: '0' }, 0);
+        gridApi.addRow({ name: `Order ${Math.floor(Math.random() * 101)}`, compressor: 'Compressor Sample', price: Math.floor(Math.random() * 101) }, 0);
         gridApi.editCell(0, 1, e);
       });
 
