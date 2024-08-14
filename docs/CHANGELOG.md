@@ -8,6 +8,8 @@
 
 - `[Datagrid]` Fixed data return by select event on datagrid when having filter on. ([#8905](https://github.com/infor-design/enterprise/issues/8905))
 - `[Datagrid]` Optimize the initial loading of datagrids with filterable setting. ([#8935](https://github.com/infor-design/enterprise/issues/8935))
+- `[Datagrid]` Adjusted the padding of expandable detail rows in datagrid. ([#8950](https://github.com/infor-design/enterprise/issues/8950))
+- `[Datagrid]` Optimize the initial loading of datagrids with filterable setting. ([#8935](https://github.com/infor-design/enterprise-ng/issues/8935))
 - `[Datagrid]` Remove modification in calculateTextWidth that had incorrect selectors. ([#8938](https://github.com/infor-design/enterprise/issues/8938))
 - `[Datagrid]` Updated styles so pager works on cards. ([NG#1756](https://github.com/infor-design/enterprise-ng/issues/1756))
 - `[General]` Upgrade dependencies, this involved updating sass and test dependencies with a few css deprecations that were fixed. ([#8947](https://github.com/infor-design/enterprise/issues/8947))
