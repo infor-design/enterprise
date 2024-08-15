@@ -7336,7 +7336,7 @@ Datagrid.prototype = {
       e.preventDefault();
     }
 
-    let item = self.settings.dataset[row];
+    let item = this.settings.dataset.filter(obj => obj?._isFilteredOut !== true)[row];
 
     //  Groupable
     if (this.settings.groupable) {
@@ -9125,7 +9125,7 @@ Datagrid.prototype = {
         self.setNodeStatus(rowNode);
         self.lastSelectedRow = idx;
       } else {
-        rowData = s.dataset[dataRowIndex];
+        rowData = this.settings.dataset.filter(obj => obj?._isFilteredOut !== true)[dataRowIndex];
         if (s.groupable) {
           const row = self.actualPagingRowIndex(self.actualRowIndex(rowNode));
           if (isNaN(row)) {
