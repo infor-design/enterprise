@@ -5363,6 +5363,7 @@ Datagrid.prototype = {
       if (this.settings.groupable) {
         arrayToTest = this.originalDataset;
       }
+
       const rowStart = 0;
       const arrayToTestlen = arrayToTest.length;
       for (let i = rowStart; i < arrayToTestlen; i++) {
@@ -5377,16 +5378,40 @@ Datagrid.prototype = {
 
         len = val.toString().length;
 
+        const getVal = (group) => {
+          let groupVal = this.fieldValue(group, columnDef.field);
+          groupVal = self.formatValue(columnDef.formatter, i, 0, groupVal, columnDef, row, self);
+          groupVal = xssUtils.stripHTML(groupVal);
+
+          if (this.settings.treeGrid) {
+            groupVal = groupVal.replace(Locale.translate('ExpandCollapse'), '');
+          }
+
+          groupVal = groupVal.replace(/\s+/g, ' ').trim();
+
+          return groupVal;
+        };
+
         if (this.settings.groupable && row) {
           for (let k = 0; k < row.length; k++) {
-            let groupVal = this.fieldValue(row[k], columnDef.field);
-            groupVal = self.formatValue(columnDef.formatter, i, 0, groupVal, columnDef, row, self);
-            groupVal = xssUtils.stripHTML(groupVal);
-
+            const groupVal = getVal(row[k]);
             len = groupVal.toString().length;
+
             if (len > max) {
               max = len;
               maxText = groupVal;
+            }
+          }
+        }
+
+        if (this.settings.treeGrid && row && row.children) {
+          for (let k = 0; k < row.children.length; k++) {
+            const childVal = getVal(row.children[k]);
+            len = childVal.toString().length;
+
+            if (len > max) {
+              max = len;
+              maxText = childVal;
             }
           }
         }
@@ -5512,7 +5537,6 @@ Datagrid.prototype = {
   calculateTextRenderWidth(maxText, isHeader) {
     // if given, use cached canvas for better performance, else, create new canvas
     this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
-
     if (!this.canvas || !this.canvas?.getContext) return 0;
     const context = this.canvas?.getContext('2d');
     const isNewTheme = (theme.currentTheme.id.indexOf('uplift') > -1 || theme.currentTheme.id.indexOf('new') > -1);
