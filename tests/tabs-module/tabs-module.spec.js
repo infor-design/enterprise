@@ -1,4 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
+import percySnapshot from '@percy/playwright';
 import { expect } from '@playwright/test';
 import { test } from '../base-fixture';
 
@@ -13,6 +14,13 @@ test.describe('Tabs module tests', () => {
   test.describe('general page checks', () => {
     test('should have a title', async ({ page }) => {
       await expect(page).toHaveTitle('IDS Enterprise');
+    });
+  });
+
+  test.describe('snapshot tests', () => {
+    test('should match the visual snapshot in percy', async ({ page, browserName }) => {
+      if (browserName !== 'chromium') return;
+      await percySnapshot(page, 'tabs-module');
     });
   });
 
