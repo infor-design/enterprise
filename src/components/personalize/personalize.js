@@ -530,6 +530,7 @@ Personalize.prototype = {
     const setTabColors = (selectedColor) => {
       colors.tabColor = themeColors.palette[selectedColor][100].value;
       colors.tabSelectedColor = themeColors.palette[selectedColor][90].value;
+      colors.tabHeaderColor = themeColors.palette[selectedColor][90].value;
       colors.tabHoverColor = themeColors.palette[selectedColor][80].value;
     };
 
@@ -564,6 +565,7 @@ Personalize.prototype = {
       case '#6F6F76':
         colors.tabColor = themeColors.palette.slate[70].value;
         colors.tabSelectedColor = themeColors.palette.slate[60].value;
+        colors.tabHeaderColor = themeColors.palette.slate[60].value;
         colors.tabHoverColor = themeColors.palette.slate[30].value;
         break;
       // Turquoise
