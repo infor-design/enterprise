@@ -1,8 +1,15 @@
-<div class="full-height full-width">
-  <div id="datagrid1" style='height: 50%'>
+<style>
+  .datagrid-tree {
+    height: 50%;
+    margin: 20px 0;
+  }
+</style>
+
+<div class="full-width">
+  <div id="datagrid1" class="datagrid-tree">
   </div>
 
-  <div id="datagrid2" style='height: 50%'>
+  <div id="datagrid2" class="datagrid-tree">
 </div>
 
 <script id="datagrid-script">
@@ -10,6 +17,8 @@
 
     var grid,
     columns = [];
+
+    const url = '{{basepath}}api/tree-tasks';
 
   //Define Columns for the Grid.
   columns.push({
@@ -30,88 +39,22 @@
   });
   columns.push({ id: 'time', name: 'Time', field: 'time' });
 
-  const tasks = [
-    {
-      id: 1,
-      escalated: 2,
-      depth: 1,
-      expanded: false,
-      taskName: 'Follow up action with HMM Global',
-      desc: '',
-      comments: null,
-      orderDate: new Date(2014, 12, 8),
-      time: '',
-      expanded: true,
-      children: [
-        {
-          id: 2,
-          escalated: 1,
-          depth: 2,
-          taskName:
-            'Follow up action with Logistics Follow up action with Logistics Follow up action with Logistics Follow up action with Logistics',
-          desc: 'Update pending quotes.',
-          comments: 'Example Comment',
-          orderDate: new Date(2015, 7, 3),
-          time: '7:10 AM',
-        },
-        {
-          id: 3,
-          escalated: 0,
-          depth: 2,
-          taskName: 'Follow up action with logistics',
-          desc: 'Contact sales representative with the updated purchase order.',
-          comments: 'Example Comment',
-          orderDate: new Date(2014, 6, 3),
-          time: '9:10 AM',
-        },
-        {
-          id: 4,
-          escalated: 0,
-          depth: 2,
-          taskName: 'Follow up action with trucking',
-          desc: 'Contact sales representative with the updated purchase order.',
-          comments: 'Example Comment',
-          orderDate: new Date(2015, 3, 4),
-          time: '14:10 PM',
-        },
-      ],
-    },
-    {
-      id: 5,
-      escalated: 0,
-      depth: 1,
-      taskName: 'Follow up action with Residental Housing',
-      desc: 'Contact sales representative with the updated purchase order.',
-      comments: 'Example Comment',
-      orderDate: new Date(2015, 5, 5),
-      time: '18:10 PM',
-    },
-    {
-      id: 6,
-      escalated: 0,
-      depth: 1,
-      taskName: 'Follow up action with HMM USA',
-      desc: 'Contact sales representative with the updated purchase order.',
-      comments: 'Example Comment',
-      orderDate: new Date(2014, 6, 9),
-      time: '20:10 PM',
-      portable: true,
-    },
-  ];
+  $.getJSON(url, function(data) {
+    $('#datagrid1')
+      .datagrid({
+        columns: columns,
+        dataset: data,
+        treeGrid: true,
+        selectable: 'mixed',
+      })
+      .on('selected', function (e, args) {
+        console.log(args);
+      })
+      .on('rowactivated', function (e, args) {
+        console.log(args);
+      });
 
-  $('#datagrid1')
-    .datagrid({
-      columns: columns,
-      dataset: tasks,
-      treeGrid: true,
-      selectable: 'mixed',
-    })
-    .on('selected', function (e, args) {
-      console.log(args);
-    })
-    .on('rowactivated', function (e, args) {
-      console.log(args);
-    });
+  });
 
   const tasks2 = [
     {
