@@ -140,7 +140,7 @@
         }
       }
     }
-    
+
     .tab-more {
       padding: 6px 6px 7px;
       background-color: $module-tabs-normal-bg-color;
@@ -210,8 +210,6 @@
 }
 
 .tab-panel-container {
-  padding-top: 9px;
-
   .tab-panel {
     .header .toolbar .title [class^='btn'] + h1 {
       margin-top: 4px;

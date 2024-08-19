@@ -2,6 +2,7 @@
 
 ## v4.99.0 Features
 
+- `[Module Tabs]` Updated tab colors. ([#8831](https://github.com/infor-design/enterprise/issues/8831))
 - `[Notification]` Added a callback function setting to be called when the notification is closed. ([#8767](https://github.com/infor-design/enterprise/issues/8767))
 
 ## v4.99.0 Fixes
