@@ -12,6 +12,7 @@
 - `[Datagrid]` Adjusted the padding of expandable detail rows in datagrid. ([#8950](https://github.com/infor-design/enterprise/issues/8950))
 - `[Datagrid]` Remove modification in calculateTextWidth that had incorrect selectors. ([#8938](https://github.com/infor-design/enterprise/issues/8938))
 - `[Datagrid]` Updated styles so pager works on cards. ([NG#1756](https://github.com/infor-design/enterprise-ng/issues/1756))
+- `[Datagrid]` Fixed a bug where text is misaligned in action dropdown . ([#8957](https://github.com/infor-design/enterprise-ng/issues/8957))
 - `[Datagrid]` Fixed auto sizing on columns in tree grid. ([#8646](https://github.com/infor-design/enterprise/issues/8646))
 - `[General]` Upgrade dependencies, this involved updating sass and test dependencies with a few css deprecations that were fixed. ([#8947](https://github.com/infor-design/enterprise-ng/issues/8947))
 - `[Message]` Updated docs in settings. ([#8839](https://github.com/infor-design/enterprise/issues/8839))

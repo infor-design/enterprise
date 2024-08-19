@@ -99,11 +99,12 @@ div.multiselect {
   }
 
   > span:not(.tag-list) {
-    display: inline-block;
+    display: inline-flex;
     overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 7px 0;
-    vertical-align: top;
+    text-overflow: ellipsis; 
+    align-items: center;
+    vertical-align: top; 
+    height: 100%;
     width: calc(100% - 10px);
 
     &[data-placeholder-text]::before {
