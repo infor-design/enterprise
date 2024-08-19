@@ -41,6 +41,9 @@ export default function treeTasks(req, res) {
       portable: true,
       children: [
         {
+          id: 16, escalated: 0, depth: 2, taskName: 'Follow up action with HMM USA. Deserunt magnam iste, nor consectetur. In. Explicabo. Veniam commodi, and quae, for officia.', desc: 'Contact sales representative with the updated purchase order.', comments: 'Example Comment', orderDate: new Date(2014, 6, 9), time: '20:10 PM', portable: true
+        },
+        {
           id: 8, escalated: 0, depth: 2, taskName: 'Follow up action with Logistics', desc: 'Contact sales representative.', comments: 'Example Comment', orderDate: new Date(2014, 5, 2), time: '22:10 PM'
         },
         {
