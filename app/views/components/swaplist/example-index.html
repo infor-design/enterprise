@@ -202,13 +202,13 @@
     });
 
     // Set translations for this example
-    setTimeout(function () {
+    $(window).on('localechange', (e, f) => {
       $('#example-swaplist-1 .available .card-title').text(Soho.Locale.translate('Available'));
       $('#example-swaplist-1 .selected .card-title').text(Soho.Locale.translate('Selected'));
 
       $('#example2-swaplist .available .card-title').text(Soho.Locale.translate('Available'));
       $('#example2-swaplist .selected .card-title').text(Soho.Locale.translate('Selected'));
       $('#example2-swaplist .full-access .card-title').text(Soho.Locale.translate('All'));
-    }, 150);
+    });
   });
 </script>
