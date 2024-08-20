@@ -1,0 +1,168 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="fieldset">
+      <h2 class="fieldset-title">Listview in form compact layout</h2>
+    </div>
+  </div>
+</div>
+
+<form action="" class="form-layout-compact">
+  <div class="row">
+    <div class="one-third column">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Multiselect</h2>
+          <button class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-vertical-ellipsis"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">Action One</a></li>
+            <li><a href="#">Action Two</a></li>
+          </ul>
+        </div>
+        <div class="card-content">
+          <div class="listview" id="example-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'example-tmpl', 'selectable': 'multiple'}"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="one-third column">
+      <div class="card" >
+        <div class="card-header">
+          <h2 class="card-title">Mixed</h2>
+          <button class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-vertical-ellipsis"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">Add new action item</a></li>
+            <li><a href="#">Regular action</a></li>
+            <li><a href="#">Individual Action</a></li>
+          </ul>
+        </div>
+  
+        <div class="card-content">
+          <div class="listview" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'selectable': 'mixed', 'disableItemDeactivation': true, 'selectOnFocus': 'false'}"></div>
+        </div>
+      </div>
+  
+    </div>
+
+    <div class="one-third column">
+      <div class="card" >
+        <div class="card-header">
+          <h2 class="card-title">Single</h2>
+          <button class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-vertical-ellipsis"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">Add new action item</a></li>
+            <li><a href="#">Regular action</a></li>
+            <li><a href="#">Individual Action</a></li>
+          </ul>
+        </div>
+  
+        <div class="card-content">
+          <div class="contextual-toolbar toolbar is-hidden">
+            <div class="buttonset">
+              <button class="btn-tertiary" title="Assign Selected Items" type="button">Assign</button>
+              <button class="btn-tertiary" title="Remove Selected Items" type="button">Remove</button>
+            </div>
+          </div>
+          <div class="listview" id="period-end" data-options="{template: 'period-end-tmpl', selectable: 'single', allowDeselect: false, source: '{{basepath}}api/periods' }"></div>
+        </div>
+      </div>
+  
+      {{={{{ }}}=}}
+  
+      <script id="period-end-tmpl" type="text/html">
+        <ul>
+          {{#dataset}}
+            {{#alert}}
+              <li class="{{alertClass}}">
+                <p class="listview-heading">{{city}}</p>
+                <p class="listview-subheading">{{location}}</p>
+                <div class="l-pull-right error">
+                    <svg class="icon icon-{{alertClass}}" focusable="false" aria-hidden="true" role="presentation">
+                      <use href="#icon-{{alertClass}}"/>
+                    </svg>
+                    <span class="days">{{daysLeft}}</span><span class="day-sign">d</span>
+                    <span class="hours">{{hoursLeft}}</span><span class="hour-sign">h</span>
+                </div>
+              </li>
+            {{/alert}}
+            {{^alert}}
+              <li>
+                <p class="listview-heading">{{city}}</p>
+                <p class="listview-subheading">{{location}}</p>
+  
+                <div class="l-pull-right">
+                  <span class="days">{{daysLeft}}</span><span class="day-sign">d</span>
+                  <span class="hours">{{hoursLeft}}</span><span class="hour-sign">h</span>
+                </div>
+              </li>
+            {{/alert}}
+          {{/dataset}}
+        </ul>
+      </script>
+  
+    </div>
+  </div>
+</form>
+
+<script>
+  $('body').on('initialized', function() {
+    $('#example-listview')
+    .on('selected', function (e, args) {
+     console.log('selected: ', args);
+   })
+   .on('unselected', function (e, args) {
+     console.log('unselected: (deprecated) ', args);
+    })
+    .on('deselected', function (e, args) {
+      console.log('deselected: ', args);
+     });
+  });
+</script>
+
+{{={{{ }}}=}}
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p class="listview-heading">Task #{{task}}</p>
+        <p class="listview-subheading">{{desc}} </p>
+        <p class="listview-micro">Due: {{date}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
+
+{{={{{ }}}=}}
+<script id="example-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p>{{desc}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
