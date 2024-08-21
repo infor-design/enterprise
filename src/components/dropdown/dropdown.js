@@ -253,8 +253,7 @@ Dropdown.prototype = {
     this.isWrapped = this.wrapper.length > 0;
 
     if (!this.isWrapped) {
-      // debugger;
-      this.wrapper = $(`<div class="dropdown-wrapper ${this.settings.noMarginWrapper ? 'no-margin' : ''}"></div>`).insertAfter(this.element);
+      this.wrapper = $(`<div class="dropdown-wrapper${this.settings.noMarginWrapper ? ' no-margin' : ''}"></div>`).insertAfter(this.element);
     }
 
     if (this.isWrapped) {
