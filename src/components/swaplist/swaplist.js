@@ -102,9 +102,10 @@ SwapList.prototype = {
 
   init() {
     const s = this.settings;
+    const additionalClass = `${s.additionalClass} .listview`;
     s.draggable = $.extend(true, SWAPLIST_DEFAULTS.draggable, s.draggable);
     this.isTouch = env.features.touch;
-    this.isAdditional = $(`${s.additionalClass} .listview`, this.element).length > 0;
+    this.isAdditional = $(additionalClass, this.element).length > 0;
 
     if (this.isTouch) {
       this.element.addClass('is-touch');
@@ -136,10 +137,12 @@ SwapList.prototype = {
 
     for (let i = 0, l = containers.length; i < l; i++) {
       const c = containers[i];
-      const lv = $(`${c.class} .listview`, this.element);
+      const listviewContainerClass = `${c.class} .listview`;
+      const lv = $(listviewContainerClass, this.element);
       const list = lv.data('listview');
+      const searchfieldContainerClass = `${c.class} .searchfield`;
       const options = { dataset: c.dataset || [], selectable: 'multiple', showCheckboxes: false };
-      const isSearchable = ((s.searchable === true || s.searchable === 'true') && ($(`${c.class} .searchfield`, this.element).length > 0));
+      const isSearchable = ((s.searchable === true || s.searchable === 'true') && ($(searchfieldContainerClass, this.element).length > 0));
 
       if (isSearchable) {
         options.searchable = true;
@@ -219,17 +222,23 @@ SwapList.prototype = {
 
     this.offset = null;
 
-    this.containers = $(`${s.availableClass},${
-      s.selectedClass},${
-      s.additionalClass}`, this.element);
+    const { availableClass, selectedClass, additionalClass } = s;
+    const { availableBtn, additionalBtn, selectedBtnLeft, selectedBtnRight } = s;
 
-    this.actionButtons = $(`${s.availableBtn},${
-      s.additionalBtn},${
-      s.selectedBtnLeft},${
-      s.selectedBtnRight}`, this.element);
+    this.containers = $(
+      `${availableClass}, ${selectedClass}, ${additionalClass}`,
+      this.element
+    );
 
-    this.selectedButtons = $(`${s.selectedBtnLeft},${
-      s.selectedBtnRight}`, this.element);
+    this.actionButtons = $(
+      `${availableBtn},${additionalBtn},${selectedBtnLeft},${selectedBtnRight}`,
+      this.element
+    );
+
+    this.selectedButtons = $(
+      `${selectedBtnLeft},${selectedBtnRight}`,
+      this.element
+    );
 
     this.tabButtonsStr = `${
       s.availableBtn}, ${
@@ -672,7 +681,8 @@ SwapList.prototype = {
 
     for (let i = 0, l = containers.length; i < l; i++) {
       const c = containers[i];
-      const nodes = $(`${c.class} .listview li`, this.element);
+      const classSelector = `${c.class} .listview li`;
+      const nodes = $(classSelector, this.element);
 
       for (let nodeIndex = 0, l2 = nodes.length; nodeIndex < l2; nodeIndex++) {
         let data;
@@ -961,7 +971,8 @@ SwapList.prototype = {
 
     for (let i = 0, l = containers.length; i < l; i++) {
       const c = containers[i];
-      const lv = $(`${c.class} .listview`, this.element);
+      const classSelector = `${c.class} .listview`;
+      const lv = $(classSelector, this.element);
       const api = lv.data('listview');
 
       if (api) {
@@ -1187,8 +1198,11 @@ SwapList.prototype = {
           return;
         }
 
-        $(`.${settings.numOfSelectionsClass}`, settings.itemContentTempl).html(selections.items.length);
-        $(`.${settings.numOfSelectionsClass}-text`, settings.itemContentTempl).text(Locale.translate('ItemsSelected'));
+        const selectionClass = `.${settings.numOfSelectionsClass}`;
+        const selectionClassText = `${selectionClass}-text`;
+
+        $(selectionClass, settings.itemContentTempl).html(selections.items.length);
+        $(selectionClassText, settings.itemContentTempl).text(Locale.translate('ItemsSelected'));
         self.addDropeffects();
 
         if (!self.isTouch) {
@@ -1196,7 +1210,8 @@ SwapList.prototype = {
           e.originalEvent.dataTransfer.setData('text', '');
 
           if (selections.items.length > 1) {
-            $(`.${settings.itemContentClass}`, selections.dragged).html(settings.itemContentTempl.html());
+            const itemContentClass = `.${settings.itemContentClass}`;
+            $(itemContentClass, selections.dragged).html(settings.itemContentTempl.html());
           }
         } else {
           rect = target[0].getBoundingClientRect();
@@ -1265,7 +1280,8 @@ SwapList.prototype = {
           if (!selections.isInSelection) {
             self.draggedMakeSelected(list, selections.dragged);
             selections.items = list.selectedItems;
-            $(`.${settings.numOfSelectionsClass}`, settings.itemContentTempl).html(selections.items.length);
+            const selectionClass = `.${settings.numOfSelectionsClass}`;
+            $(selectionClass, settings.itemContentTempl).html(selections.items.length);
           }
 
           touch = e.originalEvent.touches[0];
@@ -1282,7 +1298,8 @@ SwapList.prototype = {
             .slideUp();
 
           if (selections.items.length > 1) {
-            $(`.${settings.itemContentClass}`, (selections.placeholderTouch.add('#sl-placeholder-touch2')))
+            const itemContentClass = `.${settings.itemContentClass}`;
+            $(itemContentClass, (selections.placeholderTouch.add('#sl-placeholder-touch2')))
               .html(settings.itemContentTempl.html());
 
             $('#sl-placeholder-touch2').show();
@@ -1331,7 +1348,8 @@ SwapList.prototype = {
         });
 
         if (selections.items.length > 1) {
-          $(`.${settings.itemContentClass}`, selections.dragged).html($(`.${settings.itemContentClass}`, selections.placeholder).html());
+          const itemContentClass = `.${settings.itemContentClass}`;
+          $(itemContentClass, selections.dragged).html($(itemContentClass, selections.placeholder).html());
           if (self.isTouch) {
             selections.dragged.show();
           }

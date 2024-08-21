@@ -64,6 +64,7 @@
     "test:start-server": "node app/server.js --test-port",
     "test": "PERCY_LOGLEVEL=silent npx playwright test --reporter=list",
     "test:build": "npm run build:demoapp && npm run build",
+    "test:visual": "PERCY_LOGLEVEL=silent npx percy exec -- npx playwright test --reporter=list",
     "test:coverage": "npx rimraf .nyc_output && npm run build:coverage && npm run test && npx nyc report && open coverage/index.html",
     "test:coverage:no-build": "npx rimraf .nyc_output && npm run test && npx nyc report && open coverage/index.html",
     "test:ci": "PERCY_LOGLEVEL=silent npx rimraf .nyc_output && npm run build:coverage && npm run test && npx nyc report",

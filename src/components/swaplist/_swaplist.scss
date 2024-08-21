@@ -37,6 +37,18 @@
 
     .card-content {
       width: 100%;
+
+      .listview {
+        li {
+          border-radius: 0;
+          &:last-child {
+            &.over {
+              border: 1px dashed $swaplist-border-color !important;
+              border-bottom-color: inherit;
+            }
+          }
+        }
+      }
     }
 
     .card-header {
@@ -326,7 +338,8 @@
     }
 
     .over {
-      border: 1px dashed $swaplist-border-color;
+      border: 1px dashed $swaplist-border-color !important;
+      min-height: 40px;
     }
   }
 

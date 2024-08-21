@@ -25,7 +25,7 @@
 
     .card-content .listview,
     .widget-content .listview {
-      li:first-child {
+      li:first-child:not(.over) {
         border-top-color: transparent;
       }
     }
