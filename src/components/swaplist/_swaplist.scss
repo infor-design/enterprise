@@ -259,7 +259,7 @@
     border-top: thin solid $swaplist-border-color-card;
 
     ul {
-      min-height: 100%;
+      min-height: 40px;
       padding: 0 0 5px;
 
       &.is-not-droppable {
