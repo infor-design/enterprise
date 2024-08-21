@@ -18,6 +18,7 @@
 - `[General]` Upgrade dependencies, this involved updating sass and test dependencies with a few css deprecations that were fixed. ([#8947](https://github.com/infor-design/enterprise-ng/issues/8947))
 - `[Message]` Updated docs in settings. ([#8839](https://github.com/infor-design/enterprise/issues/8839))
 - `[ModuleNav]` Fixed a bug where the tooltip was not showing when collapsed by default. ([NG#1678](https://github.com/infor-design/enterprise-ng/issues/1678))
+- `[Swaplist]` Improved the size of the swaplist's drop area when there is no existing items. ([#8956](https://github.com/infor-design/enterprise/issues/8956))
 - `[Toolbar]` Fixed uncaught error when destroying the toolbar. ([#8946](https://github.com/infor-design/enterprise/issues/8946))
 - `[Tabs]` Fixed a bug where focus state is undefined when using breadcrumbs startup. ([#8910](https://github.com/infor-design/enterprise/issues/8910))
 

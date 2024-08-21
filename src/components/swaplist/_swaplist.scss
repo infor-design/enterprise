@@ -41,6 +41,7 @@
       .listview {
         li {
           border-radius: 0;
+
           &:last-child {
             &.over {
               border: 1px dashed $swaplist-border-color !important;
