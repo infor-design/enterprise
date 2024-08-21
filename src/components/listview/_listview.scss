@@ -982,6 +982,66 @@ html[dir='rtl'] .listview-filter-wrapper {
   }
 }
 
+// Listview in Form Compact Mode
+.form-layout-compact,
+.field-short {
+  .listview {
+    &.is-multiselect {
+      li {
+        padding-left: 37px;
+      }
+    }
+
+    label.inline {
+      .checkbox {
+        ~ .label-text::before,
+        input.checkbox + label::before,
+        input.checkbox + input[type='hidden'] + label::before,
+        span.checkbox > label::before {
+          top: 2px;
+        }
+    
+        &:checked ~ .label-text::after,
+        input.checkbox:checked + label::after,
+        input.checkbox:checked + input[type='hidden'] + label::after,
+        span.checkbox > input:checked + label::after {
+          top: 11px;
+        }
+      }
+    }    
+
+    li {
+      padding: 8px 8px 7px;
+
+      p {
+        margin-bottom: 3px;
+      }
+    }
+
+    .days,
+    .hours,
+    .day-sign,
+    .hour-sign {
+      @include font-size(16);
+    }
+
+    p,
+    .listview-heading,
+    .listview-subheading {
+      @include font-size(14);
+    }
+
+    .listview-micro {
+      @include font-size(12);
+    }
+
+    .l-pull-right .icon {
+      height: 16px;
+      width: 16px;
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   &.is-safari {
@@ -1019,12 +1079,6 @@ html[dir='rtl'] {
     }
 
     li {
-      &.error {
-        border-left: 3px solid $error-color !important;
-        border-right: 0 solid $error-color !important;
-        padding: 15px 17px 15px 20px;
-      }
-
       > .icon {
         float: right;
         margin: 1px 0 10px 15px;
