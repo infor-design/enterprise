@@ -56,7 +56,7 @@ This project demonstrates how to perform visual testing using Percy and Playwrig
 - [Introduction](#introduction)
 - [Example Test](#example-test)
 - [Usage](#usage)
-- [Best Practices](#best-practices)
+- [Best Practices](#best-practices-for-visual-testing)
 
 ### Introduction
 
