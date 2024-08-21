@@ -45,26 +45,6 @@ selected.push({id: 11, value: 'opt-11', text: 'Option K'});
 $('#example-swaplist-1').swaplist({available: available, selected: selected, template: $('#swaplist-tmpl').html()});
 ```
 
-## Support form compact layout
-
-The swap list can be used in a compact layout by adding the `form-layout-compact` class to the parent container or by using `field-short` class per listview. This will reduce the paddings and font sizes around the list items.
-
-```html
-<!-- Using form layout compact -->
-<div class="form-layout-compact">
-  <div class="listview" id="example-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'example-tmpl', 'selectable': 'multiple'}"></div>
-</div>
-
-<!-- Using field short class -->
-<div class="field-short field-stacked">
-  <div class="listview" id="example-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'example-tmpl', 'selectable': 'multiple'}"></div>
-</div>
-
-<div class="field-short field-stacked">
-  <div class="listview" id="example-listview-2" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'example-tmpl', 'selectable': 'multiple'}"></div>
-</div>
-```
-
 ## Accessibility
 
 - This component is keyboard accessible but not entirely tested for WAI-ARIA and Screen reader support.
