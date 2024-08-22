@@ -10903,7 +10903,7 @@ Datagrid.prototype = {
     }
 
     if (this.editor.useValue) {
-      cellValue = this.fieldValue(rowData, col.field);
+      cellValue = this.fieldValue(rowData, col.field, false);
     }
     this.editor.val(cellValue);
 
