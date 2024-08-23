@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.98.2
+
+## v4.98.2 Fixes
+
+- `[Validation]` Add guards for new setting in case it is undefined. ([#8981](https://github.com/infor-design/enterprise/issues/8981))
+
 ## v4.98.1
 
 ## v4.98.1 Fixes
