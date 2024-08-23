@@ -30,6 +30,7 @@ test.describe('Link tests', () => {
   test.describe('snapshot tests', () => {
     test('should match the visual snapshot in percy', async ({ page, browserName }) => {
       if (browserName !== 'chromium') return;
+      await page.waitForLoadState();
       await percySnapshot(page, 'link-light');
     });
   });
