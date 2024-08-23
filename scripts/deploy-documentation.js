@@ -8,12 +8,9 @@
  * (both of these pieces of data are stored in an global object
  * for each component)
  * 3. Pending the "--site" flag specified, it writes each component in the object as:
- *   - HTML files in static/ for local serving (this is the default)
- *   or
  *   - JSON files in dist/, zips them, and POSTs them to the specified
  *     ids-website server
- *
- * @example `node ./scripts/deploy-documentation.js`
+ * @example `node ./scripts/deploy-documentation.js --site=local`
  */
 
 // -------------------------------------
@@ -42,16 +39,11 @@ import getJSONFile from '../app/src/js/get-json-file.js';
 const yargs = _yargs(hideBin(process.argv));
 
 const argv = await yargs
-  .usage('Usage $node ./scripts/deploy-documentation.js [-s] [-d] [-T]')
+  .usage('Usage $node ./scripts/deploy-documentation.js [-s]')
   .option('site', {
     alias: 's',
-    describe: 'The site server to publish to (static, local, localDebug, staging, prod)',
+    describe: 'The site server to publish to (local, localDebug, staging, prod)',
     default: 'staging'
-  })
-  .option('dry-run', {
-    alias: 'd',
-    describe: 'Run the script, skipping sending of files',
-    default: false
   })
   .help('h')
   .alias('h', 'help')
@@ -71,7 +63,6 @@ setOptions({
 // -------------------------------------
 const rootPath = slash(process.cwd());
 const idsWebsitePath = 'docs/ids-website';
-const staticWebsitePath = 'app/docs';
 
 const paths = {
   components: `${rootPath}/src/components`,
@@ -85,10 +76,6 @@ const paths = {
     root: `./${idsWebsitePath}`,
     dist: `./${idsWebsitePath}/dist`,
     distDocs: `./${idsWebsitePath}/dist/docs`
-  },
-  static: {
-    root: `${rootPath}/${staticWebsitePath}`,
-    components: `${rootPath}/${staticWebsitePath}/components`
   }
 };
 
@@ -100,7 +87,6 @@ const jsonTemplate = {
 };
 
 const serverURIs = {
-  static: paths.static.root,
   local: 'http://localhost/api/docs/',
   localDebug: 'http://localhost:9002/api/docs/',
   prod: `${process.env.DOCS_API_URL}/api/docs/`
@@ -119,7 +105,7 @@ const componentStats = {
   numSkipped: 0,
   total: 0,
 };
-let deployTo = 'static';
+let deployTo = 'site';
 let numArchivesSent = 0;
 
 hbsRegistrar(handlebars, {
@@ -132,8 +118,6 @@ hbsRegistrar(handlebars, {
 // -------------------------------------
 //   Main
 // -------------------------------------
-const opStart = swlog.logTaskStart(`deploying ${packageJson.version}`);
-
 if (argv.site && Object.keys(serverURIs).includes(argv.site)) {
   deployTo = argv.site;
 }
@@ -145,48 +129,27 @@ if (packageJson.version.includes('-') && deployTo === 'prod') {
   process.exit(0);
 }
 
-await cleanAll();
-await compileSupportingDocs();
-await compileComponents();
-await writeDocs();
+// -------------------------------------
+//   Main Section
+// -------------------------------------
 
-async function writeDocs() {
-  const writeStart = swlog.logTaskStart('writing files');
-  const pageTemplate = handlebars.compile(fs.readFileSync(`${paths.templates.hbs}/page.hbs`, 'utf-8'));
-  const writePromises = [];
-
-  writePromises.push(writeJsonSitemap());
-
-  Object.keys(allDocsObjMap).forEach(compName => {
-    if (deployTo === 'static') {
-      writePromises.push(writeHtmlFile(pageTemplate, compName));
-    } else {
-      writePromises.push(writeJsonFile(compName));
-    }
-  });
-
-  Promise.allSettled(writePromises).then(() => {
-    swlog.logTaskEnd(writeStart);
-    if (deployTo !== 'static') {
-      // TODO zipAndDeploy();
-    }
-  });
+async function deployDocumentation() {
+  try {
+    await cleanAll();
+    await compileSupportingDocs();
+    await compileComponents();
+    await writeJsonSitemap();
+  } catch (error) {
+    console.error('Error during deployment:', error);
+  }
 }
 
-// -------------------------------------
-//   Functions
-// -------------------------------------
+deployDocumentation();
 
 /**
  * Compiled the component's MD and DocJS
- * @returns {Promise} - A promise
  */
 async function compileComponents() {
-  console.log('Compiling component docs');
-  const docStart = swlog.logTaskStart('component documentation');
-  const compPromises = [];
-
-  // const jsFiles = fsFiles(`${paths.components}/`, 'js').filter((item) => (!item.includes('.jquery')));
   function getDirectories(path) {
     // eslint-disable-next-line prefer-arrow-callback
     return fs.readdirSync(path).filter(function (file) {
@@ -197,7 +160,7 @@ async function compileComponents() {
   const componentDirs = getDirectories(paths.components);
   componentStats.total += componentDirs.length;
 
-  componentDirs.forEach((compName) => {
+  componentDirs.forEach(async (compName, i) => {
     const compDir = `${paths.components}${path.sep}${compName}`;
 
     if (!documentationExists(compName)) {
@@ -213,63 +176,40 @@ async function compileComponents() {
       isComponent: true
     };
 
-    // note: comp path includes an ending "/"
-    compPromises.push(documentJsToHtml(compName));
-    compPromises.push(markdownToHtml(`${compDir}${path.sep}readme.md`, compName));
+    await documentJsToHtml(compName);
+    await markdownToHtml(`${compDir}${path.sep}readme.md`, compName, i + 1 === componentDirs.length);
   });
-
-  swlog.logTaskEnd(docStart);
 }
 
 /**
  * Compile all ids-website supporting MD files
  * and store the output string
- * @returns {Promise} - A promise
  */
 async function compileSupportingDocs() {
-  console.log('Compiling supporting docs');
-  const mdStart = swlog.logTaskStart('markdown documentation');
-
-  const mdFiles = fsFiles(`${paths.docs}`, 'md');
-  mdFiles.forEach((filePath, i) => {
+  const mdFiles = fsFiles(`${paths.docs}`, 'md').filter(file => !file.includes('documentationjs'));
+  mdFiles.forEach(async (filePath, i) => {
     componentStats.total += i;
     const fileName = path.basename(filePath, '.md').toLowerCase();
     allDocsObjMap[fileName] = { ...jsonTemplate, title: fileName };
-    markdownToHtml(filePath, fileName);
+    await markdownToHtml(filePath, fileName);
   });
-
-  swlog.logTaskEnd(mdStart);
 }
 
 /**
  * Remove any "built" directories/files
  * @async
- * @returns {Promise} - A promise
  */
 async function cleanAll() {
   const cleanStart = swlog.logTaskStart('cleaning dist');
-
-  const filesToDel = [];
-  filesToDel.push(
-    `${paths.static.root}/*.html`,
-    `${paths.static.components}/*.html`
-  );
-  filesToDel.push(
-    paths.idsWebsite.dist,
-    paths.idsWebsite.distDocs
-  );
+  if (fs.existsSync(paths.idsWebsite.root)) {
+    fs.rmSync(paths.idsWebsite.root, { recursive: true });
+  }
 
   try {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const file of filesToDel) {
-      if (fs.existsSync(file)) fs.unlinkSync(file);
-    }
     await createDirs([
       paths.idsWebsite.root,
       paths.idsWebsite.dist,
-      paths.idsWebsite.distDocs,
-      paths.static.root,
-      paths.static.components
+      paths.idsWebsite.distDocs
     ]);
     swlog.logTaskEnd(cleanStart);
   } catch (err) {
@@ -283,32 +223,32 @@ async function cleanAll() {
  * object property
  * @param  {string} filePath - the full file path
  * @param  {string} fileName - the name of the file
- * @returns {Promise} - A promise
  */
-async function markdownToHtml(filePath, fileName) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) {
-        reject(err);
-      } else {
-        const fmData = frontMatter(data);
-        if (fmData.attributes.title) allDocsObjMap[fileName].title = fmData.attributes.title;
-        if (fmData.attributes.description) allDocsObjMap[fileName].description = fmData.attributes.description;
-        if (fmData.attributes.demo) allDocsObjMap[fileName].demo = fmData.attributes.demo;
-        if (fmData.attributes.system) allDocsObjMap[fileName].system = fmData.attributes.system;
+async function markdownToHtml(filePath, fileName, lastOne) {
+  const data = fs.readFileSync(filePath, 'utf8');
+  const fmData = frontMatter(data);
+  if (fmData.attributes.title) allDocsObjMap[fileName].title = fmData.attributes.title;
+  if (fmData.attributes.description) allDocsObjMap[fileName].description = fmData.attributes.description;
+  if (fmData.attributes.demo) allDocsObjMap[fileName].demo = fmData.attributes.demo;
+  if (fmData.attributes.system) allDocsObjMap[fileName].system = fmData.attributes.system;
 
-        marked(fmData.body, (err, content) => {
-          if (err) {
-            reject(err);
-          } else {
-            componentStats.numConverted++;
-            swlog.logTaskAction('Readme processed', `${filePath.replace(process.cwd(), '')}`);
-            resolve(allDocsObjMap[fileName].body = content);
-          }
-        });
-      }
-    });
-  });
+  componentStats.numConverted++;
+
+  try {
+    const content = marked.parse(fmData.body);
+    componentStats.numConverted++;
+    allDocsObjMap[fileName].body = content;
+  } catch (err) {
+    swlog.error(err);
+  }
+  writeJsonFile(fileName);
+  swlog.logTaskAction('Readme processed', `${filePath.replace(process.cwd(), '')}`);
+
+  if (lastOne) {
+    setTimeout(() => {
+      zipAndDeploy();
+    }, 1000);
+  }
 }
 
 /**
@@ -333,27 +273,17 @@ function documentationExists(componentName) {
   return fs.existsSync(`${paths.components}${path.sep}${componentName}${path.sep}readme.md`);
 }
 
-/**
- * Run documentationJs on a file with JSON output
- * and save that in the components object property
- * @param  {string} componentName - the name of the component
- * @returns {Promise} - A promise
- */
 async function documentJsToHtml(componentName) {
   const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
   const themeName = 'theme-ids-website';
+  const comments = await build([compFilePath], { extension: 'js', shallow: true });
+  const res = await formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}/index.js` });
 
-  return build([compFilePath], { extension: 'js', shallow: true })
-    .then(comments => {
-      return formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}/index.js` });
-    })
-    .then(res => {
-      res.map(async file => {
-        componentStats.numDocumented++;
-        swlog.logTaskAction('API processed', `${componentName}.js`);
-        allDocsObjMap[componentName].api = file.contents.toString().trim();
-      });
-    });
+  // eslint-disable-next-line no-restricted-syntax
+  for (const file of res) {
+    componentStats.numDocumented++;
+    allDocsObjMap[componentName].api = file.contents.toString().trim();
+  }
 }
 
 /**
@@ -361,7 +291,6 @@ async function documentJsToHtml(componentName) {
  */
 async function postZippedBundle() {
   const publishStart = swlog.logTaskStart(`attempt publish to server "${deployTo}"`);
-
   const form = new FormData();
   form.append('file', fs.createReadStream(`${paths.idsWebsite.dist}.zip`));
   form.append('root_path', `ids-enterprise/${packageJson.version}`);
@@ -398,7 +327,6 @@ function readSitemapYaml() {
  * Console.log statistics from the build
  */
 function statsConclusion() {
-  swlog.logTaskEnd(opStart);
   // did not use multiline string for formatting reasons
   let str = '';
   str += `\nComponents ${'converted'}:  ${componentStats.numConverted}/${componentStats.total}`;
@@ -411,80 +339,38 @@ function statsConclusion() {
     str += `\n\nBundles ${'deployed'}: ${numArchivesSent}/1`;
   }
   str += '\n';
-  console.log(str);
-}
-
-/**
- * Write a html file for specified component
- *
- * @param {function} hbsTemplate - the hbs page template function
- * @param {string} componentName - the name of the component
- * @returns {Promise} - A promise
- */
-function writeHtmlFile(hbsTemplate, componentName) {
-  return new Promise((resolve, reject) => {
-    const data = {
-      version: packageJson.version,
-      component: allDocsObjMap[componentName]
-    };
-    data.component.slug = componentName;
-    const html = hbsTemplate(data);
-
-    // Regular docs go in root, components go in "components/"
-    let dest = `${paths.static.root}/${componentName}.html`;
-    if (data.component.isComponent) {
-      dest = `${paths.static.components}/${componentName}.html`;
-    }
-
-    fs.writeFile(dest, html, 'utf8', err => {
-      if (err) {
-        reject(err);
-      } else {
-        swlog.logTaskAction('Created', `${dest.replace(process.cwd() ? process.cwd : '')}`);
-        resolve();
-      }
-    });
-  });
+  swlog.logTaskAction('Build Complete', str);
 }
 
 /**
  * Write a json file for specified component
  * @param {string} componentName - the name of the component
- * @returns {Promise} - A promise
  */
-function writeJsonFile(componentName) {
-  return new Promise((resolve, reject) => {
-    const thisName = componentName;
-    const dest = `${paths.idsWebsite.distDocs}/${thisName}.json`;
+async function writeJsonFile(componentName) {
+  const thisName = componentName;
+  const dest = `${paths.idsWebsite.distDocs}/${thisName}.json`;
 
-    fs.writeFile(dest, JSON.stringify(allDocsObjMap[thisName]), 'utf8', err => {
-      if (err) {
-        reject(err);
-      } else {
-        componentStats.numWritten++;
-        swlog.logTaskAction('Created', dest.replace(process.cwd()));
-        resolve();
-      }
-    });
+  await fs.writeFileSync(dest, JSON.stringify(allDocsObjMap[thisName]), 'utf8', err => {
+    if (err) {
+      swlog.error(err);
+    } else {
+      componentStats.numWritten++;
+      swlog.logTaskAction('Created', dest.replace(process.cwd()));
+    }
   });
 }
 
 /**
  * Convert/write the sitemap.yml to sitemap.json into dist
- * @returns {Promise} - A promise
  */
-function writeJsonSitemap() {
-  return new Promise((resolve, reject) => {
-    const sitemapObj = readSitemapYaml();
-    fs.writeFile(`${paths.idsWebsite.dist}/sitemap.json`, JSON.stringify(sitemapObj), 'utf8', err => {
-      if (err) {
-        reject(err);
-      } else {
-        swlog.logTaskAction('Created', 'sitemap.json');
-        resolve();
-      }
-    });
+async function writeJsonSitemap() {
+  const sitemapObj = readSitemapYaml();
+  fs.writeFileSync(`${paths.idsWebsite.dist}/sitemap.json`, JSON.stringify(sitemapObj), 'utf8', err => {
+    if (err) {
+      swlog.error(err);
+    }
   });
+  swlog.logTaskAction('Created', 'sitemap.json');
 }
 
 /**
@@ -504,13 +390,7 @@ function zipAndDeploy() {
   output.on('close', () => {
     swlog.logTaskAction('Zipped', `${archive.pointer()} total bytes`);
     swlog.logTaskEnd(zipStart);
-
-    if (argv.dryRun) {
-      console.log('\n!! NO PUBLISH - DRY RUN !!\n');
-      statsConclusion();
-    } else {
-      postZippedBundle();
-    }
+    postZippedBundle();
   });
 
   // This event is fired when the data source is drained no matter what was the data source.
