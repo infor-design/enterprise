@@ -5363,25 +5363,9 @@ Datagrid.prototype = {
       if (this.settings.groupable) {
         arrayToTest = this.originalDataset;
       }
-      let rowStart = 0;
-      let arrayToTestlen = arrayToTest.length;
-      if (this.settings.paging === false) { // calculate what is visible in the screen only
-        let rowHt;
-        switch (this.settings.rowHeight) {
-          case 'normal':
-          case 'large':
-            rowHt = 40;
-            break;
-          case 'medium':
-            rowHt = 30;
-            break;
-          default:
-            rowHt = 25;
-        }
-        rowStart = Math.floor(this.element.find('.datagrid-wrapper.scrollable-x.scrollable-y').scrollTop() / rowHt);
-        const rowCnt = rowStart + Math.floor(this.element.closest('.h5-datagrid-container').height() / rowHt);
-        arrayToTestlen = arrayToTest.length < rowCnt ? arrayToTest.length : rowCnt;
-      }
+
+      const rowStart = 0;
+      const arrayToTestlen = arrayToTest.length;
       for (let i = rowStart; i < arrayToTestlen; i++) {
         let val = this.fieldValue(arrayToTest[i], columnDef.field);
         const row = arrayToTest[i];
@@ -5394,16 +5378,40 @@ Datagrid.prototype = {
 
         len = val.toString().length;
 
+        const getVal = (group) => {
+          let groupVal = this.fieldValue(group, columnDef.field);
+          groupVal = self.formatValue(columnDef.formatter, i, 0, groupVal, columnDef, row, self);
+          groupVal = xssUtils.stripHTML(groupVal);
+
+          if (this.settings.treeGrid) {
+            groupVal = groupVal.replace(Locale.translate('ExpandCollapse'), '');
+          }
+
+          groupVal = groupVal.replace(/\s+/g, ' ').trim();
+
+          return groupVal;
+        };
+
         if (this.settings.groupable && row) {
           for (let k = 0; k < row.length; k++) {
-            let groupVal = this.fieldValue(row[k], columnDef.field);
-            groupVal = self.formatValue(columnDef.formatter, i, 0, groupVal, columnDef, row, self);
-            groupVal = xssUtils.stripHTML(groupVal);
-
+            const groupVal = getVal(row[k]);
             len = groupVal.toString().length;
+
             if (len > max) {
               max = len;
               maxText = groupVal;
+            }
+          }
+        }
+
+        if (this.settings.treeGrid && row && row.children) {
+          for (let k = 0; k < row.children.length; k++) {
+            const childVal = getVal(row.children[k]);
+            len = childVal.toString().length;
+
+            if (len > max) {
+              max = len;
+              maxText = childVal;
             }
           }
         }
@@ -5529,7 +5537,6 @@ Datagrid.prototype = {
   calculateTextRenderWidth(maxText, isHeader) {
     // if given, use cached canvas for better performance, else, create new canvas
     this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
-
     if (!this.canvas || !this.canvas?.getContext) return 0;
     const context = this.canvas?.getContext('2d');
     const isNewTheme = (theme.currentTheme.id.indexOf('uplift') > -1 || theme.currentTheme.id.indexOf('new') > -1);
@@ -7329,7 +7336,7 @@ Datagrid.prototype = {
       e.preventDefault();
     }
 
-    let item = self.settings.dataset[row];
+    let item = this.settings.dataset.filter(obj => obj?._isFilteredOut !== true)[row];
 
     //  Groupable
     if (this.settings.groupable) {
@@ -9118,7 +9125,7 @@ Datagrid.prototype = {
         self.setNodeStatus(rowNode);
         self.lastSelectedRow = idx;
       } else {
-        rowData = s.dataset[dataRowIndex];
+        rowData = this.settings.dataset.filter(obj => obj?._isFilteredOut !== true)[dataRowIndex];
         if (s.groupable) {
           const row = self.actualPagingRowIndex(self.actualRowIndex(rowNode));
           if (isNaN(row)) {

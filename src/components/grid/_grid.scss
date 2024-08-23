@@ -10,20 +10,20 @@ $gutter-neg-size: -20px;
 //$breakpoint-tablet-to-desktop: 1160px;
 //$breakpoint-desktop-to-extralarge: 1440px;
 .row {
-  &.flex-align-bottom {
-    &.has-messages {
-      // align-items: center;
-      input:not(.error) {
-        margin-bottom: 22px;
-      }
-    }
-  }
-
   clear: both;
   font-size: $ids-size-font-sm;
   margin: 0 auto;
   max-width: $breakpoint-tablet-to-desktop;
   width: 100%;
+
+    &.flex-align-bottom {
+      &.has-messages {
+        // align-items: center;
+        input:not(.error) {
+          margin-bottom: 22px;
+        }
+      }
+    }
 
   &.full-width {
     margin-top: 20px;

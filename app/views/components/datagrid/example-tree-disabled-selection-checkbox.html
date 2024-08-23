@@ -34,6 +34,7 @@
           dataset: data,
           treeGrid: true,
           selectable: 'multiple',
+          clickToSelect: false,
           toolbar: { title: 'Tasks (Hierarchical)', results: true, personalize: true, actions: true, rowHeight: true }
         }).on('selected', function (e, args) {
           console.log(args);

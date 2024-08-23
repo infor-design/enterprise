@@ -185,24 +185,24 @@
           .container.drop-area {
             padding: 20px 15px;
           }
-    
+
           .container {
             .file-row {
               .description {
                 max-width: calc(100% - 45px);
               }
-    
+
               .size {
                 margin: 0;
                 width: calc(100% - 10px);
               }
             }
-    
+
             .l-pull-right {
               float: unset;
               text-align: center;
             }
-    
+
             &.completed {
               .file-row {
                 .size {
@@ -276,12 +276,12 @@ html {
 }
 
 .input-hide-text {
+  -webkit-text-security: disc;
+
   &::-ms-reveal,
   &::-ms-clear {
     display: none !important;
   }
-
-  -webkit-text-security: disc;
 }
 
 html[dir='rtl'] {

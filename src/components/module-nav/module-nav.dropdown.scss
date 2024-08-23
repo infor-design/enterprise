@@ -21,11 +21,11 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
   }
 
   div.dropdown {
-    @include module-nav-input-style;
-    @include module-nav-div-dropdown-adjustment;
-
     height: $module-nav-switcher-dropdown-height;
     width: $module-nav-switcher-dropdown-width;
+
+    @include module-nav-div-dropdown-adjustment;
+    @include module-nav-input-style;
 
     &.is-disabled {
       padding-block-start: 7px;
@@ -202,9 +202,9 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
   // When configured with icons, don't show icon in "search" area
   &.has-icons {
     input.dropdown-search {
-      @include module-nav-div-dropdown-adjustment;
-
       padding-block-start: 7px; // Adjustment needed for the input field
+
+      @include module-nav-div-dropdown-adjustment;
     }
   }
 

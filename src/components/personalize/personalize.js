@@ -313,10 +313,10 @@ Personalize.prototype = {
     colors.tabHoverTextColor = themeColors.palette.slate[100].value;
     colors.tabTextWeight = '400';
     colors.tabTextSelectedWeight = '600';
-    colors.tabBorderColor = colors.darkest;
+    colors.tabBorderColor = themeColors.palette.slate[100].value;
     colors.tabSelectedColor = colors.dark;
     colors.tabHeaderColor = colors.dark;
-    colors.tabColor = colors.base;
+    colors.tabColor = colors.darkest;
     colors.tabVerticalColor = themeColors.palette.slate[10].value;
     colors.headerTabBorder = 'transparent';
     colors.verticalTabBorder = themeColors.palette.slate[30].value;
@@ -324,7 +324,7 @@ Personalize.prototype = {
     colors.tabSelectedTextColor = colors.contrast;
     colors.tabVerticalSelectedTextColor = colors.base;
     colors.tabVerticalSelectedColor = themeColors.palette.white.value;
-    colors.tabDivider = colors.darkest;
+    colors.tabDivider = themeColors.palette.slate[100].value;
     colors.tabTextColor = themeColors.palette.white.value;
     colors.toolbarBtnHoverColor = colors.darker;
 
@@ -337,7 +337,6 @@ Personalize.prototype = {
     colors.tabCloseHoverColor = themeColors.palette.white.value;
     colors.btnMenuColor = colors.base;
     colors.btnBoxShadow = `0 0 0 0.5px ${colors.btnMenuColor}, 0 0 0 0.5px ${colors.btnMenuColor}`;
-
     const isAlabaster = colors.header === '#ffffff';
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
     const isClassicDark = this.currentTheme.indexOf('classic-dark') >= 0;
@@ -526,6 +525,53 @@ Personalize.prototype = {
         colors.headerTabsSelectedTextColor = themeColors.palette.azure[90].value;
         colors.moduleTabsSelectedTextColor = themeColors.palette.azure[90].value;
       }
+    }
+
+    const setTabColors = (selectedColor) => {
+      colors.tabColor = themeColors.palette[selectedColor][100].value;
+      colors.tabSelectedColor = themeColors.palette[selectedColor][90].value;
+      colors.tabHeaderColor = themeColors.palette[selectedColor][90].value;
+      colors.tabHoverColor = themeColors.palette[selectedColor][80].value;
+    };
+
+    // Change tab colors here
+    // eslint-disable-next-line default-case
+    switch (colors.header) {
+      // Amber
+      case '#F98300':
+        setTabColors('amber');
+        break;
+      // Amethyst
+      case '#7928E1':
+        setTabColors('amethyst');
+        break;
+      // Azure
+      case '#0072ED':
+        setTabColors('azure');
+        break;
+      // Emerald
+      case '#2AC371':
+        setTabColors('emerald');
+        break;
+      // Graphite
+      case '#6C6C6C':
+        setTabColors('graphite');
+        break;
+      // Ruby
+      case '#DA1217':
+        setTabColors('ruby');
+        break;
+      // Slate
+      case '#6F6F76':
+        colors.tabColor = themeColors.palette.slate[70].value;
+        colors.tabSelectedColor = themeColors.palette.slate[60].value;
+        colors.tabHeaderColor = themeColors.palette.slate[60].value;
+        colors.tabHoverColor = themeColors.palette.slate[30].value;
+        break;
+      // Turquoise
+      case '#40BDBE':
+        setTabColors('turquoise');
+        break;
     }
 
     const darkestColorMap = this.getColorMap(100);

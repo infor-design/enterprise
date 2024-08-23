@@ -32,6 +32,12 @@ test.describe('Form tests', () => {
       if (browserName !== 'chromium') return;
       await percySnapshot(page, 'form-light');
     });
+
+    test('should match the visual snapshot in percy (compact mode)', async ({ page, browserName }) => {
+      if (browserName !== 'chromium') return;
+      await page.goto('/components/form/example-compact-mode.html');
+      await percySnapshot(page, 'form-compact-light');
+    });
   });
 
   test.describe('functionality tests', () => {
