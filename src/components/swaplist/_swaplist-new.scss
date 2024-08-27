@@ -58,3 +58,23 @@
     }
   }
 }
+
+html[dir=rtl] {
+  .swaplist {
+    .card,
+    .widget {
+      &:nth-child(1) {
+        border-radius: 0 6px 0 0;
+      }
+    }
+
+    &.one-third {
+      .card,
+      .widget {
+        &:nth-child(3) {
+          border-radius: 6px 0 0 0;
+        }
+      }
+    }
+  }
+}
