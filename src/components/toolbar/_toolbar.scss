@@ -360,7 +360,7 @@ $toolbar-buttonset-height: 40px;
       }
 
       &:hover {
-        color: $contextual-toolbar-button-hover-color;
+        color: $contextual-toolbar-button-hover-color !important;
         background-color: rgba(0, 0, 0, .3) !important;
 
         .icon {
