@@ -2,6 +2,7 @@
 
 ## v4.99.0 Features
 
+- `[FileuploadAdvanced]` Added beforefileupload event in handleFileUpload method. ([#8904](https://github.com/infor-design/enterprise/issues/8904))
 - `[Listview]` Added compact layout in listview. ([#8959](https://github.com/infor-design/enterprise/issues/8959))
 - `[Module Tabs]` Updated tab colors. ([#8831](https://github.com/infor-design/enterprise/issues/8831))
 - `[Notification]` Added a callback function setting to be called when the notification is closed. ([#8767](https://github.com/infor-design/enterprise/issues/8767))
