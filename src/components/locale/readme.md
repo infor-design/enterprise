@@ -21,6 +21,22 @@ $('body').initialize('es-ES');
 Soho.Locale.set('es-ES');
 ```
 
+After the local is initialized you can use the `done` pattern to initialize components. I.E.
+
+```javascript
+Soho.Locale.set('es-ES').done(function() {
+    // Initialize components here
+});
+```
+
+Also an event is fired on the window level. This can be used to update components.
+
+```javascript
+$(window).on('localechange', function() {
+    // Update components here
+});
+```
+
 ## Code Example - Translation
 
 We have a number of internal strings that are used within the components. These can be extended and used by applications. Keep in mind that the `Soho.Locale.set` function will fetch a locale js file from the server when called.
@@ -114,7 +130,7 @@ Locale.set('la-lT').done(function() {
 
 ## Code Example - Unicode Support
 
-We have limited support for Chinese Financial Numbers (Traditional and Simplified), Chinese Simplified and Traditional (normal), Hindi (Devangari), Arabic as these are in the set of supported languages. ou can now type them in certain mask fields and do some conversion to and from. Support is initially limited and could use some native speaker testing in the wild to improve this feature. To convert to a language we use the browser `toLocaleString` which we have wrapped. This may not work in all browsers and means you may need to use special locales to work with this.
+We have limited support for Chinese Financial Numbers (Traditional and Simplified), Chinese Simplified and Traditional (normal), Hindi (Devangari), Arabic as these are in the set of supported languages. You can now type them in certain mask fields and do some conversion to and from. Support is initially limited and could use some native speaker testing in the wild to improve this feature. To convert to a language we use the browser `toLocaleString` which we have wrapped. This may not work in all browsers and means you may need to use special locales to work with this.
 
 ```javascript
 Locale.toLocaleString(2019, 'ar-SA'); // ٢٬٠١٩

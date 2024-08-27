@@ -112,6 +112,26 @@ You can have a list of cards by adding the `card-list` class in the list view co
 
 See example <a href="https://design.infor.com/code/ids-enterprise/latest/demo/components/listview/example-card" target="_blank">To see it in action</a>
 
+### Listview - Support form compact layout
+
+The swap list can be used in a compact layout by adding the `form-layout-compact` class to the parent container or by using `field-short` class per listview. This will reduce the paddings and font sizes around the list items.
+
+```html
+<!-- Using form layout compact -->
+<div class="form-layout-compact">
+  <div class="listview" id="example-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'example-tmpl', 'selectable': 'multiple'}"></div>
+</div>
+
+<!-- Using field short class -->
+<div class="field-short field-stacked">
+  <div class="listview" id="example-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'example-tmpl', 'selectable': 'multiple'}"></div>
+</div>
+
+<div class="field-short field-stacked">
+  <div class="listview" id="example-listview-2" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'example-tmpl', 'selectable': 'multiple'}"></div>
+</div>
+```
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> When a list is tabbed to, select the first item if nothing else is already selected. A second tab will take the user out of the widget to the next tab stop on the page.
