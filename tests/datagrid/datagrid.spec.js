@@ -80,4 +80,26 @@ test.describe('Datagrid tests', () => {
       });
     });
   });
+
+  test.describe('Inline editor page tests', () => {
+    const url = '/components/datagrid/test-editable-with-inline-editor.html';
+
+    test.beforeEach(async ({ page }) => {
+      await page.goto(url);
+    });
+
+    test.describe('edit cell tests', () => {
+      test('value should stay the same', async ({ page }) => {
+        const val = '&<>';
+        const input = page.locator('#datagrid-inline-input-2-2');
+
+        await input.click();
+        await input.fill(val);
+        await page.locator('body').click({ position: { x: 0, y: 0 } });
+        await input.click();
+
+        await expect(input).toHaveValue(val);
+      });
+    });
+  });
 });

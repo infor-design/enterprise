@@ -17,6 +17,7 @@
 - `[Datagrid]` Updated styles so pager works on cards. ([NG#1756](https://github.com/infor-design/enterprise-ng/issues/1756))
 - `[Datagrid]` Fixed a bug where text is misaligned in action dropdown . ([#8957](https://github.com/infor-design/enterprise-ng/issues/8957))
 - `[Datagrid]` Fixed auto sizing on columns in tree grid. ([#8646](https://github.com/infor-design/enterprise/issues/8646))
+- `[Datagrid]` Fixed special characters being encoded in editor. ([#8963](https://github.com/infor-design/enterprise/issues/8963))
 - `[General]` Upgrade dependencies, this involved updating sass and test dependencies with a few css deprecations that were fixed. ([#8947](https://github.com/infor-design/enterprise-ng/issues/8947))
 - `[Locale]` Fixed translation issue of `small` into Spanish. ([#8962](https://github.com/infor-design/enterprise-wc/issues/8962)
 - `[Locale]` Fixed translation issue of `Available` into Thai and Italian. ([#8786](https://github.com/infor-design/enterprise-wc/issues/8786)
