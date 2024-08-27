@@ -1319,6 +1319,7 @@ SwapList.prototype = {
 
     // Dragend - implement items being validly dropped into targets
       .on(self.dragEnd, self.dragElements, (e) => {
+        debugger;
         if (!selections.dragged || !selections.droptarget) {
           return;
         }
