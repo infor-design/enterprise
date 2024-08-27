@@ -925,7 +925,7 @@ Validator.prototype = {
 
     if (rule.type === 'icon') {
       markup = '' +
-        `<div id="${messageId}" class="custom-icon-message${this.settings.truncated || rule?.truncated ? ' truncated' : ''}" data-rule-id="${rule.id || rule.message}">
+        `<div id="${messageId}" class="custom-icon-message${this.settings?.truncated || rule?.truncated ? ' truncated' : ''}" data-rule-id="${rule.id || rule.message}">
           ${$.createIcon({ classes: ['icon-custom'], icon: rule.icon })}
           <pre class="audible">
             ${Locale.translate(validationType.titleMessageID)}
@@ -934,7 +934,7 @@ Validator.prototype = {
         </div>`;
     } else {
       markup = '' +
-        `<div id="${messageId}" class="${validationType.type}-message${this.settings.truncated || rule?.truncated ? ' truncated' : ''}" data-rule-id="${rule.id || rule.message}">
+        `<div id="${messageId}" class="${validationType.type}-message${this.settings?.truncated || rule?.truncated ? ' truncated' : ''}" data-rule-id="${rule.id || rule.message}">
           ${$.createIcon({ classes: [`icon-${validationType.type}`], icon })}
           <pre class="audible">
             ${Locale.translate(validationType.titleMessageID)}
@@ -996,7 +996,7 @@ Validator.prototype = {
       }
     }
 
-    if ((this.settings.truncated || rule?.truncated) && isOverflowing || isOverflowingInSafari) {
+    if ((this.settings?.truncated || rule?.truncated) && isOverflowing || isOverflowingInSafari) {
       truncatedMessage.tooltip({
         content: truncatedMessage[0].innerText,
         trigger: 'hover'
