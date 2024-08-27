@@ -12487,6 +12487,16 @@ Datagrid.prototype = {
   },
 
   /**
+   * Scroll to row.
+   * @param {number} row The row index
+   */
+  scrollRowIntoView(row) {
+    if (row) {
+      this.setActiveCell(row, 0, true);
+    }
+  },
+
+  /**
    * Sets focus to the next active cell, depending on a key.
    * @private
    * @param {object} e The event object
