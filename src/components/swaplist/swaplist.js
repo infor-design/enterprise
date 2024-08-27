@@ -1256,8 +1256,17 @@ SwapList.prototype = {
         }
         self.element.triggerHandler('draggingswap', [selections.move]);
         selections.related = e.target;
+        const $target = $(selections.related);
+
         $('ul, li', self.element).removeClass('over');
-        $(e.target).closest('ul, li').addClass('over');
+        $target.closest('ul, li').addClass('over');
+
+        // Set the height to 100% if the target element has any <li> children
+        // to cover the entire card content area.
+        if ($target.find('li').length > 0) {
+          $target.closest('ul').css('height', '100%');
+        }
+
         selections.droptarget = $(selections.related).closest('.card');
         $('[aria-grabbed="true"]', self.element).not(selections.dragged).slideUp();
         e.stopPropagation();
@@ -1319,7 +1328,6 @@ SwapList.prototype = {
 
     // Dragend - implement items being validly dropped into targets
       .on(self.dragEnd, self.dragElements, (e) => {
-        debugger;
         if (!selections.dragged || !selections.droptarget) {
           return;
         }

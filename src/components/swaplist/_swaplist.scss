@@ -37,6 +37,8 @@
 
     .card-content {
       width: 100%;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
 
       .listview {
         li {
@@ -257,6 +259,7 @@
   .is-multiselect {
     background-color: $listview-bg-color;
     border-top: thin solid $swaplist-border-color-card;
+    height: 100%;
 
     ul {
       min-height: 40px;
