@@ -10903,7 +10903,7 @@ Datagrid.prototype = {
     }
 
     if (this.editor.useValue) {
-      cellValue = this.fieldValue(rowData, col.field);
+      cellValue = this.fieldValue(rowData, col.field, false);
     }
     this.editor.val(cellValue);
 
@@ -12484,6 +12484,16 @@ Datagrid.prototype = {
     * @property {number} args.row The selected row
     */
     self.element.trigger('activecellchange', { node: this.activeCell.node, row: this.activeCell.row, cell: this.activeCell.cell, api: self });
+  },
+
+  /**
+   * Scroll to row.
+   * @param {number} row The row index
+   */
+  scrollRowIntoView(row) {
+    if (row) {
+      this.setActiveCell(row, 0, true);
+    }
   },
 
   /**
