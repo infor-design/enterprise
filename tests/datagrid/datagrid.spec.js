@@ -102,4 +102,29 @@ test.describe('Datagrid tests', () => {
       });
     });
   });
+
+  test.describe('datagrid toolbar button tests', () => {
+    const url = '/components/datagrid/example-mixed-selection.html';
+
+    test.beforeEach(async ({ page }) => {
+      await page.goto(url);
+    });
+
+    test.describe('button hover tests', () => {
+      test('value should have a proper color', async ({ page }) => {
+        await page.evaluate('document.getElementsByClassName("datagrid-selection-checkbox")[0].click()');
+
+        await expect(page.locator('.contextual-toolbar > .buttonset > .btn')).toBeVisible();
+
+        const button = page.locator('.contextual-toolbar > .buttonset > .btn');
+        await button.hover();
+
+        const color = await button.evaluate((el) => {
+          return window.getComputedStyle(el).getPropertyValue('background-color');
+        });
+
+        await expect(color).toBe('rgba(0, 0, 0, 0.3)');
+      });
+    });
+  });
 });
