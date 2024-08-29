@@ -888,7 +888,7 @@ a.btn-close {
   overflow: hidden;
 
   &:hover:not([disabled]):not(.btn-primary):not(.btn-secondary) {
-    background-color: $button-color-tertiary-hover-background-new !important;
+    background-color: $button-color-tertiary-hover-background-new;
     color: $button-color-tertiary-hover-text;
 
     .icon {

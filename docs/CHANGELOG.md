@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.98.3
+
+## v4.98.3 Fixes
+
+- `[ContextualToolbar]` Fixed datagrid hover color for contextual toolbar when a row is selected. ([#8980](https://github.com/infor-design/enterprise-/issues/8980))
+
 ## v4.98.2
 
 ## v4.98.2 Fixes
