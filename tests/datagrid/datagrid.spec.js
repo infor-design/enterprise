@@ -119,6 +119,7 @@ test.describe('Datagrid tests', () => {
         const button = page.locator('.contextual-toolbar > .buttonset > .btn');
         await button.hover();
 
+        // eslint-disable-next-line arrow-body-style
         const color = await button.evaluate((el) => {
           return window.getComputedStyle(el).getPropertyValue('background-color');
         });
