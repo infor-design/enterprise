@@ -45,4 +45,28 @@ test.describe('Autocomplete tests', () => {
 
   test.describe('functionality tests', () => {
   });
+
+  test.describe('Autocomplete long list tests', () => {
+    const url = '/components/autocomplete/example-contains.html';
+
+    test.beforeEach(async ({ page }) => {
+      await page.goto(url);
+    });
+
+    test.describe('use key down to scroll test', () => {
+      test('should scroll down properly', async ({ page }) => {
+        const val = 'a';
+        const input = page.locator('#autocomplete-default');
+
+        await input.click();
+        await input.fill(val);
+        await expect(page.locator('#autocomplete-list')).toBeVisible();
+        await page.keyboard.press('ArrowUp');
+        await page.keyboard.press('ArrowUp');
+
+        await expect(page.locator('#ac-list-option42')).toBeVisible();
+        await expect(page.locator('#ac-list-option42')).toHaveClass('is-selected');
+      });
+    });
+  });
 });
