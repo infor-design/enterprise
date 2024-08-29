@@ -9,6 +9,7 @@
 
 ## v4.99.0 Fixes
 
+- `[ContextualToolbar]` Fixed datagrid hover color for contextual toolbar when a row is selected. ([#8980](https://github.com/infor-design/enterprise-/issues/8980))
 - `[Datagrid]` Fixed a bug in compact mode where datagrid filters doesn't extend all throughout the parents width. ([#8900](https://github.com/infor-design/enterprise-/issues/8900))
 - `[Datagrid]` Fixed data return by select event on datagrid when having filter on. ([#8905](https://github.com/infor-design/enterprise/issues/8905))
 - `[Datagrid]` Optimize the initial loading of datagrids with filterable setting. ([#8935](https://github.com/infor-design/enterprise/issues/8935))
