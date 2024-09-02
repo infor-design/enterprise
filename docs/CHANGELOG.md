@@ -2,6 +2,7 @@
 
 ## v4.99.0 Features
 
+- `[Calendar]` Added `customSort`. ([#8836](https://github.com/infor-design/enterprise/issues/8836))
 - `[Datagrid]` Added `scrollRowIntoView`. ([NG#1761](https://github.com/infor-design/enterprise-ng/issues/1761))
 - `[Listview]` Added compact layout in listview. ([#8959](https://github.com/infor-design/enterprise/issues/8959))
 - `[Module Tabs]` Updated tab colors. ([#8831](https://github.com/infor-design/enterprise/issues/8831))
