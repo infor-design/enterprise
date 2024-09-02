@@ -1924,6 +1924,21 @@ Datagrid.prototype = {
           break;
         }
         case 'contents':
+          filterMarkup += `<select ${attrs} ${col.filterType === 'select' ? 'class="dropdown"' : 'multiple class="multiselect"'}${col.filterDisabled ? ' disabled' : ''}>${emptyOption}`;
+          if (filterOptions) {
+            for (let i = 0, l = filterOptions.length; i < l; i++) {
+              const option = filterOptions[i];
+              const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
+              const isSelected = columnDef.filterValue && columnDef.filterValue.some(f => f === optionValue);
+
+              if (option && optionValue !== '') {
+                filterMarkup += `<option value = "${optionValue}" ${isSelected ? 'selected' : ''}>${option.label}</option>`;
+              }
+            }
+          }
+          filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></div>';
+
+          break;
         case 'select':
           filterMarkup += `<select ${attrs} ${col.filterType === 'select' ? 'class="dropdown"' : 'multiple class="multiselect"'}${col.filterDisabled ? ' disabled' : ''}>${emptyOption}`;
           if (filterOptions) {
