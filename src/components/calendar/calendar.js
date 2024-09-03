@@ -119,6 +119,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
  * or be a Date() object or string that can be converted to a date with new Date().
  * @param {function} [settings.disable.callback] return true to disable passed dates.
+ * @param {function} [settings.customSort] sort function for events.
  * @param {array} [settings.disable.dates] Disable specific dates.
  * Example `{dates: ['12/31/2018', '01/01/2019']}`.
  * @param {array} [settings.disable.years] Disable specific years.
@@ -736,7 +737,13 @@ Calendar.prototype = {
 
     // Clone and sort the array.
     const eventsSorted = this.settings.events.slice(0);
-    eventsSorted.sort((a, b) => (a.starts < b.starts ? -1 : (a.starts > b.starts ? 1 : 0)));
+    let sortEvent = (a, b) => (a.starts < b.starts ? -1 : (a.starts > b.starts ? 1 : 0));
+
+    if (this.settings.customSort && typeof this.settings.customSort === 'function') {
+      sortEvent = this.settings.customSort;
+    }
+
+    eventsSorted.sort(sortEvent);
 
     for (let i = 0; i < eventsSorted.length; i++) {
       const event = eventsSorted[i];
