@@ -1,4 +1,32 @@
 <div class="full-height full-width">
+  <div class="toolbar" role="toolbar">
+    <div class="title">
+      Compressors
+      <span class="datagrid-result-count">(N Results)</span>
+    </div>
+    <div class="buttonset">
+      <button type="button" class="btn" id="scroll">
+        <span>Scroll Down</span>
+      </button>
+    </div>
+
+    <div class="more">
+      <button class="btn-actions" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-more"></use>
+        </svg>
+        <span class="audible">More Actions</span>
+      </button>
+      <ul class="popupmenu">
+        <li class="heading">Row Height</li>
+        <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
+        <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
+        <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+        <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
+      </ul>
+
+    </div>
+  </div>
   <div id="datagrid" class="datagrid">
   </div>
 </div>
@@ -24,14 +52,22 @@
       columns.push({ id: 'action', name: 'Action Item', field: 'action'});
 
       //Init and get the api for the grid
-      $('#datagrid').datagrid({
+      grid = $('#datagrid').datagrid({
         columns: columns,
         columnReorder: true,
         dataset: data,
         paging: true,
         pagesize: 100,
         toolbar: {title: 'Compressors', actions: true, rowHeight: true, results: true }
-      });
+      }).data('datagrid');
+    });
+
+    $('#scroll').on('click', () => {
+      if (grid) {
+        const s = grid.settings;
+        const lastRow = s.pagesize > s.dataset.length ? s.dataset.length - 1 : s.pagesize - 1;
+        grid.scrollRowIntoView(lastRow);
+      }
     });
  });
 </script>
