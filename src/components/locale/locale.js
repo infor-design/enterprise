@@ -342,6 +342,7 @@ const Locale = {  // eslint-disable-line
       if (!isCurrent && !parentLocale && this.dff[locale]) {
         this.dff[locale].resolve(locale);
       }
+      $(window).trigger('localechange', { locale });
     };
 
     script.onerror = () => {

@@ -39,6 +39,7 @@ test.describe('ModuleNav tests', () => {
 
     test('should match the visual snapshot in percy', async ({ page, browserName }) => {
       if (browserName !== 'chromium') return;
+      await page.waitForSelector('#module-nav-settings-btn');
       await percySnapshot(page, 'module-nav-light');
     });
   });

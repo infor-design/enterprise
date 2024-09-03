@@ -74,21 +74,21 @@ select.dropdown-xs {
 
 div.dropdown,
 div.multiselect {
-  @include input-style();
-  @include css3(touch-callout, none);
-  @include css3(user-select, none);
-  @include transition(background-color 0.2s ease);
-
   background-color: $input-color-initial-background;
   border-color: $input-color-initial-border;
   color: $dropdown-color-initial-font;
   cursor: pointer;
   line-height: normal;
   overflow: hidden;
-  padding: 8px 30px 8px 10px;
+  padding: 7px 30px 8px 10px;
   text-overflow: ellipsis;
   vertical-align: middle;
   white-space: nowrap;
+  -webkit-touch-callout: none;
+  user-select: none;
+  transition: background-color 0.2s ease;
+
+  @include input-style();
 
   &.text-align-reverse {
     text-align: right;
@@ -99,28 +99,27 @@ div.multiselect {
   }
 
   > span:not(.tag-list) {
-    display: inline-block;
+    display: inline-flex;
     overflow: hidden;
-    text-overflow: ellipsis;
-    vertical-align: top;
+    text-overflow: ellipsis; 
+    align-items: center;
+    vertical-align: top; 
+    height: 100%;
+    width: calc(100% - 10px);
 
     &[data-placeholder-text]::before {
       color: $input-placeholder-color;
       content: attr(data-placeholder-text);
     }
-
-    @media (max-width: $breakpoint-phone) {
-      display: inline;
-    }
   }
 
   > .listoption-icon {
-    @include list-icon-colors();
-
     color: $popupmenu-icon-color;
     position: absolute;
     top: 9px;
     vertical-align: middle;
+
+    @include list-icon-colors();
 
     + span {
       padding-left: 29px;
@@ -430,13 +429,13 @@ div.multiselect {
     }
 
     .listoption-icon {
-      @include list-icon-colors();
-
       color: $popupmenu-icon-color;
       left: 0;
       margin-right: 7px;
       pointer-events: none;
       top: 3px;
+
+      @include list-icon-colors();
 
       &:not(.custom-icon) {
         height: 16px;
@@ -446,7 +445,6 @@ div.multiselect {
     // Badge Support
     .badge {
       border: 1px solid transparent;
-      display: inline-block;
       float: right;
       margin-left: -40px;
       margin-top: 5px;
@@ -457,12 +455,12 @@ div.multiselect {
   }
 
   > .listoption-icon {
-    @include list-icon-colors();
-
     color: $popupmenu-icon-color;
     left: 10px;
     position: absolute;
     top: 8px;
+
+    @include list-icon-colors();
 
     &.swatch {
       border-radius: 2px;
@@ -504,9 +502,6 @@ div.multiselect {
   }
 
   a {
-    @include css3(touch-callout, none);
-    @include css3(user-select, none);
-
     color: $popupmenu-color;
     display: block;
     overflow: hidden;
@@ -514,6 +509,9 @@ div.multiselect {
     text-overflow: ellipsis;
     white-space: nowrap;
     width: inherit;
+
+    @include css3(touch-callout, none);
+    @include css3(user-select, none);
 
     &:empty {
       height: 32px;
@@ -843,7 +841,7 @@ input.dropdown.error:focus {
       top: 6px;
 
       + span {
-        padding-left: 20px;
+        padding-left: 18px;
       }
     }
 
@@ -1641,12 +1639,14 @@ html[dir='rtl'] {
   }
 }
 
-.ie-edge {
-  .dropdown-list {
-    > .trigger {
-      .icon.close {
-        top: 6px;
-      }
-    }
-  }
+.field-short .dropdown-wrapper .dropdown-wrapper span:not(.tag-list),
+.form-layout-compact .field .dropdown-wrapper span:not(.tag-list) {
+  padding: 0;
+  margin-top: -1px;
+}
+
+.field-short div.dropdown>span:not(.tag-list),
+.field-short div.multiselect>span:not(.tag-list) {
+  padding: 0;
+  margin-top: -1px;
 }

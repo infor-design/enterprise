@@ -37,6 +37,21 @@
 
     .card-content {
       width: 100%;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      .listview {
+        li {
+          border-radius: 0;
+
+          &:last-child {
+            &.over {
+              border: 1px dashed $swaplist-border-color !important;
+              border-bottom-color: inherit;
+            }
+          }
+        }
+      }
     }
 
     .card-header {
@@ -244,9 +259,10 @@
   .is-multiselect {
     background-color: $listview-bg-color;
     border-top: thin solid $swaplist-border-color-card;
+    height: 100%;
 
     ul {
-      min-height: 100%;
+      min-height: 40px;
       padding: 0 0 5px;
 
       &.is-not-droppable {
@@ -326,7 +342,8 @@
     }
 
     .over {
-      border: 1px dashed $swaplist-border-color;
+      border: 1px dashed $swaplist-border-color !important;
+      min-height: 40px;
     }
   }
 

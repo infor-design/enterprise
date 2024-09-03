@@ -65,6 +65,8 @@
     margin-bottom: -41px;
 
     .tab {
+      top: 0;
+
       &.has-popupmenu {
         .icon {
           height: 16px;
@@ -81,8 +83,6 @@
           }
         }
       }
-
-      top: 0;
 
       // Adds "semi-bold" style to selected/active tabs
       &:not(.is-disabled).is-selected {
