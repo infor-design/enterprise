@@ -33,6 +33,18 @@
 - `[Tabs]` Fixed a bug where focus state is undefined when using breadcrumbs startup. ([#8910](https://github.com/infor-design/enterprise/issues/8910))
 - `[Validation]` Add guards for new setting in case it is undefined. ([#8981](https://github.com/infor-design/enterprise/issues/8981))
 
+## v4.98.2
+
+## v4.98.2 Fixes
+
+- `[Validation]` Add guards for new setting in case it is undefined. ([#8981](https://github.com/infor-design/enterprise/issues/8981))
+
+## v4.98.1
+
+## v4.98.1 Fixes
+
+- `[Tabs]` Fixed a bug where focus state is undefined when using breadcrumbs startup. ([#8910](https://github.com/infor-design/enterprise/issues/8910))
+
 ## v4.98.0
 
 ## v4.98.0 Features
