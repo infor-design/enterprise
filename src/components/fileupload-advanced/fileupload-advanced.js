@@ -256,6 +256,8 @@ FileUploadAdvanced.prototype = {
       return;
     }
 
+    this.element.triggerHandler('beforefileupload', [files]);
+
     const s = this.settings;
 
     // Clear previous errors in general area
