@@ -1839,7 +1839,10 @@ Datagrid.prototype = {
             isRangeDefault = true;
           }
 
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker" ${isRangeDefault ? 'data-options="{range: {useRange: true}}"' : ''} ${attrs} ${enterKeyHint}/>`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker"
+            ${columnDef.filterValue ? ` value="${columnDef.filterValue}"` : ''}
+            ${isRangeDefault ? ' data-options="{range: {useRange: true}}"' : ''}
+             ${attrs} ${enterKeyHint}/>`;
           break;
         }
         case 'integer': {
@@ -1865,7 +1868,7 @@ Datagrid.prototype = {
             col.maskOptions = utils.extend(true, {}, integerDefaults, col.maskOptions);
           }
 
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} ${enterKeyHint} />`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${columnDef.filterValue ? `value="${columnDef.filterValue}"` : ''} ${attrs} ${enterKeyHint} />`;
           break;
         }
         case 'percent':
@@ -1917,10 +1920,25 @@ Datagrid.prototype = {
             }
           }
 
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} ${enterKeyHint} />`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${columnDef.filterValue ? `value="${columnDef.filterValue}"` : ''} ${attrs} ${enterKeyHint} />`;
           break;
         }
         case 'contents':
+          filterMarkup += `<select ${attrs} ${col.filterType === 'select' ? 'class="dropdown"' : 'multiple class="multiselect"'}${col.filterDisabled ? ' disabled' : ''}>${emptyOption}`;
+          if (filterOptions) {
+            for (let i = 0, l = filterOptions.length; i < l; i++) {
+              const option = filterOptions[i];
+              const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
+              const isSelected = columnDef.filterValue && columnDef.filterValue.some(f => f === optionValue);
+
+              if (option && optionValue !== '') {
+                filterMarkup += `<option value = "${optionValue}" ${isSelected ? 'selected' : ''}>${option.label}</option>`;
+              }
+            }
+          }
+          filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></div>';
+
+          break;
         case 'select':
           filterMarkup += `<select ${attrs} ${col.filterType === 'select' ? 'class="dropdown"' : 'multiple class="multiselect"'}${col.filterDisabled ? ' disabled' : ''}>${emptyOption}`;
           if (filterOptions) {
@@ -1928,7 +1946,7 @@ Datagrid.prototype = {
               const option = filterOptions[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
               if (option && optionValue !== '') {
-                filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
+                filterMarkup += `<option value = "${optionValue}" ${optionValue === columnDef.filterValue ? 'selected' : ''}>${option.label}</option>`;
               }
             }
           }
@@ -1941,8 +1959,10 @@ Datagrid.prototype = {
             for (let i = 0, l = filterOptions.length; i < l; i++) {
               const option = filterOptions[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
+              const isSelected = columnDef.filterValue && columnDef.filterValue.some(f => f === optionValue);
+
               if (option && typeof option.label === 'string') {
-                filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
+                filterMarkup += `<option value = "${optionValue}" ${isSelected ? 'selected' : ''}>${option.label}</option>`;
               }
             }
           }
@@ -1950,13 +1970,13 @@ Datagrid.prototype = {
 
           break;
         case 'time':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="timepicker" ${attrs} ${enterKeyHint}/>`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="timepicker" ${columnDef.filterValue ? `value="${columnDef.filterValue}"` : ''} ${attrs} ${enterKeyHint}/>`;
           break;
         case 'lookup':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="lookup" ${attrs} ${enterKeyHint} >`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="lookup" ${columnDef.filterValue ? `value="${columnDef.filterValue}"` : ''} ${attrs} ${enterKeyHint} >`;
           break;
         default:
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} tabindex="0" type="text" ${attrs} ${enterKeyHint}/>`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} tabindex="0" type="text" ${columnDef.filterValue ? `value="${columnDef.filterValue}"` : ''} ${attrs} ${enterKeyHint}/>`;
           break;
       }
 
@@ -2156,6 +2176,7 @@ Datagrid.prototype = {
           // Wierd Hack - Sync to "sync" up the filter row
           const ddElem = $(this);
           $(`#${ddElem.attr('id')}`).val(ddElem.val());
+          delete col.filterValue;
           self.applyFilter(null, 'selected');
         });
 
@@ -2944,6 +2965,11 @@ Datagrid.prototype = {
       this.setSearchActivePage(pagingInfo);
     }
 
+    conditions.forEach((condition) => {
+      const index = self.settings.columns.findIndex(col => col.id === condition.columnId);
+      self.settings.columns[index].filterValue = condition.value;
+    });
+
     /**
     * Fires after a filter action ocurs
     * @event filtered
@@ -2957,8 +2983,8 @@ Datagrid.prototype = {
     if (this.settings.disableClientFilter && trigger === 'restore') {
       return;
     }
-
     this.element.trigger('filtered', { op: 'apply', conditions, trigger });
+
     this.saveUserSettings();
   },
 

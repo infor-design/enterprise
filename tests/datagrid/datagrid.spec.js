@@ -3,9 +3,11 @@ import percySnapshot from '@percy/playwright';
 import { expect } from '@playwright/test';
 import { test } from '../base-fixture';
 
+const datagridUrl = '/components/datagrid/';
+
 test.describe('Datagrid tests', () => {
   test.describe('Index page tests', () => {
-    const url = '/components/datagrid/example-index.html';
+    const url = `${datagridUrl}example-index.html`;
 
     test.beforeEach(async ({ page }) => {
       await page.goto(url);
@@ -37,7 +39,7 @@ test.describe('Datagrid tests', () => {
 
     test.describe('functionality tests', () => {
       test('should be able to disable selection with readonly checkboxes', async ({ page }) => {
-        await page.goto('/components/datagrid/example-disabled-selection-checkbox.html');
+        await page.goto(`${datagridUrl}example-disabled-selection-checkbox.html`);
         await page.locator('.datagrid tr:first-child td:first-child').click();
         expect(await page.locator('.selection-count')).toHaveText('0 Selected');
         await page.locator('.datagrid tr:first-child td:nth-child(6)').click();
@@ -47,7 +49,7 @@ test.describe('Datagrid tests', () => {
   });
 
   test.describe('Expandable row page tests', () => {
-    const url = '/components/datagrid/example-expandable-row.html';
+    const url = `${datagridUrl}example-expandable-row.html`;
 
     test.beforeEach(async ({ page }) => {
       await page.goto(url);
@@ -82,7 +84,7 @@ test.describe('Datagrid tests', () => {
   });
 
   test.describe('Inline editor page tests', () => {
-    const url = '/components/datagrid/test-editable-with-inline-editor.html';
+    const url = `${datagridUrl}test-editable-with-inline-editor.html`;
 
     test.beforeEach(async ({ page }) => {
       await page.goto(url);
@@ -103,8 +105,35 @@ test.describe('Datagrid tests', () => {
     });
   });
 
+  test.describe('Filter header page tests', () => {
+    const url = `${datagridUrl}example-filter.html`;
+
+    test.beforeEach(async ({ page }) => {
+      await page.goto(url);
+    });
+
+    test.describe('filter header tests', () => {
+      test('filter value should stay on changing row height', async ({ page }) => {
+        const val = '1';
+        const input = page.locator('#custom-id-filter-id');
+        const moreBtn = page.locator('#custom-id-actions');
+
+        await input.click();
+        await input.fill(val);
+        await page.keyboard.press('Enter');
+        await moreBtn.click();
+
+        const li = page.locator('ul.is-open > li.is-selectable:not(.is-checked)');
+
+        await li.nth(0).click();
+
+        await expect(input).toHaveValue(val);
+      });
+    });
+  });
+
   test.describe('datagrid toolbar button tests', () => {
-    const url = '/components/datagrid/example-mixed-selection.html';
+    const url = `${datagridUrl}example-mixed-selection.html`;
 
     test.beforeEach(async ({ page }) => {
       await page.goto(url);
