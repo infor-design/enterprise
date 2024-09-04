@@ -8441,7 +8441,7 @@ Datagrid.prototype = {
             const thisSearch1 = param[1];
             self1.keywordSearch(thisSearch1.val());
           }, 400, [self, thisSearch]);
-        })
+        });
       }
       clearButton.off('click.datagrid').on('click.datagrid', () => {
         self.keywordSearch(thisSearch.val());
