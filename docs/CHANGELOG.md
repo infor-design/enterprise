@@ -6,6 +6,7 @@
 - `[Datagrid]` Added `scrollRowIntoView`. ([NG#1761](https://github.com/infor-design/enterprise-ng/issues/1761))
 - `[FileuploadAdvanced]` Added beforefileupload event in handleFileUpload method. ([#8904](https://github.com/infor-design/enterprise/issues/8904))
 - `[Listview]` Added compact layout in listview. ([#8959](https://github.com/infor-design/enterprise/issues/8959))
+- `[Modal]` Added promise option for `beforeclose` event. ([#8779](https://github.com/infor-design/enterprise/issues/8779))
 - `[Module Tabs]` Updated tab colors. ([#8831](https://github.com/infor-design/enterprise/issues/8831))
 - `[Notification]` Added a callback function setting to be called when the notification is closed. ([#8767](https://github.com/infor-design/enterprise/issues/8767))
 
