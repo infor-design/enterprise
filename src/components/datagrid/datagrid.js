@@ -13918,7 +13918,7 @@ Datagrid.prototype = {
       const searchfield = toolbar.find('.searchfield');
       const searchfieldApi = searchfield.data('searchfield');
       const xIcon = searchfield.parent().find('.close.icon');
-      searchfield.off('keydown.datagrid input.datagrid');
+      searchfield.off('keypress.datagrid input.datagrid');
       xIcon.off('click.datagrid');
       if (searchfieldApi && typeof searchfieldApi.destroy === 'function') {
         searchfieldApi.destroy();
