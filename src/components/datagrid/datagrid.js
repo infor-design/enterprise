@@ -8431,16 +8431,18 @@ Datagrid.prototype = {
           e.preventDefault();
           self.keywordSearch(thisSearch.val());
         }
-
-        if (self.settings.filterWhenTyping) {
+      });
+      
+      if (self.settings.filterWhenTyping) {
+        thisSearch.on('input.datagrid', () => {
           clearTimeout(typingTimer);
           typingTimer = setTimeout((param) => {
             const self1 = param[0];
             const thisSearch1 = param[1];
             self1.keywordSearch(thisSearch1.val());
           }, 400, [self, thisSearch]);
-        }
-      });
+        })
+      }
       clearButton.off('click.datagrid').on('click.datagrid', () => {
         self.keywordSearch(thisSearch.val());
       });
@@ -13916,7 +13918,7 @@ Datagrid.prototype = {
       const searchfield = toolbar.find('.searchfield');
       const searchfieldApi = searchfield.data('searchfield');
       const xIcon = searchfield.parent().find('.close.icon');
-      searchfield.off('keypress.datagrid');
+      searchfield.off('keydown.datagrid input.datagrid');
       xIcon.off('click.datagrid');
       if (searchfieldApi && typeof searchfieldApi.destroy === 'function') {
         searchfieldApi.destroy();
