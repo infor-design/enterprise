@@ -4,18 +4,18 @@
 // Special Fonts for Certain Languages. First in this list is placeholders for now,
 // until we figure out the best way to load these dynamically
 $cultures-font-family: (
-  'ar-EG': ('Mada', 'Source Sans Pro', 'arial', sans-serif),
-  'ar-SA': ('Mada', 'Source Sans Pro', 'arial', sans-serif),
-  'he-IL': ('Assistant', 'Source Sans Pro', 'arial', sans-serif),
-  'hi-IN': ('Noto Sans', 'Source Sans Pro', 'arial', sans-serif),
-  'ja-JP': ('Noto Sans JP', 'Source Sans Pro', 'arial', sans-serif),
-  'ko-KR': ('Noto Sans KR', 'Source Sans Pro', 'arial', sans-serif),
-  'vi-VN': ('Source Sans Pro', 'arial', sans-serif),
-  'th-TH': ('Sarabun', 'Source Sans Pro', 'arial', sans-serif),
-  'zh-CN': ('Noto Sans SC', 'Source Sans Pro', 'arial', sans-serif),
-  'zh-TW': ('Noto Sans TC', 'Source Sans Pro', 'arial', sans-serif),
-  'zh-Hans': ('Noto Sans SC', 'Source Sans Pro', 'arial', sans-serif),
-  'zh-Hant': ('Noto Sans TC', 'Source Sans Pro', 'arial', sans-serif)
+  'ar-EG': ('Mada', 'Inter', 'arial', sans-serif),
+  'ar-SA': ('Mada', 'Inter', 'arial', sans-serif),
+  'he-IL': ('Assistant', 'Inter', 'arial', sans-serif),
+  'hi-IN': ('Noto Sans', 'Inter', 'arial', sans-serif),
+  'ja-JP': ('Noto Sans JP', 'Inter', 'arial', sans-serif),
+  'ko-KR': ('Noto Sans KR', 'Inter', 'arial', sans-serif),
+  'vi-VN': ('Inter', 'arial', sans-serif),
+  'th-TH': ('Sarabun', 'Inter', 'arial', sans-serif),
+  'zh-CN': ('Noto Sans SC', 'Inter', 'arial', sans-serif),
+  'zh-TW': ('Noto Sans TC', 'Inter', 'arial', sans-serif),
+  'zh-Hans': ('Noto Sans SC', 'Inter', 'arial', sans-serif),
+  'zh-Hant': ('Noto Sans TC', 'Inter', 'arial', sans-serif)
 );
 
 html {
