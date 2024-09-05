@@ -14,7 +14,7 @@
 
 - `[Autocomplete]` Fixed a bug where autocomplete items are not shown when press key down. ([#8943](https://github.com/infor-design/enterprise-/issues/8943))
 - `[ContextualToolbar]` Fixed datagrid hover color for contextual toolbar when a row is selected. ([#8980](https://github.com/infor-design/enterprise-/issues/8980))
-- `[Datagrid]` Fixed a bug in compact mode where datagrid filters doesn't extend all throughout the parents width. ([#8900](https://github.com/infor-design/enterprise-/issues/8900))
+- `[Datagrid]` Fixed a bug where filters would error in some cases in an angular app. ([#1791](https://github.com/infor-design/enterprise-ng/issues/1791))
 - `[Datagrid]` Fixed data return by select event on datagrid when having filter on. ([#8905](https://github.com/infor-design/enterprise/issues/8905))
 - `[Datagrid]` Optimize the initial loading of datagrids with filterable setting. ([#8935](https://github.com/infor-design/enterprise/issues/8935))
 - `[Datagrid]` Adjusted the padding of expandable detail rows in datagrid. ([#8950](https://github.com/infor-design/enterprise/issues/8950))

@@ -13564,16 +13564,16 @@ Datagrid.prototype = {
 
           tooltip.content = xssUtils.stripHTML(iconTooltipContent);
           tooltip.headerText = xssUtils.stripHTML(headerText);
-        } else {
+        } else if (tooltip) {
           // Default use wrapper content
-          if (tooltip.wrapper.querySelector('.datagrid-expand-btn')) {
+          if (tooltip?.wrapper?.querySelector('.datagrid-expand-btn')) {
             Array.prototype.filter
               .call(tooltip.wrapper.children, node => !node.matches('.datagrid-expand-btn'))
               .forEach((node) => {
                 tooltip.content = node.textContent;
               });
           } else {
-            tooltip.content = tooltip.wrapper.textContent;
+            tooltip.content = tooltip.wrapper?.textContent;
           }
           tooltip.content = xssUtils.stripHTML(tooltip.content).trim();
         }
