@@ -113,6 +113,21 @@ The following data fields are used.
 - checked - If true the event checkbox will appear checked
 - disabled - If true the event checkbox will appear disabled from use
 
+## Code Example
+
+### Custom sorting in events
+
+By default, events in calendar for monthview is sorted by starting time. This can be changed with the `customSort` setting. The `customSort` takes a function that follows the same parameters and return values for the compare function in [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#comparefn). The `a` and `b` in the function will be objects from the `events` in calendar.
+
+```js
+$('.calendar').calendar({
+    events: events,
+    customSort: (a, b) => {
+      return (a.starts > b.starts ? -1 : (a.starts < b.starts ? 1 : 0))
+    }
+})
+```
+
 ## Accessibility
 
 The Calendar is a very complex control we do the following:

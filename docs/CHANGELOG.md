@@ -2,13 +2,18 @@
 
 ## v4.99.0 Features
 
+- `[Calendar]` Added `customSort`. ([#8836](https://github.com/infor-design/enterprise/issues/8836))
 - `[Datagrid]` Added `scrollRowIntoView`. ([NG#1761](https://github.com/infor-design/enterprise-ng/issues/1761))
+- `[FileuploadAdvanced]` Added beforefileupload event in handleFileUpload method. ([#8904](https://github.com/infor-design/enterprise/issues/8904))
 - `[Listview]` Added compact layout in listview. ([#8959](https://github.com/infor-design/enterprise/issues/8959))
+- `[Modal]` Added promise option for `beforeclose` event. ([#8779](https://github.com/infor-design/enterprise/issues/8779))
 - `[Module Tabs]` Updated tab colors. ([#8831](https://github.com/infor-design/enterprise/issues/8831))
 - `[Notification]` Added a callback function setting to be called when the notification is closed. ([#8767](https://github.com/infor-design/enterprise/issues/8767))
 
 ## v4.99.0 Fixes
 
+- `[Autocomplete]` Fixed a bug where autocomplete items are not shown when press key down. ([#8943](https://github.com/infor-design/enterprise-/issues/8943))
+- `[ContextualToolbar]` Fixed datagrid hover color for contextual toolbar when a row is selected. ([#8980](https://github.com/infor-design/enterprise-/issues/8980))
 - `[Datagrid]` Fixed a bug in compact mode where datagrid filters doesn't extend all throughout the parents width. ([#8900](https://github.com/infor-design/enterprise-/issues/8900))
 - `[Datagrid]` Fixed data return by select event on datagrid when having filter on. ([#8905](https://github.com/infor-design/enterprise/issues/8905))
 - `[Datagrid]` Optimize the initial loading of datagrids with filterable setting. ([#8935](https://github.com/infor-design/enterprise/issues/8935))
@@ -19,6 +24,7 @@
 - `[Datagrid]` Fixed auto sizing on columns in tree grid. ([#8646](https://github.com/infor-design/enterprise/issues/8646))
 - `[Dropdown]` Removed excess space on dropdown-wrapper class. ([#8894](https://github.com/infor-design/enterprise/issues/8894))
 - `[Datagrid]` Fixed special characters being encoded in editor. ([#8963](https://github.com/infor-design/enterprise/issues/8963))
+- `[Datagrid]` Fixed selected filters being cleared when changing row size. ([NG#1759](https://github.com/infor-design/enterprise-ng/issues/1759))
 - `[General]` Upgrade dependencies, this involved updating sass and test dependencies with a few css deprecations that were fixed. ([#8947](https://github.com/infor-design/enterprise-ng/issues/8947))
 - `[Locale]` Fixed translation issue of `small` into Spanish. ([#8962](https://github.com/infor-design/enterprise-wc/issues/8962)
 - `[Locale]` Fixed translation issue of `Available` into Thai and Italian. ([#8786](https://github.com/infor-design/enterprise-wc/issues/8786)
@@ -28,6 +34,18 @@
 - `[Toolbar]` Fixed uncaught error when destroying the toolbar. ([#8946](https://github.com/infor-design/enterprise/issues/8946))
 - `[Tabs]` Fixed a bug where focus state is undefined when using breadcrumbs startup. ([#8910](https://github.com/infor-design/enterprise/issues/8910))
 - `[Validation]` Add guards for new setting in case it is undefined. ([#8981](https://github.com/infor-design/enterprise/issues/8981))
+
+## v4.98.2
+
+## v4.98.2 Fixes
+
+- `[Validation]` Add guards for new setting in case it is undefined. ([#8981](https://github.com/infor-design/enterprise/issues/8981))
+
+## v4.98.1
+
+## v4.98.1 Fixes
+
+- `[Tabs]` Fixed a bug where focus state is undefined when using breadcrumbs startup. ([#8910](https://github.com/infor-design/enterprise/issues/8910))
 
 ## v4.98.0
 

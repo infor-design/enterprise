@@ -21,6 +21,8 @@
           value: 'fileupload-advanced-automation-id'
         }
       ]
-    })
+    }).on('beforefileupload', (args) => {
+      console.log(args);
+    });
   });
 </script>

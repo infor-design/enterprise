@@ -1547,12 +1547,20 @@ Modal.prototype = {
    * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
   // eslint-disable-next-line default-param-last
-  close(destroy, noRefresh, force = false, customId) {
+  async close(destroy, noRefresh, force = false, customId) {
     if (!force && !this.visible) {
       return true;
     }
 
-    const elemCanClose = this.element.triggerHandler(`beforeclose${customId ? `.${customId}` : ''}`);
+    const beforeClose = this.element.triggerHandler(`beforeclose${customId ? `.${customId}` : ''}`);
+    let elemCanClose = beforeClose;
+
+    if (beforeClose && beforeClose.then && typeof beforeClose.then === 'function') {
+      await beforeClose.then((res) => {
+        elemCanClose = res;
+      });
+    }
+
     if (elemCanClose === false) {
       return false;
     }
