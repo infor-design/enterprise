@@ -37,7 +37,7 @@
 
   const onBeforeShow = (api, response) => {
     timer = setTimeout(function() {
-      response(); 
+      response();
     }, 2000);
   };
 
@@ -66,7 +66,15 @@
       }]
     }).data('modal');
 
-    modal.element.on('close', () => {
+    modal.element
+    .on('beforeclose', (e) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(true);
+        }, 1000);
+      });
+    })
+    .on('close', () => {
       if (lookup) {
         delete lookup.isOpen;
       }
