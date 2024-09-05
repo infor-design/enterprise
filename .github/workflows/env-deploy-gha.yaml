@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Extract branch name
         shell: bash
@@ -46,7 +46,7 @@ jobs:
           tags: hookandloop/enterprise:${{ steps.extract_branch.outputs.branch }}
           push: true
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: infor-design/apps
           ref: main
@@ -94,7 +94,7 @@ jobs:
           repository: infor-design/apps
           github_token: ${{ secrets.GH_ACCESS_TOKEN }}
           branch: main
-  
+
       - name: Install Browsers
         run: npx playwright install --with-deps
 
