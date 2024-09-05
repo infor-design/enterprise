@@ -44,6 +44,7 @@ test.describe('Toolbar tests', () => {
       test('should match the visual snapshot in percy', async ({ page, browserName }) => {
         if (browserName !== 'chromium') return;
         await page.waitForLoadState();
+        await page.waitForLoadState();
         await percySnapshot(page, 'toolbar-light');
       });
     });
