@@ -101,8 +101,8 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Run Tests
-        run: npx percy exec -- npm run test:ci
+      - name: Run Percy Tests
+        run: npx percy exec -- npm run test:ci:percy
         env:
           NODE_OPTIONS: "--max-old-space-size=8192"
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
