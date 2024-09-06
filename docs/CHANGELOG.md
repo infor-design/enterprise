@@ -1,10 +1,5 @@
 # What's New with Enterprise
 
-## v4.98.3
-
-## v4.98.3 Fixes
-
-- `[ContextualToolbar]` Fixed datagrid hover color for contextual toolbar when a row is selected. ([#8980](https://github.com/infor-design/enterprise-/issues/8980))
 ## v4.99.0 Features
 
 - `[Calendar]` Added `customSort`. ([#8836](https://github.com/infor-design/enterprise/issues/8836))
@@ -37,6 +32,12 @@
 - `[Toolbar]` Fixed uncaught error when destroying the toolbar. ([#8946](https://github.com/infor-design/enterprise/issues/8946))
 - `[Tabs]` Fixed a bug where focus state is undefined when using breadcrumbs startup. ([#8910](https://github.com/infor-design/enterprise/issues/8910))
 - `[Validation]` Add guards for new setting in case it is undefined. ([#8981](https://github.com/infor-design/enterprise/issues/8981))
+
+## v4.98.3
+
+## v4.98.3 Fixes
+
+- `[ContextualToolbar]` Fixed datagrid hover color for contextual toolbar when a row is selected. ([#8980](https://github.com/infor-design/enterprise-/issues/8980))
 
 ## v4.98.2
 
