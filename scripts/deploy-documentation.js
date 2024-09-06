@@ -122,13 +122,6 @@ if (argv.site && Object.keys(serverURIs).includes(argv.site)) {
   deployTo = argv.site;
 }
 
-// Failsafe to prevent accidentally uploading dev/beta/rc documentation to
-// production as those semver's will have a dash in them (-dev, -beta, -rc)
-if (packageJson.version.includes('-') && deployTo === 'prod') {
-  console.error('Error', 'You can NOT deploy documentation for a non-final version to "prod".');
-  process.exit(0);
-}
-
 // -------------------------------------
 //   Main Section
 // -------------------------------------
