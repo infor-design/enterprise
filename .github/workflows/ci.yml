@@ -53,7 +53,13 @@ jobs:
       run: npx playwright install --with-deps
 
     - name: Run Tests
-      run: npx percy exec -- npm run test:ci
+      run: npm run test:ci
+      env:
+        NODE_OPTIONS: "--max-old-space-size=8192"
+        PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+
+    - name: Run Percy Tests
+      run: npx percy exec -- npm run test:ci:percy
       env:
         NODE_OPTIONS: "--max-old-space-size=8192"
         PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
