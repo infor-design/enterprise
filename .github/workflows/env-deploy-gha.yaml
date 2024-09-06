@@ -95,11 +95,11 @@ jobs:
           github_token: ${{ secrets.GH_ACCESS_TOKEN }}
           branch: main
 
-      - name: Install Browsers
-        run: npx playwright install --with-deps
-
       - name: Install
         run: npm ci
+
+      - name: Install Browsers
+        run: npx playwright install --with-deps
 
       - name: Run Percy Tests
         run: npx percy exec -- npm run test:ci:percy
