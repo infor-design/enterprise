@@ -22,6 +22,7 @@
 - `[Datagrid]` Updated styles so pager works on cards. ([NG#1756](https://github.com/infor-design/enterprise-ng/issues/1756))
 - `[Datagrid]` Fixed a bug where text is misaligned in action dropdown . ([#8957](https://github.com/infor-design/enterprise-ng/issues/8957))
 - `[Datagrid]` Fixed auto sizing on columns in tree grid. ([#8646](https://github.com/infor-design/enterprise/issues/8646))
+- `[Dropdown]` Removed excess space on dropdown-wrapper class. ([#8894](https://github.com/infor-design/enterprise/issues/8894))
 - `[Datagrid]` Fixed special characters being encoded in editor. ([#8963](https://github.com/infor-design/enterprise/issues/8963))
 - `[Datagrid]` Fixed selected filters being cleared when changing row size. ([NG#1759](https://github.com/infor-design/enterprise-ng/issues/1759))
 - `[General]` Upgrade dependencies, this involved updating sass and test dependencies with a few css deprecations that were fixed. ([#8947](https://github.com/infor-design/enterprise-ng/issues/8947))
@@ -33,6 +34,7 @@
 - `[Toolbar]` Fixed uncaught error when destroying the toolbar. ([#8946](https://github.com/infor-design/enterprise/issues/8946))
 - `[Tabs]` Fixed a bug where focus state is undefined when using breadcrumbs startup. ([#8910](https://github.com/infor-design/enterprise/issues/8910))
 - `[Validation]` Add guards for new setting in case it is undefined. ([#8981](https://github.com/infor-design/enterprise/issues/8981))
+- `[Datagrid]` Fixed the filterWhenTyping feature, so that any input change (including backspace or cut/paste which previously did nothing) will update the search results. ([#9007](https://github.com/infor-design/enterprise/issues/9007))
 
 ## v4.98.2
 
