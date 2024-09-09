@@ -1583,7 +1583,7 @@ SearchField.prototype = {
       subtractWidth += this.categoryButton.outerWidth(true);
 
       if (this.element.parents('.header').length === 1 && breakpoints.isBelow('phone-to-tablet')) {
-        subtractWidth += 45;
+        subtractWidth += 40;
       }
 
       if (breakpoints.isBelow('slim')) {
