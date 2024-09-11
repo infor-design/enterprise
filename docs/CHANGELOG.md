@@ -37,6 +37,7 @@
 - `[Swaplist]` Improved the size of the swaplist's drop area when there is no existing items. ([#8956](https://github.com/infor-design/enterprise/issues/8956))
 - `[Toolbar]` Fixed uncaught error when destroying the toolbar. ([#8946](https://github.com/infor-design/enterprise/issues/8946))
 - `[Tabs]` Fixed a bug where focus state is undefined when using breadcrumbs startup. ([#8910](https://github.com/infor-design/enterprise/issues/8910))
+- `[Tabs]` Selected tab in overflow menu is scrolled and focused instead of moved into last visible space. ([#9004](https://github.com/infor-design/enterprise/issues/9004))
 - `[Validation]` Add guards for new setting in case it is undefined. ([#8981](https://github.com/infor-design/enterprise/issues/8981))
 - `[Datagrid]` Fixed the filterWhenTyping feature, so that any input change (including backspace or cut/paste which previously did nothing) will update the search results. ([#9007](https://github.com/infor-design/enterprise/issues/9007))
 

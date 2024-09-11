@@ -3721,11 +3721,6 @@ Tabs.prototype = {
       const id = href.substr(1, href.length);
       const tab = self.doGetTab(id) || $();
 
-      const visibleTabs = self.getVisibleTabs();
-      const lastVisibleTab = $(visibleTabs[visibleTabs.length - 1]);
-
-      tab.insertBefore(lastVisibleTab);
-
       let a = tab ? tab.children('a') : $();
       let originalTab = anchor.data('original-tab').parent();
 
@@ -3922,17 +3917,22 @@ Tabs.prototype = {
 
     const liTop = Math.round(liBounding.top);
     const liRight = Math.round(liBounding.right);
+    const liLeft = Math.round(liBounding.left);
 
     let tablistTop = Math.round(tablistBounding.top + 1);
     let tablistContainerRight = Math.round(tablistContainerBounding.right);
+    let tabListContainerLeft = Math.round(tablistContainerBounding.left);
 
     // +1 to compensate for top border on Module Tabs
     if (this.isModuleTabs()) {
-      tablistTop += 1;
-      tablistContainerRight += 1;
+      tablistTop++;
+      tablistContainerRight++;
+      tabListContainerLeft++;
     }
 
-    return liTop > tablistTop || (checkHorizontal && liRight > tablistContainerRight);
+    const horizontal = liRight > tablistContainerRight || liLeft < tabListContainerLeft;
+
+    return liTop > tablistTop || (checkHorizontal && horizontal);
   },
 
   /**
