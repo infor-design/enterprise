@@ -39,7 +39,22 @@ test.describe('Applicationmenu tests', () => {
 
     test('should match the visual snapshot in percy', async ({ page, browserName }) => {
       if (browserName !== 'chromium') return;
+
+      // Take the initial snapshot before the menu is opened
       await percySnapshot(page, 'application-menu-light');
+
+      // Find and click the app menu button
+      const appMenuButton = await page.locator('#header-hamburger');
+      await appMenuButton.click();
+
+      // Wait for the 'transitionend' event to ensure the menu transition has finished
+      await page.evaluate(() => new Promise((resolve) => {
+        const element = document.querySelector('#application-menu');
+        element.addEventListener('transitionend', resolve, { once: true });
+      }));
+
+      // Take the snapshot after the transition is complete
+      await percySnapshot(page, 'application-menu-open-light');
     });
   });
 

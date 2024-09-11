@@ -195,6 +195,7 @@
       }
 
       .icon {
+        color: $app-menu-accordion-text-color !important;
         top: -2px;
 
         &.plus-minus {
@@ -211,7 +212,7 @@
       }
 
       &.is-focused:not(.hide-focus) {
-        border-color: $ids-color-palette-white;
+        border-color: $app-menu-accordion-header-focused-border-color;
         box-shadow: none;
       }
 
@@ -236,7 +237,7 @@
       }
 
       &.is-selected {
-        border-bottom-color: $ids-color-palette-white;
+        border-bottom-color: $app-menu-accordion-header-border-color;
 
         > a > span {
           font-weight: $ids-number-font-weight-bold;
