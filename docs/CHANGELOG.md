@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.100.0
+
+### v4.100.0 Features
+
+- `[Application Menu]` Applied the new design to the selected states. ([#8785](https://github.com/infor-design/enterprise/issues/8785))
+
 ## v4.99.0
 
 ### v4.99.0 Features

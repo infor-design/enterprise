@@ -790,6 +790,13 @@ $application-menu-searchfield-text-active-color: $ids-color-palette-white;
 
 $application-menu-new-border-color: $ids-color-palette-white;
 
+$app-menu-accordion-header-selected-bg-color: $ids-color-palette-azure-60;
+$app-menu-accordion-header-focused-border-color: $app-menu-accordion-header-selected-bg-color;
+$app-menu-accordion-header-text-selected: $ids-color-palette-white;
+$app-menu-accordion-header-border-color: transparent;
+$app-menu-accordion-header-border-color-hover: $ids-color-palette-slate-90;
+$app-menu-accordion-text-color: $ids-color-palette-slate-20;
+
 // Module Nav (App menu alternative)
 $module-nav-bg-color: $ids-color-palette-slate-10;
 $module-nav-border-color: $ids-color-palette-slate-30;
