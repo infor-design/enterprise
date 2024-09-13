@@ -5,6 +5,9 @@
 [![Build Check](https://github.com/infor-design/enterprise/actions/workflows/env-deploy-gha.yaml/badge.svg)](https://github.com/infor-design/enterprise/actions/workflows/env-deploy-gha.yaml)
 [![Coverage Status](https://coveralls.io/repos/github/infor-design/enterprise/badge.svg?branch=main)](https://coveralls.io/github/infor-design/enterprise?branch=main)
 
+> [!IMPORTANT]
+> This repo has been moved to https://oxford.awsdev.infor.com/infor-design/enterprise
+
 Infor Design System's Enterprise component library (also known as Soho Components) is a framework-independent UI library consisting of CSS and JS that provides Infor product development teams and partners tools to create user experiences that are approachable, focused, relevant and perceptive.
 
 For guidelines on when and where to use the components see the [design.infor.com](http://design.infor.com).
