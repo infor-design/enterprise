@@ -88,13 +88,13 @@
       .searchfield-wrapper.non-collapsible {
         &.has-categories {
           .searchfield {
-            @include placeholderTextColor() {
-              @include placeholder();
-            }
-
             background-color: $subheader-searchfield-context-bg;
             border-left-color: $subheader-input-color-focus-border;
             color: $header-flex-toolbar-input-searchfield-color;
+
+            @include placeholderTextColor() {
+              @include placeholder();
+            }
 
             + .btn-icon.close {
               svg {

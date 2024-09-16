@@ -250,6 +250,11 @@
           top: calc(50% - 9px);
           width: 18px;
         }
+
+        svg.icon.close {
+          top: -28px;
+          left: 220px;
+        }
       }
     }
 
@@ -286,9 +291,9 @@
 
   // Normal configuration of the tabset can just have '.tab-list' directly inside the vertical tabs container.
   > .tab-list {
-    @include vertical-tab-style;
-
     height: 100%;
+
+    @include vertical-tab-style;
 
     > .tab {
       a {

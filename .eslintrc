@@ -81,6 +81,9 @@
     // disallow multiple empty lines and only one newline at the end
     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
 
+    // Allow functions with no this in them
+    "no-restricted-syntax": ["off", { }],
+
     // Don"t allow paramter reassignment
     "no-param-reassign": ["off", {
       "props": true

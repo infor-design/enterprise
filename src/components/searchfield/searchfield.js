@@ -1585,6 +1585,10 @@ SearchField.prototype = {
       if (this.element.parents('.header').length === 1 && breakpoints.isBelow('phone-to-tablet')) {
         subtractWidth += 40;
       }
+
+      if (breakpoints.isBelow('slim')) {
+        subtractWidth += 400 - $(window).width();
+      }
     }
 
     if (this.hasGoButton()) {

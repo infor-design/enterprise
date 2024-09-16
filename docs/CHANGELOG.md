@@ -24,9 +24,67 @@
 
 - `[Homepage]` Fixed bug that caused errors on resize when no widgets. ([#8611](https://github.com/infor-design/enterprise/issues/8611))
 - `[Timeline]` Added fix to timeline layout. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
+## v4.99.0
+
+### v4.99.0 Features
+
+- `[Calendar]` Added `customSort`. ([#8836](https://github.com/infor-design/enterprise/issues/8836))
+- `[Datagrid]` Added `scrollRowIntoView`. ([NG#1761](https://github.com/infor-design/enterprise-ng/issues/1761))
+- `[FileuploadAdvanced]` Added beforefileupload event in handleFileUpload method. ([#8904](https://github.com/infor-design/enterprise/issues/8904))
+- `[Listview]` Added compact layout in listview. ([#8959](https://github.com/infor-design/enterprise/issues/8959))
+- `[Modal]` Added promise option for `beforeclose` event. ([#8779](https://github.com/infor-design/enterprise/issues/8779))
+- `[Module Tabs]` Updated tab colors. ([#8831](https://github.com/infor-design/enterprise/issues/8831))
+- `[Notification]` Added a callback function setting to be called when the notification is closed. ([#8767](https://github.com/infor-design/enterprise/issues/8767))
+
+### v4.99.0 Fixes
+
+- `[Autocomplete]` Fixed a bug where autocomplete items are not shown when press key down. ([#8943](https://github.com/infor-design/enterprise-/issues/8943))
+- `[ContextualToolbar]` Fixed datagrid hover color for contextual toolbar when a row is selected. ([#8980](https://github.com/infor-design/enterprise-/issues/8980))
+- `[Datagrid]` Fixed a bug where filters would error in some cases in an angular app. ([#1791](https://github.com/infor-design/enterprise-ng/issues/1791))
+- `[Datagrid]` Fixed a bug in compact mode where datagrid filters doesn't extend all throughout the parents width. ([#8900](https://github.com/infor-design/enterprise-/issues/8900))
+- `[Datagrid]` Fixed data return by select event on datagrid when having filter on. ([#8905](https://github.com/infor-design/enterprise/issues/8905))
+- `[Datagrid]` Optimize the initial loading of datagrids with filterable setting. ([#8935](https://github.com/infor-design/enterprise/issues/8935))
+- `[Datagrid]` Adjusted the padding of expandable detail rows in datagrid. ([#8950](https://github.com/infor-design/enterprise/issues/8950))
+- `[Datagrid]` Remove modification in calculateTextWidth that had incorrect selectors. ([#8938](https://github.com/infor-design/enterprise/issues/8938))
+- `[Datagrid]` Updated styles so pager works on cards. ([NG#1756](https://github.com/infor-design/enterprise-ng/issues/1756))
+- `[Datagrid]` Fixed a bug where text is misaligned in action dropdown . ([#8957](https://github.com/infor-design/enterprise-ng/issues/8957))
+- `[Datagrid]` Fixed auto sizing on columns in tree grid. ([#8646](https://github.com/infor-design/enterprise/issues/8646))
+- `[Dropdown]` Removed excess space on dropdown-wrapper class. ([#8894](https://github.com/infor-design/enterprise/issues/8894))
+- `[Datagrid]` Fixed special characters being encoded in editor. ([#8963](https://github.com/infor-design/enterprise/issues/8963))
+- `[Datagrid]` Fixed selected filters being cleared when changing row size. ([NG#1759](https://github.com/infor-design/enterprise-ng/issues/1759))
+- `[General]` Upgrade dependencies, this involved updating sass and test dependencies with a few css deprecations that were fixed. ([#8947](https://github.com/infor-design/enterprise-ng/issues/8947))
+- `[Locale]` Fixed translation issue of `small` into Spanish. ([#8962](https://github.com/infor-design/enterprise-wc/issues/8962)
+- `[Locale]` Fixed translation issue of `Available` into Thai and Italian. ([#8786](https://github.com/infor-design/enterprise-wc/issues/8786)
+- `[Message]` Updated docs in settings. ([#8839](https://github.com/infor-design/enterprise/issues/8839))
+- `[ModuleNav]` Fixed a bug where the tooltip was not showing when collapsed by default. ([NG#1678](https://github.com/infor-design/enterprise-ng/issues/1678))
+- `[Searchfield]` Adjusted width calculation when searchfield has category button and the screen is less than the slim breakpoint. ([#8487](https://github.com/infor-design/enterprise/issues/8487))
+- `[Swaplist]` Improved the size of the swaplist's drop area when there is no existing items. ([#8956](https://github.com/infor-design/enterprise/issues/8956))
+- `[Toolbar]` Fixed uncaught error when destroying the toolbar. ([#8946](https://github.com/infor-design/enterprise/issues/8946))
+- `[Tabs]` Fixed a bug where focus state is undefined when using breadcrumbs startup. ([#8910](https://github.com/infor-design/enterprise/issues/8910))
+- `[Validation]` Add guards for new setting in case it is undefined. ([#8981](https://github.com/infor-design/enterprise/issues/8981))
+- `[Datagrid]` Fixed the filterWhenTyping feature, so that any input change (including backspace or cut/paste which previously did nothing) will update the search results. ([#9007](https://github.com/infor-design/enterprise/issues/9007))
+
+## v4.98.3
+
+### v4.98.3 Fixes
+
+- `[ContextualToolbar]` Fixed datagrid hover color for contextual toolbar when a row is selected. ([#8980](https://github.com/infor-design/enterprise-/issues/8980))
+
+## v4.98.2
+
+### v4.98.2 Fixes
+
+- `[Validation]` Add guards for new setting in case it is undefined. ([#8981](https://github.com/infor-design/enterprise/issues/8981))
+
+## v4.98.1
+
+### v4.98.1 Fixes
+
+- `[Tabs]` Fixed a bug where focus state is undefined when using breadcrumbs startup. ([#8910](https://github.com/infor-design/enterprise/issues/8910))
+
 ## v4.98.0
 
-## v4.98.0 Features
+### v4.98.0 Features
 
 - `[Busy Indicator]` Added circular loading type. ([#8662](https://github.com/infor-design/enterprise/issues/8662))
 - `[Datagrid]` Add the ability for isEditable on selection checkbox columns to disable row selection. ([#8915](https://github.com/infor-design/enterprise-ng/issues/8915))
@@ -35,7 +93,7 @@
 - `[Mask]` Added setting `allowTrailingDecimalZeros` to always display decimals in input mask. ([NG#1715](https://github.com/infor-design/enterprise-ng/issues/1715))
 - `[Tab]` Selecting tabs in overflow menu will move the tab to a visible space. ([#8016](https://github.com/infor-design/enterprise/issues/8016))
 
-## v4.98.0 Fixes
+### v4.98.0 Fixes
 
 - `[Button]` Fixed a bug where disabled button are not properly rendered in widgets. ([#8893](https://github.com/infor-design/enterprise/issues/8893))
 - `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
@@ -59,7 +117,7 @@
 
 ## v4.97.0
 
-## v4.97.0 Features
+### v4.97.0 Features
 
 - `[Datagrid]` Added searched event for toolbar search. ([#8814](https://github.com/infor-design/enterprise/issues/8814))
 - `[Datagrid]` Added setting `overrideTabbing` to disable tabbing sequence of datagrid which will allow custom tabbing from users. ([#8825](https://github.com/infor-design/enterprise/issues/8825))
@@ -68,7 +126,7 @@
 - `[Tests]` Changed test framework to playwright. ([#8549](https://github.com/infor-design/enterprise-wc/issues/8549))
 - `[Switch]` Update switch design. ([#8852](https://github.com/infor-design/enterprise/issues/8852))
 
-## v4.97.0 Fixes
+### v4.97.0 Fixes
 
 - `[Autocomplete]` Fixed losing focus on keydown. ([#8618](https://github.com/infor-design/enterprise/issues/8618))
 - `[Calendar]` Fixed `selectDay` being called twice on clicking events. ([#8769](https://github.com/infor-design/enterprise/issues/8769))
@@ -95,14 +153,14 @@
 
 ## v4.96.0
 
-## v4.96.0 Features
+### v4.96.0 Features
 
 - `[Calendar]` Added new setting `slideSelect` to allow users to select from span of range in creating an event. ([#8243](https://github.com/infor-design/enterprise/issues/8243))
 - `[Calendar]` Added new setting `showTooltip` and `tooltipSettings` to display event information on event hover. ([#8453](https://github.com/infor-design/enterprise/issues/8453))
 - `[ContextualActionPanel/Modal]` Added new settings `propagateStyle` and `compactPanel`. ([NG#1594](https://github.com/infor-design/enterprise-ng/issues/1594))
 - `[Validation]` Added `truncated` setting to truncate and have a tooltip on validation messages. ([#7909](https://github.com/infor-design/enterprise/issues/7909))
 
-## v4.96.0 Fixes
+### v4.96.0 Fixes
 
 - `[About]` Removed `isMobile` in about spec. ([#8502](https://github.com/infor-design/enterprise/issues/8502))
 - `[AppMenu]` Fixed hover state on menu button in app menu. ([#8723](https://github.com/infor-design/enterprise/issues/8723))
@@ -141,11 +199,11 @@
 
 ## v4.95.0
 
-## v4.95.0 Important Changes
+### v4.95.0 Important Changes
 
 - `[General]` Using googleapis CDN for the design system fonts is no longer recommended due to global cross border data protection requirements. It is now recommended to download, embed, and serve the font locally with your application. Target completion for fix: with next major product release (Oct. 2024). See [typography docs](https://github.com/infor-design/enterprise/blob/main/src/components/typography/readme.md#font-family) for details and config. ([#8635](https://github.com/infor-design/enterprise/issues/8635))
 
-## v4.95.0 Features
+### v4.95.0 Features
 
 - `[About]` Added copy to clipboard button. ([#8438](https://github.com/infor-design/enterprise/issues/8438))
 - `[Homepage]` Added setting for background images. ([#8600](https://github.com/infor-design/enterprise/issues/8600))
@@ -156,7 +214,7 @@
 - `[TabsModule]` Added setting called `equalTabWidth` to make tabs equal of width. ([#6990](https://github.com/infor-design/enterprise/issues/6990))
 - `[Timeline]` Added fix to timeline layout. ([#8586](https://github.com/infor-design/enterprise/issues/8586))
 
-## v4.95.0 Fixes
+### v4.95.0 Fixes
 
 - `[Avatar/AppMenu]` Fixed size of the avatar on app menu. ([#8631](https://github.com/infor-design/enterprise/issues/8631))
 - `[Button]` Fixed unneeded timeout in performAnimation. ([#8541](https://github.com/infor-design/enterprise/issues/8541))
@@ -197,7 +255,7 @@
 
 ## v4.94.0
 
-## v4.94.0 Features
+### v4.94.0 Features
 
 - `[About]` Added copy to clipboard button. ([#8438](https://github.com/infor-design/enterprise/issues/8438))
 - `[Datagrid]` Added setting `showEditorIcons` to always display icon without hover. ([#8439](https://github.com/infor-design/enterprise/issues/8439))
@@ -206,7 +264,7 @@
 - `[Lookup]` Added placeholder setting in toolbar. ([#8416](https://github.com/infor-design/enterprise/issues/8416))
 - `[Modal]` Added setting `draggable` to be able to drag modals. ([#7019](https://github.com/infor-design/enterprise/issues/7019))
 
-## v4.94.0 Fixes
+### v4.94.0 Fixes
 
 - `[Avatar]` Is no longer round by default. To use it in module nav add the new `square` class. ([#8539](https://github.com/infor-design/enterprise/issues/8539))
 - `[Hierarchy]` Fixed broken size on avatars on hierarchy. ([#8584](https://github.com/infor-design/enterprise/issues/8584))
@@ -244,7 +302,7 @@
 
 ## v4.93.0
 
-## v4.93.0 Features
+### v4.93.0 Features
 
 - `[Calendar]` Added event tree option for calendar. ([3870](https://github.com/infor-design/enterprise/issues/3870))
 - `[Contextual Action Panel]` Added content details and back button arrow. ([#8112](https://github.com/infor-design/enterprise/issues/8112))
@@ -254,7 +312,7 @@
 - `[Donut/Pie]` Added a legend title in donut and pie chart legends. ([#7933](https://github.com/infor-design/enterprise/issues/7933))
 - `[Locale]` Added `dateTimestamp` date format. ([#8373](https://github.com/infor-design/enterprise/issues/8373))
 
-## v4.93.0 Fixes
+### v4.93.0 Fixes
 
 - `[Checkboxes]` Fixed RTL alignment for dirty tracker and required label. ([#8308](https://github.com/infor-design/enterprise/issues/8308))
 - `[Colorpicker]` Fixed RTL alignment for color picker. ([#8306](https://github.com/infor-design/enterprise/issues/8306))
@@ -299,7 +357,7 @@
 
 ## v4.92.3
 
-## v4.92.3 Fixes
+### v4.92.3 Fixes
 
 - `[Datagrid]` Fixed cell editable not getting focused on click. ([8408](https://github.com/infor-design/enterprise/issues/8408))
 - `[Datagrid]` Fixed cell value replacing special characters on cell change. ([8285](https://github.com/infor-design/enterprise/issues/8285))
@@ -308,7 +366,7 @@
 
 ## v4.92.2
 
-## v4.92.2 Fixes
+### v4.92.2 Fixes
 
 - `[Datagrid]` Fixed cell editable not getting focused on click. ([#8408](https://github.com/infor-design/enterprise/issues/8408))
 - `[Masthead]` Fixed incorrect color on hover. ([8391](https://github.com/infor-design/enterprise/issues/8391))
@@ -316,14 +374,14 @@
 
 ## v4.92.1
 
-## v4.92.1 Features
+### v4.92.1 Features
 
 - `[Icons]` Added new icon `widgets-smart-panel`. ([#8403](https://github.com/infor-design/enterprise/issues/8403))
 - `[Icons]` Fixed spaces in `icon-user-status-unknown` icon. ([#8403](https://github.com/infor-design/enterprise/issues/8403))
 
 ## v4.92.0
 
-## v4.92.0 Features
+### v4.92.0 Features
 
 - `[Avatar]` Added a new `avatar` class that can show initials and can be used in the module nav guest area. ([#8374](https://github.com/infor-design/enterprise/issues/8374))
 - `[BusyIndicator]` Added loading indicator for AI action. ([#8312](https://github.com/infor-design/enterprise/issues/8312))
@@ -336,7 +394,7 @@
 - `[Icons]` Added new icons which are more substantial in look. ([#8129](https://github.com/infor-design/enterprise/issues/8129))
 - `[Lookup]` Added css setting for lookup. ([#8206](https://github.com/infor-design/enterprise/issues/8206))
 
-## v4.92.0 Fixes
+### v4.92.0 Fixes
 
 - `[Bar Chart]` Fixed thrown errors when having duplicate sets in the dataset for bar chart. ([#8209](https://github.com/infor-design/enterprise/issues/8209))
 - `[Cards]` Fixed widget header alignment with the parent. ([#8351](https://github.com/infor-design/enterprise/issues/8351))
@@ -383,13 +441,13 @@
 
 ## v4.91.0
 
-## v4.91.0 Features
+### v4.91.0 Features
 
 - `[Dates]` Added a new `twoDigitYear` setting to set the switch over for two digit years. ([#8061](https://github.com/infor-design/enterprise/issues/8061))
 - `[ModuleNav]` Added a new "guest" section and some new settings to toggle the search and module switcher section. ([#8232](https://github.com/infor-design/enterprise/issues/8232))
 - `[ModuleNav]` Added `attributes` setting (for automation id) in the module nav switcher. ([#8270](https://github.com/infor-design/enterprise/issues/8270))
 
-## v4.91.0 Fixes
+### v4.91.0 Fixes
 
 - `[Accordion]` Fixed a bug where focus border was not fully shown in sub header. ([#8109](https://github.com/infor-design/enterprise/issues/8109))
 - `[Breadcrumb]` Fixed a bug where overflow menu items don't fire a callback function. ([#8154](https://github.com/infor-design/enterprise/issues/8154))
@@ -419,17 +477,11 @@
 - `[Searchfield]` Fixed styling issues in RTL. ([#6982](https://github.com/infor-design/enterprise/issues/6982))
 - `[Searchfield]` Fixed searchfield stylings in RTL and in mobile viewport. ([#8103](https://github.com/infor-design/enterprise/issues/8103))
 
-## v4.89.1 (Preview)
-
-## v4.89.1 (Preview) Fixes
-
-- `[Personalization]` Fixed incorrect values in the `Soho.theme.personalizationColors` api. ([#8151](https://github.com/infor-design/enterprise/issues/8151))
-
 ## v4.90.0
 
-## v4.90.0 Features
+### v4.90.0 Features
 
-## v4.90.0 Fixes
+### v4.90.0 Fixes
 
 - `[About]` Removed operating system field. ([#8118](https://github.com/infor-design/enterprise/issues/8118))
 - `[Accordion]` Fixed a bug where the plus-minus icon shows ellipsis on mobile viewport. ([#8044](https://github.com/infor-design/enterprise/issues/8044))
@@ -458,9 +510,9 @@
 - `[Datagrid]` Added ability for expandable and summary rows to be updated after cell update. ([#8058](https://github.com/infor-design/enterprise/issues/8058))
 - `[Tabs]` Changed all azure components like header and header tabs to be alabaster by default. ([#7861](https://github.com/infor-design/enterprise/issues/7861))
 
-## v4.89.0 (Preview)
+## v4.89.0
 
-## v4.89.0 (Preview) Features
+### v4.89.0 Features
 
 - `[Icons]` Added new icon designs. ([#8129](https://github.com/infor-design/enterprise/issues/8129))
 - `[Tabs]` Changed all azure components like header and header tabs to be alabaster by default. ([#7861](https://github.com/infor-design/enterprise/issues/7861))
@@ -480,14 +532,9 @@
 - `[Tabs Header]` Fixed gradient color for personalizable overflowing header tabs. ([#8110](https://github.com/infor-design/enterprise/issues/8110))
 - `[Tabs-Module]` Removed padding in embedded mode. ([#8060](https://github.com/infor-design/enterprise/issues/8060))
 - `[Timepicker]` Removed `disabled` prop in trigger button on enable call. ([NG#1567](https://github.com/infor-design/enterprise-ng/issues/1567))
-
-## v4.89.0
-
-## v4.89.0 Features
-
 - `[Datagrid]` Added ability for expandable and summary rows to be updated after cell update. ([#8058](https://github.com/infor-design/enterprise/issues/8058))
 
-## v4.89.0 Fixes
+### v4.89.0 Fixes
 
 - `[Accordion]` Adjusted rules of accordion top border to be consistent whether open or closed. ([#7978](https://github.com/infor-design/enterprise/issues/7978))
 - `[BarStacked]` Fixed the uneven legend spaces. ([#7874](https://github.com/infor-design/enterprise/issues/7874))
@@ -531,7 +578,7 @@
 
 ## v4.88.0
 
-## v4.88.0 Features
+### v4.88.0 Features
 
 - `[Checkbox]` Changed color of checkbox in dark mode. ([#7991](https://github.com/infor-design/enterprise/issues/7991))
 - `[Form/Label]` Implemented a form layout designed to facilitate an inline design within a responsive-form container. ([#7764](https://github.com/infor-design/enterprise/issues/7764))
@@ -541,7 +588,7 @@
 - `[Module Nav]` Fixed an alignment issue. ([#7934](https://github.com/infor-design/enterprise/issues/7934))
 - `[Module Nav]` Added mobile click to close setting, and made breakpoints fire on resize, added hamburger logic and new mobile states per phone vs bigger. ([#8019](https://github.com/infor-design/enterprise/issues/8019))
 
-## v4.88.0 Fixes
+### v4.88.0 Fixes
 
 - `[Accordion]` Updated selected header text color. ([#7769](https://github.com/infor-design/enterprise/issues/7769))
 - `[ApplicationMenu]` Fixed an issue where the hover button background color was incorrect. ([#7933](https://github.com/infor-design/enterprise/issues/7782))
@@ -601,7 +648,7 @@
 
 ## v4.87.0
 
-## v4.87.0 Features
+### v4.87.0 Features
 
 - `[Datagrid]` Has a new design with a soft grey header. The white header background option is removed and this is now the default. ([#7814](https://github.com/infor-design/enterprise/issues/7814))
 - `[Datagrid]` Fix the datagrid filter color when disabled. ([#7908](https://github.com/infor-design/enterprise/issues/7908))
@@ -612,7 +659,7 @@
 - `[Timepicker]` Fix issue with `enable` function. ([#7887](https://github.com/infor-design/enterprise/issues/7887))
 - `[Typography]` Added `text-wrap` class. ([#7497](https://github.com/infor-design/enterprise/issues/7497))
 
-## v4.87.0 Fixes
+### v4.87.0 Fixes
 
 - `[Badges/Alerts/Tags/Icons]` Added docs and clearer examples. ([#7661](https://github.com/infor-design/enterprise-ng/issues/7661))
 - `[Bar]` Fixed an issue where the x-axis labels on the bar chart were not visible. ([#7797](https://github.com/infor-design/enterprise/issues/7797))
@@ -668,11 +715,11 @@
 
 ## v4.86.0
 
-## v4.86.0 Features
+### v4.86.0 Features
 
 - `[Dropdown/ModuleNav]` Added no results text when filtering and no items are found. ([#7662](https://github.com/infor-design/enterprise/issues/7662))
 
-## v4.86.0 Fixes
+### v4.86.0 Fixes
 
 - `[Accordion/ModuleNav/Appmenu]` Focus does not focus the expander buttons only the parent items. ([#7626](https://github.com/infor-design/enterprise/issues/7626))
 - `[Bar]` Fixed a bug where the bottom axis label was cut off. ([#7612](https://github.com/infor-design/enterprise/issues/7612))
@@ -728,12 +775,12 @@
 
 - `[Stats]` Added a new component called stats similar to counts. We would like counts deprecated so please use stats in place of counts now as it has a cleaner UI. ([#7506](https://github.com/infor-design/enterprise/issues/7506))
 
-## v4.85.0 Features
+### v4.85.0 Features
 
 - `[Colors]` Added new slate color palette with lower range colors. Some elements are updated. ([#7624](https://github.com/infor-design/enterprise/issues/7624))
 - `[Stats]` Added a new component called stats similar to counts. We would like counts deprecated so please use stats in place of counts now as it has a cleaner UI. ([#7506](https://github.com/infor-design/enterprise/issues/7506))
 
-## v4.85.0 Fixes
+### v4.85.0 Fixes
 
 - `[Accordion]` Updated color style for accordion selected panel. ([#7593](https://github.com/infor-design/enterprise/issues/7593))
 - `[Applicationmenu]` Fixed menu items cannot be seen properly when using alabaster. ([#7609](https://github.com/infor-design/enterprise/issues/7609))

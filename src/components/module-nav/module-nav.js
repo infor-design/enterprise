@@ -395,7 +395,7 @@ ModuleNav.prototype = {
     this.accordionAPI.updated(newSettings);
 
     // Build tooltips on top-level accordion headers in collapsed mode
-    const headers = this.accordionEl.querySelectorAll('.accordion-section > .accordion-header, .accordion-section > soho-module-nav-settings > .accordion-header');
+    const headers = this.accordionEl.querySelectorAll('.accordion-section > .module-nav-switcher, .accordion-section > .accordion-header, .accordion-section > soho-module-nav-settings > .accordion-header');
     if (headers.length) {
       [...headers].forEach((header) => {
         configureNavItemTooltip(header, this.settings.displayMode);

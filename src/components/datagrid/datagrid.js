@@ -1839,7 +1839,10 @@ Datagrid.prototype = {
             isRangeDefault = true;
           }
 
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker" ${isRangeDefault ? 'data-options="{range: {useRange: true}}"' : ''} ${attrs} ${enterKeyHint}/>`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker"
+            ${columnDef.filterValue ? ` value="${columnDef.filterValue}"` : ''}
+            ${isRangeDefault ? ' data-options="{range: {useRange: true}}"' : ''}
+             ${attrs} ${enterKeyHint}/>`;
           break;
         }
         case 'integer': {
@@ -1865,7 +1868,7 @@ Datagrid.prototype = {
             col.maskOptions = utils.extend(true, {}, integerDefaults, col.maskOptions);
           }
 
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} ${enterKeyHint} />`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${columnDef.filterValue ? `value="${columnDef.filterValue}"` : ''} ${attrs} ${enterKeyHint} />`;
           break;
         }
         case 'percent':
@@ -1917,10 +1920,25 @@ Datagrid.prototype = {
             }
           }
 
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} ${enterKeyHint} />`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${columnDef.filterValue ? `value="${columnDef.filterValue}"` : ''} ${attrs} ${enterKeyHint} />`;
           break;
         }
         case 'contents':
+          filterMarkup += `<select ${attrs} ${col.filterType === 'select' ? 'class="dropdown"' : 'multiple class="multiselect"'}${col.filterDisabled ? ' disabled' : ''}>${emptyOption}`;
+          if (filterOptions) {
+            for (let i = 0, l = filterOptions.length; i < l; i++) {
+              const option = filterOptions[i];
+              const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
+              const isSelected = columnDef.filterValue && columnDef.filterValue.some(f => f === optionValue);
+
+              if (option && optionValue !== '') {
+                filterMarkup += `<option value = "${optionValue}" ${isSelected ? 'selected' : ''}>${option.label}</option>`;
+              }
+            }
+          }
+          filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></div>';
+
+          break;
         case 'select':
           filterMarkup += `<select ${attrs} ${col.filterType === 'select' ? 'class="dropdown"' : 'multiple class="multiselect"'}${col.filterDisabled ? ' disabled' : ''}>${emptyOption}`;
           if (filterOptions) {
@@ -1928,7 +1946,7 @@ Datagrid.prototype = {
               const option = filterOptions[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
               if (option && optionValue !== '') {
-                filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
+                filterMarkup += `<option value = "${optionValue}" ${optionValue === columnDef.filterValue ? 'selected' : ''}>${option.label}</option>`;
               }
             }
           }
@@ -1941,8 +1959,10 @@ Datagrid.prototype = {
             for (let i = 0, l = filterOptions.length; i < l; i++) {
               const option = filterOptions[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
+              const isSelected = columnDef.filterValue && columnDef.filterValue.some(f => f === optionValue);
+
               if (option && typeof option.label === 'string') {
-                filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
+                filterMarkup += `<option value = "${optionValue}" ${isSelected ? 'selected' : ''}>${option.label}</option>`;
               }
             }
           }
@@ -1950,13 +1970,13 @@ Datagrid.prototype = {
 
           break;
         case 'time':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="timepicker" ${attrs} ${enterKeyHint}/>`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="timepicker" ${columnDef.filterValue ? `value="${columnDef.filterValue}"` : ''} ${attrs} ${enterKeyHint}/>`;
           break;
         case 'lookup':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="lookup" ${attrs} ${enterKeyHint} >`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="lookup" ${columnDef.filterValue ? `value="${columnDef.filterValue}"` : ''} ${attrs} ${enterKeyHint} >`;
           break;
         default:
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} tabindex="0" type="text" ${attrs} ${enterKeyHint}/>`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} tabindex="0" type="text" ${columnDef.filterValue ? `value="${columnDef.filterValue}"` : ''} ${attrs} ${enterKeyHint}/>`;
           break;
       }
 
@@ -2156,6 +2176,7 @@ Datagrid.prototype = {
           // Wierd Hack - Sync to "sync" up the filter row
           const ddElem = $(this);
           $(`#${ddElem.attr('id')}`).val(ddElem.val());
+          delete col.filterValue;
           self.applyFilter(null, 'selected');
         });
 
@@ -2944,6 +2965,11 @@ Datagrid.prototype = {
       this.setSearchActivePage(pagingInfo);
     }
 
+    conditions.forEach((condition) => {
+      const index = self.settings.columns.findIndex(col => col.id === condition.columnId);
+      self.settings.columns[index].filterValue = condition.value;
+    });
+
     /**
     * Fires after a filter action ocurs
     * @event filtered
@@ -2957,8 +2983,8 @@ Datagrid.prototype = {
     if (this.settings.disableClientFilter && trigger === 'restore') {
       return;
     }
-
     this.element.trigger('filtered', { op: 'apply', conditions, trigger });
+
     this.saveUserSettings();
   },
 
@@ -5363,25 +5389,9 @@ Datagrid.prototype = {
       if (this.settings.groupable) {
         arrayToTest = this.originalDataset;
       }
-      let rowStart = 0;
-      let arrayToTestlen = arrayToTest.length;
-      if (this.settings.paging === false) { // calculate what is visible in the screen only
-        let rowHt;
-        switch (this.settings.rowHeight) {
-          case 'normal':
-          case 'large':
-            rowHt = 40;
-            break;
-          case 'medium':
-            rowHt = 30;
-            break;
-          default:
-            rowHt = 25;
-        }
-        rowStart = Math.floor(this.element.find('.datagrid-wrapper.scrollable-x.scrollable-y').scrollTop() / rowHt);
-        const rowCnt = rowStart + Math.floor(this.element.closest('.h5-datagrid-container').height() / rowHt);
-        arrayToTestlen = arrayToTest.length < rowCnt ? arrayToTest.length : rowCnt;
-      }
+
+      const rowStart = 0;
+      const arrayToTestlen = arrayToTest.length;
       for (let i = rowStart; i < arrayToTestlen; i++) {
         let val = this.fieldValue(arrayToTest[i], columnDef.field);
         const row = arrayToTest[i];
@@ -5394,16 +5404,40 @@ Datagrid.prototype = {
 
         len = val.toString().length;
 
+        const getVal = (group) => {
+          let groupVal = this.fieldValue(group, columnDef.field);
+          groupVal = self.formatValue(columnDef.formatter, i, 0, groupVal, columnDef, row, self);
+          groupVal = xssUtils.stripHTML(groupVal);
+
+          if (this.settings.treeGrid) {
+            groupVal = groupVal.replace(Locale.translate('ExpandCollapse'), '');
+          }
+
+          groupVal = groupVal.replace(/\s+/g, ' ').trim();
+
+          return groupVal;
+        };
+
         if (this.settings.groupable && row) {
           for (let k = 0; k < row.length; k++) {
-            let groupVal = this.fieldValue(row[k], columnDef.field);
-            groupVal = self.formatValue(columnDef.formatter, i, 0, groupVal, columnDef, row, self);
-            groupVal = xssUtils.stripHTML(groupVal);
-
+            const groupVal = getVal(row[k]);
             len = groupVal.toString().length;
+
             if (len > max) {
               max = len;
               maxText = groupVal;
+            }
+          }
+        }
+
+        if (this.settings.treeGrid && row && row.children) {
+          for (let k = 0; k < row.children.length; k++) {
+            const childVal = getVal(row.children[k]);
+            len = childVal.toString().length;
+
+            if (len > max) {
+              max = len;
+              maxText = childVal;
             }
           }
         }
@@ -5529,7 +5563,6 @@ Datagrid.prototype = {
   calculateTextRenderWidth(maxText, isHeader) {
     // if given, use cached canvas for better performance, else, create new canvas
     this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
-
     if (!this.canvas || !this.canvas?.getContext) return 0;
     const context = this.canvas?.getContext('2d');
     const isNewTheme = (theme.currentTheme.id.indexOf('uplift') > -1 || theme.currentTheme.id.indexOf('new') > -1);
@@ -7329,7 +7362,7 @@ Datagrid.prototype = {
       e.preventDefault();
     }
 
-    let item = self.settings.dataset[row];
+    let item = this.settings.dataset.filter(obj => obj?._isFilteredOut !== true)[row];
 
     //  Groupable
     if (this.settings.groupable) {
@@ -8398,16 +8431,18 @@ Datagrid.prototype = {
           e.preventDefault();
           self.keywordSearch(thisSearch.val());
         }
-
-        if (self.settings.filterWhenTyping) {
+      });
+      
+      if (self.settings.filterWhenTyping) {
+        thisSearch.on('input.datagrid', () => {
           clearTimeout(typingTimer);
           typingTimer = setTimeout((param) => {
             const self1 = param[0];
             const thisSearch1 = param[1];
             self1.keywordSearch(thisSearch1.val());
           }, 400, [self, thisSearch]);
-        }
-      });
+        });
+      }
       clearButton.off('click.datagrid').on('click.datagrid', () => {
         self.keywordSearch(thisSearch.val());
       });
@@ -9118,7 +9153,7 @@ Datagrid.prototype = {
         self.setNodeStatus(rowNode);
         self.lastSelectedRow = idx;
       } else {
-        rowData = s.dataset[dataRowIndex];
+        rowData = this.settings.dataset.filter(obj => obj?._isFilteredOut !== true)[dataRowIndex];
         if (s.groupable) {
           const row = self.actualPagingRowIndex(self.actualRowIndex(rowNode));
           if (isNaN(row)) {
@@ -10896,7 +10931,7 @@ Datagrid.prototype = {
     }
 
     if (this.editor.useValue) {
-      cellValue = this.fieldValue(rowData, col.field);
+      cellValue = this.fieldValue(rowData, col.field, false);
     }
     this.editor.val(cellValue);
 
@@ -12480,6 +12515,16 @@ Datagrid.prototype = {
   },
 
   /**
+   * Scroll to row.
+   * @param {number} row The row index
+   */
+  scrollRowIntoView(row) {
+    if (row) {
+      this.setActiveCell(row, 0, true);
+    }
+  },
+
+  /**
    * Sets focus to the next active cell, depending on a key.
    * @private
    * @param {object} e The event object
@@ -13521,16 +13566,16 @@ Datagrid.prototype = {
 
           tooltip.content = xssUtils.stripHTML(iconTooltipContent);
           tooltip.headerText = xssUtils.stripHTML(headerText);
-        } else {
+        } else if (tooltip) {
           // Default use wrapper content
-          if (tooltip.wrapper.querySelector('.datagrid-expand-btn')) {
+          if (tooltip?.wrapper?.querySelector('.datagrid-expand-btn')) {
             Array.prototype.filter
               .call(tooltip.wrapper.children, node => !node.matches('.datagrid-expand-btn'))
               .forEach((node) => {
                 tooltip.content = node.textContent;
               });
           } else {
-            tooltip.content = tooltip.wrapper.textContent;
+            tooltip.content = tooltip.wrapper?.textContent;
           }
           tooltip.content = xssUtils.stripHTML(tooltip.content).trim();
         }
@@ -13873,7 +13918,7 @@ Datagrid.prototype = {
       const searchfield = toolbar.find('.searchfield');
       const searchfieldApi = searchfield.data('searchfield');
       const xIcon = searchfield.parent().find('.close.icon');
-      searchfield.off('keypress.datagrid');
+      searchfield.off('keypress.datagrid input.datagrid');
       xIcon.off('click.datagrid');
       if (searchfieldApi && typeof searchfieldApi.destroy === 'function') {
         searchfieldApi.destroy();

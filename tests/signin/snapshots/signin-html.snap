@@ -25,7 +25,7 @@
                 <option value="U">US</option>
                 <option value="E">EU</option>
                 <option value="c">China</option>
-              </select><div class="dropdown-wrapper "><div class="dropdown" data-automation-id="states-automation-id" role="combobox" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false" aria-label="Server, NL" tabindex="0"><span><span class="audible">Server </span>NL</span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></div>
+              </select><div class="dropdown-wrapper"><div class="dropdown" data-automation-id="states-automation-id" role="combobox" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false" aria-label="Server, NL" tabindex="0"><span><span class="audible">Server </span>NL</span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></div>
             </div>
 
             <button id="submit" class="btn-primary no-ripple hide-focus" type="submit" data-automation-id="submit-automation-id">Sign in</button>
