@@ -54,7 +54,7 @@
   }
 
   &.has-bottom-legend svg {
-    min-height: 290px;
+    min-height: 260px;
   }
 
   // Adjust smaller bottom legend for the pie chart
@@ -121,8 +121,6 @@
 .card,
 .widget {
   &:not(.auto-height):has(div.has-bottom-legend) {
-    min-height: 390px;
-
     .card-content,
     .widget-content {
       height: auto;

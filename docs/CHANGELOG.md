@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.99.1
+
+### v4.99.1 Fixes
+
+- `[Donut]` Fixes on donut chart resizing and widget placement. ([#4894](https://inforwiki.atlassian.net/browse/IDS-4894))
+- `[Lookup/Datagrid]` Fixed an issue where filtered data wasn't selected, causing an error in the console. ([#4904](https://inforwiki.atlassian.net/browse/IDS-4904))
+
 ## v4.99.0
 
 ### v4.99.0 Features

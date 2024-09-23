@@ -382,7 +382,7 @@ charts.addLegend = function (series, chartType, settings, container) {
 
   width += 55;
   const widthPercent = width / $(container).width() * 100;
-  const exceedsMaxWidth = widthPercent > 45;
+  const exceedsMaxWidth = widthPercent > 35;
   const isBottom = series[0].placement && series[0].placement === 'bottom' || settings.forceLegendPopup === true;
 
   if (!(isBottom && exceedsMaxWidth)) {
@@ -394,8 +394,7 @@ charts.addLegend = function (series, chartType, settings, container) {
   }
 
   const isTwoColumn = series[0].display && series[0].display === 'twocolumn';
-  let legend = isTwoColumn ? $(`<div class="chart-legend ${
-    series[0].placement && !isBottom ? `is-${series[0].placement}` : 'is-bottom'}"></div>`) :
+  let legend = isTwoColumn ? $(`<div class="chart-legend ${series[0].placement && !isBottom ? `is-${series[0].placement}` : 'is-bottom'}"></div>`) :
     $('<div class="chart-legend"></div>');
 
   if ((chartType === 'pie' || chartType === 'donut') && settings.showMobile) {
@@ -472,11 +471,19 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
 
     if ((series[i].display && series[i].display === 'block') || (isTwoColumn && exceedsMaxWidth && isBottom)) {
+      let sWidth = width;
+
+      if (isTwoColumn && exceedsMaxWidth) {
+        sWidth -= 15;
+      } else {
+        sWidth += 15;
+      }
+
       seriesLine.css({
         float: 'none',
         display: 'block',
         margin: '0 auto',
-        width: `${width + 15}px`,
+        width: `${sWidth}px`,
       });
     }
 
@@ -488,7 +495,7 @@ charts.addLegend = function (series, chartType, settings, container) {
         .append('path')
         .attr('class', 'symbol')
         .attr('transform', 'translate(10, 10)')
-        .attr('d', d3.symbol().size('80').type( () => { return d3.symbols[i]; })) //eslint-disable-line
+        .attr('d', d3.symbol().size('80').type(() => { return d3.symbols[i]; })) //eslint-disable-line
         .style('fill', hexColor);
     }
 
@@ -663,27 +670,7 @@ charts.handleElementClick = function (idx, line, series, settings, container) {
   }
 
   if (isTwoColumn && this.hasLegendPopup) {
-    const chartType = settings.type === 'donut' ? 'pie' : settings.type;
-    const hexColor = charts.chartColor(idx, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[idx]);
-    const colorName = charts.chartColorName(idx, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[idx]);
-    let color = '';
-    if (colorName.substr(0, 1) === '#') {
-      color = $('<span class="chart-legend-color"></span>');
-      if (!elem.pattern) {
-        color.css('background-color', hexColor);
-      }
-    } else {
-      color = $(`<span class="chart-legend-color ${elem.pattern ? '' : colorName}"></span>`);
-    }
-
-    const textBlock = $(`<span class="chart-legend-item-text">${xssUtils.stripTags(elem.name)}</span>`);
-    const chartLegendItem = container.find('.chart-legend-item');
-
-    chartLegendItem.empty();
-    chartLegendItem.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
-    chartLegendItem.attr('index-id', `chart-legend-${idx}`);
-    container.find('.list-button').data('popupmenu').menu.children().removeClass('is-hidden');
-    $(container.find('.list-button').data('popupmenu').menu.children().get(idx)).addClass('is-hidden');
+    this.updateChartItem(idx, elem, settings, series, container);
   }
 };
 
@@ -716,6 +703,49 @@ charts.clearSelected = function (dataset) {
     };
     clear(dataset);
   }
+};
+
+/**
+ * Update chart legend items, used for select events
+ * @private
+ * @param {number} idx Index of chart
+ * @param {object} elem Item element
+ * @param {object} settings Chart settings
+ * @param {array} series Chart items
+ * @param {JQuery} container Container of chart items
+ */
+charts.updateChartItem = function (idx, elem, settings, series, container) {
+  const chartLegendItems = container.find('.chart-legend-item');
+  let chartLegendItem = chartLegendItems.first();
+
+  if (chartLegendItems.length > 1) {
+    chartLegendItems.each((_i, e) => {
+      if (e.getAttribute('index-id') === `chart-legend-${idx}`) {
+        chartLegendItem = $(e);
+      }
+    });
+  }
+
+  const chartType = settings.type === 'donut' ? 'pie' : settings.type;
+  const hexColor = charts.chartColor(idx, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[idx]);
+  const colorName = charts.chartColorName(idx, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[idx]);
+  let color = '';
+  if (colorName.substr(0, 1) === '#') {
+    color = $('<span class="chart-legend-color"></span>');
+    if (!elem.pattern) {
+      color.css('background-color', hexColor);
+    }
+  } else {
+    color = $(`<span class="chart-legend-color ${elem.pattern ? '' : colorName}"></span>`);
+  }
+
+  const textBlock = $(`<span class="chart-legend-item-text">${xssUtils.stripTags(elem.name)}</span>`);
+
+  chartLegendItem.empty();
+  chartLegendItem.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
+  chartLegendItem.attr('index-id', `chart-legend-${idx}`);
+  container.find('.list-button').data('popupmenu').menu.children().removeClass('is-hidden');
+  $(container.find('.list-button').data('popupmenu').menu.children().get(idx)).addClass('is-hidden');
 };
 
 /**
@@ -976,6 +1006,7 @@ charts.setSelectedElement = function (o) {
       triggerData.push({ elem: selector.nodes(), data: thisArcData, index: o.i });
 
       if (o.i === undefined) {
+        // eslint-disable-next-line no-underscore-dangle
         const nodeList = svg.selectAll('.slice')._groups[0];
         o.i = 0;
 
@@ -989,28 +1020,7 @@ charts.setSelectedElement = function (o) {
 
       const isTwoColumn = o.series[0].display && o.series[0].display === 'twocolumn';
       if (isTwoColumn && this.hasLegendPopup) {
-        const elem = o.series[o.i];
-        const chartType = o.settings.type === 'donut' ? 'pie' : o.settings.type;
-        const hexColor = charts.chartColor(o.i, chartType || (o.series.length === 1 ? 'bar-single' : 'bar'), o.series[o.i]);
-        const colorName = charts.chartColorName(o.i, chartType || (o.series.length === 1 ? 'bar-single' : 'bar'), o.series[o.i]);
-        let color = '';
-        if (colorName.substr(0, 1) === '#') {
-          color = $('<span class="chart-legend-color"></span>');
-          if (!elem.pattern) {
-            color.css('background-color', hexColor);
-          }
-        } else {
-          color = $(`<span class="chart-legend-color ${elem.pattern ? '' : colorName}"></span>`);
-        }
-
-        const textBlock = $(`<span class="chart-legend-item-text">${xssUtils.stripTags(elem.name)}</span>`);
-        const chartLegendItem = o.container.find('.chart-legend-item');
-
-        chartLegendItem.empty();
-        chartLegendItem.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
-        chartLegendItem.attr('index-id', `chart-legend-${o.i}`);
-        o.container.find('.list-button').data('popupmenu').menu.children().removeClass('is-hidden');
-        $(o.container.find('.list-button').data('popupmenu').menu.children().get(o.i)).addClass('is-hidden');
+        this.updateChartItem(o.i, o.series[o.i], o.settings, o.series, o.container);
       }
     }
   } else {
@@ -1070,11 +1080,11 @@ charts.setSelected = function (o, isToggle, internals) {
       }
       if (selected < 1) {
         if ((typeof o.fieldName !== 'undefined' &&
-              typeof o.fieldValue !== 'undefined' &&
-                o.fieldValue === d[o.fieldName]) ||
-            (typeof o.index !== 'undefined' && o.index === i) ||
-            (o.data && equals(o.data, internals.chartData[d.index].data[i])) ||
-            (o.elem && $(this).is(o.elem))) {
+          typeof o.fieldValue !== 'undefined' &&
+          o.fieldValue === d[o.fieldName]) ||
+          (typeof o.index !== 'undefined' && o.index === i) ||
+          (o.data && equals(o.data, internals.chartData[d.index].data[i])) ||
+          (o.elem && $(this).is(o.elem))) {
           selected++;
           selector = d3.select(this);
           barIndex = i;
@@ -1097,18 +1107,18 @@ charts.setSelected = function (o, isToggle, internals) {
   };
 
   if (internals.isGrouped || (internals.isStacked && !internals.isSingle)) {
-    internals.chartData.forEach(function(d, i) {  //eslint-disable-line
+    internals.chartData.forEach(function (d, i) {  //eslint-disable-line
       if (selected < 1) {
         xGroup = $(internals.svg.select('[data-group-id="' + i + '"]').node()); //eslint-disable-line
         if ((typeof o.groupName !== 'undefined' &&
-              typeof o.groupValue !== 'undefined' &&
-                o.groupValue === d[o.groupName]) ||
-            (typeof o.groupIndex !== 'undefined' && o.groupIndex === i) ||
-            (o.data && equals(o.data, d)) ||
-            (o.elem && (xGroup.is(o.elem)))) {
+          typeof o.groupValue !== 'undefined' &&
+          o.groupValue === d[o.groupName]) ||
+          (typeof o.groupIndex !== 'undefined' && o.groupIndex === i) ||
+          (o.data && equals(o.data, d)) ||
+          (o.elem && (xGroup.is(o.elem)))) {
           if (typeof o.fieldName === 'undefined' &&
-                typeof o.fieldValue === 'undefined' &&
-                  typeof o.index === 'undefined') {
+            typeof o.fieldValue === 'undefined' &&
+            typeof o.index === 'undefined') {
             selected++;
             selector = internals.svg.select('[data-group-id="' + i + '"]').select('.bar'); //eslint-disable-line
             barIndex = i;
@@ -1133,15 +1143,15 @@ charts.setSelected = function (o, isToggle, internals) {
         elem = that.svg.select(`[data-group-id="${i1}"]`)
           .select(`.dot:nth-child(${i2 + 2})`);
         if ((typeof o.groupIndex === 'number' &&
-              typeof o.fieldName !== 'undefined' &&
-                typeof o.fieldValue !== 'undefined' &&
-                  o.groupIndex === i1 &&
-                    o.fieldValue === d2[o.fieldName]) ||
-            (typeof o.index !== 'undefined' &&
-              typeof o.groupIndex === 'number' &&
-                o.groupIndex === i1 && o.index === i2) ||
-            (o.elem && $(elem.node()).is(o.elem)) ||
-            (o.data && equals(o.data, d2))) {
+          typeof o.fieldName !== 'undefined' &&
+          typeof o.fieldValue !== 'undefined' &&
+          o.groupIndex === i1 &&
+          o.fieldValue === d2[o.fieldName]) ||
+          (typeof o.index !== 'undefined' &&
+            typeof o.groupIndex === 'number' &&
+            o.groupIndex === i1 && o.index === i2) ||
+          (o.elem && $(elem.node()).is(o.elem)) ||
+          (o.data && equals(o.data, d2))) {
           selected++;
           selectorData = d2;
           selector = that.svg.select(`[data-group-id="${i1}"]`);
@@ -1149,12 +1159,12 @@ charts.setSelected = function (o, isToggle, internals) {
       } else {
         elem = that.svg.select(`[data-group-id="${i1}"]`);
         if ((typeof o.groupName !== 'undefined' &&
-              typeof o.groupValue !== 'undefined' &&
-                o.groupValue === d[o.groupName]) ||
-            (typeof o.groupIndex !== 'undefined' &&
-              o.groupIndex === i1) ||
-            (o.elem && $(elem.node()).is(o.elem)) ||
-            (o.data && equals(o.data, d))) {
+          typeof o.groupValue !== 'undefined' &&
+          o.groupValue === d[o.groupName]) ||
+          (typeof o.groupIndex !== 'undefined' &&
+            o.groupIndex === i1) ||
+          (o.elem && $(elem.node()).is(o.elem)) ||
+          (o.data && equals(o.data, d))) {
           selected++;
           selectorData = d;
           selector = elem;

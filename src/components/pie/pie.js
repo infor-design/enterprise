@@ -166,6 +166,7 @@ Pie.prototype = {
       this.element.addClass(`has-${s.legendPlacement}-legend`);
     }
 
+    const hasBottomLegend = this.element.closest('.has-bottom-legend').length > 0;
     const hasParentBordered = this.element.parents('.widget').hasClass('bordered');
     const w = parseInt(this.element.width(), 10);
     let h = this.element.height() < 320 ? 320 : parseInt(this.element.height(), 10);
@@ -205,6 +206,11 @@ Pie.prototype = {
     }
 
     let heightAdjusted = 0;
+
+    if (hasBottomLegend) {
+      dims.height -= 25;
+    }
+
     if (legendBotOnSingleWidget) {
       heightAdjusted = 35;
       this.element.closest('.widget-content').css({ height: 'auto', 'min-height': 'auto' });
@@ -217,7 +223,7 @@ Pie.prototype = {
       if (s.fitHeight) {
         minHeight -= utils.getSiblingsHeight(self.element[0]);
       }
-      if (this.element.closest('.has-bottom-legend').length > 0 && minHeight < 260) {
+      if (hasBottomLegend && minHeight < 260) {
         minHeight = 260;
       }
 
@@ -816,11 +822,11 @@ Pie.prototype = {
 
       if (selected < 1) {
         if ((typeof o.fieldName !== 'undefined' &&
-              typeof o.fieldValue !== 'undefined' &&
-                o.fieldValue === d.data[o.fieldName]) ||
-            (typeof o.index !== 'undefined' && o.index === i) ||
-            (o.data && equals(o.data, self.chartData[i].data)) ||
-            (o.elem && $(this).is(o.elem))) {
+          typeof o.fieldValue !== 'undefined' &&
+          o.fieldValue === d.data[o.fieldName]) ||
+          (typeof o.index !== 'undefined' && o.index === i) ||
+          (o.data && equals(o.data, self.chartData[i].data)) ||
+          (o.elem && $(this).is(o.elem))) {
           selected++;
           selector = d3.select(this);
           arcIndex = i;
