@@ -592,6 +592,7 @@ ModuleNav.prototype = {
    */
   updated(settings) {
     if (settings) {
+      delete this.settings?.accordionSettings?.selected;
       this.settings = utils.deepMergeObject(this.settings, settings);
       if (this.switcherAPI) this.switcherAPI.settings.displayMode = this.settings.displayMode;
       if (this.settingsAPI) this.settingsAPI.settings.displayMode = this.settings.displayMode;

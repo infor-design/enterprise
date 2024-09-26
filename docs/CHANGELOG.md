@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.91.3
+
+## v4.91.3 Fixes
+
+- `[ModuleNav]` Fixed a bug where the module nav is not behind modals when opened on the same page. ([#4807](https://inforwiki.atlassian.net/browse/IDS-4114))
+
 ## v4.91.2
 
 ## v4.91.2 Fixes
